@@ -148,6 +148,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 
 
     //metod start camera
+    //voy a modificar este metodo
     private void dispatchTakePictureIntent(){
         //intention start camera
     	Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
