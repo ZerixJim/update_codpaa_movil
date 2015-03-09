@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.Lanzador"/>
+      <point      
+        x = "150"      
+        y = "2565"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.InventarioBodega"/>
+      <point      
+        x = "8149"      
+        y = "150"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.PhotoCapture"/>
+      <point      
+        x = "6338"      
+        y = "150"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.EnviarInformacion"/>
+      <point      
+        x = "4979"      
+        y = "150"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.InteligenciaMercado"/>
+      <point      
+        x = "4678"      
+        y = "2565"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.MenuPrincipal"/>
+      <point      
+        x = "1659"      
+        y = "150"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.Exhibiciones"/>
+      <point      
+        x = "6639"      
+        y = "2414"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.ComentariosActivity"/>
+      <point      
+        x = "1659"      
+        y = "2565"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.SurtidoMueble"/>
+      <point      
+        x = "3018"      
+        y = "2414"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.Mayoreo"/>
+      <point      
+        x = "3169"      
+        y = "150"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.Frentes"/>
+      <point      
+        x = "8299"      
+        y = "2414"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.Imagesheduler"/>
+      <point      
+        x = "4678"      
+        y = "150"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.MainActivity"/>
+      <point      
+        x = "150"      
+        y = "3772"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.MostrarCalendario"/>
+      <point      
+        x = "0"      
+        y = "150"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.MenuTienda"/>
+      <point      
+        x = "4074"      
+        y = "1659"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.codpaa.ListarLocation"/>
+      <point      
+        x = "1659"      
+        y = "754"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>

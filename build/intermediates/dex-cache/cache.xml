@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\libs\android-support-v4.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="307c1cc532eabbf1d135b43e5c983c9da700449d">
+        <dex dex="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\pre-dexed\debug\android-support-v4-fda65d4ea982765079ccbf3dace8d5edbe342b55.jar" />
+    </item>
+    <item
+        jar="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\libs\android-async-http-1.4.4.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3bae85a076241828810bf8fbcc12e5891d5fc34c">
+        <dex dex="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\pre-dexed\debug\android-async-http-1.4.4-6679f0ba4c261bb980caba6abfebe93987c7250c.jar" />
+    </item>
+
+</items>

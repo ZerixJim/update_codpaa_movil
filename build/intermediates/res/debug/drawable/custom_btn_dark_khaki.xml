@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_pressed="true" >
+         <shape android:shape="rectangle"  >
+             <corners android:radius="3dip" />
+             <stroke android:width="1dip" android:color="#618a57" />
+             <gradient  android:angle="-90"  android:startColor="#438830" android:endColor="#6eb25e"  />           
+         </shape>
+     </item>
+    <item android:state_focused="true">
+         <shape android:shape="rectangle"  >
+             <corners android:radius="3dip" />
+             <stroke android:width="1dip" android:color="#638a57" />
+             <solid  android:color="#5dab4e"/>      
+         </shape>
+     </item> 
+    <item >
+        <shape android:shape="rectangle"  >
+             <corners android:radius="3dip" />
+             <stroke android:width="1dip" android:color="#678a57" />
+             <gradient  android:angle="-90"  android:startColor="#92d285" android:endColor="#639f55" />           
+         </shape>
+     </item>
+
+</selector>
+<!-- From: file:/C:/Users/Gustavo/Desktop/CODPAA/CODPAA/res/drawable/custom_btn_dark_khaki.xml -->

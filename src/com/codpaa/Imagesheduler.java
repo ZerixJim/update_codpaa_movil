@@ -1,0 +1,490 @@
+package com.codpaa;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import BD.BDopenHelper;
+ 
+public class Imagesheduler extends Activity implements OnItemClickListener{
+	
+	ListView listV;
+	CustomListAdapter adp;
+	TextView text ;
+    ProgressBar progressBar;
+    private boolean imagenCola = false;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.imagesheduler);
+		
+
+		
+		listV = (ListView) findViewById(R.id.listImageCola);
+        progressBar = (ProgressBar) findViewById(R.id.proBarImaShe);
+
+		listV.setOnItemClickListener(this);
+		loadList();
+		
+	}
+	
+	private void loadList(){
+		try {
+			adp = new CustomListAdapter(this, android.R.layout.simple_list_item_1, getList());
+			listV.setAdapter(adp);
+		} catch (Exception e) {
+			Log.d("ImageSheduler", "Error en adaptador");
+		}
+		
+	}
+	
+	private ArrayList<PhotoListModel> getList(){
+		ArrayList<PhotoListModel> array = new ArrayList<PhotoListModel>();
+		BDopenHelper basel = new BDopenHelper(this);
+		Cursor cur = basel.datosPhoto();
+		
+		if(cur.getCount() > 0){
+            for(cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()){
+                final PhotoListModel mP = new PhotoListModel();
+                mP.set_idPhoto(cur.getInt(0));
+                mP.set_tienda(cur.getString(1));
+                mP.setMarca(cur.getString(2));
+                mP.set_fecha(cur.getString(3));
+                mP.set_img(cur.getString(4));
+
+                array.add(mP);
+
+            }
+
+		}else{
+            text.setText("No Existen imagenes Pendientes");
+			listV.setVisibility(View.GONE);
+
+		}
+		
+		
+		basel.close();
+		return array;
+	}
+	
+	
+	public class CustomListAdapter extends ArrayAdapter<PhotoListModel>{
+		
+		Activity _context;
+		//TextView txtName, txtProducto, txtFecha;
+		private ArrayList<PhotoListModel> _datos;
+
+        private class ViewHolder{
+            TextView txtName;
+            TextView txtProducto;
+            TextView txtFecha;
+            ImageView img;
+            ProgressBar progressBar;
+            PhotoListModel temp;
+            //Button botonEnviar;
+        }
+
+		public CustomListAdapter(Activity con, int textViewResourceId,ArrayList<PhotoListModel> objects) {
+			super(con, textViewResourceId, objects);
+			
+			this._context= con;
+			this._datos = objects;
+			
+		}
+
+		
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+            View row = convertView;
+            PhotoListModel temp = _datos.get(position);
+            ViewHolder holder;
+
+            if(null == row){
+                LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                row = inflater.inflate(R.layout.custom_photo_list, parent,false);
+
+                holder = new ViewHolder();
+                holder.txtName = (TextView) row.findViewById(R.id.txtNombretienda);
+                holder.txtProducto = (TextView) row.findViewById(R.id.txtProdPhoto);
+                holder.txtFecha = (TextView) row.findViewById(R.id.txtfechaPhoto);
+                holder.img = (ImageView) row.findViewById(R.id.imgPhotoCola);
+                holder.progressBar = (ProgressBar) row.findViewById(R.id.progressBar2);
+               // holder.botonEnviar = (Button) row.findViewById(R.id.buttonEnviarFoto);
+                holder.temp = temp;
+
+                row.setTag(holder);
+            }else{
+                holder = (ViewHolder) row.getTag();
+                holder.temp = temp;
+            }
+            /*
+            if(position % 2 == 0){
+                row.setBackgroundColor(Color.WHITE);
+            }else{
+                row.setBackgroundColor(Color.LTGRAY);
+            }*/
+			
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inSampleSize = 4;
+
+			
+			holder.txtName.setText(temp.get_tienda());
+            holder.txtProducto.setText(temp.getMarca());
+            holder.txtFecha.setText(temp.get_fecha());
+            try {
+                Bitmap bitmap = BitmapFactory.decodeFile(temp.get_img(),options);
+                Bitmap thumbImage = ThumbnailUtils.extractThumbnail(bitmap,64,64);
+                holder.img.setImageBitmap(thumbImage);
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+
+
+            //final ProgressBar progress = holder.progressBar;
+            /*
+            holder.botonEnviar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //progress.setVisibility(View.VISIBLE);
+                }
+            });*/
+			
+			
+			return row;
+			
+		}
+
+		
+	}
+	
+	class PhotoListModel{
+		
+		private String _tienda;
+		private String _img;
+		private String _fecha;
+		private String _marca;
+		private int _idPhoto;
+		
+		public String get_tienda() {
+			return _tienda;
+		}
+		public void set_tienda(String _tienda) {
+			this._tienda = _tienda;
+		}
+		public String get_img() {
+			return _img;
+		}
+		public void set_img(String _img) {
+			this._img = _img;
+		}
+		public String get_fecha() {
+			return _fecha;
+		}
+		public void set_fecha(String _fecha) {
+			this._fecha = _fecha;
+		}
+		public String getMarca() {
+			return _marca;
+		}
+		public void setMarca(String marca) {
+			this._marca = marca;
+		}
+		public int get_idPhoto() {
+			return _idPhoto;
+		}
+		public void set_idPhoto(int _idPhoto) {
+			this._idPhoto = _idPhoto;
+		}
+		
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		PhotoListModel pl = (PhotoListModel) arg0.getItemAtPosition(arg2);
+
+		//ProgressBar progressBar = (ProgressBar) arg1.findViewById(R.id.progressBar2);
+		dialogoFoto(pl.get_img(), pl.get_idPhoto(), arg2);
+
+		
+	}
+	
+	private void dialogoFoto(String img, int idFoto, int position) {
+		
+		Builder builder  = new AlertDialog.Builder(this);
+		View vistaFotoEnviar = LayoutInflater.from(this).inflate(R.layout.dialogimg, null);
+		ImageView imagen = (ImageView) vistaFotoEnviar.findViewById(R.id.imgDialog);
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inSampleSize = 0;
+		
+		Bitmap bitmap = BitmapFactory.decodeFile(img,options);
+		imagen.setImageBitmap(bitmap);
+		
+		EnviarFotoListener listener = new EnviarFotoListener(idFoto, img, position);
+		
+		builder.setPositiveButton("Enviar Foto", listener).setNegativeButton("Cancelar", listener).setView(vistaFotoEnviar);
+		builder.create().show();
+		
+	}
+	
+	
+	private class EnviarFotoListener implements DialogInterface.OnClickListener{
+		
+		private int _idFoto= 0;
+		private int _position;
+		private String _img;
+		
+		public EnviarFotoListener(int idFoto, String img, int position){
+			this._idFoto = idFoto;
+			this._img = img;
+			this._position = position;
+		}
+		
+		
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			
+			if(which == DialogInterface.BUTTON_POSITIVE){
+				if(_idFoto != 0){
+					enviarFoto(_idFoto, this._img, this._position);
+					Toast.makeText(getApplicationContext(), "Enviando Imagen", Toast.LENGTH_LONG).show();
+				}
+				
+				
+				
+			}else if(which == DialogInterface.BUTTON_NEGATIVE){
+				Toast.makeText(getApplicationContext(),"Cancelaste el Envio", Toast.LENGTH_SHORT).show();
+			}
+			
+		}
+
+	
+		
+	}
+	
+	public void enviarFoto(int idFoto, String img, int position) {
+
+        if(!imagenCola){
+            try {
+
+
+                BDopenHelper base = new BDopenHelper(this);
+                RequestParams rpFoto = new RequestParams();
+                AsyncHttpClient cliente = new AsyncHttpClient();
+                Cursor curFoto = base.datosFoto(idFoto);
+
+
+                if(verificarConexion()){
+                    if(curFoto.getCount() != 0) {
+                        curFoto.moveToFirst();
+                        File file = new File(img);
+
+
+                        rpFoto.put("idtienda", Integer.toString(curFoto.getInt(0)));
+                        rpFoto.put("idpromo", Integer.toString(curFoto.getInt(1)));
+                        rpFoto.put("idmarca", Integer.toString(curFoto.getInt(2)));
+                        rpFoto.put("idex", Integer.toString(curFoto.getInt(3)));
+                        rpFoto.put("fecha", curFoto.getString(4));
+                        rpFoto.put("dia", Integer.toString(curFoto.getInt(5)));
+                        rpFoto.put("mes", Integer.toString(curFoto.getInt(6)));
+                        rpFoto.put("ano", Integer.toString(curFoto.getInt(7)));
+                        rpFoto.put("file", file);
+
+                        cliente.post("http://promotoressumma.com/codpaa/sentimage.php",rpFoto, new HttpResponseFoto(this,idFoto,position,img) );
+
+
+                    }
+                    base.close();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Se Predio la conexion a Internet \n intentelo mas tarde", Toast.LENGTH_LONG).show();
+                }
+
+
+
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            Toast.makeText(getApplicationContext(), "Espere.. foto Pendiente", Toast.LENGTH_LONG).show();
+        }
+
+	}
+	
+	
+	
+	
+	
+	
+	public boolean verificarConexion() {
+	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+	    return netInfo != null && netInfo.isConnected();
+	}
+	
+	
+	private class HttpResponseFoto extends JsonHttpResponseHandler{
+		
+		private int _idFoto;
+		private int _position;
+        private String _imgPath;
+		Activity act;
+		SQLiteDatabase db;
+
+		
+		public HttpResponseFoto(Activity contex,int idFoto, int position, String imgPath){
+			this._idFoto = idFoto;
+			this.act = contex;
+			this._position = position;
+            this._imgPath = imgPath;
+			db = new BDopenHelper(act).getWritableDatabase();
+
+		}
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            imagenCola = true;
+
+            progressBar.post(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+            });
+
+        }
+
+        @Override
+        public void onFinish() {
+            super.onFinish();
+            imagenCola = false;
+            progressBar.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setVisibility(View.GONE);
+                }
+            },3000);
+        }
+
+        @Override
+        public void onProgress(final int bytesWritten, final int totalSize) {
+            super.onProgress(bytesWritten, totalSize);
+
+            //Log.v("Progress"," "+(bytesWritten*100)/totalSize);
+            progressBar.post(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.setProgress(bytesWritten);
+                    progressBar.setMax(totalSize);
+                }
+            });
+        }
+
+        @Override
+		public void onSuccess(int statusCode,Header[] headers ,JSONObject response) {
+			
+			if(response != null){
+				try {
+					
+
+					if(response.getBoolean("bol")){
+
+                        //
+
+                        //set status=2 (status 2 = send image)
+						db.execSQL("Update photo set status=2 where idPhoto="+this._idFoto);
+
+                        //removemos el elmento de la lista
+						adp.remove(adp.getItem(_position));
+                        //notificamos el cambio al adaptador
+						adp.notifyDataSetChanged();
+                        //notificamos al usuario la respuesta del servidor
+						Toast.makeText(getApplicationContext(), response.getString("insert"), Toast.LENGTH_SHORT).show();
+                        deleteArchivo(_imgPath);
+
+
+                    }else{
+						if(response.getInt("code") == 3){
+
+
+							adp.remove(adp.getItem(_position));
+							adp.notifyDataSetChanged();
+                            deleteArchivo(_imgPath);
+                            Toast.makeText(getApplicationContext(), response.getString("insert"), Toast.LENGTH_SHORT).show();
+                            db.execSQL("Update photo set status=2 where idPhoto="+this._idFoto);
+						}
+					}
+				} catch (JSONException e) {
+					
+					e.printStackTrace();
+				} finally {
+                    db.close();
+                }
+
+			}else{
+				Log.d("Response image", "Sin respuesta");
+			}
+			
+			
+		}
+		
+		
+
+		@Override
+		public void onFailure(int statusCode, Header[] headers,Throwable throwable, JSONObject errorResponse) {
+			Toast.makeText(getApplicationContext(), "Error al enviar \n se perdio la conexion intentelo mas tarde" , Toast.LENGTH_LONG).show();
+
+
+		}
+
+
+		
+	}
+
+
+    public void deleteArchivo(String filePath){
+        File img = new File(filePath);
+        if(img.delete()){
+            Log.d("Delete file","Archivo borrado");
+        }else{
+            Log.d("Delete file","Archivo no se pudo borrar");
+        }
+    }
+	
+
+}

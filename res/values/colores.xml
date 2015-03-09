@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="negroFondo">#000000</color>
+    <color name="Blanco">#ffffff</color>
+    <color name="Blue">#c1dbfb</color>
+    <color name="Blue2">#2883C8</color>
+    <color name="Red">#FF0000</color>
+    <color name="AmarilloClaro">#E0FB8E</color>
+    <color name="AzulMedio">#008BB2</color>
+    <color name="Azul3">#D0F1F7</color>
+    <color name="Azul4">#06ACC9</color>
+    <color name="naranjaClaro">#FEE0C1</color>
+    <color name="blanco2">#F6F6F6</color>
+    <color name="gris">#f3f3f3</color>
+    
+    
+</resources>

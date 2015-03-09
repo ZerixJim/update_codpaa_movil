@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <corners android:radius="10dp"/>
+
+</shape>
+<!-- From: file:/C:/Users/Gustavo/Desktop/CODPAA/CODPAA/res/drawable-mdpi/cornersbutton.xml -->

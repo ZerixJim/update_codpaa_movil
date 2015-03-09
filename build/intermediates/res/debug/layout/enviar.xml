@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btnVisitasP"
+        style="@style/btnStyleShakespeare"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/vistasPendientes" />
+
+    <Button
+        android:id="@+id/btnFrentesP"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/frentesPendientes" />
+
+    <Button
+        android:id="@+id/btnSurtidoP"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/surtidoPendiente" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/inventarioPendiente" />
+
+    <Button
+        android:id="@+id/btnExhiP"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/exhibicionesPendientes" />
+
+    <Button
+        android:id="@+id/btnFotosNo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/imaPendiente" />
+
+    <Button
+        android:id="@+id/bntSaEnvi"
+        style="@style/btnStyleOrange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/exit" />
+
+</LinearLayout>
+<!-- From: file:/C:/Users/Gustavo/Desktop/CODPAA/CODPAA/res/layout/enviar.xml -->

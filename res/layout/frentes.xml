@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ScrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gris"
+    tools:ignore="UselessParent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/AmarilloClaro"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/userFrente"
+                style="@style/TextShadow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tiendaFrente"
+                style="@style/TextShadow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/AzulMedio" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textInvPromo"
+            style="@style/btnStyleGenoa"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:clickable="false"
+            android:text="@string/marca"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerMarFre"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/Blanco"
+            android:layout_margin="2dp" />
+
+        <TextView
+            android:id="@+id/txtCusSpi1"
+            style="@style/btnStyleGenoa"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="7dp"
+            android:clickable="false"
+            android:text="@string/produ"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerFrePro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Blanco"
+            android:layout_margin="2dp" />
+
+        <TextView
+            android:id="@+id/textSalida"
+            style="@style/btnStyleBeige"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:clickable="false"
+            android:text="@string/stringCharo"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@color/Blanco">
+
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <Button
+                        android:id="@+id/btnf1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/cha1"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/editCha1"
+                        android:layout_width="60dp"
+                        android:maxLength="2"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+                   
+
+                    <Button
+                        android:id="@+id/btnfoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/cha4"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/editCha4"
+                        android:layout_width="60dp"
+                        android:maxLength="2"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number" />
+
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/btnExit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/cha2"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/editCha2"
+                        android:layout_width="60dp"
+                        android:maxLength="2"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number" />
+
+                    <Button
+                        android:id="@+id/btnf5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/cha5"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/editCha5"
+                        android:layout_width="60dp"
+                        android:maxLength="2"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <Button
+                        android:id="@+id/btnf3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/cha3"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/editCha3"
+                        android:layout_width="60dp"
+                        android:maxLength="2"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number" />
+
+                    <Button
+                        android:id="@+id/btnf6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/cha6"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/editCha6"
+                        android:layout_width="60dp"
+                        android:maxLength="2"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number" />
+
+                </LinearLayout>
+
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="72dp"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btonChFr"
+            style="@style/btnStyleShakespeare"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:drawableLeft="@drawable/save"
+            android:text="@string/guar"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp" />
+
+        <Button
+            android:id="@+id/buttonExhib"
+            style="@style/btnStyleOrange"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/back"
+            android:layout_marginRight="3dp" />
+
+    </LinearLayout>
+
+</ScrollView>
