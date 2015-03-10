@@ -306,7 +306,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 
                         clienteFoto.setTimeout(5000);
 
-                        clienteFoto.post("http://promotoressumma.com/codpaa/sentimage.php", requ,
+                        clienteFoto.post("http://upload.plataformavanguardia.com/upimage.php", requ,
                                 new HttpResponseImage(CameraActivity, idTienda, idPromotor, idMarca,
                                         idExhibicion, timeStamp, Integer.parseInt(dia),
                                         Integer.parseInt(mes), Integer.parseInt(ano),mCurrentPhotoPath));
