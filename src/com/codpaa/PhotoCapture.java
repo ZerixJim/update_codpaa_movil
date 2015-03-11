@@ -306,7 +306,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 
                         clienteFoto.setTimeout(5000);
 
-                        clienteFoto.post("http://upload.plataformavanguardia.com/upimage.php", requ,
+                        clienteFoto.post("http://plataformavanguardia.net/codpaa/upimage.php", requ,
                                 new HttpResponseImage(CameraActivity, idTienda, idPromotor, idMarca,
                                         idExhibicion, timeStamp, Integer.parseInt(dia),
                                         Integer.parseInt(mes), Integer.parseInt(ano),mCurrentPhotoPath));
@@ -576,7 +576,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 		spiMfirst.setId(0);
 
 		array.add(0,spiMfirst);
-
+        cursorMarca.close();
 		base.close();
 		return array;
 
@@ -615,6 +615,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 
 		arrayE.add(0,spiMfirst);
 
+        cursorE.close();
 		base.close();
 		return arrayE;
 
