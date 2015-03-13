@@ -241,6 +241,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
                     fe.printStackTrace();
                 }
                 Log.v("Image ",bitmap.getWidth()+"x"+bitmap.getHeight());
+                //falta validacion
                 showImg.setImageBitmap(bitmap);
 
     		}
@@ -306,7 +307,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 
                         clienteFoto.setTimeout(5000);
 
-                        clienteFoto.post("http://plataformavanguardia.net/codpaa/upimage.php", requ,
+                        clienteFoto.post("http://plataformavanguardia.net/codpaa/php/upimage.php", requ,
                                 new HttpResponseImage(CameraActivity, idTienda, idPromotor, idMarca,
                                         idExhibicion, timeStamp, Integer.parseInt(dia),
                                         Integer.parseInt(mes), Integer.parseInt(ano),mCurrentPhotoPath));
@@ -431,6 +432,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 		public void onFailure(int statusCode, Header[] header,Throwable e,JSONObject errorResponse) {
 
             Log.d("EnviarFoto","Estatus "+statusCode);
+            Log.d("EnviarFoto","ErrorRespo"+errorResponse);
 			Toast.makeText(getApplicationContext(), "Se perdio la conexion \n   intentelo de nuevo mas tarde", Toast.LENGTH_SHORT).show();
 			Toast.makeText(getApplicationContext(), "Enviado a Imagenes No Enviadas \n (Menu Enviar)", Toast.LENGTH_SHORT).show();
 
@@ -459,7 +461,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 		public void onSuccess(int statusCode,Header[] headers,JSONObject response) {
 
             Log.d("EnviarFoto","Estatus "+statusCode);
-
+            Log.d("EnviarFoto","Response"+response);
             textoEnvio.post(new Runnable() {
                 @Override
                 public void run() {
