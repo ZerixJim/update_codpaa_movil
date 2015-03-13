@@ -242,6 +242,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
                 }
                 Log.v("Image ",bitmap.getWidth()+"x"+bitmap.getHeight());
                 //falta validacion
+                //falta validacion
                 showImg.setImageBitmap(bitmap);
 
     		}
