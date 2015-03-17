@@ -60,6 +60,8 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int widthRequerida = 640;
     private static final int heightRequerida = 480;
+    private static final String BASE_URL = "http://plataformavanguardia.com/codpaa/";
+
     ProgressBar progressFoto;
 
     TextView textoEnvio;
@@ -67,7 +69,6 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 	Button photo, enviarPhoto, salir;
     Locale local;
     public static ImageView showImg = null;
-    MultiSelectionSpinner selectionSpinner;
     PhotoCapture CameraActivity = null;
     String mCurrentPhotoPath;
     boolean imagenEspera = false;
@@ -114,14 +115,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
         loadSpinner();
         spinnerExhi();
 
-        try {
 
-            selectionSpinner = (MultiSelectionSpinner) findViewById(R.id.spinnerProM);
-
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
 
         local = new Locale("es_MX");
@@ -132,19 +126,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 
 
 
-    public ArrayList<ProductosModel> getProductos(){
 
-        ArrayList<ProductosModel> array = new ArrayList<ProductosModel>();
-
-        for (int i=0;i<=10;i++){
-            final ProductosModel model = new ProductosModel();
-            model.setIdProducto(i+1);
-            model.setNombre("Producto "+i);
-            model.setPresentacion(i+"gr");
-            array.add(model);
-        }
-        return array;
-    }
 
 
     //metod start camera
@@ -308,7 +290,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 
                         clienteFoto.setTimeout(5000);
 
-                        clienteFoto.post("http://plataformavanguardia.net/codpaa/php/upimage.php", requ,
+                        clienteFoto.post(BASE_URL+"upimage.php", requ,
                                 new HttpResponseImage(CameraActivity, idTienda, idPromotor, idMarca,
                                         idExhibicion, timeStamp, Integer.parseInt(dia),
                                         Integer.parseInt(mes), Integer.parseInt(ano),mCurrentPhotoPath));
@@ -352,9 +334,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        SpinnerMarcaModel sm = (SpinnerMarcaModel) adapterView.getSelectedItem();
 
-        selectionSpinner.setItemsModel(getArrayListProductos(sm.getId()));
 
 
     }
@@ -634,38 +614,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
         }
     }
 
-    public ArrayList<ProductosModel> productosArray(){
-        ArrayList<ProductosModel> array = new ArrayList<ProductosModel>();
 
-        for (int i = 0;i < 10; i++){
-            final ProductosModel sp = new ProductosModel();
-            sp.setPresentacion(i+"gr");
-            sp.setIdProducto(i+1);
-            sp.setNombre("Producto"+(i+1));
-
-            array.add(sp);
-        }
-        return array;
-    }
-
-
-    private ArrayList<SpinnerProductoModel> getArrayListPro(int idMarca){
-
-        Cursor curPro = new BDopenHelper(this).productos(idMarca);
-        ArrayList<SpinnerProductoModel> arrayP = new ArrayList<SpinnerProductoModel>();
-        for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-            final SpinnerProductoModel spP = new SpinnerProductoModel();
-            spP.setIdProducto(curPro.getInt(0));
-            spP.setNombre(curPro.getString(1));
-            spP.setPresentacion(curPro.getString(2));
-            arrayP.add(spP);
-        }
-
-
-        base.close();
-        return arrayP;
-
-    }
 
     private ArrayList<ProductosModel> getArrayListProductos(int idMarca){
 

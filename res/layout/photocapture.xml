@@ -61,12 +61,6 @@
             android:layout_marginRight="2dp"
             android:layout_marginLeft="2dp" />
 
-        <widget.MultiSelectionSpinner
-            android:id="@+id/spinnerProM"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/sombra_caja" />
-
         <Spinner
             android:id="@+id/spiExhPho"
             android:layout_width="match_parent"
