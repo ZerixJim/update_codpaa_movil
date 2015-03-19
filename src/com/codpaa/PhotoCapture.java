@@ -28,9 +28,11 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -49,9 +51,9 @@ import android.widget.Toast;
 import android.os.Handler;
 
 import BD.BDopenHelper;
-import modelos.MarcaModel;
+
 import modelos.ProductosModel;
-import widget.MultiSelectionSpinner;
+
 
 
 public class PhotoCapture extends Activity implements OnClickListener, OnItemSelectedListener{
@@ -209,24 +211,40 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
                 /*BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 0;*/
 
-                Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+                File archivo = new File(mCurrentPhotoPath);
+                long tamano = archivo.length();
+                double kb = tamano/1024;
+                double mb = kb/1024;
 
-                try {
-                    if(bitmap.getWidth() > widthRequerida && bitmap.getHeight() > heightRequerida){
-                        File fileP = new File(mCurrentPhotoPath);
-                        FileOutputStream fileOut = new FileOutputStream(fileP);
-                        //Log.v("Tamaño imagen: ",Long.toString(fileP.length()));
-                        bitmap.compress(Bitmap.CompressFormat.JPEG,80,fileOut);
+                Log.e("Imagen","Tamaño de imagen: "+mb+"mb");
+
+
+                if (tamano > 0 ) {
+
+
+                    Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+
+                    try {
+                        if (bitmap.getWidth() > widthRequerida && bitmap.getHeight() > heightRequerida) {
+                            File fileP = new File(mCurrentPhotoPath);
+                            FileOutputStream fileOut = new FileOutputStream(fileP);
+                            //Log.v("Tamaño imagen: ",Long.toString(fileP.length()));
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fileOut);
+                        }
+
+                    } catch (FileNotFoundException fe) {
+                        fe.printStackTrace();
                     }
+                    Log.v("Image ", bitmap.getWidth() + "x" + bitmap.getHeight());
+                    //falta validacion
+                    //falta validacion
 
-                }catch (FileNotFoundException fe){
-                    fe.printStackTrace();
+                    Bitmap thum = ThumbnailUtils.extractThumbnail(bitmap,256,128);
+                    showImg.setImageBitmap(thum);
+                } else {
+                    Toast.makeText(getApplicationContext(),"Error al cargar " +
+                            "la foto \n intente tomar la foto de nuevo",Toast.LENGTH_SHORT).show();
                 }
-                Log.v("Image ",bitmap.getWidth()+"x"+bitmap.getHeight());
-                //falta validacion
-                //falta validacion
-                showImg.setImageBitmap(bitmap);
-
     		}
 
     	}
@@ -414,8 +432,8 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 
             Log.d("EnviarFoto","Estatus "+statusCode);
             Log.d("EnviarFoto","ErrorRespo"+errorResponse);
-			Toast.makeText(getApplicationContext(), "Se perdio la conexion \n   intentelo de nuevo mas tarde", Toast.LENGTH_SHORT).show();
-			Toast.makeText(getApplicationContext(), "Enviado a Imagenes No Enviadas \n (Menu Enviar)", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "No fue posible conectarse con el servidor", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Imagen no envida \n (Menu Enviar)", Toast.LENGTH_SHORT).show();
 
             textoEnvio.post(new Runnable() {
                 @Override
@@ -639,6 +657,8 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
         return arrayP;
 
     }
+
+
 
 
 
