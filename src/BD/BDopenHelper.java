@@ -353,6 +353,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
 
+    public Cursor fotos() throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+        return baseDatosLocal.rawQuery("select idPhoto, idTienda, idCelular, idMarca, idExhibicion, fecha, dia, mes, anio, imagen where status=1",null);
+
+    }
+
     public Cursor datosFoto(int idFoto) throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
 

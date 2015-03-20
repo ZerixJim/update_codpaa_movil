@@ -81,9 +81,10 @@ public final class R {
         public static final int salidatienda=0x7f020031;
         public static final int save=0x7f020032;
         public static final int sombra_caja=0x7f020033;
-        public static final int surtido=0x7f020034;
-        public static final int tienda=0x7f020035;
-        public static final int tiendaerror=0x7f020036;
+        public static final int subirimagen=0x7f020034;
+        public static final int surtido=0x7f020035;
+        public static final int tienda=0x7f020036;
+        public static final int tiendaerror=0x7f020037;
     }
     public static final class id {
         public static final int Encargado=0x7f0900a5;

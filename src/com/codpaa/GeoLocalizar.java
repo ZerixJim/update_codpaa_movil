@@ -2,6 +2,8 @@ package com.codpaa;
 
 import com.loopj.android.http.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,9 +34,11 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import BD.BDopenHelper;
+import HandlerResponse.ResponseImage;
 
 
 public class GeoLocalizar extends Service implements LocationListener{
@@ -390,6 +394,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 					enviarEncargado();
 					enviarComentario();
 					enviarRastreo();
+
+                    enviarFotos();
 					
 					
 
@@ -865,6 +871,46 @@ public class GeoLocalizar extends Service implements LocationListener{
 			e.printStackTrace();
 		}
 	}
+
+    public void enviarFotos(){
+
+        BDopenHelper base = new BDopenHelper(this);
+        RequestParams rpFoto = new RequestParams();
+        AsyncHttpClient cliente = new AsyncHttpClient();
+        Cursor curFoto = base.fotos();
+
+
+        if(curFoto.getCount() != 0) {
+            for(curFoto.moveToFirst(); !curFoto.isAfterLast(); curFoto.moveToNext()){
+                File file = new File(curFoto.getString(9));
+
+
+                rpFoto.put("idtienda", Integer.toString(curFoto.getInt(1)));
+                rpFoto.put("idpromo", Integer.toString(curFoto.getInt(2)));
+                rpFoto.put("idmarca", Integer.toString(curFoto.getInt(3)));
+                rpFoto.put("idex", Integer.toString(curFoto.getInt(4)));
+                rpFoto.put("fecha", curFoto.getString(5));
+                rpFoto.put("dia", Integer.toString(curFoto.getInt(6)));
+                rpFoto.put("mes", Integer.toString(curFoto.getInt(7)));
+                rpFoto.put("ano", Integer.toString(curFoto.getInt(8)));
+                try {
+                    rpFoto.put("file", file);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            cliente.setTimeout(5000);
+            ResponseImage responseImage = new ResponseImage(this,curFoto.getInt(0),curFoto.getString(9));
+            cliente.post("http://plataformavanguardia.com/codpaa/upimage.php",rpFoto, responseImage);
+
+
+        }
+        base.close();
+
+
+    }
 	
 	
 	public boolean verificarConexion() {
