@@ -439,7 +439,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
                 @Override
                 public void run() {
 
-                    textoEnvio.setText("Erro el enviar");
+                    textoEnvio.setText("Error el enviar");
                     textoEnvio.setTextColor(Color.RED);
                 }
             });
