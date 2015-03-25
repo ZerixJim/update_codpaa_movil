@@ -160,7 +160,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
     private File createImageFile() throws IOException {
 
 
-		String timeStamp = new SimpleDateFormat("ddMMyyyy", local).format(new Date());
+		String timeStamp = new SimpleDateFormat("ddMMyyyykm", local).format(new Date());
 		String imageFileName = idTienda+timeStamp;
 		File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 		if(!storageDir.exists()){

@@ -357,6 +357,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         String path = "";
         if (base != null) {
             Cursor cur = base.rawQuery("select imagen from photo where idPhoto=" + idPhoto, null);
+            cur.moveToFirst();
             path = cur.getString(0);
 
         }

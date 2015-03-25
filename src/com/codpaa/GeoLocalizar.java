@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -923,7 +924,10 @@ public class GeoLocalizar extends Service implements LocationListener{
 
     JsonHttpResponseHandler jr = new JsonHttpResponseHandler(){
 
-        int id = 1;
+        Random r = new Random();
+
+
+        int id = r.nextInt(80 - 65) + 65;
         NotificationManager notification;
         NotificationCompat.Builder notificationBuilder;
         SQLiteDatabase db;
@@ -950,6 +954,7 @@ public class GeoLocalizar extends Service implements LocationListener{
         public void onProgress(int bytesWritten, int totalSize) {
             super.onProgress(bytesWritten, totalSize);
             notificationBuilder.setProgress(totalSize,bytesWritten,false);
+            notification.notify(id,notificationBuilder.build());
         }
 
         @Override
@@ -968,16 +973,26 @@ public class GeoLocalizar extends Service implements LocationListener{
                                 .setProgress(0,0,false);
                         notification.notify(id,notificationBuilder.build());
                         db = new BDopenHelper(getApplicationContext()).getWritableDatabase();
-                        db.execSQL("Update photo set status=2 where idTienda="+
+
+                        Log.e("Response Ima JSON","idTienda"+response.getInt("idTienda")+" " +
+                                "idMarca"+response.getInt("idMarca")+" " +
+                                "fecha"+response.getString("fecha"));
+                        db.execSQL("update photo set status=2 where idTienda="+
                                 response.getInt("idTienda")+" and " +
-                                "idMarca="+response.getInt("idMarca")+" and fecha="+response.getString("fecha"));
+                                "idMarca="+response.getInt("idMarca")+" and fecha='"+
+                                response.getString("fecha")+"';");
 
 
                         deleteArchivo(bs.fotoPath(response.getInt("idFotoCel")));
-                        db.close();
+
                     }else{
                         if(response.getInt("code") == 3){
                             deleteArchivo(bs.fotoPath(response.getInt("idFotoCel")));
+
+                            db.execSQL("update photo set status=2 where idTienda="+
+                                    response.getInt("idTienda")+" and " +
+                                    "idMarca="+response.getInt("idMarca")+" and fecha='"+
+                                    response.getString("fecha")+"';");
                         }
 
 
@@ -986,6 +1001,8 @@ public class GeoLocalizar extends Service implements LocationListener{
                 } catch (JSONException e) {
 
                     e.printStackTrace();
+                } finally {
+                    db.close();
                 }
 
             }else{
