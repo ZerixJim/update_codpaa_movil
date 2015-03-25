@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +33,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -490,7 +492,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 			base = new BDopenHelper(this).getWritableDatabase();
 			
 			if(verificarConexion()){
-				if(curVisitas.getCount() != 0) {
+				if(curVisitas.getCount() >= 1) {
 					
 					
 					for(curVisitas.moveToFirst(); !curVisitas.isAfterLast(); curVisitas.moveToNext()) {
@@ -879,31 +881,38 @@ public class GeoLocalizar extends Service implements LocationListener{
         AsyncHttpClient cliente = new AsyncHttpClient();
         Cursor curFoto = base.fotos();
 
+        Log.e("Geolocalizar","paso 1");
 
-        if(curFoto.getCount() != 0) {
+        if(curFoto.getCount() >= 1) {
+
             for(curFoto.moveToFirst(); !curFoto.isAfterLast(); curFoto.moveToNext()){
-                File file = new File(curFoto.getString(9));
 
 
-                rpFoto.put("idtienda", Integer.toString(curFoto.getInt(1)));
-                rpFoto.put("idpromo", Integer.toString(curFoto.getInt(2)));
-                rpFoto.put("idmarca", Integer.toString(curFoto.getInt(3)));
-                rpFoto.put("idex", Integer.toString(curFoto.getInt(4)));
-                rpFoto.put("fecha", curFoto.getString(5));
-                rpFoto.put("dia", Integer.toString(curFoto.getInt(6)));
-                rpFoto.put("mes", Integer.toString(curFoto.getInt(7)));
-                rpFoto.put("ano", Integer.toString(curFoto.getInt(8)));
+
+                rpFoto.put("idtienda", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idTienda"))));
+                rpFoto.put("idpromo", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idCelular"))));
+                rpFoto.put("idmarca", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idMarca"))));
+                rpFoto.put("idex", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idExhibicion"))));
+                rpFoto.put("fecha", curFoto.getString(curFoto.getColumnIndex("fecha")));
+                rpFoto.put("dia", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("dia"))));
+                rpFoto.put("mes", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("mes"))));
+                rpFoto.put("ano", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("anio"))));
+                rpFoto.put("idFotoCel",Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idPhoto"))));
+
+                File file = new File(curFoto.getString(curFoto.getColumnIndex("imagen")));
                 try {
                     rpFoto.put("file", file);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
 
+                cliente.setTimeout(5000);
+
+                cliente.post("http://plataformavanguardia.com/codpaa/upimage.php",rpFoto, jr);
+
             }
 
-            cliente.setTimeout(5000);
-            ResponseImage responseImage = new ResponseImage(this,curFoto.getInt(0),curFoto.getString(9));
-            cliente.post("http://plataformavanguardia.com/codpaa/upimage.php",rpFoto, responseImage);
+
 
 
         }
@@ -911,6 +920,101 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 
     }
+
+    JsonHttpResponseHandler jr = new JsonHttpResponseHandler(){
+
+        int id = 1;
+        NotificationManager notification;
+        NotificationCompat.Builder notificationBuilder;
+        SQLiteDatabase db;
+
+        @Override
+        public void onStart() {
+            super.onStart();
+
+            Log.w("JR","onStart");
+
+            notification = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationBuilder = new NotificationCompat.Builder(getApplicationContext());
+
+            notificationBuilder.setContentTitle("Enviando imagen")
+                    .setContentText("subiendo la foto")
+                    .setSmallIcon(R.drawable.subirimagen);
+
+            notification.notify(id,notificationBuilder.build());
+            Log.e("ResponseImage","paso 2");
+
+        }
+
+        @Override
+        public void onProgress(int bytesWritten, int totalSize) {
+            super.onProgress(bytesWritten, totalSize);
+            notificationBuilder.setProgress(totalSize,bytesWritten,false);
+        }
+
+        @Override
+        public void onSuccess(int statusCode, JSONObject response) {
+            super.onSuccess(statusCode, response);
+            Log.w("JR","onSucess");
+            Log.e("ResponseImage","paso 3");
+            if(response != null){
+                try {
+
+                    Log.d("Respuestas Ima", response.getString("insert"));
+                    BDopenHelper bs = new BDopenHelper(getApplicationContext());
+                    if(response.getBoolean("bol")){
+
+                        notificationBuilder.setContentText("se envio correctamente")
+                                .setProgress(0,0,false);
+                        notification.notify(id,notificationBuilder.build());
+                        db = new BDopenHelper(getApplicationContext()).getWritableDatabase();
+                        db.execSQL("Update photo set status=2 where idTienda="+
+                                response.getInt("idTienda")+" and " +
+                                "idMarca="+response.getInt("idMarca")+" and fecha="+response.getString("fecha"));
+
+
+                        deleteArchivo(bs.fotoPath(response.getInt("idFotoCel")));
+                        db.close();
+                    }else{
+                        if(response.getInt("code") == 3){
+                            deleteArchivo(bs.fotoPath(response.getInt("idFotoCel")));
+                        }
+
+
+
+                    }
+                } catch (JSONException e) {
+
+                    e.printStackTrace();
+                }
+
+            }else{
+                Log.d("Response image", "Sin respuesta");
+            }
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
+            super.onFailure(statusCode, headers, e, errorResponse);
+            notificationBuilder.setContentText("fallo, el envio")
+                    .setProgress(0,0,false);
+            notification.notify(id,notificationBuilder.build());
+        }
+
+        @Override
+        public void onFinish() {
+            super.onFinish();
+        }
+
+        public void deleteArchivo(String filePath){
+            File img = new File(filePath);
+            if(img.delete()){
+                Log.d("Delete file","Archivo borrado");
+            }else{
+                Log.d("Delete file","Archivo no se pudo borrar");
+            }
+        }
+    };
 	
 	
 	public boolean verificarConexion() {

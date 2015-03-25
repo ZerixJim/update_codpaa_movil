@@ -18,12 +18,13 @@ import java.io.File;
 
 import BD.BDopenHelper;
 
-/**
- * Created by Gustavo on 20/03/2015.
- */
+
 public class ResponseImage extends JsonHttpResponseHandler  {
 
-    private int _idFoto;
+
+    private int _idTienda;
+    private int _idMarca;
+    private String _fecha;
     private String _imgPath;
 
 
@@ -34,14 +35,22 @@ public class ResponseImage extends JsonHttpResponseHandler  {
     int id = 1;
     SQLiteDatabase db;
 
-    public ResponseImage(Context context,int idFoto,String imgPath) {
+    public ResponseImage(Context context,String imgPath, int idTienda, int idMarca,
+                         String fecha) {
         this._con = context;
 
-        this._idFoto = idFoto;
+
         this._imgPath = imgPath;
+        this._idTienda = idTienda;
+        this._idMarca = idMarca;
+        this._fecha = fecha;
+
 
         notification = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationBuilder = new NotificationCompat.Builder(context);
+
+        Log.e("ResponseImage","paso 1");
+
     }
 
     @Override
@@ -52,7 +61,7 @@ public class ResponseImage extends JsonHttpResponseHandler  {
                 .setSmallIcon(R.drawable.subirimagen);
 
         notification.notify(id,notificationBuilder.build());
-
+        Log.e("ResponseImage","paso 2");
 
     }
 
@@ -65,7 +74,7 @@ public class ResponseImage extends JsonHttpResponseHandler  {
     @Override
     public void onSuccess(int statusCode, JSONObject response) {
         super.onSuccess(statusCode, response);
-
+        Log.e("ResponseImage","paso 3");
         if(response != null){
             try {
 
@@ -76,8 +85,11 @@ public class ResponseImage extends JsonHttpResponseHandler  {
                             .setProgress(0,0,false);
                     notification.notify(id,notificationBuilder.build());
                     db = new BDopenHelper(_con).getWritableDatabase();
-                    db.execSQL("Update photo set status=2 where idPhoto="+this._idFoto);
+                    db.execSQL("Update photo set status=2 where idTienda="+this._idTienda+" and " +
+                            "idMarca="+this._idMarca+" and fecha="+this._fecha);
                     deleteArchivo(_imgPath);
+
+                    db.close();
 
                 }else{
                     if(response.getInt("code") == 3){

@@ -352,17 +352,31 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null) baseDatosLocal.close();
     }
 
+    public String fotoPath(int idPhoto){
+        SQLiteDatabase base = getReadableDatabase();
+        String path = "";
+        if (base != null) {
+            Cursor cur = base.rawQuery("select imagen from photo where idPhoto=" + idPhoto, null);
+            path = cur.getString(0);
+
+        }
+        base.close();
+        return path;
+    }
+
 
     public Cursor fotos() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select idPhoto, idTienda, idCelular, idMarca, idExhibicion, fecha, dia, mes, anio, imagen where status=1",null);
+        return baseDatosLocal.rawQuery("select idPhoto, idTienda, idCelular, idMarca, idExhibicion," +
+                " fecha, dia, mes, anio, imagen from photo where status=1;",null);
 
     }
 
     public Cursor datosFoto(int idFoto) throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select idTienda, idCelular, idMarca, idExhibicion, fecha, dia, mes, anio from photo where idPhoto="+idFoto+";", null);
+        return baseDatosLocal.rawQuery("select idTienda, idCelular, idMarca, idExhibicion," +
+                " fecha, dia, mes, anio from photo where idPhoto="+idFoto+";", null);
 
 
     }
@@ -379,7 +393,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor datosPhoto() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select p.idPhoto,(c.grupo||' '||c.sucursal) as tienda,m.nombre, p.fecha, p.imagen from photo as p inner join clientes as c on p.idTienda=c.idTienda inner join marca as m on p.idMarca=m.idMarca where p.status=1", null);
+        return baseDatosLocal.rawQuery("select p.idPhoto,(c.grupo||' '||c.sucursal) as tienda," +
+                "m.nombre, p.fecha, p.imagen " +
+                "from photo as p inner join clientes as c on p.idTienda=c.idTienda " +
+                "inner join marca as m on p.idMarca=m.idMarca where p.status=1", null);
 
 
     }
