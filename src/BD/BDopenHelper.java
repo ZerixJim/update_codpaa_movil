@@ -232,6 +232,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
+    public void borrarFotos(){
+        SQLiteDatabase baseFoto = getWritableDatabase();
+        if (baseFoto != null)
+            baseFoto.execSQL("delete from photo where status=2");
+        if (baseFoto != null) baseFoto.close();
+
+    }
+
 
     public void insertarRutaVisitas(int idTienda, int lu, int ma, int mi, int ju, int vi, int sa, int dom, int idCel, String rol) throws SQLiteException{
 

@@ -520,6 +520,7 @@ public class MenuPrincipal extends Activity implements OnClickListener, Location
 			base.borrarInteli(fechaActual, 2);
 			base.borrarFrentes(fechaActual, 2);
 			base.borrarCajasMa(fechaActual, 2);
+            base.borrarFotos();
 			base.borrarVisitas(sem);
 			
 			
