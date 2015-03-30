@@ -41,6 +41,8 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.codpaa.updates.UpdateInformation;
+
 import BD.BDopenHelper;
 
 
@@ -154,33 +156,42 @@ public class MenuPrincipal extends Activity implements OnClickListener, Location
 		if(verificarConexion()){
 			conexion.setText("Conexion");
 			conexion.setBackgroundColor(Color.GREEN);
+
+
+
+            /*JSONParseAndroid jsonAndroid = new JSONParseAndroid(this);
+				jsonAndroid.readAndParseJSON(idUsuario);*/
+
+
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy");
+            String fechaActual = dFecha.format(c.getTime());
+
+            BDopenHelper actuali = new BDopenHelper(this);
+
+
+            //actualizarInfo();
+
+
+
+            Cursor infoAc = actuali.infoActualizada("producto", fechaActual);
+            //Log.d("Re Ac pro", Integer.toString(infoAc.getCount()));
+            if(infoAc.getCount() <= 0){
+					/*actuali.insertarUpdateInfo("producto", fechaActual);
+					jsonAndroid.readAndParseProdcutos(idUsuario);*/
+
+            }
+
+            actuali.close();
 	
-			try {
-				JSONParseAndroid jsonAndroid = new JSONParseAndroid(this);
-				jsonAndroid.readAndParseJSON(idUsuario);
-				
-				
-				Calendar c = Calendar.getInstance();
-				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy");
-				String fechaActual = dFecha.format(c.getTime());
-				
-				BDopenHelper actuali = new BDopenHelper(this);
-				
-				Cursor infoAc = actuali.infoActualizada("producto", fechaActual);
-				//Log.d("Re Ac pro", Integer.toString(infoAc.getCount()));
-				if(infoAc.getCount() <= 0){
-					actuali.insertarUpdateInfo("producto", fechaActual);
-					jsonAndroid.readAndParseProdcutos(idUsuario);
-					
-				}
-				
-				actuali.close();
+			/*try {
+
 				
 				
 			} catch (JSONException e) {
 				
 				e.printStackTrace();
-			}
+			}*/
 			
 		}else{
 			conexion.setText("Sin conexion");
@@ -274,14 +285,18 @@ public class MenuPrincipal extends Activity implements OnClickListener, Location
 			
 			
 			if(verificarConexion()){
-				try {
+
+                UpdateInformation upinfo = new UpdateInformation(this);
+                upinfo.actualizarTiendas(idUsuario);
+                upinfo.actualizarRuta(idUsuario);
+				/*try {
 					
 					new JSONParseAndroid(this).readAndParseJSON(idUsuario);
 					
 				} catch (JSONException e) {
 					
 					Toast.makeText(this, "error al descargar datos", Toast.LENGTH_SHORT).show();
-				}
+				}*/
 				
 			}else{
 				
@@ -661,7 +676,14 @@ public class MenuPrincipal extends Activity implements OnClickListener, Location
         return str != null && str.contains("gps");
 
 
-   }
+    }
+
+    public void actualizarInfo(){
+        UpdateInformation uInf = new UpdateInformation(this);
+        uInf.actualizarTiendas(idUsuario);
+        uInf.actualizarRuta(idUsuario);
+        uInf.actualizarExhibiciones();
+    }
 
 
 
