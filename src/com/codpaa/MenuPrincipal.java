@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import org.json.JSONException;
 
 
 
@@ -158,9 +157,10 @@ public class MenuPrincipal extends Activity implements OnClickListener, Location
 			conexion.setBackgroundColor(Color.GREEN);
 
 
+            UpdateInformation upinfo = new UpdateInformation(this);
+            upinfo.actualizarTiendas(idUsuario);
+            upinfo.actualizarRuta(idUsuario);
 
-            /*JSONParseAndroid jsonAndroid = new JSONParseAndroid(this);
-				jsonAndroid.readAndParseJSON(idUsuario);*/
 
 
             Calendar c = Calendar.getInstance();
@@ -177,8 +177,9 @@ public class MenuPrincipal extends Activity implements OnClickListener, Location
             Cursor infoAc = actuali.infoActualizada("producto", fechaActual);
             //Log.d("Re Ac pro", Integer.toString(infoAc.getCount()));
             if(infoAc.getCount() <= 0){
-					/*actuali.insertarUpdateInfo("producto", fechaActual);
-					jsonAndroid.readAndParseProdcutos(idUsuario);*/
+                upinfo.actualizarExhibiciones();
+                upinfo.actualizarMarca(idUsuario);
+                upinfo.actualizarProducto(idUsuario);
 
             }
 
@@ -289,14 +290,9 @@ public class MenuPrincipal extends Activity implements OnClickListener, Location
                 UpdateInformation upinfo = new UpdateInformation(this);
                 upinfo.actualizarTiendas(idUsuario);
                 upinfo.actualizarRuta(idUsuario);
-				/*try {
-					
-					new JSONParseAndroid(this).readAndParseJSON(idUsuario);
-					
-				} catch (JSONException e) {
-					
-					Toast.makeText(this, "error al descargar datos", Toast.LENGTH_SHORT).show();
-				}*/
+				upinfo.actualizarExhibiciones();
+                upinfo.actualizarMarca(idUsuario);
+                upinfo.actualizarProducto(idUsuario);
 				
 			}else{
 				

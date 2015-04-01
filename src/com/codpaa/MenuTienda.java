@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 
+import com.codpaa.updates.UpdateInformation;
 import com.loopj.android.http.*;
 
 import android.app.Activity;
@@ -417,13 +418,10 @@ public class MenuTienda extends Activity implements OnClickListener{
 	
 
 	private void actualizarPro() {
-		try {
-			JSONParseAndroid productos = new JSONParseAndroid(this);
-			productos.readAndParseProdcutos(idPromotor);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        UpdateInformation updateInformation = new UpdateInformation(this);
+        updateInformation.actualizarMarca(idPromotor);
+        updateInformation.actualizarProducto(idPromotor);
+        updateInformation.actualizarExhibiciones();
 		
 		
 	}

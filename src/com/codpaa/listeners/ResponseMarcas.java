@@ -1,11 +1,16 @@
 package com.codpaa.listeners;
 
-import android.app.ProgressDialog;
+
 import android.content.Context;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import BD.BDopenHelper;
 
 
 public class ResponseMarcas extends JsonHttpResponseHandler{
@@ -14,40 +19,62 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
 
     Context _context;
 
-    private ProgressDialog pdia;
+
 
     public ResponseMarcas(Context context){
         this._context = context;
-        pdia = new ProgressDialog(context);
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        pdia.show();
+
+        Toast.makeText(_context,"Descargando Marcas",Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     public void onProgress(int bytesWritten, int totalSize) {
         super.onProgress(bytesWritten, totalSize);
-        pdia.setMax(totalSize);
-        pdia.setProgress(bytesWritten);
+
     }
 
     @Override
     public void onSuccess(int statusCode, JSONObject response) {
         super.onSuccess(statusCode, response);
+
+        if (response != null){
+            try {
+                parseJSONMarca(response.getJSONArray("M"));
+                Toast.makeText(_context,"Descarga de Marcas Satisfactoria",
+                        Toast.LENGTH_SHORT).show();
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
         super.onFailure(statusCode, e, errorResponse);
+        Toast.makeText(_context,"Error al descargar Marcas",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onFinish() {
         super.onFinish();
 
-        pdia.dismiss();
+    }
+
+    private void parseJSONMarca(JSONArray marcaArray) throws JSONException {
+        BDopenHelper b = new BDopenHelper(_context);
+        b.vaciarTabla("marca");
+
+        for(int i= 0; i < marcaArray.length(); i++) {
+
+            b.insertarMarca(marcaArray.getJSONObject(i).getInt("IM"),
+                    marcaArray.getJSONObject(i).getString("N"));
+        }
     }
 }

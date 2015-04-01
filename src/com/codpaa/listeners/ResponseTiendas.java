@@ -2,12 +2,16 @@ package com.codpaa.listeners;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import BD.BDopenHelper;
 
@@ -16,6 +20,7 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
 
     Context _context;
     private ProgressDialog pdia;
+    Handler updateProgress;
 
     public ResponseTiendas(Context context){
         this._context = context;
@@ -24,22 +29,42 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
         pdia.setMessage("Descargando Tiendas");
         pdia.setIndeterminate(false);
         pdia.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pdia.setCancelable(false);
+
+
+        updateProgress = new Handler();
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        pdia.show();
+        updateProgress.post(new Runnable() {
+            @Override
+            public void run() {
+                pdia.show();
+            }
+        });
 
+        Toast.makeText(_context,"Descargando Tiendas",Toast.LENGTH_SHORT).show();
+
+        Log.d("RTiendas","Start");
     }
 
     @Override
-    public void onProgress(int bytesWritten, int totalSize) {
+    public void onProgress(final int bytesWritten, final int totalSize) {
         super.onProgress(bytesWritten, totalSize);
 
-        pdia.setMax(totalSize);
-        pdia.setProgress(bytesWritten);
+        updateProgress.post(new Runnable() {
+            @Override
+            public void run() {
+                pdia.setMax(totalSize);
+                pdia.setProgress(bytesWritten);
+            }
+        });
+
+
+
     }
 
     @Override
@@ -53,19 +78,29 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
             }catch (JSONException e){
                 e.printStackTrace();
             }
+            Toast.makeText(_context,"Descarga de Tiendas Satisfactoria",Toast.LENGTH_SHORT).show();
+            Log.d("RTiendas","Success");
         }
     }
 
     @Override
     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
         super.onFailure(statusCode, e, errorResponse);
+        Toast.makeText(_context,"Error al descargar",Toast.LENGTH_SHORT).show();
+        Log.d("RTiendas","Failure");
     }
 
     @Override
     public void onFinish() {
         super.onFinish();
 
-        pdia.dismiss();
+        updateProgress.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                pdia.dismiss();
+            }
+        },2000);
+
     }
 
     private void parseJsonTiendas(JSONArray tiendasArray) throws JSONException {

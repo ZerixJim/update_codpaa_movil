@@ -2,6 +2,7 @@ package com.codpaa.listeners;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -22,23 +23,29 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
     public ResponseExhibiciones(Context context){
         this._context = context;
         pdia = new ProgressDialog(context);
+
+        /*
         pdia.setTitle("Exhibiciones");
         pdia.setMessage("Descargando Exhibiciones");
         pdia.setIndeterminate(false);
-        pdia.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pdia.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);*/
+
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        pdia.show();
+        //pdia.show();
+
+        Toast.makeText(_context,"Iniciando la descarga de Exhibiciones",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onProgress(int bytesWritten, int totalSize) {
         super.onProgress(bytesWritten, totalSize);
-        pdia.setMax(totalSize);
-        pdia.setProgress(bytesWritten);
+        //pdia.setMax(totalSize);
+        //pdia.setProgress(bytesWritten);
     }
 
     @Override
@@ -50,20 +57,26 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
             }catch (JSONException e){
                 e.printStackTrace();
             }
-
+            Toast.makeText(_context,"Exhibiciones Descargadas",Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
         super.onFailure(statusCode, e, errorResponse);
+
+
+
+        Toast.makeText(_context,"Error al descargar las Exhibiciones",Toast.LENGTH_SHORT).show();
+
+
     }
 
     @Override
     public void onFinish() {
         super.onFinish();
 
-        pdia.dismiss();
+        //pdia.dismiss();
     }
 
     private void parseJSONExhi(JSONArray exhiArray) throws JSONException {

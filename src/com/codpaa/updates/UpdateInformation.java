@@ -4,6 +4,8 @@ package com.codpaa.updates;
 import android.content.Context;
 
 import com.codpaa.listeners.ResponseExhibiciones;
+import com.codpaa.listeners.ResponseMarcas;
+import com.codpaa.listeners.ResponseProductos;
 import com.codpaa.listeners.ResponseRuta;
 import com.codpaa.listeners.ResponseTiendas;
 import com.loopj.android.http.AsyncHttpClient;
@@ -32,6 +34,9 @@ public class UpdateInformation{
         rp.put("solicitud","rutas");
         rp.put("id",String.valueOf(idPromotor));
 
+
+
+        clientRuta.setTimeout(5000);
         clientRuta.get(_context, URL_INFO, rp, responseRuta);
 
     }
@@ -44,7 +49,9 @@ public class UpdateInformation{
         rp.put("solicitud","client");
         rp.put("id",String.valueOf(idPromotor));
 
+        clientTiendas.setTimeout(5000);
         clientTiendas.get(_context,URL_INFO,rp,responseTienda);
+
 
 
     }
@@ -56,13 +63,34 @@ public class UpdateInformation{
 
         rp.put("solicitud","exhibicion");
 
+        clientExh.setTimeout(5000);
         clientExh.get(_context,URL_INFO,rp,responseExh);
     }
 
 
-    public void actualizarMarca(){}
+    public void actualizarMarca(int idPromotor){
+        AsyncHttpClient clientMarc = new AsyncHttpClient();
+        ResponseMarcas responseMarc = new ResponseMarcas(_context);
+        RequestParams rp = new RequestParams();
 
-    public void actualizarProducto(){
+        rp.put("solicitud","marcaid");
+        rp.put("id",String.valueOf(idPromotor));
+
+        clientMarc.setTimeout(5000);
+        clientMarc.get(_context,URL_INFO,rp,responseMarc);
+
+    }
+
+    public void actualizarProducto(int idPromotor){
+        AsyncHttpClient clientPro = new AsyncHttpClient();
+        ResponseProductos responseProductos = new ResponseProductos(_context);
+        RequestParams rp = new RequestParams();
+
+        rp.put("solicitud","productoid");
+        rp.put("id",String.valueOf(idPromotor));
+
+        clientPro.setTimeout(5000);
+        clientPro.get(_context,URL_INFO,rp,responseProductos);
 
     }
 
