@@ -19,34 +19,19 @@ import BD.BDopenHelper;
 public class ResponseTiendas extends JsonHttpResponseHandler{
 
     Context _context;
-    private ProgressDialog pdia;
-    Handler updateProgress;
+
 
     public ResponseTiendas(Context context){
         this._context = context;
-        pdia = new ProgressDialog(context);
-        pdia.setTitle("Tiendas");
-        pdia.setMessage("Descargando Tiendas");
-        pdia.setIndeterminate(false);
-        pdia.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        pdia.setCancelable(false);
 
-
-        updateProgress = new Handler();
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        updateProgress.post(new Runnable() {
-            @Override
-            public void run() {
-                pdia.show();
-            }
-        });
 
-        Toast.makeText(_context,"Descargando Tiendas",Toast.LENGTH_SHORT).show();
+        Toast.makeText(_context.getApplicationContext(),"Descargando Tiendas",Toast.LENGTH_SHORT).show();
 
         Log.d("RTiendas","Start");
     }
@@ -54,15 +39,6 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
     @Override
     public void onProgress(final int bytesWritten, final int totalSize) {
         super.onProgress(bytesWritten, totalSize);
-
-        updateProgress.post(new Runnable() {
-            @Override
-            public void run() {
-                pdia.setMax(totalSize);
-                pdia.setProgress(bytesWritten);
-            }
-        });
-
 
 
     }
@@ -78,7 +54,7 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
             }catch (JSONException e){
                 e.printStackTrace();
             }
-            Toast.makeText(_context,"Descarga de Tiendas Satisfactoria",Toast.LENGTH_SHORT).show();
+            Toast.makeText(_context.getApplicationContext(),"Descarga de Tiendas Satisfactoria",Toast.LENGTH_SHORT).show();
             Log.d("RTiendas","Success");
         }
     }
@@ -86,7 +62,7 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
     @Override
     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
         super.onFailure(statusCode, e, errorResponse);
-        Toast.makeText(_context,"Error al descargar",Toast.LENGTH_SHORT).show();
+        Toast.makeText(_context.getApplicationContext(),"Error al descargar",Toast.LENGTH_SHORT).show();
         Log.d("RTiendas","Failure");
     }
 
@@ -94,17 +70,11 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
     public void onFinish() {
         super.onFinish();
 
-        updateProgress.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                pdia.dismiss();
-            }
-        },2000);
 
     }
 
     private void parseJsonTiendas(JSONArray tiendasArray) throws JSONException {
-        BDopenHelper b = new BDopenHelper(_context);
+        BDopenHelper b = new BDopenHelper(_context.getApplicationContext());
         b.vaciarTabla("clientes");
         for(int i=0; i<tiendasArray.length(); i++){
             b.insertarClientes(tiendasArray.getJSONObject(i).getInt("IT"),

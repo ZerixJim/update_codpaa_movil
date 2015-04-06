@@ -30,7 +30,7 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
     public void onStart() {
         super.onStart();
 
-        Toast.makeText(_context,"Descargando Marcas",Toast.LENGTH_SHORT).show();
+        Toast.makeText(_context.getApplicationContext(),"Descargando Marcas",Toast.LENGTH_SHORT).show();
 
     }
 
@@ -47,7 +47,7 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
         if (response != null){
             try {
                 parseJSONMarca(response.getJSONArray("M"));
-                Toast.makeText(_context,"Descarga de Marcas Satisfactoria",
+                Toast.makeText(_context.getApplicationContext(),"Descarga de Marcas Satisfactoria",
                         Toast.LENGTH_SHORT).show();
             }catch (JSONException e){
                 e.printStackTrace();
@@ -58,7 +58,7 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
     @Override
     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
         super.onFailure(statusCode, e, errorResponse);
-        Toast.makeText(_context,"Error al descargar Marcas",Toast.LENGTH_SHORT).show();
+        Toast.makeText(_context.getApplicationContext(),"Error al descargar Marcas",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -68,7 +68,7 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
     }
 
     private void parseJSONMarca(JSONArray marcaArray) throws JSONException {
-        BDopenHelper b = new BDopenHelper(_context);
+        BDopenHelper b = new BDopenHelper(_context.getApplicationContext());
         b.vaciarTabla("marca");
 
         for(int i= 0; i < marcaArray.length(); i++) {

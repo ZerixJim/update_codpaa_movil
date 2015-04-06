@@ -27,7 +27,7 @@ public class ResponseProductos extends JsonHttpResponseHandler{
     @Override
     public void onStart() {
         super.onStart();
-        Toast.makeText(_context,"Descargando Productos", Toast.LENGTH_SHORT).show();
+        Toast.makeText(_context.getApplicationContext(),"Descargando Productos", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -43,7 +43,7 @@ public class ResponseProductos extends JsonHttpResponseHandler{
         if (response != null){
             try {
                 parseJSONProductos(response.getJSONArray("P"));
-                Toast.makeText(_context,"Descarga de Productos Satisfactoria",
+                Toast.makeText(_context.getApplicationContext(),"Descarga de Productos Satisfactoria",
                         Toast.LENGTH_SHORT).show();
             }catch (JSONException e){
                 e.printStackTrace();
@@ -54,7 +54,7 @@ public class ResponseProductos extends JsonHttpResponseHandler{
     @Override
     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
         super.onFailure(statusCode, e, errorResponse);
-        Toast.makeText(_context,"Error al Descargar Productos", Toast.LENGTH_SHORT).show();
+        Toast.makeText(_context.getApplicationContext(),"Error al Descargar Productos", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ResponseProductos extends JsonHttpResponseHandler{
     }
 
     private void parseJSONProductos(JSONArray productosArray) throws JSONException {
-        BDopenHelper b = new BDopenHelper(_context);
+        BDopenHelper b = new BDopenHelper(_context.getApplicationContext());
         b.vaciarTabla("producto");
 
         for(int i= 0; i < productosArray.length(); i++) {

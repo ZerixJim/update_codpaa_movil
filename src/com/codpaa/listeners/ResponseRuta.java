@@ -40,7 +40,7 @@ public class ResponseRuta extends JsonHttpResponseHandler {
         super.onStart();
        // pdia.show();
 
-        Toast.makeText(_context,"Descargando Ruta",Toast.LENGTH_SHORT).show();
+        Toast.makeText(_context.getApplicationContext(),"Descargando Ruta",Toast.LENGTH_SHORT).show();
         Log.d("RRuta","iniciado");
     }
 
@@ -62,7 +62,7 @@ public class ResponseRuta extends JsonHttpResponseHandler {
                 e.printStackTrace();
             }
 
-            Toast.makeText(_context,"Descarga Satisfactoria de Ruta",Toast.LENGTH_SHORT).show();
+            Toast.makeText(_context.getApplicationContext(),"Descarga Satisfactoria de Ruta",Toast.LENGTH_SHORT).show();
             Log.d("RRuta","success");
         }
     }
@@ -71,7 +71,7 @@ public class ResponseRuta extends JsonHttpResponseHandler {
     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
         super.onFailure(statusCode, e, errorResponse);
 
-        Toast.makeText(_context,"Error al descargar",Toast.LENGTH_SHORT).show();
+        Toast.makeText(_context.getApplicationContext(),"Error al descargar",Toast.LENGTH_SHORT).show();
         Log.d("RRuta","failure");
 
     }
@@ -84,7 +84,7 @@ public class ResponseRuta extends JsonHttpResponseHandler {
     }
 
     private void parseJSONRuta(JSONArray rutasArray) throws JSONException {
-        BDopenHelper b = new BDopenHelper(_context);
+        BDopenHelper b = new BDopenHelper(_context.getApplicationContext());
         b.vaciarTabla("visitaTienda");
 
         for(int i= 0; i < rutasArray.length(); i++) {

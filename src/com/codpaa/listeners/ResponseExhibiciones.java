@@ -18,17 +18,11 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
 
     Context _context;
 
-    private ProgressDialog pdia;
 
     public ResponseExhibiciones(Context context){
         this._context = context;
-        pdia = new ProgressDialog(context);
 
-        /*
-        pdia.setTitle("Exhibiciones");
-        pdia.setMessage("Descargando Exhibiciones");
-        pdia.setIndeterminate(false);
-        pdia.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);*/
+
 
 
     }
@@ -38,7 +32,7 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
         super.onStart();
         //pdia.show();
 
-        Toast.makeText(_context,"Iniciando la descarga de Exhibiciones",Toast.LENGTH_SHORT).show();
+        Toast.makeText(_context.getApplicationContext(),"Iniciando la descarga de Exhibiciones",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -57,7 +51,7 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
             }catch (JSONException e){
                 e.printStackTrace();
             }
-            Toast.makeText(_context,"Exhibiciones Descargadas",Toast.LENGTH_SHORT).show();
+            Toast.makeText(_context.getApplicationContext(),"Exhibiciones Descargadas",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -67,7 +61,7 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
 
 
 
-        Toast.makeText(_context,"Error al descargar las Exhibiciones",Toast.LENGTH_SHORT).show();
+        Toast.makeText(_context.getApplicationContext(),"Error al descargar las Exhibiciones",Toast.LENGTH_SHORT).show();
 
 
     }
@@ -80,7 +74,7 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
     }
 
     private void parseJSONExhi(JSONArray exhiArray) throws JSONException {
-        BDopenHelper b = new BDopenHelper(_context);
+        BDopenHelper b = new BDopenHelper(_context.getApplicationContext());
         b.vaciarTabla("exhibiciones");
 
         for(int i= 0; i < exhiArray.length(); i++) {
