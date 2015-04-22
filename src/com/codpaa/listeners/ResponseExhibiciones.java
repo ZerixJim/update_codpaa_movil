@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +33,7 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
         super.onStart();
         //pdia.show();
 
-        Toast.makeText(_context.getApplicationContext(),"Iniciando la descarga de Exhibiciones",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(_context.getApplicationContext(),"Iniciando la descarga de Exhibiciones",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -43,8 +44,8 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
     }
 
     @Override
-    public void onSuccess(int statusCode, JSONObject response) {
-        super.onSuccess(statusCode, response);
+    public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+        super.onSuccess(statusCode, headers, response);
         if (response != null) {
             try {
                 parseJSONExhi(response.getJSONArray("E"));
@@ -55,9 +56,11 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
         }
     }
 
+
+
     @Override
-    public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
-        super.onFailure(statusCode, e, errorResponse);
+    public void onFailure(int statusCode, Header[] headers,Throwable e, JSONObject errorResponse) {
+        super.onFailure(statusCode, headers,e, errorResponse);
 
 
 

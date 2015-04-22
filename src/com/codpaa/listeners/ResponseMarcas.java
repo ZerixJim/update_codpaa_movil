@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +31,7 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
     public void onStart() {
         super.onStart();
 
-        Toast.makeText(_context.getApplicationContext(),"Descargando Marcas",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(_context.getApplicationContext(),"Descargando Marcas",Toast.LENGTH_SHORT).show();
 
     }
 
@@ -41,8 +42,8 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
     }
 
     @Override
-    public void onSuccess(int statusCode, JSONObject response) {
-        super.onSuccess(statusCode, response);
+    public void onSuccess(int statusCode, Header[] headers,JSONObject response) {
+        super.onSuccess(statusCode, headers,response);
 
         if (response != null){
             try {
@@ -56,8 +57,8 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
     }
 
     @Override
-    public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
-        super.onFailure(statusCode, e, errorResponse);
+    public void onFailure(int statusCode, Header[] headers,Throwable e, JSONObject errorResponse) {
+        super.onFailure(statusCode, headers,e, errorResponse);
         Toast.makeText(_context.getApplicationContext(),"Error al descargar Marcas",Toast.LENGTH_SHORT).show();
     }
 

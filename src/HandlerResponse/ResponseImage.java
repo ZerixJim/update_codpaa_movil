@@ -72,8 +72,8 @@ public class ResponseImage extends JsonHttpResponseHandler  {
     }
 
     @Override
-    public void onSuccess(int statusCode, JSONObject response) {
-        super.onSuccess(statusCode, response);
+    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+        super.onSuccess(statusCode, headers, response);
         Log.e("ResponseImage","paso 3");
         if(response != null){
             try {

@@ -288,6 +288,7 @@ public class MenuPrincipal extends Activity implements OnClickListener, Location
 			if(verificarConexion()){
 
                 UpdateInformation upinfo = new UpdateInformation(this);
+                Toast.makeText(this,"Actualizando Informacion",Toast.LENGTH_SHORT).show();
                 upinfo.actualizarTiendas(idUsuario);
                 upinfo.actualizarRuta(idUsuario);
 				upinfo.actualizarExhibiciones();

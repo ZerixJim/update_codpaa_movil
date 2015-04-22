@@ -958,8 +958,8 @@ public class GeoLocalizar extends Service implements LocationListener{
         }
 
         @Override
-        public void onSuccess(int statusCode, JSONObject response) {
-            super.onSuccess(statusCode, response);
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            super.onSuccess(statusCode, headers, response);
             Log.w("JR","onSucess");
             Log.e("ResponseImage","paso 3");
             if(response != null){
@@ -1009,6 +1009,8 @@ public class GeoLocalizar extends Service implements LocationListener{
                 Log.d("Response image", "Sin respuesta");
             }
         }
+
+
 
         @Override
         public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {

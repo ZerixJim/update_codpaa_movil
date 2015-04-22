@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        maven { url 'http://download.crashlytics.com/maven' }
         mavenCentral()
     }
     dependencies {
@@ -8,9 +9,11 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 
-dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+repositories {
+    maven { url 'http://download.crashlytics.com/maven' }
+    mavenCentral()
 }
+
 
 android {
     compileSdkVersion 15
@@ -39,4 +42,9 @@ android {
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.loopj.android:android-async-http:1.4.6'
 }
