@@ -12,6 +12,7 @@
     <color name="naranjaClaro">#FEE0C1</color>
     <color name="blanco2">#F6F6F6</color>
     <color name="gris">#f3f3f3</color>
+    <color name="fondo_gris">#f1f1f1</color>
     
     
 </resources>

@@ -10,6 +10,8 @@
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <item name="android:colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColor">@color/negroFondo</item>
+
 
     </style>
 
@@ -20,7 +22,7 @@
 
     <color name="primary_dark">#056f00</color>
     <color name="primary">#259b24</color>
-    <color name="accent">#ffea00</color>
+    <color name="accent">#00B0FF</color>
     <color name="text_primary">#ffffff</color>
     
     

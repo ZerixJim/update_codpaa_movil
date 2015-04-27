@@ -617,11 +617,7 @@ public class MenuPrincipal extends Activity implements OnClickListener, Location
 				name.setTextColor(Color.BLUE);
 			}
 
-            if (position % 2 == 1){
-                row.setBackgroundColor(Color.rgb(243,243,243));
-            }else {
-                row.setBackgroundColor(Color.WHITE);
-            }
+
 			
 			
 			return row;
