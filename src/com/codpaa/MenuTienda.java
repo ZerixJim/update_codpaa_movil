@@ -143,8 +143,8 @@ public class MenuTienda extends Activity implements OnClickListener{
 			
 		
 		try{
-			
-			Cursor cTienda = new BDopenHelper(this).tienda(idTienda);
+
+			Cursor cTienda = DB.tienda(idTienda);
 			cTienda.moveToFirst();
 			
 			tiendaSeleccionada.setText(cTienda.getString(0)+" "+cTienda.getString(1));
@@ -152,7 +152,9 @@ public class MenuTienda extends Activity implements OnClickListener{
 			cTienda.close();
 			
 			try {
-				Cursor cNomPromo = new BDopenHelper(this).nombrePromotor(idPromotor);
+
+
+				Cursor cNomPromo = DB.nombrePromotor(idPromotor);
 				cNomPromo.moveToFirst();
 				
 				promotor.setText(cNomPromo.getString(0));
@@ -163,14 +165,16 @@ public class MenuTienda extends Activity implements OnClickListener{
 			}catch(Exception e) {
 				Toast.makeText(this, "error menuTienda 2", Toast.LENGTH_SHORT).show();
 			}
-			
+
 
 			
 		}catch(Exception e){
 			
 			Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();			
-		}
-		
+		}finally {
+            DB.close();
+        }
+
 		
 		
 		
@@ -632,10 +636,17 @@ public class MenuTienda extends Activity implements OnClickListener{
 		localizar.removeUpdates(new localizacion());
 		
 	}
-	
-	
 
-	private void dialogoEncargado() {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (DB != null){
+            DB.close();
+        }
+
+    }
+
+    private void dialogoEncargado() {
 		
 		
 		Builder builder  = new AlertDialog.Builder(this);

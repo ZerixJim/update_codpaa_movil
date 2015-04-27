@@ -29,7 +29,8 @@ public class DBAdapter{
 	}
  
 	public void close(){
-		mDbHelper.close();
+		if (mDbHelper != null)
+            mDbHelper.close();
 	}
  
 	

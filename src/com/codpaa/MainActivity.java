@@ -367,9 +367,13 @@ public class MainActivity extends Activity implements OnClickListener, OnKeyList
 		super.onResume();
 	}
 
-	
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbAdapter.close();
+    }
 
-	@Override
+    @Override
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
 
 

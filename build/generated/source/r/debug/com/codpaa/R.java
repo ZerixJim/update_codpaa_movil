@@ -19,10 +19,14 @@ public final class R {
         public static final int Blue=0x7f040005;
         public static final int Blue2=0x7f040006;
         public static final int Red=0x7f040007;
+        public static final int accent=0x7f04000c;
         public static final int blanco2=0x7f040008;
         public static final int gris=0x7f040009;
         public static final int naranjaClaro=0x7f04000a;
         public static final int negroFondo=0x7f04000b;
+        public static final int primary=0x7f04000d;
+        public static final int primary_dark=0x7f04000e;
+        public static final int text_primary=0x7f04000f;
     }
     public static final class dimen {
         public static final int activity_horizontal_margin=0x7f050000;
