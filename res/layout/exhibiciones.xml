@@ -3,7 +3,7 @@
     android:id="@+id/ScrollView1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/naranjaClaro" >
+    android:background="@color/fondo_gris" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +43,8 @@
         <Spinner
             android:id="@+id/spiExhMarca"
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:background="@drawable/sombra_caja" />
 
         <TextView
             android:id="@+id/textInvPromo"
@@ -56,7 +57,8 @@
         <Spinner
             android:id="@+id/spiExhProd"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/sombra_caja" />
 
         <TextView
             android:id="@+id/textSalida"
@@ -69,7 +71,8 @@
         <Spinner
             android:id="@+id/spiExhibi"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/sombra_caja" />
 
         <TextView
             android:id="@+id/textInvTie"

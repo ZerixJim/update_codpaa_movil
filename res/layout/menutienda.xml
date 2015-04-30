@@ -43,8 +43,8 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:weightSum="3" >
+            android:weightSum="3"
+            android:layout_margin="10dp">
 
             <TextView
                 android:id="@+id/frentes"
@@ -114,10 +114,11 @@
                     style="buttonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginRight="1dp"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/entradatienda"
-                    android:text="@string/entrada" />
+                    android:text="@string/entrada"
+                    android:padding="5dp" />
 
                 <Button
                     android:id="@+id/salidaTienda"
@@ -125,8 +126,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableRight="@drawable/salidatienda"
-                    android:text="@string/Sal" />
+                    android:drawableLeft="@drawable/salidatienda"
+                    android:text="@string/Sal"
+                    android:layout_marginLeft="1dp"
+                    android:padding="5dp" />
 
             </LinearLayout>
 
