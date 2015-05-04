@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo" >
+    android:background="@color/fondo_gris" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,8 @@
             android:id="@+id/spInMar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:background="@drawable/sombra_caja" />
 
         <TextView
             android:id="@+id/textView7"
@@ -36,12 +37,14 @@
         <Spinner
             android:id="@+id/spInProd"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/sombra_caja" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp" >
+            android:layout_marginTop="6dp"
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/txtCusSpi2"
@@ -49,16 +52,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/precioNormal"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:gravity="center_horizontal" />
 
             <EditText
                 android:id="@+id/editPreN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="6dp"
                 android:ems="10"
                 android:focusableInTouchMode="true"
-                android:inputType="numberDecimal" >
+                android:inputType="numberDecimal"
+                android:layout_weight="1">
 
             </EditText>
 
@@ -67,7 +73,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp" >
+            android:layout_marginTop="5dp"
+            android:weightSum="2">
 
             <TextView
                 android:id="@+id/textView10"
@@ -84,7 +91,6 @@
                 android:id="@+id/editTextPreCaj"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="numberDecimal" >
@@ -120,7 +126,8 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="@string/precioOferta"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/editPreOfer"
@@ -154,19 +161,22 @@
                 android:id="@+id/checkOferC"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/ofertaCruz" />
+                android:text="@string/ofertaCruz"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/checkProdEx"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/prodExtra" />
+                android:text="@string/prodExtra"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/checkProEmp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/prodEmpa" />
+                android:text="@string/prodEmpa"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -176,7 +186,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:clickable="false"
-            android:text="@string/vigencia" />
+            android:text="@string/vigencia"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -246,13 +257,15 @@
             android:id="@+id/checkCambio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cambioImagen" />
+            android:text="@string/cambioImagen"
+            android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/checkCampre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cambprecio" />
+            android:text="@string/cambprecio"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnInteligua"

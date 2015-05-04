@@ -1,10 +1,11 @@
 package com.codpaa;
 
-import android.app.Activity;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -13,7 +14,7 @@ import android.widget.TextView;
 
 import BD.BDopenHelper;
 
-public class MostrarCalendario extends Activity implements OnClickListener{
+public class MostrarCalendario extends AppCompatActivity implements OnClickListener{
 	
 	SQLiteDatabase base;
 	TextView rol;
@@ -22,12 +23,13 @@ public class MostrarCalendario extends Activity implements OnClickListener{
 
 
 
-    @Override
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.calendario);
-		
-		
+
+
+
 		
 		lunes = (LinearLayout) findViewById(R.id.colunes);
 		martes = (LinearLayout) findViewById(R.id.columnaMartes);
@@ -48,7 +50,9 @@ public class MostrarCalendario extends Activity implements OnClickListener{
 		
 			
 	}
-		
+
+
+
 	public void lunes(){
 			
 		base = new BDopenHelper(this).getReadableDatabase();
@@ -101,7 +105,7 @@ public class MostrarCalendario extends Activity implements OnClickListener{
 			
 		}
 		
-		
+		cursor.close();
 		base.close();
 		
 		
@@ -154,6 +158,7 @@ public class MostrarCalendario extends Activity implements OnClickListener{
 			contColor++;
 			
 		}
+		cursor.close();
 		base.close();
 		
 		
@@ -204,6 +209,7 @@ public class MostrarCalendario extends Activity implements OnClickListener{
 			contColor++;
 			
 		}
+		cursor.close();
 		base.close();
 		
 		
@@ -255,7 +261,7 @@ public class MostrarCalendario extends Activity implements OnClickListener{
 			contColor++;
 			
 		}
-		
+		cursor.close();
 		base.close();
 		
 	}
@@ -306,7 +312,7 @@ public class MostrarCalendario extends Activity implements OnClickListener{
 			contColor++;
 			
 		}
-		
+		cursor.close();
 		base.close();
 		
 	}
@@ -356,7 +362,7 @@ public class MostrarCalendario extends Activity implements OnClickListener{
 			
 		}
 		
-		
+		cursor.close();
 		base.close();
 	}
 
