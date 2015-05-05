@@ -5,10 +5,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,7 +21,8 @@ public class MostrarCalendario extends AppCompatActivity implements OnClickListe
 	SQLiteDatabase base;
 	TextView rol;
 	LinearLayout lunes, martes, miercoles,jueves, viernes, sabado;
-	Button regresar;
+
+
 
 
 
@@ -37,8 +40,7 @@ public class MostrarCalendario extends AppCompatActivity implements OnClickListe
 		jueves = (LinearLayout) findViewById(R.id.columnaJueves);
 		viernes = (LinearLayout) findViewById(R.id.columnaViernes);
 		sabado = (LinearLayout) findViewById(R.id.columnaSabado);
-		regresar = (Button) findViewById(R.id.btncalendario);
-		regresar.setOnClickListener(this);
+
 		
 		lunes();
 		martes();
@@ -46,12 +48,42 @@ public class MostrarCalendario extends AppCompatActivity implements OnClickListe
 		jueves();
 		viernes();
 		sabado();
-		
-		
-			
+
+		try {
+			assert getSupportActionBar() != null;
+			ActionBar actionBar = getSupportActionBar();
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			actionBar.setDisplayUseLogoEnabled(true);
+			actionBar.setHomeButtonEnabled(true);
+			actionBar.setLogo(R.drawable.ic_launcher);
+		}catch (NullPointerException e){
+			e.printStackTrace();
+		}
+
+
 	}
 
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+
+
+			case android.R.id.home:
+				this.finish();
+				return true;
+
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu,menu);
+		return true;
+	}
 
 	public void lunes(){
 			
@@ -368,8 +400,7 @@ public class MostrarCalendario extends AppCompatActivity implements OnClickListe
 
 	@Override
 	public void onClick(View v) {
-		if(v.getId() == R.id.btncalendario)
-			finish();
+
 		
 	}
 	

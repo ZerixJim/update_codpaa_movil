@@ -24,8 +24,11 @@ import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -39,7 +42,7 @@ import android.widget.Toast;
 
 import BD.BDopenHelper;
  
-public class Imagesheduler extends Activity implements OnItemClickListener{
+public class Imagesheduler extends AppCompatActivity implements OnItemClickListener{
 	
 	ListView listV;
 	CustomListAdapter adp;
@@ -59,7 +62,34 @@ public class Imagesheduler extends Activity implements OnItemClickListener{
 
 		listV.setOnItemClickListener(this);
 		loadList();
+
+
+		try {
+			assert getSupportActionBar() != null;
+			ActionBar actionBar = getSupportActionBar();
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			actionBar.setDisplayUseLogoEnabled(true);
+			actionBar.setHomeButtonEnabled(true);
+			actionBar.setLogo(R.drawable.ic_launcher);
+		}catch (NullPointerException e){
+			e.printStackTrace();
+		}
 		
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+
+
+			case android.R.id.home:
+				this.finish();
+				return true;
+
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 	
 	private void loadList(){

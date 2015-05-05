@@ -5,31 +5,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <FrameLayout
-            style="@style/btnStyleShakespeare"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="false" >
 
-            <TextView
-                android:id="@+id/textView1"
-                style="@style/TextShadow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ruta1"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/blanco2" />
-
-            <Button
-                android:id="@+id/btncalendario"
-                style="@style/btnStyleShakespeare"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_margin="6dp"
-                android:text="@string/back" />
-
-        </FrameLayout>
 
         <HorizontalScrollView
             android:id="@+id/HorizontalScrollView1"

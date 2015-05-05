@@ -45,14 +45,5 @@
         android:layout_height="wrap_content"
         android:text="@string/imaPendiente" />
 
-    <Button
-        android:id="@+id/bntSaEnvi"
-        style="@style/btnStyleOrange"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/exit" />
-
 </LinearLayout>
 <!-- From: file:/C:/Users/Gustavo/Desktop/CODPAA/CODPAA/res/layout/enviar.xml -->

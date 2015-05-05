@@ -43,6 +43,8 @@
     <!-- From: file:/C:/Users/Gustavo/Desktop/CODPAA/CODPAA/res/values/colores.xml -->
     <eat-comment/>
     <color name="blanco2">#F6F6F6</color>
+    <color name="blue_primary">#2196F3</color>
+    <color name="blue_primary_dark">#0D47A1</color>
     <!-- From: file:/C:/Users/Gustavo/Desktop/CODPAA/CODPAA/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
@@ -275,6 +277,7 @@
     <string name="enca">Encargado de tienda</string>
     <string name="encendercamara">Iniciar Camara</string>
     <string name="entrada">Entrada Tienda</string>
+    <string name="enviar">Enviar</string>
     <string name="escribeP">Contraseña</string>
     <string name="escribeU">Usuario</string>
     <string name="exhi">Exhibiciones Especiales</string>
@@ -336,6 +339,7 @@
     <string name="regis">Registrar</string>
     <string name="regisPendien">Registros pendientes</string>
     <string name="rolA">Rol de activida</string>
+    <string name="ruta">Ruta</string>
     <string name="ruta1">Ruta</string>
     <string name="send">Enviar</string>
     <string name="start">Iniciar Sesion</string>
@@ -1285,6 +1289,7 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
+        <item name="android:textColorPrimary">@color/Blanco</item>
         <item name="android:textColor">@color/negroFondo</item>
         <item name="android:editTextStyle">@style/editText</item>
 

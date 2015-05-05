@@ -44,9 +44,9 @@
         <activity android:name="com.codpaa.MainActivity" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
         <activity android:name="com.codpaa.MenuPrincipal" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
         <activity android:name="com.codpaa.MenuTienda" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
-        <activity android:name="com.codpaa.MostrarCalendario" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
+        <activity android:name="com.codpaa.MostrarCalendario" android:label="@string/ruta" android:screenOrientation="portrait" android:icon="@drawable/ic_launcher" />
         <activity android:name="com.codpaa.ListarLocation" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
-        <activity android:name="com.codpaa.EnviarInformacion" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
+        <activity android:name="com.codpaa.EnviarInformacion" android:label="@string/enviar" android:screenOrientation="portrait" />
         <activity android:name="com.codpaa.Frentes" android:label="@string/frentes" android:screenOrientation="portrait" />
         <activity android:name="com.codpaa.SurtidoMueble" android:label="@string/surtido" android:screenOrientation="portrait" />
         <activity android:name="com.codpaa.Exhibiciones" android:label="@string/exhi" android:screenOrientation="portrait" />

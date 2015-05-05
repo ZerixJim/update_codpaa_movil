@@ -28,6 +28,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ import com.codpaa.updates.UpdateInformation;
 import BD.BDopenHelper;
 
 
-public class MenuPrincipal extends Activity implements OnClickListener, LocationListener{
+public class MenuPrincipal extends AppCompatActivity implements OnClickListener, LocationListener{
 	
 	
 	TextView nombreUsuario, conexion, bien, version, cartera;

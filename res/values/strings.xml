@@ -123,6 +123,8 @@
     <string name="tipo">Tipo</string>
     <string name="pieza">Piezas</string>
     <string name="inven">Inventario</string>
+    <string name="ruta">Ruta</string>
+    <string name="enviar">Enviar</string>
 
 
 

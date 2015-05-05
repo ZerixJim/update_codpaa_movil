@@ -56,7 +56,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.codpaa.MostrarCalendario"
-            android:label="@string/nombreAplicacion"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/ruta"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.codpaa.ListarLocation"
@@ -64,7 +65,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.codpaa.EnviarInformacion"
-            android:label="@string/nombreAplicacion"
+            android:label="@string/enviar"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.codpaa.Frentes"
