@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,6 +17,7 @@ import org.json.JSONObject;
 
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -37,11 +37,11 @@ import android.os.Looper;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.widget.Toast;
+
 
 
 import BD.BDopenHelper;
-import HandlerResponse.ResponseImage;
+
 
 
 public class GeoLocalizar extends Service implements LocationListener{
@@ -59,13 +59,16 @@ public class GeoLocalizar extends Service implements LocationListener{
 	int idCel;
     private final String Url = "http://promotoresvanguardia.com";
 
-
-	
+	Intent resultIntent;
+	PendingIntent pendingIntent;
 	Context con;
 	
 	public GeoLocalizar(){
 		local = new Locale("es_MX");
 		con = this;
+
+
+
 	}
 	
 	AsyncHttpResponseHandler respuesta = new AsyncHttpResponseHandler(){
@@ -341,10 +344,11 @@ public class GeoLocalizar extends Service implements LocationListener{
 				
 			}
 		}, 0, (1000 * 60)* 10);
-		
-		
-		
-		
+
+
+
+		resultIntent = new Intent(this, GeoLocalizar.class);
+		pendingIntent = PendingIntent.getActivity(this,0, resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
 	}
 	
@@ -924,13 +928,16 @@ public class GeoLocalizar extends Service implements LocationListener{
 
     JsonHttpResponseHandler jr = new JsonHttpResponseHandler(){
 
-        Random r = new Random();
 
 
-        int id = r.nextInt(80 - 65) + 65;
+
+        int id = 100;
+
         NotificationManager notification;
         NotificationCompat.Builder notificationBuilder;
         SQLiteDatabase db;
+
+
 
         @Override
         public void onStart() {
@@ -938,11 +945,12 @@ public class GeoLocalizar extends Service implements LocationListener{
 
             Log.w("JR","onStart");
 
-            notification = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationBuilder = new NotificationCompat.Builder(getApplicationContext());
+            notification = (NotificationManager) con.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationBuilder = new NotificationCompat.Builder(con);
 
-            notificationBuilder.setContentTitle("Enviando imagen")
+            notificationBuilder.setContentTitle("CODPAA Enviando imagen")
                     .setContentText("subiendo la foto")
+					.setContentIntent(pendingIntent)
                     .setSmallIcon(R.drawable.subirimagen);
 
             notification.notify(id,notificationBuilder.build());
@@ -953,7 +961,7 @@ public class GeoLocalizar extends Service implements LocationListener{
         @Override
         public void onProgress(int bytesWritten, int totalSize) {
             super.onProgress(bytesWritten, totalSize);
-            notificationBuilder.setProgress(totalSize,bytesWritten,false);
+            notificationBuilder.setProgress(totalSize,bytesWritten,false).setContentIntent(pendingIntent);
             notification.notify(id,notificationBuilder.build());
         }
 
@@ -970,7 +978,8 @@ public class GeoLocalizar extends Service implements LocationListener{
                     if(response.getBoolean("bol")){
 
                         notificationBuilder.setContentText("se envio correctamente")
-                                .setProgress(0,0,false);
+								.setContentIntent(pendingIntent)
+                                .setProgress(0, 0, false);
                         notification.notify(id,notificationBuilder.build());
                         db = new BDopenHelper(getApplicationContext()).getWritableDatabase();
 
@@ -1016,7 +1025,8 @@ public class GeoLocalizar extends Service implements LocationListener{
         public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
             super.onFailure(statusCode, headers, e, errorResponse);
             notificationBuilder.setContentText("fallo, el envio")
-                    .setProgress(0,0,false);
+					.setContentIntent(pendingIntent)
+                    .setProgress(0, 0, false);
             notification.notify(id,notificationBuilder.build());
         }
 
@@ -1034,8 +1044,8 @@ public class GeoLocalizar extends Service implements LocationListener{
             }
         }
     };
-	
-	
+
+
 	public boolean verificarConexion() {
 
 	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

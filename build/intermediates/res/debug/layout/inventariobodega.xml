@@ -35,14 +35,12 @@
             android:id="@+id/spiInMar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/Blanco"
             android:layout_margin="3dp" />
 
         <Spinner
             android:id="@+id/spiInvPro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/Blanco"
             android:layout_margin="3dp" />
 
         <LinearLayout

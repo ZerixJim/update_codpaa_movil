@@ -37,7 +37,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -56,7 +59,7 @@ import modelos.ProductosModel;
 
 
 
-public class PhotoCapture extends Activity implements OnClickListener, OnItemSelectedListener{
+public class PhotoCapture extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
 
 
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -68,7 +71,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 
     TextView textoEnvio;
 	int idPromotor, idTienda;
-	Button photo, enviarPhoto, salir;
+	Button photo, enviarPhoto;
     Locale local;
     public static ImageView showImg = null;
     PhotoCapture CameraActivity = null;
@@ -98,7 +101,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 
         photo = (Button) findViewById(R.id.photo);
         enviarPhoto = (Button) findViewById(R.id.btnEnviPho);
-        salir = (Button) findViewById(R.id.btnSalPhoto);
+
 
         spiMarca = (Spinner) findViewById(R.id.spiMarPhoto);
         spiExh = (Spinner) findViewById(R.id.spiExhPho);
@@ -109,7 +112,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
         //add event listener
         photo.setOnClickListener(this);
         enviarPhoto.setOnClickListener(this);
-        salir.setOnClickListener(this);
+
 
         spiMarca.setOnItemSelectedListener(this);
 
@@ -124,9 +127,34 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 
         //load default image (not image loaded)
         showImg.setImageDrawable(getResources().getDrawable(R.drawable.noimage));
+
+        try {
+            assert getSupportActionBar() != null;
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayUseLogoEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setLogo(R.drawable.ic_launcher);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+
+
+            case android.R.id.home:
+                this.finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 
@@ -528,9 +556,7 @@ public class PhotoCapture extends Activity implements OnClickListener, OnItemSel
 		case R.id.btnEnviPho:
 			EnviarImagen();
 			break;
-		case R.id.btnSalPhoto:
-			finish();
-			break;
+
 		}
 
 	}

@@ -61,6 +61,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	boolean GpsEncendido = false;
 
 	int idUsuario;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){

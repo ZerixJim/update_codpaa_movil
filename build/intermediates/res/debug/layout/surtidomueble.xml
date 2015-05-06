@@ -48,7 +48,6 @@
         android:id="@+id/spiSurM"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/Blanco"
         android:layout_margin="2dp" />
 
     <TextView
@@ -68,7 +67,6 @@
         android:id="@+id/spiSurP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/Blanco"
         android:layout_margin="2dp" />
 
     <LinearLayout

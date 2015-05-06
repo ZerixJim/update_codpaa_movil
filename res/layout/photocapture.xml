@@ -21,7 +21,7 @@
             <Button
                 android:id="@+id/photo"
                 style="@style/btnStyleShakespeare"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="3dp"
                 android:layout_weight="1"
@@ -29,16 +29,7 @@
                 android:padding="2dp"
                 android:text="@string/encendercamara" />
 
-            <Button
-                android:id="@+id/btnSalPhoto"
-                style="@style/btnStyleOrange"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/exit"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginRight="3dp" />
+
 
         </LinearLayout>
 
