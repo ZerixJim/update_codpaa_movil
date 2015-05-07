@@ -57,15 +57,14 @@ public class GeoLocalizar extends Service implements LocationListener{
 	String fecha, hora;
 	RequestParams rp;
 	int idCel;
-    private final String Url = "http://promotoresvanguardia.com";
+    private final String Url = "http://plataformavanguardia.com";
 
 	Intent resultIntent;
 	PendingIntent pendingIntent;
 	Context con;
 	
 	public GeoLocalizar(){
-		local = new Locale("es_MX");
-		con = this;
+
 
 
 
@@ -266,7 +265,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 	        loNet = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 	        loGps = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 	        
-	        handler.postDelayed(stop, 1 * 60 * 1000L);
+	        handler.postDelayed(stop, 60 * 1000L);
 	    }
 	};
 
@@ -313,8 +312,10 @@ public class GeoLocalizar extends Service implements LocationListener{
 		DBhelper = new BDopenHelper(this);
 		cliente = new AsyncHttpClient();
 		rp = new RequestParams();
-		
 
+
+		local = new Locale("es_MX");
+		con = this;
 
 		startContiniuosListening();
 		
@@ -791,8 +792,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 			
 
 			Calendar c = Calendar.getInstance();
-			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy");
-			SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a");
+			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",local);
+			SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a", local);
 			fecha = dFecha.format(c.getTime());
 			hora = dHora.format(c.getTime());
 			
