@@ -63,12 +63,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 	PendingIntent pendingIntent;
 	Context con;
 	
-	public GeoLocalizar(){
-
-
-
-
-	}
+	public GeoLocalizar(){}
 	
 	AsyncHttpResponseHandler respuesta = new AsyncHttpResponseHandler(){
 		
@@ -975,18 +970,16 @@ public class GeoLocalizar extends Service implements LocationListener{
                 try {
 
                     Log.d("Respuestas Ima", response.getString("insert"));
-                    BDopenHelper bs = new BDopenHelper(getApplicationContext());
+                    BDopenHelper bs = new BDopenHelper(con);
                     if(response.getBoolean("bol")){
 
                         notificationBuilder.setContentText("se envio correctamente")
 								.setContentIntent(pendingIntent)
                                 .setProgress(0, 0, false);
                         notification.notify(id,notificationBuilder.build());
-                        db = new BDopenHelper(getApplicationContext()).getWritableDatabase();
+                        db = new BDopenHelper(con).getWritableDatabase();
 
-                        Log.e("Response Ima JSON","idTienda"+response.getInt("idTienda")+" " +
-                                "idMarca"+response.getInt("idMarca")+" " +
-                                "fecha"+response.getString("fecha"));
+
                         db.execSQL("update photo set status=2 where idTienda="+
                                 response.getInt("idTienda")+" and " +
                                 "idMarca="+response.getInt("idMarca")+" and fecha='"+
