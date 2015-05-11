@@ -77,7 +77,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 	
 	JsonHttpResponseHandler resVisitas = new JsonHttpResponseHandler(){
 		
-		SQLiteDatabase baseEven;
+		SQLiteDatabase baseEven=null;
 		@Override
 		public void onSuccess(int statusCode,Header[] headers,JSONObject response) {
 			try {
@@ -88,7 +88,9 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 					Log.d("EnvioRegistroThread",response.getString("mensaje")+" "+response.getInt("idTienda")+" "+response.getString("fecha")+" "+response.getString("tipo"));
 					baseEven.execSQL("UPDATE coordenadas SET status=2 WHERE idTienda="+response.getInt("idTienda")+" and fecha='"+response.getString("fecha")+"' and tipo='"+response.getString("tipo")+"';");
-					baseEven.close();
+					if (baseEven != null){
+						baseEven.close();
+					}
 				}else{
 					Log.d("EnvioRegistroThread", response.getString("mensaje"));
 				}
@@ -113,7 +115,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 
     JsonHttpResponseHandler respuestaFrentes = new JsonHttpResponseHandler(){
 
-        SQLiteDatabase bdF;
+        SQLiteDatabase bdF=null;
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
@@ -931,7 +933,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 
         NotificationManager notification;
         NotificationCompat.Builder notificationBuilder;
-        SQLiteDatabase db;
+        SQLiteDatabase db = null;
 
 
 
@@ -1005,7 +1007,9 @@ public class GeoLocalizar extends Service implements LocationListener{
 
                     e.printStackTrace();
                 } finally {
-                    db.close();
+
+					if (db != null)
+                    	db.close();
                 }
 
             }else{

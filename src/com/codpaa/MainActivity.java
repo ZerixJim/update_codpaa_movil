@@ -377,7 +377,6 @@ public class MainActivity extends Activity implements OnClickListener, OnKeyList
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
 
 
-        Log.d("KeyEvent","evento:"+ keyCode );
 		
         if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN){
             Log.d("KeyEvent","Enter");

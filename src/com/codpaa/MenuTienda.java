@@ -4,6 +4,7 @@ package com.codpaa;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 
 import com.codpaa.updates.UpdateInformation;
@@ -57,6 +58,7 @@ public class MenuTienda extends Activity implements OnClickListener{
 	BDopenHelper DB = null;
 	String myVersionName = "not available";
 	EnviarDatos enviar;
+	Locale locale;
 	Spinner spinnerEnc;
 	EditText editNombre;
 	AsyncHttpClient cliente;
@@ -176,7 +178,7 @@ public class MenuTienda extends Activity implements OnClickListener{
         }
 
 		
-		
+		locale = new Locale("es_MX");
 		
 		
 	}
@@ -184,9 +186,9 @@ public class MenuTienda extends Activity implements OnClickListener{
 	public void entradaTienda() {
 		
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy");
-		SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a");
-		SimpleDateFormat dSema = new SimpleDateFormat("w");
+		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
+		SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a",locale);
+		SimpleDateFormat dSema = new SimpleDateFormat("w",locale);
 			
 		String fecha = dFecha.format(c.getTime());
 		String hora = dHora.format(c.getTime());
@@ -267,9 +269,9 @@ public class MenuTienda extends Activity implements OnClickListener{
 						if(!Salida){
 							
 							Calendar c = Calendar.getInstance();
-							SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy");
-							SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a");
-							SimpleDateFormat dSema = new SimpleDateFormat("w");
+							SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
+							SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a",locale);
+							SimpleDateFormat dSema = new SimpleDateFormat("w",locale);
 								
 							String fecha = dFecha.format(c.getTime());
 							String hora = dHora.format(c.getTime());
@@ -434,7 +436,7 @@ public class MenuTienda extends Activity implements OnClickListener{
 		super.onResume();
 		
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
 		String fecha = dFecha.format(c.getTime());
 		
 		try {
@@ -697,7 +699,7 @@ public class MenuTienda extends Activity implements OnClickListener{
 				String nombre = editNombre.getText().toString();
 				
 				Calendar c = Calendar.getInstance();
-				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy");
+				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
 
 				
 				String fecha = dFecha.format(c.getTime());
@@ -818,7 +820,7 @@ public class MenuTienda extends Activity implements OnClickListener{
             fm.setMarca("No Existen Registros");
             arrayFrentes.add(fm);
         }
-
+		frentes.close();
         base.close();
 
         return arrayFrentes;
@@ -853,7 +855,7 @@ public class MenuTienda extends Activity implements OnClickListener{
             Ip.setMarca("No Existen Registros");
             arrayInventarios.add(Ip);
         }
-
+		inventarios.close();
         base.close();
 
         return arrayInventarios;
