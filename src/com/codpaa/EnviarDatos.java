@@ -18,14 +18,17 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.codpaa.utils.Utilities;
 import com.loopj.android.http.*;
 
 import BD.BDopenHelper;
 
+
+
 public class EnviarDatos {
 	
 	AsyncHttpClient cliente = new AsyncHttpClient();
-    private final String Url = "http://promotoresvanguardia.com";
+
 	RequestParams rp = new RequestParams();
 	SQLiteDatabase base;
 	BDopenHelper DB;
@@ -87,7 +90,7 @@ public class EnviarDatos {
 					rpVisitas.put("numerocel", getPhoneNumber());
 
 
-					cliente.get(Url+"/codpaa/sendvisitasnew.php",rpVisitas, new HttpResponse(activity, curVisitas.getInt(0), curVisitas.getString(2), curVisitas.getString(6)));
+					cliente.get(Utilities.WEB_SERVICE_PATH+"/sendvisitasnew.php",rpVisitas, new HttpResponse(activity, curVisitas.getInt(0), curVisitas.getString(2), curVisitas.getString(6)));
 					
 				
 				}
@@ -131,7 +134,7 @@ public class EnviarDatos {
 						
 						
 						
-						clienteVP.post(Url+"/codpaa/sentInfo.php", rpVP,respuesta);
+						clienteVP.post(Utilities.WEB_SERVICE_PATH+"/sentInfo.php", rpVP,respuesta);
 						
 					
 					}
@@ -168,7 +171,7 @@ public class EnviarDatos {
 						rpC.put("fecha", curCajasM.getString(2));
 						rpC.put("cajas", Integer.toString(curCajasM.getInt(3)));
 						
-						cliente.post(Url+"/codpaa/sendcajasmay.php", rpC, new HttpResponseCaMa(activity,curCajasM.getInt(1),curCajasM.getString(2)));
+						cliente.post(Utilities.WEB_SERVICE_PATH+"/sendcajasmay.php", rpC, new HttpResponseCaMa(activity,curCajasM.getInt(1),curCajasM.getString(2)));
 					}
 					
 				}else{
@@ -249,7 +252,7 @@ public class EnviarDatos {
 					rp.put("cha6", Integer.toString(curFrentes.getInt(10)));
 					
 					
-					cliente.post(Url+"/codpaa/sendfront.php", rp, new HttpResponseFrentes(activity, curFrentes.getInt(0),curFrentes.getString(2), curFrentes.getInt(3)));
+					cliente.post(Utilities.WEB_SERVICE_PATH+"/sendfront.php", rp, new HttpResponseFrentes(activity, curFrentes.getInt(0),curFrentes.getString(2), curFrentes.getInt(3)));
 					
 
 				}
@@ -322,7 +325,7 @@ public class EnviarDatos {
 					
 					
 					
-					cliente.post(Url+"/codpaa/surti.php", rp, respuesta);
+					cliente.post(Utilities.WEB_SERVICE_PATH+"/surti.php", rp, respuesta);
 					base.execSQL("delete from surtido where idTienda="+curSurtido.getInt(0)+" and fecha='"+curSurtido.getString(3)+"' ;");
 					
 					
@@ -356,7 +359,7 @@ public class EnviarDatos {
                     rp.put("tipo",curInven.getString(7));
 					
 					
-					cliente.post(Url+"/codpaa/php/sendinventario.php", rp, new HttpResponseInventario(activity, curInven.getInt(0),curInven.getString(2), curInven.getInt(3)));
+					cliente.post(Utilities.WEB_SERVICE_PATH+"/sendinventario.php", rp, new HttpResponseInventario(activity, curInven.getInt(0),curInven.getString(2), curInven.getInt(3)));
 					
 
 				}
@@ -428,7 +431,7 @@ public class EnviarDatos {
 					
 					
 					
-					cliente.post(Url+"/codpaa/sendexhi.php", rp, new HttpResponseExhi(activity, curExhi.getInt(0), curExhi.getString(3), curExhi.getInt(4), curExhi.getInt(2)));
+					cliente.post(Utilities.WEB_SERVICE_PATH+"/sendexhi.php", rp, new HttpResponseExhi(activity, curExhi.getInt(0), curExhi.getString(3), curExhi.getInt(4), curExhi.getInt(2)));
 
 				}
 				
@@ -498,7 +501,7 @@ public class EnviarDatos {
 					rp.put("puesto",curEncargado.getString(3));
 					rp.put("fecha", curEncargado.getString(4));
 					
-					cliente.post(Url+"/codpaa/sendEncargado.php", rp, respuesta);
+					cliente.post(Utilities.WEB_SERVICE_PATH+"/sendEncargado.php", rp, respuesta);
 					base.delete("encargadotienda", "idTienda="+curEncargado.getInt(0)+" and fecha='"+curEncargado.getString(4)+"'", null);
 				}
 				
@@ -528,7 +531,7 @@ public class EnviarDatos {
 					rp.put("comentario", curComentario.getString(3));
 					
 					
-					cliente.post(Url+"/codpaa/sendComentario.php", rp, respuesta);
+					cliente.post(Utilities.WEB_SERVICE_PATH+"/sendComentario.php", rp, respuesta);
 					base.delete("comentarioTienda", "idTienda="+curComentario.getInt(0)+" and fecha='"+curComentario.getString(2)+"'", null);
 				}
 				
@@ -565,7 +568,7 @@ public class EnviarDatos {
 					rpIn.put("cambioprecio",curInteli.getString(13));
 					
 					
-					cliente.post(Url+"/codpaa/sendinteligencia2.php", rpIn, new HttpResponseInteligen(activity, curInteli.getInt(1), curInteli.getString(5),curInteli.getInt(2)));
+					cliente.post(Utilities.WEB_SERVICE_PATH+"/sendinteligencia2.php", rpIn, new HttpResponseInteligen(activity, curInteli.getInt(1), curInteli.getString(5),curInteli.getInt(2)));
 					
 				}
 			}
