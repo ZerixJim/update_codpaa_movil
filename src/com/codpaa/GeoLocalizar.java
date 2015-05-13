@@ -664,6 +664,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 					
 					
 				}
+
 				
 				
 			}
