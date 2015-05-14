@@ -170,10 +170,13 @@ public class MainActivity extends Activity implements OnClickListener, OnKeyList
     private void loginAsync(final String usuario, final String pass){
 
         AsyncHttpClient cliente = new AsyncHttpClient();
+		cliente.setTimeout(10000);
         RequestParams rp = new RequestParams();
         rp.put("solicitud","user");
         rp.put("user",usuario);
-        rp.put("pass",pass);
+        rp.put("pass", pass);
+
+
 
         cliente.get(this, Utilities.WEB_SERVICE_PATH+"/serv.php", rp, new JsonHttpResponseHandler() {
 

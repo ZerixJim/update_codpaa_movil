@@ -464,7 +464,7 @@ public class MenuTienda extends Activity implements OnClickListener{
 						DB.close();
 						try {
 							Cursor cuEntra = DB.VisitaTienda(idTienda, fecha, "E");
-							
+
 							if(cuEntra.getCount() >0) {
 								
 								
