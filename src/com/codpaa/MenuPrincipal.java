@@ -525,9 +525,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy");
 			String fechaActual = dFecha.format(c.getTime());
 			
-			SimpleDateFormat dSem = new SimpleDateFormat("w");
-			String semana = dSem.format(c.getTime());
-			int sem = Integer.parseInt(semana);
+			//SimpleDateFormat dSem = new SimpleDateFormat("w");
+			//String semana = dSem.format(c.getTime());
+			//int sem = Integer.parseInt(semana);
 			
 			base.borrarInven(fechaActual, 2);
 			base.borrarExhi(fechaActual, 2);
@@ -535,7 +535,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			base.borrarFrentes(fechaActual, 2);
 			base.borrarCajasMa(fechaActual, 2);
             base.borrarFotos();
-			base.borrarVisitas(sem);
+			base.borrarVisitas(fechaActual, 2);
 			
 			
 		} catch (Exception e) {
