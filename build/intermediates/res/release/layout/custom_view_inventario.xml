@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#ffddf6ff">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Marca"
+        android:id="@+id/txtMarcaCustomInve"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Producto"
+        android:id="@+id/txtCustomProductoInve"
+        android:layout_below="@+id/txtMarcaCustomInve"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Tipo"
+        android:id="@+id/txtCustomTipoInve"
+        android:layout_below="@+id/txtCustomStatusInve"
+        android:layout_alignRight="@+id/txtCustomStatusInve" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtCustomProductoInve"
+        android:layout_alignParentLeft="true"
+        android:weightSum="2"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Sistema"
+            android:id="@+id/txtCustomSisteInve"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Fisico"
+            android:id="@+id/txtCustomFisicoInv"
+            android:layout_weight="1"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Status"
+        android:id="@+id/txtCustomStatusInve"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp" />
+
+</RelativeLayout><!-- From: file:/C:/Users/Gustavo/Desktop/CODPAA/CODPAA/res/layout/custom_view_inventario.xml -->

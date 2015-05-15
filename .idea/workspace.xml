@@ -95,23 +95,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2962656-ec72-47f7-978b-d73626701fb7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/BuildConfig.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/BuildConfig.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug-unaligned.apk" afterPath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug-unaligned.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug.apk" afterPath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/MenuTienda.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/MenuTienda.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex/debug/classes.dex" afterPath="$PROJECT_DIR$/build/intermediates/dex/debug/classes.dex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/manifests/full/debug/AndroidManifest.xml" afterPath="$PROJECT_DIR$/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/source/buildConfig/debug/com/codpaa/BuildConfig.java" afterPath="$PROJECT_DIR$/build/generated/source/buildConfig/debug/com/codpaa/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/incremental/mergeResources/debug/merger.xml" afterPath="$PROJECT_DIR$/build/intermediates/incremental/mergeResources/debug/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/outputFileStates.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_22_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_22_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/res/debug/values/values.xml" afterPath="$PROJECT_DIR$/build/intermediates/res/debug/values/values.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CODPAA.iws" />
@@ -173,7 +156,21 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="527" column="14" selection-start-line="527" selection-start-column="14" selection-end-line="527" selection-end-column="14" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#12377#12378#0" expanded="false" />
+                <element signature="e#12402#12403#0" expanded="false" />
+                <element signature="e#12445#12446#0" expanded="false" />
+                <element signature="e#12479#12480#0" expanded="false" />
+                <element signature="e#12510#12511#0" expanded="false" />
+                <element signature="e#12533#12534#0" expanded="false" />
+                <element signature="e#12575#12576#0" expanded="false" />
+                <element signature="e#12605#12606#0" expanded="false" />
+                <element signature="e#12638#12639#0" expanded="false" />
+                <element signature="e#12663#12664#0" expanded="false" />
+                <element signature="e#12709#12710#0" expanded="false" />
+                <element signature="e#12743#12744#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -183,7 +180,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="79" column="29" selection-start-line="79" selection-start-column="29" selection-end-line="79" selection-end-column="29" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -193,7 +192,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="481" column="32" selection-start-line="481" selection-start-column="32" selection-end-line="481" selection-end-column="32" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -213,7 +214,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="47" column="45" selection-start-line="47" selection-start-column="45" selection-end-line="47" selection-end-column="45" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -223,7 +226,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="375" column="13" selection-start-line="375" selection-start-column="13" selection-end-line="375" selection-end-column="13" />
-              <folding />
+              <folding>
+                <element signature="n#!!doc" expanded="false" />
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1409,7 +1415,13 @@
       <option name="project" value="LOCAL" />
       <updated>1431643180498</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="actualizacion grandle">
+      <created>1431706311753</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1431706311753</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1434,7 +1446,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-97" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329582" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32376397" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1483,7 +1495,8 @@
     <MESSAGE value="comentario del metodo que tendo que mejorar" />
     <MESSAGE value="cambio de la url del webservice para subir las imagenes" />
     <MESSAGE value="correccion de error en el boton de entrada" />
-    <option name="LAST_COMMIT_MESSAGE" value="correccion de error en el boton de entrada" />
+    <MESSAGE value="actualizacion grandle" />
+    <option name="LAST_COMMIT_MESSAGE" value="actualizacion grandle" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1845,7 +1858,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="79" column="29" selection-start-line="79" selection-start-column="29" selection-end-line="79" selection-end-column="29" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1853,7 +1868,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="375" column="13" selection-start-line="375" selection-start-column="13" selection-end-line="375" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1861,7 +1879,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="47" column="45" selection-start-line="47" selection-start-column="45" selection-end-line="47" selection-end-column="45" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1869,7 +1889,21 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="527" column="14" selection-start-line="527" selection-start-column="14" selection-end-line="527" selection-end-column="14" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#12377#12378#0" expanded="false" />
+            <element signature="e#12402#12403#0" expanded="false" />
+            <element signature="e#12445#12446#0" expanded="false" />
+            <element signature="e#12479#12480#0" expanded="false" />
+            <element signature="e#12510#12511#0" expanded="false" />
+            <element signature="e#12533#12534#0" expanded="false" />
+            <element signature="e#12575#12576#0" expanded="false" />
+            <element signature="e#12605#12606#0" expanded="false" />
+            <element signature="e#12638#12639#0" expanded="false" />
+            <element signature="e#12663#12664#0" expanded="false" />
+            <element signature="e#12709#12710#0" expanded="false" />
+            <element signature="e#12743#12744#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1877,7 +1911,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="481" column="32" selection-start-line="481" selection-start-column="32" selection-end-line="481" selection-end-column="32" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
