@@ -2,18 +2,25 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex dex="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\pre-dexed\debug\classes-a46c36e0a731f2a1673600d1eb8d478f8fcadc92.jar" />
-    </item>
-    <item
         jar="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
         <dex dex="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\pre-dexed\debug\classes-3b4c5673f3e4c29cad2f55c4b3af05e39a60ed39.jar" />
+    </item>
+    <item
+        jar="C:\Users\Gustavo\.gradle\caches\modules-2\files-2.1\com.loopj.android\android-async-http\1.4.6\a845a88238be0b5be9d238652c1bc0605ef91f52\android-async-http-1.4.6.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a845a88238be0b5be9d238652c1bc0605ef91f52">
+        <dex dex="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\pre-dexed\debug\android-async-http-1.4.6-85fb04c289c711b43becc43b65084c7c7ab598c6.jar" />
+    </item>
+    <item
+        jar="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\pre-dexed\debug\classes-a46c36e0a731f2a1673600d1eb8d478f8fcadc92.jar" />
     </item>
     <item
         jar="C:\Users\Gustavo\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
@@ -28,13 +35,6 @@
         revision="21.1.2"
         sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
         <dex dex="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-572bb58a9ca59074c5b89bd0efbf78145c0be0f7.jar" />
-    </item>
-    <item
-        jar="C:\Users\Gustavo\.gradle\caches\modules-2\files-2.1\com.loopj.android\android-async-http\1.4.6\a845a88238be0b5be9d238652c1bc0605ef91f52\android-async-http-1.4.6.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="a845a88238be0b5be9d238652c1bc0605ef91f52">
-        <dex dex="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\pre-dexed\debug\android-async-http-1.4.6-85fb04c289c711b43becc43b65084c7c7ab598c6.jar" />
     </item>
 
 </items>
