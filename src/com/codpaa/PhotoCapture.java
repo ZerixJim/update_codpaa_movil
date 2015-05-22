@@ -335,9 +335,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                             Log.d("Enviar Method", "El archivo no funciona");
                         }
 
-                        clienteFoto.setTimeout(5000);
-
-                        clienteFoto.post(Utilities.WEB_SERVICE_PATH+"/upimage1.php", requ,
+                        clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "upimage1.php", requ,
                                 new HttpResponseImage(CameraActivity, idTienda, idPromotor, idMarca,
                                         idExhibicion, timeStamp, Integer.parseInt(dia),
                                         Integer.parseInt(mes), Integer.parseInt(ano),mCurrentPhotoPath));

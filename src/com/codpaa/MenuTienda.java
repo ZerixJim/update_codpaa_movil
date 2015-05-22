@@ -473,6 +473,7 @@ public class MenuTienda extends Activity implements OnClickListener{
 								DB.close();
 								
 							}else {
+
 								btnEntrada.setBackgroundResource(R.drawable.custom_btn_orange);
 								Entrada = false;
 								

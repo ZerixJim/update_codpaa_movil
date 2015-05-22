@@ -913,7 +913,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 
                 cliente.setTimeout(5000);
 
-                cliente.post(Utilities.WEB_SERVICE_PATH+"/upimage.php",rpFoto, jr);
+                cliente.post(Utilities.WEB_SERVICE_CODPAA + "upimage1.php",rpFoto, jr);
 
             }
 
