@@ -448,7 +448,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 						rpV.put("ve", myVersionName);
 						rpV.put("fecha", fecha);
 						
-						clienteVersio.post(Utilities.WEB_SERVICE_PATH+"/sendVersion.php", rpV,respuesta);
+						clienteVersio.post(Utilities.WEB_SERVICE_CODPAA+"sendVersion.php", rpV,respuesta);
 					}else{
 						Log.d("Env Version","id NO Asignado");
 					}
@@ -509,7 +509,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 						rpVis.put("tipo", curVisitas.getString(6));
 						rpVis.put("numerocel", getPhoneNumber());
 						
-						cli.get(Utilities.WEB_SERVICE_PATH+"/sendvisitasnewresponse.php",rpVis, resVisitas);
+						cli.get(Utilities.WEB_SERVICE_CODPAA+"sendvisitasnewresponse.php",rpVis, resVisitas);
 						
 
 						
@@ -558,7 +558,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rp.put("cha6", Integer.toString(curFrentes.getInt(10)));
 
 
-					cliente.post(Utilities.WEB_SERVICE_PATH+"/sendfrentesnew.php", rp, respuestaFrentes);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendfrentesnew.php", rp, respuestaFrentes);
 
 				}
 				
@@ -589,7 +589,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 					
 					
 					
-					cliente.post(Utilities.WEB_SERVICE_PATH+"/surti.php", rp, respuesta);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"surti.php", rp, respuesta);
 					base.execSQL("delete from surtido where idTienda="+curSurtido.getInt(0)+" and fecha='"+curSurtido.getString(3)+"' and idProducto="+curSurtido.getInt(4)+" ;");
 					
 					
@@ -625,7 +625,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 					
 					
 					
-					cliente.post(Utilities.WEB_SERVICE_PATH+"/sendinventario.php", rp,responseInventario);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinventario.php", rp,responseInventario);
 
 					
 				}
@@ -659,7 +659,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 					
 					
 					
-					cliente.post(Utilities.WEB_SERVICE_PATH+"/sendexhi.php", rp, respuestaExhibiciones);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendexhi.php", rp, respuestaExhibiciones);
 					//base.execSQL("Update exhibiciones set status=2 where idTienda="+curExhi.getInt(0)+" and idExhibicion="+curExhi.getInt(2)+" and fecha='"+curExhi.getString(3)+"' and idProducto="+curExhi.getInt(4));
 					
 					
@@ -691,7 +691,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rp.put("puesto",curEncargado.getString(3));
 					rp.put("fecha", curEncargado.getString(4));
 					
-					cliente.post(Utilities.WEB_SERVICE_PATH+"/sendEncargado.php", rp, respuesta);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendEncargado.php", rp, respuesta);
 					base.delete("encargadotienda", "idTienda="+curEncargado.getInt(0)+" and fecha='"+curEncargado.getString(4)+"'", null);
 				}
 				
@@ -721,7 +721,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rp.put("comentario", curComentario.getString(3));
 					
 					
-					cliente.post(Utilities.WEB_SERVICE_PATH+"/sendComentario.php", rp, respuesta);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendComentario.php", rp, respuesta);
 					base.delete("comentarioTienda", "idTienda="+curComentario.getInt(0)+" and fecha='"+curComentario.getString(2)+"'", null);
 				}
 				
@@ -761,7 +761,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rpRastreo.put("altitud", Double.toString(curRastreo.getDouble(5)));
 							
 							
-					cliente.post(Utilities.WEB_SERVICE_PATH+"/sendRastreo.php", rpRastreo, respuesta);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendRastreo.php", rpRastreo, respuesta);
 							
 							
 					bases.delete("rastreo", "idCelular="+curRastreo.getInt(0)+" and fecha='"+curRastreo.getString(1)+"'", null);
@@ -864,7 +864,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rpIn.put("preciocaja",curInteli.getString(12));
 					rpIn.put("cambioprecio",curInteli.getString(13));
 
-                    cliente.post(Utilities.WEB_SERVICE_PATH+"/sendinteligencia.php", rpIn, respuestaInteligencia);
+                    cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinteligencia.php", rpIn, respuestaInteligencia);
 					
 
 					
@@ -968,8 +968,7 @@ public class GeoLocalizar extends Service implements LocationListener{
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             super.onSuccess(statusCode, headers, response);
-            Log.w("JR","onSucess");
-            Log.e("ResponseImage","paso 3");
+
             if(response != null){
                 try {
 

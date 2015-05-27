@@ -88,7 +88,7 @@ public class MainActivity extends Activity implements OnClickListener, OnKeyList
 
 
 		AsyncHttpClient clienteVersion = new AsyncHttpClient();
-        clienteVersion.post(Utilities.WEB_SERVICE_PATH+"/codpaaVersion.json",new JsonHttpResponseHandler(){
+        clienteVersion.post(Utilities.WEB_SERVICE_CODPAA+"codpaaVersion.json",new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -178,7 +178,7 @@ public class MainActivity extends Activity implements OnClickListener, OnKeyList
 
 
 
-        cliente.get(this, Utilities.WEB_SERVICE_PATH+"/serv.php", rp, new JsonHttpResponseHandler() {
+        cliente.get(this, Utilities.WEB_SERVICE_CODPAA+"serv.php", rp, new JsonHttpResponseHandler() {
 
 
             @Override
