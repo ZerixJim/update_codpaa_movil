@@ -29,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codpaa.utils.Utilities;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -87,7 +88,7 @@ public class MainActivity extends Activity implements OnClickListener, OnKeyList
 
 
 		AsyncHttpClient clienteVersion = new AsyncHttpClient();
-        clienteVersion.post("http://promotoressumma.com/codpaa/php/codpaaVersion.json",new JsonHttpResponseHandler(){
+        clienteVersion.post(Utilities.WEB_SERVICE_CODPAA+"codpaaVersion.json",new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -169,12 +170,15 @@ public class MainActivity extends Activity implements OnClickListener, OnKeyList
     private void loginAsync(final String usuario, final String pass){
 
         AsyncHttpClient cliente = new AsyncHttpClient();
+		cliente.setTimeout(10000);
         RequestParams rp = new RequestParams();
         rp.put("solicitud","user");
         rp.put("user",usuario);
-        rp.put("pass",pass);
+        rp.put("pass", pass);
 
-        cliente.get(this, "http://promotoressumma.com/codpaa/serv.php", rp, new JsonHttpResponseHandler() {
+
+
+        cliente.get(this, Utilities.WEB_SERVICE_CODPAA+"serv.php", rp, new JsonHttpResponseHandler() {
 
 
             @Override

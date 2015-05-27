@@ -7,6 +7,7 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.codpaa.utils.Utilities;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -354,7 +355,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
                         rpFoto.put("ano", Integer.toString(curFoto.getInt(7)));
                         rpFoto.put("file", file);
 
-                        cliente.post("http://promotoressumma.com/codpaa/sentimage.php",rpFoto, new HttpResponseFoto(this,idFoto,position,img) );
+                        cliente.post(Utilities.WEB_SERVICE_CODPAA + "sentimage.php",rpFoto, new HttpResponseFoto(this,idFoto,position,img) );
 
 
                     }

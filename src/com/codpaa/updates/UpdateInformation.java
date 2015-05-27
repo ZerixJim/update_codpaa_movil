@@ -8,6 +8,7 @@ import com.codpaa.listeners.ResponseMarcas;
 import com.codpaa.listeners.ResponseProductos;
 import com.codpaa.listeners.ResponseRuta;
 import com.codpaa.listeners.ResponseTiendas;
+import com.codpaa.utils.Utilities;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 
@@ -15,7 +16,7 @@ import com.loopj.android.http.RequestParams;
 public class UpdateInformation{
 
 
-    private final static String URL_INFO = "http://promotoressumma.com/codpaa/serv.php";
+    private final static String URL_INFO = "serv.php";
 
     Context _context;
 
@@ -37,7 +38,7 @@ public class UpdateInformation{
 
 
         clientRuta.setTimeout(5000);
-        clientRuta.get(_context, URL_INFO, rp, responseRuta);
+        clientRuta.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, responseRuta);
 
     }
 
@@ -50,7 +51,7 @@ public class UpdateInformation{
         rp.put("id",String.valueOf(idPromotor));
 
         clientTiendas.setTimeout(5000);
-        clientTiendas.get(_context,URL_INFO,rp,responseTienda);
+        clientTiendas.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO,rp,responseTienda);
 
 
 
@@ -64,7 +65,7 @@ public class UpdateInformation{
         rp.put("solicitud","exhibicion");
 
         clientExh.setTimeout(5000);
-        clientExh.get(_context,URL_INFO,rp,responseExh);
+        clientExh.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO,rp,responseExh);
     }
 
 
@@ -77,7 +78,7 @@ public class UpdateInformation{
         rp.put("id",String.valueOf(idPromotor));
 
         clientMarc.setTimeout(5000);
-        clientMarc.get(_context,URL_INFO,rp,responseMarc);
+        clientMarc.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO,rp,responseMarc);
 
     }
 
@@ -90,7 +91,7 @@ public class UpdateInformation{
         rp.put("id",String.valueOf(idPromotor));
 
         clientPro.setTimeout(5000);
-        clientPro.get(_context,URL_INFO,rp,responseProductos);
+        clientPro.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO,rp,responseProductos);
 
     }
 

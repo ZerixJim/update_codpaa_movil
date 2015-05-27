@@ -15,6 +15,7 @@ import org.apache.http.Header; //detectado
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.codpaa.utils.Utilities;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -65,7 +66,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int widthRequerida = 640;
     private static final int heightRequerida = 480;
-    private static final String BASE_URL = "http://plataformavanguardia.com/codpaa/";
+
 
     ProgressBar progressFoto;
 
@@ -78,7 +79,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     String mCurrentPhotoPath;
     boolean imagenEspera = false;
     Spinner spiMarca, spiExh;
-    ArrayList<SpinnerMarcaModel> array = new ArrayList<SpinnerMarcaModel>();
+    ArrayList<SpinnerMarcaModel> array = new ArrayList<>();
  	SQLiteDatabase base;
 
 
@@ -334,9 +335,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                             Log.d("Enviar Method", "El archivo no funciona");
                         }
 
-                        clienteFoto.setTimeout(5000);
-
-                        clienteFoto.post(BASE_URL+"upimage.php", requ,
+                        clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "upimage1.php", requ,
                                 new HttpResponseImage(CameraActivity, idTienda, idPromotor, idMarca,
                                         idExhibicion, timeStamp, Integer.parseInt(dia),
                                         Integer.parseInt(mes), Integer.parseInt(ano),mCurrentPhotoPath));
@@ -460,6 +459,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
             Log.d("EnviarFoto","Estatus "+statusCode);
             Log.d("EnviarFoto","ErrorRespo"+errorResponse);
+            Log.d("EnviarFoto","Thro:" + e );
 			Toast.makeText(getApplicationContext(), "No fue posible conectarse con el servidor", Toast.LENGTH_SHORT).show();
 			Toast.makeText(getApplicationContext(), "Imagen no envida \n (Menu Enviar)", Toast.LENGTH_SHORT).show();
 
