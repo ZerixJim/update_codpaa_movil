@@ -1,153 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AndroidConfiguredLogFilters">
-    <filters>
-      <filter>
-        <option name="name" value="app: com.codpaa" />
-        <option name="packageNamePattern" value="com.codpaa" />
-      </filter>
-    </filters>
-  </component>
-  <component name="AndroidLayoutPreviewToolWindow">
-    <option name="state">
-      <GlobalState />
-    </option>
-  </component>
   <component name="AndroidLayouts">
     <shared>
-      <config>
-        <devices>
-          <device id="Galaxy Nexus" />
-        </devices>
-        <target>android-10</target>
-      </config>
+      <config />
     </shared>
-    <layouts>
-      <layout url="file://$PROJECT_DIR$/res/drawable/degradado.xml">
-        <config>
-          <theme>@style/AppBaseTheme</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/activity_main.xml">
-        <config>
-          <theme>@style/MiTema</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/custom_photo_list.xml">
-        <config>
-          <theme>@style/AppBaseTheme</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/custom_view_frentes.xml">
-        <config>
-          <theme>@style/AppBaseTheme</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/custom_view_inventario.xml">
-        <config>
-          <theme>@style/AppBaseTheme</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/custom_view_productos.xml">
-        <config>
-          <theme>@style/AppBaseTheme</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/frentes.xml">
-        <config>
-          <theme>@style/Theme.AppCompat.Light</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/imagesheduler.xml">
-        <config>
-          <theme>@style/AppBaseTheme</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/inteligenciamercado.xml">
-        <config>
-          <theme>@style/MiTema</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/inventariobodega.xml">
-        <config>
-          <theme>@style/Theme.AppCompat.Light</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/lista_frentes_capturados.xml">
-        <config>
-          <theme>@style/AppBaseTheme</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/menu.xml">
-        <config>
-          <theme>@style/Theme.AppCompat.Light</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/menutienda.xml">
-        <config>
-          <theme>@android:style/Theme.Holo.Light</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/photocapture.xml">
-        <config>
-          <theme>@style/AppBaseTheme</theme>
-        </config>
-      </layout>
-      <layout url="file://$PROJECT_DIR$/res/layout/promptversion.xml">
-        <config>
-          <theme>@style/AppBaseTheme</theme>
-        </config>
-      </layout>
-    </layouts>
-  </component>
-  <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.codpaa" />
-  </component>
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/widget/MultiSelectionSpinner.java" line="41" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="b2962656-ec72-47f7-978b-d73626701fb7" name="Default" comment="apuntadas todas las conexiones al nuevo servidor hostgator">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-=======
-    <list default="true" id="b2962656-ec72-47f7-978b-d73626701fb7" name="Default" comment="">
-      <change type="MOVED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\utils\utilities.java" afterPath="$PROJECT_DIR$/src/com/codpaa/utils/Utilities.java" />
+    <list default="true" id="bcf431eb-1d57-496e-a492-7290e1b20f2f" name="Default" comment="">
+      <change type="MOVED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\utils\utilities.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/utils/Utilities.class" />
+      <change type="MOVED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\release\com\codpaa\utils\utilities.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/utils/Utilities.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/BuildConfig.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/BuildConfig.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/BuildConfig.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/BuildConfig.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug-unaligned.apk" afterPath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug-unaligned.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug.apk" afterPath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/EnviarDatos.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/EnviarDatos.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/apk/CODPAA-release-unaligned.apk" afterPath="$PROJECT_DIR$/build/outputs/apk/CODPAA-release-unaligned.apk" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CODPAA-release.apk" afterPath="$PROJECT_DIR$/CODPAA-release.apk" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseCaMa.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseCaMa.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseExhi.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseExhi.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseFrentes.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseFrentes.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseInteligen.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseInteligen.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseInventario.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseInventario.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$10.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$10.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$11.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$11.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$12.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$12.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$13.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$13.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/GeoLocalizar$14.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/GeoLocalizar$14.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$14.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$14.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$4.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$5.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$6.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$7.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$7.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$8.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$8.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$9.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$9.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$MyBinder.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$MyBinder.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/GeoLocalizar.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/GeoLocalizar.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$CustomListAdapter$ViewHolder.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$CustomListAdapter$ViewHolder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$CustomListAdapter.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$CustomListAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$EnviarFotoListener.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$EnviarFotoListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$PhotoListModel.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$PhotoListModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/MainActivity.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/MainActivity.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$CustomListAdapter$ViewHolder.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$CustomListAdapter$ViewHolder.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$CustomListAdapter.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$CustomListAdapter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$EnviarFotoListener.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$EnviarFotoListener.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$PhotoListModel.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$PhotoListModel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$4.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$5.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$EscucharDialogoEncargado.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$EscucharDialogoEncargado.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$Listener.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$Listener.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$ListenerSAlida.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$ListenerSAlida.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$localizacion.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$localizacion.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/updates/UpdateInformation.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/updates/UpdateInformation.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/updates/UpdateInformation.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/updates/UpdateInformation.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/utils/Utilities.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/utils/Utilities.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex/debug/classes.dex" afterPath="$PROJECT_DIR$/build/intermediates/dex/debug/classes.dex" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex/release/classes.dex" afterPath="$PROJECT_DIR$/build/intermediates/dex/release/classes.dex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/resources/resources-debug.ap_" afterPath="$PROJECT_DIR$/build/intermediates/resources/resources-debug.ap_" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/EnviarDatos.java" afterPath="$PROJECT_DIR$/src/com/codpaa/EnviarDatos.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java" afterPath="$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java" afterPath="$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/MainActivity.java" afterPath="$PROJECT_DIR$/src/com/codpaa/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseExhibiciones.java" afterPath="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseExhibiciones.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/updates/UpdateInformation.java" afterPath="$PROJECT_DIR$/src/com/codpaa/updates/UpdateInformation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/resources/resources-release.ap_" afterPath="$PROJECT_DIR$/build/intermediates/resources/resources-release.ap_" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/manifests/full/debug/AndroidManifest.xml" afterPath="$PROJECT_DIR$/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/manifests/full/release/AndroidManifest.xml" afterPath="$PROJECT_DIR$/build/intermediates/manifests/full/release/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/source/buildConfig/debug/com/codpaa/BuildConfig.java" afterPath="$PROJECT_DIR$/build/generated/source/buildConfig/debug/com/codpaa/BuildConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/source/buildConfig/release/com/codpaa/BuildConfig.java" afterPath="$PROJECT_DIR$/build/generated/source/buildConfig/release/com/codpaa/BuildConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/res/debug/layout/promptversion.xml" afterPath="$PROJECT_DIR$/build/intermediates/res/debug/layout/promptversion.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/promptversion.xml" afterPath="$PROJECT_DIR$/res/layout/promptversion.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/lint-results-release-fatal.html" afterPath="$PROJECT_DIR$/build/outputs/lint-results-release-fatal.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/incremental/mergeResources/debug/merger.xml" afterPath="$PROJECT_DIR$/build/intermediates/incremental/mergeResources/debug/merger.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/incremental/mergeResources/release/merger.xml" afterPath="$PROJECT_DIR$/build/intermediates/incremental/mergeResources/release/merger.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/outputFileStates.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/res/release/layout/promptversion.xml" afterPath="$PROJECT_DIR$/build/intermediates/res/release/layout/promptversion.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" />
->>>>>>> experimental
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/res/debug/values/values.xml" afterPath="$PROJECT_DIR$/build/intermediates/res/debug/values/values.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/res/release/values/values.xml" afterPath="$PROJECT_DIR$/build/intermediates/res/release/values/values.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
-    <list id="e5fc9371-7451-439e-924f-61b53a041969" name="New changelist" comment="" />
     <ignored path="CODPAA.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/build/intermediates/assets/" />
@@ -157,6 +104,8 @@
     <ignored path="$PROJECT_DIR$/build/intermediates/dependency-cache/" />
     <ignored path="$PROJECT_DIR$/build/intermediates/dex/" />
     <ignored path="$PROJECT_DIR$/build/intermediates/dex-cache/" />
+    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/jars/" />
+    <ignored path="$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/" />
     <ignored path="$PROJECT_DIR$/build/intermediates/incremental/" />
     <ignored path="$PROJECT_DIR$/build/intermediates/jacoco/" />
     <ignored path="$PROJECT_DIR$/build/intermediates/javaResources/" />
@@ -179,63 +128,60 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
-  <component name="Commander">
-    <leftPanel />
-    <rightPanel />
-    <splitter proportion="0.5" />
-  </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
-        <projects_view>
-          <tree_state>
-            <PATH>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="CODPAA" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
-              </PATH_ELEMENT>
-              <PATH_ELEMENT>
-                <option name="myItemId" value="Tasks" />
-                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode" />
-              </PATH_ELEMENT>
-            </PATH>
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
   <component name="FavoritesManager">
     <favorites_list name="CODPAA" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MenuTienda.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuTienda.java">
-<<<<<<< HEAD
+      <file leaf-file-name="GeoLocalizar.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="201" column="16" selection-start-line="201" selection-start-column="16" selection-end-line="201" selection-end-column="16" />
+              <caret line="109" column="57" selection-start-line="109" selection-start-column="57" selection-end-line="109" selection-end-column="57" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BDopenHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/BD/BDopenHelper.java">
+      <file leaf-file-name="PhotoCapture.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.475827">
+              <caret line="304" column="25" selection-start-line="304" selection-start-column="25" selection-end-line="304" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MenuPrincipal.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="548" column="0" selection-start-line="548" selection-start-column="0" selection-end-line="548" selection-end-column="0" />
+              <caret line="534" column="47" selection-start-line="534" selection-start-column="47" selection-end-line="534" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="39" column="76" selection-start-line="39" selection-start-column="76" selection-end-line="39" selection-end-column="76" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InventarioBodega.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/codpaa/InventarioBodega.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -245,240 +191,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/codpaa/EnviarDatos.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="4" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="4" />
-              <folding>
-                <marker date="1432748570747" expanded="false" signature="28:521" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MenuPrincipal.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="131" column="50" selection-start-line="131" selection-start-column="50" selection-end-line="131" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GeoLocalizar.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="799" column="0" selection-start-line="799" selection-start-column="0" selection-end-line="799" selection-end-column="0" />
-              <folding>
-                <element signature="e#29869#29870#0" expanded="false" />
-                <element signature="e#29909#29910#0" expanded="false" />
-                <marker date="1432748570750" expanded="false" signature="28:32" placeholder="..." />
-                <marker date="1432748570750" expanded="true" signature="27595:29398" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Imagesheduler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="358" column="0" selection-start-line="358" selection-start-column="0" selection-end-line="358" selection-end-column="0" />
-              <folding>
-                <element signature="e#11786#11957#0" expanded="false" />
-                <element signature="e#11956#11957#0" expanded="false" />
-                <element signature="e#12121#12289#0" expanded="false" />
-                <element signature="e#12288#12289#0" expanded="false" />
-                <element signature="e#12555#12775#0" expanded="false" />
-                <element signature="e#12774#12775#0" expanded="false" />
-                <marker date="1432748570752" expanded="false" signature="28:173" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.033388983">
-              <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
-=======
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="201" column="16" selection-start-line="201" selection-start-column="16" selection-end-line="201" selection-end-column="16" />
->>>>>>> experimental
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-<<<<<<< HEAD
-      <file leaf-file-name="ResponseExhibiciones.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/listeners/ResponseExhibiciones.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-=======
-      <file leaf-file-name="BDopenHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/BD/BDopenHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="548" column="0" selection-start-line="548" selection-start-column="0" selection-end-line="548" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EnviarDatos.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/EnviarDatos.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="4" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MenuPrincipal.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="131" column="50" selection-start-line="131" selection-start-column="50" selection-end-line="131" selection-end-column="50" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#12360#12361#0" expanded="false" />
-                <element signature="e#12385#12386#0" expanded="false" />
-                <element signature="e#12428#12429#0" expanded="false" />
-                <element signature="e#12462#12463#0" expanded="false" />
-                <element signature="e#12493#12494#0" expanded="false" />
-                <element signature="e#12516#12517#0" expanded="false" />
-                <element signature="e#12558#12559#0" expanded="false" />
-                <element signature="e#12588#12589#0" expanded="false" />
-                <element signature="e#12621#12622#0" expanded="false" />
-                <element signature="e#12646#12647#0" expanded="false" />
-                <element signature="e#12692#12693#0" expanded="false" />
-                <element signature="e#12726#12727#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GeoLocalizar.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="800" column="0" selection-start-line="800" selection-start-column="0" selection-end-line="800" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#8928#8929#0" expanded="false" />
-                <element signature="e#8955#8956#0" expanded="false" />
-                <element signature="e#9169#9170#0" expanded="false" />
-                <element signature="e#9202#9203#0" expanded="false" />
-                <element signature="e#9374#9375#0" expanded="false" />
-                <element signature="e#9420#9421#0" expanded="false" />
-                <element signature="e#10630#10631#0" expanded="false" />
-                <element signature="e#10669#10670#0" expanded="false" />
-                <element signature="e#10732#10733#0" expanded="false" />
-                <element signature="e#10760#10761#0" expanded="false" />
-                <element signature="e#29910#29911#0" expanded="false" />
-                <element signature="e#29950#29951#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Imagesheduler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="359" column="0" selection-start-line="359" selection-start-column="0" selection-end-line="359" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#2831#2847#0" expanded="false" />
-                <element signature="e#6721#6722#0" expanded="false" />
-                <element signature="e#6744#6745#0" expanded="false" />
-                <element signature="e#6787#6788#0" expanded="false" />
-                <element signature="e#6818#6819#0" expanded="false" />
-                <element signature="e#6846#6847#0" expanded="false" />
-                <element signature="e#6866#6867#0" expanded="false" />
-                <element signature="e#6903#6904#0" expanded="false" />
-                <element signature="e#6928#6929#0" expanded="false" />
-                <element signature="e#6958#6959#0" expanded="false" />
-                <element signature="e#6980#6981#0" expanded="false" />
-                <element signature="e#7021#7022#0" expanded="false" />
-                <element signature="e#7050#7051#0" expanded="false" />
-                <element signature="e#7079#7080#0" expanded="false" />
-                <element signature="e#7101#7102#0" expanded="false" />
-                <element signature="e#7140#7141#0" expanded="false" />
-                <element signature="e#7168#7169#0" expanded="false" />
-                <element signature="e#7197#7198#0" expanded="false" />
-                <element signature="e#7221#7222#0" expanded="false" />
-                <element signature="e#7263#7264#0" expanded="false" />
-                <element signature="e#7296#7297#0" expanded="false" />
-                <element signature="e#11818#11989#0" expanded="false" />
-                <element signature="e#11988#11989#0" expanded="false" />
-                <element signature="e#12153#12321#0" expanded="false" />
-                <element signature="e#12320#12321#0" expanded="false" />
-                <element signature="e#12587#12807#0" expanded="false" />
-                <element signature="e#12806#12807#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5555556">
-              <caret line="45" column="20" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
-              <folding>
-                <element signature="e#11283#11448#0" expanded="true" />
-                <element signature="e#11447#11448#0" expanded="true" />
-                <element signature="e#11480#11631#0" expanded="true" />
-                <element signature="e#11630#11631#0" expanded="true" />
->>>>>>> experimental
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-<<<<<<< HEAD
-      <file leaf-file-name="Utilities.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/utils/Utilities.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-=======
-      <file leaf-file-name="ResponseExhibiciones.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/listeners/ResponseExhibiciones.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="49" selection-start-line="16" selection-start-column="49" selection-end-line="16" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Utilities.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/utils/Utilities.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
->>>>>>> experimental
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <caret line="365" column="16" selection-start-line="365" selection-start-column="16" selection-end-line="365" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -486,42 +199,14 @@
       </file>
     </leaf>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="resourceFile" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
-  <component name="FindManager">
-    <FindUsagesManager>
-      <setting name="OPEN_NEW_TAB" value="true" />
-    </FindUsagesManager>
-  </component>
   <component name="GenerateSignedApkSettings">
     <option name="KEY_STORE_PATH" value="C:\Users\Gustavo\Desktop\CODPAA\Codpaa APk\firma" />
     <option name="KEY_ALIAS" value="codpaa" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-<<<<<<< HEAD
-        <entry key="$PROJECT_DIR$" value="experimental" />
-=======
-        <entry key="$PROJECT_DIR$" value="master" />
->>>>>>> experimental
-      </map>
-    </option>
   </component>
   <component name="GradleLocalSettings">
-    <option name="tasksExpandState">
-      <map>
-        <entry key="" value="true" />
-        <entry key="CODPAA/" value="false" />
-      </map>
-    </option>
     <option name="availableProjects">
       <map>
         <entry>
@@ -569,7 +254,6 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles the android (on device) tests for the Debug build." />
-<<<<<<< HEAD
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="assembleDebugAndroidTest" />
               </ExternalTaskPojo>
@@ -579,17 +263,6 @@
                 <option name="name" value="assembleDebugUnitTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-=======
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="assembleDebugAndroidTest" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Assembles the unit tests for the Debug build." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="assembleDebugUnitTest" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
->>>>>>> experimental
                 <option name="description" value="Assembles all Release builds." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="assembleRelease" />
@@ -1059,11 +732,6 @@
         </entry>
       </map>
     </option>
-    <option name="modificationStamps">
-      <map>
-        <entry key="$PROJECT_DIR$" value="2853331301399" />
-      </map>
-    </option>
     <option name="projectBuildClasspath">
       <map>
         <entry key="$PROJECT_DIR$">
@@ -1157,23 +825,6 @@
                       </ExternalModuleBuildClasspathPojo>
                     </value>
                   </entry>
-                  <entry key="$PROJECT_DIR$/actionbarsherlock">
-                    <value>
-                      <ExternalModuleBuildClasspathPojo>
-                        <option name="entries">
-                          <list>
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/build/gradle/1.0.0/gradle-1.0.0-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/build/builder/1.0.0/builder-1.0.0-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/build/builder-model/1.0.0/builder-model-1.0.0-sources.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/build/builder/1.0.0/builder-1.0.0.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/build/gradle/1.0.0/gradle-1.0.0.jar" />
-                            <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/build/builder-model/1.0.0/builder-model-1.0.0.jar" />
-                          </list>
-                        </option>
-                        <option name="path" value="$PROJECT_DIR$/actionbarsherlock" />
-                      </ExternalModuleBuildClasspathPojo>
-                    </value>
-                  </entry>
                 </map>
               </option>
               <option name="name" value="CODPAA" />
@@ -1241,66 +892,17 @@
         </entry>
       </map>
     </option>
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/HandlerResponse/ResponseImage.java" />
-        <option value="$PROJECT_DIR$/res/menu/main.xml" />
-        <option value="$PROJECT_DIR$/res/layout/calendario.xml" />
-        <option value="$PROJECT_DIR$/res/menu/menu.xml" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/MostrarCalendario.java" />
-        <option value="$PROJECT_DIR$/res/layout/enviar.xml" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/EnviarInformacion.java" />
-        <option value="$PROJECT_DIR$/res/values/colores.xml" />
-        <option value="$PROJECT_DIR$/res/drawable/custom_btn_shakespeare.xml" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java" />
-        <option value="$PROJECT_DIR$/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/res/layout/listatiendaspinner.xml" />
-        <option value="$PROJECT_DIR$/res/layout/encargadotienda.xml" />
-        <option value="$PROJECT_DIR$/res/layout/menu.xml" />
-        <option value="$PROJECT_DIR$/res/layout/frentes.xml" />
-        <option value="$PROJECT_DIR$/res/layout/surtidomueble.xml" />
-        <option value="$PROJECT_DIR$/res/layout/inventariobodega.xml" />
-        <option value="$PROJECT_DIR$/res/layout/menutienda.xml" />
-        <option value="$PROJECT_DIR$/res/layout/photocapture.xml" />
-        <option value="$PROJECT_DIR$/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/res/values-v21/styles.xml" />
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/MenuTienda.java" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/utils/utilities.java" />
-        <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/EnviarDatos.java" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java" />
-<<<<<<< HEAD
-        <option value="$PROJECT_DIR$/res/layout/promptversion.xml" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseExhibiciones.java" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/updates/UpdateInformation.java" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/MainActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/utils/Utilities.java" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-=======
-        <option value="$PROJECT_DIR$/src/com/codpaa/utils/Utilities.java" />
-        <option value="$PROJECT_DIR$/res/layout/promptversion.xml" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/MainActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseExhibiciones.java" />
-        <option value="$PROJECT_DIR$/src/com/codpaa/updates/UpdateInformation.java" />
->>>>>>> experimental
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
       </list>
     </option>
-  </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="Bundled (Maven 3)" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
-  <component name="MavenProjectNavigator">
-    <treeState />
   </component>
   <component name="NamedScopeManager">
     <order />
@@ -1311,26 +913,7 @@
     <option name="width" value="1382" />
     <option name="height" value="784" />
   </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>Spelling</id>
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>SpellCheckingInspection</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
-  </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -1339,9 +922,6 @@
     <OptionsSetting value="true" id="Edit" />
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
-  </component>
-  <component name="ProjectReloadState">
-    <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -1356,40 +936,15 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="CODPAA" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-<<<<<<< HEAD
-=======
-      <pane id="Scope" />
->>>>>>> experimental
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -1401,10 +956,6 @@
               <option name="myItemId" value="CODPAA" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1445,160 +996,22 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="codpaa" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-<<<<<<< HEAD
-              <option name="myItemId" value=".idea" />
-=======
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codpaa" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codpaa" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="updates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codpaa" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="listeners" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
->>>>>>> experimental
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-<<<<<<< HEAD
-      <pane id="Scope" />
-=======
->>>>>>> experimental
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="GoToClass.includeLibraries" value="false" />
-    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="MemberChooser.showClasses" value="true" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="android.project.structure.last.selected" value="CODPAA" />
-    <property name="android.project.structure.proportion" value="0.15" />
-    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
-    <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="options.searchVisible" value="true" />
-    <property name="FullScreen" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.56.101:5555" />
-    <property name="OverrideImplement.combined" value="true" />
-    <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="borrar&#9;PSI&#9;JAVA://BD.BDopenHelper#borrarFrentes&#10;borrarFrentes&#9;PSI&#9;JAVA://BD.BDopenHelper#borrarFrentes&#10;Inventa&#9;PSI&#9;JAVA://com.codpaa.bbdd#Inventario&#10;Inventario&#9;PSI&#9;JAVA://com.codpaa.bbdd#Inventario&#10;stringMa&#9;PSI&#9;JAVA://com.codpaa.R.string#stringMarca&#10;insertarU&#9;PSI&#9;JAVA://com.codpaa.bbdd#insertarUsuarios" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Codpaa APk/firma" />
-    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="316" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_21_x86" />
-    <property name="full.screen.before.presentation.mode" value="true" />
+    <property name="FullScreen" value="false" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="TA94801UX0" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Galaxy_Ace_API_10" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Codpaa APk/Apk android studio" />
     <property name="ExportApk.ApkPath" value="C:\Users\Gustavo\Desktop\CODPAA\Codpaa APk\Apk android studio" />
     <property name="ExportApk.Flavors" value="" />
     <property name="ExportApk.BuildType" value="release" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="132" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="161" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="162" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="837" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="155" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="153" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="155" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="829" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
-    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/sdk" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\res\values-v20" />
-      <recent name="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\res\values-v15" />
-      <recent name="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\res\values-v19" />
-      <recent name="C:\Users\usuario\workspace\CODPAA\res\drawable" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\res\drawable-hdpi" />
-      <recent name="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\res\drawable-xhdpi" />
-      <recent name="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\res\drawable-mdpi" />
-      <recent name="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\res" />
-      <recent name="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\res\drawable-xxhdpi" />
-    </key>
   </component>
   <component name="RunManager" selected="Android Application.CODPAA">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -1681,15 +1094,6 @@
       </ExternalSystemSettings>
       <method />
     </configuration>
-    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
-      <module name="" />
-      <setting name="path" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workDir" value="file://$PROJECT_DIR$" />
-      <setting name="debug" value="false" />
-      <method />
-    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -1701,11 +1105,11 @@
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
+        <value defaultName="singleModule" />
       </option>
       <envs />
       <patterns />
@@ -1743,7 +1147,7 @@
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
+        <value defaultName="singleModule" />
       </option>
       <option name="USE_DEFAULT_REPORTERS" value="false" />
       <option name="PROPERTIES_FILE" />
@@ -1774,19 +1178,22 @@
       <option name="SELECTED_CLOUD_PROJECT_ID" value="" />
       <option name="IS_VALID_CLOUD_SELECTION" value="false" />
       <option name="INVALID_CLOUD_SELECTION_ERROR" value="" />
-      <RunnerSettings RunnerId="AndroidDebugRunner" />
-      <ConfigurationWrapper RunnerId="AndroidDebugRunner" />
       <method />
     </configuration>
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="Android Application.CODPAA" />
     </list>
+    <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+    </configuration>
     <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-    </configuration>
-    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
-      <Host>localhost</Host>
-      <Port>5050</Port>
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -1795,251 +1202,44 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b2962656-ec72-47f7-978b-d73626701fb7" name="Default" comment="" />
-      <changelist id="e5fc9371-7451-439e-924f-61b53a041969" name="New changelist" comment="" />
-      <created>1404227904744</created>
+      <changelist id="bcf431eb-1d57-496e-a492-7290e1b20f2f" name="Default" comment="" />
+      <created>1432824427262</created>
       <option name="number" value="Default" />
-      <updated>1404227904744</updated>
+      <updated>1432824427262</updated>
     </task>
-    <task id="LOCAL-00001" summary="comentario del metodo que tendo que mejorar">
-      <created>1425930503251</created>
-      <option name="number" value="00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1425930503251</updated>
-    </task>
-    <task id="LOCAL-00002" summary="cambio de la url del webservice para subir las imagenes">
-      <created>1426013738855</created>
-      <option name="number" value="00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1426013738855</updated>
-    </task>
-    <task id="LOCAL-00003" summary="cambio de la url del webservice para subir las imagenes plataformavanguardia.net/upimage.php">
-      <created>1426033538986</created>
-      <option name="number" value="00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1426033538986</updated>
-    </task>
-    <task id="LOCAL-00004" summary="cambio de la url del webservice para subir las imagenes plataformavanguardia.net/upimage.php">
-      <created>1426206168442</created>
-      <option name="number" value="00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1426206168442</updated>
-    </task>
-    <task id="LOCAL-00005" summary="falta validacion">
-      <created>1426206269527</created>
-      <option name="number" value="00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1426206269527</updated>
-    </task>
-    <task id="LOCAL-00006" summary="quite el multi spinner select y  acomode la url de una manera mas legible">
-      <created>1426617157032</created>
-      <option name="number" value="00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1426617157032</updated>
-    </task>
-    <task id="LOCAL-00007" summary="optimizacion de captura de fotos">
-      <created>1426794010961</created>
-      <option name="number" value="00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1426794010961</updated>
-    </task>
-    <task id="LOCAL-00008" summary="creacion de response para enviar fotos en segundo plano">
-      <created>1426880745218</created>
-      <option name="number" value="00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1426880745218</updated>
-    </task>
-    <task id="LOCAL-00009" summary="implementado servicio de envio de fotos en segundo plano">
-      <created>1426895852417</created>
-      <option name="number" value="00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1426895852417</updated>
-    </task>
-    <task id="LOCAL-00010" summary="envio de imagen en segundo plano finish, en proceso de testing">
-      <created>1427243676937</created>
-      <option name="number" value="00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1427243676937</updated>
-    </task>
-    <task id="LOCAL-00011" summary="optimizacion del envio de imagenes en segundo plano">
-      <created>1427314080352</created>
-      <option name="number" value="00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1427314080352</updated>
-    </task>
-    <task id="LOCAL-00012" summary="implementacion del objeto para la recepcion de productos">
-      <created>1427502032018</created>
-      <option name="number" value="00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1427502032018</updated>
-    </task>
-    <task id="LOCAL-00013" summary="implementacion de progressDialog para la descarga de informacion">
-      <created>1427745478004</created>
-      <option name="number" value="00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1427745478004</updated>
-    </task>
-    <task id="LOCAL-00014" summary="optimzado la descarga de informacion desde el webservice">
-      <created>1427907224174</created>
-      <option name="number" value="00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1427907224174</updated>
-    </task>
-    <task id="LOCAL-00015" summary="correccion de bug en la descarga de informacion">
-      <created>1428337750570</created>
-      <option name="number" value="00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1428337750570</updated>
-    </task>
-    <task id="LOCAL-00016" summary="cambio de tema de acuerdo a la version de api">
-      <created>1429206579474</created>
-      <option name="number" value="00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1429206579474</updated>
-    </task>
-    <task id="LOCAL-00017" summary="implemetancion de tema para la futura version de lollipop">
-      <created>1429552651893</created>
-      <option name="number" value="00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1429552651893</updated>
-    </task>
-    <task id="LOCAL-00018" summary="actulizacion de la libreria httpAsync a la version 1.4.6">
-      <created>1429718810854</created>
-      <option name="number" value="00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1429718810854</updated>
-    </task>
-    <task id="LOCAL-00019" summary="implementacion de material desing">
-      <created>1430160151425</created>
-      <option name="number" value="00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1430160151426</updated>
-    </task>
-    <task id="LOCAL-00020" summary="implementacion de las librerias de soporte mas recientes">
-      <created>1430172922781</created>
-      <option name="number" value="00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1430172922781</updated>
-    </task>
-    <task id="LOCAL-00021" summary="correcion de tema para cada version, y boton de salida desviado">
-      <created>1430431971847</created>
-      <option name="number" value="00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1430431971847</updated>
-    </task>
-    <task id="LOCAL-00022" summary="implementacion de AppCompatActivity, funcionando en todas las versionnes">
-      <created>1430760378389</created>
-      <option name="number" value="00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1430760378389</updated>
-    </task>
-    <task id="LOCAL-00023" summary="implementacion de action bar">
-      <created>1430868493854</created>
-      <option name="number" value="00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1430868493854</updated>
-    </task>
-    <task id="LOCAL-00024" summary="reparacion del error encontrado en las notificaciones">
-      <created>1430952734630</created>
-      <option name="number" value="00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1430952734630</updated>
-    </task>
-    <task id="LOCAL-00025" summary="optimizacion de servicio">
-      <created>1431009570714</created>
-      <option name="number" value="00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1431009570714</updated>
-    </task>
-    <task id="LOCAL-00026" summary="pequeñas errores encontrados en el servicio de geolocalizar">
-      <created>1431361396259</created>
-      <option name="number" value="00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1431361396259</updated>
-    </task>
-    <task id="LOCAL-00027" summary="arreglo del null pointer, locale y color de texto en el edittex en material desing">
-      <created>1431368550860</created>
-      <option name="number" value="00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1431368550860</updated>
-    </task>
-    <task id="LOCAL-00028" summary="implementacion de clase utilities y actualizacion de ide">
-      <created>1431526942199</created>
-      <option name="number" value="00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1431526942199</updated>
-    </task>
-<<<<<<< HEAD
-    <task id="LOCAL-00029" summary="directorio ignorado">
-      <created>1432748430612</created>
-      <option name="number" value="00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1432748430612</updated>
-    </task>
-    <option name="localTasksCounter" value="30" />
-=======
-    <option name="localTasksCounter" value="29" />
->>>>>>> experimental
     <servers />
-  </component>
-  <component name="TodoView" selected-index="0">
-    <todo-panel id="selected-file">
-      <are-packages-shown value="false" />
-      <are-modules-shown value="false" />
-      <flatten-packages value="false" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <are-modules-shown value="false" />
-      <flatten-packages value="false" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="default-changelist">
-      <are-packages-shown value="false" />
-      <are-modules-shown value="false" />
-      <flatten-packages value="false" />
-      <is-autoscroll-to-source value="false" />
-    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-97" width="1382" height="784" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329582" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32376397" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32854864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35885167" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32695374" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.50717705" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="135" y="-9" width="1200" height="703" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7057878" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1580938" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.67942584" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21860817" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22692889" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29346094" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3125997" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6028708" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
-  </component>
-  <component name="UnknownFeatures">
-    <option featureType="com.intellij.fileTypeFactory" implementationName="*.gitignore" />
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -2053,743 +1253,204 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-<<<<<<< HEAD
-=======
-    <MESSAGE value="creacion de response para enviar fotos en segundo plano" />
->>>>>>> experimental
-    <MESSAGE value="implementado servicio de envio de fotos en segundo plano" />
-    <MESSAGE value="envio de imagen en segundo plano finish, en proceso de testing" />
-    <MESSAGE value="optimizacion del envio de imagenes en segundo plano" />
-    <MESSAGE value="implementacion del objeto para la recepcion de productos" />
-    <MESSAGE value="implementacion de progressDialog para la descarga de informacion" />
-    <MESSAGE value="optimzado la descarga de informacion desde el webservice" />
-    <MESSAGE value="correccion de bug en la descarga de informacion" />
-    <MESSAGE value="cambio de tema de acuerdo a la version de api" />
-    <MESSAGE value="implemetancion de tema para la futura version de lollipop" />
-    <MESSAGE value="actulizacion de la libreria httpAsync a la version 1.4.6" />
-    <MESSAGE value="implementacion de material desing" />
-    <MESSAGE value="implementacion de las librerias de soporte mas recientes" />
-    <MESSAGE value="correcion de tema para cada version, y boton de salida desviado" />
-    <MESSAGE value="implementacion de AppCompatActivity, funcionando en todas las versionnes" />
-    <MESSAGE value="implementacion de action bar" />
-    <MESSAGE value="reparacion del error encontrado en las notificaciones" />
-    <MESSAGE value="optimizacion de servicio" />
-    <MESSAGE value="pequeñas errores encontrados en el servicio de geolocalizar" />
-    <MESSAGE value="arreglo del null pointer, locale y color de texto en el edittex en material desing" />
-    <MESSAGE value="implementacion de clase utilities y actualizacion de ide" />
-    <MESSAGE value="migracion a nuevo servidor" />
-    <MESSAGE value="migracion de server 90%, solo falta fotos" />
-    <MESSAGE value="migracion de server al 95%" />
-    <MESSAGE value="apuntadas todas las conexiones al nuevo servidor hostgator" />
-<<<<<<< HEAD
-    <MESSAGE value="directorio ignorado" />
-    <option name="LAST_COMMIT_MESSAGE" value="directorio ignorado" />
-=======
-    <option name="LAST_COMMIT_MESSAGE" value="apuntadas todas las conexiones al nuevo servidor hostgator" />
->>>>>>> experimental
+    <MESSAGE value="version 1.0.31" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 1.0.31" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <option name="time" value="9" />
-    </breakpoint-manager>
+    <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-<<<<<<< HEAD
-=======
-    <entry file="file://$PROJECT_DIR$/res/mipmap-mdpi/ic_launcher.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
->>>>>>> experimental
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/InteligenciaMercado.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13651878">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/inteligenciamercado.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/exhibiciones.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/menu/main.xml">
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="37" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/HandlerResponse/ResponseImage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable-mdpi/ic_window_close.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable-xhdpi/ic_window_close.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable-hdpi/ic_window_close.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/calendario.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/menu/menu.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/enviar.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable/custom_btn_genoa.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13355593">
-          <caret line="4" column="45" selection-start-line="4" selection-start-column="45" selection-end-line="4" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable/custom_btn_dark_khaki.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6327212">
-          <caret line="20" column="46" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable/custom_btn_beige.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5676127">
-          <caret line="17" column="43" selection-start-line="17" selection-start-column="43" selection-end-line="17" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable/custom_btn_sandrift.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable/custom_btn_shakespeare.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="89" selection-start-line="6" selection-start-column="89" selection-end-line="6" selection-end-column="89" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MostrarCalendario.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="9" selection-start-line="51" selection-start-column="8" selection-end-line="60" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/local.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/listatiendaspinner.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/encargadotienda.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <caret line="109" column="57" selection-start-line="109" selection-start-column="57" selection-end-line="109" selection-end-column="57" />
           <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/surtidomueble.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="47" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/inventariobodega.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/frentes.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/menu.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="124" column="47" selection-start-line="124" selection-start-column="47" selection-end-line="124" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/colores.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="47" selection-start-line="11" selection-start-column="47" selection-end-line="11" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/menutienda.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="49" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-<<<<<<< HEAD
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/EnviarInformacion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="94" column="5" selection-start-line="81" selection-start-column="4" selection-end-line="94" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/photocapture.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
-          <folding />
-=======
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/EnviarInformacion.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="94" column="5" selection-start-line="81" selection-start-column="4" selection-end-line="94" selection-end-column="5" />
->>>>>>> experimental
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-=======
-    <entry file="file://$PROJECT_DIR$/res/layout/photocapture.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="50" selection-start-line="22" selection-start-column="50" selection-end-line="22" selection-end-column="50" />
->>>>>>> experimental
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-<<<<<<< HEAD
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.53422374">
-          <caret line="16" column="74" selection-start-line="16" selection-start-column="74" selection-end-line="16" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10452962">
-          <caret line="3" column="50" selection-start-line="3" selection-start-column="50" selection-end-line="3" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/InventarioBodega.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.041736">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values-v21/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="67" selection-start-line="15" selection-start-column="67" selection-end-line="15" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/BD/BDopenHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="548" column="0" selection-start-line="548" selection-start-column="0" selection-end-line="548" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-22/com/android/internal/os/ZygoteInit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="11.874791">
-          <caret line="838" column="0" selection-start-line="838" selection-start-column="0" selection-end-line="838" selection-end-column="0" />
-=======
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.53422374">
-          <caret line="16" column="74" selection-start-line="16" selection-start-column="74" selection-end-line="16" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10452962">
-          <caret line="3" column="50" selection-start-line="3" selection-start-column="50" selection-end-line="3" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/InventarioBodega.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.041736">
-          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values-v21/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="67" selection-start-line="15" selection-start-column="67" selection-end-line="15" selection-end-column="67" />
->>>>>>> experimental
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-<<<<<<< HEAD
-        <state vertical-scroll-proportion="0.66611016">
-          <caret line="52" column="55" selection-start-line="52" selection-start-column="55" selection-end-line="52" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="9.382304">
-          <caret line="337" column="69" selection-start-line="337" selection-start-column="69" selection-end-line="337" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="358" column="0" selection-start-line="358" selection-start-column="0" selection-end-line="358" selection-end-column="0" />
-          <folding>
-            <element signature="e#11786#11957#0" expanded="false" />
-            <element signature="e#11956#11957#0" expanded="false" />
-            <element signature="e#12121#12289#0" expanded="false" />
-            <element signature="e#12288#12289#0" expanded="false" />
-            <element signature="e#12555#12775#0" expanded="false" />
-            <element signature="e#12774#12775#0" expanded="false" />
-            <marker date="1432748570752" expanded="false" signature="28:173" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/EnviarDatos.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="4" selection-start-line="31" selection-start-column="4" selection-end-line="31" selection-end-column="4" />
-          <folding>
-            <marker date="1432748570747" expanded="false" signature="28:521" placeholder="..." />
-          </folding>
+          <caret line="272" column="24" selection-start-line="272" selection-start-column="24" selection-end-line="272" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="131" column="50" selection-start-line="131" selection-start-column="50" selection-end-line="131" selection-end-column="50" />
+          <caret line="534" column="47" selection-start-line="534" selection-start-column="47" selection-end-line="534" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/promptversion.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="799" column="0" selection-start-line="799" selection-start-column="0" selection-end-line="799" selection-end-column="0" />
-          <folding>
-            <element signature="e#29869#29870#0" expanded="false" />
-            <element signature="e#29909#29910#0" expanded="false" />
-            <marker date="1432748570750" expanded="false" signature="28:32" placeholder="..." />
-            <marker date="1432748570750" expanded="true" signature="27595:29398" placeholder="{...}" />
-=======
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/BD/BDopenHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="548" column="0" selection-start-line="548" selection-start-column="0" selection-end-line="548" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-22/com/android/internal/os/ZygoteInit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="11.874791">
-          <caret line="838" column="0" selection-start-line="838" selection-start-column="0" selection-end-line="838" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.66611016">
-          <caret line="52" column="55" selection-start-line="52" selection-start-column="55" selection-end-line="52" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="9.382304">
-          <caret line="337" column="69" selection-start-line="337" selection-start-column="69" selection-end-line="337" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/utils/Utilities.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <caret line="39" column="76" selection-start-line="39" selection-start-column="76" selection-end-line="39" selection-end-column="76" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java">
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/InventarioBodega.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="359" column="0" selection-start-line="359" selection-start-column="0" selection-end-line="359" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2831#2847#0" expanded="false" />
-            <element signature="e#6721#6722#0" expanded="false" />
-            <element signature="e#6744#6745#0" expanded="false" />
-            <element signature="e#6787#6788#0" expanded="false" />
-            <element signature="e#6818#6819#0" expanded="false" />
-            <element signature="e#6846#6847#0" expanded="false" />
-            <element signature="e#6866#6867#0" expanded="false" />
-            <element signature="e#6903#6904#0" expanded="false" />
-            <element signature="e#6928#6929#0" expanded="false" />
-            <element signature="e#6958#6959#0" expanded="false" />
-            <element signature="e#6980#6981#0" expanded="false" />
-            <element signature="e#7021#7022#0" expanded="false" />
-            <element signature="e#7050#7051#0" expanded="false" />
-            <element signature="e#7079#7080#0" expanded="false" />
-            <element signature="e#7101#7102#0" expanded="false" />
-            <element signature="e#7140#7141#0" expanded="false" />
-            <element signature="e#7168#7169#0" expanded="false" />
-            <element signature="e#7197#7198#0" expanded="false" />
-            <element signature="e#7221#7222#0" expanded="false" />
-            <element signature="e#7263#7264#0" expanded="false" />
-            <element signature="e#7296#7297#0" expanded="false" />
-            <element signature="e#11818#11989#0" expanded="false" />
-            <element signature="e#11988#11989#0" expanded="false" />
-            <element signature="e#12153#12321#0" expanded="false" />
-            <element signature="e#12320#12321#0" expanded="false" />
-            <element signature="e#12587#12807#0" expanded="false" />
-            <element signature="e#12806#12807#0" expanded="false" />
-          </folding>
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/codpaa/EnviarDatos.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="4" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="false" />
->>>>>>> experimental
-          </folding>
-        </state>
-      </provider>
-    </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/listeners/ResponseExhibiciones.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-=======
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="131" column="50" selection-start-line="131" selection-start-column="50" selection-end-line="131" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#12360#12361#0" expanded="false" />
-            <element signature="e#12385#12386#0" expanded="false" />
-            <element signature="e#12428#12429#0" expanded="false" />
-            <element signature="e#12462#12463#0" expanded="false" />
-            <element signature="e#12493#12494#0" expanded="false" />
-            <element signature="e#12516#12517#0" expanded="false" />
-            <element signature="e#12558#12559#0" expanded="false" />
-            <element signature="e#12588#12589#0" expanded="false" />
-            <element signature="e#12621#12622#0" expanded="false" />
-            <element signature="e#12646#12647#0" expanded="false" />
-            <element signature="e#12692#12693#0" expanded="false" />
-            <element signature="e#12726#12727#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/promptversion.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="365" column="16" selection-start-line="365" selection-start-column="16" selection-end-line="365" selection-end-column="16" />
           <folding />
->>>>>>> experimental
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/updates/UpdateInformation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29883137">
-          <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
-=======
     <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="800" column="0" selection-start-line="800" selection-start-column="0" selection-end-line="800" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#8928#8929#0" expanded="false" />
-            <element signature="e#8955#8956#0" expanded="false" />
-            <element signature="e#9169#9170#0" expanded="false" />
-            <element signature="e#9202#9203#0" expanded="false" />
-            <element signature="e#9374#9375#0" expanded="false" />
-            <element signature="e#9420#9421#0" expanded="false" />
-            <element signature="e#10630#10631#0" expanded="false" />
-            <element signature="e#10669#10670#0" expanded="false" />
-            <element signature="e#10732#10733#0" expanded="false" />
-            <element signature="e#10760#10761#0" expanded="false" />
-            <element signature="e#29910#29911#0" expanded="false" />
-            <element signature="e#29950#29951#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/listeners/ResponseExhibiciones.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="49" selection-start-line="16" selection-start-column="49" selection-end-line="16" selection-end-column="49" />
->>>>>>> experimental
+          <caret line="109" column="57" selection-start-line="109" selection-start-column="57" selection-end-line="109" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuTienda.java">
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="201" column="16" selection-start-line="201" selection-start-column="16" selection-end-line="201" selection-end-column="16" />
-=======
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/updates/UpdateInformation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29883137">
-          <caret line="18" column="39" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
->>>>>>> experimental
+          <caret line="272" column="24" selection-start-line="272" selection-start-column="24" selection-end-line="272" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/utils/Utilities.java">
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-=======
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuTienda.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="201" column="16" selection-start-line="201" selection-start-column="16" selection-end-line="201" selection-end-column="16" />
->>>>>>> experimental
+          <caret line="521" column="55" selection-start-line="521" selection-start-column="55" selection-end-line="521" selection-end-column="55" />
           <folding />
         </state>
       </provider>
     </entry>
-<<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.033388983">
-          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="76" selection-start-line="39" selection-start-column="76" selection-end-line="39" selection-end-column="76" />
           <folding />
-=======
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5555556">
-          <caret line="45" column="20" selection-start-line="45" selection-start-column="20" selection-end-line="45" selection-end-column="20" />
-          <folding>
-            <element signature="e#11283#11448#0" expanded="true" />
-            <element signature="e#11447#11448#0" expanded="true" />
-            <element signature="e#11480#11631#0" expanded="true" />
-            <element signature="e#11630#11631#0" expanded="true" />
-          </folding>
->>>>>>> experimental
         </state>
       </provider>
     </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.7</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ScopeChooserConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/InventarioBodega.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/EnviarDatos.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="365" column="16" selection-start-line="365" selection-start-column="16" selection-end-line="365" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="109" column="57" selection-start-line="109" selection-start-column="57" selection-end-line="109" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10452962">
+          <caret line="3" column="41" selection-start-line="3" selection-start-column="41" selection-end-line="3" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="109" column="57" selection-start-line="109" selection-start-column="57" selection-end-line="109" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="76" selection-start-line="39" selection-start-column="76" selection-end-line="39" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/InventarioBodega.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/Configuracion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/EnviarDatos.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="365" column="16" selection-start-line="365" selection-start-column="16" selection-end-line="365" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="534" column="47" selection-start-line="534" selection-start-column="47" selection-end-line="534" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.475827">
+          <caret line="304" column="25" selection-start-line="304" selection-start-column="25" selection-end-line="304" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>
