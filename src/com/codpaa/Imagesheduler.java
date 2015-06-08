@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -116,6 +117,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
                 mP.setMarca(cur.getString(2));
                 mP.set_fecha(cur.getString(3));
                 mP.set_img(cur.getString(4));
+				mP.set_status(cur.getInt(5));
 
                 array.add(mP);
 
@@ -143,6 +145,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
             TextView txtName;
             TextView txtProducto;
             TextView txtFecha;
+			TextView txtStatus;
             ImageView img;
             ProgressBar progressBar;
             PhotoListModel temp;
@@ -173,6 +176,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
                 holder.txtName = (TextView) row.findViewById(R.id.txtNombretienda);
                 holder.txtProducto = (TextView) row.findViewById(R.id.txtProdPhoto);
                 holder.txtFecha = (TextView) row.findViewById(R.id.txtfechaPhoto);
+				holder.txtStatus = (TextView) row.findViewById(R.id.statusSheduler);
                 holder.img = (ImageView) row.findViewById(R.id.imgPhotoCola);
                 holder.progressBar = (ProgressBar) row.findViewById(R.id.progressBar2);
                // holder.botonEnviar = (Button) row.findViewById(R.id.buttonEnviarFoto);
@@ -197,6 +201,14 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 			holder.txtName.setText(temp.get_tienda());
             holder.txtProducto.setText(temp.getMarca());
             holder.txtFecha.setText(temp.get_fecha());
+			if (temp.get_status() == 1){
+
+				holder.txtStatus.setText("En Proceso");
+				holder.txtStatus.setTextColor(Color.GREEN);
+			}else if (temp.get_status() == 2){
+				holder.txtStatus.setText("Enviada");
+				holder.txtStatus.setTextColor(Color.BLUE);
+			}
             try {
                 Bitmap bitmap = BitmapFactory.decodeFile(temp.get_img(),options);
                 Bitmap thumbImage = ThumbnailUtils.extractThumbnail(bitmap,64,64);
@@ -229,8 +241,17 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		private String _img;
 		private String _fecha;
 		private String _marca;
+		private int _status;
 		private int _idPhoto;
-		
+
+		public int get_status() {
+			return _status;
+		}
+
+		public void set_status(int _status) {
+			this._status = _status;
+		}
+
 		public String get_tienda() {
 			return _tienda;
 		}
@@ -355,7 +376,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
                         rpFoto.put("ano", Integer.toString(curFoto.getInt(7)));
                         rpFoto.put("file", file);
 
-                        cliente.post(Utilities.WEB_SERVICE_CODPAA + "sentimage.php",rpFoto, new HttpResponseFoto(this,idFoto,position,img) );
+                        cliente.post(Utilities.WEB_SERVICE_CODPAA + "upimage1.php",rpFoto, new HttpResponseFoto(this,idFoto,position,img) );
 
 
                     }
@@ -458,7 +479,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
                         //
 
                         //set status=2 (status 2 = send image)
-						db.execSQL("Update photo set status=2 where idPhoto="+this._idFoto);
+						db.execSQL("Update photo set status=2 where idPhoto=" + this._idFoto);
 
                         //removemos el elmento de la lista
 						adp.remove(adp.getItem(_position));
@@ -466,7 +487,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 						adp.notifyDataSetChanged();
                         //notificamos al usuario la respuesta del servidor
 						Toast.makeText(getApplicationContext(), response.getString("insert"), Toast.LENGTH_SHORT).show();
-                        deleteArchivo(_imgPath);
+                        //deleteArchivo(_imgPath);
 
 
                     }else{
@@ -475,7 +496,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 
 							adp.remove(adp.getItem(_position));
 							adp.notifyDataSetChanged();
-                            deleteArchivo(_imgPath);
+                            //deleteArchivo(_imgPath);
                             Toast.makeText(getApplicationContext(), response.getString("insert"), Toast.LENGTH_SHORT).show();
                             db.execSQL("Update photo set status=2 where idPhoto="+this._idFoto);
 						}

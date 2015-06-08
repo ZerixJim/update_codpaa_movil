@@ -313,33 +313,46 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 				if(verificarConexion()){
 
                     AsyncHttpClient clienteFoto = new AsyncHttpClient();
-
+                    BDopenHelper registraImagen = new BDopenHelper(this);
                     RequestParams requ = new RequestParams();
 
 
                     if(!mCurrentPhotoPath.equals("")){
-                        Log.d("EnviarImage", "Enviando la imagen");
-                        File file = new File(mCurrentPhotoPath);
 
-                        requ.put("fecha", timeStamp);
-                        requ.put("idtienda", Integer.toString(idTienda));
-                        requ.put("idpromo", Integer.toString(idPromotor));
-                        requ.put("idex", Integer.toString(idExhibicion));
-                        requ.put("idmarca", Integer.toString(idMarca));
-                        requ.put("ano", ano);
-                        requ.put("mes", mes);
-                        requ.put("dia", dia);
-                        try {
-                            requ.put("file", file);
-                        } catch (FileNotFoundException e) {
-                            Log.d("Enviar Method", "El archivo no funciona");
+                        long id = registraImagen.insertarImagenId(idTienda,idPromotor,idMarca,idExhibicion,timeStamp,Integer.valueOf(dia),
+                                Integer.valueOf(mes),Integer.valueOf(ano),mCurrentPhotoPath,1);
+
+                        if(id > 0){
+                            Log.d("EnviarImage", "Enviando la imagen");
+                            Cursor datosFoto = registraImagen.datosFoto((int)(long)id);
+                            datosFoto.moveToFirst();
+
+                            //next
+
+                            File file = new File(mCurrentPhotoPath);
+
+
+                            requ.put("idtienda", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("idTienda"))));
+                            requ.put("idpromo", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("idCelular"))));
+                            requ.put("idmarca", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("idMarca"))));
+                            requ.put("idex", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("idExhibicion"))));
+                            requ.put("fecha", datosFoto.getString(datosFoto.getColumnIndex("fecha")));
+                            requ.put("dia", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("dia"))));
+                            requ.put("mes", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("mes"))));
+                            requ.put("ano", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("anio"))));
+                            try {
+                                requ.put("file", file );
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "upimage1.php", requ,
+                                    new HttpResponseImage(CameraActivity, (int)(long)id));
+                            Log.d("http foto", requ.toString());
+                            datosFoto.close();
                         }
 
-                        clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "upimage1.php", requ,
-                                new HttpResponseImage(CameraActivity, idTienda, idPromotor, idMarca,
-                                        idExhibicion, timeStamp, Integer.parseInt(dia),
-                                        Integer.parseInt(mes), Integer.parseInt(ano),mCurrentPhotoPath));
-                        Log.d("http foto", requ.toString());
                     }else{
                         Toast.makeText(this, "Sin Imagen para enviar", Toast.LENGTH_SHORT).show();
                     }
@@ -393,24 +406,17 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     //metod: listener response of image loaded
 	private class HttpResponseImage extends JsonHttpResponseHandler{
 
-		private int _idTienda, _idPromo, _idMarca, _idExhib, _dia, _mes, _ano;
-		private String _timeStamp, _imgPath;
+		int _idPhotho;
 		Activity _act;
 		BDopenHelper db;
+        SQLiteDatabase base;
 
-		public HttpResponseImage(Activity context, int idTi, int idPromo, int idMar, int idExhi,
-                                 String time ,int dia, int mes, int ano,String imgPath) {
+		public HttpResponseImage(Activity context, int idPhoto) {
 				this._act = context;
+            this._idPhotho = idPhoto;
 				db = new BDopenHelper(_act);
-                this._imgPath = imgPath;
-				this._idTienda = idTi;
-				this._idPromo = idPromo;
-				this._idMarca = idMar;
-				this._idExhib = idExhi;
-				this._timeStamp = time;
-				this._dia = dia;
-				this._mes = mes;
-				this._ano = ano;
+
+            base = db.getWritableDatabase();
 		}
 
 
@@ -476,7 +482,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 			try {
 
-				db.insertarImagen(_idTienda, _idPromo, _idMarca, _idExhib, _timeStamp, _dia, _mes, _ano, mCurrentPhotoPath, 1);
+				//db.insertarImagen(_idTienda, _idPromo, _idMarca, _idExhib, _timeStamp, _dia, _mes, _ano, mCurrentPhotoPath, 1);
 				imagenEspera = false;
 				showImg.setImageDrawable(getResources().getDrawable(R.drawable.noimage));
 			} catch (SQLiteException e1) {
@@ -510,9 +516,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 						spiExh.setSelection(0);
 						spiMarca.setSelection(0);
 
-                        deleteArchivo(_imgPath);
-
-
+                        //deleteArchivo(_imgPath);
+                        base.execSQL("Update photo set status=2 where idPhoto="+this._idPhotho);
+                        base.close();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -524,7 +530,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 							showImg.setImageDrawable(getResources().getDrawable(R.drawable.imagesend));
 							imagenEspera = false;
 						}
-                        deleteArchivo(_imgPath);
+                        //deleteArchivo(_imgPath);
 
 						Toast.makeText(getApplicationContext(), response.getString("insert"),
                                 Toast.LENGTH_SHORT).show();

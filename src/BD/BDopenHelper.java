@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 
 public class BDopenHelper extends SQLiteOpenHelper {
@@ -157,6 +161,28 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
+    public long insertarImagenId(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia, int mes, int anio, String imagen, int status){
+        baseDatosLocal = getWritableDatabase();
+        ContentValues valores = new ContentValues();
+        long id = 0;
+        valores.put("idTienda", idTien);
+        valores.put("idCelular", idCel);
+        valores.put("idMarca", idMarca);
+        valores.put("idExhibicion", idExhi);
+        valores.put("fecha", fecha);
+        valores.put("dia", dia);
+        valores.put("mes", mes);
+        valores.put("anio", anio);
+        valores.put("imagen", imagen);
+        valores.put("status", status);
+
+        if(baseDatosLocal != null)
+            id = baseDatosLocal.insert("photo", null, valores);
+        if(baseDatosLocal != null)baseDatosLocal.close();
+
+        return id;
+    }
+
     public void insertarCajasMay(int idCel, int idMar, String fecha,int Cajas, int status){
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
@@ -232,10 +258,30 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
-    public void borrarFotos(){
+    public void borrarFotos(String fecha){
         SQLiteDatabase baseFoto = getWritableDatabase();
-        if (baseFoto != null)
-            baseFoto.execSQL("delete from photo where status=2");
+        if (baseFoto != null){
+            //Cursor eliminarFoto = baseFoto.query("photo",new String[]{"imagen"},)
+            Cursor eliminarFoto = baseFoto.rawQuery("select p.imagen from photo as p where p.status=2 and fecha!='"+fecha+"';", null);
+            for (eliminarFoto.moveToFirst();!eliminarFoto.isAfterLast();eliminarFoto.moveToNext()){
+
+                try {
+                    File archivo = new File(eliminarFoto.getString(0));
+
+                    if(archivo.delete()){
+                        baseFoto.execSQL("delete from photo where imagen='"+eliminarFoto.getString(0)+"';");
+                        Log.d("Delete file", "Archivo borrado");
+                    }else{
+                        Log.d("Delete file","Archivo no se pudo borrar");
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+            eliminarFoto.close();
+        }
         if (baseFoto != null) baseFoto.close();
 
     }
@@ -403,9 +449,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
 
         return baseDatosLocal.rawQuery("select p.idPhoto,(c.grupo||' '||c.sucursal) as tienda," +
-                "m.nombre, p.fecha, p.imagen " +
+                "m.nombre, p.fecha, p.imagen, p.status " +
                 "from photo as p inner join clientes as c on p.idTienda=c.idTienda " +
-                "inner join marca as m on p.idMarca=m.idMarca where p.status=1", null);
+                "inner join marca as m on p.idMarca=m.idMarca", null);
 
 
     }

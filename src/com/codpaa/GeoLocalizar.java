@@ -973,7 +973,7 @@ public class GeoLocalizar extends Service implements LocationListener{
                 try {
 
                     Log.d("Respuestas Ima", response.getString("insert"));
-                    BDopenHelper bs = new BDopenHelper(con);
+                    //BDopenHelper bs = new BDopenHelper(con);
                     if(response.getBoolean("bol")){
 
                         notificationBuilder.setContentText("se envio correctamente")
@@ -988,12 +988,12 @@ public class GeoLocalizar extends Service implements LocationListener{
                                 "idMarca="+response.getInt("idMarca")+" and fecha='"+
                                 response.getString("fecha")+"';");
 
-
-                        deleteArchivo(bs.fotoPath(response.getInt("idFotoCel")));
+						//borrar la imagen
+                        //deleteArchivo(bs.fotoPath(response.getInt("idFotoCel")));
 
                     }else{
                         if(response.getInt("code") == 3){
-                            deleteArchivo(bs.fotoPath(response.getInt("idFotoCel")));
+                            //deleteArchivo(bs.fotoPath(response.getInt("idFotoCel")));
 
                             db.execSQL("update photo set status=2 where idTienda="+
                                     response.getInt("idTienda")+" and " +

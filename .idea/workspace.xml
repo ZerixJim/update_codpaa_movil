@@ -5,94 +5,74 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="bcf431eb-1d57-496e-a492-7290e1b20f2f" name="Default" comment="">
-      <change type="MOVED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\utils\utilities.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/utils/Utilities.class" />
-      <change type="MOVED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\release\com\codpaa\utils\utilities.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/utils/Utilities.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/BuildConfig.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/BuildConfig.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/BuildConfig.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/BuildConfig.class" />
+    <list default="true" id="bcf431eb-1d57-496e-a492-7290e1b20f2f" name="Default" comment="version 1.0.31">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/BD/BDopenHelper.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/BD/BDopenHelper.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug-unaligned.apk" afterPath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug-unaligned.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug.apk" afterPath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/apk/CODPAA-release-unaligned.apk" afterPath="$PROJECT_DIR$/build/outputs/apk/CODPAA-release-unaligned.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CODPAA-release.apk" afterPath="$PROJECT_DIR$/CODPAA-release.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseCaMa.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseCaMa.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseExhi.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseExhi.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseFrentes.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseFrentes.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseInteligen.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseInteligen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseInventario.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos$HttpResponseInventario.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/EnviarDatos.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$10.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$10.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$11.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$11.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$12.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$12.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$13.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$13.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/CustomAdapter.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/CustomAdapter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/EnviarInformacion.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/EnviarInformacion.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Exhibiciones.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Exhibiciones.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Frentes.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Frentes.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/adapters/FrentesCustomAdapter.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/adapters/FrentesCustomAdapter.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/GeoLocalizar$14.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/GeoLocalizar$14.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$14.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$14.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$4.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$5.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$5.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$6.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$6.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$7.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$7.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$8.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$8.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$9.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$9.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$MyBinder.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar$MyBinder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/GeoLocalizar.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/GeoLocalizar.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/GeoLocalizar.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$CustomListAdapter$ViewHolder.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$CustomListAdapter$ViewHolder.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$CustomListAdapter.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$CustomListAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$EnviarFotoListener.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$EnviarFotoListener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$HttpResponseFoto.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$PhotoListModel.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler$PhotoListModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/Imagesheduler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$4.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$5.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity$5.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MainActivity.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$EscucharDialogoEncargado.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$EscucharDialogoEncargado.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$Listener.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$Listener.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$ListenerSAlida.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$ListenerSAlida.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$localizacion.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda$localizacion.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/MenuTienda.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture$HttpResponseImage.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/PhotoCapture.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/updates/UpdateInformation.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/updates/UpdateInformation.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/updates/UpdateInformation.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/release/com/codpaa/updates/UpdateInformation.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$CustomListAdapter$ViewHolder.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$CustomListAdapter$ViewHolder.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$CustomListAdapter.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$CustomListAdapter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$EnviarFotoListener.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$EnviarFotoListener.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$HttpResponseFoto.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$PhotoListModel.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler$PhotoListModel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Imagesheduler.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/InteligenciaMercado.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/InteligenciaMercado.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/InventarioBodega.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/InventarioBodega.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/adapters/InventariosCustomAdapter.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/adapters/InventariosCustomAdapter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/ListarLocation.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/ListarLocation.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/MainActivity.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/MainActivity.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Mayoreo.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/Mayoreo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/MenuPrincipal$TiendasCustomAdapter.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/MenuPrincipal$TiendasCustomAdapter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/MenuPrincipal.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/MenuPrincipal.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/MenuTienda.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/MenuTienda.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage$1.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage$2.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage$3.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage$4.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage$5.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage$6.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture$HttpResponseImage.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/PhotoCapture.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/adapters/ProductosAdapter.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/adapters/ProductosAdapter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/ProductosCustomAdapter.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/ProductosCustomAdapter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$id.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$id.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$integer.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$integer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$layout.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$layout.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$menu.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$menu.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$mipmap.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$mipmap.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$string.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$string.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$style.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$style.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$styleable.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R$styleable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/R.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/SurtidoMueble.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/SurtidoMueble.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/utils/Utilities.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/utils/Utilities.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex/debug/classes.dex" afterPath="$PROJECT_DIR$/build/intermediates/dex/debug/classes.dex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex/release/classes.dex" afterPath="$PROJECT_DIR$/build/intermediates/dex/release/classes.dex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/resources/resources-debug.ap_" afterPath="$PROJECT_DIR$/build/intermediates/resources/resources-debug.ap_" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/resources/resources-release.ap_" afterPath="$PROJECT_DIR$/build/intermediates/resources/resources-release.ap_" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/manifests/full/debug/AndroidManifest.xml" afterPath="$PROJECT_DIR$/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/manifests/full/release/AndroidManifest.xml" afterPath="$PROJECT_DIR$/build/intermediates/manifests/full/release/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/source/buildConfig/debug/com/codpaa/BuildConfig.java" afterPath="$PROJECT_DIR$/build/generated/source/buildConfig/debug/com/codpaa/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/source/buildConfig/release/com/codpaa/BuildConfig.java" afterPath="$PROJECT_DIR$/build/generated/source/buildConfig/release/com/codpaa/BuildConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BD/BDopenHelper.java" afterPath="$PROJECT_DIR$/src/BD/BDopenHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java" afterPath="$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java" afterPath="$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java" afterPath="$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java" afterPath="$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/source/r/debug/com/codpaa/R.java" afterPath="$PROJECT_DIR$/build/generated/source/r/debug/com/codpaa/R.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/symbols/debug/R.txt" afterPath="$PROJECT_DIR$/build/intermediates/symbols/debug/R.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/res/debug/layout/custom_photo_list.xml" afterPath="$PROJECT_DIR$/build/intermediates/res/debug/layout/custom_photo_list.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/custom_photo_list.xml" afterPath="$PROJECT_DIR$/res/layout/custom_photo_list.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/lint-results-release-fatal.html" afterPath="$PROJECT_DIR$/build/outputs/lint-results-release-fatal.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/incremental/mergeResources/debug/merger.xml" afterPath="$PROJECT_DIR$/build/intermediates/incremental/mergeResources/debug/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/incremental/mergeResources/release/merger.xml" afterPath="$PROJECT_DIR$/build/intermediates/incremental/mergeResources/release/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/outputFileStates.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/res/release/layout/promptversion.xml" afterPath="$PROJECT_DIR$/build/intermediates/res/release/layout/promptversion.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/res/debug/values/values.xml" afterPath="$PROJECT_DIR$/build/intermediates/res/debug/values/values.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/res/release/values/values.xml" afterPath="$PROJECT_DIR$/build/intermediates/res/release/values/values.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CODPAA.iws" />
@@ -132,56 +112,88 @@
     <option name="PATCH_PATH" value="" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <PATH>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
+              </PATH_ELEMENT>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="CODPAA" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
+              </PATH_ELEMENT>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="Tasks" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.TasksNode" />
+              </PATH_ELEMENT>
+            </PATH>
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="FavoritesManager">
     <favorites_list name="CODPAA" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GeoLocalizar.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
+      <file leaf-file-name="Imagesheduler.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="109" column="57" selection-start-line="109" selection-start-column="57" selection-end-line="109" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.5676127">
+              <caret line="207" column="46" selection-start-line="207" selection-start-column="46" selection-end-line="207" selection-end-column="46" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PhotoCapture.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="custom_photo_list.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/custom_photo_list.xml">
+          <provider selected="true" editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BDopenHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/BD/BDopenHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="453" column="70" selection-start-line="453" selection-start-column="70" selection-end-line="453" selection-end-column="70" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PhotoCapture.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.475827">
-              <caret line="304" column="25" selection-start-line="304" selection-start-column="25" selection-end-line="304" selection-end-column="25" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="353" column="25" selection-start-line="353" selection-start-column="25" selection-end-line="353" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MenuPrincipal.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
+      <file leaf-file-name="Frentes.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/codpaa/Frentes.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="534" column="47" selection-start-line="534" selection-start-column="47" selection-end-line="534" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="76" selection-start-line="39" selection-start-column="76" selection-end-line="39" selection-end-column="76" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InventarioBodega.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/codpaa/InventarioBodega.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+              <caret line="242" column="60" selection-start-line="242" selection-start-column="60" selection-end-line="242" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -192,6 +204,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="365" column="16" selection-start-line="365" selection-start-column="16" selection-end-line="365" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MenuPrincipal.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="536" column="42" selection-start-line="536" selection-start-column="42" selection-end-line="536" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -901,8 +923,24 @@
       <list>
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java" />
+        <option value="$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java" />
+        <option value="$PROJECT_DIR$/res/layout/custom_photo_list.xml" />
+        <option value="$PROJECT_DIR$/src/BD/BDopenHelper.java" />
+        <option value="$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java" />
+        <option value="$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java" />
       </list>
     </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Bundled (Maven 3)" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState />
   </component>
   <component name="NamedScopeManager">
     <order />
@@ -936,7 +974,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="AndroidView">
@@ -999,19 +1036,53 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CODPAA" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CODPAA" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BD" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CODPAA" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CODPAA" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="recentsLimit" value="5" />
     <property name="FullScreen" value="false" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="TA94801UX0" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.56.101:5555" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Galaxy_Ace_API_10" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Codpaa APk/Apk android studio" />
     <property name="ExportApk.ApkPath" value="C:\Users\Gustavo\Desktop\CODPAA\Codpaa APk\Apk android studio" />
     <property name="ExportApk.Flavors" value="" />
     <property name="ExportApk.BuildType" value="release" />
+    <property name="SearchEverywhereHistoryKey" value="sendfrentesnew&#9;null&#9;null" />
   </component>
   <component name="RunManager" selected="Android Application.CODPAA">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -1209,36 +1280,45 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-97" width="1382" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32854864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.67942584" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21860817" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21860817" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1264,6 +1344,112 @@
     <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="945" column="34" selection-start-line="945" selection-start-column="34" selection-end-line="945" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="108" column="33" selection-start-line="108" selection-start-column="33" selection-end-line="108" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/custom_photo_list.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/BD/BDopenHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="453" column="70" selection-start-line="453" selection-start-column="70" selection-end-line="453" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="494" column="0" selection-start-line="494" selection-start-column="0" selection-end-line="494" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="536" column="42" selection-start-line="536" selection-start-column="42" selection-end-line="536" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="915" column="84" selection-start-line="915" selection-start-column="84" selection-end-line="915" selection-end-column="84" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="108" column="33" selection-start-line="108" selection-start-column="33" selection-end-line="108" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/custom_photo_list.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/BD/BDopenHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="453" column="70" selection-start-line="453" selection-start-column="70" selection-end-line="453" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="520" column="37" selection-start-line="520" selection-start-column="37" selection-end-line="520" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="536" column="42" selection-start-line="536" selection-start-column="42" selection-end-line="536" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="109" column="57" selection-start-line="109" selection-start-column="57" selection-end-line="109" selection-end-column="57" />
           <folding />
         </state>
@@ -1272,8 +1458,10 @@
     <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="272" column="24" selection-start-line="272" selection-start-column="24" selection-end-line="272" selection-end-column="24" />
-          <folding />
+          <caret line="304" column="25" selection-start-line="304" selection-start-column="25" selection-end-line="304" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1297,7 +1485,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1305,7 +1492,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="365" column="16" selection-start-line="365" selection-start-column="16" selection-end-line="365" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1321,7 +1507,57 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="272" column="24" selection-start-line="272" selection-start-column="24" selection-end-line="272" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="534" column="47" selection-start-line="534" selection-start-column="47" selection-end-line="534" selection-end-column="47" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="76" selection-start-line="39" selection-start-column="76" selection-end-line="39" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/InventarioBodega.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/EnviarDatos.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="365" column="16" selection-start-line="365" selection-start-column="16" selection-end-line="365" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="109" column="57" selection-start-line="109" selection-start-column="57" selection-end-line="109" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="272" column="24" selection-start-line="272" selection-start-column="24" selection-end-line="272" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1345,7 +1581,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1353,7 +1588,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="365" column="16" selection-start-line="365" selection-start-column="16" selection-end-line="365" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1369,7 +1603,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1397,18 +1633,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/Configuracion.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="109" column="57" selection-start-line="109" selection-start-column="57" selection-end-line="109" selection-end-column="57" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/Localizacion.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0684475">
+          <caret line="36" column="11" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.navigation/CODPAA/raw/main.nvg.xml">
+      <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="76" selection-start-line="39" selection-start-column="76" selection-end-line="39" selection-end-column="76" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="navigationeditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/utils/Utilities.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06677797">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1417,14 +1669,49 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6010017">
+          <caret line="39" column="76" selection-start-line="39" selection-start-column="76" selection-end-line="39" selection-end-column="76" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/Configuracion.java">
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="536" column="42" selection-start-line="536" selection-start-column="42" selection-end-line="536" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/custom_photo_list.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/BD/BDopenHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="453" column="70" selection-start-line="453" selection-start-column="70" selection-end-line="453" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/Frentes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="242" column="60" selection-start-line="242" selection-start-column="60" selection-end-line="242" selection-end-column="60" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1436,18 +1723,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/MenuPrincipal.java">
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="534" column="47" selection-start-line="534" selection-start-column="47" selection-end-line="534" selection-end-column="47" />
+          <caret line="353" column="25" selection-start-line="353" selection-start-column="25" selection-end-line="353" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/GeoLocalizar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="13.522537">
+          <caret line="945" column="34" selection-start-line="945" selection-start-column="34" selection-end-line="945" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/codpaa/PhotoCapture.java">
+    <entry file="file://$PROJECT_DIR$/src/com/codpaa/Imagesheduler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.475827">
-          <caret line="304" column="25" selection-start-line="304" selection-start-column="25" selection-end-line="304" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.5676127">
+          <caret line="207" column="46" selection-start-line="207" selection-start-column="46" selection-end-line="207" selection-end-column="46" />
           <folding />
         </state>
       </provider>
