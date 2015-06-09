@@ -69,7 +69,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
     ProgressBar progressFoto;
-
+    File imageCaptured = null;
     TextView textoEnvio;
 	int idPromotor, idTienda;
 	Button photo, enviarPhoto;
@@ -164,6 +164,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     //voy a modificar este metodo
     private void dispatchTakePictureIntent(){
         //intention start camera
+
+        Log.d("dispath", "1");
     	Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //if exists respost to camera
     	if(takePictureIntent.resolveActivity(getPackageManager()) != null){
@@ -203,17 +205,20 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 			Log.v("PictireCir", "Directorio Ya Existe");
 		}
 
-		File image = File.createTempFile(imageFileName, ".jpg",storageDir);
+		imageCaptured = File.createTempFile(imageFileName, ".jpg",storageDir);
 
-		mCurrentPhotoPath = image.getAbsolutePath();
+		//mCurrentPhotoPath = image.getAbsolutePath();
 
-		return image;
+		return imageCaptured;
 	}
 
 
     //result of takeImage
 	@Override
     protected void onActivityResult( int requestCode, int resultCode, Intent data){
+
+        Log.d("onActivityResult", "1");
+
     	if(requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
 
     		imagenEspera = true;
@@ -239,7 +244,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
                 /*BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 0;*/
-
+                mCurrentPhotoPath = imageCaptured.getAbsolutePath();
                 File archivo = new File(mCurrentPhotoPath);
                 long tamano = archivo.length();
                 double kb = tamano/1024;
@@ -276,7 +281,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 }
     		}
 
-    	}
+    	}else {
+            imageCaptured = null;
+        }
 
     }
 

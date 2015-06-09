@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
@@ -28,9 +29,13 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -50,8 +55,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	
 	
 	TextView nombreUsuario, conexion, bien, version, cartera;
-	Button btnC, btnTienda, btnRuta, btnEnviar, btnCajasM;
-	ImageButton btnActua;
+	Button btnTienda, btnRuta, btnEnviar, btnCajasM;
+
 	Spinner spinnerTien;
 	SQLiteDatabase base;
 	LocationManager lM = null;
@@ -70,11 +75,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 		Intent recibe = getIntent();
 		String valor = (String) recibe.getExtras().get("nombre");
-		
-	
-		btnC = (Button) findViewById(R.id.cerrarApli);
-	
-		btnActua = (ImageButton) findViewById(R.id.imageBtnRefresh);
+
 	
 		bien = (TextView) findViewById(R.id.bienvenido);
 		nombreUsuario = (TextView) findViewById(R.id.txtnomUser);
@@ -91,8 +92,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 		
 		
-		btnC.setOnClickListener(this);
-		btnActua.setOnClickListener(this);
+
 		
 		btnTienda.setOnClickListener(this);
 		btnRuta.setOnClickListener(this);
@@ -148,6 +148,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			Toast.makeText(this, "no se pudo asignar el usurio "+valor, Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
 			
+		}catch (CursorIndexOutOfBoundsException e){
+			Toast.makeText(getApplicationContext(), "Salga de la aplicacion e inicie sesion de nuevo", Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
 		}
 		
 		
@@ -204,10 +207,57 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 		
 		borrarRegistros();
+
+		try {
+			assert getSupportActionBar() != null;
+			ActionBar actionBar = getSupportActionBar();
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			actionBar.setDisplayUseLogoEnabled(true);
+			actionBar.setHomeButtonEnabled(true);
+			actionBar.setLogo(R.drawable.ic_launcher);
+		}catch (NullPointerException e){
+			e.printStackTrace();
+		}
 		
 	}
-	
-	
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menu_principal, menu);
+
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()){
+			case R.id.refresh_info:
+				if(verificarConexion()){
+
+					UpdateInformation upinfo = new UpdateInformation(this);
+					Toast.makeText(this,"Actualizando Informacion",Toast.LENGTH_SHORT).show();
+					upinfo.actualizarTiendas(idUsuario);
+					upinfo.actualizarRuta(idUsuario);
+					upinfo.actualizarExhibiciones();
+					upinfo.actualizarMarca(idUsuario);
+					upinfo.actualizarProducto(idUsuario);
+
+				}else{
+
+					Toast.makeText(this, "Se perdio la conexion a Internet", Toast.LENGTH_SHORT).show();
+				}
+				return true;
+			case android.R.id.home:
+				this.finish();
+				return true;
+
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 
 	@Override
 	protected void onResume() {
@@ -284,34 +334,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			calendario();
 			break;
 		
-		case R.id.imageBtnRefresh:
-			
-			
-			if(verificarConexion()){
 
-                UpdateInformation upinfo = new UpdateInformation(this);
-                Toast.makeText(this,"Actualizando Informacion",Toast.LENGTH_SHORT).show();
-                upinfo.actualizarTiendas(idUsuario);
-                upinfo.actualizarRuta(idUsuario);
-				upinfo.actualizarExhibiciones();
-                upinfo.actualizarMarca(idUsuario);
-                upinfo.actualizarProducto(idUsuario);
-				
-			}else{
-				
-				Toast.makeText(this, "Se perdio la conexion a Internet", Toast.LENGTH_SHORT).show();
-			}
-			
-			break;
-			
-			
-		case R.id.cerrarApli:
-			
-			finish();
-			break;
-			
-		
-			
 		case R.id.buttonEnviar:
 			
 			Intent in = new Intent(this, EnviarInformacion.class);

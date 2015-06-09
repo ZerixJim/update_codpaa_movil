@@ -72,45 +72,10 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/sombra_caja"
-        android:weightSum="2" >
-
-        <ImageButton
-            android:id="@+id/imageBtnRefresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_action_refresh"
-            tools:ignore="ContentDescription"
-            android:layout_margin="2dp"
-            style="@style/btnStyleBeige" />
-
-        <Button
-            android:id="@+id/cerrarApli"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:drawableLeft="@drawable/delete"
-            android:padding="10dp"
-            android:text="@string/cerra"
-            android:textColorLink="@color/Red"
-            android:layout_margin="2dp"
-            style="@style/btnStyleBeige" />
-
-    </LinearLayout>
-
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/linearLayout1" >
 

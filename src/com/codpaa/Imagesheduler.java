@@ -204,10 +204,10 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 			if (temp.get_status() == 1){
 
 				holder.txtStatus.setText("En Proceso");
-				holder.txtStatus.setTextColor(Color.GREEN);
+				holder.txtStatus.setTextColor(Color.BLUE);
 			}else if (temp.get_status() == 2){
 				holder.txtStatus.setText("Enviada");
-				holder.txtStatus.setTextColor(Color.BLUE);
+				holder.txtStatus.setTextColor(Color.GREEN);
 			}
             try {
                 Bitmap bitmap = BitmapFactory.decodeFile(temp.get_img(),options);
@@ -479,10 +479,10 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
                         //
 
                         //set status=2 (status 2 = send image)
-						db.execSQL("Update photo set status=2 where idPhoto=" + this._idFoto);
+						db.execSQL("Update photo set status=2 where idPhoto="+ this._idFoto);
 
                         //removemos el elmento de la lista
-						adp.remove(adp.getItem(_position));
+						//adp.remove(adp.getItem(_position));
                         //notificamos el cambio al adaptador
 						adp.notifyDataSetChanged();
                         //notificamos al usuario la respuesta del servidor
@@ -494,7 +494,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 						if(response.getInt("code") == 3){
 
 
-							adp.remove(adp.getItem(_position));
+							//adp.remove(adp.getItem(_position));
 							adp.notifyDataSetChanged();
                             //deleteArchivo(_imgPath);
                             Toast.makeText(getApplicationContext(), response.getString("insert"), Toast.LENGTH_SHORT).show();
