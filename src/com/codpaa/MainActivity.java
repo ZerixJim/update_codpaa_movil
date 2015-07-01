@@ -418,14 +418,8 @@ public class MainActivity extends Activity implements OnClickListener, OnKeyList
 				iniciarMarket();
 				finish();
 			}
-		}).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-				
-			}
 		});
+
 		
 		AlertDialog alertDialog = alertDialogB.create();
 		alertDialog.show();

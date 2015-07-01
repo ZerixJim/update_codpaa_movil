@@ -96,9 +96,13 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 	
 	private void loadList(){
 		try {
+
+			Log.d("listValue","cantidad: "+getList().size());
 			adp = new CustomListAdapter(this, android.R.layout.simple_list_item_1, getList());
 			listV.setAdapter(adp);
+
 		} catch (Exception e) {
+			e.printStackTrace();
 			Log.d("ImageSheduler", "Error en adaptador");
 		}
 		
@@ -290,12 +294,12 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		PhotoListModel pl = (PhotoListModel) arg0.getItemAtPosition(arg2);
 
 		//ProgressBar progressBar = (ProgressBar) arg1.findViewById(R.id.progressBar2);
-		dialogoFoto(pl.get_img(), pl.get_idPhoto(), arg2);
+		dialogoFoto(pl.get_img(), pl.get_idPhoto(), arg2, pl.get_status());
 
 		
 	}
 	
-	private void dialogoFoto(String img, int idFoto, int position) {
+	private void dialogoFoto(String img, int idFoto, int position, int status) {
 		
 		Builder builder  = new AlertDialog.Builder(this);
 		View vistaFotoEnviar = LayoutInflater.from(this).inflate(R.layout.dialogimg, null);
@@ -306,7 +310,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		Bitmap bitmap = BitmapFactory.decodeFile(img,options);
 		imagen.setImageBitmap(bitmap);
 		
-		EnviarFotoListener listener = new EnviarFotoListener(idFoto, img, position);
+		EnviarFotoListener listener = new EnviarFotoListener(idFoto, img, position, status);
 		
 		builder.setPositiveButton("Enviar Foto", listener).setNegativeButton("Cancelar", listener).setView(vistaFotoEnviar);
 		builder.create().show();
@@ -318,12 +322,14 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		
 		private int _idFoto= 0;
 		private int _position;
+		private int _status;
 		private String _img;
 		
-		public EnviarFotoListener(int idFoto, String img, int position){
+		public EnviarFotoListener(int idFoto, String img, int position, int status){
 			this._idFoto = idFoto;
 			this._img = img;
 			this._position = position;
+			this._status = status;
 		}
 		
 		
@@ -332,8 +338,13 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 			
 			if(which == DialogInterface.BUTTON_POSITIVE){
 				if(_idFoto != 0){
-					enviarFoto(_idFoto, this._img, this._position);
-					Toast.makeText(getApplicationContext(), "Enviando Imagen", Toast.LENGTH_LONG).show();
+					if (_status == 2){
+						Toast.makeText(getApplicationContext(),"La imagen ya esta enviada",Toast.LENGTH_SHORT).show();
+					}else {
+						enviarFoto(_idFoto, this._img, this._position);
+						Toast.makeText(getApplicationContext(), "Enviando Imagen", Toast.LENGTH_LONG).show();
+
+					}
 				}
 				
 				

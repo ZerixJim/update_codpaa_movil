@@ -218,7 +218,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		}catch (NullPointerException e){
 			e.printStackTrace();
 		}
-		
+
+		//estadisticas();
 	}
 
 	@Override
@@ -702,6 +703,27 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         uInf.actualizarRuta(idUsuario);
         uInf.actualizarExhibiciones();
     }
+
+
+	/*public void estadisticas(){
+
+        int uid = getApplication().getApplicationInfo().uid;
+
+
+		double totalBytes = (double) TrafficStats.getTotalRxBytes() + TrafficStats.getTotalTxBytes();
+		double mobileBytes = TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes();
+        double datosCodpaa = (TrafficStats.getUidRxBytes(uid) + TrafficStats.getUidTxBytes(uid)) / 1000000.0;
+		totalBytes -= mobileBytes;
+		totalBytes /= 1000000;
+		mobileBytes /= 1000000;
+
+		NumberFormat nf = new DecimalFormat("#.##");
+		String totalStr = nf.format(totalBytes);
+		String mobileStr = nf.format(mobileBytes);
+        String codpaaStr = nf.format(datosCodpaa);
+		String info = String.format("\tWifi Data Usage: %s MB\tMobile Data Usage, %s mb \tCodpaa: %s mb", totalStr, mobileStr, codpaaStr );
+		Log.d("DATOS", info);
+	}*/
 
 
 

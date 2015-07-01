@@ -4,7 +4,40 @@
     <item android:id="@+id/refresh_info"
         android:icon="@drawable/ic_autorenew_white_24dp"
         android:title="Refresh"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_overflow"
+        android:title="OverFlow"
+        android:icon="@drawable/ic_more_vert_white_36dp"
+        android:orderInCategory="11111"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/contacts"
+                app:showAsAction="never"
+                android:title="Contactos"/>
+
+
+            <item
+                android:id="@+id/service_Tasks"
+                app:showAsAction="never"
+                android:title="Servicios"/>
+
+
+            <item
+                android:id="@+id/charge_summary"
+                app:showAsAction="never"
+                android:title="Acerca de"/>
+
+
+
+        </menu>
+    </item>
+
+
+
+
 
 
 

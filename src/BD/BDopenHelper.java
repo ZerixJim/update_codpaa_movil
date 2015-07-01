@@ -262,21 +262,34 @@ public class BDopenHelper extends SQLiteOpenHelper {
         SQLiteDatabase baseFoto = getWritableDatabase();
         if (baseFoto != null){
             //Cursor eliminarFoto = baseFoto.query("photo",new String[]{"imagen"},)
-            Cursor eliminarFoto = baseFoto.rawQuery("select p.imagen from photo as p where p.status=2 and fecha!='"+fecha+"';", null);
+            Cursor eliminarFoto = baseFoto.rawQuery("select p.imagen, p.fecha, p.status from photo as p where p.fecha!='"+fecha+"';", null);
             for (eliminarFoto.moveToFirst();!eliminarFoto.isAfterLast();eliminarFoto.moveToNext()){
 
                 try {
                     File archivo = new File(eliminarFoto.getString(0));
 
-                    if(archivo.delete()){
+
+                    if (archivo.exists()){
+                        if (eliminarFoto.getInt(2) == 2){
+                            if (archivo.delete()){
+                                baseFoto.execSQL("delete from photo where imagen='"+eliminarFoto.getString(0)+"';");
+
+                                Log.d("Delete file", "Archivo borrado: "+eliminarFoto.getString(0));
+                            }else {
+                                Log.d("Delete file","Archivo no se pudo borrar");
+                            }
+                        }
+                    }else {
                         baseFoto.execSQL("delete from photo where imagen='"+eliminarFoto.getString(0)+"';");
-                        Log.d("Delete file", "Archivo borrado");
-                    }else{
-                        Log.d("Delete file","Archivo no se pudo borrar");
                     }
+
+
                 }catch (Exception e){
                     e.printStackTrace();
+
                 }
+
+
 
             }
 
