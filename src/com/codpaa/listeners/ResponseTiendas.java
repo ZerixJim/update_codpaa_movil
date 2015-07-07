@@ -13,7 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import BD.BDopenHelper;
+import com.codpaa.db.BDopenHelper;
 
 
 public class ResponseTiendas extends JsonHttpResponseHandler{

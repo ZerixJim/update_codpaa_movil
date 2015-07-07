@@ -1,7 +1,6 @@
 package com.codpaa.listeners;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -13,10 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-
-import BD.BDopenHelper;
+import com.codpaa.db.BDopenHelper;
 
 
 public class ResponseRuta extends JsonHttpResponseHandler {

@@ -82,7 +82,7 @@ MERGED from com.android.support:support-v4:22.1.1:22:5
 		ADDED from AndroidManifest.xml:30:9
 	android:theme
 		ADDED from AndroidManifest.xml:32:9
-activity#com.codpaa.Lanzador
+activity#com.codpaa.launcher.Lanzador
 ADDED from AndroidManifest.xml:33:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:36:13
@@ -100,7 +100,7 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:40:17
 	android:name
 		ADDED from AndroidManifest.xml:40:27
-activity#com.codpaa.MainActivity
+activity#com.codpaa.activitys.MainActivity
 ADDED from AndroidManifest.xml:44:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:44:99
@@ -108,7 +108,7 @@ ADDED from AndroidManifest.xml:44:9
 		ADDED from AndroidManifest.xml:44:58
 	android:name
 		ADDED from AndroidManifest.xml:44:19
-activity#com.codpaa.MenuPrincipal
+activity#com.codpaa.activitys.MenuPrincipal
 ADDED from AndroidManifest.xml:45:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:45:100
@@ -116,7 +116,7 @@ ADDED from AndroidManifest.xml:45:9
 		ADDED from AndroidManifest.xml:45:59
 	android:name
 		ADDED from AndroidManifest.xml:45:19
-activity#com.codpaa.MenuTienda
+activity#com.codpaa.activitys.MenuTienda
 ADDED from AndroidManifest.xml:46:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:46:97
@@ -124,7 +124,7 @@ ADDED from AndroidManifest.xml:46:9
 		ADDED from AndroidManifest.xml:46:56
 	android:name
 		ADDED from AndroidManifest.xml:46:19
-activity#com.codpaa.MostrarCalendario
+activity#com.codpaa.activitys.MostrarCalendario
 ADDED from AndroidManifest.xml:47:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:47:92
@@ -134,7 +134,7 @@ ADDED from AndroidManifest.xml:47:9
 		ADDED from AndroidManifest.xml:47:129
 	android:name
 		ADDED from AndroidManifest.xml:47:19
-activity#com.codpaa.ListarLocation
+activity#com.codpaa.activitys.ListarLocation
 ADDED from AndroidManifest.xml:48:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:48:101
@@ -142,7 +142,7 @@ ADDED from AndroidManifest.xml:48:9
 		ADDED from AndroidManifest.xml:48:60
 	android:name
 		ADDED from AndroidManifest.xml:48:19
-activity#com.codpaa.EnviarInformacion
+activity#com.codpaa.activitys.EnviarInformacion
 ADDED from AndroidManifest.xml:49:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:49:94
@@ -150,7 +150,7 @@ ADDED from AndroidManifest.xml:49:9
 		ADDED from AndroidManifest.xml:49:63
 	android:name
 		ADDED from AndroidManifest.xml:49:19
-activity#com.codpaa.Frentes
+activity#com.codpaa.activitys.Frentes
 ADDED from AndroidManifest.xml:50:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:50:85
@@ -158,7 +158,7 @@ ADDED from AndroidManifest.xml:50:9
 		ADDED from AndroidManifest.xml:50:53
 	android:name
 		ADDED from AndroidManifest.xml:50:19
-activity#com.codpaa.SurtidoMueble
+activity#com.codpaa.activitys.SurtidoMueble
 ADDED from AndroidManifest.xml:51:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:51:91
@@ -166,7 +166,7 @@ ADDED from AndroidManifest.xml:51:9
 		ADDED from AndroidManifest.xml:51:59
 	android:name
 		ADDED from AndroidManifest.xml:51:19
-activity#com.codpaa.Exhibiciones
+activity#com.codpaa.activitys.Exhibiciones
 ADDED from AndroidManifest.xml:52:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:52:87
@@ -174,7 +174,7 @@ ADDED from AndroidManifest.xml:52:9
 		ADDED from AndroidManifest.xml:52:58
 	android:name
 		ADDED from AndroidManifest.xml:52:19
-activity#com.codpaa.InventarioBodega
+activity#com.codpaa.activitys.InventarioBodega
 ADDED from AndroidManifest.xml:53:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:53:97
@@ -182,7 +182,7 @@ ADDED from AndroidManifest.xml:53:9
 		ADDED from AndroidManifest.xml:53:62
 	android:name
 		ADDED from AndroidManifest.xml:53:19
-activity#com.codpaa.ComentariosActivity
+activity#com.codpaa.activitys.ComentariosActivity
 ADDED from AndroidManifest.xml:54:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:54:101
@@ -190,7 +190,7 @@ ADDED from AndroidManifest.xml:54:9
 		ADDED from AndroidManifest.xml:54:65
 	android:name
 		ADDED from AndroidManifest.xml:54:19
-activity#com.codpaa.InteligenciaMercado
+activity#com.codpaa.activitys.InteligenciaMercado
 ADDED from AndroidManifest.xml:55:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:55:102
@@ -198,7 +198,7 @@ ADDED from AndroidManifest.xml:55:9
 		ADDED from AndroidManifest.xml:55:65
 	android:name
 		ADDED from AndroidManifest.xml:55:19
-activity#com.codpaa.Mayoreo
+activity#com.codpaa.activitys.Mayoreo
 ADDED from AndroidManifest.xml:56:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:56:90
@@ -206,7 +206,7 @@ ADDED from AndroidManifest.xml:56:9
 		ADDED from AndroidManifest.xml:56:53
 	android:name
 		ADDED from AndroidManifest.xml:56:19
-activity#com.codpaa.PhotoCapture
+activity#com.codpaa.activitys.PhotoCapture
 ADDED from AndroidManifest.xml:57:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:57:89
@@ -214,7 +214,7 @@ ADDED from AndroidManifest.xml:57:9
 		ADDED from AndroidManifest.xml:57:58
 	android:name
 		ADDED from AndroidManifest.xml:57:19
-activity#com.codpaa.Imagesheduler
+activity#com.codpaa.activitys.Imagesheduler
 ADDED from AndroidManifest.xml:58:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:58:100
@@ -222,7 +222,7 @@ ADDED from AndroidManifest.xml:58:9
 		ADDED from AndroidManifest.xml:58:59
 	android:name
 		ADDED from AndroidManifest.xml:58:19
-service#com.codpaa.GeoLocalizar
+service#com.codpaa.services.GeoLocalizar
 ADDED from AndroidManifest.xml:59:9
 	android:name
 		ADDED from AndroidManifest.xml:59:18

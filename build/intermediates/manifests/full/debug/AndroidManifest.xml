@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codpaa"
-    android:versionCode="32"
-    android:versionName="1.0.32" >
+    android:versionCode="33"
+    android:versionName="1.1.2" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -33,7 +33,7 @@
         android:label="@string/app_name"
         android:theme="@style/MiTema" >
         <activity
-            android:name="com.codpaa.Lanzador"
+            android:name="com.codpaa.launcher.Lanzador"
             android:label="@string/nombreAplicacion"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -43,68 +43,68 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.codpaa.MainActivity"
+            android:name="com.codpaa.activitys.MainActivity"
             android:label="@string/nombreAplicacion"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.MenuPrincipal"
+            android:name="com.codpaa.activitys.MenuPrincipal"
             android:label="@string/nombreAplicacion"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.MenuTienda"
+            android:name="com.codpaa.activitys.MenuTienda"
             android:label="@string/nombreAplicacion"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.MostrarCalendario"
+            android:name="com.codpaa.activitys.MostrarCalendario"
             android:icon="@drawable/ic_launcher"
             android:label="@string/ruta"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.ListarLocation"
+            android:name="com.codpaa.activitys.ListarLocation"
             android:label="@string/nombreAplicacion"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.EnviarInformacion"
+            android:name="com.codpaa.activitys.EnviarInformacion"
             android:label="@string/enviar"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.Frentes"
+            android:name="com.codpaa.activitys.Frentes"
             android:label="@string/frentes"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.SurtidoMueble"
+            android:name="com.codpaa.activitys.SurtidoMueble"
             android:label="@string/surtido"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.Exhibiciones"
+            android:name="com.codpaa.activitys.Exhibiciones"
             android:label="@string/exhi"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.InventarioBodega"
+            android:name="com.codpaa.activitys.InventarioBodega"
             android:label="@string/inventario"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.ComentariosActivity"
+            android:name="com.codpaa.activitys.ComentariosActivity"
             android:label="@string/comentienda"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.InteligenciaMercado"
+            android:name="com.codpaa.activitys.InteligenciaMercado"
             android:label="@string/inteligencia"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.Mayoreo"
+            android:name="com.codpaa.activitys.Mayoreo"
             android:label="@string/cajasmayoreo"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.PhotoCapture"
+            android:name="com.codpaa.activitys.PhotoCapture"
             android:label="@string/capIma"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.codpaa.Imagesheduler"
+            android:name="com.codpaa.activitys.Imagesheduler"
             android:label="@string/nombreAplicacion"
             android:screenOrientation="portrait" />
 
-        <service android:name="com.codpaa.GeoLocalizar" />
+        <service android:name="com.codpaa.services.GeoLocalizar" />
     </application>
 
 </manifest>
