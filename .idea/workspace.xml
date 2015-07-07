@@ -17,174 +17,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bcf431eb-1d57-496e-a492-7290e1b20f2f" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\BD\BDopenHelper.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\BD\DBAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\HandlerResponse\ResponseImage.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\adapters\FrentesCustomAdapter$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\adapters\FrentesCustomAdapter$ViewHolder.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\adapters\FrentesCustomAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\adapters\InventariosCustomAdapter$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\adapters\InventariosCustomAdapter$ViewHolder.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\adapters\InventariosCustomAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\adapters\ProductosAdapter$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\adapters\ProductosAdapter$ViewHolder.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\adapters\ProductosAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\ComentariosActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Configuracion.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\CustomAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\EnviarDatos$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\EnviarDatos$HttpResponseCaMa.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\EnviarDatos$HttpResponseExhi.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\EnviarDatos$HttpResponseFrentes.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\EnviarDatos$HttpResponseInteligen.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\EnviarDatos$HttpResponseInventario.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\EnviarDatos.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\EnviarInformacion.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Exhibiciones.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Frentes.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\FrentesCapturados.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$10.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$11.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$12.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$13.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$14.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$2.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$3.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$4.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$5.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$6.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$7.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$8.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$9.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar$MyBinder.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\GeoLocalizar.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\HttpResponse.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Imagesheduler$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Imagesheduler$CustomListAdapter$ViewHolder.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Imagesheduler$CustomListAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Imagesheduler$EnviarFotoListener.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Imagesheduler$HttpResponseFoto$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Imagesheduler$HttpResponseFoto$2.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Imagesheduler$HttpResponseFoto$3.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Imagesheduler$HttpResponseFoto.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Imagesheduler$PhotoListModel.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Imagesheduler.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\InteligenciaMercado.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\InventarioBodega.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Lanzador$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Lanzador.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\ListarLocation.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Localizacion.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MainActivity$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MainActivity$2.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MainActivity$3$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MainActivity$3$2.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MainActivity$3$3.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MainActivity$3.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MainActivity$4.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MainActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\Mayoreo.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuPrincipal$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuPrincipal$DListener.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuPrincipal$SpinnerTiendasModel.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuPrincipal$TiendasCustomAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuPrincipal.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuTienda$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuTienda$2.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuTienda$3$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuTienda$3$2.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuTienda$3.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuTienda$EscucharDialogoEncargado.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuTienda$Listener.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuTienda$ListenerSAlida.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuTienda$localizacion.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MenuTienda.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\MostrarCalendario.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\PhotoCapture$HttpResponseImage$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\PhotoCapture$HttpResponseImage$2.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\PhotoCapture$HttpResponseImage$3.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\PhotoCapture$HttpResponseImage$4.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\PhotoCapture$HttpResponseImage$5.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\PhotoCapture$HttpResponseImage$6.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\PhotoCapture$HttpResponseImage.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\PhotoCapture.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\ProductosCustomAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\SpinnerMarcaModel.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\SpinnerProductoModel.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\com\codpaa\SurtidoMueble.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\modelos\FrentesModel.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\modelos\InventarioModel.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\modelos\MarcaModel.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\modelos\ProductosModel.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\widget\MultiSelectionSpinner$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\widget\MultiSelectionSpinner$2.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\build\intermediates\classes\debug\widget\MultiSelectionSpinner.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\BD\BDopenHelper.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\BD\DBAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\HandlerResponse\ResponseImage.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\adapters\FrentesCustomAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\adapters\InventariosCustomAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\adapters\ProductosAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\ComentariosActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\Configuracion.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\CustomAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\EnviarDatos.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\EnviarInformacion.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\Exhibiciones.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\Frentes.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\FrentesCapturados.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\GeoLocalizar.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\HttpResponse.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\Imagesheduler.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\InteligenciaMercado.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\InventarioBodega.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\Lanzador.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\ListarLocation.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\Localizacion.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\MainActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\Mayoreo.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\MenuPrincipal.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\MenuTienda.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\MostrarCalendario.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\PhotoCapture.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\ProductosCustomAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\SpinnerMarcaModel.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\SpinnerProductoModel.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\com\codpaa\SurtidoMueble.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\modelos\FrentesModel.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\modelos\InventarioModel.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\modelos\MarcaModel.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\modelos\ProductosModel.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Gustavo\Desktop\CODPAA\CODPAA\src\widget\MultiSelectionSpinner.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/BuildConfig.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/BuildConfig.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug-unaligned.apk" afterPath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug-unaligned.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug.apk" afterPath="$PROJECT_DIR$/build/outputs/apk/CODPAA-debug.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/listeners/ResponseExhibiciones.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/listeners/ResponseExhibiciones.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/listeners/ResponseMarcas.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/listeners/ResponseMarcas.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/listeners/ResponseProductos.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/listeners/ResponseProductos.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/listeners/ResponseRuta.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/listeners/ResponseRuta.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/listeners/ResponseTiendas.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/listeners/ResponseTiendas.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/utils/Utilities.class" afterPath="$PROJECT_DIR$/build/intermediates/classes/debug/com/codpaa/utils/Utilities.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex/debug/classes.dex" afterPath="$PROJECT_DIR$/build/intermediates/dex/debug/classes.dex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/resources/resources-debug.ap_" afterPath="$PROJECT_DIR$/build/intermediates/resources/resources-debug.ap_" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/AndroidManifest.xml" afterPath="$PROJECT_DIR$/bin/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/manifests/full/debug/AndroidManifest.xml" afterPath="$PROJECT_DIR$/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/source/buildConfig/debug/com/codpaa/BuildConfig.java" afterPath="$PROJECT_DIR$/build/generated/source/buildConfig/debug/com/codpaa/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseExhibiciones.java" afterPath="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseExhibiciones.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseMarcas.java" afterPath="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseMarcas.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseProductos.java" afterPath="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseProductos.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseRuta.java" afterPath="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseRuta.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseTiendas.java" afterPath="$PROJECT_DIR$/src/com/codpaa/listeners/ResponseTiendas.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.navigation/CODPAA/raw/main.nvg.xml" afterPath="$PROJECT_DIR$/.navigation/CODPAA/raw/main.nvg.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/outputs/logs/manifest-merger-debug-report.txt" afterPath="$PROJECT_DIR$/build/outputs/logs/manifest-merger-debug-report.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CODPAA.iws" />
@@ -271,11 +104,9 @@
       <file leaf-file-name="Frentes.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/codpaa/activitys/Frentes.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.7412353">
-              <caret line="182" column="8" selection-start-line="182" selection-start-column="8" selection-end-line="182" selection-end-column="8" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.3338898">
+              <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1118,28 +949,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CODPAA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="codpaa" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="activitys" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -1368,7 +1177,13 @@
       <option name="project" value="LOCAL" />
       <updated>1433892812178</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="optimizado la organización de los directorios del proyecto">
+      <created>1436286288019</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1436286288019</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1382,7 +1197,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1398,7 +1213,7 @@
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.49601275" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16868381" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16868381" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1430,7 +1245,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="version 1.0.31" />
     <MESSAGE value="error de la foto en blanco corregido" />
-    <option name="LAST_COMMIT_MESSAGE" value="error de la foto en blanco corregido" />
+    <MESSAGE value="optimizado la organización de los directorios del proyecto" />
+    <option name="LAST_COMMIT_MESSAGE" value="optimizado la organización de los directorios del proyecto" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1869,11 +1685,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/codpaa/activitys/Frentes.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.7412353">
-          <caret line="182" column="8" selection-start-line="182" selection-start-column="8" selection-end-line="182" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.3338898">
+          <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
