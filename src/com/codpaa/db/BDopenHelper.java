@@ -18,32 +18,105 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static final int version = 15;
     private static SQLiteDatabase baseDatosLocal = null;
 
-
-    private static String usuarios = "create table if not exists usuarios(idCelular int primary key, nombre varchar(100), user varchar(15), pass varchar(15) )";
-    private static String tiendasVisitadas = "Create table if not exists tiendasVisitadas(idTienda int,nombre, idPromotor int,  fecha date, ingreso char (6), salida char(7))";
-    private static String coordenadas = "create table if not exists coordenadas(idTienda int, idPromotor int, fecha char(20),hora char(10), latitud double, longitud double, precision int, tipo char(1), status int, semana int(3))";
-    private static String encargadoTienda = "create table if not exists encargadotienda(idTienda int, idPromotor int, nombre char (50), puesto char(20), fecha char(15))";
-    private static String frentesCharola = "create table if not exists frentesCharola(idTienda int, idPromotor int,fecha char(10),idMarca int, idProducto int, cha1 int,cha2 int, cha3 int, cha4 int,cha5 int, cha6 int,status int)";
-    private static String exhibiciones = "create table if not exists exhibiciones(idTienda int, idPromotor int, idExhibicion int, fecha char(15), idProducto int, cantidad decimal (10,2), status int)";
-    private static String inventarioProducto = "create table if not exists invProducto(idTienda int, idPromotor int ,fecha char(25), idProducto int, cantidad int ,cantidadFisico int, cantidadSistema int,status int,tipo varchar(10))";
-    private static String productoPrecio = "Create table if not exists prodPrecio (idTienda int, idPromotor int, codBarpieza char(14), fecha date, precio  decimal(18,2))";
-    private static String productos = "Create table if not exists producto(idProducto int primary key, nombre varchar(50), presentacion varchar(10),idMarca int, cb varchar(45))";
-    private static String surtido = "create table if not exists surtido(idTienda int, idPromotor int,surtido char(2), fecha char(25), idProducto int, cajas int)";
-    private static String tipoExhibicion = "create table if not exists tipoexhibicion(idExhibicion int primary key, nombre char(30))";
-    private static String visitaTiendas = "create table if not exists visitaTienda(idTienda int primary key, lunes int, martes int, miercoles int, jueves int, viernes int, sabado int, domingo int, idCelular int, rol varchar(30))";
-    private static String clientes = "create table if not exists clientes(idTienda int primary key, grupo varchar(60), sucursal varchar(60), latitud varchar(25), longitud varchar(25))";
-    private static String marca ="create table if not exists marca(idMarca int primary key, nombre char(20))";
-    private static String coordenadasEnviar = "create table if not exists coordenadasEnviar(idTienda int, idCelular int, fecha varchar(15), ingreso varchar(8), salida varchar(8))";
-    private static String comentarioTienda = "create table if not exists comentarioTienda(idComentario integer primary key autoincrement,idTienda int,idCelular int, fecha varchar(25),comentario text,status int)";
-    private static String rastreo = "create table if not exists rastreo(idCelular int, fecha varchar(10), hora varchar(10), latitud double, longitud double, altitud double)";
-    private static String inteligenciaMercado = "create table if not exists inteligencia(idCelular int,idTienda int,idProducto int,precioNormal varchar(8),precioOferta varchar(8),fecha varchar(15),ofertaCruz varchar(5),productoExtra varchar(5),productoEmpla varchar(5), cambioImagen varchar(5), status int,iniofer varchar(10),finofer varchar(10),preciocaja varchar(8),cambioprecio varchar(5))";
-    private static String updateInfor = "create table if not exists upInfo(nombre varchar(15) primary key, fecha varchar(10))";
-    private static String cajasMayoreo = "create table if not exists cajasMayoreo(idCelular int,idMarca int,fecha varchar(10),cajas int, status int)";
-    private static String photo = "create table if not exists photo(idPhoto integer primary key autoincrement NOT NULL, idTienda int NOT NULL, idCelular int NOT NULL, idMarca int NOT NULL, idExhibicion int NOT NULL, fecha varchar(10) NOT NULL, dia int NOT NULL, mes int NOT NULL, anio int NOT NULL, imagen varchar(250) NOT NULL, status int(2) NOT NULL)";
+    //fields of DB
+    private static String usuarios;
+    private static String tiendasVisitadas;
+    private static String coordenadas;
+    private static String encargadoTienda;
+    private static String frentesCharola;
+    private static String exhibiciones;
+    private static String inventarioProducto;
+    private static String productoPrecio;
+    private static String productos;
+    private static String surtido;
+    private static String tipoExhibicion;
+    private static String visitaTiendas;
+    private static String clientes;
+    private static String marca;
+    private static String coordenadasEnviar;
+    private static String comentarioTienda;
+    private static String rastreo;
+    private static String inteligenciaMercado;
+    private static String updateInfor;
+    private static String cajasMayoreo;
+    private static String photo;
 
 
     public BDopenHelper(Context miContext) {
         super(miContext, name, cursorfactory, version);
+
+        fields();
+
+
+    }
+
+    private void fields(){
+        usuarios = "create table if not exists " +
+                "usuarios(idCelular int primary key, nombre varchar(100), " +
+                "user varchar(15), pass varchar(15) )";
+        tiendasVisitadas = "Create table if not exists " +
+                "tiendasVisitadas(idTienda int,nombre, idPromotor int,  fecha date, " +
+                "ingreso char (6), salida char(7))";
+        coordenadas = "create table if not exists " +
+                "coordenadas(idTienda int, idPromotor int, fecha char(20),hora char(10), " +
+                "latitud double, longitud double, precision int, " +
+                "tipo char(1), status int, semana int(3))";
+        encargadoTienda = "create table if not exists " +
+                "encargadotienda(idTienda int, idPromotor int, nombre char (50), " +
+                "puesto char(20), fecha char(15))";
+        frentesCharola = "create table if not exists " +
+                "frentesCharola(idTienda int, idPromotor int,fecha char(10),idMarca int, " +
+                "idProducto int, cha1 int,cha2 int, cha3 int, cha4 int,cha5 int, cha6 int,status int)";
+        exhibiciones = "create table if not exists " +
+                "exhibiciones(idTienda int, idPromotor int, idExhibicion int, fecha char(15), " +
+                "idProducto int, cantidad decimal (10,2), status int)";
+        inventarioProducto = "create table if not exists " +
+                "invProducto(idTienda int, idPromotor int ,fecha char(25), idProducto int, cantidad int " +
+                ",cantidadFisico int, cantidadSistema int,status int,tipo varchar(10))";
+        productoPrecio = "Create table if not exists " +
+                "prodPrecio (idTienda int, idPromotor int, codBarpieza char(14), " +
+                "fecha date, precio  decimal(18,2))";
+        productos = "Create table if not exists " +
+                "producto(idProducto int primary key, nombre varchar(50), presentacion varchar(10)," +
+                "idMarca int, cb varchar(45))";
+        surtido = "create table if not exists " +
+                "surtido(idTienda int, idPromotor int,surtido char(2), fecha char(25), " +
+                "idProducto int, cajas int)";
+        tipoExhibicion = "create table if not exists " +
+                "tipoexhibicion(idExhibicion int primary key, nombre char(30))";
+        visitaTiendas = "create table if not exists " +
+                "visitaTienda(idTienda int primary key, lunes int, martes int, miercoles int, " +
+                "jueves int, viernes int, sabado int, domingo int, idCelular int, rol varchar(30))";
+        clientes = "create table if not exists " +
+                "clientes(idTienda int primary key, grupo varchar(60), sucursal varchar(60), " +
+                "latitud varchar(25), longitud varchar(25))";
+        marca ="create table if not exists " +
+                "marca(idMarca int primary key, nombre char(20))";
+        coordenadasEnviar = "create table if not exists " +
+                "coordenadasEnviar(idTienda int, idCelular int, fecha varchar(15), " +
+                "ingreso varchar(8), salida varchar(8))";
+        comentarioTienda = "create table if not exists " +
+                "comentarioTienda(idComentario integer primary key autoincrement,idTienda int," +
+                "idCelular int, fecha varchar(25),comentario text,status int)";
+        rastreo = "create table if not exists " +
+                "rastreo(idCelular int, fecha varchar(10), hora varchar(10), latitud double, " +
+                "longitud double, altitud double)";
+        inteligenciaMercado = "create table if not exists " +
+                "inteligencia(idCelular int,idTienda int,idProducto int,precioNormal varchar(8)," +
+                "precioOferta varchar(8),fecha varchar(15),ofertaCruz varchar(5),productoExtra varchar(5)," +
+                "productoEmpla varchar(5), cambioImagen varchar(5), status int,iniofer varchar(10)," +
+                "finofer varchar(10),preciocaja varchar(8),cambioprecio varchar(5))";
+        updateInfor = "create table if not exists " +
+                "upInfo(nombre varchar(15) primary key, fecha varchar(10))";
+        cajasMayoreo = "create table if not exists " +
+                "cajasMayoreo(idCelular int,idMarca int,fecha varchar(10),cajas int, status int)";
+        photo = "create table if not exists " +
+                "photo(idPhoto integer primary key autoincrement NOT NULL, idTienda int NOT NULL, " +
+                "idCelular int NOT NULL, idMarca int NOT NULL, idExhibicion int NOT NULL, " +
+                "fecha varchar(10) NOT NULL, dia int NOT NULL, mes int NOT NULL, anio int NOT NULL, " +
+                "imagen varchar(250) NOT NULL, status int(2) NOT NULL)";
+
+
 
     }
 
@@ -80,46 +153,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 
-        if(oldVersion <= 11){
-            db.execSQL(usuarios);
-            db.execSQL(tiendasVisitadas);
-            db.execSQL("Drop table if exists coordenadas");
-            db.execSQL(coordenadas);
-            db.execSQL(visitaTiendas);
-            db.execSQL(encargadoTienda);
-            db.execSQL("Drop table if exists frentesCharola");
-            db.execSQL(frentesCharola);
-            db.execSQL("Drop table if exists exhibiciones");
-            db.execSQL(exhibiciones);
-            db.execSQL("Drop table if exists invProducto");
-            db.execSQL(inventarioProducto);
-            db.execSQL(productoPrecio);
-            db.execSQL("Drop table if exists producto");
-            db.execSQL(productos);
-            db.execSQL(surtido);
-            db.execSQL(surtido);
-            db.execSQL(tipoExhibicion);
-            db.execSQL(clientes);
-            db.execSQL(marca);
-            db.execSQL(coordenadasEnviar);
-            db.execSQL(comentarioTienda);
-            db.execSQL(rastreo);
-            db.execSQL("Drop table if exists inteligencia");
-            db.execSQL(inteligenciaMercado);
-            db.execSQL(updateInfor);
-            db.execSQL(cajasMayoreo);
-            db.execSQL(photo);
-
-        }
-        if(oldVersion == 12){
-            db.execSQL(cajasMayoreo);
-            db.execSQL("Drop table if exists inteligencia");
-            db.execSQL(inteligenciaMercado);
-            db.execSQL(photo);
-        }
-        if(oldVersion == 13){
-            db.execSQL(photo);
-        }
         if(oldVersion == 14 && newVersion == 15){
             db.execSQL("Alter table invProducto add column cantidadFisico int");
             db.execSQL("Alter table invProducto add column cantidadSistema int");
@@ -189,13 +222,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null) baseDatosLocal.close();
     }
 
-    public void insertarUpdateInfo(String nombre, String fecha) throws SQLiteException {
-        baseDatosLocal = getWritableDatabase();
 
-        if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert or replace into upInfo(nombre,fecha) values('"+nombre+"','"+fecha+"')");
-        if(baseDatosLocal != null)baseDatosLocal.close();
-    }
 
 
     public void insertarUsuarios(int idcelular, String nombre, String user, String pass ) throws SQLiteException {
@@ -418,18 +445,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null) baseDatosLocal.close();
     }
 
-    public String fotoPath(int idPhoto){
-        SQLiteDatabase base = getReadableDatabase();
-        String path = "";
-        if (base != null) {
-            Cursor cur = base.rawQuery("select imagen from photo where idPhoto=" + idPhoto, null);
-            cur.moveToFirst();
-            path = cur.getString(0);
 
-        }
-        base.close();
-        return path;
-    }
 
 
     public Cursor fotos() throws SQLiteException{
@@ -599,12 +615,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     public int idUser(){
         baseDatosLocal = getReadableDatabase();
-
+        int id;
         Cursor cursor = baseDatosLocal.rawQuery("select idCelular from usuarios", null);
 
         cursor.moveToFirst();
-
-        return cursor.getInt(0);
+        id = cursor.getInt(0);
+        cursor.close();
+        return id;
     }
 
     public Cursor datosRastreo() throws SQLiteException{

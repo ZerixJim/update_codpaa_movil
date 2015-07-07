@@ -14,3 +14,4 @@ build/intermediates/classes/release/com/codpaa/GeoLocalizar.class
 *.class
 build/generated/source/buildConfig/release/com/codpaa/BuildConfig.java
 merger.xml
+.idea/workspace.xml
