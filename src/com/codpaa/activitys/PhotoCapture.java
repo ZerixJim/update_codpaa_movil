@@ -43,6 +43,8 @@ import android.provider.MediaStore.Images;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -153,10 +155,25 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.iniciar_camara:
+                dispatchTakePictureIntent();
+                return true;
+            case R.id.save_photo:
+                EnviarImagen();
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_photo, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
 

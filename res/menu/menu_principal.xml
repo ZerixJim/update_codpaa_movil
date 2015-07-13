@@ -9,7 +9,7 @@
     <item
         android:id="@+id/menu_overflow"
         android:title="OverFlow"
-        android:icon="@drawable/ic_more_vert_white_36dp"
+        android:icon="@drawable/ic_more_vert_white_24dp"
         android:orderInCategory="11111"
         app:showAsAction="always">
         <menu>

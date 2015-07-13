@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">CODPAA 1.0.32</string>
+    <string name="app_name">CODPAA 1.1.2</string>1989
     <string name="action_settings">Settings</string>
     <string name="user">Usuario</string>
     <string name="pass">Contraseña</string>
@@ -57,7 +57,7 @@
     <string name="imaMa">Imagen de la marca</string>
     <string name="porc">Tamaño</string>
     <string name="entrada">Entrada Tienda</string>
-    <string name="inventario">Inventario en Bodega</string>
+    <string name="inventario">Inv. Gral</string>
     <string name="Entradacheck">Entrada</string>
     <string name="Salidacheck">Salida</string>
     <string name="logo">Logotipo de la Aplicacion</string>
@@ -125,6 +125,8 @@
     <string name="inven">Inventario</string>
     <string name="ruta">Ruta</string>
     <string name="enviar">Enviar</string>
+    <string name="lote">Lote</string>
+    <string name="caducidad">Caducidad</string>
 
 
 

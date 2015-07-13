@@ -1,17 +1,34 @@
-.idea/*
+# Android Studio
+*.iml
 .idea/
-.idea\*
-.idea\
 .idea/workspace.xml
-bin/
+.idea/tasks.xml
+.idea/datasources.xml
+.idea/dataSources.ids
 build/
-*.apk
-build/outputs/lint-results-release-fatal.html
-build/intermediates/res/debug/layout/promptversion.xml
-*.jar
-*.bin
-build/intermediates/classes/release/com/codpaa/GeoLocalizar.class
+.gradle/
+
+# Files of the dex VM
+*.dex
+
+# Generated Files
+bin/
+gen/
+
+#Java Class Files
 *.class
-build/generated/source/buildConfig/release/com/codpaa/BuildConfig.java
-merger.xml
-.idea/workspace.xml
+
+# build Application files
+*.apk
+*.ap_
+
+# Eclipse projects Files
+.classpath
+.project
+
+# Windows Thumbnail db
+Thumbs.db
+Thumbs.db
+
+# Local configuration files
+local.properties

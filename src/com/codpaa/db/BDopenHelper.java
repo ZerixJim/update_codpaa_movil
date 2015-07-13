@@ -15,7 +15,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
-    private static final int version = 15;
+    private static final int version = 16;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -72,7 +72,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "idProducto int, cantidad decimal (10,2), status int)";
         inventarioProducto = "create table if not exists " +
                 "invProducto(idTienda int, idPromotor int ,fecha char(25), idProducto int, cantidad int " +
-                ",cantidadFisico int, cantidadSistema int,status int,tipo varchar(10))";
+                ",cantidadFisico int, cantidadSistema int,status int,tipo varchar(10),fecha_caducidad varchar(15),lote varchar(20))";
         productoPrecio = "Create table if not exists " +
                 "prodPrecio (idTienda int, idPromotor int, codBarpieza char(14), " +
                 "fecha date, precio  decimal(18,2))";
@@ -159,6 +159,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL("Alter table invProducto add column idPromotor int");
             db.execSQL("Alter table invProducto add column tipo varchar(10)");
 
+        }else if (oldVersion == 15 && newVersion == 16){
+            db.execSQL("Alter table invProducto add column fecha_caducidad varchar(15)");
+            db.execSQL("Alter table invProducto add column lote varchar(20)");
         }
 
     }

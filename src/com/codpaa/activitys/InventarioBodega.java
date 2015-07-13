@@ -3,23 +3,35 @@ package com.codpaa.activitys;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
-import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -31,7 +43,8 @@ import com.codpaa.models.SpinnerMarcaModel;
 import com.codpaa.models.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
-public class InventarioBodega extends Activity implements OnClickListener,OnItemSelectedListener{
+
+public class InventarioBodega extends AppCompatActivity implements OnClickListener,OnItemSelectedListener{
 	
 	
 	int idTienda, idPromotor;
@@ -40,15 +53,18 @@ public class InventarioBodega extends Activity implements OnClickListener,OnItem
     RadioButton piezas, cajas, selec;
     RadioGroup radio;
 	Spinner marca,producto;
-	Button guardar, salir;
+	Button guardar;
+    static Button btnFecha;
 	EditText editFisico, editSistema;
 	InputMethodManager im;
-	ArrayList<SpinnerMarcaModel> array = new ArrayList<SpinnerMarcaModel>();
+	ArrayList<SpinnerMarcaModel> array = new ArrayList<>();
+	Locale locale;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.inventariobodega);
+		locale = new Locale("es_MX");
 		Intent i = getIntent();
 		idTienda = (Integer) i.getExtras().get("idTienda");
 		idPromotor = (Integer) i.getExtras().get("idPromotor");
@@ -61,7 +77,6 @@ public class InventarioBodega extends Activity implements OnClickListener,OnItem
 		producto = (Spinner) findViewById(R.id.spiInvPro);
 	
 		guardar = (Button) findViewById(R.id.bInvGuar);
-		salir = (Button) findViewById(R.id.bInvSalir);
 		editFisico = (EditText) findViewById(R.id.editInv);
         editSistema = (EditText) findViewById(R.id.editSistema);
 
@@ -69,11 +84,14 @@ public class InventarioBodega extends Activity implements OnClickListener,OnItem
         piezas = (RadioButton) radio.findViewById(R.id.radioTipo1);
         cajas = (RadioButton) radio.findViewById(R.id.radioTipo2);
 
+
+        btnFecha = (Button) findViewById(R.id.btnFecha);
+
 		piezas.setChecked(true);
 		
 		marca.setOnItemSelectedListener(this);
 		guardar.setOnClickListener(this);
-		salir.setOnClickListener(this);
+
 		
 		
 		try {
@@ -104,8 +122,47 @@ public class InventarioBodega extends Activity implements OnClickListener,OnItem
 			Toast.makeText(this, "Error  1", Toast.LENGTH_SHORT).show();
 			
 		}
+
+
+        try {
+            assert getSupportActionBar() != null;
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayUseLogoEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setLogo(R.drawable.ic_launcher);
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
 		
 	}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_inventario, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case android.R.id.home:
+                this.finish();
+                return true;
+
+            case R.id.save_inventario:
+                guardarLosDatos();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int id,long arg3) {
@@ -121,19 +178,21 @@ public class InventarioBodega extends Activity implements OnClickListener,OnItem
 		
 	}
 
+	public void showDatePickerDialog(View v){
+		DialogFragment dialogFragment = new TimePickerFragment();
+		dialogFragment.show(getSupportFragmentManager(),"datePicker");
+	}
+
 	@Override
 	public void onClick(View v) {
 		
 		switch(v.getId()) {
-		
-		case R.id.bInvGuar:
-			guardarLosDatos();
-			break;
-			
-		case R.id.bInvSalir:
-			finish();
-			break;
-		}
+
+            case R.id.bInvGuar:
+                guardarLosDatos();
+                break;
+
+        }
 		
 		
 	}
@@ -143,7 +202,7 @@ public class InventarioBodega extends Activity implements OnClickListener,OnItem
 			
 			int cantidadFisico = 0, cantidadSistema = 0;
 			Calendar c = Calendar.getInstance();
-			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
 			
 			SpinnerMarcaModel spM = (SpinnerMarcaModel) marca.getSelectedItem();
 			SpinnerProductoModel spP = (SpinnerProductoModel) producto.getSelectedItem();
@@ -227,7 +286,7 @@ public class InventarioBodega extends Activity implements OnClickListener,OnItem
 	private ArrayList<SpinnerProductoModel> getArrayListPro(int idMarca){
 		
 		Cursor curPro = new BDopenHelper(this).productos(idMarca);
-		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<SpinnerProductoModel>();
+		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
 		for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
 			final SpinnerProductoModel spP = new SpinnerProductoModel();
 			spP.setIdProducto(curPro.getInt(0));
@@ -267,10 +326,41 @@ public class InventarioBodega extends Activity implements OnClickListener,OnItem
 		spiMfirst.setId(0);
 		
 		array.add(0,spiMfirst);
-		
+
+        cursorMarca.close();
 		base.close();
 		return array;
 		
+	}
+
+	public static class TimePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+
+		@NonNull
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			//estableciendo el tiempo actual como tiempo para el picker
+			final Calendar c = Calendar.getInstance();
+
+
+			return new DatePickerDialog(getActivity(),this,
+					c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+		}
+
+		@Override
+		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+            String dia = dayOfMonth+"";
+            String mes = monthOfYear+"";
+            if (dayOfMonth < 10){
+                dia = 0 + dia;
+            }
+
+            if (monthOfYear <10){
+                mes = 0 + mes;
+            }
+            btnFecha.setText(dia+"-"+mes+"-"+year);
+
+		}
 	}
 	
 	
