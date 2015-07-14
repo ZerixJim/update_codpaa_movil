@@ -28,7 +28,6 @@ gen/
 
 # Windows Thumbnail db
 Thumbs.db
-Thumbs.db
 
 # Local configuration files
 local.properties

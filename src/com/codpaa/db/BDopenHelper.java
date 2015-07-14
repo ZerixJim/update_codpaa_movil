@@ -424,10 +424,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
-    public void insertarInventario(int idTien, int idPromo ,String fecha, int Producto, int CantidadFisico,int CantidadSistema,int sta,String tipo) throws SQLiteException {
+    public void insertarInventario(int idTien, int idPromo ,String fecha, int Producto, int CantidadFisico,int CantidadSistema,int sta,String tipo, String fechaCaducidad, String lote) throws SQLiteException {
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert or replace into invProducto (idTienda, idPromotor ,fecha, idProducto, cantidadFisico,cantidadSistema,status,tipo) values ("+idTien+","+idPromo+",'"+fecha+"',"+Producto+","+CantidadFisico+","+CantidadSistema+","+sta+",'"+tipo+"')");
+            baseDatosLocal.execSQL("insert or replace into invProducto (idTienda, idPromotor" +
+                    " ,fecha, idProducto, cantidadFisico,cantidadSistema,status,tipo, fecha_caducidad, lote) values ("+idTien+","+idPromo+
+                    ",'"+fecha+"',"+Producto+","+CantidadFisico+","+CantidadSistema+","+sta+",'"+tipo+"','"+fechaCaducidad+"','"+lote+"')");
         if(baseDatosLocal != null) baseDatosLocal.close();
 
     }
@@ -557,33 +559,38 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
     public Cursor SurtidoCantidad(int idTien, String fecha) throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select idTienda, idPromotor,surtido,fecha,idProducto,cajas from surtido where idTienda="+idTien+" and fecha='"+fecha+"';",null);
+        return baseDatosLocal.rawQuery("select idTienda, idPromotor,surtido,fecha,idProducto,cajas from " +
+                "surtido where idTienda="+idTien+" and fecha='"+fecha+"';",null);
 
 
     }
     public Cursor contarInventario(int idTienda, String fecha)throws SQLiteException {
         baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select idTienda from invProducto where idTienda="+idTienda+" and fecha='"+fecha+"';",null);
+        return baseDatosLocal.rawQuery("select idTienda from invProducto where" +
+                " idTienda="+idTienda+" and fecha='"+fecha+"';",null);
 
     }
 
     public Cursor Inventario() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,idProducto,cantidadFisico,cantidadSistema,cantidad,tipo from invProducto where status=1",null);
+        return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,idProducto,cantidadFisico," +
+                "cantidadSistema,cantidad,tipo, fecha_caducidad, lote from invProducto where status=1",null);
 
     }
 
     public Cursor Exhibiciones() throws SQLiteException{
 
         baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select idTienda, idPromotor, idExhibicion, fecha, idProducto, cantidad from exhibiciones where status=1;",null);
+        return baseDatosLocal.rawQuery("select idTienda, idPromotor, idExhibicion, fecha, idProducto," +
+                " cantidad from exhibiciones where status=1;",null);
 
     }
 
     public Cursor VisitaTienda(int idTien, String fecha, String tipo)throws SQLiteException {
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select * from coordenadas where idTienda="+idTien+" and fecha='"+fecha+"' and tipo='"+tipo+"';", null);
+        return baseDatosLocal.rawQuery("select * from coordenadas where idTienda="+idTien+" and" +
+                " fecha='"+fecha+"' and tipo='"+tipo+"';", null);
 
     }
 

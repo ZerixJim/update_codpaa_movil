@@ -87,7 +87,7 @@
             android:layout_height="fill_parent"
             android:weightSum="2"
             android:baselineAligned="false"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="20dp">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -156,26 +156,28 @@
             android:background="@color/Blanco"
             android:orientation="vertical"
             android:layout_margin="2dp"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:clickable="false"
+            android:padding="3dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/lote"
-                android:layout_gravity="center_horizontal"
                 style="@style/TextShadow"
                 android:id="@+id/textView"/>
 
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText"
+                android:id="@+id/editLote"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:maxLength="15"
-                android:textColor="@color/negroFondo" />
+                android:textColor="@color/negroFondo"
+                android:hint="escribe codigo de lote" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -184,17 +186,19 @@
                 android:text="@string/caducidad"
                 android:id="@+id/textView2"
                 android:layout_marginTop="15dp"
-                android:layout_gravity="center_horizontal"
                 style="@style/TextShadow"/>
 
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="fecha"
-                android:onClick="showDatePickerDialog"
-                android:id="@+id/btnFecha"
+                android:id="@+id/txtfecha"
+                android:textSize="50dp"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/negroFondo" />
+                android:onClick="showDatePickerDialog"
+                android:clickable="true"
+                android:textColor="#ff434343" />
 
         </LinearLayout>
 
@@ -206,7 +210,8 @@
             android:drawableLeft="@drawable/save"
             android:text="@string/guar"
             android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp" />
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="20dp" />
 
     </LinearLayout>
 

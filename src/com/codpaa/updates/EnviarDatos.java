@@ -358,6 +358,8 @@ public class EnviarDatos {
                     rp.put("cantidadSistema",Integer.toString(curInven.getInt(5)));
                     rp.put("cantidad",Integer.toString(curInven.getInt(6)));
                     rp.put("tipo",curInven.getString(7));
+					rp.put("fecha_cad",curInven.getString(8));
+					rp.put("lote",curInven.getString(9));
 					
 					
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinventario.php", rp, new HttpResponseInventario(activity, curInven.getInt(0),curInven.getString(2), curInven.getInt(3)));

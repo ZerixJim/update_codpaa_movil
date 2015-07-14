@@ -7,7 +7,6 @@ import java.util.Locale;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -31,7 +30,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -54,8 +52,9 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
     RadioGroup radio;
 	Spinner marca,producto;
 	Button guardar;
-    static Button btnFecha;
-	EditText editFisico, editSistema;
+    static TextView textFecha;
+
+	EditText editFisico, editSistema, editLote;
 	InputMethodManager im;
 	ArrayList<SpinnerMarcaModel> array = new ArrayList<>();
 	Locale locale;
@@ -75,17 +74,19 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 		promotor = (TextView) findViewById(R.id.textInvPromo);
 		marca = (Spinner) findViewById(R.id.spiInMar);
 		producto = (Spinner) findViewById(R.id.spiInvPro);
+		textFecha = (TextView) findViewById(R.id.txtfecha);
 	
 		guardar = (Button) findViewById(R.id.bInvGuar);
 		editFisico = (EditText) findViewById(R.id.editInv);
         editSistema = (EditText) findViewById(R.id.editSistema);
+		editLote = (EditText) findViewById(R.id.editLote);
 
         radio = (RadioGroup) findViewById(R.id.radioInventario);
         piezas = (RadioButton) radio.findViewById(R.id.radioTipo1);
         cajas = (RadioButton) radio.findViewById(R.id.radioTipo2);
 
 
-        btnFecha = (Button) findViewById(R.id.btnFecha);
+
 
 		piezas.setChecked(true);
 		
@@ -99,6 +100,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 			Cursor cNomUser = new BDopenHelper(this).nombrePromotor(idPromotor);
 			cNomUser.moveToFirst();
 			promotor.setText(cNomUser.getString(0));
+            cNomUser.close();
 			try {
 				Cursor cTienda = new BDopenHelper(this).tienda(idTienda);
 				cTienda.moveToFirst();
@@ -112,7 +114,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 				}catch(Exception e) {
 					Toast.makeText(this, "Error  3", Toast.LENGTH_SHORT).show();
 				}
-				
+				cTienda.close();
 			}catch(Exception e) {
 				Toast.makeText(this, "Error  2", Toast.LENGTH_SHORT).show();
 			}
@@ -225,10 +227,13 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
                             selec = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
 							
 							try {
-								new BDopenHelper(this).insertarInventario(idTienda,idPromotor ,fecha, idProdu, cantidadFisico,cantidadSistema,1,selec.getText().toString());
+								new BDopenHelper(this).insertarInventario(idTienda,idPromotor ,fecha, idProdu, cantidadFisico,cantidadSistema,1
+										,selec.getText().toString(),getFechaCaducidad(), editLote.getText().toString());
 								Toast.makeText(this,"Datos Guardados", Toast.LENGTH_SHORT).show();
 								editFisico.setText("");
                                 editSistema.setText("");
+								editLote.setText("");
+								textFecha.setText("fecha");
                                 producto.setSelection(0);
 								im.hideSoftInputFromWindow(editFisico.getWindowToken(), 0);
 								new EnviarDatos(this).enviarInventario();
@@ -299,8 +304,8 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 		spPinicio.setNombre("Seleccione Producto");
 		spPinicio.setPresentacion("producto sin seleccionar");
 		
-		arrayP.add(0,spPinicio);
-		
+		arrayP.add(0, spPinicio);
+		curPro.close();
 		base.close();
 		return arrayP;
 		
@@ -350,7 +355,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
             String dia = dayOfMonth+"";
-            String mes = monthOfYear+"";
+            String mes = (monthOfYear+1)+"";
             if (dayOfMonth < 10){
                 dia = 0 + dia;
             }
@@ -358,10 +363,22 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
             if (monthOfYear <10){
                 mes = 0 + mes;
             }
-            btnFecha.setText(dia+"-"+mes+"-"+year);
+
+            textFecha.setText(dia+"-"+mes+"-"+year);
 
 		}
 	}
+
+	public String getFechaCaducidad(){
+		String salidaFecha;
+		if (!textFecha.getText().equals("fecha")){
+			salidaFecha = textFecha.getText().toString();
+		}else {
+			salidaFecha = "";
+		}
+		return salidaFecha;
+	}
+
 	
 	
 
