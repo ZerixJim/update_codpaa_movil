@@ -3,16 +3,22 @@ package com.codpaa.activitys;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
-import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -31,24 +37,26 @@ import com.codpaa.models.SpinnerMarcaModel;
 import com.codpaa.models.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
-public class InteligenciaMercado extends Activity implements OnClickListener, OnItemSelectedListener{
+public class InteligenciaMercado extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
 	
 	Button guardar, salir;
 	Spinner spMarca, spProducto;
-	DatePicker dateInicio, dateFin;
+    static Button btnFechaInicio, btnFechaFin;
 	SQLiteDatabase base;
 	EditText editProNormal, editProOfer, editPrecioCaja;
 	CheckBox chOferCr, chProExtra, chProEmp, chCambioI, chCambioP;
 	InputMethodManager im;
-	ArrayList<SpinnerMarcaModel> array = new ArrayList<SpinnerMarcaModel>();
-	
+	ArrayList<SpinnerMarcaModel> array = new ArrayList<>();
+    Locale locale;
+
 	int idTienda, idPromotor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.inteligenciamercado);
-		
+
+        locale = new Locale("es_MX");
 		Intent i = getIntent();
 		idTienda = (Integer) i.getExtras().get("idTienda");
 		idPromotor = (Integer) i.getExtras().get("idPromotor");
@@ -70,10 +78,11 @@ public class InteligenciaMercado extends Activity implements OnClickListener, On
 		chProEmp = (CheckBox) findViewById(R.id.checkProEmp);
 		chCambioI = (CheckBox) findViewById(R.id.checkCambio);
 		chCambioP = (CheckBox) findViewById(R.id.checkCampre);
-		
-		dateInicio = (DatePicker) findViewById(R.id.datePickIni);
-		dateFin = (DatePicker) findViewById(R.id.datePickFin);
-		
+
+        //buttons
+        btnFechaInicio = (Button) findViewById(R.id.btnFechaInicio);
+        btnFechaFin = (Button) findViewById(R.id.btnFechaFin);
+
 		
 		
 		salir.setOnClickListener(this);
@@ -83,20 +92,13 @@ public class InteligenciaMercado extends Activity implements OnClickListener, On
 		
 	
 		try {
-			/*
-			base = new BDopenHelper(this).getReadableDatabase();
-			String sql = "select idMarca as _id, nombre from marca order by nombre asc;";
-			Cursor cursorMarca = base.rawQuery(sql, null);
-			
-			SimpleCursorAdapter adaptadorMarca = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursorMarca, new String[]{"nombre"},new int[]{android.R.id.text1});
-			adaptadorMarca.setDropDownViewResource(android.R.layout.simple_list_item_2);
-			spMarca.setAdapter(adaptadorMarca);
-			base.close();*/
-			
+
 			loadSpinner();
 			
 			im.hideSoftInputFromWindow(editProNormal.getWindowToken(), 0);
 			im.hideSoftInputFromWindow(editProOfer.getWindowToken(), 0);
+
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 			
 			
 			
@@ -149,14 +151,8 @@ public class InteligenciaMercado extends Activity implements OnClickListener, On
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int id,long arg3) {
 		SpinnerMarcaModel spM = (SpinnerMarcaModel) spMarca.getSelectedItem();
 		
-		int idMarca = (int) spM.getId();
-		/*
-		Cursor cursorMarca = new BDopenHelper(this).productos(idMarca);
-		
-		SimpleCursorAdapter adaptadorPro = new SimpleCursorAdapter(InteligenciaMercado.this, android.R.layout.simple_list_item_2, cursorMarca, new String[]{"nombre","presentacion"},new int[]{android.R.id.text1,android.R.id.text2});
-		adaptadorPro.setDropDownViewResource(android.R.layout.simple_list_item_2);
-		spProducto.setAdapter(adaptadorPro);
-		base.close();*/
+		int idMarca = spM.getId();
+
 		loadSpinnerProd(idMarca);
 		
 	}
@@ -240,25 +236,26 @@ public class InteligenciaMercado extends Activity implements OnClickListener, On
 				cambioPr = "NO";
 			}
 			
-			if(oferCru=="NO" && produExtr=="NO" && proEmpl=="NO" && cambioImagen=="NO" && precioN=="NO" && precioOfer=="NO" && precioN=="---" && precioOfer=="---" ){
+			if(oferCru.equals("NO") && produExtr.equals("NO") && proEmpl.equals("NO") && cambioImagen.equals("NO") &&
+					precioN.equals("NO") && precioOfer.equals("NO") && precioN.equals("---") && precioOfer.equals("---") ){
 				Toast.makeText(getApplicationContext(), "Seleccione un campo", Toast.LENGTH_SHORT).show();
 			}else{
 				try {
 					SpinnerMarcaModel spM = (SpinnerMarcaModel) spMarca.getSelectedItem();
 					SpinnerProductoModel spP = (SpinnerProductoModel) spProducto.getSelectedItem();
 					Calendar c = Calendar.getInstance();
-					SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy");
+					SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
 					
 					String fecha = dFecha.format(c.getTime());
-					int idMarca = (int) spM.getId();
-					int idProdu = (int) spP.getIdProducto();
+					int idMarca = spM.getId();
+					int idProdu = spP.getIdProducto();
 					if(idMarca != 0){
 						if(idProdu != 0){
-							baseH.insertarInteligencia(idPromotor, idTienda, idProdu, precioN, precioOfer, fecha, oferCru, produExtr, proEmpl,cambioImagen,1,getInicioOferta(),getFinoferta(),precioCaja,cambioPr);
-							Log.d("InteligMer", "idProm "+idPromotor+" idT "+idTienda+" idP "+precioN+" precOfer "+precioOfer+" fecha "+fecha+" pferCr "+oferCru+" proE"+proEmpl);
+							baseH.insertarInteligencia(idPromotor, idTienda, idProdu, precioN, precioOfer, fecha, oferCru, produExtr, proEmpl, cambioImagen, 1, getFechaInicio(), getFechaFin(), precioCaja, cambioPr);
+							Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + precioN + " precOfer " + precioOfer + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
 							enviar.enviarInteli();
 							Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
-							setTimePicker();
+
 							resetCampos();
 							spProducto.setSelection(0);
 							
@@ -271,7 +268,7 @@ public class InteligenciaMercado extends Activity implements OnClickListener, On
 					
 					
 				} catch (Exception e) {
-					
+					e.printStackTrace();
 				}
 			}
 			
@@ -279,67 +276,12 @@ public class InteligenciaMercado extends Activity implements OnClickListener, On
 			
 			
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 	}
 	
-	private String getInicioOferta(){
-		
-		int dia = dateInicio.getDayOfMonth();
-		int mes = dateInicio.getMonth();
-		int ano = dateInicio.getYear();
-		
-		String diaf = "", mesf = "",df;
-		
-		
-		if(dia<10){
-			diaf = "0"+dia;
-		}else{
-			diaf = Integer.toString(dia);
-		}
-			
-		if((mes+1)<10){
-			mesf = "0"+(mes+1);
-		}else{
-			mesf = Integer.toString(mes);
-		}
-			
-		
-		df = diaf+"-"+mesf+"-"+ano;
-		
-		
-		return df;
-		
-	}
-	private String getFinoferta(){
-		int dia = dateFin.getDayOfMonth();
-		int mes = dateFin.getMonth();
-		int ano = dateFin.getYear();
-		
-		String diaf = "", mesf = "",df;
-		
-		
-		if(dia<10){
-			diaf = "0"+dia;
-		}else{
-			diaf = Integer.toString(dia);
-		}
-			
-		if((mes+1)<10){
-			mesf = "0"+(mes+1);
-		}else{
-			mesf = Integer.toString(mes);
-		}
-			
-		
-		df = diaf+"-"+mesf+"-"+ano;
-		
-		
-		return df;
-		
-	}
-	
+
 	private void loadSpinner(){
 		try {
 			
@@ -367,7 +309,7 @@ public class InteligenciaMercado extends Activity implements OnClickListener, On
 	private ArrayList<SpinnerProductoModel> getArrayListPro(int idMarca){
 		
 		Cursor curPro = new BDopenHelper(this).productos(idMarca);
-		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<SpinnerProductoModel>();
+		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
 		for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
 			final SpinnerProductoModel spP = new SpinnerProductoModel();
 			spP.setIdProducto(curPro.getInt(0));
@@ -406,22 +348,124 @@ public class InteligenciaMercado extends Activity implements OnClickListener, On
 		spiMfirst.setNombre("Selecciona Marca");
 		spiMfirst.setId(0);
 		
-		array.add(0,spiMfirst);
-		
+		array.add(0, spiMfirst);
+		cursorMarca.close();
 		base.close();
 		return array;
 		
 	}
-	
-	public void setTimePicker(){
-		Calendar c = Calendar.getInstance();
-		int year = c.get(Calendar.YEAR);
-		int month = c.get(Calendar.MONTH);
-		int day = c.get(Calendar.DAY_OF_MONTH); 
-		
-		dateInicio.init(year, month, day, null);
-		dateFin.init(year, month, day, null);
-		
-	}
+
+    public String getFechaInicio(){
+        String salidaFecha;
+        if (!btnFechaInicio.getText().equals("fecha")){
+            salidaFecha = btnFechaInicio.getText().toString();
+        }else {
+            salidaFecha = "";
+        }
+        return salidaFecha;
+    }
+
+    public String getFechaFin(){
+        String salidaFecha;
+        if (!btnFechaFin.getText().equals("fecha")){
+            salidaFecha = btnFechaFin.getText().toString();
+        }else {
+            salidaFecha = "";
+        }
+        return salidaFecha;
+    }
+
+    public void showDatePickerDialogInicio(View v){
+        DialogFragment dialogInicio = new DatePickerInicio();
+
+        dialogInicio.show(getSupportFragmentManager(), "datePickerInicio");
+
+    }
+
+    public void showDatePickerDialogFin(View v){
+        DialogFragment dialogFin = new DatePickerFin();
+
+        dialogFin.show(getSupportFragmentManager(), "datePickerFin");
+
+    }
+
+
+    public static class DatePickerInicio extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            //estableciendo el tiempo actual como tiempo para el picker
+            final Calendar c = Calendar.getInstance();
+
+
+            return new DatePickerDialog(getActivity(),this,
+                    c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        }
+
+
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+
+
+            String dia = dayOfMonth+"";
+            String mes = (monthOfYear+1)+"";
+            if (dayOfMonth < 10){
+                dia = 0 + dia;
+            }
+
+            if (monthOfYear <10){
+                mes = 0 + mes;
+            }
+
+            btnFechaInicio.setText(dia+"-"+mes+"-"+year);
+
+
+
+
+        }
+    }
+
+    public static class DatePickerFin extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            //estableciendo el tiempo actual como tiempo para el picker
+            final Calendar c = Calendar.getInstance();
+
+
+            return new DatePickerDialog(getActivity(),this,
+                    c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        }
+
+
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+
+
+            String dia = dayOfMonth+"";
+            String mes = (monthOfYear+1)+"";
+            if (dayOfMonth < 10){
+                dia = 0 + dia;
+            }
+
+            if (monthOfYear <10){
+                mes = 0 + mes;
+            }
+
+            btnFechaFin.setText(dia+"-"+mes+"-"+year);
+
+
+
+
+        }
+    }
 
 }

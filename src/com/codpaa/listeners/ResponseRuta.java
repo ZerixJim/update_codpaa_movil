@@ -41,12 +41,6 @@ public class ResponseRuta extends JsonHttpResponseHandler {
         Log.d("RRuta","iniciado");
     }
 
-    @Override
-    public void onProgress(int bytesWritten, int totalSize) {
-        super.onProgress(bytesWritten, totalSize);
-        //pdia.setMax(totalSize);
-        //pdia.setProgress(bytesWritten);
-    }
 
     @Override
     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

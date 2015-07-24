@@ -40,6 +40,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -395,7 +396,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 					try {
 						baseinsert.insertarImagen(idTienda, idPromotor, idMarca, idExhibicion, timeStamp, Integer.parseInt(dia),Integer.parseInt(mes) , Integer.parseInt(ano), mCurrentPhotoPath, 1);
 						imagenEspera = false;
-						showImg.setImageDrawable(getResources().getDrawable(R.drawable.noimage));
+						showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -461,14 +462,14 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         }
 
         @Override
-        public void onProgress(final int bytesWritten, final int totalSize) {
+        public void onProgress(final long bytesWritten, final long totalSize) {
             super.onProgress(bytesWritten, totalSize);
 
             progressFoto.post(new Runnable() {
                 @Override
                 public void run() {
-                    progressFoto.setProgress(bytesWritten);
-                    progressFoto.setMax(totalSize);
+                    progressFoto.setProgress((int)bytesWritten);
+                    progressFoto.setMax((int)totalSize);
                 }
             });
         }
@@ -510,7 +511,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 				//db.insertarImagen(_idTienda, _idPromo, _idMarca, _idExhib, _timeStamp, _dia, _mes, _ano, mCurrentPhotoPath, 1);
 				imagenEspera = false;
-				showImg.setImageDrawable(getResources().getDrawable(R.drawable.noimage));
+				showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.noimage));
 			} catch (SQLiteException e1) {
 				e1.printStackTrace();
 			}
@@ -548,12 +549,12 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                showImg.setImageDrawable(getResources().getDrawable(R.drawable.noimage));
+                                showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.noimage));
                             }
                         },3000);
 					}else{
 						if(response.getInt("code") == 3){
-							showImg.setImageDrawable(getResources().getDrawable(R.drawable.imagesend));
+							showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.imagesend));
 							imagenEspera = false;
 						}
                         //deleteArchivo(_imgPath);
@@ -655,7 +656,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	private ArrayList<SpinnerMarcaModel> getArrayExhi(){
 
 		base = new BDopenHelper(this).getReadableDatabase();
-		ArrayList<SpinnerMarcaModel> arrayE = new ArrayList<SpinnerMarcaModel>();
+		ArrayList<SpinnerMarcaModel> arrayE = new ArrayList<>();
 		String sql = "select idExhibicion, nombre from tipoexhibicion order by nombre asc;";
 		Cursor cursorE = base.rawQuery(sql, null);
 
@@ -695,7 +696,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private ArrayList<ProductosModel> getArrayListProductos(int idMarca){
 
         Cursor curPro = new BDopenHelper(this).productos(idMarca);
-        ArrayList<ProductosModel> arrayP = new ArrayList<ProductosModel>();
+        ArrayList<ProductosModel> arrayP = new ArrayList<>();
         for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
             final ProductosModel spP = new ProductosModel();
             spP.setIdProducto(curPro.getInt(0));

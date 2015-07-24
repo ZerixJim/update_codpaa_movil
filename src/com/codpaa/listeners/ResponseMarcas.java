@@ -35,11 +35,7 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
 
     }
 
-    @Override
-    public void onProgress(int bytesWritten, int totalSize) {
-        super.onProgress(bytesWritten, totalSize);
 
-    }
 
     @Override
     public void onSuccess(int statusCode, Header[] headers,JSONObject response) {

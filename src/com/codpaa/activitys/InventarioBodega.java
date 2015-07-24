@@ -182,7 +182,9 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 
 	public void showDatePickerDialog(View v){
 		DialogFragment dialogFragment = new TimePickerFragment();
-		dialogFragment.show(getSupportFragmentManager(),"datePicker");
+
+		dialogFragment.show(getSupportFragmentManager(), "datePicker");
+
 	}
 
 	@Override
@@ -340,6 +342,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 
 	public static class TimePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
+
 		@NonNull
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -351,8 +354,12 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 					c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 		}
 
+
+
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+
 
             String dia = dayOfMonth+"";
             String mes = (monthOfYear+1)+"";
@@ -365,6 +372,9 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
             }
 
             textFecha.setText(dia+"-"+mes+"-"+year);
+
+
+
 
 		}
 	}

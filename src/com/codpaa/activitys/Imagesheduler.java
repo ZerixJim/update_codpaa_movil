@@ -110,7 +110,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 	}
 	
 	private ArrayList<PhotoListModel> getList(){
-		ArrayList<PhotoListModel> array = new ArrayList<PhotoListModel>();
+		ArrayList<PhotoListModel> array = new ArrayList<>();
 		BDopenHelper basel = new BDopenHelper(this);
 		Cursor cur = basel.datosPhoto();
 		
@@ -424,8 +424,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 	private class HttpResponseFoto extends JsonHttpResponseHandler{
 		
 		private int _idFoto;
-		private int _position;
-        private String _imgPath;
+
 		Activity act;
 		SQLiteDatabase db;
 
@@ -433,8 +432,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		public HttpResponseFoto(Activity contex,int idFoto, int position, String imgPath){
 			this._idFoto = idFoto;
 			this.act = contex;
-			this._position = position;
-            this._imgPath = imgPath;
+
 			db = new BDopenHelper(act).getWritableDatabase();
 
 		}
@@ -465,19 +463,21 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
             },3000);
         }
 
-        @Override
-        public void onProgress(final int bytesWritten, final int totalSize) {
-            super.onProgress(bytesWritten, totalSize);
 
-            //Log.v("Progress"," "+(bytesWritten*100)/totalSize);
-            progressBar.post(new Runnable() {
-                @Override
-                public void run() {
-                    progressBar.setProgress(bytesWritten);
-                    progressBar.setMax(totalSize);
-                }
-            });
-        }
+		@Override
+		public void onProgress(final long bytesWritten, final long totalSize) {
+			super.onProgress(bytesWritten, totalSize);
+			//Log.v("Progress"," "+(bytesWritten*100)/totalSize);
+			progressBar.post(new Runnable() {
+				@Override
+				public void run() {
+					progressBar.setProgress((int)bytesWritten);
+					progressBar.setMax((int)totalSize);
+				}
+			});
+		}
+
+
 
         @Override
 		public void onSuccess(int statusCode,Header[] headers ,JSONObject response) {

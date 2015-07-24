@@ -962,9 +962,9 @@ public class GeoLocalizar extends Service implements LocationListener{
         }
 
         @Override
-        public void onProgress(int bytesWritten, int totalSize) {
+        public void onProgress(long bytesWritten, long totalSize) {
             super.onProgress(bytesWritten, totalSize);
-            notificationBuilder.setProgress(totalSize,bytesWritten,false).setContentIntent(pendingIntent);
+            notificationBuilder.setProgress((int)totalSize,(int)bytesWritten,false).setContentIntent(pendingIntent);
             notification.notify(id,notificationBuilder.build());
         }
 

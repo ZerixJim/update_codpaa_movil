@@ -36,12 +36,6 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
         //Toast.makeText(_context.getApplicationContext(),"Iniciando la descarga de Exhibiciones",Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void onProgress(int bytesWritten, int totalSize) {
-        super.onProgress(bytesWritten, totalSize);
-        //pdia.setMax(totalSize);
-        //pdia.setProgress(bytesWritten);
-    }
 
     @Override
     public void onSuccess(int statusCode, Header[] headers,JSONObject response) {

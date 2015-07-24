@@ -36,12 +36,6 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
         Log.d("RTiendas","Start");
     }
 
-    @Override
-    public void onProgress(final int bytesWritten, final int totalSize) {
-        super.onProgress(bytesWritten, totalSize);
-
-
-    }
 
     @Override
     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
