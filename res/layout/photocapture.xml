@@ -10,7 +10,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingRight="24dp"
+        android:paddingLeft="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,7 +50,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:background="@drawable/sombra_caja"
             android:layout_marginRight="2dp"
             android:layout_marginLeft="2dp" />
 
@@ -56,7 +57,6 @@
             android:id="@+id/spiExhPho"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/sombra_caja"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp" />

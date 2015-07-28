@@ -15,6 +15,18 @@
         <item name="android:textColor">@color/negroFondo</item>
         <item name="android:editTextStyle">@style/editText</item>
 
+
+    </style>
+
+    <style name="MiMateria" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorControlNormal">#c5c5c5</item>
+        <item name="colorControlActivated">@color/accent</item>
+        <item name="colorControlHighlight">@color/accent</item>
+        <item name="android:colorButtonNormal">@color/primary_dark</item>
+
     </style>
 
     <style name="editText" parent="@android:style/Widget.EditText">

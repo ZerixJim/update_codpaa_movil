@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -31,7 +31,7 @@ import com.codpaa.models.SpinnerMarcaModel;
 import com.codpaa.models.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
-public class Frentes extends Activity implements OnClickListener, OnItemSelectedListener{
+public class Frentes extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
 	
 	int idPromotor, idTienda;
 	TextView nUser, nTienda;
@@ -159,14 +159,14 @@ public class Frentes extends Activity implements OnClickListener, OnItemSelected
 	public void onClick(View v) {
 		
 		switch(v.getId()) {
-		case R.id.btnf1: reQuesFocus(Echa1);break;
-		case R.id.btnExit: reQuesFocus(Echa2);break;
-		case R.id.btnf3: reQuesFocus(Echa3);break;
-		case R.id.btnfoto: reQuesFocus(Echa4);break;
-		case R.id.btnf5: reQuesFocus(Echa5);break;
-		case R.id.btnf6: reQuesFocus(Echa6);break;
-		case R.id.btonChFr: guardarDatos(); break;
-		case R.id.buttonExhib: finish(); break;
+			case R.id.btnf1: reQuesFocus(Echa1);break;
+			case R.id.btnExit: reQuesFocus(Echa2);break;
+			case R.id.btnf3: reQuesFocus(Echa3);break;
+			case R.id.btnfoto: reQuesFocus(Echa4);break;
+			case R.id.btnf5: reQuesFocus(Echa5);break;
+			case R.id.btnf6: reQuesFocus(Echa6);break;
+			case R.id.btonChFr: guardarDatos(); break;
+			case R.id.buttonExhib: finish(); break;
 		}
 		
 		

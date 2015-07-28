@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -40,7 +41,7 @@ import com.codpaa.db.BDopenHelper;
 import com.codpaa.db.DBAdapter;
 
 
-public class MainActivity extends Activity implements OnClickListener, OnKeyListener {
+public class MainActivity extends AppCompatActivity implements OnClickListener, OnKeyListener {
 
 	DBAdapter dbAdapter;
 	EditText txtUserName;

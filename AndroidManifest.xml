@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".activitys.MainActivity" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
+        <activity android:name=".activitys.MainActivity" android:label="@string/nombreAplicacion" android:theme="@style/MiMateria" android:screenOrientation="portrait" />
         <activity android:name=".activitys.MenuPrincipal" android:label="@string/nombreAplicacion" android:icon="@drawable/ic_launcher" android:screenOrientation="portrait" />
         <activity android:name=".activitys.MenuTienda" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
         <activity android:name=".activitys.MostrarCalendario" android:label="@string/ruta" android:screenOrientation="portrait" android:icon="@drawable/ic_launcher" />
