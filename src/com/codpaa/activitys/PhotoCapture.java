@@ -62,7 +62,7 @@ import android.os.Handler;
 import com.codpaa.db.BDopenHelper;
 
 import com.codpaa.models.ProductosModel;
-
+import com.squareup.picasso.Picasso;
 
 
 public class PhotoCapture extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
@@ -293,8 +293,15 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     //falta validacion
                     //falta validacion
 
-                    Bitmap thum = ThumbnailUtils.extractThumbnail(bitmap,256,128);
-                    showImg.setImageBitmap(thum);
+                    /*Bitmap thum = ThumbnailUtils.extractThumbnail(bitmap,256,128);
+                    showImg.setImageBitmap(thum);*/
+                    Picasso.with(this).load(new File(mCurrentPhotoPath))
+                            .placeholder(R.drawable.placeholder)
+                            .resize(512,256)
+                            .centerCrop()
+                            .into(showImg);
+
+
                 } else {
                     Toast.makeText(getApplicationContext(),"Error al cargar " +
                             "la foto \n intente tomar la foto de nuevo",Toast.LENGTH_SHORT).show();

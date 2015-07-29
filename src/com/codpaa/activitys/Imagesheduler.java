@@ -44,7 +44,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codpaa.db.BDopenHelper;
- 
+import com.squareup.picasso.Picasso;
+
 public class Imagesheduler extends AppCompatActivity implements OnItemClickListener{
 	
 	ListView listV;
@@ -199,8 +200,8 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
                 row.setBackgroundColor(Color.LTGRAY);
             }*/
 			
-			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inSampleSize = 4;
+			/*BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inSampleSize = 4;*/
 
 			
 			holder.txtName.setText(temp.get_tienda());
@@ -215,9 +216,16 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 				holder.txtStatus.setTextColor(Color.GREEN);
 			}
             try {
-                Bitmap bitmap = BitmapFactory.decodeFile(temp.get_img(),options);
+                /*Bitmap bitmap = BitmapFactory.decodeFile(temp.get_img(),options);
                 Bitmap thumbImage = ThumbnailUtils.extractThumbnail(bitmap,64,64);
-                holder.img.setImageBitmap(thumbImage);
+                holder.img.setImageBitmap(thumbImage);*/
+
+                Picasso.with(_context)
+                        .load(new File(temp.get_img()))
+                        .placeholder(R.drawable.placeholder)
+                        .resize(50,50)
+                        .centerCrop()
+                        .into(holder.img);
             }catch (Exception ex){
                 ex.printStackTrace();
             }
@@ -305,11 +313,16 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		Builder builder  = new AlertDialog.Builder(this);
 		View vistaFotoEnviar = LayoutInflater.from(this).inflate(R.layout.dialogimg, null);
 		ImageView imagen = (ImageView) vistaFotoEnviar.findViewById(R.id.imgDialog);
-		BitmapFactory.Options options = new BitmapFactory.Options();
+		/*BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inSampleSize = 0;
 		
 		Bitmap bitmap = BitmapFactory.decodeFile(img,options);
-		imagen.setImageBitmap(bitmap);
+		imagen.setImageBitmap(bitmap);*/
+
+		Picasso.with(this)
+				.load(new File(img))
+				.placeholder(R.drawable.placeholder)
+				.into(imagen);
 		
 		EnviarFotoListener listener = new EnviarFotoListener(idFoto, img, position, status);
 		
