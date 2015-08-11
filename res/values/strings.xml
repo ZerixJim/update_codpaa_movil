@@ -8,7 +8,7 @@
     <string name="start">Iniciar Sesion</string>
     <string name="icono_de_aplicacion">icono de aplicacion</string>
     <string name="regis">Registrar</string>
-    <string name="nombreAplicacion">CODPAA</string>
+    <string name="nombreAplicacion">Codpaa</string>
     <string name="update">Actualizar base de usuarios</string>
     <string name="cerra">Salir de la aplicacion</string>
     <string name="tienda">Elige tienda</string>
@@ -127,6 +127,7 @@
     <string name="enviar">Enviar</string>
     <string name="lote">Lote</string>
     <string name="caducidad">Caducidad</string>
+    <string name="acerca_de">Acerca de</string>
 
 
 

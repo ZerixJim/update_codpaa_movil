@@ -32,7 +32,6 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -61,7 +60,6 @@ import android.os.Handler;
 
 import com.codpaa.db.BDopenHelper;
 
-import com.codpaa.models.ProductosModel;
 import com.squareup.picasso.Picasso;
 
 
@@ -132,15 +130,15 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         local = new Locale("es_MX");
 
         //load default image (not image loaded)
-        showImg.setImageDrawable(getResources().getDrawable(R.drawable.noimage));
+        showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
 
         try {
-            assert getSupportActionBar() != null;
+            //assert getSupportActionBar() != null;
             ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayUseLogoEnabled(true);
             actionBar.setHomeButtonEnabled(true);
-            actionBar.setLogo(R.drawable.ic_launcher);
+            actionBar.setIcon(R.drawable.ic_launcher);
         }catch (NullPointerException e){
             e.printStackTrace();
         }
@@ -180,12 +178,14 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
 
+
+
     //metod start camera
     //voy a modificar este metodo
     private void dispatchTakePictureIntent(){
         //intention start camera
 
-        Log.d("dispath", "1");
+
     	Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //if exists respost to camera
     	if(takePictureIntent.resolveActivity(getPackageManager()) != null){
@@ -193,13 +193,13 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     		try {
 				photoFile = createImageFile();
 				if(photoFile != null){
-	    			Log.d("PhotoCapture", "dispatch2");
+
 	    			takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
 	    			startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 	    		}
-				Log.d("PhotoCapture", "dispatch1");
+
 			} catch (IOException e) {
-				Log.v("Excepcion", "dispath");
+				
 				e.printStackTrace();
 			}
 
@@ -246,7 +246,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
         		Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-                Log.v("Image ",imageBitmap.getWidth()+"x"+imageBitmap.getHeight());
+                //Log.v("Image ",imageBitmap.getWidth()+"x"+imageBitmap.getHeight());
         		showImg.setImageBitmap(imageBitmap);
 
         		Uri tempUri = getImageUri(CameraActivity, imageBitmap);
@@ -327,7 +327,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	    Cursor cursor = getContentResolver().query(uri, null, null, null, null);
 	    cursor.moveToFirst();
 	    int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-	    return cursor.getString(idx);
+        String path = cursor.getString(idx);
+        cursor.close();
+	    return path;
 	}
     //metod: sent image to server
 	public void EnviarImagen(){
@@ -545,7 +547,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 					Log.d("Respuestas Ima", response.getString("insert"));
 					if(response.getBoolean("bol")){
 						Toast.makeText(getApplicationContext(), response.getString("insert"), Toast.LENGTH_SHORT).show();
-						showImg.setImageDrawable(getResources().getDrawable(R.drawable.imagesend));
+						showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.imagesend));
 						imagenEspera = false;
 						spiExh.setSelection(0);
 						spiMarca.setSelection(0);
@@ -687,45 +689,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		return arrayE;
 
 	}
-
-
-    public void deleteArchivo(String filePath){
-        File img = new File(filePath);
-        if(img.delete()){
-            Log.d("Delete file","Archivo borrado");
-        }else{
-            Log.d("Delete file","Archivo no se pudo borrar");
-        }
-    }
-
-
-
-    private ArrayList<ProductosModel> getArrayListProductos(int idMarca){
-
-        Cursor curPro = new BDopenHelper(this).productos(idMarca);
-        ArrayList<ProductosModel> arrayP = new ArrayList<>();
-        for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-            final ProductosModel spP = new ProductosModel();
-            spP.setIdProducto(curPro.getInt(0));
-            spP.setNombre(curPro.getString(1));
-            spP.setPresentacion(curPro.getString(2));
-            arrayP.add(spP);
-        }
-
-        final ProductosModel pm2 = new ProductosModel();
-        pm2.setIdProducto(0);
-        pm2.setNombre("Seleccine Producto");
-        pm2.setPresentacion("");
-        arrayP.add(0,pm2);
-
-
-        base.close();
-        return arrayP;
-
-    }
-
-
-
 
 
 

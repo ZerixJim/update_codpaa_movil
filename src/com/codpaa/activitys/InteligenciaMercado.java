@@ -14,8 +14,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -58,6 +62,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 
         locale = new Locale("es_MX");
 		Intent i = getIntent();
+
 		idTienda = (Integer) i.getExtras().get("idTienda");
 		idPromotor = (Integer) i.getExtras().get("idPromotor");
 		
@@ -105,11 +110,42 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 		}catch(Exception e) {
 			Toast.makeText(this, "Error Frentes 3", Toast.LENGTH_SHORT).show();
 		}
-		
+
+
+		try {
+			assert getSupportActionBar() != null;
+			ActionBar actionBar = getSupportActionBar();
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			actionBar.setDisplayUseLogoEnabled(true);
+			actionBar.setHomeButtonEnabled(true);
+			actionBar.setLogo(R.drawable.ic_launcher);
+		}catch (NullPointerException e){
+			e.printStackTrace();
+		}
 		
 	}
 
-	@Override
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_inteligencia,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
 	protected void onDestroy() {
 		super.onDestroy();
 	}
@@ -417,7 +453,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
                 dia = 0 + dia;
             }
 
-            if (monthOfYear <10){
+            if (monthOfYear + 1 < 10){
                 mes = 0 + mes;
             }
 
@@ -449,14 +485,14 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
 
-
+			Log.d("mes",Integer.toString(monthOfYear));
             String dia = dayOfMonth+"";
             String mes = (monthOfYear+1)+"";
             if (dayOfMonth < 10){
                 dia = 0 + dia;
             }
 
-            if (monthOfYear <10){
+            if (monthOfYear + 1 < 10){
                 mes = 0 + mes;
             }
 

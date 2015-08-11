@@ -359,7 +359,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		spPinicio.setPresentacion("producto sin seleccionar");
 		
 		arrayP.add(0,spPinicio);
-		
+
+		curPro.close();
 		base.close();
 		return arrayP;
 		
