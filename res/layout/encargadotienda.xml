@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/fondo_gris">
+    android:background="@color/fondo_gris"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp">
 
     <TextView
         android:id="@+id/textExhibicio"

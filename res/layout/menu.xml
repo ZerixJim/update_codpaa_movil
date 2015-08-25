@@ -9,8 +9,8 @@
     android:background="@color/gris"
     android:orientation="vertical"
     tools:ignore="SelectableText"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
     android:paddingTop="5dp">
 
 
@@ -20,6 +20,7 @@
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        card_view:cardUseCompatPadding="true"
         card_view:cardCornerRadius="2dp">
 
         <LinearLayout

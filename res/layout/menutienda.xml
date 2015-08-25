@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fondo_gris"
-    android:orientation="vertical"
-    tools:ignore="UselessParent" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/LinearLay2"
@@ -151,30 +150,30 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:weightSum="2" >
 
                 <Button
                     android:id="@+id/buttonMensaje"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/frentes"
                     android:text="@string/frente"
                     style="@style/btnStyleBeige"
-                    android:layout_margin="2dp" />
+                    android:layout_margin="2dp"/>
 
                 <Button
                     android:id="@+id/buttonEnviar"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/surtido"
                     android:text="@string/surtido"
                     style="@style/btnStyleBeige"
-                    android:layout_margin="2dp" />
+                    android:layout_margin="2dp"/>
 
             </LinearLayout>
 
@@ -229,23 +228,23 @@
 
                 <Button
                     android:id="@+id/btnEncarg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/encargado"
                     android:text="@string/enca"
-                    style="@style/btnStyleBeige"
-                    android:layout_margin="2dp" />
+                    android:layout_margin="2dp"
+                    android:padding="15dp"
+                    android:drawableLeft="@drawable/encargado"/>
 
                 <Button
                     android:id="@+id/btnfoto"
-                    style="@style/btnStyleShakespeare"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
                     android:layout_weight="1"
-                    android:drawableRight="@drawable/camara"
-                    android:text="@string/foto" />
+                    android:text="@string/foto"
+                    android:layout_margin="2dp"
+                    android:padding="15dp"
+                    android:drawableLeft="@drawable/ic_camera_grey600_24dp"/>
 
             </LinearLayout>
 

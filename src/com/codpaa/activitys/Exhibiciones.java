@@ -4,15 +4,20 @@ package com.codpaa.activitys;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,13 +37,14 @@ import com.codpaa.models.SpinnerMarcaModel;
 import com.codpaa.models.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
-public class Exhibiciones extends Activity implements OnClickListener,OnItemSelectedListener{
+public class Exhibiciones extends AppCompatActivity implements OnClickListener,OnItemSelectedListener{
 	
 	int idTienda, idPromotor;
 	TextView tienda, promotor;
 	SQLiteDatabase base;
 	Spinner marca,producto,exhibicion, spinum;
     EditText cantidadExhi;
+    Locale locale;
 	Button guardar, salir;
 	InputMethodManager im;
 	String numeros[] = {"0","0.25","0.5","0.75","1","1.5","1.75","2","2.25","2.50","2.75","3","3.5","3.75","4"};
@@ -48,10 +54,12 @@ public class Exhibiciones extends Activity implements OnClickListener,OnItemSele
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.exhibiciones);
+
+        locale = new Locale("es_MX");
 		Intent i = getIntent();
 		idTienda = (Integer) i.getExtras().get("idTienda");
 		idPromotor = (Integer) i.getExtras().get("idPromotor");
-		
+
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		
 		tienda = (TextView) findViewById(R.id.ExhiTienda);
@@ -68,7 +76,7 @@ public class Exhibiciones extends Activity implements OnClickListener,OnItemSele
 		marca.setOnItemSelectedListener(this);
 		guardar.setOnClickListener(this);
 		salir.setOnClickListener(this);
-		
+		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
 		try {
 			
@@ -87,26 +95,27 @@ public class Exhibiciones extends Activity implements OnClickListener,OnItemSele
 					try {
 						base = new BDopenHelper(this).getReadableDatabase();
 						Cursor cuExhi = base.rawQuery("select idExhibicion as _id, nombre from tipoexhibicion order by nombre asc;", null);
-						SimpleCursorAdapter adaptadorExi = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cuExhi, new String[]{"nombre"},new int[]{android.R.id.text1});
+						SimpleCursorAdapter adaptadorExi = new SimpleCursorAdapter(this,
+                                android.R.layout.simple_list_item_1,
+                                cuExhi, new String[]{"nombre"},new int[]{android.R.id.text1},0);
 						adaptadorExi.setDropDownViewResource(android.R.layout.simple_list_item_2);
 						exhibicion.setAdapter(adaptadorExi);
 						base.close();
 						
 						try {
 
-							ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, numeros);
+							ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_selectable_list_item, numeros);
 							spinum.setAdapter(spinnerArrayAdapter);
 							
 							
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-						
-						
+
 					}catch(Exception e){
 						Toast.makeText(this, "Error  4", Toast.LENGTH_SHORT).show();
 					}
-					
+
 				}catch(Exception e) {
 					Toast.makeText(this, "Error  3", Toast.LENGTH_SHORT).show();
 				}
@@ -119,6 +128,17 @@ public class Exhibiciones extends Activity implements OnClickListener,OnItemSele
 		}catch(Exception e) {
 			Toast.makeText(this, "Error  1", Toast.LENGTH_SHORT).show();
 			
+		}
+
+		try {
+			//assert getSupportActionBar() != null;
+			ActionBar actionBar = getSupportActionBar();
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			actionBar.setDisplayUseLogoEnabled(true);
+			actionBar.setHomeButtonEnabled(true);
+			actionBar.setIcon(R.drawable.ic_launcher);
+		}catch (NullPointerException e){
+			e.printStackTrace();
 		}
 		
 	}
@@ -137,6 +157,21 @@ public class Exhibiciones extends Activity implements OnClickListener,OnItemSele
 		
 		
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+
+
+            case android.R.id.home:
+                this.finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 	@Override
 	public void onClick(View v) {
@@ -160,7 +195,7 @@ public class Exhibiciones extends Activity implements OnClickListener,OnItemSele
 			
 			float cantidad = 0;
 			Calendar c = Calendar.getInstance();
-			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
 			
 			String fecha = dFecha.format(c.getTime());
 			if(cantidadExhi.getText().toString().length() > 0){
@@ -236,7 +271,7 @@ public class Exhibiciones extends Activity implements OnClickListener,OnItemSele
 	private ArrayList<SpinnerProductoModel> getArrayListPro(int idMarca){
 		
 		Cursor curPro = new BDopenHelper(this).productos(idMarca);
-		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<SpinnerProductoModel>();
+		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
 		for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
 			final SpinnerProductoModel spP = new SpinnerProductoModel();
 			spP.setIdProducto(curPro.getInt(0));
@@ -275,8 +310,8 @@ public class Exhibiciones extends Activity implements OnClickListener,OnItemSele
 		spiMfirst.setNombre("Selecciona Marca");
 		spiMfirst.setId(0);
 		
-		array.add(0,spiMfirst);
-		
+		array.add(0, spiMfirst);
+        cursorMarca.close();
 		base.close();
 		return array;
 		

@@ -1037,14 +1037,7 @@ public class GeoLocalizar extends Service implements LocationListener{
             super.onFinish();
         }
 
-        public void deleteArchivo(String filePath){
-            File img = new File(filePath);
-            if(img.delete()){
-                Log.d("Delete file","Archivo borrado");
-            }else{
-                Log.d("Delete file","Archivo no se pudo borrar");
-            }
-        }
+
     };
 
 

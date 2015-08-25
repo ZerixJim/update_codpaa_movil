@@ -21,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -65,8 +66,9 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 		setContentView(R.layout.inventariobodega);
 		locale = new Locale("es_MX");
 		Intent i = getIntent();
-		idTienda = (Integer) i.getExtras().get("idTienda");
-		idPromotor = (Integer) i.getExtras().get("idPromotor");
+
+		idTienda = i.getIntExtra("idTienda",0);
+		idPromotor = i.getIntExtra("idPromotor",0);
 		
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		
@@ -93,7 +95,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 		marca.setOnItemSelectedListener(this);
 		guardar.setOnClickListener(this);
 
-		
+		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
 		try {
 			
@@ -367,7 +369,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
                 dia = 0 + dia;
             }
 
-            if (monthOfYear <10){
+            if (monthOfYear + 1 < 10){
                 mes = 0 + mes;
             }
 

@@ -11,7 +11,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -64,21 +66,24 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		nTienda = (TextView) findViewById(R.id.tiendaFrente);
 		spiMarca = (Spinner) findViewById(R.id.spinnerMarFre);
 		spiPro = (Spinner) findViewById(R.id.spinnerFrePro);
-		
+
+		//asiganacion de botones
 		btn1 = (Button) findViewById(R.id.btnf1);
 		btn2 = (Button) findViewById(R.id.btnExit);
 		btn3 = (Button) findViewById(R.id.btnf3);
 		btn4 = (Button) findViewById(R.id.btnfoto);
 		btn5 = (Button) findViewById(R.id.btnf5);
 		btn6 = (Button) findViewById(R.id.btnf6);
-		
+
+		//asignacion de campos de texto
 		Echa1 = (EditText) findViewById(R.id.editCha1);
 		Echa2 = (EditText) findViewById(R.id.editCha2);
 		Echa3 = (EditText) findViewById(R.id.editCha3);
 		Echa4 = (EditText) findViewById(R.id.editCha4);
 		Echa5 = (EditText) findViewById(R.id.editCha5);
 		Echa6 = (EditText) findViewById(R.id.editCha6);
-		
+
+		//asignacion de escuchadores
 		Echa1.setVisibility(View.INVISIBLE);
 		Echa2.setVisibility(View.INVISIBLE);
 		Echa3.setVisibility(View.INVISIBLE);
@@ -138,9 +143,18 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 			Toast.makeText(this, "Error Frentes 1", Toast.LENGTH_SHORT).show();
 			
 		}
-		
-		
-		
+
+
+		try {
+			//assert getSupportActionBar() != null;
+			ActionBar actionBar = getSupportActionBar();
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			actionBar.setDisplayUseLogoEnabled(true);
+			actionBar.setHomeButtonEnabled(true);
+			actionBar.setIcon(R.drawable.ic_launcher);
+		}catch (NullPointerException e){
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -153,6 +167,21 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		
 	}
 
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+
+
+			case android.R.id.home:
+				this.finish();
+				return true;
+
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 
 
 	@Override

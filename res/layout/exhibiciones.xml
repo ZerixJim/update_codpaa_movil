@@ -8,7 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,47 +34,23 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/idMarca"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/stringMarca"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
         <Spinner
             android:id="@+id/spiExhMarca"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/sombra_caja" />
-
-        <TextView
-            android:id="@+id/textInvPromo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/produ"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginTop="10dp"/>
 
         <Spinner
             android:id="@+id/spiExhProd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/sombra_caja" />
-
-        <TextView
-            android:id="@+id/textSalida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/exhibicion"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            />
 
         <Spinner
             android:id="@+id/spiExhibi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/sombra_caja" />
+            />
 
         <TextView
             android:id="@+id/textInvTie"

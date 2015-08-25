@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -35,7 +35,7 @@ import com.codpaa.models.SpinnerMarcaModel;
 import com.codpaa.models.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
-public class SurtidoMueble extends Activity implements OnClickListener, OnItemSelectedListener,OnCheckedChangeListener{
+public class SurtidoMueble extends AppCompatActivity implements OnClickListener, OnItemSelectedListener,OnCheckedChangeListener{
 	
 	Spinner spiMar, spiPro;
 	EditText cantidad;

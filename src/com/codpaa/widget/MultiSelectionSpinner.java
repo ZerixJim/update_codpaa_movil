@@ -286,7 +286,7 @@ public class MultiSelectionSpinner extends Spinner implements
 
 
     public ArrayList<ProductosModel> productosArray(){
-        ArrayList<ProductosModel> array = new ArrayList<ProductosModel>();
+        ArrayList<ProductosModel> array = new ArrayList<>();
 
         for (int i = 0;i < 10; i++){
             final ProductosModel sp = new ProductosModel();

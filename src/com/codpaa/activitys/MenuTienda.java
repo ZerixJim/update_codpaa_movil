@@ -79,8 +79,8 @@ public class MenuTienda extends Activity implements OnClickListener{
 		Intent recibeIdTi = getIntent();
 		enviar = new EnviarDatos(this);
 		
-		idTienda = (Integer) recibeIdTi.getExtras().get("idTienda");
-		idPromotor = (Integer) recibeIdTi.getExtras().get("idPromotor");
+		idTienda = recibeIdTi.getIntExtra("idTienda",0);
+		idPromotor = recibeIdTi.getIntExtra("idPromotor",0);
 		
 		
 		tiendaSeleccionada = (TextView) findViewById(R.id.tiendaSeleccio);
@@ -260,7 +260,7 @@ public class MenuTienda extends Activity implements OnClickListener{
 			
 		
 	
-	
+
 	private void salidaTienda() {
 		
 		if(Entrada){
@@ -660,7 +660,7 @@ public class MenuTienda extends Activity implements OnClickListener{
 		spinnerEnc = (Spinner) vistaEncargado.findViewById(R.id.spinnerMarca);
 		editNombre = (EditText) vistaEncargado.findViewById(R.id.nombreEnca);
 		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, tipoEncargado);
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, tipoEncargado);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerEnc.setAdapter(adapter);
 		
@@ -804,7 +804,7 @@ public class MenuTienda extends Activity implements OnClickListener{
                 "from frentesCharola as f inner join marca as m on f.idMarca=m.idMarca " +
                 "inner join producto as p on f.idProducto=p.idProducto where f.idTienda="+idTienda;
         Cursor frentes = base.rawQuery(sql,null);
-        ArrayList<FrentesModel> arrayFrentes = new ArrayList<FrentesModel>();
+        ArrayList<FrentesModel> arrayFrentes = new ArrayList<>();
         Log.v("Cursor","CAntidad: "+frentes.getCount());
         if(frentes.getCount() > 0){
             for (frentes.moveToFirst();!frentes.isAfterLast();frentes.moveToNext()){
@@ -839,7 +839,7 @@ public class MenuTienda extends Activity implements OnClickListener{
                 "where ivp.idTienda="+idTienda;
 
         Cursor inventarios = base.rawQuery(sql,null);
-        ArrayList<InventarioModel> arrayInventarios = new ArrayList<InventarioModel>();
+        ArrayList<InventarioModel> arrayInventarios = new ArrayList<>();
         Log.v("Cursor","CAntidad: "+inventarios.getCount());
         if(inventarios.getCount() > 0){
             for (inventarios.moveToFirst();!inventarios.isAfterLast();inventarios.moveToNext()){

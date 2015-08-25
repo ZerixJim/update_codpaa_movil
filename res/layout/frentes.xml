@@ -11,9 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:weightSum="2"
-        android:paddingLeft="2dp"
-        android:paddingRight="2dp">
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,160 +58,137 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@color/Blanco">
-
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <Button
-                        android:id="@+id/btnf1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left|center_vertical"
-                        android:text="@string/cha1"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editCha1"
-                        android:layout_width="60dp"
-                        android:maxLength="2"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textColor="@color/negroFondo"/>
-                   
-
-                    <Button
-                        android:id="@+id/btnfoto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left|center_vertical"
-                        android:text="@string/cha4"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editCha4"
-                        android:layout_width="60dp"
-                        android:maxLength="2"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:textColor="@color/negroFondo"/>
-
-                </LinearLayout>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <Button
-                        android:id="@+id/btnExit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left|center_vertical"
-                        android:text="@string/cha2"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editCha2"
-                        android:layout_width="60dp"
-                        android:maxLength="2"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:textColor="@color/negroFondo"/>
-
-                    <Button
-                        android:id="@+id/btnf5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left|center_vertical"
-                        android:text="@string/cha5"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editCha5"
-                        android:layout_width="60dp"
-                        android:maxLength="2"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:textColor="@color/negroFondo"/>
-
-                </LinearLayout>
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-
-                    <Button
-                        android:id="@+id/btnf3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left|center_vertical"
-                        android:text="@string/cha3"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editCha3"
-                        android:layout_width="60dp"
-                        android:maxLength="2"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:textColor="@color/negroFondo"/>
-
-                    <Button
-                        android:id="@+id/btnf6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left|center_vertical"
-                        android:text="@string/cha6"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editCha6"
-                        android:layout_width="60dp"
-                        android:maxLength="2"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="number"
-                        android:textColor="@color/negroFondo"/>
-
-                </LinearLayout>
-
-            </TableRow>
-        </TableLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="72dp"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="4"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnf1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cha1"
+                    android:textStyle="bold"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:id="@+id/editCha1"
+                    android:layout_width="wrap_content"
+                    android:maxLength="2"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textColor="@color/negroFondo"
+                    android:layout_weight="1"/>
+
+
+                <Button
+                    android:id="@+id/btnfoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cha4"
+                    android:textStyle="bold"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:id="@+id/editCha4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:textColor="@color/negroFondo"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/btnExit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cha2"
+                    android:textStyle="bold"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:id="@+id/editCha2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:textColor="@color/negroFondo"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/btnf5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cha5"
+                    android:textStyle="bold"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:id="@+id/editCha5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:textColor="@color/negroFondo"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="4">
+
+                <Button
+                    android:id="@+id/btnf3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cha3"
+                    android:textStyle="bold"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:id="@+id/editCha3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:textColor="@color/negroFondo"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/btnf6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cha6"
+                    android:textStyle="bold"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:id="@+id/editCha6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:textColor="@color/negroFondo"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
         </LinearLayout>
 
         <Button
@@ -235,7 +211,7 @@
             android:layout_marginLeft="3dp"
             android:layout_marginTop="20dp"
             android:text="@string/back"
-            android:layout_marginRight="3dp" />
+            android:layout_marginRight="3dp"/>
 
     </LinearLayout>
 
