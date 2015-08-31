@@ -77,6 +77,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="2dp"
                     android:layout_marginRight="4dp"
+                    android:layout_marginEnd="4dp"
                     android:gravity="center"
                     android:textColor="@color/Blanco" />
             </LinearLayout>
@@ -93,6 +94,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/card_view" >
 
         <LinearLayout
@@ -112,6 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/tienda"
+                    android:drawableStart="@drawable/tienda"
                     android:text="@string/tienda"
                     style="@style/btnStyleBeige"
                     android:layout_margin="2dp" />
@@ -122,6 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ruta"
+                    android:drawableStart="@drawable/ruta"
                     android:text="@string/ruta1"
                     style="@style/btnStyleBeige"
                     android:layout_margin="2dp" />
@@ -139,6 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/mesaje"
+                    android:drawableStart="@drawable/mesaje"
                     android:text="@string/mensaje"
                     style="@style/btnStyleBeige"
                     android:layout_margin="2dp" />
@@ -149,6 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/enviar"
+                    android:drawableStart="@drawable/enviar"
                     android:text="@string/send"
                     style="@style/btnStyleBeige"
                     android:layout_margin="2dp" />
@@ -165,9 +171,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
+                    android:layout_marginStart="3dp"
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/cajas"
+                    android:drawableStart="@drawable/cajas"
                     android:text="@string/cajmay" />
 
             </LinearLayout>

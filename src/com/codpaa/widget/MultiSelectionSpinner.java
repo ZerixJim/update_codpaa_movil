@@ -22,8 +22,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.codpaa.adapters.ProductosAdapter;
-import com.codpaa.models.ProductosModel;
+import com.codpaa.adapter.ProductosAdapter;
+import com.codpaa.model.ProductosModel;
 
 
 public class MultiSelectionSpinner extends Spinner implements

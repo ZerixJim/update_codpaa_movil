@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.codpaa.R;
-import com.codpaa.activitys.MainActivity;
-import com.codpaa.services.GeoLocalizar;
+import com.codpaa.activity.MainActivity;
+import com.codpaa.service.GeoLocalizar;
 
 public class Lanzador extends Activity{
 	

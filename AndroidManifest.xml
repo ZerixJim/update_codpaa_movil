@@ -41,22 +41,22 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".activitys.MainActivity" android:label="@string/nombreAplicacion" android:theme="@style/MiMateria" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.MenuPrincipal" android:label="@string/nombreAplicacion" android:icon="@drawable/ic_launcher" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.MenuTienda" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.MostrarCalendario" android:label="@string/ruta" android:screenOrientation="portrait" android:icon="@drawable/ic_launcher" />
-        <activity android:name=".activitys.ListarLocation" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.EnviarInformacion" android:label="@string/enviar" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.Frentes" android:label="@string/frentes" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.SurtidoMueble" android:label="@string/surtido" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.Exhibiciones" android:label="@string/exhi" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.InventarioBodega" android:label="@string/inventario" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.ComentariosActivity" android:label="@string/comentienda" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.InteligenciaMercado" android:label="@string/inteligencia" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.Mayoreo" android:label="@string/cajasmayoreo" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.PhotoCapture" android:label="@string/capIma" android:screenOrientation="portrait" />
-        <activity android:name=".activitys.Imagesheduler" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
-        <service android:name=".services.GeoLocalizar"/>
+        <activity android:name=".activity.MainActivity" android:label="@string/nombreAplicacion" android:theme="@style/MiMateria" android:screenOrientation="portrait" />
+        <activity android:name=".activity.MenuPrincipal" android:label="@string/nombreAplicacion" android:icon="@drawable/ic_launcher" android:screenOrientation="portrait" />
+        <activity android:name=".activity.MenuTienda" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
+        <activity android:name=".activity.MostrarCalendario" android:label="@string/ruta" android:screenOrientation="portrait" android:icon="@drawable/ic_launcher" />
+        <activity android:name=".activity.ListarLocation" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
+        <activity android:name=".activity.EnviarInformacion" android:label="@string/enviar" android:screenOrientation="portrait" />
+        <activity android:name=".activity.Frentes" android:label="@string/frentes" android:screenOrientation="portrait" />
+        <activity android:name=".activity.SurtidoMueble" android:label="@string/surtido" android:screenOrientation="portrait" />
+        <activity android:name=".activity.Exhibiciones" android:label="@string/exhi" android:screenOrientation="portrait" />
+        <activity android:name=".activity.InventarioBodega" android:label="@string/inventario" android:screenOrientation="portrait" />
+        <activity android:name=".activity.ComentariosActivity" android:label="@string/comentienda" android:screenOrientation="portrait" />
+        <activity android:name=".activity.InteligenciaMercado" android:label="@string/inteligencia" android:screenOrientation="portrait" />
+        <activity android:name=".activity.Mayoreo" android:label="@string/cajasmayoreo" android:screenOrientation="portrait" />
+        <activity android:name=".activity.PhotoCapture" android:label="@string/capIma" android:screenOrientation="portrait" />
+        <activity android:name=".activity.Imagesheduler" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
+        <service android:name=".service.GeoLocalizar"/>
     </application>
     
    	

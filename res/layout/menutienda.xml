@@ -114,8 +114,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="1dp"
+                    android:layout_marginEnd="1dp"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/entradatienda"
+                    android:drawableStart="@drawable/entradatienda"
                     android:text="@string/entrada"
                     android:padding="5dp" />
 
@@ -126,8 +128,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/salidatienda"
+                    android:drawableStart="@drawable/salidatienda"
                     android:text="@string/Sal"
                     android:layout_marginLeft="1dp"
+                    android:layout_marginStart="1dp"
                     android:padding="5dp" />
 
             </LinearLayout>
@@ -145,6 +149,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/comentario"
+                    android:drawableStart="@drawable/comentario"
                     android:text="@string/comen" />
 
             </LinearLayout>
@@ -161,6 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/frentes"
+                    android:drawableStart="@drawable/frentes"
                     android:text="@string/frente"
                     style="@style/btnStyleBeige"
                     android:layout_margin="2dp"/>
@@ -171,6 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/surtido"
+                    android:drawableStart="@drawable/surtido"
                     android:text="@string/surtido"
                     style="@style/btnStyleBeige"
                     android:layout_margin="2dp"/>
@@ -189,6 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/inventario"
+                    android:drawableStart="@drawable/inventario"
                     android:text="@string/inven"
                     style="@style/btnStyleBeige"
                     android:layout_margin="2dp" />
@@ -216,6 +224,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/inteligencia"
+                    android:drawableEnd="@drawable/inteligencia"
                     android:text="@string/inteliMercado" />
 
             </LinearLayout>
@@ -234,6 +243,7 @@
                     android:text="@string/enca"
                     android:layout_margin="2dp"
                     android:padding="15dp"
+                    android:drawableStart="@drawable/encargado"
                     android:drawableLeft="@drawable/encargado"/>
 
                 <Button
@@ -244,6 +254,7 @@
                     android:text="@string/foto"
                     android:layout_margin="2dp"
                     android:padding="15dp"
+                    android:drawableStart="@drawable/ic_camera_grey600_24dp"
                     android:drawableLeft="@drawable/ic_camera_grey600_24dp"/>
 
             </LinearLayout>
@@ -273,6 +284,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:drawableLeft="@drawable/tiendaerror"
+                    android:drawableStart="@drawable/tiendaerror"
                     android:text="@string/tiendaErronea" />
 
             </LinearLayout>
