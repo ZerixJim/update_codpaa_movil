@@ -20,18 +20,16 @@
             android:background="@color/AmarilloClaro"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/userFrente"
-                style="@style/TextShadow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+
 
             <TextView
                 android:id="@+id/tiendaFrente"
                 style="@style/TextShadow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/AzulMedio" />
+                android:textColor="@color/AzulMedio"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>
 

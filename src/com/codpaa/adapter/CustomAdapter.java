@@ -1,8 +1,8 @@
 package com.codpaa.adapter;
 
+
 import java.util.ArrayList;
-import android.app.Activity;
-import android.graphics.Color;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +12,27 @@ import android.widget.TextView;
 import com.codpaa.R;
 import com.codpaa.model.SpinnerMarcaModel;
 
+
 public class CustomAdapter extends ArrayAdapter<SpinnerMarcaModel>{
 	
-	Activity _context;
+	Context _context;
 	private ArrayList<SpinnerMarcaModel> _datos;
+	LayoutInflater inflater;
+
+	private class ViewHolder{
+        TextView txtNombre;
+        TextView txtDescrip;
+    }
 	
 
-	public CustomAdapter(Activity con, int textViewResourceId,ArrayList<SpinnerMarcaModel> objects) {
+	public CustomAdapter(Context con, int textViewResourceId,ArrayList<SpinnerMarcaModel> objects) {
 		super(con, textViewResourceId, objects);
 		
 		
 		this._context= con;
 		this._datos = objects;
+
+		inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 	}
 
@@ -42,21 +51,29 @@ public class CustomAdapter extends ArrayAdapter<SpinnerMarcaModel>{
 
 	public View getCustomView(int position, View convertView, ViewGroup parent){
 		View row = convertView;
+        ViewHolder viewHolder;
 		
 		if(row == null){
-			LayoutInflater inflater = _context.getLayoutInflater();
+			//LayoutInflater inflater = _context.getLayoutInflater();
 			row = inflater.inflate(R.layout.custom_spinner_list, parent, false);
+
+            viewHolder = new ViewHolder();
+
+            viewHolder.txtNombre = (TextView) row.findViewById(R.id.txtCusSpi1);
+            viewHolder.txtDescrip = (TextView) row.findViewById(R.id.txtCusSpi2);
+
+            row.setTag(viewHolder);
 			
-		}
+		}else {
+            viewHolder = (ViewHolder) row.getTag();
+        }
 		
 		SpinnerMarcaModel temp = _datos.get(position);
 		
-		TextView name = (TextView) row.findViewById(R.id.txtCusSpi1);
-		name.setText(temp.getNombre());
-		if(position > 0){
-			
-			name.setTextColor(Color.BLUE);
-		}
+		viewHolder.txtNombre.setText(temp.getNombre());
+        //viewHolder.txtDescrip.setText(temp.getImgUrl());
+
+
 		
 		
 		return row;

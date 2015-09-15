@@ -16,6 +16,11 @@ import com.codpaa.model.SpinnerProductoModel;
 public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 	Activity _context;
 	private ArrayList<SpinnerProductoModel> _datos;
+
+	private class ViewHolder{
+		TextView txtNombre;
+		TextView txtPresentacion;
+	}
 	
 
 	public ProductosCustomAdapter(Activity con, int textViewResourceId,ArrayList<SpinnerProductoModel> objects) {
@@ -44,23 +49,29 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 
 	public View getCustomView(int position, View convertView, ViewGroup parent){
 		View row = convertView;
+        ViewHolder viewHolder;
 		
 		if(row == null){
 			LayoutInflater inflater = _context.getLayoutInflater();
 			row = inflater.inflate(R.layout.custom_spinner_list, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.txtNombre = (TextView) row.findViewById(R.id.txtCusSpi1);
+            viewHolder.txtPresentacion = (TextView) row.findViewById(R.id.txtCusSpi2);
+
+            row.setTag(viewHolder);
 			
-		}
+		}else {
+            viewHolder = (ViewHolder) row.getTag();
+        }
 		
 		SpinnerProductoModel temp = _datos.get(position);
 		
-		TextView name = (TextView) row.findViewById(R.id.txtCusSpi1);
-		name.setText(temp.getNombre());
-		
-		TextView presentacion = (TextView) row.findViewById(R.id.txtCusSpi2);
-		presentacion.setText(temp.getPresentacion());
+
+		viewHolder.txtNombre.setText(temp.getNombre());
+        viewHolder.txtPresentacion.setText(temp.getPresentacion());
 		if(position > 0){
 			
-			name.setTextColor(Color.BLUE);
+			viewHolder.txtNombre.setTextColor(Color.BLUE);
 		}
 		
 		

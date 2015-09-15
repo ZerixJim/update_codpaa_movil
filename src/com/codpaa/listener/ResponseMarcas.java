@@ -70,8 +70,9 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
 
         for(int i= 0; i < marcaArray.length(); i++) {
 
-            b.insertarMarca(marcaArray.getJSONObject(i).getInt("IM"),
-                    marcaArray.getJSONObject(i).getString("N"));
+            b.insertarMarca(marcaArray.getJSONObject(i).getInt("IM")
+                    ,marcaArray.getJSONObject(i).getString("N")
+                    ,marcaArray.getJSONObject(i).getString("logo"));
         }
     }
 }

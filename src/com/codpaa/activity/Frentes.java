@@ -25,18 +25,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codpaa.adapter.CustomAdapter;
+
+import com.codpaa.adapter.MarcasAdapter;
+import com.codpaa.model.MarcaModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.R;
-import com.codpaa.model.SpinnerMarcaModel;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
 public class Frentes extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
 	
 	int idPromotor, idTienda;
-	TextView nUser, nTienda;
+	TextView nTienda;
 	Button btnRegresar, btnGuar, btn1,btn2,btn3,btn4,btn5,btn6;
 	 
 	EditText Echa1,Echa2,Echa3,Echa4,Echa5,Echa6;
@@ -45,7 +46,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 	Locale locale;
 
-	ArrayList<SpinnerMarcaModel> array = new ArrayList<>();
+	ArrayList<MarcaModel> array = new ArrayList<>();
  	SQLiteDatabase base;
 	Spinner spiMarca, spiPro;
 
@@ -62,7 +63,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		
-		nUser = (TextView) findViewById(R.id.userFrente);
+
 		nTienda = (TextView) findViewById(R.id.tiendaFrente);
 		spiMarca = (Spinner) findViewById(R.id.spinnerMarFre);
 		spiPro = (Spinner) findViewById(R.id.spinnerFrePro);
@@ -112,12 +113,9 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		
 		
 		try {
-			
+
 			baseH = new BDopenHelper(this);
-			Cursor cNomUser = baseH.nombrePromotor(idPromotor);
-			cNomUser.moveToFirst();
-			nUser.setText(cNomUser.getString(0));
-			baseH.close();
+
 			try {
 				Cursor cTienda = baseH.tienda(idTienda);
 				cTienda.moveToFirst();
@@ -126,20 +124,23 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 				try {
 
 					loadSpinner();
-					
-					
-					
-					
+
+
+
+
 				}catch(Exception e) {
+                    e.printStackTrace();
 					Toast.makeText(this, "Error Frentes 3", Toast.LENGTH_SHORT).show();
 				}
-				
+
 			}catch(Exception e) {
+                e.printStackTrace();
 				Toast.makeText(this, "Error Frentes 2", Toast.LENGTH_SHORT).show();
 			}
-			
+
 			
 		}catch(Exception e) {
+            e.printStackTrace();
 			Toast.makeText(this, "Error Frentes 1", Toast.LENGTH_SHORT).show();
 			
 		}
@@ -148,10 +149,13 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		try {
 			//assert getSupportActionBar() != null;
 			ActionBar actionBar = getSupportActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setDisplayUseLogoEnabled(true);
-			actionBar.setHomeButtonEnabled(true);
-			actionBar.setIcon(R.drawable.ic_launcher);
+            if (actionBar != null){
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayUseLogoEnabled(true);
+                actionBar.setHomeButtonEnabled(true);
+                actionBar.setIcon(R.drawable.ic_launcher);
+            }
+
 		}catch (NullPointerException e){
 			e.printStackTrace();
 		}
@@ -251,7 +255,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 			
 				Calendar c = Calendar.getInstance();
 				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
-				SpinnerMarcaModel spm = (SpinnerMarcaModel) spiMarca.getSelectedItem();
+				MarcaModel spm = (MarcaModel) spiMarca.getSelectedItem();
 				SpinnerProductoModel spPm = (SpinnerProductoModel) spiPro.getSelectedItem();
 
 				
@@ -314,6 +318,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 				
 				
 			}catch(Exception e) {
+				e.printStackTrace();
 				Toast.makeText(this,"error 4", Toast.LENGTH_SHORT).show();
 			}
 			
@@ -331,7 +336,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int id,long arg3) {
 
-		SpinnerMarcaModel spm = (SpinnerMarcaModel)  spiMarca.getSelectedItem();
+        MarcaModel spm = (MarcaModel)  spiMarca.getSelectedItem();
 
 		
 		int idMarca = spm.getId();
@@ -351,7 +356,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		try {
 			
 			
-			CustomAdapter adapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
+			MarcasAdapter adapter = new MarcasAdapter(this,
+                    android.R.layout.simple_spinner_item, getArrayList());
 			spiMarca.setAdapter(adapter);
 			
 		}catch(Exception e) {
@@ -395,22 +401,23 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		
 	}
 	
-	private ArrayList<SpinnerMarcaModel> getArrayList(){
+	private ArrayList<MarcaModel> getArrayList(){
 		
 		base = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select idMarca as _id, nombre from marca order by nombre asc;";
+		String sql = "select idMarca, nombre, img from marca order by nombre asc;";
 		Cursor cursorMarca = base.rawQuery(sql, null);
 		
 		for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){
 			
-			final SpinnerMarcaModel spiM = new SpinnerMarcaModel();
+			final MarcaModel spiM = new MarcaModel();
 			spiM.setNombre(cursorMarca.getString(1));
 			spiM.setId(cursorMarca.getInt(0));
-			
-			array.add(spiM);			
+            spiM.setUrl(cursorMarca.getString(2));
+
+			array.add(spiM);
 		}
 		
-		final SpinnerMarcaModel spiMfirst = new SpinnerMarcaModel();
+		final MarcaModel spiMfirst = new MarcaModel();
 		spiMfirst.setNombre("Selecciona Marca");
 		spiMfirst.setId(0);
 		

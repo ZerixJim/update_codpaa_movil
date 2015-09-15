@@ -7,7 +7,7 @@
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/save_photo"
-        android:icon="@drawable/ic_save_white_24dp"
+        android:icon="@drawable/ic_send_white_24dp"
         android:title="save"
         app:showAsAction="ifRoom"/>
 

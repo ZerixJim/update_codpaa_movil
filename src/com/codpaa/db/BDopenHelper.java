@@ -15,7 +15,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
-    private static final int version = 16;
+    private static final int version = 17;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -91,7 +91,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "clientes(idTienda int primary key, grupo varchar(60), sucursal varchar(60), " +
                 "latitud varchar(25), longitud varchar(25))";
         marca ="create table if not exists " +
-                "marca(idMarca int primary key, nombre char(20))";
+                "marca(idMarca int primary key, nombre char(20), img varchar(250))";
         coordenadasEnviar = "create table if not exists " +
                 "coordenadasEnviar(idTienda int, idCelular int, fecha varchar(15), " +
                 "ingreso varchar(8), salida varchar(8))";
@@ -162,6 +162,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
         }else if (oldVersion == 15 && newVersion == 16){
             db.execSQL("Alter table invProducto add column fecha_caducidad varchar(15)");
             db.execSQL("Alter table invProducto add column lote varchar(20)");
+        }
+
+        if (oldVersion == 16 && newVersion == 17 ){
+            db.execSQL("Alter table marca add column img varchar(250)");
         }
 
     }
@@ -356,10 +360,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     }
 
-    public void insertarMarca(int idMarc, String nombre)throws SQLiteException {
+    public void insertarMarca(int idMarc, String nombre, String img)throws SQLiteException {
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert or replace into marca(idMarca,nombre) values("+idMarc+",'"+nombre+"')");
+            baseDatosLocal.execSQL("insert or replace into marca(idMarca,nombre,img) values("+idMarc+",'"+nombre+"','"+img+"')");
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 

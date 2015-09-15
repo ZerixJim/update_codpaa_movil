@@ -1,11 +1,10 @@
 package com.codpaa.model;
 
-/**
- * Created by Gustavo on 05/02/2015.
- */
+
 public class MarcaModel {
     private int _id;
     private String _nombre;
+    private String url;
 
     public void setId(int id){
         this._id = id;
@@ -21,5 +20,13 @@ public class MarcaModel {
 
     public String getNombre(){
         return this._nombre;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
