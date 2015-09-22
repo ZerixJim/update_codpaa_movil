@@ -17,7 +17,17 @@
         android:id="@+id/txtCusSpi2"
         style="@style/TextShadow"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textColor="#5b5b5b"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:id="@+id/txt_cb"
+        android:textColor="#636363"/>
 
 
 </LinearLayout>

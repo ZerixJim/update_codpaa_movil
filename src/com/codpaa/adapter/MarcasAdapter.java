@@ -86,8 +86,8 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         picasso.load(spm.getUrl())
                 .resize(bitmapDrawable.getBitmap().getWidth(),bitmapDrawable.getBitmap().getHeight())
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher)
-                .error(R.drawable.ic_launcher)
+                .placeholder(R.drawable.ic_crop_original_grey600_36dp)
+                .error(R.drawable.ic_error_grey600_36dp)
                 .into(viewHolder.img);
 
 

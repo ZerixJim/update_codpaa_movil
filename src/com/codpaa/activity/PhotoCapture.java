@@ -17,6 +17,9 @@ import org.json.JSONObject;
 
 import com.codpaa.adapter.CustomAdapter;
 import com.codpaa.R;
+import com.codpaa.adapter.MarcasAdapter;
+import com.codpaa.adapter.ProductosAdapter;
+import com.codpaa.model.MarcaModel;
 import com.codpaa.model.SpinnerMarcaModel;
 import com.codpaa.util.Utilities;
 import com.loopj.android.http.AsyncHttpClient;
@@ -82,7 +85,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     String mCurrentPhotoPath;
     boolean imagenEspera = false;
     Spinner spiMarca, spiExh;
-    ArrayList<SpinnerMarcaModel> array = new ArrayList<>();
+    ArrayList<MarcaModel> array = new ArrayList<>();
  	SQLiteDatabase base;
 
 
@@ -336,7 +339,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	}
     //metod: sent image to server
 	public void EnviarImagen(){
-		SpinnerMarcaModel spm = (SpinnerMarcaModel) spiMarca.getSelectedItem();
+		MarcaModel spm = (MarcaModel) spiMarca.getSelectedItem();
 		SpinnerMarcaModel spe = (SpinnerMarcaModel) spiExh.getSelectedItem();
 
 		int idMarca = spm.getId();
@@ -619,7 +622,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		try {
 
 
-			CustomAdapter adapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
+			MarcasAdapter adapter = new MarcasAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
 			spiMarca.setAdapter(adapter);
 
 		}catch(Exception e) {
@@ -628,22 +631,23 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 	}
     //
-	private ArrayList<SpinnerMarcaModel> getArrayList(){
+	private ArrayList<MarcaModel> getArrayList(){
 
 		base = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select idMarca as _id, nombre from marca order by nombre asc;";
+		String sql = "select idMarca as _id, nombre, img from marca order by nombre asc;";
 		Cursor cursorMarca = base.rawQuery(sql, null);
 
 		for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){
 
-			final SpinnerMarcaModel spiM = new SpinnerMarcaModel();
+			final MarcaModel spiM = new MarcaModel();
 			spiM.setNombre(cursorMarca.getString(1));
 			spiM.setId(cursorMarca.getInt(0));
+            spiM.setUrl(cursorMarca.getString(2));
 
 			array.add(spiM);
 		}
 
-		final SpinnerMarcaModel spiMfirst = new SpinnerMarcaModel();
+		final MarcaModel spiMfirst = new MarcaModel();
 		spiMfirst.setNombre("Selecciona Marca");
 		spiMfirst.setId(0);
 

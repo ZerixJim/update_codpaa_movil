@@ -64,10 +64,7 @@ public class EnviarInformacion extends AppCompatActivity implements OnClickListe
 			visitas();
 			
 			break;
-			
-		case R.id.bntSaEnvi:
-			finish();
-			break;
+
 			
 		case R.id.btnFotosNo:
 			Intent i = new Intent(this,Imagesheduler.class);

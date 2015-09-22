@@ -54,6 +54,7 @@
                 android:id="@+id/editCha2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:password="true"
                 android:ems="10"
                 android:hint="@string/escribeP"
                 android:inputType="numberPassword"
@@ -82,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:text="@string/start"
-            android:padding="12dp"/>
+            android:padding="25dp"/>
 
 
     </LinearLayout>

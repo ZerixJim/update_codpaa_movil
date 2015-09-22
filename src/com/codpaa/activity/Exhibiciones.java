@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -20,20 +21,17 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
-
-import com.codpaa.adapter.CustomAdapter;
+import com.codpaa.adapter.MarcasAdapter;
+import com.codpaa.model.MarcaModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.R;
-import com.codpaa.model.SpinnerMarcaModel;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
@@ -42,13 +40,13 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 	int idTienda, idPromotor;
 	TextView tienda, promotor;
 	SQLiteDatabase base;
-	Spinner marca,producto,exhibicion, spinum;
+	Spinner marca,producto,exhibicion;
     EditText cantidadExhi;
     Locale locale;
-	Button guardar, salir;
+	Button guardar;
 	InputMethodManager im;
-	String numeros[] = {"0","0.25","0.5","0.75","1","1.5","1.75","2","2.25","2.50","2.75","3","3.5","3.75","4"};
-	ArrayList<SpinnerMarcaModel> array = new ArrayList<>();
+
+	ArrayList<MarcaModel> array = new ArrayList<>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,17 +63,16 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 		tienda = (TextView) findViewById(R.id.ExhiTienda);
 		promotor = (TextView) findViewById(R.id.ExhiPromo);
 		marca = (Spinner) findViewById(R.id.spiExhMarca);
-		spinum = (Spinner) findViewById(R.id.spinnerNumeros);
 		producto = (Spinner) findViewById(R.id.spiExhProd);
 		exhibicion = (Spinner) findViewById(R.id.spiExhibi);
 		guardar = (Button) findViewById(R.id.btnGuaEx);
-		salir = (Button) findViewById(R.id.bntSaEnvi);
+
 
         cantidadExhi = (EditText) findViewById(R.id.cantidadExhibicion);
 
 		marca.setOnItemSelectedListener(this);
 		guardar.setOnClickListener(this);
-		salir.setOnClickListener(this);
+
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
 		try {
@@ -94,49 +91,52 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 					
 					try {
 						base = new BDopenHelper(this).getReadableDatabase();
-						Cursor cuExhi = base.rawQuery("select idExhibicion as _id, nombre from tipoexhibicion order by nombre asc;", null);
+						Cursor cuExhi = base.rawQuery("select idExhibicion as _id, nombre from" +
+                                " tipoexhibicion order by nombre asc;", null);
 						SimpleCursorAdapter adaptadorExi = new SimpleCursorAdapter(this,
-                                android.R.layout.simple_list_item_1,
+                                android.R.layout.simple_spinner_item,
                                 cuExhi, new String[]{"nombre"},new int[]{android.R.id.text1},0);
-						adaptadorExi.setDropDownViewResource(android.R.layout.simple_list_item_2);
+
 						exhibicion.setAdapter(adaptadorExi);
+
+
 						base.close();
 						
-						try {
 
-							ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_selectable_list_item, numeros);
-							spinum.setAdapter(spinnerArrayAdapter);
-							
-							
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
 
 					}catch(Exception e){
 						Toast.makeText(this, "Error  4", Toast.LENGTH_SHORT).show();
+						e.printStackTrace();
 					}
 
 				}catch(Exception e) {
 					Toast.makeText(this, "Error  3", Toast.LENGTH_SHORT).show();
+					e.printStackTrace();
 				}
 				
 			}catch(Exception e) {
 				Toast.makeText(this, "Error  2", Toast.LENGTH_SHORT).show();
+				e.printStackTrace();
 			}
 			
 			
 		}catch(Exception e) {
 			Toast.makeText(this, "Error  1", Toast.LENGTH_SHORT).show();
-			
+			e.printStackTrace();
 		}
 
 		try {
 			//assert getSupportActionBar() != null;
 			ActionBar actionBar = getSupportActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setDisplayUseLogoEnabled(true);
-			actionBar.setHomeButtonEnabled(true);
-			actionBar.setIcon(R.drawable.ic_launcher);
+
+            if (actionBar != null){
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayUseLogoEnabled(true);
+                actionBar.setHomeButtonEnabled(true);
+                actionBar.setLogo(R.drawable.ic_launcher);
+            }
+
+
 		}catch (NullPointerException e){
 			e.printStackTrace();
 		}
@@ -145,7 +145,7 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int id,long arg3) {
-		SpinnerMarcaModel spM = (SpinnerMarcaModel) marca.getSelectedItem();
+		MarcaModel spM = (MarcaModel) marca.getSelectedItem();
 		int idMarca = spM.getId();
 	
 		
@@ -181,10 +181,7 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 		case R.id.btnGuaEx:
 			guardarLosDatos();
 			break;
-			
-		case R.id.bntSaEnvi:
-			finish();
-			break;
+
 		}
 		
 		
@@ -202,12 +199,8 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
                 cantidad = Float.valueOf(cantidadExhi.getText().toString());
             }
 
-			//String can = (String) spinum.getSelectedItem();
-			//cantidad = Float.parseFloat(can);
-			
-			
 			try {
-				SpinnerMarcaModel spM = (SpinnerMarcaModel) marca.getSelectedItem();
+				MarcaModel spM = (MarcaModel) marca.getSelectedItem();
 				SpinnerProductoModel spP = (SpinnerProductoModel) producto.getSelectedItem();
 				
 				int idMarca = spM.getId();
@@ -219,6 +212,8 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 						try {
 							new BDopenHelper(this).insertarExhibiciones(idTienda, idPromotor, idEx, fecha, idProdu, cantidad,1);
 							Toast.makeText(this,"Datos Guardados", Toast.LENGTH_SHORT).show();
+                            cantidadExhi.setText("");
+                            producto.setSelection(0);
 							
 							new EnviarDatos(this).enviarExibiciones();
 						}catch(Exception e) {
@@ -234,7 +229,8 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 				
 			}catch(Exception e) {
 				
-				Toast.makeText(this,"No seleccionaste producto", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this,"Articulos no seleccionados", Toast.LENGTH_SHORT).show();
+				e.printStackTrace();
 			}
 			
 			
@@ -248,11 +244,12 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 		try {
 			
 			
-			CustomAdapter adapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
+			MarcasAdapter adapter = new MarcasAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
 			marca.setAdapter(adapter);
 			
 		}catch(Exception e) {
 			Toast.makeText(this, "Error Mayoreo 3", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
 		}
 		
 	}
@@ -277,6 +274,7 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 			spP.setIdProducto(curPro.getInt(0));
 			spP.setNombre(curPro.getString(1));
 			spP.setPresentacion(curPro.getString(2));
+            spP.setCodigoBarras(curPro.getString(3));
 			arrayP.add(spP);
 		}
 		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
@@ -291,22 +289,23 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 		
 	}
 	
-	private ArrayList<SpinnerMarcaModel> getArrayList(){
+	private ArrayList<MarcaModel> getArrayList(){
 		
 		base = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select idMarca as _id, nombre from marca order by nombre asc;";
+		String sql = "select idMarca as _id, nombre, img from marca order by nombre asc;";
 		Cursor cursorMarca = base.rawQuery(sql, null);
 		
 		for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){
 			
-			final SpinnerMarcaModel spiM = new SpinnerMarcaModel();
+			final MarcaModel spiM = new MarcaModel();
 			spiM.setNombre(cursorMarca.getString(1));
 			spiM.setId(cursorMarca.getInt(0));
+            spiM.setUrl(cursorMarca.getString(2));
 			
 			array.add(spiM);			
 		}
 		
-		final SpinnerMarcaModel spiMfirst = new SpinnerMarcaModel();
+		final MarcaModel spiMfirst = new MarcaModel();
 		spiMfirst.setNombre("Selecciona Marca");
 		spiMfirst.setId(0);
 		

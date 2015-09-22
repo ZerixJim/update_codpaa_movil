@@ -1,6 +1,3 @@
-/****
- * Autor: Gustavo Ramon Ibarra Maciel code version: 1.0.19
- ******/
 package com.codpaa.activity;
 
 import org.apache.http.Header;

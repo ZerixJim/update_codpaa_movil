@@ -78,7 +78,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "fecha date, precio  decimal(18,2))";
         productos = "Create table if not exists " +
                 "producto(idProducto int primary key, nombre varchar(50), presentacion varchar(10)," +
-                "idMarca int, cb varchar(45))";
+                "idMarca int, cb varchar(45), img varchar(250))";
         surtido = "create table if not exists " +
                 "surtido(idTienda int, idPromotor int,surtido char(2), fecha char(25), " +
                 "idProducto int, cajas int)";
@@ -166,6 +166,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         if (oldVersion == 16 && newVersion == 17 ){
             db.execSQL("Alter table marca add column img varchar(250)");
+            db.execSQL("Alter table producto add column img varchar(250)");
         }
 
     }
@@ -552,7 +553,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     public Cursor productos(int idMar) throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select idProducto as _id, nombre,presentacion from producto where idMarca="+idMar+" order by nombre asc;", null);
+        return baseDatosLocal.rawQuery("select idProducto as _id, nombre,presentacion, cb from producto where idMarca="+idMar+" order by nombre asc;", null);
 
     }
 

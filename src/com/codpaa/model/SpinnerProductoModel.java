@@ -5,8 +5,17 @@ public class SpinnerProductoModel {
 	private int _idProducto;
 	private String _nombre;
 	private String _presentacion;
-	
-	public void setIdProducto(int idProductos){
+	private String _codigoBarras;
+
+    public String getCodigoBarras() {
+        return _codigoBarras;
+    }
+
+    public void setCodigoBarras(String codigoBarras) {
+        this._codigoBarras = codigoBarras;
+    }
+
+    public void setIdProducto(int idProductos){
 		this._idProducto = idProductos;
 	}
 	

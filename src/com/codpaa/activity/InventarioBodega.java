@@ -35,6 +35,8 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.codpaa.adapter.CustomAdapter;
+import com.codpaa.adapter.MarcasAdapter;
+import com.codpaa.model.MarcaModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.R;
@@ -57,7 +59,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 
 	EditText editFisico, editSistema, editLote;
 	InputMethodManager im;
-	ArrayList<SpinnerMarcaModel> array = new ArrayList<>();
+	ArrayList<MarcaModel> array = new ArrayList<>();
 	Locale locale;
 	
 	@Override
@@ -170,7 +172,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int id,long arg3) {
-		SpinnerMarcaModel spM = (SpinnerMarcaModel) marca.getSelectedItem();
+		MarcaModel spM = (MarcaModel) marca.getSelectedItem();
 		int idMarca = spM.getId();
 
 		loadSpinnerProd(idMarca);
@@ -210,7 +212,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 			Calendar c = Calendar.getInstance();
 			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
 			
-			SpinnerMarcaModel spM = (SpinnerMarcaModel) marca.getSelectedItem();
+			MarcaModel spM = (MarcaModel) marca.getSelectedItem();
 			SpinnerProductoModel spP = (SpinnerProductoModel) producto.getSelectedItem();
 			int idMarca = spM.getId();
 			int idProdu = spP.getIdProducto();
@@ -272,7 +274,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 		try {
 			
 			
-			CustomAdapter adapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
+			MarcasAdapter adapter = new MarcasAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
 			marca.setAdapter(adapter);
 			
 		}catch(Exception e) {
@@ -301,6 +303,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 			spP.setIdProducto(curPro.getInt(0));
 			spP.setNombre(curPro.getString(1));
 			spP.setPresentacion(curPro.getString(2));
+			spP.setCodigoBarras(curPro.getString(3));
 			arrayP.add(spP);
 		}
 		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
@@ -315,22 +318,23 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 		
 	}
 	
-	private ArrayList<SpinnerMarcaModel> getArrayList(){
+	private ArrayList<MarcaModel> getArrayList(){
 		
 		base = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select idMarca as _id, nombre from marca order by nombre asc;";
+		String sql = "select idMarca as _id, nombre, img from marca order by nombre asc;";
 		Cursor cursorMarca = base.rawQuery(sql, null);
 		
 		for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){
 			
-			final SpinnerMarcaModel spiM = new SpinnerMarcaModel();
+			final MarcaModel spiM = new MarcaModel();
 			spiM.setNombre(cursorMarca.getString(1));
 			spiM.setId(cursorMarca.getInt(0));
+            spiM.setUrl(cursorMarca.getString(2));
 			
 			array.add(spiM);			
 		}
 		
-		final SpinnerMarcaModel spiMfirst = new SpinnerMarcaModel();
+		final MarcaModel spiMfirst = new MarcaModel();
 		spiMfirst.setNombre("Selecciona Marca");
 		spiMfirst.setId(0);
 		

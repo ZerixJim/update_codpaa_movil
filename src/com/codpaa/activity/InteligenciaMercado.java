@@ -33,7 +33,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.codpaa.adapter.CustomAdapter;
+import com.codpaa.adapter.MarcasAdapter;
+import com.codpaa.model.MarcaModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.R;
@@ -50,7 +51,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 	EditText editProNormal, editProOfer, editPrecioCaja;
 	CheckBox chOferCr, chProExtra, chProEmp, chCambioI, chCambioP;
 	InputMethodManager im;
-	ArrayList<SpinnerMarcaModel> array = new ArrayList<>();
+	ArrayList<MarcaModel> array = new ArrayList<>();
     Locale locale;
 
 	int idTienda, idPromotor;
@@ -185,7 +186,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int id,long arg3) {
-		SpinnerMarcaModel spM = (SpinnerMarcaModel) spMarca.getSelectedItem();
+		MarcaModel spM = (MarcaModel) spMarca.getSelectedItem();
 		
 		int idMarca = spM.getId();
 
@@ -277,7 +278,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 				Toast.makeText(getApplicationContext(), "Seleccione un campo", Toast.LENGTH_SHORT).show();
 			}else{
 				try {
-					SpinnerMarcaModel spM = (SpinnerMarcaModel) spMarca.getSelectedItem();
+					MarcaModel spM = (MarcaModel) spMarca.getSelectedItem();
 					SpinnerProductoModel spP = (SpinnerProductoModel) spProducto.getSelectedItem();
 					Calendar c = Calendar.getInstance();
 					SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
@@ -322,7 +323,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 		try {
 			
 			
-			CustomAdapter adapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
+			MarcasAdapter adapter = new MarcasAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
 			spMarca.setAdapter(adapter);
 			
 		}catch(Exception e) {
@@ -351,6 +352,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 			spP.setIdProducto(curPro.getInt(0));
 			spP.setNombre(curPro.getString(1));
 			spP.setPresentacion(curPro.getString(2));
+            spP.setCodigoBarras(curPro.getString(3));
 			arrayP.add(spP);
 		}
 		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
@@ -365,22 +367,23 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 		
 	}
 	
-	private ArrayList<SpinnerMarcaModel> getArrayList(){
+	private ArrayList<MarcaModel> getArrayList(){
 		
 		base = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select idMarca as _id, nombre from marca order by nombre asc;";
+		String sql = "select idMarca as _id, nombre, img from marca order by nombre asc;";
 		Cursor cursorMarca = base.rawQuery(sql, null);
 		
 		for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){
 			
-			final SpinnerMarcaModel spiM = new SpinnerMarcaModel();
+			final MarcaModel spiM = new MarcaModel();
 			spiM.setNombre(cursorMarca.getString(1));
 			spiM.setId(cursorMarca.getInt(0));
+			spiM.setUrl(cursorMarca.getString(2));
 			
 			array.add(spiM);			
 		}
 		
-		final SpinnerMarcaModel spiMfirst = new SpinnerMarcaModel();
+		final MarcaModel spiMfirst = new MarcaModel();
 		spiMfirst.setNombre("Selecciona Marca");
 		spiMfirst.setId(0);
 		

@@ -7,7 +7,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -25,7 +24,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
@@ -36,15 +34,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.codpaa.R;
+import com.codpaa.adapter.TiendasAdapter;
+import com.codpaa.model.TiendasModel;
 import com.codpaa.update.UpdateInformation;
 
 import com.codpaa.db.BDopenHelper;
@@ -88,10 +86,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		btnRuta = (Button) findViewById(R.id.buttonRuta);
 		btnEnviar = (Button) findViewById(R.id.buttonEnviar);
 		btnCajasM = (Button) findViewById(R.id.btnGuCajasM);
-		
-		
-		
-		
 
 		
 		btnTienda.setOnClickListener(this);
@@ -100,9 +94,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	
 		btnCajasM.setOnClickListener(this);
 
-		
-		
-		
+
 		Context context = getApplicationContext();
 		PackageManager packageManager = context.getPackageManager();
 		String packageName = context.getPackageName();
@@ -201,12 +193,15 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		borrarRegistros();
 
 		try {
-			assert getSupportActionBar() != null;
+
 			ActionBar actionBar = getSupportActionBar();
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setDisplayUseLogoEnabled(true);
-			actionBar.setHomeButtonEnabled(true);
-			actionBar.setLogo(R.drawable.ic_launcher);
+			if (actionBar != null){
+				actionBar.setDisplayHomeAsUpEnabled(true);
+				actionBar.setDisplayUseLogoEnabled(true);
+				actionBar.setHomeButtonEnabled(true);
+				actionBar.setLogo(R.drawable.ic_launcher);
+			}
+
 		}catch (NullPointerException e){
 			e.printStackTrace();
 		}
@@ -368,7 +363,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 
 		
-		TiendasCustomAdapter adap = new TiendasCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
+		TiendasAdapter adap = new TiendasAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
 		spinnerTien.setAdapter(adap);
 		DListener listener = new DListener();
 		
@@ -383,46 +378,36 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 	}
 	
-	private ArrayList<SpinnerTiendasModel> getArrayList(){
+	private ArrayList<TiendasModel> getArrayList(){
 		
 		base = new BDopenHelper(this).getReadableDatabase();
 		String sql = "select idTienda as _id, grupo, sucursal from clientes order by grupo asc;";
 		Cursor cursorTienda = base.rawQuery(sql, null);
-		ArrayList<SpinnerTiendasModel> arrayT = new ArrayList<>();
+		ArrayList<TiendasModel> arrayT = new ArrayList<>();
 		for(cursorTienda.moveToFirst(); !cursorTienda.isAfterLast(); cursorTienda.moveToNext()){
 			
-			final SpinnerTiendasModel spT = new SpinnerTiendasModel();
-			spT.set_idTienda(cursorTienda.getInt(0));
-			spT.set_nombre(cursorTienda.getString(1));
-			spT.set_sucursal(cursorTienda.getString(2));
+			final TiendasModel spT = new TiendasModel();
+			spT.setIdTienda(cursorTienda.getInt(0));
+			spT.setNombre(cursorTienda.getString(1));
+			spT.setSucursal(cursorTienda.getString(2));
 			
 			arrayT.add(spT);			
 		}
 		
-		final SpinnerTiendasModel spT2 = new SpinnerTiendasModel();
-		spT2.set_idTienda(0);
-		spT2.set_nombre("Seleccione Tienda");
-		spT2.set_sucursal("Tienda no seleccionada");
+		final TiendasModel spT2 = new TiendasModel();
+		spT2.setIdTienda(0);
+		spT2.setNombre("Seleccione Tienda");
+		spT2.setSucursal("Tienda no seleccionada");
 		
-		arrayT.add(0,spT2);
-		
+		arrayT.add(0, spT2);
+
+		cursorTienda.close();
 		base.close();
 		return arrayT;
 		
 	}
 	
-	private void loadSpinner(){
-		try {
-			
-			
-			TiendasCustomAdapter adapter = new TiendasCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
-			spinnerTien.setAdapter(adapter);
-			
-		}catch(Exception e) {
-			Toast.makeText(this, "Error Mayoreo 3", Toast.LENGTH_SHORT).show();
-		}
-		
-	}
+
 	
 	
 	
@@ -450,14 +435,14 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		public void onClick(DialogInterface dialog, int which) {
 			
 			//int posicion = spinnerTien.getSelectedItemPosition();
-			SpinnerTiendasModel stm = (SpinnerTiendasModel) spinnerTien.getSelectedItem();
+			TiendasModel stm = (TiendasModel) spinnerTien.getSelectedItem();
 			//int idt = (int) spinnerTien.getItemIdAtPosition(posicion);
-			int idTienda = stm.get_idTienda();
+			int idTienda = stm.getIdTienda();
 			if(which == DialogInterface.BUTTON_POSITIVE){
 				
 				
 				
-				if(stm.get_idTienda() != 0){
+				if(stm.getIdTienda() != 0){
 					
 					
 					Intent abrirMenuTienda = new Intent(MenuPrincipal.this , MenuTienda.class);
@@ -485,53 +470,20 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 	
 	
-	
-	
-	public void gpsStart(){
-		
-		
-		if(!GpsEncendido){
-			
-			lM.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 10, this);
-			GpsEncendido = true;
-		
-
-			
-		}
-		
-		
-	}
-	
-	
 	@Override
-	public void onLocationChanged(Location location) {
-	
-		
-	}
-
+	public void onLocationChanged(Location location) {}
 
 
 	@Override
-	public void onProviderDisabled(String provider) {
-	
-		
-	}
-
+	public void onProviderDisabled(String provider) {}
 
 
 	@Override
-	public void onProviderEnabled(String provider) {
-
-		
-	}
-
+	public void onProviderEnabled(String provider) {}
 
 
 	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		
-		
-	}
+	public void onStatusChanged(String provider, int status, Bundle extras) {}
 	
 	
 	private void borrarRegistros(){
@@ -539,7 +491,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			BDopenHelper base = new BDopenHelper(this);
 			
 			Calendar c = Calendar.getInstance();
-			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy");
+			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
 			String fechaActual = dFecha.format(c.getTime());
 			
 			//SimpleDateFormat dSem = new SimpleDateFormat("w");
@@ -561,124 +513,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 	}
 	
-	private class SpinnerTiendasModel{
-		
-		private int _idTienda;
-		private String _nombre;
-		private String _sucursal;
-		
-		public int get_idTienda() {
-			return _idTienda;
-		}
-		public void set_idTienda(int idTienda) {
-			this._idTienda = idTienda;
-		}
-		public String get_nombre() {
-			return _nombre;
-		}
-		public void set_nombre(String nombre) {
-			this._nombre = nombre;
-		}
-		public String get_sucursal() {
-			return _sucursal;
-		}
-		public void set_sucursal(String sucursal) {
-			this._sucursal = sucursal;
-		}
-
-		
-	}
-	
-	private class TiendasCustomAdapter extends ArrayAdapter<SpinnerTiendasModel>{
-		Activity _context;
-		private ArrayList<SpinnerTiendasModel> _datos;
-		
-
-		public TiendasCustomAdapter(Activity con, int textViewResourceId,ArrayList<SpinnerTiendasModel> objects) {
-			super(con, textViewResourceId, objects);
-			
-			this._context= con;
-			this._datos = objects;
-			
-		}
-
-		@Override
-		public View getDropDownView(int position, View convertView, ViewGroup parent) {
-			 return getCustomView(position, convertView, parent);
-			
-		}
-		
-		
-		
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			
-			return getCustomView(position, convertView, parent);
-		}
-
-		public View getCustomView(int position, View convertView, ViewGroup parent){
-			View row = convertView;
-			
-			if(row == null){
-				LayoutInflater inflater = _context.getLayoutInflater();
-				row = inflater.inflate(R.layout.custom_spinner_list, parent, false);
-				
-			}
-			
-			SpinnerTiendasModel temp = _datos.get(position);
-			
-			TextView name = (TextView) row.findViewById(R.id.txtCusSpi1);
-			name.setText(temp.get_nombre());
-			TextView sucursal = (TextView) row.findViewById(R.id.txtCusSpi2);
-			sucursal.setText(temp.get_sucursal());
-			if(position > 0){
-				
-				name.setTextColor(Color.BLUE);
-			}
 
 
-			
-			
-			return row;
-		}
-	}
-	
-	private void turnGPSOn(){
-	    String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-
-	    
-	}
-
-	private void turnGPSOff(){
-	    String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-
-	    if(provider.contains("gps")){ //if gps is enabled
-	        final Intent poke = new Intent();
-	        poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
-	        poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
-	        poke.setData(Uri.parse("3")); 
-	        sendBroadcast(poke);
-
-
-	   }
-	}
-	
-	private void turnGPSOnoff(){
-	     try{
-	    	 String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-
-	    	 if(!provider.contains("gps")){
-	    		 final Intent poke = new Intent();
-	    		 poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider"); 
-	    		 poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
-	    		 poke.setData(Uri.parse("3"));  //SET 3 for gps,3 for bluthooth
-	    		 sendBroadcast(poke);
-	    	 }
-	     }
-	     catch(Exception e){
-	    	 Log.d("Location", " exception thrown in enabling GPS "+e);
-	     }
-	 }
 	
 	private boolean isGPSEnable() {
 
@@ -690,12 +526,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     }
 
-    public void actualizarInfo(){
-        UpdateInformation uInf = new UpdateInformation(this);
-        uInf.actualizarTiendas(idUsuario);
-        uInf.actualizarRuta(idUsuario);
-        uInf.actualizarExhibiciones();
-    }
 
 
 	/*public void estadisticas(){

@@ -20,6 +20,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 	private class ViewHolder{
 		TextView txtNombre;
 		TextView txtPresentacion;
+		TextView txtCodigoBarras;
 	}
 	
 
@@ -57,6 +58,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
             viewHolder = new ViewHolder();
             viewHolder.txtNombre = (TextView) row.findViewById(R.id.txtCusSpi1);
             viewHolder.txtPresentacion = (TextView) row.findViewById(R.id.txtCusSpi2);
+			viewHolder.txtCodigoBarras = (TextView) row.findViewById(R.id.txt_cb);
 
             row.setTag(viewHolder);
 			
@@ -69,10 +71,19 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 
 		viewHolder.txtNombre.setText(temp.getNombre());
         viewHolder.txtPresentacion.setText(temp.getPresentacion());
-		if(position > 0){
+        if(temp.getCodigoBarras() != null){
+
+            if (!temp.getCodigoBarras().equals("")){
+                viewHolder.txtCodigoBarras.setText("CB:" + temp.getCodigoBarras());
+            }else {
+                viewHolder.txtCodigoBarras.setText("CB:N/A");
+            }
+        }
+		if(position == 0){
 			
-			viewHolder.txtNombre.setTextColor(Color.BLUE);
+			viewHolder.txtCodigoBarras.setText("");
 		}
+
 		
 		
 		return row;

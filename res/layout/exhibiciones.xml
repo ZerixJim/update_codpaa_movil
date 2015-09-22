@@ -50,7 +50,8 @@
             android:id="@+id/spiExhibi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:padding="5dp"
+            android:layout_marginTop="10dp"/>
 
         <TextView
             android:id="@+id/textInvTie"
@@ -71,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
+            android:textColor="@color/negroFondo"
             android:ems="10"
             android:id="@+id/cantidadExhibicion"
             android:visibility="visible" />
@@ -82,15 +84,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:drawableLeft="@drawable/save"
+            android:drawableStart="@drawable/save"
             android:text="@string/guar" />
-
-        <Button
-            android:id="@+id/bntSaEnvi"
-            style="@style/btnStyleOrange"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/exit" />
 
     </LinearLayout>
 

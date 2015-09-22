@@ -38,7 +38,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 	
 	int idPromotor, idTienda;
 	TextView nTienda;
-	Button btnRegresar, btnGuar, btn1,btn2,btn3,btn4,btn5,btn6;
+	Button btnGuar, btn1,btn2,btn3,btn4,btn5,btn6;
 	 
 	EditText Echa1,Echa2,Echa3,Echa4,Echa5,Echa6;
 	InputMethodManager im;
@@ -95,12 +95,12 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		
 		
 		
-		btnRegresar = (Button) findViewById(R.id.buttonExhib);
+
 		btnGuar = (Button) findViewById(R.id.btonChFr);
 		
 		
 		
-		btnRegresar.setOnClickListener(this);
+
 		btnGuar.setOnClickListener(this);
 		spiMarca.setOnItemSelectedListener(this);
 		btn1.setOnClickListener(this);
@@ -154,6 +154,9 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
                 actionBar.setDisplayUseLogoEnabled(true);
                 actionBar.setHomeButtonEnabled(true);
                 actionBar.setIcon(R.drawable.ic_launcher);
+
+
+
             }
 
 		}catch (NullPointerException e){
@@ -193,7 +196,6 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		
 		switch(v.getId()) {
 			case R.id.btnf1: reQuesFocus(Echa1);break;
-			case R.id.btnExit: reQuesFocus(Echa2);break;
 			case R.id.btnf3: reQuesFocus(Echa3);break;
 			case R.id.btnfoto: reQuesFocus(Echa4);break;
 			case R.id.btnf5: reQuesFocus(Echa5);break;
@@ -386,12 +388,14 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 			spP.setIdProducto(curPro.getInt(0));
 			spP.setNombre(curPro.getString(1));
 			spP.setPresentacion(curPro.getString(2));
+			spP.setCodigoBarras(curPro.getString(3));
 			arrayP.add(spP);
 		}
 		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
 		spPinicio.setIdProducto(0);
 		spPinicio.setNombre("Seleccione Producto");
 		spPinicio.setPresentacion("producto sin seleccionar");
+        spPinicio.setCodigoBarras(" ");
 		
 		arrayP.add(0,spPinicio);
 

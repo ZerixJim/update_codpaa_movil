@@ -4,7 +4,7 @@
     android:id="@+id/ScrollView1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gris"
+    android:background="@color/Blanco"
     tools:ignore="UselessParent" >
 
     <LinearLayout
@@ -200,16 +200,6 @@
             android:text="@string/guar"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp" />
-
-        <Button
-            android:id="@+id/buttonExhib"
-            style="@style/btnStyleOrange"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/back"
-            android:layout_marginRight="3dp"/>
 
     </LinearLayout>
 

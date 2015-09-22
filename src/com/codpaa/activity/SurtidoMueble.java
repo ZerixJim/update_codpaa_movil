@@ -12,7 +12,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -28,6 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codpaa.adapter.CustomAdapter;
+import com.codpaa.adapter.MarcasAdapter;
+import com.codpaa.model.MarcaModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.R;
@@ -44,8 +48,8 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 	SQLiteDatabase base;
 	RadioGroup radio;
 	RadioButton si,no,selec;
-	Button guardar,salir;
-	ArrayList<SpinnerMarcaModel> array = new ArrayList<>();
+	Button guardar;
+	ArrayList<MarcaModel> array = new ArrayList<>();
 	int idTienda, idPromotor;
 	Locale locale;
 	
@@ -63,7 +67,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		spiPro = (Spinner) findViewById(R.id.spiSurP);
 		cantidad = (EditText) findViewById(R.id.editSur);
 		guardar = (Button) findViewById(R.id.btnGurSur);
-		salir = (Button) findViewById(R.id.btnExit);
+
 		
 		usuario = (TextView) findViewById(R.id.textSuser);
 		tienda = (TextView) findViewById(R.id.textSurT);
@@ -72,7 +76,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		no = (RadioButton) radio.findViewById(R.id.radio1);
 		
 		guardar.setOnClickListener(this);
-		salir.setOnClickListener(this);
+
 
 		spiMar.setOnItemSelectedListener(this);
 		
@@ -115,15 +119,39 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		}
 
 		locale = new Locale("es_MX");
+
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null){
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			actionBar.setDisplayUseLogoEnabled(true);
+			actionBar.setHomeButtonEnabled(true);
+
+
+		}
 		
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+
+
+            case android.R.id.home:
+                this.finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 	
 	
 
 	@Override
 	public void onItemSelected(AdapterView<?> adapter, View v, int id,long arg3) {
 
-		SpinnerMarcaModel spM = (SpinnerMarcaModel) spiMar.getSelectedItem();
+		MarcaModel spM = (MarcaModel) spiMar.getSelectedItem();
 		int idMarca = spM.getId();
 
 		loadSpinnerProd(idMarca);
@@ -142,10 +170,8 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		switch(v.getId()) {
 		
 		case R.id.btnGurSur: guardar();
-		
-				
+
 			break;
-		case R.id.btnExit: finish(); break;
 		
 		}
 		
@@ -181,7 +207,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 			
 			
 			selec = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
-			SpinnerMarcaModel spM = (SpinnerMarcaModel) spiMar.getSelectedItem();
+			MarcaModel spM = (MarcaModel) spiMar.getSelectedItem();
 			SpinnerProductoModel spP = (SpinnerProductoModel) spiPro.getSelectedItem();
 			
 			//int idProdu = (int) spiPro.getItemIdAtPosition(spiPro.getSelectedItemPosition());
@@ -224,7 +250,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		try {
 			
 			
-			CustomAdapter adapter = new CustomAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
+			MarcasAdapter adapter = new MarcasAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
 			spiMar.setAdapter(adapter);
 			
 		}catch(Exception e) {
@@ -253,6 +279,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 			spP.setIdProducto(curPro.getInt(0));
 			spP.setNombre(curPro.getString(1));
 			spP.setPresentacion(curPro.getString(2));
+            spP.setCodigoBarras(curPro.getString(3));
 			arrayP.add(spP);
 		}
 		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
@@ -267,22 +294,23 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		
 	}
 	
-	private ArrayList<SpinnerMarcaModel> getArrayList(){
+	private ArrayList<MarcaModel> getArrayList(){
 		
 		base = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select idMarca as _id, nombre from marca order by nombre asc;";
+		String sql = "select idMarca as _id, nombre, img from marca order by nombre asc;";
 		Cursor cursorMarca = base.rawQuery(sql, null);
 		
 		for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){
 			
-			final SpinnerMarcaModel spiM = new SpinnerMarcaModel();
+			final MarcaModel spiM = new MarcaModel();
 			spiM.setNombre(cursorMarca.getString(1));
 			spiM.setId(cursorMarca.getInt(0));
+            spiM.setUrl(cursorMarca.getString(2));
 			
 			array.add(spiM);			
 		}
 		
-		final SpinnerMarcaModel spiMfirst = new SpinnerMarcaModel();
+		final MarcaModel spiMfirst = new MarcaModel();
 		spiMfirst.setNombre("Selecciona Marca");
 		spiMfirst.setId(0);
 		
