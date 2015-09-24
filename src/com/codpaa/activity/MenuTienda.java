@@ -71,41 +71,42 @@ public class MenuTienda extends Activity implements OnClickListener{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menutienda);
+		locale = new Locale("es_MX");
 		cliente = new AsyncHttpClient();
 		rp = new RequestParams();
 		Intent recibeIdTi = getIntent();
 		enviar = new EnviarDatos(this);
-		
+
 		idTienda = recibeIdTi.getIntExtra("idTienda",0);
 		idPromotor = recibeIdTi.getIntExtra("idPromotor",0);
-		
-		
+
+
 		tiendaSeleccionada = (TextView) findViewById(R.id.tiendaSeleccio);
 		promotor = (TextView) findViewById(R.id.promotor);
-        inventario = (TextView) findViewById(R.id.inventario);
-        txtEncargado = (TextView) findViewById(R.id.Encargado);
-        frentes = (TextView) findViewById(R.id.frentes);
-        surtido = (TextView) findViewById(R.id.surtido);
-        exhi = (TextView) findViewById(R.id.textExhibicio);
-        btnFrente = (Button) findViewById(R.id.buttonMensaje);
-        btnSalidaTi = (Button) findViewById(R.id.salidaTienda);
-        btnEntrada = (Button) findViewById(R.id.btnEnTienda);
-        btnEncar = (Button) findViewById(R.id.btnEncarg);
-        btnExhib = (Button) findViewById(R.id.buttonExhib);
-        btnUpdaPro = (Button) findViewById(R.id.btnUpdaPro);
-        btnInven = (Button) findViewById(R.id.btnInvenBode);
-        btnSurtido = (Button) findViewById(R.id.buttonEnviar);
-        btnTiendaError = (Button) findViewById(R.id.btnTiendaError);
+		inventario = (TextView) findViewById(R.id.inventario);
+		txtEncargado = (TextView) findViewById(R.id.Encargado);
+		frentes = (TextView) findViewById(R.id.frentes);
+		surtido = (TextView) findViewById(R.id.surtido);
+		exhi = (TextView) findViewById(R.id.textExhibicio);
+		btnFrente = (Button) findViewById(R.id.buttonMensaje);
+		btnSalidaTi = (Button) findViewById(R.id.salidaTienda);
+		btnEntrada = (Button) findViewById(R.id.btnEnTienda);
+		btnEncar = (Button) findViewById(R.id.btnEncarg);
+		btnExhib = (Button) findViewById(R.id.buttonExhib);
+		btnUpdaPro = (Button) findViewById(R.id.btnUpdaPro);
+		btnInven = (Button) findViewById(R.id.btnInvenBode);
+		btnSurtido = (Button) findViewById(R.id.buttonEnviar);
+		btnTiendaError = (Button) findViewById(R.id.btnTiendaError);
 		btnComentario = (Button) findViewById(R.id.btnComentario);
 		btnInteligencia = (Button) findViewById(R.id.btnMenInt);
 		btnFoto = (Button) findViewById(R.id.btnfoto);
-		
-		
+
+
 		DB = new BDopenHelper(this);
-		
+
 		btnFrente.setOnClickListener(this);
 		btnEntrada.setOnClickListener(this);
 		btnSurtido.setOnClickListener(this);
@@ -119,69 +120,68 @@ public class MenuTienda extends Activity implements OnClickListener{
 		btnUpdaPro.setOnClickListener(this);
 		btnFoto.setOnClickListener(this);
 
-        // textView with listener
-        frentes.setOnClickListener(this);
+		// textView with listener
+		frentes.setOnClickListener(this);
 		inventario.setOnClickListener(this);
 
 		localizar = (LocationManager) getSystemService(LOCATION_SERVICE);
-		
+
 		Context context = getApplicationContext();
 		PackageManager packageManager = context.getPackageManager();
 		String packageName = context.getPackageName();
 
 
 		try {
-		    myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
-		    
-		} catch (PackageManager.NameNotFoundException e) {
-		    e.printStackTrace();
-		}
-		
+			myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
 
-		
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+
+
+
 		gpsProvedor = LocationManager.GPS_PROVIDER;
 		netProvedor = LocationManager.NETWORK_PROVIDER;
-		
-		
+
+
 		localizar.requestLocationUpdates(netProvedor, 30000, 10, new localizacion());
-			
-		
+
+
 		try{
 
 			Cursor cTienda = DB.tienda(idTienda);
 			cTienda.moveToFirst();
-			
+
 			tiendaSeleccionada.setText(cTienda.getString(0)+" "+cTienda.getString(1));
 			tiendaSeleccionada.setTextColor(Color.rgb(175, 237, 252));
 			cTienda.close();
-			
+
 			try {
 
 
 				Cursor cNomPromo = DB.nombrePromotor(idPromotor);
 				cNomPromo.moveToFirst();
-				
+
 				promotor.setText(cNomPromo.getString(0));
 				cNomPromo.close();
-				
 
-				
+
+
 			}catch(Exception e) {
 				Toast.makeText(this, "error menuTienda 2", Toast.LENGTH_SHORT).show();
 			}
 
 
-			
-		}catch(Exception e){
-			
-			Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();			
-		}finally {
-            DB.close();
-        }
 
-		
-		locale = new Locale("es_MX");
-		
+		}catch(Exception e){
+
+			Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+		}finally {
+			DB.close();
+		}
+
+
+
 		
 	}
 	
@@ -482,7 +482,10 @@ public class MenuTienda extends Activity implements OnClickListener{
 							}
 							try {
 								Cursor cuSalida = DB.VisitaTienda(idTienda, fecha, "S");
+
+								//auto time
 								Settings.System.putInt(getContentResolver(), Settings.System.AUTO_TIME,1);
+
 								
 								if(cuSalida.getCount() >0) {
 									

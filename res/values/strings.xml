@@ -129,6 +129,7 @@
     <string name="caducidad">Caducidad</string>
     <string name="acerca_de">Acerca de</string>
     <string name="fecha">fecha</string>
+    <string name="codigo_lote">escribe codigo de lote</string>
 
 
 </resources>

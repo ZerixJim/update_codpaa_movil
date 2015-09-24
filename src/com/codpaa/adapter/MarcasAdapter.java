@@ -76,14 +76,24 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         viewHolder.nombre.setText(spm.getNombre());
         viewHolder.descrip.setText("");
 
-
+        //Log.d("Url",":" + spm.getUrl());
 
 
         Picasso picasso = Picasso.with(_context);
 
         //picasso.setIndicatorsEnabled(true);
 
-        picasso.load(spm.getUrl())
+        String url = null;
+
+
+        if (spm.getUrl() != null){
+            url = spm.getUrl().replace(" ","%20");
+
+        }
+
+
+        //Log.d("url encode", ":"+url);
+        picasso.load(url)
                 .resize(bitmapDrawable.getBitmap().getWidth(),bitmapDrawable.getBitmap().getHeight())
                 .centerCrop()
                 .placeholder(R.drawable.ic_crop_original_grey600_36dp)

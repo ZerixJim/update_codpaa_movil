@@ -4,6 +4,7 @@ package com.codpaa.listener;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.codpaa.util.Configuracion;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -13,16 +14,21 @@ import org.json.JSONObject;
 
 import com.codpaa.db.BDopenHelper;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 
 public class ResponseExhibiciones extends JsonHttpResponseHandler {
 
 
     Context _context;
+    Locale locale;
 
 
     public ResponseExhibiciones(Context context){
         this._context = context;
-
+        locale = new Locale("es_MX");
 
 
 
@@ -74,9 +80,17 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
         BDopenHelper b = new BDopenHelper(_context.getApplicationContext());
         b.vaciarTabla("exhibiciones");
 
+        Configuracion configuracion = new Configuracion(_context);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
+        String fecha = dFecha.format(c.getTime());
+
         for(int i= 0; i < exhiArray.length(); i++) {
             b.insertarTipoExhibicion(exhiArray.getJSONObject(i).getInt("IE"),
                     exhiArray.getJSONObject(i).getString("N"));
         }
+
+        configuracion.setExhibicion(fecha);
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ScrollView1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fondo_gris" >
+            android:id="@+id/ScrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/fondo_gris">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,14 +53,7 @@
             android:padding="5dp"
             android:layout_marginTop="10dp"/>
 
-        <TextView
-            android:id="@+id/textInvTie"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="@string/porc"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+
 
         <Spinner
             android:id="@+id/spinnerNumeros"
@@ -68,14 +61,26 @@
             android:layout_height="wrap_content"
             android:visibility="gone" />
 
-        <EditText
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:textColor="@color/negroFondo"
-            android:ems="10"
-            android:id="@+id/cantidadExhibicion"
-            android:visibility="visible" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="@color/negroFondo"
+                android:hint="@string/porc"
+                android:ems="10"
+                android:id="@+id/cantidadExhibicion"
+                android:visibility="visible" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
 
         <Button
             android:id="@+id/btnGuaEx"

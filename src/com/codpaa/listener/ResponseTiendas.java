@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.codpaa.util.Configuracion;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -15,14 +16,19 @@ import org.json.JSONObject;
 
 import com.codpaa.db.BDopenHelper;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 
 public class ResponseTiendas extends JsonHttpResponseHandler{
 
     Context _context;
-
+    Locale locale;
 
     public ResponseTiendas(Context context){
         this._context = context;
+        locale = new Locale("es_Mx");
 
     }
 
@@ -70,6 +76,12 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
     private void parseJsonTiendas(JSONArray tiendasArray) throws JSONException {
         BDopenHelper b = new BDopenHelper(_context.getApplicationContext());
         b.vaciarTabla("clientes");
+        Configuracion configuracion = new Configuracion(_context);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
+        String fecha = dFecha.format(c.getTime());
+
         for(int i=0; i<tiendasArray.length(); i++){
             b.insertarClientes(tiendasArray.getJSONObject(i).getInt("IT"),
                     tiendasArray.getJSONObject(i).getString("G"),
@@ -77,6 +89,8 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
                     tiendasArray.getJSONObject(i).getString("X"),
                     tiendasArray.getJSONObject(i).getString("Y"));
         }
+
+        configuracion.setTiendas(fecha);
 
     }
 }

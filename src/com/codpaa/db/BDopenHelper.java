@@ -231,6 +231,15 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
 
+    public void insetar(String table,ContentValues values){
+        baseDatosLocal = getWritableDatabase();
+        if (baseDatosLocal != null){
+            baseDatosLocal.insert(table,null,values);
+            baseDatosLocal.close();
+        }
+
+    }
+
 
 
     public void insertarUsuarios(int idcelular, String nombre, String user, String pass ) throws SQLiteException {

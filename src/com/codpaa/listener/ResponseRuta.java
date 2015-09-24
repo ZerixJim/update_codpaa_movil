@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.codpaa.util.Configuracion;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -14,15 +15,21 @@ import org.json.JSONObject;
 
 import com.codpaa.db.BDopenHelper;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 
 public class ResponseRuta extends JsonHttpResponseHandler {
 
     Context _context;
+    Locale locale;
 
     //private ProgressDialog pdia;
 
     public ResponseRuta(Context context){
         this._context = context;
+        locale = new Locale("es_MX");
         //pdia = new ProgressDialog(context);
        /* pdia.setTitle("Ruta");
         pdia.setMessage("Descargando Ruta");
@@ -78,6 +85,12 @@ public class ResponseRuta extends JsonHttpResponseHandler {
         BDopenHelper b = new BDopenHelper(_context.getApplicationContext());
         b.vaciarTabla("visitaTienda");
 
+        Configuracion configuracion = new Configuracion(_context);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
+        String fecha = dFecha.format(c.getTime());
+
         for(int i= 0; i < rutasArray.length(); i++) {
 
             b.insertarRutaVisitas(rutasArray.getJSONObject(i).getInt("IT"),
@@ -92,6 +105,8 @@ public class ResponseRuta extends JsonHttpResponseHandler {
                     rutasArray.getJSONObject(i).getString("R"));
 
         }
+
+        configuracion.setRuta(fecha);
 
     }
 }

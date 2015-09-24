@@ -12,6 +12,7 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
@@ -46,6 +47,7 @@ import com.codpaa.model.TiendasModel;
 import com.codpaa.update.UpdateInformation;
 
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.util.Configuracion;
 
 
 public class MenuPrincipal extends AppCompatActivity implements OnClickListener, LocationListener{
@@ -59,6 +61,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	LocationManager lM = null;
 	String myVersionName = "not available";
 	Locale locale;
+
+    Configuracion configuracion;
+
 
 	boolean GpsEncendido = false;
 
@@ -153,35 +158,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			conexion.setText("Conexion");
 			conexion.setBackgroundColor(Color.GREEN);
 
+            updateInfo();
 
-            UpdateInformation upinfo = new UpdateInformation(this);
-            upinfo.actualizarTiendas(idUsuario);
-            upinfo.actualizarRuta(idUsuario);
-
-
-
-            Calendar c = Calendar.getInstance();
-            SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
-            String fechaActual = dFecha.format(c.getTime());
-
-            BDopenHelper actuali = new BDopenHelper(this);
-
-
-            //actualizarInfo();
-
-
-
-            Cursor infoAc = actuali.infoActualizada("producto", fechaActual);
-            //Log.d("Re Ac pro", Integer.toString(infoAc.getCount()));
-            if(infoAc.getCount() <= 0){
-                upinfo.actualizarExhibiciones();
-                upinfo.actualizarMarca(idUsuario);
-                upinfo.actualizarProducto(idUsuario);
-
-            }
-
-            actuali.close();
-	
 
 		}else{
 			conexion.setText("Sin conexion");
@@ -207,6 +185,11 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		}
 
 		//estadisticas();
+
+
+
+
+
 
 	}
 
@@ -288,6 +271,65 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		}
 
 	}
+
+
+    private void updateInfo(){
+        configuracion = new Configuracion(this);
+        UpdateInformation uI = new UpdateInformation(this);
+
+        if (configuracion.getTiendas() != null){
+            if (!configuracion.getTiendas().equals(fechaActual())){
+                uI.actualizarTiendas(idUsuario);
+            }else {
+                Log.d("Shared", "tien:" + configuracion.getTiendas());
+            }
+        }else {
+            uI.actualizarTiendas(idUsuario);
+        }
+
+        if (configuracion.getRuta() != null){
+            if (!configuracion.getRuta().equals(fechaActual())){
+              uI.actualizarRuta(idUsuario);
+            }else {
+                Log.d("Shared", "ruta:" +configuracion.getRuta());
+            }
+        }else {
+            uI.actualizarRuta(idUsuario);
+        }
+
+        if (configuracion.getExhi() != null){
+            if (!configuracion.getExhi().equals(fechaActual())){
+                uI.actualizarExhibiciones();
+            }else {
+                Log.d("Shared", "exhi:" +configuracion.getExhi());
+            }
+        }else {
+            uI.actualizarExhibiciones();
+        }
+
+        if (configuracion.getMarca() != null){
+            if (!configuracion.getMarca().equals(fechaActual())){
+               uI.actualizarMarca(idUsuario);
+            }else {
+                Log.d("Shared", "marca:" + configuracion.getMarca());
+            }
+        }else {
+            uI.actualizarMarca(idUsuario);
+        }
+
+        if (configuracion.getProducto() != null){
+            if (!configuracion.getProducto().equals(fechaActual())){
+                uI.actualizarProducto(idUsuario);
+
+            }else {
+                Log.d("Shared", "pro:" + configuracion.getProducto());
+            }
+        }else {
+            uI.actualizarProducto(idUsuario);
+        }
+
+
+    }
 
 
 
@@ -468,6 +510,11 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	}
 
 
+    private String fechaActual(){
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
+        return dFecha.format(c.getTime());
+    }
 	
 	
 	@Override

@@ -179,7 +179,8 @@
                 android:layout_marginRight="10dp"
                 android:maxLength="15"
                 android:textColor="@color/negroFondo"
-                android:hint="escribe codigo de lote" />
+                android:hint="@string/codigo_lote"
+                android:maxLines="2"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -194,9 +195,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="fecha"
+                android:text="@string/fecha"
                 android:id="@+id/txtfecha"
-                android:textSize="50dp"
+                android:textSize="50sp"
                 android:layout_gravity="center_horizontal"
                 android:onClick="showDatePickerDialog"
                 android:clickable="true"
@@ -210,6 +211,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/save"
+            android:drawableStart="@drawable/save"
             android:text="@string/guar"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"

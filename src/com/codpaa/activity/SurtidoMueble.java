@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -43,6 +44,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 	
 	Spinner spiMar, spiPro;
 	EditText cantidad;
+	TextInputLayout cantidadLayout;
 	TextView usuario,tienda;
 	InputMethodManager im;
 	SQLiteDatabase base;
@@ -74,13 +76,16 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		radio = (RadioGroup) findViewById(R.id.radioGroup1);
 		si = (RadioButton) radio.findViewById(R.id.radio0);
 		no = (RadioButton) radio.findViewById(R.id.radio1);
+
+		cantidadLayout = (TextInputLayout) findViewById(R.id.txt_input_cantidad);
 		
 		guardar.setOnClickListener(this);
 
 
 		spiMar.setOnItemSelectedListener(this);
 		
-		cantidad.setVisibility(View.INVISIBLE);
+		//cantidad.setVisibility(View.INVISIBLE);
+		cantidadLayout.setVisibility(View.INVISIBLE);
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		
 		radio.setOnCheckedChangeListener(this);
@@ -185,12 +190,14 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		
 		switch(group.getCheckedRadioButtonId()) {
 		
-		case R.id.radio0: cantidad.setVisibility(View.VISIBLE);
+		case R.id.radio0: //cantidad.setVisibility(View.VISIBLE);
+                            cantidadLayout.setVisibility(View.VISIBLE);
 						  cantidad.requestFocus();
 						  im.showSoftInput(cantidad, 0);
 		
 						  break;
-		case R.id.radio1: cantidad.setVisibility(View.INVISIBLE);
+		case R.id.radio1: //cantidad.setVisibility(View.INVISIBLE);
+                            cantidadLayout.setVisibility(View.INVISIBLE);
 						  im.hideSoftInputFromWindow(cantidad.getWindowToken(), 0);
 					      break;
 		}

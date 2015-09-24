@@ -44,7 +44,7 @@ import com.codpaa.db.BDopenHelper;
 
 public class InteligenciaMercado extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
 	
-	Button guardar, salir;
+	Button guardar;
 	Spinner spMarca, spProducto;
     static Button btnFechaInicio, btnFechaFin;
 	SQLiteDatabase base;
@@ -69,7 +69,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 		
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			
-		salir = (Button) findViewById(R.id.btnSalirIntel);
+
 		guardar = (Button) findViewById(R.id.btnInteligua);
 		
 		spMarca = (Spinner) findViewById(R.id.spInMar);
@@ -91,7 +91,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 
 		
 		
-		salir.setOnClickListener(this);
+
 		guardar.setOnClickListener(this);
 		spMarca.setOnItemSelectedListener(this);
 		
@@ -175,9 +175,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 		case R.id.btnInteligua:
 			guardar();
 			break;
-		case R.id.btnSalirIntel:
-			finish();
-			break;
+
 		
 		}
 

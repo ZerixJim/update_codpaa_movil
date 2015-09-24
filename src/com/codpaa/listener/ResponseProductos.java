@@ -4,6 +4,7 @@ package com.codpaa.listener;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.codpaa.util.Configuracion;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -13,15 +14,21 @@ import org.json.JSONObject;
 
 import com.codpaa.db.BDopenHelper;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 
 public class ResponseProductos extends JsonHttpResponseHandler{
 
     Context _context;
+    Locale locale;
 
 
 
     public ResponseProductos(Context context){
         this._context = context;
+        locale = new Locale("es_MX");
 
     }
 
@@ -62,6 +69,12 @@ public class ResponseProductos extends JsonHttpResponseHandler{
 
     private void parseJSONProductos(JSONArray productosArray) throws JSONException {
         BDopenHelper b = new BDopenHelper(_context.getApplicationContext());
+        Configuracion configuracion = new Configuracion(_context);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
+        String fecha = dFecha.format(c.getTime());
+
         b.vaciarTabla("producto");
 
         for(int i= 0; i < productosArray.length(); i++) {
@@ -71,6 +84,12 @@ public class ResponseProductos extends JsonHttpResponseHandler{
                     productosArray.getJSONObject(i).getString("P"),
                     productosArray.getJSONObject(i).getInt("IM"),
                     productosArray.getJSONObject(i).getString("CB"));
+
+
+
+
         }
+
+        configuracion.setProducto(fecha);
     }
 }

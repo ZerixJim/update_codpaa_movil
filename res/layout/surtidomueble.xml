@@ -2,12 +2,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gris"
+    android:background="@color/Blanco"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -47,14 +49,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2" android:baselineAligned="false"
-        android:background="@color/Blanco"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="5dp"
             android:layout_weight="1"
             android:orientation="vertical" >
 
@@ -95,34 +97,33 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/ExhiTienda"
-                style="@style/TextShadow"
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/txt_input_cantidad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="@string/StringCantidadFre"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/negroFondo" />
+                android:layout_margin="8dp">
 
-            <EditText
-                android:id="@+id/editSur"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ems="10"
-                android:inputType="number"
-                android:maxLength="2"
-                android:textColor="@color/negroFondo">
+                <EditText
+                    android:id="@+id/editSur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:hint="@string/StringCantidadFre"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:textColor="@color/negroFondo"/>
 
-                <requestFocus />
-            </EditText>
+
+            </android.support.design.widget.TextInputLayout>
+
 
         </LinearLayout>
 
@@ -134,6 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/save"
+        android:drawableStart="@drawable/save"
         android:text="@string/guar"
         style="@style/btnStyleShakespeare"
         android:layout_marginLeft="2dp"
