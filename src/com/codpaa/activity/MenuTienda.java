@@ -669,7 +669,11 @@ public class MenuTienda extends Activity implements OnClickListener{
 		
 		EscucharDialogoEncargado listener = new EscucharDialogoEncargado();
 		
-		builder.setTitle("Selecciona Encargado").setPositiveButton("Guardar", listener).setNegativeButton("Cancelar", listener).setView(vistaEncargado);
+		builder.setTitle("Selecciona Encargado")
+				.setIcon(R.drawable.ic_timer_auto_grey600_24dp)
+				.setPositiveButton("Guardar", listener)
+				.setNegativeButton("Cancelar", listener)
+				.setView(vistaEncargado);
 		builder.create().show();
 		
 	}

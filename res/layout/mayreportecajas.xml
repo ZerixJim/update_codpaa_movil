@@ -27,6 +27,7 @@
             android:layout_marginTop="15dp"
             android:ems="10"
             android:hint="@string/cantCajas"
+            android:textColor="#000000"
             android:inputType="number"
             android:maxLength="4" >
 
@@ -42,6 +43,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="20dp"
             android:drawableLeft="@drawable/save"
+            android:drawableStart="@drawable/save"
             android:text="@string/guar" />
 
         <Button
@@ -54,6 +56,7 @@
             android:layout_marginRight="3dp"
             android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/delete"
+            android:drawableStart="@drawable/delete"
             android:text="@string/exit" />
 
     </LinearLayout>

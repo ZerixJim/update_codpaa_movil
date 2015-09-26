@@ -6,10 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
@@ -21,10 +23,10 @@ import com.codpaa.update.EnviarDatos;
 import com.codpaa.R;
 import com.codpaa.db.BDopenHelper;
 
-public class ComentariosActivity extends Activity implements OnClickListener{
+public class ComentariosActivity extends AppCompatActivity implements OnClickListener{
 	
 	
-	Button btnGuardar, btnSalir;
+	Button btnGuardar;
 	EditText editComentario;
 	BDopenHelper BD;
 	EnviarDatos EnviaDatos;
@@ -41,20 +43,35 @@ public class ComentariosActivity extends Activity implements OnClickListener{
 		idPromotor = (Integer) recibeIdTi.getExtras().get("idPromotor");
 		
 		btnGuardar = (Button) findViewById(R.id.btnGuaComentario);
-		btnSalir = (Button) findViewById(R.id.btnSalirComen);
+
 		editComentario = (EditText) findViewById(R.id.editComen);
 		
 		
 		btnGuardar.setOnClickListener(this);
-		btnSalir.setOnClickListener(this);
+
 		
 		EnviaDatos = new EnviarDatos(this);
 		
 		local = new Locale("es_MX");
+
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null){
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
 		
 	}
 
-	@Override
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
 	protected void onPause() {
 		super.onPause();
 		
@@ -78,13 +95,9 @@ public class ComentariosActivity extends Activity implements OnClickListener{
 		switch(v.getId()){
 		case R.id.btnGuaComentario:
 			guardarComentario();
-			
-		
-			
+
 			break;
-		case R.id.btnSalirComen:
-			finish();
-			break;
+
 		}
 		
 		
@@ -101,9 +114,7 @@ public class ComentariosActivity extends Activity implements OnClickListener{
 		
 		
 		try{
-			
-			
-			
+
 			if(editComentario.getText().length() > 0){
 				String comentario = editComentario.getText().toString();
 				BD.insertarComentarios(idTienda, idPromotor, fecha, comentario);
