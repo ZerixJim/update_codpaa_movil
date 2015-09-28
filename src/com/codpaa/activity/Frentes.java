@@ -70,7 +70,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 		//asiganacion de botones
 		btn1 = (Button) findViewById(R.id.btnf1);
-		btn2 = (Button) findViewById(R.id.btnExit);
+		btn2 = (Button) findViewById(R.id.btn_charola_2);
 		btn3 = (Button) findViewById(R.id.btnf3);
 		btn4 = (Button) findViewById(R.id.btnfoto);
 		btn5 = (Button) findViewById(R.id.btnf5);
@@ -196,6 +196,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		
 		switch(v.getId()) {
 			case R.id.btnf1: reQuesFocus(Echa1);break;
+			case R.id.btn_charola_2: reQuesFocus(Echa2);break;
 			case R.id.btnf3: reQuesFocus(Echa3);break;
 			case R.id.btnfoto: reQuesFocus(Echa4);break;
 			case R.id.btnf5: reQuesFocus(Echa5);break;

@@ -232,6 +232,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 						Toast.makeText(this, "Surtido guardado de:\n "+spP.getNombre(), Toast.LENGTH_SHORT).show();
 						new BDopenHelper(this).insertarSurtido(idTienda, idPromotor, selec.getText().toString(), fecha, idProdu, cajas);
 						im.hideSoftInputFromWindow(cantidad.getWindowToken(), 0);
+						cantidad.setText("");
 						new EnviarDatos(this).enviarSurtido();
 					}catch(Exception e) {
 						Toast.makeText(this, "No se guardo, error", Toast.LENGTH_SHORT).show();
