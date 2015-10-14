@@ -3,7 +3,6 @@ package com.codpaa.activity;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,6 +41,8 @@ import android.widget.Toast;
 
 import com.codpaa.db.BDopenHelper;
 import com.squareup.picasso.Picasso;
+
+import cz.msebera.android.httpclient.Header;
 
 public class Imagesheduler extends AppCompatActivity implements OnItemClickListener{
 	

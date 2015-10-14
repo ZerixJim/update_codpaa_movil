@@ -8,7 +8,6 @@ import android.widget.Toast;
 import com.codpaa.util.Configuracion;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +17,8 @@ import com.codpaa.db.BDopenHelper;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import cz.msebera.android.httpclient.Header;
 
 
 public class ResponseRuta extends JsonHttpResponseHandler {
@@ -45,7 +46,7 @@ public class ResponseRuta extends JsonHttpResponseHandler {
        // pdia.show();
 
         //Toast.makeText(_context.getApplicationContext(),"Descargando Ruta",Toast.LENGTH_SHORT).show();
-        Log.d("RRuta","iniciado");
+
     }
 
 

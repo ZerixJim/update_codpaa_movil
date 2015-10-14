@@ -13,7 +13,6 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,6 +43,7 @@ import android.util.Log;
 
 import com.codpaa.db.BDopenHelper;
 
+import cz.msebera.android.httpclient.Header;
 
 
 public class GeoLocalizar extends Service implements LocationListener{
@@ -260,9 +260,15 @@ public class GeoLocalizar extends Service implements LocationListener{
 	Runnable start = new Runnable( ) {
 	    public void run() {
 	        startGPS();
+
+			try {
+				loNet = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+				loGps = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			}catch(SecurityException e){
+				e.printStackTrace();
+			}
 	        
-	        loNet = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-	        loGps = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
 	        
 	        handler.postDelayed(stop, 60 * 1000L);
 	    }
@@ -294,13 +300,22 @@ public class GeoLocalizar extends Service implements LocationListener{
 
     
     public void stopGPS(){
-        lm.removeUpdates(this);        
+        try {
+            lm.removeUpdates(this);
+        }catch (SecurityException e){
+            e.printStackTrace();
+        }
     }
     
     public void startGPS(){
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0,this);
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000 , 0,this);
+
+        try {
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+        }catch (SecurityException e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -336,14 +351,14 @@ public class GeoLocalizar extends Service implements LocationListener{
 		}, 0, (1000 * 60)* 20);
 		
 		tiempoRastreo.scheduleAtFixedRate(new TimerTask() {
-			
-			@Override
-			public void run() {
-				Log.d("TimerRastreo", "inicio");
-				rastreo();
-				
-			}
-		}, 0, (1000 * 60)* 10);
+
+            @Override
+            public void run() {
+                Log.d("TimerRastreo", "inicio");
+                rastreo();
+
+            }
+        }, 0, (1000 * 60) * 10);
 
 
 
@@ -695,7 +710,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rp.put("fecha", curEncargado.getString(4));
 					
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendEncargado.php", rp, respuesta);
-					base.delete("encargadotienda", "idTienda="+curEncargado.getInt(0)+" and fecha='"+curEncargado.getString(4)+"'", null);
+					base.delete("encargadotienda", "idTienda=" + curEncargado.getInt(0) + " and fecha='" + curEncargado.getString(4) + "'", null);
 				}
 				
 			}
@@ -724,8 +739,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rp.put("comentario", curComentario.getString(3));
 					
 					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendComentario.php", rp, respuesta);
-					base.delete("comentarioTienda", "idTienda="+curComentario.getInt(0)+" and fecha='"+curComentario.getString(2)+"'", null);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendComentario.php", rp, respuesta);
+					base.delete("comentarioTienda", "idTienda=" + curComentario.getInt(0) + " and fecha='" + curComentario.getString(2) + "'", null);
 				}
 				
 			}
@@ -781,7 +796,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 			DBhelper.close();
 			Log.d("TimerRastreo", "Termino");
 		}catch(Exception e){
-			Log.d("enviarRastreo", "Excep",e);
+			Log.d("enviarRastreo", "Excep", e);
 		}
 		
 		Log.d("enviarRastreo", "termino envio de rastreo");
@@ -834,7 +849,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 			
 			
 		}catch(Exception e){
-			Log.d("Insertar Rastreo", "no se inserto",e);
+			Log.d("Insertar Rastreo", "no se inserto", e);
 			
 			
 		}
@@ -865,9 +880,9 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rpIn.put("iniofer",curInteli.getString(10));
 					rpIn.put("finofer",curInteli.getString(11));
 					rpIn.put("preciocaja",curInteli.getString(12));
-					rpIn.put("cambioprecio",curInteli.getString(13));
+					rpIn.put("cambioprecio", curInteli.getString(13));
 
-                    cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinteligencia.php", rpIn, respuestaInteligencia);
+                    cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendinteligencia.php", rpIn, respuestaInteligencia);
 					
 
 					
@@ -906,6 +921,7 @@ public class GeoLocalizar extends Service implements LocationListener{
                 rpFoto.put("mes", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("mes"))));
                 rpFoto.put("ano", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("anio"))));
                 rpFoto.put("idFotoCel",Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idPhoto"))));
+				rpFoto.put("evento", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("evento"))));
 
                 File file = new File(curFoto.getString(curFoto.getColumnIndex("imagen")));
                 try {
@@ -1072,8 +1088,12 @@ public class GeoLocalizar extends Service implements LocationListener{
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		lm.removeUpdates(this);
-		
+
+        try {
+            lm.removeUpdates(this);
+        }catch (SecurityException e){
+            e.printStackTrace();
+        }
 	}
 
 

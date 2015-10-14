@@ -15,7 +15,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
-    private static final int version = 17;
+    private static final int version = 18;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -114,7 +114,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "photo(idPhoto integer primary key autoincrement NOT NULL, idTienda int NOT NULL, " +
                 "idCelular int NOT NULL, idMarca int NOT NULL, idExhibicion int NOT NULL, " +
                 "fecha varchar(10) NOT NULL, dia int NOT NULL, mes int NOT NULL, anio int NOT NULL, " +
-                "imagen varchar(250) NOT NULL, status int(2) NOT NULL)";
+                "imagen varchar(250) NOT NULL, status int(2) NOT NULL, evento int(2))";
 
 
 
@@ -169,6 +169,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL("Alter table producto add column img varchar(250)");
         }
 
+        if (oldVersion == 17 && newVersion == 18){
+            db.execSQL("Alter table photo add column evento int(2)");
+        }
+
+
+
     }
 
     @Override
@@ -182,7 +188,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
 
-    public void insertarImagen(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia, int mes, int anio, String imagen, int status){
+    public void insertarImagen(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia, int mes, int anio, String imagen, int status, int evento){
         baseDatosLocal = getWritableDatabase();
         ContentValues valores = new ContentValues();
         valores.put("idTienda", idTien);
@@ -195,13 +201,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
         valores.put("anio", anio);
         valores.put("imagen", imagen);
         valores.put("status", status);
+        valores.put("evento", evento);
 
         if(baseDatosLocal != null)
             baseDatosLocal.insert("photo", null, valores);
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
-    public long insertarImagenId(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia, int mes, int anio, String imagen, int status){
+    public long insertarImagenId(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia, int mes, int anio, String imagen, int status, int evento){
         baseDatosLocal = getWritableDatabase();
         ContentValues valores = new ContentValues();
         long id = 0;
@@ -215,6 +222,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         valores.put("anio", anio);
         valores.put("imagen", imagen);
         valores.put("status", status);
+        valores.put("evento", evento);
 
         if(baseDatosLocal != null)
             id = baseDatosLocal.insert("photo", null, valores);
@@ -470,7 +478,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor fotos() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
         return baseDatosLocal.rawQuery("select idPhoto, idTienda, idCelular, idMarca, idExhibicion," +
-                " fecha, dia, mes, anio, imagen from photo where status=1;",null);
+                " fecha, dia, mes, anio, imagen, evento from photo where status=1;",null);
 
     }
 
@@ -478,7 +486,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
 
         return baseDatosLocal.rawQuery("select idTienda, idCelular, idMarca, idExhibicion," +
-                " fecha, dia, mes, anio from photo where idPhoto="+idFoto+";", null);
+                " fecha, dia, mes, anio, evento from photo where idPhoto="+idFoto+";", null);
 
 
     }

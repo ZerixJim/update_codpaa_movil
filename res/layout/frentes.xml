@@ -197,6 +197,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:drawableLeft="@drawable/save"
+            android:drawableStart="@drawable/save"
             android:text="@string/guar"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp" />

@@ -12,7 +12,6 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
@@ -345,9 +344,13 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		
-		lM.removeUpdates(this);
-		
+		try {
+
+			lM.removeUpdates(this);
+		}catch (SecurityException e){
+			e.printStackTrace();
+		}
+
 	}
 	
 
@@ -385,7 +388,13 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	@Override
 	protected void onPause() {
 		super.onPause();
-		lM.removeUpdates(this);
+
+		try {
+			lM.removeUpdates(this);
+
+		}catch (SecurityException e){
+			e.printStackTrace();
+		}
 		GpsEncendido = false;
 		
 	}

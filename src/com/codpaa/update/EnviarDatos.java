@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import org.apache.http.Header;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +24,7 @@ import com.loopj.android.http.*;
 
 import com.codpaa.db.BDopenHelper;
 
+import cz.msebera.android.httpclient.Header;
 
 
 public class EnviarDatos {
@@ -37,7 +38,7 @@ public class EnviarDatos {
 	private Activity activity;
 
 	AsyncHttpResponseHandler respuesta = new AsyncHttpResponseHandler(){
-		
+
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2,Throwable arg3) {
 			
@@ -204,6 +205,8 @@ public class EnviarDatos {
 			this.fecha = fecha;
 			this.act = activity;
 		}
+
+
 
 		@Override
 		public void onSuccess(int statusCode,Header[] headers ,JSONObject response) {

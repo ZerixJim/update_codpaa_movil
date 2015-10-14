@@ -130,6 +130,9 @@
     <string name="acerca_de">Acerca de</string>
     <string name="fecha">fecha</string>
     <string name="codigo_lote">escribe codigo de lote</string>
-
+    <string name="out_conection">Se perdio la conexion, intentelo mas tarde</string>
+    <string name="invalid_user">Usuario no valido</string>
+    <string name="loaded_user">Usuario Cargado, puede iniciar sesion</string>
+    <string name="tipo_carga">Tipo de Carga:</string>
 
 </resources>

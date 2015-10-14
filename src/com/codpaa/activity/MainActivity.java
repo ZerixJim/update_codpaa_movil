@@ -1,6 +1,6 @@
 package com.codpaa.activity;
 
-import org.apache.http.Header;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +37,8 @@ import com.loopj.android.http.RequestParams;
 
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.db.DBAdapter;
+
+import cz.msebera.android.httpclient.Header;
 
 
 public class MainActivity extends AppCompatActivity implements OnClickListener, OnKeyListener {
@@ -199,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                             act.runOnUiThread(runProgress);
                             valido.post(new Runnable() {
                                 public void run() {
-                                    valido.setText("Usuario Cargado, puede iniciar sesion");
+                                    valido.setText(R.string.loaded_user);
                                     valido.setTextColor(Color.GREEN);
 
                                 }
@@ -216,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                             act.runOnUiThread(runProgress);
                             valido.post(new Runnable() {
                                 public void run() {
-                                    valido.setText("Usuario No Valido");
+                                    valido.setText(R.string.invalid_user);
                                     valido.setTextColor(Color.RED);
 
                                 }
@@ -237,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 act.runOnUiThread(runProgress);
                 valido.post(new Runnable() {
                     public void run() {
-                        valido.setText("Se perdio la conexion, intentelo mas tarde");
+                        valido.setText(R.string.out_conection);
                         valido.setTextColor(Color.RED);
 
                     }

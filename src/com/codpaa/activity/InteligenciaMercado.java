@@ -38,7 +38,6 @@ import com.codpaa.model.MarcaModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.R;
-import com.codpaa.model.SpinnerMarcaModel;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
@@ -293,6 +292,9 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 
 							resetCampos();
 							spProducto.setSelection(0);
+
+							btnFechaInicio.setText(R.string.fecha);
+                            btnFechaFin.setText(R.string.fecha);
 							
 						}else{
 							Toast.makeText(getApplicationContext(), "NO seleccionaste Marca", Toast.LENGTH_SHORT).show();

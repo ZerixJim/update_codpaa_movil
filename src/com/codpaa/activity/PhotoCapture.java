@@ -11,14 +11,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-import org.apache.http.Header; //detectado
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.codpaa.adapter.CustomAdapter;
 import com.codpaa.R;
 import com.codpaa.adapter.MarcasAdapter;
-import com.codpaa.adapter.ProductosAdapter;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.SpinnerMarcaModel;
 import com.codpaa.util.Utilities;
@@ -56,6 +55,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,8 @@ import android.os.Handler;
 import com.codpaa.db.BDopenHelper;
 
 import com.squareup.picasso.Picasso;
+
+import cz.msebera.android.httpclient.Header;
 
 
 public class PhotoCapture extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
@@ -87,6 +90,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     Spinner spiMarca, spiExh;
     ArrayList<MarcaModel> array = new ArrayList<>();
  	SQLiteDatabase base;
+
+    RadioGroup radioChoice;
+    RadioButton radioNormal, radioEvento;
 
 
     @Override
@@ -115,6 +121,10 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
         progressFoto = (ProgressBar) findViewById(R.id.progressEnviarFoto);
         textoEnvio = (TextView) findViewById(R.id.textEvioFoto);
+
+        radioChoice = (RadioGroup) findViewById(R.id.radioChoice);
+        radioNormal = (RadioButton) radioChoice.findViewById(R.id.radioNormal);
+        radioEvento = (RadioButton) radioChoice.findViewById(R.id.radioEvento);
 
         //add event listener
         photo.setOnClickListener(this);
@@ -331,6 +341,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     //get real path from Uri
 	public String getRealPathFromURI(Uri uri) {
 	    Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+
 	    cursor.moveToFirst();
 	    int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
         String path = cursor.getString(idx);
@@ -362,7 +373,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     if(!mCurrentPhotoPath.equals("")){
 
                         long id = registraImagen.insertarImagenId(idTienda,idPromotor,idMarca,idExhibicion,timeStamp,Integer.valueOf(dia),
-                                Integer.valueOf(mes),Integer.valueOf(ano),mCurrentPhotoPath,1);
+                                Integer.valueOf(mes),Integer.valueOf(ano),mCurrentPhotoPath,1,getSelectedRadioGroup());
 
                         if(id > 0){
                             Log.d("EnviarImage", "Enviando la imagen");
@@ -382,6 +393,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                             requ.put("dia", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("dia"))));
                             requ.put("mes", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("mes"))));
                             requ.put("ano", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("anio"))));
+                            requ.put("evento", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("evento"))));
                             try {
                                 requ.put("file", file );
                             } catch (FileNotFoundException e) {
@@ -393,6 +405,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                     new HttpResponseImage(CameraActivity, (int)(long)id));
                             Log.d("http foto", requ.toString());
                             datosFoto.close();
+                            radioNormal.setChecked(true);
                         }
 
                     }else{
@@ -409,7 +422,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 					BDopenHelper baseinsert = new BDopenHelper(this);
 
 					try {
-						baseinsert.insertarImagen(idTienda, idPromotor, idMarca, idExhibicion, timeStamp, Integer.parseInt(dia),Integer.parseInt(mes) , Integer.parseInt(ano), mCurrentPhotoPath, 1);
+						baseinsert.insertarImagen(idTienda, idPromotor, idMarca, idExhibicion, timeStamp, Integer.parseInt(dia),Integer.parseInt(mes) , Integer.parseInt(ano), mCurrentPhotoPath, 1,getSelectedRadioGroup());
 						imagenEspera = false;
 						showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
 					} catch (Exception e) {
@@ -696,6 +709,18 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		return arrayE;
 
 	}
+
+    private int getSelectedRadioGroup(){
+
+
+        int radioButtonId = radioChoice.getCheckedRadioButtonId();
+        View radioButton = radioChoice.findViewById(radioButtonId);
+
+        Log.d("RadioValue","valor:"+ radioChoice.indexOfChild(radioButton));
+
+        return radioChoice.indexOfChild(radioButton);
+
+    }
 
 
 

@@ -1,6 +1,6 @@
 package com.codpaa.listener;
 
-import org.apache.http.Header;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import com.codpaa.db.BDopenHelper;
+
+import cz.msebera.android.httpclient.Header;
 
 public class HttpResponse extends JsonHttpResponseHandler{
 	
