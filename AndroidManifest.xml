@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codpaa"
-    android:versionCode="36"
-    android:versionName="1.1.5" >
+    android:versionCode="37"
+    android:versionName="1.1.6" >
     
     <uses-sdk android:minSdkVersion="10" />
     
@@ -27,6 +27,7 @@
 	
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/MiTema" >
@@ -56,6 +57,7 @@
         <activity android:name=".activity.Mayoreo" android:label="@string/cajasmayoreo" android:screenOrientation="portrait" />
         <activity android:name=".activity.PhotoCapture" android:label="@string/capIma" android:screenOrientation="portrait" />
         <activity android:name=".activity.Imagesheduler" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
+
         <service android:name=".service.GeoLocalizar"/>
     </application>
     

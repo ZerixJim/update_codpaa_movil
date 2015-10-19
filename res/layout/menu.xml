@@ -178,6 +178,8 @@
                     android:drawableStart="@drawable/cajas"
                     android:text="@string/cajmay" />
 
+
+
             </LinearLayout>
 
         </LinearLayout>

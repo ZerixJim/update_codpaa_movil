@@ -7,8 +7,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,9 +23,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,7 +53,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	
 	
 	TextView nombreUsuario, conexion, bien, version, cartera;
-	Button btnTienda, btnRuta, btnEnviar, btnCajasM;
+	Button btnTienda, btnRuta, btnEnviar, btnCajasM, testButton;
 
 	Spinner spinnerTien;
 	SQLiteDatabase base;
@@ -64,7 +64,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     Configuracion configuracion;
 
 
-	boolean GpsEncendido = false;
 
 	int idUsuario;
 
@@ -90,6 +89,11 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		btnRuta = (Button) findViewById(R.id.buttonRuta);
 		btnEnviar = (Button) findViewById(R.id.buttonEnviar);
 		btnCajasM = (Button) findViewById(R.id.btnGuCajasM);
+
+		//test button
+		testButton = (Button) findViewById(R.id.test_btn);
+
+		testButton.setOnClickListener(this);
 
 		
 		btnTienda.setOnClickListener(this);
@@ -130,14 +134,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			cartera.setText("Cartera: "+cursorDatosUser.getInt(0));
 			recibeDatos.close();
 			
-			if(!isGPSEnable()){
-		    	
-				//turnGPSOn();
-		    	//turnGPSOnoff();
-		    	Log.v("GPS", "gps activando..");
-			}else{
-				Log.v("GPS", "ya esta activado");
-			}
+
 	
 			
 		}catch(SQLiteException e){
@@ -184,8 +181,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		}
 
 		//estadisticas();
-
-
 
 
 
@@ -249,14 +244,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	    gd.setColor(fillColor);
 	    gd.setCornerRadius(roundRadius);
 	    
-	    if(!isGPSEnable()){
-	    	
-			//turnGPSOn();
-	    	//turnGPSOnoff();
-	    	Log.v("GPS", "gps activando..");
-		}else{
-			Log.v("GPS", "ya esta activado");
-		}
+
 		
 		if(verificarConexion()){
 			
@@ -360,28 +348,30 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	public void onClick(View v) {
 		
 		switch(v.getId()){
-		
-		case R.id.buttonTienda:
-			crearD();
-			break;
-		case R.id.buttonRuta:
-			calendario();
-			break;
-		
 
-		case R.id.buttonEnviar:
-			
-			Intent in = new Intent(this, EnviarInformacion.class);
-			startActivity(in);
-			
-			break;
-		case R.id.btnGuCajasM:
-			Intent i = new Intent(this, Mayoreo.class);
-			i.putExtra("idCelular", idUsuario);
-			startActivity(i);
-			break;
-			
-		}
+            case R.id.buttonTienda:
+                crearD();
+                break;
+            case R.id.buttonRuta:
+                calendario();
+                break;
+
+
+            case R.id.buttonEnviar:
+
+                Intent in = new Intent(this, EnviarInformacion.class);
+                startActivity(in);
+
+                break;
+            case R.id.btnGuCajasM:
+                Intent i = new Intent(this, Mayoreo.class);
+                i.putExtra("idCelular", idUsuario);
+                startActivity(i);
+                break;
+
+
+
+        }
 		
 	}
 
@@ -395,7 +385,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		}catch (SecurityException e){
 			e.printStackTrace();
 		}
-		GpsEncendido = false;
+
 		
 	}
 	
@@ -404,22 +394,28 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	private void crearD() {
 		
 		
-		Builder builder  = new AlertDialog.Builder(this);
+		AlertDialog.Builder builder  = new AlertDialog.Builder(this);
 
 		
 		
-		View vistaLocal = LayoutInflater.from(this).inflate(R.layout.listatiendaspinner, null);
+		View vistaLocal = LayoutInflater.from(this).inflate(R.layout.lista_tienda_spinner, null);
 		
 		spinnerTien = (Spinner) vistaLocal.findViewById(R.id.spinnerTiendas);
-		
 
-		
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+
+            spinnerTien.setPadding(70, 70, 70, 70);
+        }
+
+
 		TiendasAdapter adap = new TiendasAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
 		spinnerTien.setAdapter(adap);
 		DListener listener = new DListener();
 		
 			
-		builder.setPositiveButton("Aceptar Seleccion", listener).setNegativeButton("Cancelar", listener).setView(vistaLocal);
+		builder.setPositiveButton("Aceptar Seleccion", listener)
+				.setNegativeButton("Cancelar", listener)
+				.setView(vistaLocal);
 		
 		
 		builder.create().show();
@@ -428,6 +424,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	
 		
 	}
+
+
 	
 	private ArrayList<TiendasModel> getArrayList(){
 		
@@ -568,19 +566,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		}
 		
 	}
-	
 
 
-	
-	private boolean isGPSEnable() {
 
-        String str = Settings.Secure.getString(getContentResolver(),Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-
-
-        return str != null && str.contains("gps");
-
-
-    }
 
 
 
