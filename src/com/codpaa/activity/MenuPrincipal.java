@@ -90,9 +90,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		btnEnviar = (Button) findViewById(R.id.buttonEnviar);
 		btnCajasM = (Button) findViewById(R.id.btnGuCajasM);
 
-		//test button
-		testButton = (Button) findViewById(R.id.test_btn);
-
+		testButton = (Button) findViewById(R.id.btn_test);
 		testButton.setOnClickListener(this);
 
 		
@@ -369,7 +367,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 startActivity(i);
                 break;
 
-
+			case R.id.btn_test:
+				startCalendarioActivity();
+				break;
 
         }
 		
@@ -569,6 +569,11 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
 
+
+	public void startCalendarioActivity(){
+		Intent i = new Intent(this, CalendarioRuta.class);
+		startActivity(i);
+	}
 
 
 

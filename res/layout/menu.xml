@@ -178,6 +178,21 @@
                     android:drawableStart="@drawable/cajas"
                     android:text="@string/cajmay" />
 
+                <Button
+                    android:id="@+id/btn_test"
+                    style="@style/btnStyleBeige"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/cajas"
+                    android:drawableStart="@drawable/cajas"
+                    android:text="test" />
+
+
+
 
 
             </LinearLayout>
