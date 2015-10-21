@@ -169,9 +169,16 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL("Alter table producto add column img varchar(250)");
         }
 
+        if (oldVersion == 16 && newVersion == 18){
+            db.execSQL("Alter table marca add column img varchar(250)");
+            db.execSQL("Alter table producto add column img varchar(250)");
+            db.execSQL("Alter table photo add column evento int(2)");
+        }
+
         if (oldVersion == 17 && newVersion == 18){
             db.execSQL("Alter table photo add column evento int(2)");
         }
+
 
 
 
@@ -203,9 +210,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
         valores.put("status", status);
         valores.put("evento", evento);
 
-        if(baseDatosLocal != null)
+        if(baseDatosLocal != null) {
             baseDatosLocal.insert("photo", null, valores);
-        if(baseDatosLocal != null)baseDatosLocal.close();
+            baseDatosLocal.close();
+        }
     }
 
     public long insertarImagenId(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia, int mes, int anio, String imagen, int status, int evento){
@@ -224,9 +232,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
         valores.put("status", status);
         valores.put("evento", evento);
 
-        if(baseDatosLocal != null)
+        if(baseDatosLocal != null) {
             id = baseDatosLocal.insert("photo", null, valores);
-        if(baseDatosLocal != null)baseDatosLocal.close();
+            baseDatosLocal.close();
+        }
 
         return id;
     }

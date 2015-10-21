@@ -8,19 +8,23 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.codpaa.R;
+import com.codpaa.model.RutaDia;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAdapter.VersionViewHolder>{
+public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAdapter.DiaViewHolder>{
 
-    List<String> versionModels;
+
+    List<RutaDia> rutaDias;
     Boolean isHomeList = false;
 
     public static List<String> homeActivitiesList = new ArrayList<>();
@@ -45,26 +49,29 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
     }
 
 
-    public SimpleRecyclerAdapter(List<String> versionModels) {
+    public SimpleRecyclerAdapter(List<RutaDia> rutaDias) {
         isHomeList = false;
-        this.versionModels = versionModels;
+        this.rutaDias = rutaDias;
 
     }
 
     @Override
-    public VersionViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public DiaViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_list_item, viewGroup, false);
-        VersionViewHolder viewHolder = new VersionViewHolder(view);
-        return viewHolder;
+
+        return new DiaViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(VersionViewHolder versionViewHolder, int i) {
+    public void onBindViewHolder(DiaViewHolder dia, int i) {
         if (isHomeList) {
-            versionViewHolder.title.setText(homeActivitiesList.get(i));
-            versionViewHolder.subTitle.setText(homeActivitiesSubList.get(i));
+            dia.title.setText(homeActivitiesList.get(i));
+            dia.subTitle.setText(homeActivitiesSubList.get(i));
         } else {
-            versionViewHolder.title.setText(versionModels.get(i));
+            RutaDia diaModel = rutaDias.get(i);
+            dia.title.setText(diaModel.getNombreTienda());
+            dia.subTitle.setText(diaModel.getSucursal());
+            dia.rol.setText(diaModel.getRol());
         }
     }
 
@@ -73,33 +80,35 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         if (isHomeList)
             return homeActivitiesList == null ? 0 : homeActivitiesList.size();
         else
-            return versionModels == null ? 0 : versionModels.size();
+            return rutaDias == null ? 0 : rutaDias.size();
     }
 
 
-    class VersionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class DiaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cardItemLayout;
         TextView title;
         TextView subTitle;
+        TextView rol;
 
-        public VersionViewHolder(View itemView) {
+        public DiaViewHolder(View itemView) {
             super(itemView);
 
             cardItemLayout = (CardView) itemView.findViewById(R.id.cardlist_item);
-            title = (TextView) itemView.findViewById(R.id.listitem_name);
-            subTitle = (TextView) itemView.findViewById(R.id.listitem_subname);
+            title = (TextView) itemView.findViewById(R.id.rutadia_tienda);
+            subTitle = (TextView) itemView.findViewById(R.id.rutadia_sucursal);
+            rol = (TextView) itemView.findViewById(R.id.rutadia_rol);
 
-            if (isHomeList) {
-                itemView.setOnClickListener(this);
-            } else {
-                subTitle.setVisibility(View.GONE);
-            }
+            itemView.setOnClickListener(this);
+
 
         }
 
         @Override
         public void onClick(View v) {
-            clickListener.onItemClick(v, getPosition());
+            //clickListener.onItemClick(v, getPosition());
+
+            RutaDia rutaDia = rutaDias.get(getAdapterPosition());
+            Log.d("Onclick","Element: "+  rutaDia.getIdTienda());
         }
     }
 

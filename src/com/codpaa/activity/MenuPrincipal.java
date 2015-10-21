@@ -53,7 +53,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	
 	
 	TextView nombreUsuario, conexion, bien, version, cartera;
-	Button btnTienda, btnRuta, btnEnviar, btnCajasM, testButton;
+	Button btnTienda, btnRuta, btnEnviar, btnCajasM;
 
 	Spinner spinnerTien;
 	SQLiteDatabase base;
@@ -90,8 +90,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		btnEnviar = (Button) findViewById(R.id.buttonEnviar);
 		btnCajasM = (Button) findViewById(R.id.btnGuCajasM);
 
-		testButton = (Button) findViewById(R.id.btn_test);
-		testButton.setOnClickListener(this);
+
 
 		
 		btnTienda.setOnClickListener(this);
@@ -351,7 +350,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 crearD();
                 break;
             case R.id.buttonRuta:
-                calendario();
+                startCalendarioActivity();
                 break;
 
 
@@ -367,9 +366,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 startActivity(i);
                 break;
 
-			case R.id.btn_test:
-				startCalendarioActivity();
-				break;
+
 
         }
 		

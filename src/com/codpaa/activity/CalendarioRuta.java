@@ -16,7 +16,13 @@ import android.view.MenuItem;
 
 import com.codpaa.R;
 import com.codpaa.adapter.ViewPagerAdapter;
-import com.codpaa.fragment.FragmentTest;
+import com.codpaa.fragment.FragmentDomingo;
+import com.codpaa.fragment.FragmentJueves;
+import com.codpaa.fragment.FragmentLunes;
+import com.codpaa.fragment.FragmentMartes;
+import com.codpaa.fragment.FragmentMiercoles;
+import com.codpaa.fragment.FragmentSabado;
+import com.codpaa.fragment.FragmentViernes;
 
 public class CalendarioRuta extends AppCompatActivity{
 
@@ -49,6 +55,7 @@ public class CalendarioRuta extends AppCompatActivity{
         tabLayout = (TabLayout) findViewById(R.id.tabs_calendario);
         tabLayout.setupWithViewPager(viewPager);
 
+
     }
 
     @Override
@@ -75,15 +82,17 @@ public class CalendarioRuta extends AppCompatActivity{
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new FragmentTest(), "Lunes");
-        adapter.addFrag(new FragmentTest(), "Martes");
-        adapter.addFrag(new FragmentTest(), "Miercoles");
-        adapter.addFrag(new FragmentTest(), "Jueves");
-        adapter.addFrag(new FragmentTest(), "Viernes");
-        adapter.addFrag(new FragmentTest(), "Sabado");
-        adapter.addFrag(new FragmentTest(), "Domingo");
+        adapter.addFrag(new FragmentLunes(), "Lunes");
+        adapter.addFrag(new FragmentMartes(), "Martes");
+        adapter.addFrag(new FragmentMiercoles(), "Miercoles");
+        adapter.addFrag(new FragmentJueves(), "Jueves");
+        adapter.addFrag(new FragmentViernes(), "Viernes");
+        adapter.addFrag(new FragmentSabado(), "Sabado");
+        adapter.addFrag(new FragmentDomingo(), "Domingo");
 
+        
         viewPager.setAdapter(adapter);
+
     }
 
 
