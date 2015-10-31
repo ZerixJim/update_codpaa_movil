@@ -288,6 +288,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 			spP.setNombre(curPro.getString(1));
 			spP.setPresentacion(curPro.getString(2));
             spP.setCodigoBarras(curPro.getString(3));
+			spP.setIdMarca(curPro.getInt(4));
 			arrayP.add(spP);
 		}
 		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();

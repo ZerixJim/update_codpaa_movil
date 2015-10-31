@@ -3,25 +3,33 @@ package com.codpaa.adapter;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codpaa.R;
 import com.codpaa.model.SpinnerProductoModel;
+import com.codpaa.util.Utilities;
+import com.squareup.picasso.Picasso;
+
+
 
 public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 	Activity _context;
 	private ArrayList<SpinnerProductoModel> _datos;
+    BitmapDrawable bitmapDrawable;
 
 	private class ViewHolder{
 		TextView txtNombre;
 		TextView txtPresentacion;
 		TextView txtCodigoBarras;
-	}
+		ImageView imagenProducto;
+ 	}
 	
 
 	public ProductosCustomAdapter(Activity con, int textViewResourceId,ArrayList<SpinnerProductoModel> objects) {
@@ -29,6 +37,15 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		
 		this._context= con;
 		this._datos = objects;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+
+            bitmapDrawable = (BitmapDrawable) _context.getResources()
+                    .getDrawable(R.drawable.ic_launcher, _context.getTheme());
+        }else {
+            bitmapDrawable = (BitmapDrawable) _context.getResources()
+                    .getDrawable(R.drawable.ic_launcher);
+        }
 		
 		
 	}
@@ -54,11 +71,12 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		
 		if(row == null){
 			LayoutInflater inflater = _context.getLayoutInflater();
-			row = inflater.inflate(R.layout.custom_spinner_list, parent, false);
+			row = inflater.inflate(R.layout.row_spinner_product, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.txtNombre = (TextView) row.findViewById(R.id.txtCusSpi1);
-            viewHolder.txtPresentacion = (TextView) row.findViewById(R.id.txtCusSpi2);
-			viewHolder.txtCodigoBarras = (TextView) row.findViewById(R.id.txt_cb);
+            viewHolder.txtNombre = (TextView) row.findViewById(R.id.text_nombre_producto);
+            viewHolder.txtPresentacion = (TextView) row.findViewById(R.id.text_presentacion_producto);
+			viewHolder.txtCodigoBarras = (TextView) row.findViewById(R.id.text_codigo_barras);
+			viewHolder.imagenProducto = (ImageView) row.findViewById(R.id.image_producto);
 
             row.setTag(viewHolder);
 			
@@ -71,10 +89,35 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 
 		viewHolder.txtNombre.setText(temp.getNombre());
         viewHolder.txtPresentacion.setText(temp.getPresentacion());
+
+
+		if (position == 0){
+			viewHolder.imagenProducto.setVisibility(View.GONE);
+		}else {
+
+
+            if (viewHolder.imagenProducto.getVisibility() == View.GONE)
+                viewHolder.imagenProducto.setVisibility(View.VISIBLE);
+
+			Picasso picasso = Picasso.with(_context);
+
+			picasso.load(Utilities.PRODUCT_PATH+temp.getIdMarca()+"/"+temp.getIdProducto()+".gif")
+					.resize(bitmapDrawable.getBitmap().getWidth(),0)
+					.placeholder(R.drawable.ic_crop_original_grey600_36dp)
+					.error(R.drawable.ic_error_grey600_36dp)
+					.into(viewHolder.imagenProducto);
+
+		}
+
+
+
+
         if(temp.getCodigoBarras() != null){
 
             if (!temp.getCodigoBarras().equals("")){
-                viewHolder.txtCodigoBarras.setText("CB:" + temp.getCodigoBarras());
+				String cb = "CB: " + temp.getCodigoBarras();
+                viewHolder.txtCodigoBarras.setText(cb);
+
             }else {
                 viewHolder.txtCodigoBarras.setText("CB:N/A");
             }
@@ -83,6 +126,8 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 			
 			viewHolder.txtCodigoBarras.setText("");
 		}
+
+
 
 		
 		

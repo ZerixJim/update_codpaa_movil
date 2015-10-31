@@ -21,8 +21,9 @@
     <color name="blanco2">#F6F6F6</color>
     <color name="gris">#f3f3f3</color>
     <color name="fondo_gris">#f1f1f1</color>
-    <color name="blue_primary">#2196F3</color>
-    <color name="blue_primary_dark">#0D47A1</color>
+    <color name="blue_primary">#2196f3</color>
+    <color name="blue_primary_dark">#1976d2</color>
+
     
     
 </resources>

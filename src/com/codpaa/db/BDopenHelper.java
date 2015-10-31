@@ -579,7 +579,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     public Cursor productos(int idMar) throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select idProducto as _id, nombre,presentacion, cb from producto where idMarca="+idMar+" order by nombre asc;", null);
+        return baseDatosLocal.rawQuery("select idProducto as _id, nombre,presentacion, cb, idMarca from producto where idMarca="+idMar+" order by nombre asc;", null);
 
     }
 

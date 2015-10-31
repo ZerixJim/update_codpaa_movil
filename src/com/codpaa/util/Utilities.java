@@ -6,6 +6,8 @@ public class Utilities {
     static final String BASE_URL = "http://plataformavanguardia.net";
     public static final String WEB_SERVICE_PATH = "http://plataformavanguardia.net/codpaa/webservice";
     public static final String WEB_SERVICE_CODPAA = "http://service.plataformavanguardia.net/";
+    public static final String PRODUCT_PATH = "http://codpaa.plataformavanguardia.net/images/productos/";
+    public static final String MARCA_PATH = "http://codpaa.plataformavanguardia.net/images/marcas/";
 
 
 }

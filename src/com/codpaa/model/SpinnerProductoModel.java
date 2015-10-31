@@ -3,9 +3,20 @@ package com.codpaa.model;
 public class SpinnerProductoModel {
 	
 	private int _idProducto;
-	private String _nombre;
-	private String _presentacion;
-	private String _codigoBarras;
+	private int _idMarca;
+    private String _nombre;
+    private String _presentacion;
+    private String _codigoBarras;
+
+    public int getIdMarca() {
+        return _idMarca;
+    }
+
+    public void setIdMarca(int _idMarca) {
+        this._idMarca = _idMarca;
+    }
+
+
 
     public String getCodigoBarras() {
         return _codigoBarras;

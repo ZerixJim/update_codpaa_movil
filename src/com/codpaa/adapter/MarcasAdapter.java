@@ -3,6 +3,7 @@ package com.codpaa.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.codpaa.R;
 import com.codpaa.model.MarcaModel;
+import com.codpaa.util.Utilities;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -38,8 +40,15 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         this.arrayMarcas = objects;
 
         layoutInflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        bitmapDrawable = (BitmapDrawable) _context.getResources()
-                .getDrawable(R.drawable.ic_launcher);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+
+            bitmapDrawable = (BitmapDrawable) _context.getResources()
+                    .getDrawable(R.drawable.ic_launcher, _context.getTheme());
+        }else {
+            bitmapDrawable = (BitmapDrawable) _context.getResources()
+                    .getDrawable(R.drawable.ic_launcher);
+        }
 
     }
 
@@ -83,22 +92,25 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
 
         //picasso.setIndicatorsEnabled(true);
 
-        String url = null;
 
 
-        if (spm.getUrl() != null){
-            url = spm.getUrl().replace(" ","%20");
+        if (position == 0){
+            viewHolder.img.setVisibility(View.INVISIBLE);
+        }else {
+
+            if (viewHolder.img.getVisibility() == View.INVISIBLE)
+                viewHolder.img.setVisibility(View.VISIBLE);
+
+            //Log.d("url encode", ":"+url);
+            picasso.load(Utilities.MARCA_PATH + "/" + spm.getId() + ".gif")
+                    .resize(bitmapDrawable.getBitmap().getWidth(),0)
+                    .placeholder(R.drawable.ic_crop_original_grey600_36dp)
+                    .error(R.drawable.ic_error_grey600_36dp)
+                    .into(viewHolder.img);
 
         }
 
 
-        //Log.d("url encode", ":"+url);
-        picasso.load(url)
-                .resize(bitmapDrawable.getBitmap().getWidth(),bitmapDrawable.getBitmap().getHeight())
-                .centerCrop()
-                .placeholder(R.drawable.ic_crop_original_grey600_36dp)
-                .error(R.drawable.ic_error_grey600_36dp)
-                .into(viewHolder.img);
 
 
         return convertView;
