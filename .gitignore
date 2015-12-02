@@ -1,15 +1,12 @@
 # Android Studio
 *.iml
 .idea/
-.idea/workspace.xml
 .idea/tasks.xml
 .idea/datasources.xml
 .idea/dataSources.ids
 build/
 .gradle/
 
-# Files of the dex VM
-*.dex
 
 # Generated Files
 bin/
@@ -20,7 +17,6 @@ gen/
 
 # build Application files
 *.apk
-*.ap_
 
 # Eclipse projects Files
 .classpath

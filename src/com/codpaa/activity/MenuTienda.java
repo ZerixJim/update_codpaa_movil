@@ -144,7 +144,13 @@ public class MenuTienda extends Activity implements OnClickListener{
 		netProvedor = LocationManager.NETWORK_PROVIDER;
 
 
-		localizar.requestLocationUpdates(netProvedor, 30000, 10, new localizacion());
+		try {
+
+			localizar.requestLocationUpdates(netProvedor, 30000, 10, new localizacion());
+		}catch (SecurityException e){
+			e.printStackTrace();
+		}
+
 
 
 		try{
@@ -201,10 +207,15 @@ public class MenuTienda extends Activity implements OnClickListener{
 		if(!Entrada){
 			btnTiendaError.setVisibility(View.GONE);
 			
-				
-			locGps = localizar.getLastKnownLocation(gpsProvedor);
-			locNet = localizar.getLastKnownLocation(netProvedor);
-				
+
+			try {
+
+				locGps = localizar.getLastKnownLocation(gpsProvedor);
+				locNet = localizar.getLastKnownLocation(netProvedor);
+			}catch (SecurityException e){
+				e.printStackTrace();
+			}
+
 			BDopenHelper base = new BDopenHelper(getApplicationContext());
 				
 		
@@ -279,10 +290,17 @@ public class MenuTienda extends Activity implements OnClickListener{
 							String hora = dHora.format(c.getTime());
 							String sem = dSema.format(c.getTime());
 							int semana = Integer.parseInt(sem);
-							
-							locGps = localizar.getLastKnownLocation(gpsProvedor);
-							locNet = localizar.getLastKnownLocation(netProvedor);
-							
+
+
+							try{
+
+								locGps = localizar.getLastKnownLocation(gpsProvedor);
+								locNet = localizar.getLastKnownLocation(netProvedor);
+							}catch (SecurityException e){
+								e.printStackTrace();
+							}
+
+
 							BDopenHelper base = new BDopenHelper(getApplicationContext());
 							
 							
@@ -640,9 +658,7 @@ public class MenuTienda extends Activity implements OnClickListener{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		
-		localizar.removeUpdates(new localizacion());
-		
+
 	}
 
     @Override

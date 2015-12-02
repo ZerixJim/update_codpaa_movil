@@ -103,8 +103,6 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 
 			picasso.load(Utilities.PRODUCT_PATH+temp.getIdMarca()+"/"+temp.getIdProducto()+".gif")
 					.resize(bitmapDrawable.getBitmap().getWidth(),0)
-					.placeholder(R.drawable.ic_crop_original_grey600_36dp)
-					.error(R.drawable.ic_error_grey600_36dp)
 					.into(viewHolder.imagenProducto);
 
 		}

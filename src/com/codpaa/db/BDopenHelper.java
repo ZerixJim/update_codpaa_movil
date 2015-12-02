@@ -15,7 +15,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
-    private static final int version = 18;
+    private static final int version = 19;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -30,7 +30,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String productos;
     private static String surtido;
     private static String tipoExhibicion;
-    private static String visitaTiendas;
+    private static String ruta;
     private static String clientes;
     private static String marca;
     private static String coordenadasEnviar;
@@ -84,9 +84,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "idProducto int, cajas int)";
         tipoExhibicion = "create table if not exists " +
                 "tipoexhibicion(idExhibicion int primary key, nombre char(30))";
-        visitaTiendas = "create table if not exists " +
+        ruta = "create table if not exists " +
                 "visitaTienda(idTienda int primary key, lunes int, martes int, miercoles int, " +
-                "jueves int, viernes int, sabado int, domingo int, idCelular int, rol varchar(30))";
+                "jueves int, viernes int, sabado int, domingo int, idCelular int, rol varchar(100))";
         clientes = "create table if not exists " +
                 "clientes(idTienda int primary key, grupo varchar(60), sucursal varchar(60), " +
                 "latitud varchar(25), longitud varchar(25))";
@@ -100,7 +100,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "idCelular int, fecha varchar(25),comentario text,status int)";
         rastreo = "create table if not exists " +
                 "rastreo(idCelular int, fecha varchar(10), hora varchar(10), latitud double, " +
-                "longitud double, altitud double)";
+                "longitud double, altitud double, numero_telefono varchar(14))";
         inteligenciaMercado = "create table if not exists " +
                 "inteligencia(idCelular int,idTienda int,idProducto int,precioNormal varchar(8)," +
                 "precioOferta varchar(8),fecha varchar(15),ofertaCruz varchar(5),productoExtra varchar(5)," +
@@ -127,7 +127,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(usuarios);
         db.execSQL(tiendasVisitadas);
         db.execSQL(coordenadas);
-        db.execSQL(visitaTiendas);
+        db.execSQL(ruta);
         db.execSQL(encargadoTienda);
         db.execSQL(frentesCharola);
         db.execSQL(exhibiciones);
@@ -179,6 +179,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL("Alter table photo add column evento int(2)");
         }
 
+
+        if (newVersion == 19){
+            db.execSQL("Alter table rastreo add column numero_telefono varchar(14)");
+            db.execSQL("Drop table visitaTienda");
+            db.execSQL(ruta);
+
+        }
 
 
 
@@ -248,7 +255,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
 
-    public void insetar(String table,ContentValues values){
+
+    public void insertar(String table,ContentValues values){
         baseDatosLocal = getWritableDatabase();
         if (baseDatosLocal != null){
             baseDatosLocal.insert(table,null,values);
@@ -408,10 +416,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
-    public void insertarRastreo(int idCel,String fecha, String hora, double latitud, double longitud, double altitud) throws SQLiteException{
+    public void insertarRastreo(int idCel,String fecha, String hora, double latitud, double longitud, double altitud,String numeroTelefono) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert into rastreo(idCelular,fecha,hora,latitud,longitud,altitud) values("+idCel+",'"+fecha+"','"+hora+"',"+latitud+","+longitud+","+altitud+")");
+            baseDatosLocal.execSQL("insert into rastreo(idCelular,fecha,hora,latitud,longitud,altitud,numero_telefono) values("+idCel+",'"+fecha+"','"+hora+"',"+latitud+","+longitud+","+altitud+","+numeroTelefono+")");
         if(baseDatosLocal != null)baseDatosLocal.close();
 
     }
@@ -667,7 +675,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     public Cursor datosRastreo() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select idCelular, fecha, hora, latitud, longitud, altitud from rastreo", null);
+        return baseDatosLocal.rawQuery("select idCelular, fecha, hora, latitud, " +
+                "longitud, altitud, numero_telefono from rastreo", null);
 
     }
 }

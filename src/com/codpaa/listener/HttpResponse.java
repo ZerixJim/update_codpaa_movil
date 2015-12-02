@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -45,14 +46,16 @@ public class HttpResponse extends JsonHttpResponseHandler{
 				
 				base = new BDopenHelper(miCon).getWritableDatabase();
 				if(response.getBoolean("insert")){
+
 					base.execSQL("UPDATE coordenadas SET status=2 WHERE idTienda="+idTienda+" and fecha='"+fecha+"' and tipo='"+tipo+"';");
 					Toast.makeText(miCon, "Registro Recibido", Toast.LENGTH_SHORT).show();
-					
+
+					Log.d("Response Entrada", "2");
 
 					
 				}else{
-					
-					Toast.makeText(miCon, "No se Recibio", Toast.LENGTH_SHORT).show();
+					Log.d("Response Entrada", "1");
+					//Toast.makeText(miCon, "No se Recibio", Toast.LENGTH_SHORT).show();
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();

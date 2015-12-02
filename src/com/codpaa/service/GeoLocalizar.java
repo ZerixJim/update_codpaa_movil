@@ -366,6 +366,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 		pendingIntent = PendingIntent.getActivity(this,0, resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
 
 	}
+
+
 	
 	
 	
@@ -777,6 +779,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rpRastreo.put("latitud", Double.toString(curRastreo.getDouble(3)));
 					rpRastreo.put("longitud", Double.toString(curRastreo.getDouble(4)));
 					rpRastreo.put("altitud", Double.toString(curRastreo.getDouble(5)));
+					rpRastreo.put("numero_tel", curRastreo.getString(6));
 							
 							
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendRastreo.php", rpRastreo, respuesta);
@@ -830,12 +833,12 @@ public class GeoLocalizar extends Service implements LocationListener{
 				
 				if(loGps != null){
 					
-					DBhelper.insertarRastreo(idCel, fecha, hora, loGps.getLatitude(), loGps.getLongitude(), loGps.getAltitude());
+					DBhelper.insertarRastreo(idCel, fecha, hora, loGps.getLatitude(), loGps.getLongitude(), loGps.getAltitude(),getPhoneNumber());
 				}else if(loNet != null){
-					DBhelper.insertarRastreo(idCel, fecha, hora, loNet.getLatitude(), loNet.getLongitude(), loNet.getAltitude());
+					DBhelper.insertarRastreo(idCel, fecha, hora, loNet.getLatitude(), loNet.getLongitude(), loNet.getAltitude(),getPhoneNumber());
 				}else if(loGeneral != null){
 					
-					DBhelper.insertarRastreo(idCel, fecha, hora, loGeneral.getLatitude(), loGeneral.getLongitude(), loGeneral.getAltitude());
+					DBhelper.insertarRastreo(idCel, fecha, hora, loGeneral.getLatitude(), loGeneral.getLongitude(), loGeneral.getAltitude(), getPhoneNumber());
 
 				}else{
 					Log.d("Rastreo", "nullos");
@@ -1088,6 +1091,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+
+		stopContiniousListening();
 
         try {
             lm.removeUpdates(this);
