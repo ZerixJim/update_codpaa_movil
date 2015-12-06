@@ -1,10 +1,29 @@
 # Android Studio
 *.iml
 .idea/
-
+.idea/tasks.xml
+.idea/datasources.xml
+.idea/dataSources.ids
 build/
 .gradle/
 
+
+# Generated Files
+bin/
+gen/
+
+#Java Class Files
+*.class
+
+# build Application files
+*.apk
+
+# Eclipse projects Files
+.classpath
+.project
+
+# Windows Thumbnail db
+Thumbs.db
 
 # Local configuration files
 local.properties

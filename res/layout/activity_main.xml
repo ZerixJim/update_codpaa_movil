@@ -57,8 +57,9 @@
                 android:password="true"
                 android:ems="10"
                 android:hint="@string/escribeP"
-                android:inputType="numberPassword"
-                android:maxLength="10"/>
+                android:inputType="textPassword"
+                android:maxLines="2"
+                android:maxLength="15"/>
 
         </android.support.design.widget.TextInputLayout>
 

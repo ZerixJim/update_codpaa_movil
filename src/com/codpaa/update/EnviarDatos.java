@@ -629,23 +629,7 @@ public class EnviarDatos {
 		
 		
 	}
-	
-	/*
-	public void enviarVersion(int idCel,String version,String fecha){
-		try {
-			RequestParams rpVersion = new RequestParams();
-			AsyncHttpClient clienteVersion = new AsyncHttpClient();
-			
-			rpVersion.put("id", Integer.toString(idCel));
-			rpVersion.put("ve", version);
-			rpVersion.put("fecha", fecha);
-			
-			clienteVersion.post("http://promotoressumma.com/codpaa/sendVersion.php", rpVersion, respuesta);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
-	
+
 	
 	public boolean verificarConexion() {
 	    ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);

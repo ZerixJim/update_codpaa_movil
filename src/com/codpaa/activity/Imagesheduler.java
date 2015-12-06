@@ -22,6 +22,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -211,7 +212,13 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 				holder.txtStatus.setTextColor(Color.BLUE);
 			}else if (temp.get_status() == 2){
 				holder.txtStatus.setText("Enviada");
-				holder.txtStatus.setTextColor(Color.GREEN);
+
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+
+					holder.txtStatus.setTextColor(getResources().getColor(R.color.accent,_context.getTheme()));
+				}else {
+					holder.txtStatus.setTextColor(getResources().getColor(R.color.accent));
+				}
 			}
             try {
                 /*Bitmap bitmap = BitmapFactory.decodeFile(temp.get_img(),options);
