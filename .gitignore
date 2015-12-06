@@ -1,33 +1,10 @@
 # Android Studio
 *.iml
 .idea/
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/datasources.xml
-.idea/dataSources.ids
+
 build/
 .gradle/
 
-# Files of the dex VM
-*.dex
-
-# Generated Files
-bin/
-gen/
-
-#Java Class Files
-*.class
-
-# build Application files
-*.apk
-*.ap_
-
-# Eclipse projects Files
-.classpath
-.project
-
-# Windows Thumbnail db
-Thumbs.db
 
 # Local configuration files
 local.properties
