@@ -88,8 +88,13 @@ public class GeoLocalizar extends Service implements LocationListener{
 					baseEven = new BDopenHelper(con).getWritableDatabase();
 					
 
-					Log.d("EnvioRegistroThread",response.getString("mensaje")+" "+response.getInt("idTienda")+" "+response.getString("fecha")+" "+response.getString("tipo"));
-					baseEven.execSQL("UPDATE coordenadas SET status=2 WHERE idTienda="+response.getInt("idTienda")+" and fecha='"+response.getString("fecha")+"' and tipo='"+response.getString("tipo")+"';");
+					Log.d("EnvioRegistroThread",response.getString("mensaje")+" "+
+							response.getInt("idTienda")+" "+response.getString("fecha")+" "+
+							response.getString("tipo"));
+					baseEven.execSQL("UPDATE coordenadas SET status=2 WHERE idTienda="+
+							response.getInt("idTienda")+" and fecha='"+
+							response.getString("fecha")+"' and tipo='"+
+							response.getString("tipo")+"';");
 					if (baseEven != null){
 						baseEven.close();
 					}
@@ -126,7 +131,11 @@ public class GeoLocalizar extends Service implements LocationListener{
                     Log.d("ResponseFrentes",response.toString());
                     if (response.getBoolean("insert")) {
                         bdF = new BDopenHelper(con).getWritableDatabase();
-                        bdF.execSQL("Update frentesCharola set status=2 where idTienda=" + response.getInt("idTienda") + " and fecha='" + response.getString("fecha") + "' and idMarca=" + response.getInt("idMarca") + " and idProducto=" + response.getInt("idProducto"));
+                        bdF.execSQL("Update frentesCharola set status=2 where idTienda=" +
+								response.getInt("idTienda") + " and fecha='" +
+								response.getString("fecha") + "' and idMarca=" +
+								response.getInt("idMarca") + " and idProducto=" +
+								response.getInt("idProducto"));
                         Log.d("ResponseFrentes", "insertado :)");
 
                         bdF.close();
@@ -161,7 +170,10 @@ public class GeoLocalizar extends Service implements LocationListener{
                     Log.d("ResponseInteligencia",response.toString());
                     if (response.getBoolean("insert")) {
                         bdInt = new BDopenHelper(con).getWritableDatabase();
-                        bdInt.execSQL("Update inteligencia set status=2 where idTienda="+response.getInt("idTienda")+"  and fecha='"+response.getString("fecha")+"' and idProducto="+response.getInt("idProducto"));
+                        bdInt.execSQL("Update inteligencia set status=2 where idTienda="+
+								response.getInt("idTienda")+"  and fecha='"+
+								response.getString("fecha")+"' and idProducto="+
+								response.getInt("idProducto"));
 
 
                         bdInt.close();
@@ -195,7 +207,10 @@ public class GeoLocalizar extends Service implements LocationListener{
                     Log.d("ResponseInventario",response.toString());
                     if (response.getBoolean("insert")) {
                         bdIn = new BDopenHelper(con).getWritableDatabase();
-                        bdIn.execSQL("UPDATE invProducto SET status=2 where idTienda="+response.getInt("idTienda")+" and fecha='"+response.getString("fecha")+"' and idProducto="+response.getInt("idProducto")+";");
+                        bdIn.execSQL("UPDATE invProducto SET status=2 where idTienda="+
+								response.getInt("idTienda")+" and fecha='"+
+								response.getString("fecha")+"' and idProducto="+
+								response.getInt("idProducto")+";");
 
 
                         bdIn.close();
@@ -228,7 +243,11 @@ public class GeoLocalizar extends Service implements LocationListener{
                     Log.d("ResponseInteligencia",response.toString());
                     if (response.getBoolean("insert")) {
                         bdInt = new BDopenHelper(con).getWritableDatabase();
-                        bdInt.execSQL("Update exhibiciones set status=2 where idTienda="+response.getInt("idTienda")+" and idExhibicion="+response.getInt("idExhi")+" and fecha='"+response.getString("fecha")+"' and idProducto="+response.getInt("idProducto"));
+                        bdInt.execSQL("Update exhibiciones set status=2 where idTienda="+
+								response.getInt("idTienda")+" and idExhibicion="+
+								response.getInt("idExhi")+" and fecha='"+
+								response.getString("fecha")+"' and idProducto="+
+								response.getInt("idProducto"));
 
                         bdInt.close();
                     } else {
@@ -311,8 +330,8 @@ public class GeoLocalizar extends Service implements LocationListener{
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         try {
-            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+			lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
         }catch (SecurityException e){
             e.printStackTrace();
         }
@@ -608,7 +627,10 @@ public class GeoLocalizar extends Service implements LocationListener{
 					
 					
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"surti.php", rp, respuesta);
-					base.execSQL("delete from surtido where idTienda="+curSurtido.getInt(0)+" and fecha='"+curSurtido.getString(3)+"' and idProducto="+curSurtido.getInt(4)+" ;");
+					base.execSQL("delete from surtido where idTienda="+
+							curSurtido.getInt(0)+" and fecha='"+
+							curSurtido.getString(3)+"' and idProducto="+
+							curSurtido.getInt(4)+" ;");
 					
 					
 					
@@ -712,7 +734,9 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rp.put("fecha", curEncargado.getString(4));
 					
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendEncargado.php", rp, respuesta);
-					base.delete("encargadotienda", "idTienda=" + curEncargado.getInt(0) + " and fecha='" + curEncargado.getString(4) + "'", null);
+					base.delete("encargadotienda", "idTienda=" +
+							curEncargado.getInt(0) + " and fecha='" +
+							curEncargado.getString(4) + "'", null);
 				}
 				
 			}
@@ -742,7 +766,9 @@ public class GeoLocalizar extends Service implements LocationListener{
 					
 					
 					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendComentario.php", rp, respuesta);
-					base.delete("comentarioTienda", "idTienda=" + curComentario.getInt(0) + " and fecha='" + curComentario.getString(2) + "'", null);
+					base.delete("comentarioTienda", "idTienda=" +
+							curComentario.getInt(0) + " and fecha='" +
+							curComentario.getString(2) + "'", null);
 				}
 				
 			}
@@ -785,7 +811,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendRastreo.php", rpRastreo, respuesta);
 							
 							
-					bases.delete("rastreo", "idCelular="+curRastreo.getInt(0)+" and fecha='"+curRastreo.getString(1)+"'", null);
+					bases.delete("rastreo", "idCelular="+curRastreo.getInt(0)+" and fecha='"+
+							curRastreo.getString(1)+"'", null);
 				}
 						
 			}else{
@@ -833,12 +860,15 @@ public class GeoLocalizar extends Service implements LocationListener{
 				
 				if(loGps != null){
 					
-					DBhelper.insertarRastreo(idCel, fecha, hora, loGps.getLatitude(), loGps.getLongitude(), loGps.getAltitude(),getPhoneNumber());
+					DBhelper.insertarRastreo(idCel, fecha, hora, loGps.getLatitude(),
+							loGps.getLongitude(), loGps.getAltitude(),getPhoneNumber());
 				}else if(loNet != null){
-					DBhelper.insertarRastreo(idCel, fecha, hora, loNet.getLatitude(), loNet.getLongitude(), loNet.getAltitude(),getPhoneNumber());
+					DBhelper.insertarRastreo(idCel, fecha, hora, loNet.getLatitude(),
+							loNet.getLongitude(), loNet.getAltitude(),getPhoneNumber());
 				}else if(loGeneral != null){
 					
-					DBhelper.insertarRastreo(idCel, fecha, hora, loGeneral.getLatitude(), loGeneral.getLongitude(), loGeneral.getAltitude(), getPhoneNumber());
+					DBhelper.insertarRastreo(idCel, fecha, hora, loGeneral.getLatitude(),
+							loGeneral.getLongitude(), loGeneral.getAltitude(), getPhoneNumber());
 
 				}else{
 					Log.d("Rastreo", "nullos");

@@ -108,7 +108,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		try {
 		    myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
 		    bien.setText("Bienvenido(a)");
-			version.setText("versión: "+myVersionName);
+			version.setText("versión: " + myVersionName);
 		} catch (PackageManager.NameNotFoundException e) {
 		    e.printStackTrace();
 		}
