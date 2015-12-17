@@ -86,18 +86,14 @@ public class GeoLocalizar extends Service implements LocationListener{
 				if(response.getBoolean("insert")){
 					
 					baseEven = new BDopenHelper(con).getWritableDatabase();
-					
 
-					Log.d("EnvioRegistroThread",response.getString("mensaje")+" "+
-							response.getInt("idTienda")+" "+response.getString("fecha")+" "+
-							response.getString("tipo"));
 					baseEven.execSQL("UPDATE coordenadas SET status=2 WHERE idTienda="+
 							response.getInt("idTienda")+" and fecha='"+
 							response.getString("fecha")+"' and tipo='"+
 							response.getString("tipo")+"';");
-					if (baseEven != null){
+					if (baseEven != null)
 						baseEven.close();
-					}
+
 				}else{
 					Log.d("EnvioRegistroThread", response.getString("mensaje"));
 				}
@@ -114,6 +110,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 			super.onFailure(statusCode, headers, responseString, throwable);
 			
 			Log.d("EnvioRegistroThread", "onFailure :(");
+			throwable.printStackTrace();
 			
 		}
 		
@@ -391,10 +388,10 @@ public class GeoLocalizar extends Service implements LocationListener{
 	
 	
 	public class MyBinder extends Binder{
-		
-	    
 
-		GeoLocalizar getService(){
+
+
+		public GeoLocalizar getService(){
 	    	return GeoLocalizar.this;
 	    }
 	    

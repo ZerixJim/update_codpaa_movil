@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codpaa"
-    android:versionCode="38"
-    android:versionName="1.1.7" >
+    android:versionCode="39"
+    android:versionName="1.1.8">
     
     <uses-sdk android:minSdkVersion="10" />
     
@@ -44,11 +44,11 @@
         
         <activity android:name=".activity.MainActivity" android:label="@string/nombreAplicacion" android:theme="@style/MiMateria" android:screenOrientation="portrait" />
         <activity android:name=".activity.MenuPrincipal" android:label="@string/nombreAplicacion" android:icon="@drawable/ic_launcher" android:screenOrientation="portrait" />
-        <activity android:name=".activity.MenuTienda" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
+        <activity android:name=".activity.MenuTienda" android:label="@string/nombreAplicacion" android:theme="@style/noActionBarNoTitle" android:screenOrientation="portrait" />
         <activity android:name=".activity.MostrarCalendario" android:label="@string/ruta" android:screenOrientation="portrait" android:icon="@drawable/ic_launcher" />
         <activity android:name=".activity.ListarLocation" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
         <activity android:name=".activity.EnviarInformacion" android:label="@string/enviar" android:screenOrientation="portrait" />
-        <activity android:name=".activity.Frentes" android:label="@string/frentes" android:screenOrientation="portrait" />
+        <activity android:name=".activity.Frentes" android:label="@string/frentes"  android:theme="@style/noActionBarNoTitle" android:screenOrientation="portrait" />
         <activity android:name=".activity.SurtidoMueble" android:label="@string/surtido" android:screenOrientation="portrait" />
         <activity android:name=".activity.Exhibiciones" android:label="@string/exhi" android:screenOrientation="portrait" />
         <activity android:name=".activity.InventarioBodega" android:label="@string/inventario" android:screenOrientation="portrait" />

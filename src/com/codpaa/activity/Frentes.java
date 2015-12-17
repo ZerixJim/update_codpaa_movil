@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,13 +38,12 @@ import com.codpaa.db.BDopenHelper;
 public class Frentes extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
 	
 	int idPromotor, idTienda;
-	TextView nTienda;
 	Button btnGuar, btn1,btn2,btn3,btn4,btn5,btn6;
 	 
 	EditText Echa1,Echa2,Echa3,Echa4,Echa5,Echa6;
 	InputMethodManager im;
 	BDopenHelper baseH;
-
+	Toolbar toolbar;
 	Locale locale;
 
 	ArrayList<MarcaModel> array = new ArrayList<>();
@@ -55,6 +55,17 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.frentes);
 
+		toolbar = (Toolbar) findViewById(R.id.toolbar_frentes);
+
+		if(toolbar != null){
+			setSupportActionBar(toolbar);
+			ActionBar actionBar = getSupportActionBar();
+			if (actionBar != null){
+				actionBar.setDisplayHomeAsUpEnabled(true);
+
+			}
+		}
+
 		locale = new Locale("es_MX");
 		
 		Intent i = getIntent();
@@ -64,7 +75,6 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		
 
-		nTienda = (TextView) findViewById(R.id.tiendaFrente);
 		spiMarca = (Spinner) findViewById(R.id.spinnerMarFre);
 		spiPro = (Spinner) findViewById(R.id.spinnerFrePro);
 
@@ -119,13 +129,13 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 			try {
 				Cursor cTienda = baseH.tienda(idTienda);
 				cTienda.moveToFirst();
-				nTienda.setText(cTienda.getString(0)+" "+cTienda.getString(1));
+				if(getSupportActionBar() != null){
+					getSupportActionBar().setSubtitle(cTienda.getString(0)+" "+cTienda.getString(1));
+				}
 				cTienda.close();
 				try {
 
 					loadSpinner();
-
-
 
 
 				}catch(Exception e) {
@@ -146,22 +156,6 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		}
 
 
-		try {
-			//assert getSupportActionBar() != null;
-			ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null){
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setDisplayUseLogoEnabled(true);
-                actionBar.setHomeButtonEnabled(true);
-                actionBar.setIcon(R.drawable.ic_launcher);
-
-
-
-            }
-
-		}catch (NullPointerException e){
-			e.printStackTrace();
-		}
 		
 	}
 	

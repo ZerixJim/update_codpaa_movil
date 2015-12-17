@@ -610,6 +610,20 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     }
 
+    public int contarExhibiciones(int idTienda, String fecha) throws  SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+
+        Cursor cursor =  baseDatosLocal.rawQuery("select idTienda from exhibiciones where" +
+                " idTienda=" + idTienda + " and fecha='" + fecha + "';", null);
+
+        int cantidad = cursor.getCount();
+        cursor.close();
+
+        return cantidad;
+
+    }
+
     public Cursor Inventario() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
         return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,idProducto,cantidadFisico," +

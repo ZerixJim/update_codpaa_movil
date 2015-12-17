@@ -12,7 +12,6 @@ import com.codpaa.R;
 import com.codpaa.update.UpdateInformation;
 import com.loopj.android.http.*;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -21,15 +20,18 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -46,7 +48,7 @@ import com.codpaa.adapter.InventariosCustomAdapter;
 import com.codpaa.model.FrentesModel;
 import com.codpaa.model.InventarioModel;
 
-public class MenuTienda extends Activity implements OnClickListener{
+public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	
 	
 	Button btnSalidaTi,btnEntrada, btnEncar, btnExhib, btnInven, btnFrente, btnSurtido, btnTiendaError;
@@ -54,7 +56,7 @@ public class MenuTienda extends Activity implements OnClickListener{
 	SQLiteDatabase base = null;
 	Location locGps,locNet;
 	LocationManager localizar = null;
-	TextView tiendaSeleccionada, promotor, txtEncargado, frentes, surtido, exhi,inventario;
+	TextView txtEncargado, frentes, surtido, exhi,inventario;
 	int idPromotor, idTienda;
 	String gpsProvedor, netProvedor;
 	BDopenHelper DB = null;
@@ -65,6 +67,8 @@ public class MenuTienda extends Activity implements OnClickListener{
 	EditText editNombre;
 	AsyncHttpClient cliente;
 	RequestParams rp;
+
+	Toolbar toolbar;
 	private Boolean Salida = false;
 	private Boolean Entrada = false;
 
@@ -74,6 +78,20 @@ public class MenuTienda extends Activity implements OnClickListener{
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menutienda);
+
+		toolbar = (Toolbar) findViewById(R.id.toolbar_menu_principal);
+
+
+		if(toolbar != null){
+
+			setSupportActionBar(toolbar);
+			ActionBar actionBar = getSupportActionBar();
+			if (actionBar != null){
+				actionBar.setDisplayHomeAsUpEnabled(true);
+
+			}
+		}
+
 		locale = new Locale("es_MX");
 		cliente = new AsyncHttpClient();
 		rp = new RequestParams();
@@ -84,8 +102,7 @@ public class MenuTienda extends Activity implements OnClickListener{
 		idPromotor = recibeIdTi.getIntExtra("idPromotor",0);
 
 
-		tiendaSeleccionada = (TextView) findViewById(R.id.tiendaSeleccio);
-		promotor = (TextView) findViewById(R.id.promotor);
+
 		inventario = (TextView) findViewById(R.id.inventario);
 		txtEncargado = (TextView) findViewById(R.id.Encargado);
 		frentes = (TextView) findViewById(R.id.frentes);
@@ -158,8 +175,11 @@ public class MenuTienda extends Activity implements OnClickListener{
 			Cursor cTienda = DB.tienda(idTienda);
 			cTienda.moveToFirst();
 
-			tiendaSeleccionada.setText(cTienda.getString(0)+" "+cTienda.getString(1));
-			tiendaSeleccionada.setTextColor(Color.rgb(175, 237, 252));
+			String nombreTienda = cTienda.getString(0) + " " + cTienda.getString(1);
+
+
+			if (getSupportActionBar() != null)
+				getSupportActionBar().setTitle(nombreTienda);
 			cTienda.close();
 
 			try {
@@ -168,7 +188,8 @@ public class MenuTienda extends Activity implements OnClickListener{
 				Cursor cNomPromo = DB.nombrePromotor(idPromotor);
 				cNomPromo.moveToFirst();
 
-				promotor.setText(cNomPromo.getString(0));
+				if(getSupportActionBar() != null)
+					getSupportActionBar().setSubtitle(cNomPromo.getString(0));
 				cNomPromo.close();
 
 
@@ -189,6 +210,25 @@ public class MenuTienda extends Activity implements OnClickListener{
 
 
 		
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()){
+			case android.R.id.home:
+
+				if(!Entrada && !Salida){
+					this.finish();
+				}else {
+					dialogoConfirmacionSalida();
+				}
+
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+
+		}
+
 	}
 	
 	public void entradaTienda() {
@@ -438,9 +478,7 @@ public class MenuTienda extends Activity implements OnClickListener{
 		
 	}
 	
-	
 
-	
 
 	private void actualizarPro() {
         UpdateInformation updateInformation = new UpdateInformation(this);
@@ -482,6 +520,16 @@ public class MenuTienda extends Activity implements OnClickListener{
 						Cursor cuInventario = DB.contarInventario(idTienda, fecha);
 						inventario.setText("Inventario ("+cuInventario.getCount()+")");
 						DB.close();
+
+
+						try {
+
+							exhi.setText("Exhibiciones("+DB.contarExhibiciones(idTienda, fecha)+")");
+						}catch (Exception e){
+							e.printStackTrace();
+						}
+
+
 						try {
 							Cursor cuEntra = DB.VisitaTienda(idTienda, fecha, "E");
 
@@ -903,12 +951,21 @@ public class MenuTienda extends Activity implements OnClickListener{
     }
 
     private void dialogoConfirmacionSalida(){
-        Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("¿Estas Seguro(a) que quieres Registrar tu Salida?");
-        ListenerSAlida listener = new ListenerSAlida();
-        builder.setPositiveButton("Aceptar",listener).setNegativeButton("Cancelar",listener);
-        builder.create().show();
 
+		if (Salida){
+			this.finish();
+		}else {
+			if (Entrada){
+				Builder builder = new AlertDialog.Builder(this);
+				builder.setMessage("¿Estas Seguro(a) que quieres Registrar tu Salida?");
+				ListenerSAlida listener = new ListenerSAlida();
+				builder.setPositiveButton("Aceptar", listener).setNegativeButton("Cancelar", listener);
+				builder.create().show();
+			}else {
+				Toast.makeText(this,"Entrada no Registrada", Toast.LENGTH_SHORT).show();
+			}
+
+		}
     }
 
     private class ListenerSAlida implements DialogInterface.OnClickListener{
@@ -926,10 +983,6 @@ public class MenuTienda extends Activity implements OnClickListener{
 
     }
 
-
-
-	
-	
 	
 
 }

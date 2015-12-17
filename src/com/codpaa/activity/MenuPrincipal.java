@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,7 +61,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	LocationManager lM = null;
 	String myVersionName = "not available";
 	Locale locale;
-
     Configuracion configuracion;
 
 
@@ -73,6 +73,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		super.onCreate(savedInstanceState);
         locale = new Locale("es_MX");
 		setContentView(R.layout.menu);
+
 		
 		Intent recibe = getIntent();
 		String valor = (String) recibe.getExtras().get("nombre");
@@ -454,17 +455,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	}
 	
 
-	
-	
-	
-	
-	private void calendario() {
-		Intent intenCalen = new Intent(this,MostrarCalendario.class);
-		intenCalen.putExtra("idPromotor", idUsuario);
-		startActivity(intenCalen);
-	}
-	
-	
 	
 	public boolean verificarConexion() {
 	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
