@@ -3,32 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/fondo_gris"
-              android:paddingLeft="10dp"
-              android:paddingRight="10dp">
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <TextView
         android:id="@+id/textExhibicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="start"
         android:layout_marginTop="20dp"
         android:text="@string/pues"
+        android:textColor="@color/primary_text_color"
         android:textStyle="bold"
         android:typeface="normal" />
 
     <Spinner
         android:id="@+id/spinnerMarca"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-         />
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/textInvPromo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="start"
         android:layout_marginTop="20dp"
         android:text="@string/nombEncar"
         android:textStyle="bold" />
@@ -38,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:textColor="@color/negroFondo"
         android:ems="10"
         android:inputType="textPersonName" >
 

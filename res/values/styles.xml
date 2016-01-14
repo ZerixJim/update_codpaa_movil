@@ -54,15 +54,14 @@
         <item name="android:divider">@color/divider</item>
         <item name="colorControlNormal">@color/text_primary</item>
         <item name="subtitleTextColor">@color/text_primary</item>
-
     </style>
 
     <style name="ToolbarSubtitleAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">9sp</item>
     </style>
 
     <style name="ToolbarTitleAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">12sp</item>
         <!-- include other attributes you want to change: textColor, textStyle, etc -->
     </style>
 

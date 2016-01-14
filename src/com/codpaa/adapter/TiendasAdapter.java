@@ -72,11 +72,6 @@ public class TiendasAdapter extends ArrayAdapter<TiendasModel> {
 
         viewHolder.nombreTienda.setText(temp.getNombre());
         viewHolder.sucursal.setText(temp.getSucursal());
-        if(position > 0){
-
-            viewHolder.nombreTienda.setTextColor(Color.BLUE);
-        }
-
 
 
 

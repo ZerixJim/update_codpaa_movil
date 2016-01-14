@@ -7,6 +7,9 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
+import com.codpaa.adapter.ExhibicionesAdapter;
+import com.codpaa.fragment.DialogFragmentFotos;
+import com.codpaa.model.ExhibicionesModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.R;
 import com.codpaa.update.UpdateInformation;
@@ -25,6 +28,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -56,7 +60,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	SQLiteDatabase base = null;
 	Location locGps,locNet;
 	LocationManager localizar = null;
-	TextView txtEncargado, frentes, surtido, exhi,inventario;
+	TextView txtEncargado, frentes, surtido, exhi,inventario, fotos;
 	int idPromotor, idTienda;
 	String gpsProvedor, netProvedor;
 	BDopenHelper DB = null;
@@ -108,6 +112,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		frentes = (TextView) findViewById(R.id.frentes);
 		surtido = (TextView) findViewById(R.id.surtido);
 		exhi = (TextView) findViewById(R.id.textExhibicio);
+        fotos = (TextView) findViewById(R.id.text_fotos);
+
 		btnFrente = (Button) findViewById(R.id.buttonMensaje);
 		btnSalidaTi = (Button) findViewById(R.id.salidaTienda);
 		btnEntrada = (Button) findViewById(R.id.btnEnTienda);
@@ -140,6 +146,10 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		// textView with listener
 		frentes.setOnClickListener(this);
 		inventario.setOnClickListener(this);
+		exhi.setOnClickListener(this);
+        fotos.setOnClickListener(this);
+
+        fotos.setText("fotos(0)");
 
 		localizar = (LocationManager) getSystemService(LOCATION_SERVICE);
 
@@ -418,69 +428,85 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch(v.getId()) {
 		
-		case R.id.buttonMensaje:
-			menuFrentes();
+		    case R.id.buttonMensaje:
+			    menuFrentes();
 			
-			break;
+			    break;
 			
-		case R.id.btnEnTienda:
-			entradaTienda();
+		    case R.id.btnEnTienda:
+			    entradaTienda();
 			
-			break;
+			    break;
 			
-		case R.id.salidaTienda:
-			
-			dialogoConfirmacionSalida();
+            case R.id.salidaTienda:
 
-			break;
-			
-		case R.id.btnEncarg:
-			dialogoEncargado();
+                dialogoConfirmacionSalida();
 
-			break;
+                break;
 			
-		case R.id.buttonEnviar:
-			menuSurtido();
-			break;
-		case R.id.btnInvenBode:
-			menuInventario();
-			break;
-			
-		case R.id.buttonExhib:
-			menuExhibicion();
-			break;
-			
-		case R.id.btnTiendaError:
-			tiendaErronea();
-			break;
-		case R.id.btnComentario:
-			menuComentario();
-			break;
-			
-		case R.id.btnMenInt:
-			inteligenciaMercado();
-			break;
-		case R.id.btnfoto:
-			capturaFoto();
-			break;
-		case R.id.btnUpdaPro:
-			actualizarPro();
-			break;
-        case R.id.frentes:
-            Log.v("TextFrentes","Onclick");
-            dialogoFrentesCapturados();
-            break;
+            case R.id.btnEncarg:
+                dialogoEncargado();
 
+                break;
+
+            case R.id.buttonEnviar:
+                menuSurtido();
+                break;
+            case R.id.btnInvenBode:
+                menuInventario();
+                break;
+
+            case R.id.buttonExhib:
+                menuExhibicion();
+                break;
+
+            case R.id.btnTiendaError:
+                tiendaErronea();
+                break;
+            case R.id.btnComentario:
+                menuComentario();
+                break;
+
+            case R.id.btnMenInt:
+                inteligenciaMercado();
+                break;
+            case R.id.btnfoto:
+                capturaFoto();
+                break;
+            case R.id.btnUpdaPro:
+                actualizarPro();
+                break;
+            case R.id.frentes:
+                Log.v("TextFrentes","Onclick");
+                dialogoFrentesCapturados();
+                break;
             case R.id.inventario:
                 dialogoInventariosCapturados();
+                break;
+            case R.id.textExhibicio:
+                dialogoExhibiciones();
+                break;
+            case R.id.text_fotos:
+                dialogoFotos();
                 break;
 		}
 		
 	}
-	
+
+    private void dialogoFotos() {
+
+        FragmentManager fm = getSupportFragmentManager();
+        DialogFragmentFotos dialog = new DialogFragmentFotos();
+        Bundle bundle = new Bundle();
+        bundle.putInt("idTienda", idTienda);
+        dialog.setArguments(bundle);
+
+        dialog.show(fm, "Dialog fotos");
+
+    }
 
 
-	private void actualizarPro() {
+    private void actualizarPro() {
         UpdateInformation updateInformation = new UpdateInformation(this);
         updateInformation.actualizarMarca(idPromotor);
         updateInformation.actualizarProducto(idPromotor);
@@ -858,15 +884,33 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
         ListView listView = (ListView) frentes.findViewById(R.id.listCapturados);
 
         InventariosCustomAdapter adapter = new InventariosCustomAdapter(this,R.layout.lista_capturados,getInventariosCapturados());
-        //Inventarios
 
-        //FrentesCustomAdapter adapter = new FrentesCustomAdapter(this,R.layout.lista_frentes_capturados,getFrentesCapturados());
         listView.setAdapter(adapter);
 
 
         builder.setPositiveButton("Cerrar",flistener).setView(frentes);
 
         builder.create().show();
+    }
+
+
+    private void dialogoExhibiciones(){
+        Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater layoutInflater =  (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View exhiList = layoutInflater.inflate(R.layout.list_view_exhi,null);
+        Listener flistener = new Listener();
+        ListView listView = (ListView) exhiList.findViewById(R.id.list_exhi);
+
+    	ExhibicionesAdapter adapter = new ExhibicionesAdapter(this, R.layout.row_exhi, getExhibicionesByIdTienda(idTienda));
+
+        listView.setAdapter(adapter);
+
+
+        builder.setPositiveButton("Cerrar",flistener).setView(exhiList);
+
+        builder.create().show();
+
+
     }
 
     private ArrayList<FrentesModel> getFrentesCapturados(){
@@ -876,7 +920,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
                 "inner join producto as p on f.idProducto=p.idProducto where f.idTienda="+idTienda;
         Cursor frentes = base.rawQuery(sql,null);
         ArrayList<FrentesModel> arrayFrentes = new ArrayList<>();
-        Log.v("Cursor","CAntidad: "+frentes.getCount());
+        Log.v("Cursor", "CAntidad: " + frentes.getCount());
         if(frentes.getCount() > 0){
             for (frentes.moveToFirst();!frentes.isAfterLast();frentes.moveToNext()){
                 final FrentesModel fm = new FrentesModel();
@@ -911,7 +955,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
         Cursor inventarios = base.rawQuery(sql,null);
         ArrayList<InventarioModel> arrayInventarios = new ArrayList<>();
-        Log.v("Cursor","CAntidad: "+inventarios.getCount());
+        Log.v("Cursor", "CAntidad: " + inventarios.getCount());
         if(inventarios.getCount() > 0){
             for (inventarios.moveToFirst();!inventarios.isAfterLast();inventarios.moveToNext()){
                 final InventarioModel Ip = new InventarioModel();
@@ -934,6 +978,43 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
         return arrayInventarios;
     }
+
+	private ArrayList<ExhibicionesModel> getExhibicionesByIdTienda(int idTienda){
+		base = new BDopenHelper(this).getReadableDatabase();
+        ArrayList<ExhibicionesModel> arrayList = new ArrayList<>();
+        String sql = "select m.nombre as marca, p.nombre as producto,te.nombre as tipo, e.cantidad as cantidad " +
+                "from exhibiciones as e " +
+                "left join tipoexhibicion as te on te.idExhibicion=e.idExhibicion " +
+                "left join producto as p on p.idProducto=e.idProducto " +
+                "left join marca as m on m.idMarca=p.idMarca " +
+                "where e.idTienda="+idTienda;
+
+        Cursor exhibiciones = base.rawQuery(sql, null);
+        if (exhibiciones.getCount() > 0){
+            for (exhibiciones.moveToFirst(); !exhibiciones.isAfterLast(); exhibiciones.moveToNext()){
+                final ExhibicionesModel em = new ExhibicionesModel();
+                em.setMarca(exhibiciones.getString(exhibiciones.getColumnIndex("marca")));
+                em.setProducto(exhibiciones.getString(exhibiciones.getColumnIndex("producto")));
+                em.setCantidad(exhibiciones.getString(exhibiciones.getColumnIndex("cantidad")));
+                em.setTipo(exhibiciones.getString(exhibiciones.getColumnIndex("tipo")));
+
+                arrayList.add(em);
+            }
+        }else {
+            final ExhibicionesModel em = new ExhibicionesModel();
+            em.setMarca("No existen registros");
+            arrayList.add(em);
+        }
+
+        exhibiciones.close();
+        base.close();
+
+        return arrayList;
+	}
+
+
+
+
 
 
     private class Listener implements DialogInterface.OnClickListener{

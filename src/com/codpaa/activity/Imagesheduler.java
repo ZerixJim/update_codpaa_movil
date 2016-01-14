@@ -213,12 +213,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 			}else if (temp.get_status() == 2){
 				holder.txtStatus.setText("Enviada");
 
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
 
-					holder.txtStatus.setTextColor(getResources().getColor(R.color.accent,_context.getTheme()));
-				}else {
-					holder.txtStatus.setTextColor(getResources().getColor(R.color.accent));
-				}
 			}
             try {
                 /*Bitmap bitmap = BitmapFactory.decodeFile(temp.get_img(),options);

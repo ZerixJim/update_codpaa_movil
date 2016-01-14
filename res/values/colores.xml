@@ -4,8 +4,8 @@
     <color name="primary">#4caf50</color>
     <color name="accent">#ff5722</color>
     <color name="text_primary">#ffffff</color>
-    <color name="primary_text_color">#212121</color>
-    <color name="secondary_text_color">#727272</color>
+    <color name="primary_text_color">#4c4e54</color>
+    <color name="secondary_text_color">#7f8fa4</color>
     <color name="divider">#363636</color>
     <color name="light_primary_color">#c8e6c9</color>
     <color name="negroFondo">#000000</color>
