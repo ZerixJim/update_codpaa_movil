@@ -4,8 +4,6 @@ package com.codpaa.fragment;
  */
 
 
-
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -54,9 +52,11 @@ public class DialogFragmentFotos extends DialogFragment{
         SQLiteDatabase db = new BDopenHelper(getActivity()).getReadableDatabase();
         ArrayList<FotosModel> arrayList = new ArrayList<>();
         String sql = "select p.idPhoto, " +
-                "m.nombre as nombre_marca, p.fecha, p.imagen, p.status " +
-                "from photo as p inner join clientes as c on p.idTienda=c.idTienda " +
-                "inner join marca as m on p.idMarca=m.idMarca where p.idTienda="+idTienda;
+                "m.nombre as nombre_marca, p.fecha, p.imagen, p.status,te.nombre as n_exhi " +
+                "from photo as p " +
+                "left join tipoexhibicion as te on te.idExhibicion=p.idExhibicion " +
+                "left join clientes as c on p.idTienda=c.idTienda " +
+                "left join marca as m on p.idMarca=m.idMarca where p.idTienda="+idTienda;
 
         Cursor cF = db.rawQuery(sql, null);
 
@@ -66,6 +66,7 @@ public class DialogFragmentFotos extends DialogFragment{
             fm.setImg(cF.getString(cF.getColumnIndex("imagen")));
             fm.setStatus(cF.getInt(cF.getColumnIndex("status")));
             fm.setFecha(cF.getString(cF.getColumnIndex("fecha")));
+            fm.setTipo(cF.getString(cF.getColumnIndex("n_exhi")));
 
             arrayList.add(fm);
         }

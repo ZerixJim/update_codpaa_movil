@@ -624,6 +624,17 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     }
 
+    public int contarFotos(int idTienda){
+        baseDatosLocal = getReadableDatabase();
+        Cursor cursor = baseDatosLocal.rawQuery("select idPhoto from photo where idTienda="+idTienda,null);
+        int cantidad = cursor.getCount();
+
+        cursor.close();
+
+        return cantidad;
+
+    }
+
     public Cursor Inventario() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
         return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,idProducto,cantidadFisico," +

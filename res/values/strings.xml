@@ -109,7 +109,7 @@
     <string name="cajasmayoreo">Cajas Mayoreo</string>
     <string name="promptProducto">No has seleccionado marca</string>
     <string name="captura">Captaure</string>
-    <string name="capIma">Captura de foto</string>
+    <string name="capIma">foto</string>
     <string name="imadescrip">Imagen evidencia</string>
     <string name="button">Enviar Imagen</string>
     <string name="camaraon">click en el Boton para encender la Camara</string>

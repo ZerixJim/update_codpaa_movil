@@ -81,7 +81,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     File imageCaptured = null;
     TextView textoEnvio;
 	int idPromotor, idTienda;
-	Button photo, enviarPhoto;
+	Button enviarPhoto;
     Locale local;
     public static ImageView showImg = null;
     PhotoCapture CameraActivity = null;
@@ -112,7 +112,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         //instancia de views
         showImg = (ImageView) findViewById(R.id.showImg);
 
-        photo = (Button) findViewById(R.id.photo);
         enviarPhoto = (Button) findViewById(R.id.btnEnviPho);
 
 
@@ -127,7 +126,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         radioEvento = (RadioButton) radioChoice.findViewById(R.id.radioEvento);
 
         //add event listener
-        photo.setOnClickListener(this);
         enviarPhoto.setOnClickListener(this);
 
 
@@ -280,48 +278,57 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
                 /*BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 0;*/
-                mCurrentPhotoPath = imageCaptured.getAbsolutePath();
-                File archivo = new File(mCurrentPhotoPath);
-                long tamano = archivo.length();
-                double kb = tamano/1024;
-                double mb = kb/1024;
+                try {
 
-                Log.e("Imagen","Tamaño de imagen: "+mb+"mb");
+                    mCurrentPhotoPath = imageCaptured.getAbsolutePath();
+                    File archivo = new File(mCurrentPhotoPath);
+                    long tamano = archivo.length();
+                    double kb = tamano/1024;
+                    double mb = kb/1024;
+
+                    Log.e("Imagen","Tamaño de imagen: "+mb+"mb");
 
 
-                if (tamano > 0 ) {
+                    if (tamano > 0 ) {
 
 
-                    Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
+                        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
 
-                    try {
-                        if (bitmap.getWidth() > widthRequerida && bitmap.getHeight() > heightRequerida) {
-                            File fileP = new File(mCurrentPhotoPath);
-                            FileOutputStream fileOut = new FileOutputStream(fileP);
-                            //Log.v("Tamaño imagen: ",Long.toString(fileP.length()));
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fileOut);
+                        try {
+                            if (bitmap.getWidth() > widthRequerida && bitmap.getHeight() > heightRequerida) {
+                                File fileP = new File(mCurrentPhotoPath);
+                                FileOutputStream fileOut = new FileOutputStream(fileP);
+                                //Log.v("Tamaño imagen: ",Long.toString(fileP.length()));
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fileOut);
+                            }
+
+                        } catch (FileNotFoundException fe) {
+                            fe.printStackTrace();
                         }
-
-                    } catch (FileNotFoundException fe) {
-                        fe.printStackTrace();
-                    }
-                    Log.v("Image ", bitmap.getWidth() + "x" + bitmap.getHeight());
-                    //falta validacion
-                    //falta validacion
+                        Log.v("Image ", bitmap.getWidth() + "x" + bitmap.getHeight());
+                        //falta validacion
+                        //falta validacion
 
                     /*Bitmap thum = ThumbnailUtils.extractThumbnail(bitmap,256,128);
                     showImg.setImageBitmap(thum);*/
-                    Picasso.with(this).load(new File(mCurrentPhotoPath))
-                            .placeholder(R.drawable.placeholder)
-                            .resize(512,256)
-                            .centerCrop()
-                            .into(showImg);
+                        Picasso.with(this).load(new File(mCurrentPhotoPath))
+                                .placeholder(R.drawable.placeholder)
+                                .resize(512,256)
+                                .centerCrop()
+                                .into(showImg);
 
 
-                } else {
-                    Toast.makeText(getApplicationContext(),"Error al cargar " +
-                            "la foto \n intente tomar la foto de nuevo",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),"Error al cargar " +
+                                "la foto \n intente tomar la foto de nuevo",Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
+
+
+
     		}
 
     	}else {
@@ -341,6 +348,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     //get real path from Uri
 	public String getRealPathFromURI(Uri uri) {
 	    Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+
 
 	    cursor.moveToFirst();
 	    int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
@@ -609,13 +617,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()){
-		case R.id.photo:
-			dispatchTakePictureIntent();
 
-			break;
-
-		case R.id.btnEnviPho:
-			EnviarImagen();
+            case R.id.btnEnviPho:
+                EnviarImagen();
 			break;
 
 		}

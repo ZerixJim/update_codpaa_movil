@@ -555,6 +555,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 							e.printStackTrace();
 						}
 
+						try {
+							fotos.setText("Fotos("+DB.contarFotos(idTienda)+")");
+
+						}catch (Exception e){
+							e.printStackTrace();
+						}
+
 
 						try {
 							Cursor cuEntra = DB.VisitaTienda(idTienda, fecha, "E");
