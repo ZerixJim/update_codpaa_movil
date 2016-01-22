@@ -8,6 +8,15 @@ public class RutaDia {
     private String nombreTienda;
     private String sucursal;
     private String rol;
+    private String hora;
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
 
     public int getIdTienda() {
         return idTienda;

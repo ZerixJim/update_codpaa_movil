@@ -72,6 +72,8 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             dia.title.setText(diaModel.getNombreTienda());
             dia.subTitle.setText(diaModel.getSucursal());
             dia.rol.setText(diaModel.getRol());
+            dia.hora.setText(diaModel.getHora());
+
         }
     }
 
@@ -89,6 +91,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         TextView title;
         TextView subTitle;
         TextView rol;
+        TextView hora;
 
         public DiaViewHolder(View itemView) {
             super(itemView);
@@ -97,7 +100,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             title = (TextView) itemView.findViewById(R.id.rutadia_tienda);
             subTitle = (TextView) itemView.findViewById(R.id.rutadia_sucursal);
             rol = (TextView) itemView.findViewById(R.id.rutadia_rol);
-
+            hora = (TextView) itemView.findViewById(R.id.hora);
             itemView.setOnClickListener(this);
 
 
