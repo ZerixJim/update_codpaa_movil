@@ -25,6 +25,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,7 @@ import android.widget.Toast;
 
 import com.codpaa.R;
 import com.codpaa.adapter.TiendasAdapter;
+import com.codpaa.fragment.DialogEncuestas;
 import com.codpaa.model.TiendasModel;
 import com.codpaa.update.UpdateInformation;
 
@@ -54,7 +56,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	
 	
 	TextView nombreUsuario, conexion, bien, version, cartera;
-	Button btnTienda, btnRuta, btnEnviar, btnCajasM;
+	Button btnTienda, btnRuta, btnEnviar, btnCajasM, btnMensaje;
 
 	Spinner spinnerTien;
 	SQLiteDatabase base;
@@ -90,6 +92,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		btnRuta = (Button) findViewById(R.id.buttonRuta);
 		btnEnviar = (Button) findViewById(R.id.buttonEnviar);
 		btnCajasM = (Button) findViewById(R.id.btnGuCajasM);
+        btnMensaje = (Button) findViewById(R.id.buttonMensaje);
 
 
 
@@ -99,6 +102,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		btnEnviar.setOnClickListener(this);
 	
 		btnCajasM.setOnClickListener(this);
+
+        btnMensaje.setOnClickListener(this);
 
 
 		Context context = getApplicationContext();
@@ -313,6 +318,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             uI.actualizarProducto(idUsuario);
         }
 
+		uI.actualizarEncuesta(idUsuario);
+
 
     }
 
@@ -323,6 +330,13 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		super.onStart();
 
 		
+	}
+
+	private void dialogoEncuestas(){
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		DialogEncuestas dialogEncuestas = new DialogEncuestas();
+
+		dialogEncuestas.show(fragmentManager, "Dialogo encuestas");
 	}
 	
 	
@@ -365,6 +379,10 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 Intent i = new Intent(this, Mayoreo.class);
                 i.putExtra("idCelular", idUsuario);
                 startActivity(i);
+                break;
+
+            case R.id.buttonMensaje:
+                dialogoEncuestas();
                 break;
 
 

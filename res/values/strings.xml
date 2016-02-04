@@ -135,5 +135,6 @@
     <string name="loaded_user">Usuario Cargado, puede iniciar sesion</string>
     <string name="tipo_carga">Tipo de Carga:</string>
     <string name="bar_code">CB: $s</string>
+    <string name="encuestas">Encuestas</string>
 
 </resources>

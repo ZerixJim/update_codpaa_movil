@@ -3,6 +3,7 @@ package com.codpaa.update;
 
 import android.content.Context;
 
+import com.codpaa.listener.ResponseEncuesta;
 import com.codpaa.listener.ResponseExhibiciones;
 import com.codpaa.listener.ResponseMarcas;
 import com.codpaa.listener.ResponseProductos;
@@ -92,6 +93,19 @@ public class UpdateInformation{
 
         clientPro.setTimeout(5000);
         clientPro.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO,rp,responseProductos);
+
+    }
+
+    public void actualizarEncuesta(int idPromotor){
+        AsyncHttpClient client = new AsyncHttpClient();
+        ResponseEncuesta response = new ResponseEncuesta(_context);
+        RequestParams rp = new RequestParams();
+
+        rp.put("solicitud", "encuesta");
+        rp.put("id", String.valueOf(idPromotor));
+
+        client.setTimeout(5000);
+        client.get(_context, Utilities.WEB_SERVICE_CODPAA_TEST + URL_INFO, rp, response);
 
     }
 

@@ -72,6 +72,7 @@
         <activity android:name=".activity.PhotoCapture" android:label="@string/capIma" android:screenOrientation="portrait" />
         <activity android:name=".activity.Imagesheduler" android:label="@string/nombreAplicacion" android:screenOrientation="portrait" />
         <activity android:name=".activity.CalendarioRuta" android:label="@string/ruta" android:theme="@style/noActionBar" android:screenOrientation="portrait" />
+        <activity android:name=".activity.Preguntas" android:label="@string/encuestas" />
 
         <service android:name=".service.GeoLocalizar"/>
     </application>

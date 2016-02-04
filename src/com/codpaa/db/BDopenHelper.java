@@ -15,7 +15,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
-    private static final int version = 19;
+    private static final int version = 20;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -40,6 +40,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String updateInfor;
     private static String cajasMayoreo;
     private static String photo;
+    private static String preguntas;
+    private static String respuesta;
+    private static String respuestaTipo;
 
 
     public BDopenHelper(Context miContext) {
@@ -115,6 +118,15 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "idCelular int NOT NULL, idMarca int NOT NULL, idExhibicion int NOT NULL, " +
                 "fecha varchar(10) NOT NULL, dia int NOT NULL, mes int NOT NULL, anio int NOT NULL, " +
                 "imagen varchar(250) NOT NULL, status int(2) NOT NULL, evento int(2))";
+        preguntas = "create table if not exists " +
+                    "preguntas(id_pregunta integer NOT NULL, " +
+                "descripcion varchar(250) NOT NULL, id_tipo int NOT NULL, " +
+                "id_encuesta integer NOT NULL, nombre_encuesta varchar(50) NOT NULL," +
+                " id_marca int NOT NULL, PRIMARY KEY(id_pregunta, id_encuesta))";
+        respuesta = "create table if not exists " +
+                "respuestas(id_pregunta int NOT NULL, respuesta varchar, id_encuesta)";
+        respuestaTipo = "create table if not exists "+
+                "respuestaTipo(id_tipo int NOT NULL, descripcion varchar(15) NOT NULL)";
 
 
 
@@ -146,6 +158,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(updateInfor);
         db.execSQL(cajasMayoreo);
         db.execSQL(photo);
+        db.execSQL(preguntas);
+        db.execSQL(respuesta);
+        db.execSQL(respuestaTipo);
 
     }
 
@@ -153,27 +168,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 
-        if(oldVersion == 14 && newVersion == 15){
-            db.execSQL("Alter table invProducto add column cantidadFisico int");
-            db.execSQL("Alter table invProducto add column cantidadSistema int");
-            db.execSQL("Alter table invProducto add column idPromotor int");
-            db.execSQL("Alter table invProducto add column tipo varchar(10)");
 
-        }else if (oldVersion == 15 && newVersion == 16){
-            db.execSQL("Alter table invProducto add column fecha_caducidad varchar(15)");
-            db.execSQL("Alter table invProducto add column lote varchar(20)");
-        }
-
-        if (oldVersion == 16 && newVersion == 17 ){
-            db.execSQL("Alter table marca add column img varchar(250)");
-            db.execSQL("Alter table producto add column img varchar(250)");
-        }
-
-        if (oldVersion == 16 && newVersion == 18){
-            db.execSQL("Alter table marca add column img varchar(250)");
-            db.execSQL("Alter table producto add column img varchar(250)");
-            db.execSQL("Alter table photo add column evento int(2)");
-        }
 
         if (oldVersion == 17 && newVersion == 18){
             db.execSQL("Alter table photo add column evento int(2)");
@@ -187,7 +182,31 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         }
 
+        if (newVersion == 20){
+            db.execSQL(preguntas);
+            db.execSQL(respuesta);
+            db.execSQL(respuestaTipo);
+        }
 
+
+
+    }
+
+    public void insertar(String table,ContentValues values){
+        baseDatosLocal = getWritableDatabase();
+        if (baseDatosLocal != null){
+            baseDatosLocal.insert(table, null, values);
+            baseDatosLocal.close();
+        }
+
+    }
+
+    public void remplazar(String table, ContentValues values){
+        baseDatosLocal = getWritableDatabase();
+        if (baseDatosLocal != null){
+            baseDatosLocal.replace(table,null, values);
+            baseDatosLocal.close();
+        }
 
     }
 
@@ -256,14 +275,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
 
-    public void insertar(String table,ContentValues values){
-        baseDatosLocal = getWritableDatabase();
-        if (baseDatosLocal != null){
-            baseDatosLocal.insert(table,null,values);
-            baseDatosLocal.close();
-        }
 
-    }
 
 
 
