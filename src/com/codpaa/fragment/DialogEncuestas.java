@@ -1,7 +1,9 @@
-package com.codpaa.fragment;/*
+package com.codpaa.fragment;
+/*
  * Created by grim on 3/02/16.
  */
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.codpaa.R;
+import com.codpaa.activity.EncuestaActivity;
 import com.codpaa.adapter.EncuestasAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.Encuesta;
@@ -67,8 +70,15 @@ public class DialogEncuestas extends DialogFragment implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        dismiss();
         Encuesta encuesta = (Encuesta) parent.getItemAtPosition(position);
         Toast.makeText(getActivity(), " "+encuesta.getNombreEncuesta(), Toast.LENGTH_SHORT).show();
+
+        Intent i = new Intent(getActivity(), EncuestaActivity.class);
+        i.putExtra("idEncuesta", encuesta.getIdEncuesta());
+        getActivity().startActivity(i);
+
 
     }
 }
