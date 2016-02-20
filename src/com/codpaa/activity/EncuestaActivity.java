@@ -40,7 +40,7 @@ public class EncuestaActivity extends AppCompatActivity  {
         Intent intent = getIntent();
         idEncuesta = intent.getIntExtra("idEncuesta", 0);
 
-        Log.d("EncuestaActivity", "idEncuesta: "+idEncuesta);
+        //Log.d("EncuestaActivity", "idEncuesta: "+idEncuesta);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
@@ -72,7 +72,7 @@ public class EncuestaActivity extends AppCompatActivity  {
 
             case R.id.save_encuesta:
 
-                Log.d("Save Encuesta", "Menu " + adapter.getItemCount());
+                //Log.d("Save Encuesta", "Menu " + adapter.getItemCount());
                 if(adapter.getRespuestaFaltante()){
                     Toast.makeText(this, "Faltan preguntas por contestar", Toast.LENGTH_SHORT).show();
                 }

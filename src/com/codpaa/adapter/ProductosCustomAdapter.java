@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.util.Utilities;
@@ -104,6 +105,8 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 			picasso.load(Utilities.PRODUCT_PATH+temp.getIdMarca()+"/"+temp.getIdProducto()+".gif")
 					.resize(bitmapDrawable.getBitmap().getWidth(),0)
 					.into(viewHolder.imagenProducto);
+
+
 
 		}
 

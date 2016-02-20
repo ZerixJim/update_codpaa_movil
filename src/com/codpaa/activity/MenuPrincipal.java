@@ -577,6 +577,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 	public void startCalendarioActivity(){
 		Intent i = new Intent(this, CalendarioRuta.class);
+		i.putExtra("idCelular",idUsuario);
 		startActivity(i);
 	}
 

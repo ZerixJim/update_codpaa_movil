@@ -4,17 +4,19 @@ package com.codpaa.adapter;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 
 
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.codpaa.R;
+import com.codpaa.activity.MenuTienda;
 import com.codpaa.model.RutaDia;
 
 
@@ -30,7 +32,8 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
     public static List<String> homeActivitiesList = new ArrayList<>();
     public static List<String> homeActivitiesSubList = new ArrayList<>();
     Context context;
-    OnItemClickListener clickListener;
+    //private int idPromotor;
+
 
 
     public void setHomeActivitiesList(Context context) {
@@ -51,6 +54,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
 
     public SimpleRecyclerAdapter(List<RutaDia> rutaDias) {
         isHomeList = false;
+        //this.idPromotor = idPromotor;
         this.rutaDias = rutaDias;
 
     }
@@ -108,18 +112,23 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
 
         @Override
         public void onClick(View v) {
-            //clickListener.onItemClick(v, getPosition());
-            /*
+
             RutaDia rutaDia = rutaDias.get(getAdapterPosition());
-            Log.d("Onclick","Element: "+  rutaDia.getIdTienda());*/
+            Log.d("Onclick", "Element: " + rutaDia.getIdTienda());
+
+            //startActivityRute(rutaDia.getIdTienda());
+
         }
+
+        /*
+        private void startActivityRute(int idTienda){
+            Intent i = new Intent(context, MenuTienda.class);
+            i.putExtra("idTienda", idTienda);
+            i.putExtra("idPromotor", idPromotor);
+            context.startActivity(i);
+        }*/
+
     }
 
-    public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
-    }
 
-    public void SetOnItemClickListener(final OnItemClickListener itemClickListener) {
-        this.clickListener = itemClickListener;
-    }
 }

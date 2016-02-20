@@ -3,6 +3,7 @@ package com.codpaa.activity;
  * Created by Gustavo on 20/10/2015.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -29,10 +30,14 @@ public class CalendarioRuta extends AppCompatActivity{
     Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
+    private int idPromotor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendario_ruta);
+
+        Intent i = getIntent();
+        idPromotor = i.getIntExtra("idCelular", 0);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_calendario);
 
@@ -94,6 +99,5 @@ public class CalendarioRuta extends AppCompatActivity{
         viewPager.setAdapter(adapter);
 
     }
-
 
 }

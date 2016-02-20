@@ -108,6 +108,8 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
                     .error(R.drawable.ic_error_grey600_36dp)
                     .into(viewHolder.img);
 
+
+
         }
 
 
