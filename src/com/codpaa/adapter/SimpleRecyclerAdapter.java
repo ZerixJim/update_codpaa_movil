@@ -3,7 +3,9 @@ package com.codpaa.adapter;
  * Created by Gustavo on 20/10/2015.
  */
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codpaa.R;
+import com.codpaa.activity.CalendarioRuta;
 import com.codpaa.activity.MenuTienda;
 import com.codpaa.model.RutaDia;
 
@@ -32,7 +36,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
     public static List<String> homeActivitiesList = new ArrayList<>();
     public static List<String> homeActivitiesSubList = new ArrayList<>();
     Context context;
-    //private int idPromotor;
+    private int idPromotor;
 
 
 
@@ -52,10 +56,12 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
     }
 
 
-    public SimpleRecyclerAdapter(List<RutaDia> rutaDias) {
+    public SimpleRecyclerAdapter(Context context, List<RutaDia> rutaDias, int idPromotor) {
         isHomeList = false;
-        //this.idPromotor = idPromotor;
+
+        this.context = context;
         this.rutaDias = rutaDias;
+        this.idPromotor = idPromotor;
 
     }
 
@@ -116,17 +122,36 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             RutaDia rutaDia = rutaDias.get(getAdapterPosition());
             Log.d("Onclick", "Element: " + rutaDia.getIdTienda());
 
-            //startActivityRute(rutaDia.getIdTienda());
+            dialodStartComfirm(rutaDia.getIdTienda(), rutaDia);
 
         }
 
-        /*
+
         private void startActivityRute(int idTienda){
+
             Intent i = new Intent(context, MenuTienda.class);
             i.putExtra("idTienda", idTienda);
             i.putExtra("idPromotor", idPromotor);
             context.startActivity(i);
-        }*/
+        }
+
+        private void dialodStartComfirm(final int idTienda, final RutaDia rute){
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("¿Estas Seguro(a) que quieres Entrar a "+ rute.getNombreTienda() +
+            " " + rute.getSucursal() + "?");
+
+            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+
+                    startActivityRute(idTienda);
+
+                }
+            }).setNegativeButton("Cancelar", null);
+            builder.create().show();
+        }
 
     }
 

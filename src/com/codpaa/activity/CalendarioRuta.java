@@ -4,12 +4,14 @@ package com.codpaa.activity;
  */
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +26,8 @@ import com.codpaa.fragment.FragmentMartes;
 import com.codpaa.fragment.FragmentMiercoles;
 import com.codpaa.fragment.FragmentSabado;
 import com.codpaa.fragment.FragmentViernes;
+
+import java.util.Calendar;
 
 public class CalendarioRuta extends AppCompatActivity{
 
@@ -87,16 +91,46 @@ public class CalendarioRuta extends AppCompatActivity{
 
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new FragmentLunes(), "Lunes");
-        adapter.addFrag(new FragmentMartes(), "Martes");
-        adapter.addFrag(new FragmentMiercoles(), "Miercoles");
-        adapter.addFrag(new FragmentJueves(), "Jueves");
-        adapter.addFrag(new FragmentViernes(), "Viernes");
-        adapter.addFrag(new FragmentSabado(), "Sabado");
-        adapter.addFrag(new FragmentDomingo(), "Domingo");
+        Bundle b = new Bundle();
+        b.putInt("idPromotor", idPromotor);
 
-        
+        FragmentLunes fL = new FragmentLunes();
+        fL.setArguments(b);
+
+        FragmentMartes fM = new FragmentMartes();
+        fM.setArguments(b);
+
+        FragmentMiercoles fMi = new FragmentMiercoles();
+        fMi.setArguments(b);
+
+        FragmentJueves fJ = new FragmentJueves();
+        fJ.setArguments(b);
+
+        FragmentViernes fV = new FragmentViernes();
+        fV.setArguments(b);
+
+        FragmentSabado fS = new FragmentSabado();
+        fS.setArguments(b);
+
+        FragmentDomingo fD = new FragmentDomingo();
+        fD.setArguments(b);
+
+        adapter.addFrag(fD, "Domingo");
+        adapter.addFrag(fL, "Lunes");
+        adapter.addFrag(fM, "Martes");
+        adapter.addFrag(fMi, "Miercoles");
+        adapter.addFrag(fJ, "Jueves");
+        adapter.addFrag(fV, "Viernes");
+        adapter.addFrag(fS, "Sabado");
+
+
+
         viewPager.setAdapter(adapter);
+
+        Calendar calendar = Calendar.getInstance();
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        viewPager.setCurrentItem(dayOfWeek-1);
 
     }
 

@@ -25,8 +25,12 @@ public class FragmentDomingo extends Fragment {
     SQLiteDatabase base;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        int idPromotor = getArguments().getInt("idPromotor");
+
         View view = inflater.inflate(R.layout.fragment_test, container, false);
 
 
@@ -35,7 +39,7 @@ public class FragmentDomingo extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        adapter = new SimpleRecyclerAdapter(rutaDia());
+        adapter = new SimpleRecyclerAdapter(getActivity(), rutaDia(), idPromotor);
         recyclerView.setAdapter(adapter);
         return view;
     }
