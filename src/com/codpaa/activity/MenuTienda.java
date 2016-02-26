@@ -307,7 +307,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 				
 			}else {
 				
-				Toast.makeText(this, "Imposible Guardar Entrada", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "No fue posible registrar la Entrada" +
+						" \n -Verifique que el Gps esta activado \n - De lo contrario comuniquese con Mesa de control", Toast.LENGTH_LONG).show();
 				base.close();
 			}
 		}else{

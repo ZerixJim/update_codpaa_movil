@@ -25,7 +25,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -58,6 +61,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	TextView nombreUsuario, conexion, bien, version, cartera;
 	Button btnTienda, btnRuta, btnEnviar, btnCajasM, btnMensaje;
 
+	private DrawerLayout drawerLayout;
+
 	Spinner spinnerTien;
 	SQLiteDatabase base;
 	LocationManager lM = null;
@@ -74,7 +79,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
         locale = new Locale("es_MX");
-		setContentView(R.layout.menu);
+		setContentView(R.layout.menu_principal);
 
 		
 		Intent recibe = getIntent();
@@ -109,6 +114,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		Context context = getApplicationContext();
 		PackageManager packageManager = context.getPackageManager();
 		String packageName = context.getPackageName();
+
+
+
 	
 
 		try {
@@ -169,25 +177,31 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 		borrarRegistros();
 
-		try {
+        setToolbar();
 
-			ActionBar actionBar = getSupportActionBar();
-			if (actionBar != null){
-				actionBar.setDisplayHomeAsUpEnabled(true);
-				actionBar.setDisplayUseLogoEnabled(true);
-				actionBar.setHomeButtonEnabled(true);
-				actionBar.setLogo(R.drawable.ic_launcher);
-			}
+		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-		}catch (NullPointerException e){
-			e.printStackTrace();
-		}
+        if (navigationView != null){
+            setupDrawerContent(navigationView);
+        }
 
 		//estadisticas();
 
 
 
 
+	}
+
+	private void setToolbar(){
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 	}
 
 	@Override
@@ -220,7 +234,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 				}
 				return true;
 			case android.R.id.home:
-				this.finish();
+
+				drawerLayout.openDrawer(GravityCompat.START);
+				//this.finish();
 				return true;
 
 			default:
@@ -603,6 +619,26 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		Log.d("DATOS", info);
 	}*/
 
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+
+    }
+
+    private void setupDrawerContent(NavigationView navigationView){
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                Log.d("Item press",item.getTitle().toString());
+                return true;
+            }
+        });
+    }
 
 
 
