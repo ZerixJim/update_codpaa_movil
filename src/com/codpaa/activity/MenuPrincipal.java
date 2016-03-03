@@ -5,9 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 
-
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +36,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -142,7 +145,30 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			cursorDatosUser.moveToFirst();
 			idUsuario = cursorDatosUser.getInt(0);
 			nombreUsuario.setText(cursorDatosUser.getString(1));
-			cartera.setText("Cartera: "+cursorDatosUser.getInt(0));
+			cartera.setText("ID: "+cursorDatosUser.getInt(0));
+
+
+
+
+            drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+            if (navigationView != null){
+                setupDrawerContent(navigationView);
+
+                View view = navigationView.getHeaderView(0);
+                TextView nomPromo = (TextView) view.findViewById(R.id.user_name);
+                TextView email = (TextView) view.findViewById(R.id.user_mail);
+
+                nomPromo.setText(cursorDatosUser.getString(1));
+
+                if (getUserName() != null){
+                    email.setText(getUserName());
+                }
+
+            }
+
+
 			recibeDatos.close();
 			
 
@@ -179,12 +205,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         setToolbar();
 
-		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        if (navigationView != null){
-            setupDrawerContent(navigationView);
-        }
 
 		//estadisticas();
 
@@ -629,15 +650,40 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     }
 
+    //DrawerListener
+
     private void setupDrawerContent(NavigationView navigationView){
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
 
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                Log.d("Item press",item.getTitle().toString());
+                //Log.d("Item press",item.getTitle().toString());
+
+				switch (item.getItemId()){
+                    case R.id.shutdown:
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        finish();
+                        return true;
+				}
+
                 return true;
             }
         });
+    }
+
+	public String getUserName(){
+        Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+        Account[] acccounts = AccountManager.get(this).getAccounts();
+
+        String mail = null;
+        for (Account account : acccounts){
+            if (emailPattern.matcher(account.name).matches()){
+                mail = account.name;
+            }
+        }
+
+        return mail;
+
     }
 
 

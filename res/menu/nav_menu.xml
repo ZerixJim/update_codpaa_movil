@@ -2,12 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+
+
         <item android:checkable="true"
-            android:title="Hola"/>
+            android:icon="@drawable/ic_settings_grey_500_18dp"
+            android:title="Configuracion"/>
+
         <item android:checkable="true"
-            android:title="Hola 2"/>
+            android:title="opcion 1"/>
+
         <item android:checkable="true"
-            android:title="Hola 3"/>
+            android:id="@+id/shutdown"
+            android:icon="@drawable/ic_power_settings_new_grey_700_18dp"
+            android:title="Cerrar Aplicacion"/>
+
+
     </group>
 
 </menu>

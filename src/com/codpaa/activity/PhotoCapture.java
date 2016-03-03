@@ -21,6 +21,7 @@ import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.SpinnerMarcaModel;
 import com.codpaa.util.Utilities;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -82,6 +83,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     TextView textoEnvio;
 	int idPromotor, idTienda;
 	Button enviarPhoto;
+    DonutProgress donutProgress;
     Locale local;
     public static ImageView showImg = null;
     PhotoCapture CameraActivity = null;
@@ -119,6 +121,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         spiExh = (Spinner) findViewById(R.id.spiExhPho);
 
         progressFoto = (ProgressBar) findViewById(R.id.progressEnviarFoto);
+        donutProgress = (DonutProgress) findViewById(R.id.progress_photo);
         textoEnvio = (TextView) findViewById(R.id.textEvioFoto);
 
         radioChoice = (RadioGroup) findViewById(R.id.radioChoice);
@@ -489,7 +492,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
             progressFoto.post(new Runnable() {
                 @Override
                 public void run() {
-                    progressFoto.setVisibility(View.VISIBLE);
+                    //progressFoto.setVisibility(View.VISIBLE);
+                    donutProgress.setVisibility(View.VISIBLE);
                     textoEnvio.setVisibility(View.VISIBLE);
                     textoEnvio.setText("Enviando...");
                 }
@@ -501,11 +505,20 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         public void onProgress(final long bytesWritten, final long totalSize) {
             super.onProgress(bytesWritten, totalSize);
 
+
+
             progressFoto.post(new Runnable() {
                 @Override
                 public void run() {
+
+                    /*
                     progressFoto.setProgress((int)bytesWritten);
-                    progressFoto.setMax((int)totalSize);
+                    progressFoto.setMax((int)totalSize);*/
+
+
+                    donutProgress.setProgress((int) ((bytesWritten * 100) / totalSize));
+                    donutProgress.setMax(100);
+
                 }
             });
         }
@@ -517,7 +530,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
             progressFoto.post(new Runnable() {
                 @Override
                 public void run() {
-                    progressFoto.setVisibility(View.GONE);
+                    //progressFoto.setVisibility(View.GONE);
+                    donutProgress.setVisibility(View.GONE);
                     textoEnvio.setVisibility(View.GONE);
                 }
             });
@@ -526,8 +540,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         @Override
 		public void onFailure(int statusCode, Header[] header,Throwable e,JSONObject errorResponse) {
 
-            Log.d("EnviarFoto","Estatus "+statusCode);
-            Log.d("EnviarFoto","ErrorRespo"+errorResponse);
+            Log.d("EnviarFoto", "Estatus " + statusCode);
+            Log.d("EnviarFoto","ErrorRespo" + errorResponse);
             Log.d("EnviarFoto","Thro:" + e );
 			Toast.makeText(getApplicationContext(), "No fue posible conectarse con el servidor", Toast.LENGTH_SHORT).show();
 			Toast.makeText(getApplicationContext(), "Imagen no envida \n (Menu Enviar)", Toast.LENGTH_SHORT).show();
@@ -557,7 +571,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		public void onSuccess(int statusCode,Header[] headers,JSONObject response) {
 
             Log.d("EnviarFoto","Estatus "+statusCode);
-            Log.d("EnviarFoto","Response"+response);
+            Log.d("EnviarFoto","Response" + response);
             textoEnvio.post(new Runnable() {
                 @Override
                 public void run() {
