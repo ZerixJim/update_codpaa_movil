@@ -4,17 +4,38 @@
     <group android:checkableBehavior="single">
 
 
-        <item android:checkable="true"
-            android:icon="@drawable/ic_settings_grey_500_18dp"
-            android:title="Configuracion"/>
+        <item
+            android:id="@+id/principal"
+            android:title="Principal"/>
 
-        <item android:checkable="true"
-            android:title="opcion 1"/>
 
-        <item android:checkable="true"
-            android:id="@+id/shutdown"
-            android:icon="@drawable/ic_power_settings_new_grey_700_18dp"
-            android:title="Cerrar Aplicacion"/>
+
+
+        <item
+            android:id="@+id/otra_seccion"
+            android:title="Otras opciones">
+
+            <menu >
+
+
+                <item android:checkable="true"
+                    android:id="@+id/configuracion"
+                    android:icon="@drawable/ic_settings_grey_500_18dp"
+                    android:title="Configuracion"/>
+
+                <item android:checkable="true"
+                    android:id="@+id/shutdown"
+                    android:icon="@drawable/ic_power_settings_new_black_18dp"
+                    android:title="Cerrar Aplicacion"/>
+
+            </menu>
+
+
+        </item>
+
+
+
+
 
 
     </group>

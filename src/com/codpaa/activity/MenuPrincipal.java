@@ -124,7 +124,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 		try {
 		    myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
-		    bien.setText("Bienvenido(a)");
+		    bien.setText(R.string.wellcome);
 			version.setText("versión: " + myVersionName);
 		} catch (PackageManager.NameNotFoundException e) {
 		    e.printStackTrace();
@@ -419,7 +419,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 break;
 
             case R.id.buttonMensaje:
-                dialogoEncuestas();
+                //dialogoEncuestas();
                 break;
 
 
@@ -664,6 +664,10 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                         drawerLayout.closeDrawer(GravityCompat.START);
                         finish();
                         return true;
+
+					case R.id.configuracion:
+						drawerLayout.closeDrawer(GravityCompat.START);
+						return true;
 				}
 
                 return true;

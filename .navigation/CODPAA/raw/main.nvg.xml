@@ -14,7 +14,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.codpaa.activity.InventarioBodega"/>
+        className = "com.codpaa.activity.Inventario"/>
       <point      
         x = "8149"      
         y = "150"/>

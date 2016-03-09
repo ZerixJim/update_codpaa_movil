@@ -15,19 +15,25 @@
         />
 
     <TextView
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:id="@+id/NombreTxtMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_alignTop="@+id/logotipoMarca"
-        android:layout_centerHorizontal="true"
+        android:layout_toRightOf="@+id/logotipoMarca"
+        android:layout_toEndOf="@+id/logotipoMarca"
         />
 
     <TextView
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:id="@+id/DescriTxtMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/NombreTxtMarca"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_centerHorizontal="true"/>
+        android:layout_toEndOf="@+id/logotipoMarca"
+        android:layout_toRightOf="@+id/logotipoMarca"
+        />
 </RelativeLayout>

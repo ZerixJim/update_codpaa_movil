@@ -649,7 +649,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	
 	private void menuInventario() {
 		if(Entrada){
-			Intent i = new Intent(this, InventarioBodega.class);
+			Intent i = new Intent(this, Inventario.class);
 			i.putExtra("idTienda", idTienda);
 			i.putExtra("idPromotor", idPromotor);
 			startActivity(i);

@@ -75,7 +75,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "idProducto int, cantidad decimal (10,2), status int)";
         inventarioProducto = "create table if not exists " +
                 "invProducto(idTienda int, idPromotor int ,fecha char(25), idProducto int, cantidad int " +
-                ",cantidadFisico int, cantidadSistema int,status int,tipo varchar(10),fecha_caducidad varchar(15),lote varchar(20))";
+                ",cantidadFisico int, cantidadSistema int,status int,tipo varchar(10),fecha_caducidad varchar(15)," +
+                "lote varchar(20), estatus int)";
         productoPrecio = "Create table if not exists " +
                 "prodPrecio (idTienda int, idPromotor int, codBarpieza char(14), " +
                 "fecha date, precio  decimal(18,2))";
@@ -182,10 +183,11 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         }
 
-        if (newVersion == 20){
+        if (newVersion == 20 && oldVersion==19){
             db.execSQL(preguntas);
             db.execSQL(respuesta);
             db.execSQL(respuestaTipo);
+            db.execSQL("Alter table invProducto add column estatus int");
         }
 
 

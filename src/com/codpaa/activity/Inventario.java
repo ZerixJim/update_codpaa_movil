@@ -16,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,17 +46,18 @@ import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
 
-public class InventarioBodega extends AppCompatActivity implements OnClickListener,OnItemSelectedListener{
+public class Inventario extends AppCompatActivity implements OnClickListener,OnItemSelectedListener{
 	
 	
 	int idTienda, idPromotor;
-	TextView tienda, promotor;
 	SQLiteDatabase base;
     RadioButton piezas, cajas, selec;
     RadioGroup radio;
+
+	Toolbar toolbar;
 	Spinner marca,producto;
 	Button guardar;
-    static TextView textFecha;
+    static Button btnFecha;
 
 	EditText editFisico, editSistema, editLote;
 	InputMethodManager im;
@@ -73,14 +75,14 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 		idPromotor = i.getIntExtra("idPromotor",0);
 		
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		
-		tienda = (TextView) findViewById(R.id.textInvTie);
-		promotor = (TextView) findViewById(R.id.textInvPromo);
+
 		marca = (Spinner) findViewById(R.id.spiInMar);
 		producto = (Spinner) findViewById(R.id.spiInvPro);
-		textFecha = (TextView) findViewById(R.id.txtfecha);
+
 	
 		guardar = (Button) findViewById(R.id.bInvGuar);
+		btnFecha = (Button) findViewById(R.id.button_fecha);
+
 		editFisico = (EditText) findViewById(R.id.editInv);
         editSistema = (EditText) findViewById(R.id.editSistema);
 		editLote = (EditText) findViewById(R.id.editLote);
@@ -92,56 +94,66 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 
 
 
+
 		piezas.setChecked(true);
 		
 		marca.setOnItemSelectedListener(this);
 		guardar.setOnClickListener(this);
 
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		
-		try {
-			
-			Cursor cNomUser = new BDopenHelper(this).nombrePromotor(idPromotor);
-			cNomUser.moveToFirst();
-			promotor.setText(cNomUser.getString(0));
-            cNomUser.close();
-			try {
-				Cursor cTienda = new BDopenHelper(this).tienda(idTienda);
-				cTienda.moveToFirst();
-				tienda.setText(cTienda.getString(0)+" "+cTienda.getString(1));
-				
-				try {
 
-					loadSpinner();
-					
-					
-				}catch(Exception e) {
-					Toast.makeText(this, "Error  3", Toast.LENGTH_SHORT).show();
-				}
-				cTienda.close();
-			}catch(Exception e) {
-				Toast.makeText(this, "Error  2", Toast.LENGTH_SHORT).show();
-			}
-			
-			
-		}catch(Exception e) {
-			Toast.makeText(this, "Error  1", Toast.LENGTH_SHORT).show();
-			
-		}
+
 
 
         try {
-            assert getSupportActionBar() != null;
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+
             ActionBar actionBar = getSupportActionBar();
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayUseLogoEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setLogo(R.drawable.ic_launcher);
+            if (actionBar != null){
+                actionBar.setDisplayHomeAsUpEnabled(true);
+
+
+                try {
+
+                    Cursor cNomUser = new BDopenHelper(this).nombrePromotor(idPromotor);
+                    cNomUser.moveToFirst();
+                    actionBar.setTitle(cNomUser.getString(0));
+                    cNomUser.close();
+                    try {
+                        Cursor cTienda = new BDopenHelper(this).tienda(idTienda);
+                        cTienda.moveToFirst();
+                        actionBar.setSubtitle(cTienda.getString(0)+" "+cTienda.getString(1));
+
+                        try {
+
+                            loadSpinner();
+
+
+                        }catch(Exception e) {
+                            Toast.makeText(this, "Error  3", Toast.LENGTH_SHORT).show();
+                        }
+                        cTienda.close();
+                    }catch(Exception e) {
+                        Toast.makeText(this, "Error  2", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }catch(Exception e) {
+                    Toast.makeText(this, "Error  1", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+
         }catch (NullPointerException e){
             e.printStackTrace();
         }
 		
 	}
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -239,7 +251,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 								editFisico.setText("");
                                 editSistema.setText("");
 								editLote.setText("");
-								textFecha.setText("fecha");
+								btnFecha.setText("fecha");
                                 producto.setSelection(0);
 								im.hideSoftInputFromWindow(editFisico.getWindowToken(), 0);
 								new EnviarDatos(this).enviarInventario();
@@ -378,7 +390,7 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
                 mes = 0 + mes;
             }
 
-            textFecha.setText(dia+"-"+mes+"-"+year);
+            btnFecha.setText(dia + "-" + mes + "-" + year);
 
 
 
@@ -388,8 +400,8 @@ public class InventarioBodega extends AppCompatActivity implements OnClickListen
 
 	public String getFechaCaducidad(){
 		String salidaFecha;
-		if (!textFecha.getText().equals("fecha")){
-			salidaFecha = textFecha.getText().toString();
+		if (!btnFecha.getText().equals("fecha")){
+			salidaFecha = btnFecha.getText().toString();
 		}else {
 			salidaFecha = "";
 		}

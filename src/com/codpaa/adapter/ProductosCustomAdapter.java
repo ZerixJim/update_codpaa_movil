@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+
 import com.codpaa.R;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.util.Utilities;

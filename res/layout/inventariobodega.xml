@@ -1,222 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gris">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:layout_height="?attr/actionBarSize"
+        app:subtitleTextAppearance="@style/ToolbarSubtitleAppearance"
+        app:titleTextAppearance="@style/ToolbarTitleAppearance"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="?attr/colorPrimary"/>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/Azul3"
             android:orientation="vertical"
-            tools:ignore="UselessParent" >
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
-            <TextView
-                android:id="@+id/textInvTie"
-                style="@style/TextShadow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/textInvPromo"
-                style="@style/TextShadow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/spiInMar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/MiTema"
+                android:layout_margin="3dp" />
 
-        </LinearLayout>
+            <Spinner
+                android:id="@+id/spiInvPro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/MiTema"
+                android:layout_margin="3dp" />
 
-        <Spinner
-            android:id="@+id/spiInMar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp" />
-
-        <Spinner
-            android:id="@+id/spiInvPro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp" />
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:background="@color/Blanco"
-            android:padding="3dp">
-
-            <TextView
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/tipo"
-                android:id="@+id/tipoText"
                 android:layout_gravity="center_horizontal"
-                style="@style/TextShadow" />
+                android:layout_marginTop="30dp"
+                android:padding="5dp">
 
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/tipo"
+                    android:id="@+id/tipoText"
+
+                    style="@style/TextShadow" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal"
+                    android:theme="@style/MiTema"
+                    android:id="@+id/radioInventario">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pieza"
+                        android:id="@+id/radioTipo1" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/cajas"
+                        android:id="@+id/radioTipo2" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
                 android:orientation="horizontal"
-                android:id="@+id/radioInventario">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pieza"
-                    android:id="@+id/radioTipo1" />
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cajas"
-                    android:id="@+id/radioTipo2" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:weightSum="2"
-            android:baselineAligned="false"
-            android:layout_marginTop="20dp">
-
-            <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:background="@color/Blanco"
-                android:layout_margin="2dp">
+                android:weightSum="2"
+                android:baselineAligned="false"
+                android:layout_marginTop="20dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+
+                    android:layout_margin="2dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/fisico"
+                        android:id="@+id/textViewRowProducto"
+
+                        style="@style/TextShadow" />
+
+                    <EditText
+                        android:id="@+id/editInv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:ems="10"
+                        android:hint="@string/cant"
+                        android:theme="@style/MiTema"
+                        android:inputType="number"
+                        android:maxLength="7"
+                        android:textColor="@color/negroFondo" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+
+                    android:layout_margin="2dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/systema"
+                        android:id="@+id/textViewRowMarca"
+
+                        style="@style/TextShadow" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="10"
+                        android:id="@+id/editSistema"
+                        android:hint="@string/cant"
+                        android:theme="@style/MiTema"
+                        android:maxLength="7"
+                        android:textColor="@color/negroFondo" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Estatus"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/MiTema"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Des-Catalogado"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No re-surtible"/>
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:orientation="vertical"
+                android:layout_margin="2dp"
+                android:weightSum="1"
+                android:clickable="false"
+                android:padding="3dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/fisico"
-                    android:id="@+id/textViewRowProducto"
-                    android:layout_gravity="center_horizontal"
-                    style="@style/TextShadow" />
+                    android:text="@string/lote"
+                    style="@style/TextShadow"
+                    android:id="@+id/textView"/>
 
                 <EditText
-                    android:id="@+id/editInv"
-                    android:layout_width="100dp"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:ems="10"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:hint="@string/cant"
-                    android:inputType="number"
-                    android:maxLength="7"
-                    android:textColor="@color/negroFondo" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:background="@color/Blanco"
-                android:layout_margin="2dp">
+                    android:id="@+id/editLote"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:maxLength="15"
+                    android:textColor="@color/negroFondo"
+                    android:hint="@string/codigo_lote"
+                    android:theme="@style/MiTema"
+                    android:maxLines="2"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/systema"
-                    android:id="@+id/textViewRowMarca"
-                    android:layout_gravity="center_horizontal"
-                    style="@style/TextShadow" />
+                    android:text="@string/caducidad"
+                    android:id="@+id/textView2"
+                    android:layout_marginTop="15dp"
+                    style="@style/TextShadow"/>
 
-                <EditText
-                    android:layout_width="100dp"
+                <Button
+                    android:id="@+id/button_fecha"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:ems="10"
-                    android:id="@+id/editSistema"
-                    android:layout_gravity="center_horizontal"
-                    android:hint="@string/cant"
-                    android:maxLength="7"
-                    android:textColor="@color/negroFondo" />
+                    android:text="@string/fecha"
+                    android:textColor="@android:color/white"
+                    android:drawableStart="@drawable/ic_event_white_24dp"
+                    android:drawableLeft="@drawable/ic_event_white_24dp"
+                    android:onClick="showDatePickerDialog"
+                    />
+
             </LinearLayout>
 
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/Blanco"
-            android:orientation="vertical"
-            android:layout_margin="2dp"
-            android:weightSum="1"
-            android:clickable="false"
-            android:padding="3dp">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/bInvGuar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/lote"
-                style="@style/TextShadow"
-                android:id="@+id/textView"/>
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editLote"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:maxLength="15"
-                android:textColor="@color/negroFondo"
-                android:hint="@string/codigo_lote"
-                android:maxLines="2"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/caducidad"
-                android:id="@+id/textView2"
-                android:layout_marginTop="15dp"
-                style="@style/TextShadow"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/fecha"
-                android:id="@+id/txtfecha"
-                android:textSize="50sp"
-                android:layout_gravity="center_horizontal"
-                android:onClick="showDatePickerDialog"
-                android:clickable="true"
-                android:textColor="#ff434343" />
+                android:drawableLeft="@drawable/save"
+                android:drawableStart="@drawable/save"
+                android:textColor="@android:color/white"
+                android:padding="25dp"
+                android:text="@string/guar"/>
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/bInvGuar"
-            style="@style/btnStyleShakespeare"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/save"
-            android:drawableStart="@drawable/save"
-            android:text="@string/guar"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginTop="20dp" />
+    </ScrollView>
 
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

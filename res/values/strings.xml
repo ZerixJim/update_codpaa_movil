@@ -137,4 +137,8 @@
     <string name="bar_code">CB: $s</string>
     <string name="encuestas">Encuestas</string>
 
+    <string name="wellcome">Bienvenido(a)</string>
+    <string name="version">versión: </string>
+
+
 </resources>

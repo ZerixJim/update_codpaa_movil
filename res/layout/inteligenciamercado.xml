@@ -198,8 +198,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/fecha"
                         android:id="@+id/btnFechaInicio"
-                        android:drawableRight="@drawable/ruta"
-                        android:drawableEnd="@drawable/ruta"
+                        android:drawableLeft="@drawable/ruta"
+                        android:drawableStart="@drawable/ruta"
                         android:onClick="showDatePickerDialogInicio"
                         />
 
@@ -227,8 +227,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/fecha"
                         android:id="@+id/btnFechaFin"
-                        android:drawableRight="@drawable/ruta"
-                        android:drawableEnd="@drawable/ruta"
+                        android:drawableLeft="@drawable/ruta"
+                        android:drawableStart="@drawable/ruta"
                         android:onClick="showDatePickerDialogFin"/>
 
                 </LinearLayout>

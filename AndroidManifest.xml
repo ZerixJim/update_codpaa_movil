@@ -65,8 +65,8 @@
         <activity android:name=".activity.Frentes" android:label="@string/frentes"  android:theme="@style/noActionBarNoTitle" android:screenOrientation="portrait" />
         <activity android:name=".activity.SurtidoMueble" android:label="@string/surtido" android:screenOrientation="portrait" />
         <activity android:name=".activity.Exhibiciones" android:label="@string/exhi" android:screenOrientation="portrait" />
-        <activity android:name=".activity.InventarioBodega" android:label="@string/inventario" android:screenOrientation="portrait" />
-        <activity android:name=".activity.ComentariosActivity" android:label="@string/comentienda" android:screenOrientation="portrait" />
+        <activity android:name=".activity.Inventario" android:label="@string/inventario" android:screenOrientation="portrait" android:theme="@style/noActionBar"/>
+        <activity android:name=".activity.ComentariosActivity" android:label="@string/comentienda" android:screenOrientation="portrait"/>
         <activity android:name=".activity.InteligenciaMercado" android:label="@string/inteligencia" android:screenOrientation="portrait" />
         <activity android:name=".activity.Mayoreo" android:label="@string/cajasmayoreo" android:screenOrientation="portrait" />
         <activity android:name=".activity.PhotoCapture" android:label="@string/capIma" android:screenOrientation="portrait" />
