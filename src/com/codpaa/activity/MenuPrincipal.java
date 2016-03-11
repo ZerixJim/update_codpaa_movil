@@ -245,7 +245,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 					Toast.makeText(this,"Actualizando Informacion",Toast.LENGTH_SHORT).show();
 					upinfo.actualizarTiendas(idUsuario);
 					upinfo.actualizarRuta(idUsuario);
-					upinfo.actualizarExhibiciones();
+					upinfo.actualizarExhibiciones(idUsuario);
 					upinfo.actualizarMarca(idUsuario);
 					upinfo.actualizarProducto(idUsuario);
 
@@ -326,12 +326,12 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         if (configuracion.getExhi() != null){
             if (!configuracion.getExhi().equals(fechaActual())){
-                uI.actualizarExhibiciones();
+                uI.actualizarExhibiciones(idUsuario);
             }else {
                 Log.d("Shared", "exhi:" +configuracion.getExhi());
             }
         }else {
-            uI.actualizarExhibiciones();
+            uI.actualizarExhibiciones(idUsuario);
         }
 
         if (configuracion.getMarca() != null){

@@ -58,12 +58,13 @@ public class UpdateInformation{
 
     }
 
-    public void actualizarExhibiciones(){
+    public void actualizarExhibiciones(int idPromotor){
         AsyncHttpClient clientExh = new AsyncHttpClient();
         ResponseExhibiciones responseExh = new ResponseExhibiciones(_context);
         RequestParams rp = new RequestParams();
 
         rp.put("solicitud","exhibicion");
+        rp.put("id", idPromotor);
 
         clientExh.setTimeout(5000);
         clientExh.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO,rp,responseExh);
