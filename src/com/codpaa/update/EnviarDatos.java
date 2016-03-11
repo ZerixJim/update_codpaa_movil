@@ -363,6 +363,9 @@ public class EnviarDatos {
                     rp.put("tipo",curInven.getString(7));
 					rp.put("fecha_cad",curInven.getString(8));
 					rp.put("lote",curInven.getString(9));
+					rp.put("estatus", curInven.getInt(curInven.getColumnIndex("estatus")));
+
+					//Log.d("Estatus"," "+ curInven.getInt(curInven.getColumnIndex("estatus")));
 					
 					
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinventario.php", rp, new HttpResponseInventario(activity, curInven.getInt(0),curInven.getString(2), curInven.getInt(3)));

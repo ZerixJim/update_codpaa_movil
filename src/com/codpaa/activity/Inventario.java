@@ -17,6 +17,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,17 +32,17 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
+
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import com.codpaa.adapter.CustomAdapter;
+
 import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.R;
-import com.codpaa.model.SpinnerMarcaModel;
+
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
@@ -51,8 +52,8 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 	
 	int idTienda, idPromotor;
 	SQLiteDatabase base;
-    RadioButton piezas, cajas, selec;
-    RadioGroup radio;
+    RadioButton piezas, cajas, selec, estatusSelected;
+    RadioGroup radio, radioEstatus;
 
 	Toolbar toolbar;
 	Spinner marca,producto;
@@ -90,6 +91,8 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
         radio = (RadioGroup) findViewById(R.id.radioInventario);
         piezas = (RadioButton) radio.findViewById(R.id.radioTipo1);
         cajas = (RadioButton) radio.findViewById(R.id.radioTipo2);
+
+        radioEstatus = (RadioGroup) findViewById(R.id.radio_estatus);
 
 
 
@@ -243,10 +246,14 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 						try {
 
                             selec = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
+                            //estatusSelected = (RadioButton) findViewById(radioEstatus.getCheckedRadioButtonId());
 							
 							try {
 								new BDopenHelper(this).insertarInventario(idTienda,idPromotor ,fecha, idProdu, cantidadFisico,cantidadSistema,1
-										,selec.getText().toString(),getFechaCaducidad(), editLote.getText().toString());
+										,selec.getText().toString(),getFechaCaducidad(),
+                                        editLote.getText().toString(), getSelectedStatus(radioEstatus));
+
+								//Log.d("RadioChecked", " " + String.valueOf(radioEstatus.getCheckedRadioButtonId()));
 								Toast.makeText(this,"Datos Guardados", Toast.LENGTH_SHORT).show();
 								editFisico.setText("");
                                 editSistema.setText("");
@@ -281,6 +288,18 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 		}
 		
 	}
+
+
+
+    private int getSelectedStatus(RadioGroup radio){
+        int id = radio.getCheckedRadioButtonId();
+        if (id >= 1){
+
+            radio.check(-1);
+            return id;
+        } else
+            return 0;
+    }
 	
 	private void loadSpinner(){
 		try {

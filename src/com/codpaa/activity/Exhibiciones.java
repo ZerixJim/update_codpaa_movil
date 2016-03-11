@@ -99,7 +99,6 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 
 						exhibicion.setAdapter(adaptadorExi);
 
-
 						base.close();
 						
 

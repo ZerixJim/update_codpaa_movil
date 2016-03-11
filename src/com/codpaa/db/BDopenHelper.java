@@ -477,12 +477,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
-    public void insertarInventario(int idTien, int idPromo ,String fecha, int Producto, int CantidadFisico,int CantidadSistema,int sta,String tipo, String fechaCaducidad, String lote) throws SQLiteException {
+    public void insertarInventario(int idTien, int idPromo ,String fecha, int Producto, int CantidadFisico,
+                                   int CantidadSistema,int sta,String tipo, String fechaCaducidad,
+                                   String lote, int estatus) throws SQLiteException {
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
             baseDatosLocal.execSQL("insert or replace into invProducto (idTienda, idPromotor" +
-                    " ,fecha, idProducto, cantidadFisico,cantidadSistema,status,tipo, fecha_caducidad, lote) values ("+idTien+","+idPromo+
-                    ",'"+fecha+"',"+Producto+","+CantidadFisico+","+CantidadSistema+","+sta+",'"+tipo+"','"+fechaCaducidad+"','"+lote+"')");
+                    " ,fecha, idProducto, cantidadFisico,cantidadSistema,status,tipo, fecha_caducidad, lote, estatus) values ("+idTien+","+idPromo+
+                    ",'"+fecha+"',"+Producto+","+CantidadFisico+","+CantidadSistema+","+sta+",'"+tipo+"','"+fechaCaducidad+"','"+lote+"', "+estatus+")");
         if(baseDatosLocal != null) baseDatosLocal.close();
 
     }
@@ -652,7 +654,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor Inventario() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
         return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,idProducto,cantidadFisico," +
-                "cantidadSistema,cantidad,tipo, fecha_caducidad, lote from invProducto where status=1",null);
+                "cantidadSistema,cantidad,tipo, fecha_caducidad, lote, estatus from invProducto where status=1",null);
 
     }
 

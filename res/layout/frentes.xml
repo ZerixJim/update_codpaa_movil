@@ -45,12 +45,14 @@
                 android:id="@+id/spinnerMarFre"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:theme="@style/MiTema"
                 android:layout_marginTop="15dp"/>
 
             <Spinner
                 android:id="@+id/spinnerFrePro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:theme="@style/MiTema"
                 android:layout_margin="2dp" />
 
             <TextView
