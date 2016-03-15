@@ -51,7 +51,7 @@ public class FragmentMartes extends Fragment{
         String Lunes="select c.grupo, c.sucursal, v.rol, c.idTienda" +
                 "  from clientes as c " +
                 "  left join visitaTienda as v " +
-                "  on c.idTienda = v.idTienda and v.martes=1";
+                "  on c.idTienda = v.idTienda where v.martes=1";
         Cursor cursor = base.rawQuery(Lunes, null);
 
 
