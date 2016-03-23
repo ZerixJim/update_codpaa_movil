@@ -10,9 +10,12 @@ import java.util.regex.Pattern;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
@@ -27,8 +30,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -52,15 +57,20 @@ import com.codpaa.R;
 import com.codpaa.adapter.TiendasAdapter;
 import com.codpaa.fragment.DialogEncuestas;
 import com.codpaa.model.TiendasModel;
+import com.codpaa.service.RegistrationIntentService;
 import com.codpaa.update.UpdateInformation;
 
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.util.Configuracion;
+import com.codpaa.util.QuickstartPreferences;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 
 public class MenuPrincipal extends AppCompatActivity implements OnClickListener, LocationListener{
-	
-	
+
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String TAG = "MainActivity";
 	TextView nombreUsuario, conexion, bien, version, cartera;
 	Button btnTienda, btnRuta, btnEnviar, btnCajasM, btnMensaje;
 
@@ -72,6 +82,10 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	String myVersionName = "not available";
 	Locale locale;
     Configuracion configuracion;
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+
+    private boolean isReceiverRegistered;
 
 
 
@@ -207,12 +221,49 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
 
+
+
+        /* implementacion de BroadCast para el registro de Gcm */
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(MenuPrincipal.this);
+                boolean sentToken =
+                        sharedPreferences.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+
+                if (sentToken) {
+                    Log.d("Register", "Registrado");
+                } else {
+
+                    Log.d("Register", " no se pudo registrar");
+                }
+            }
+        };
+
+        registerReceiver();
 		//estadisticas();
 
+        if (checkPlayServices()){
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
 
+            Log.d("MenuPrincipal", "Servicio iniciado");
+        }
 
 
 	}
+
+    private void registerReceiver(){
+		Log.d("MenuPrincipal", "RegisterReciver");
+        if(!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                    new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
+            isReceiverRegistered = true;
+
+            Log.d("MenuPrincipal", "RegisterRecive2");
+        }
+    }
 
 	private void setToolbar(){
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -296,6 +347,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			conexion.setBackgroundDrawable(gd2);
 			//conexion.setBackgroundColor(Color.RED);
 		}
+
+        registerReceiver();
 
 	}
 
@@ -430,7 +483,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 	@Override
 	protected void onPause() {
-		super.onPause();
+
 
 		try {
 			lM.removeUpdates(this);
@@ -439,6 +492,10 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			e.printStackTrace();
 		}
 
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        isReceiverRegistered = false;
+
+        super.onPause();
 		
 	}
 	
@@ -689,6 +746,23 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         return mail;
 
     }
+
+	private boolean checkPlayServices(){
+		GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+		int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+		if (resultCode != ConnectionResult.SUCCESS){
+			if (apiAvailability.isUserResolvableError(resultCode)){
+				apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+			}else {
+                Log.i(TAG, "This service is not supported");
+                finish();
+
+            }
+            return false;
+		}
+        return true;
+	}
 
 
 
