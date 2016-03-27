@@ -32,7 +32,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -55,7 +54,6 @@ import android.widget.Toast;
 
 import com.codpaa.R;
 import com.codpaa.adapter.TiendasAdapter;
-import com.codpaa.fragment.DialogEncuestas;
 import com.codpaa.model.TiendasModel;
 import com.codpaa.service.RegistrationIntentService;
 import com.codpaa.update.UpdateInformation;
@@ -139,7 +137,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		try {
 		    myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
 		    bien.setText(R.string.wellcome);
-			version.setText("versión: " + myVersionName);
+			version.setText(String.format("versión: %s", myVersionName));
 		} catch (PackageManager.NameNotFoundException e) {
 		    e.printStackTrace();
 		}
@@ -159,7 +157,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			cursorDatosUser.moveToFirst();
 			idUsuario = cursorDatosUser.getInt(0);
 			nombreUsuario.setText(cursorDatosUser.getString(1));
-			cartera.setText("ID: "+cursorDatosUser.getInt(0));
+			cartera.setText(String.format("ID: %d", cursorDatosUser.getInt(0)));
 
 
 
@@ -202,14 +200,14 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 		
 		if(verificarConexion()){
-			conexion.setText("Conexion");
+			conexion.setText(R.string.connection);
 			conexion.setBackgroundColor(Color.GREEN);
 
             updateInfo();
 
 
 		}else{
-			conexion.setText("Sin conexion");
+			conexion.setText(R.string.desconnect);
 			conexion.setBackgroundColor(Color.RED);
 			Toast.makeText(this, "No fue posible Actualizar, No hay conexion a Internet", Toast.LENGTH_SHORT).show();
 		}
@@ -248,20 +246,20 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
 
-            Log.d("MenuPrincipal", "Servicio iniciado");
+            //Log.d("MenuPrincipal", "Servicio iniciado");
         }
 
 
 	}
 
     private void registerReceiver(){
-		Log.d("MenuPrincipal", "RegisterReciver");
+		//Log.d("MenuPrincipal", "RegisterReciver");
         if(!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                     new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
             isReceiverRegistered = true;
 
-            Log.d("MenuPrincipal", "RegisterRecive2");
+            //Log.d("MenuPrincipal", "RegisterRecive2");
         }
     }
 
@@ -339,11 +337,11 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 		if(verificarConexion()){
 			
-			conexion.setText("Conexion");
+			conexion.setText(R.string.connection);
 			conexion.setBackgroundDrawable(gd);
 			//conexion.setBackgroundColor(Color.GREEN);
 		}else{
-			conexion.setText("Sin conexion");
+			conexion.setText(R.string.desconnect);
 			conexion.setBackgroundDrawable(gd2);
 			//conexion.setBackgroundColor(Color.RED);
 		}
@@ -421,14 +419,14 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 		
 	}
-
+	/* @encuesta
 	private void dialogoEncuestas(){
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		DialogEncuestas dialogEncuestas = new DialogEncuestas();
 
 		dialogEncuestas.show(fragmentManager, "Dialogo encuestas");
 	}
-	
+	*/
 	
 
 	@Override

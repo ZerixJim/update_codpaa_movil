@@ -139,6 +139,11 @@
 
     <string name="wellcome">Bienvenido(a)</string>
     <string name="version">versión: </string>
+    <string name="connection">Conexion</string>
+    <string name="desconnect">Sin conexion</string>
+    <string name="no_imagenes">No Existen imagenes Pendientes</string>
+    <string name="process">En Proceso</string>
+    <string name="sent">Enviada</string>
 
 
 </resources>

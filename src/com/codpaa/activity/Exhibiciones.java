@@ -83,7 +83,7 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 			try {
 				Cursor cTienda = new BDopenHelper(this).tienda(idTienda);
 				cTienda.moveToFirst();
-				tienda.setText(cTienda.getString(0)+" "+cTienda.getString(1));
+				tienda.setText(String.format("%s %s", cTienda.getString(0), cTienda.getString(1)));
 				
 				try {
 

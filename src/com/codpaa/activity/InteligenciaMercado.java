@@ -461,7 +461,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
                 mes = 0 + mes;
             }
 
-            btnFechaInicio.setText(dia+"-"+mes+"-"+year);
+            btnFechaInicio.setText(String.format("%s-%s-%d", dia, mes, year));
 
 
 
@@ -500,7 +500,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
                 mes = 0 + mes;
             }
 
-            btnFechaFin.setText(dia+"-"+mes+"-"+year);
+            btnFechaFin.setText(String.format("%s-%s-%d", dia, mes, year));
 
 
 

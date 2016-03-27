@@ -129,7 +129,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
             }
 
 		}else{
-            text.setText("No Existen imagenes Pendientes");
+            text.setText(R.string.no_imagenes);
 			listV.setVisibility(View.GONE);
 
 		}
@@ -208,10 +208,10 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
             holder.txtFecha.setText(temp.get_fecha());
 			if (temp.get_status() == 1){
 
-				holder.txtStatus.setText("En Proceso");
+				holder.txtStatus.setText(R.string.process);
 				holder.txtStatus.setTextColor(Color.BLUE);
 			}else if (temp.get_status() == 2){
-				holder.txtStatus.setText("Enviada");
+				holder.txtStatus.setText(R.string.sent);
 
 
 			}
@@ -554,14 +554,14 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 	}
 
 
-    public void deleteArchivo(String filePath){
-        File img = new File(filePath);
-        if(img.delete()){
-            Log.d("Delete file","Archivo borrado");
-        }else{
-            Log.d("Delete file","Archivo no se pudo borrar");
-        }
-    }
+    /*public void deleteArchivo(String filePath){
+		File img = new File(filePath);
+		if(img.delete()){
+			Log.d("Delete file","Archivo borrado");
+		}else{
+			Log.d("Delete file","Archivo no se pudo borrar");
+		}
+	}*/
 	
 
 }
