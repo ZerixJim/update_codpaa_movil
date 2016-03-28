@@ -222,7 +222,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
         /* implementacion de BroadCast para el registro de Gcm */
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+		mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 SharedPreferences sharedPreferences =
@@ -239,9 +239,12 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             }
         };
 
+		//Registro de Brodcast para verificar si el token fue enviado al servidor
         registerReceiver();
 		//estadisticas();
 
+
+        //intent para registrar nuestro dispositivo en gcm
         if (checkPlayServices()){
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
@@ -252,6 +255,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 	}
 
+
+    //metodo para registrar broadcast
     private void registerReceiver(){
 		//Log.d("MenuPrincipal", "RegisterReciver");
         if(!isReceiverRegistered) {
@@ -263,6 +268,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         }
     }
 
+    //metodo para implementar el toolbar
 	private void setToolbar(){
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

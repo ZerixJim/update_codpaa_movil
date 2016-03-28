@@ -28,6 +28,7 @@ import android.util.Log;
 
 import com.codpaa.R;
 import com.codpaa.activity.MenuPrincipal;
+import com.codpaa.activity.MessaginActivity;
 import com.google.android.gms.gcm.GcmListenerService;
 
 public class MyGcmListenerService extends GcmListenerService {
@@ -68,7 +69,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+        sendNotification(data);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -76,13 +77,21 @@ public class MyGcmListenerService extends GcmListenerService {
     /**
      * Create and show a simple notification containing the received GCM message.
      *
-     * @param message GCM message received.
+     * @param data GCM message received.
      */
-    private void sendNotification(String message) {
-        Intent intent = new Intent(this, MenuPrincipal.class);
+    private void sendNotification(Bundle data) {
+
+        String message = data.getString("message");
+        String content = data.getString("content");
+
+        Intent intent = new Intent(this, MessaginActivity.class);
+
+        intent.putExtra("content", content);
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
+
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
