@@ -11,4 +11,7 @@ public class Utilities {
     public static final String WEB_SERVICE_CODPAA_TEST = "http://plataformavanguardia.net/test/webservice/";
 
 
+    public static final String TABLE_MENSAJE = "mensaje";
+
+
 }

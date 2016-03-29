@@ -18,6 +18,7 @@ package com.codpaa.service;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
@@ -28,7 +29,13 @@ import android.util.Log;
 
 import com.codpaa.R;
 import com.codpaa.activity.MessaginActivity;
+import com.codpaa.db.BDopenHelper;
+import com.codpaa.util.Utilities;
 import com.google.android.gms.gcm.GcmListenerService;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -44,17 +51,39 @@ public class MyGcmListenerService extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
+
+        Locale locale = new Locale("es_MX");
         String message = data.getString("message");
         String content = data.getString("content");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
         Log.d(TAG, "Content: " + content);
 
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
+
+        String fecha = dFecha.format(c.getTime());
+
+
+        BDopenHelper db = new BDopenHelper(this);
+        ContentValues values = new ContentValues();
+
+        values.put("mensaje", message);
+        values.put("asunto", data.getString("asunto"));
+        values.put("content", content);
+        values.put("fecha", fecha);
+
+
+        db.insertar(Utilities.TABLE_MENSAJE, values );
+
+
+        /*
+
         if (from.startsWith("/topics/")) {
             // message received from some topic.
         } else {
             // normal downstream message.
-        }
+        }*/
 
         // [START_EXCLUDE]
         /**

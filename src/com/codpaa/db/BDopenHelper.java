@@ -15,7 +15,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
-    private static final int version = 20;
+    private static final int version = 21;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -43,6 +43,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String preguntas;
     private static String respuesta;
     private static String respuestaTipo;
+    private static String mensaje;
 
 
     public BDopenHelper(Context miContext) {
@@ -129,6 +130,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
         respuestaTipo = "create table if not exists "+
                 "respuestaTipo(id_tipo int NOT NULL, descripcion varchar(15) NOT NULL)";
 
+        mensaje = "create table if not exists " +
+                "mensaje(id_mensaje integer primary key autoincrement NOT NULL, " +
+                "mensaje varchar(50) NOT NULL, asunto varchar(50) NOT NULL ," +
+                "content varchar(250) NOT NULL, fecha varchar(15) NOT NULL, " +
+                "estatus integer default 0, enviado integer default 0)";
+
 
 
     }
@@ -162,6 +169,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(preguntas);
         db.execSQL(respuesta);
         db.execSQL(respuestaTipo);
+        db.execSQL(mensaje);
 
     }
 
@@ -188,6 +196,19 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL(respuesta);
             db.execSQL(respuestaTipo);
             db.execSQL("Alter table invProducto add column estatus int");
+        }
+
+        if (newVersion == 21 && oldVersion == 20){
+            db.execSQL(mensaje);
+        }
+
+        if (newVersion == 21 && oldVersion == 19){
+            db.execSQL(preguntas);
+            db.execSQL(respuesta);
+            db.execSQL(respuestaTipo);
+            db.execSQL("Alter table invProducto add column estatus int");
+
+            db.execSQL(mensaje);
         }
 
 
