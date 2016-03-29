@@ -27,7 +27,6 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.codpaa.R;
-import com.codpaa.activity.MenuPrincipal;
 import com.codpaa.activity.MessaginActivity;
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -81,6 +80,7 @@ public class MyGcmListenerService extends GcmListenerService {
      */
     private void sendNotification(Bundle data) {
 
+        String asunto = data.getString("asunto");
         String message = data.getString("message");
         String content = data.getString("content");
 
@@ -96,9 +96,10 @@ public class MyGcmListenerService extends GcmListenerService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_launcher)
-                .setContentTitle("Codpaa")
+                .setContentTitle(asunto)
                 .setContentText(message)
                 .setAutoCancel(true)
+                .setOngoing(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
@@ -107,4 +108,7 @@ public class MyGcmListenerService extends GcmListenerService {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
+
+
+
 }

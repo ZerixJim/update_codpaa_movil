@@ -19,30 +19,47 @@ package com.codpaa.service;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.codpaa.R;
+import com.codpaa.db.BDopenHelper;
 import com.codpaa.util.QuickstartPreferences;
+import com.codpaa.util.Utilities;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+
+import cz.msebera.android.httpclient.Header;
 
 public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
-    private static final String[] TOPICS = {"vanguardia"};
+
+    private int idPromotor;
 
     public RegistrationIntentService() {
         super(TAG);
+
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        this.idPromotor = intent.getIntExtra("idPromo", 0);
 
         try {
             // [START register_for_gcm]
@@ -66,7 +83,7 @@ public class RegistrationIntentService extends IntentService {
             // You should store a boolean that indicates whether the generated token has been
             // sent to your server. If the boolean is false, send the token to your server,
             // otherwise your server should have already received the token.
-            sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true).apply();
+            //sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true).apply();
             // [END register_for_gcm]
         } catch (Exception e) {
             Log.d(TAG, "Failed to complete token refresh", e);
@@ -89,6 +106,63 @@ public class RegistrationIntentService extends IntentService {
      */
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
+        if (idPromotor > 0){
+
+            final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            boolean enviado = sharedPreferences.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+
+            Log.d(TAG, QuickstartPreferences.SENT_TOKEN_TO_SERVER + " " + enviado);
+
+            if (!enviado){
+
+                AsyncHttpClient client = new AsyncHttpClient();
+
+                RequestParams rp = new RequestParams();
+                rp.put("id", idPromotor);
+                rp.put("solicitud", "update_token");
+                rp.put("token_gcm", token);
+
+                client.get(Utilities.WEB_SERVICE_CODPAA + "serv.php", rp, new JsonHttpResponseHandler() {
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+
+
+                        if (response != null) {
+                            try {
+                                if (response.getInt("success") == 1) {
+                                    sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true).apply();
+                                    Log.d(TAG, "success");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                        sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false).apply();
+
+                        Log.d(TAG, "onFailure");
+
+
+                    }
+
+
+                });
+            }
+
+
+
+            Log.d(TAG, "token send to server");
+        }
+
+
+
 
 
     }
@@ -101,11 +175,21 @@ public class RegistrationIntentService extends IntentService {
      */
     // [START subscribe_topics]
     private void subscribeTopics(String token) throws IOException {
+
+        SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+        Cursor c = db.rawQuery("select nombre from marca", null);
         GcmPubSub pubSub = GcmPubSub.getInstance(this);
-        for (String topic : TOPICS) {
-            pubSub.subscribe(token, "/topics/" + topic, null);
+
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+            pubSub.subscribe(token, "/topics/" + c.getString(c.getColumnIndex("nombre")) , null);
         }
+
+
+        c.close();
+        db.close();
     }
     // [END subscribe_topics]
+
+
 
 }
