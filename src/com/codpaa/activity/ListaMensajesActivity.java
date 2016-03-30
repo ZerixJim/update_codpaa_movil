@@ -9,11 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
+import android.util.Log;
 
 import com.codpaa.R;
 import com.codpaa.adapter.MensajesRecyclerAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.MensajeModel;
+import com.codpaa.widget.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ public class ListaMensajesActivity extends AppCompatActivity{
 
     private RecyclerView mRecyclerView;
     private LayoutManager mLayoutManager;
-    private RecyclerView.Adapter adapter;
+    private MensajesRecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +35,13 @@ public class ListaMensajesActivity extends AppCompatActivity{
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, null));
 
 
 
-        adapter = new MensajesRecyclerAdapter(this, mensajeModels());
+        adapter = new MensajesRecyclerAdapter(this);
+
         mRecyclerView.setAdapter(adapter);
-
-
     }
 
 
@@ -48,7 +50,14 @@ public class ListaMensajesActivity extends AppCompatActivity{
         super.onResume();
 
 
+        Log.d("MessageList", "onResume");
+
+        adapter.setItems(mensajeModels());
         adapter.notifyDataSetChanged();
+
+
+
+
 
     }
 

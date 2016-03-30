@@ -132,7 +132,6 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setContentTitle(asunto)
                 .setContentText(message)
                 .setAutoCancel(true)
-                .setOngoing(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 

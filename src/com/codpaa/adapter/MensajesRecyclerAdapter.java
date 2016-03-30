@@ -4,6 +4,7 @@ package com.codpaa.adapter;/*
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +25,15 @@ public class MensajesRecyclerAdapter extends RecyclerView.Adapter<MensajesRecycl
     private List<MensajeModel> mensajesArray;
 
 
-    public MensajesRecyclerAdapter(Context context, List<MensajeModel> mensajeArray) {
+    public MensajesRecyclerAdapter(Context context) {
 
         this.context = context;
-        this.mensajesArray = mensajeArray;
 
+
+    }
+
+    public void setItems(List<MensajeModel> mensajesArray){
+        this.mensajesArray = mensajesArray;
     }
 
     @Override
@@ -51,8 +56,17 @@ public class MensajesRecyclerAdapter extends RecyclerView.Adapter<MensajesRecycl
 
         if (mModel.isVisto()){
             holder.imgVisto.setVisibility(View.VISIBLE);
+
+
+            holder.txtAsunto.setTextColor(context.getResources().getColor(R.color.text_primary_leido));
+            holder.txtMensaje.setTextColor(context.getResources().getColor(R.color.text_second_leido));
+
+
         } else {
             holder.imgVisto.setVisibility(View.INVISIBLE);
+
+            holder.txtAsunto.setTextColor(Color.BLACK);
+            holder.txtMensaje.setTextColor(Color.BLACK);
         }
 
     }
@@ -60,6 +74,11 @@ public class MensajesRecyclerAdapter extends RecyclerView.Adapter<MensajesRecycl
     @Override
     public int getItemCount() {
         return mensajesArray.size();
+    }
+
+    public void notifyChange(){
+        mensajesArray.clear();
+        this.notifyDataSetChanged();
     }
 
     public class MensajesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -74,6 +93,8 @@ public class MensajesRecyclerAdapter extends RecyclerView.Adapter<MensajesRecycl
             txtFecha = (TextView) itemView.findViewById(R.id.fecha);
 
             imgVisto = (ImageView) itemView.findViewById(R.id.image_favorito);
+
+            itemView.setOnClickListener(this);
 
         }
 

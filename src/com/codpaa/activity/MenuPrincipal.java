@@ -357,6 +357,15 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         registerReceiver();
 
+		if (new BDopenHelper(this).countMessege() > 0){
+            btnMensaje.setBackgroundColor(getResources().getColor(R.color.alert_color));
+            btnMensaje.setTextColor(Color.WHITE);
+        }else {
+            btnMensaje.setBackgroundColor(Color.WHITE);
+            btnMensaje.setTextColor(Color.BLACK);
+
+        }
+
 	}
 
 

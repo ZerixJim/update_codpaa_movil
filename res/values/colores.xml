@@ -33,6 +33,12 @@
     <color name="grey_500">#9e9e9e</color>
     <color name="grey_700">#616161</color>
 
+
+    <color name="text_primary_leido">#787878</color>
+    <color name="text_second_leido">#8b8b8b</color>
+
+    <color name="alert_color">#f26e6e</color>
+
     
     
 </resources>

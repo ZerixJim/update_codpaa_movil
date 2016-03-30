@@ -10,7 +10,7 @@
     app:cardUseCompatPadding="true"
     android:padding="@dimen/activity_horizontal_margin"
     android:foreground="?android:attr/selectableItemBackground"
-    card_view:cardElevation="2dp">
+    card_view:cardElevation="0dp">
 
     <RelativeLayout
         android:padding="@dimen/activity_horizontal_margin"
@@ -19,6 +19,7 @@
         <TextView
             android:text="Asunto"
             android:textSize="20sp"
+            android:paddingBottom="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/asunto" />
@@ -53,7 +54,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
 
-            android:src="@drawable/ic_star_rate_grey_500_18dp"
+            android:src="@drawable/ic_done_grey_600_18dp"
             />
 
     </RelativeLayout>

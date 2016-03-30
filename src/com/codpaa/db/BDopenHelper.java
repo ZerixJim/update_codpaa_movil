@@ -659,7 +659,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
 
         return baseDatosLocal.rawQuery("select mensaje, asunto, content, fecha, estatus, enviado, " +
-                " id_mensaje from mensaje", null);
+                " id_mensaje from mensaje order by id_mensaje desc, estatus", null);
     }
 
     public int contarExhibiciones(int idTienda, String fecha) throws  SQLiteException{
@@ -755,5 +755,16 @@ public class BDopenHelper extends SQLiteOpenHelper {
         return baseDatosLocal.rawQuery("select idCelular, fecha, hora, latitud, " +
                 "longitud, altitud, numero_telefono from rastreo", null);
 
+    }
+
+    public int countMessege() throws  SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+        int count;
+
+        Cursor cursor = baseDatosLocal.rawQuery("select id_mensaje from mensaje where estatus<1", null);
+
+        count = cursor.getCount();
+
+        return count;
     }
 }
