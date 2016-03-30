@@ -21,6 +21,7 @@ import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -65,7 +66,7 @@ public class MyGcmListenerService extends GcmListenerService {
         String fecha = dFecha.format(c.getTime());
 
 
-        BDopenHelper db = new BDopenHelper(this);
+        SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put("mensaje", message);
@@ -73,8 +74,10 @@ public class MyGcmListenerService extends GcmListenerService {
         values.put("content", content);
         values.put("fecha", fecha);
 
+        int idMensaje = (int) db.insert(Utilities.TABLE_MENSAJE, null, values);
 
-        db.insertar(Utilities.TABLE_MENSAJE, values );
+
+        db.close();
 
 
         /*
@@ -97,7 +100,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(data);
+        sendNotification(data, idMensaje);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -107,7 +110,7 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param data GCM message received.
      */
-    private void sendNotification(Bundle data) {
+    private void sendNotification(Bundle data, int idMensaje) {
 
         String asunto = data.getString("asunto");
         String message = data.getString("message");
@@ -116,6 +119,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Intent intent = new Intent(this, MessaginActivity.class);
 
         intent.putExtra("content", content);
+        intent.putExtra("idMensaje", idMensaje);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,

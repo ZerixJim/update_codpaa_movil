@@ -91,7 +91,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "tipoexhibicion(idExhibicion int primary key, nombre char(30))";
         ruta = "create table if not exists " +
                 "visitaTienda(idTienda int primary key, lunes int, martes int, miercoles int, " +
-                "jueves int, viernes int, sabado int, domingo int, idCelular int, rol varchar(100))";
+                "jueves int, viernes int, sabado int, domingo int, idCelular int, rol varchar(250))";
         clientes = "create table if not exists " +
                 "clientes(idTienda int primary key, grupo varchar(60), sucursal varchar(60), " +
                 "latitud varchar(25), longitud varchar(25))";
@@ -200,6 +200,11 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         if (newVersion == 21 && oldVersion == 20){
             db.execSQL(mensaje);
+
+            db.execSQL("Drop table if exists visitaTienda");
+            db.execSQL(ruta);
+
+
         }
 
         if (newVersion == 21 && oldVersion == 19){
@@ -209,6 +214,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL("Alter table invProducto add column estatus int");
 
             db.execSQL(mensaje);
+
+            db.execSQL("Drop table if exists visitaTienda");
+            db.execSQL(ruta);
         }
 
 
@@ -227,7 +235,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public void remplazar(String table, ContentValues values){
         baseDatosLocal = getWritableDatabase();
         if (baseDatosLocal != null){
-            baseDatosLocal.replace(table,null, values);
+            baseDatosLocal.replace(table, null, values);
             baseDatosLocal.close();
         }
 
@@ -645,6 +653,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
         return baseDatosLocal.rawQuery("select idTienda from invProducto where" +
                 " idTienda="+idTienda+" and fecha='"+fecha+"';",null);
 
+    }
+
+    public Cursor mensajes() throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select mensaje, asunto, content, fecha, estatus, enviado, " +
+                " id_mensaje from mensaje", null);
     }
 
     public int contarExhibiciones(int idTienda, String fecha) throws  SQLiteException{

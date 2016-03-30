@@ -144,6 +144,17 @@
             android:name=".activity.EncuestaActivity"
             android:label="@string/encuestas" />
 
+
+        <activity
+            android:name=".activity.MessaginActivity"
+            android:label="@string/title_activity_messagin"
+            android:theme="@style/MiMateria"/>
+
+        <activity
+            android:name=".activity.ListaMensajesActivity"
+            android:label="@string/title_activity_messagin" />
+
+
         <service android:name=".service.GeoLocalizar" />
 
         <receiver
@@ -175,10 +186,7 @@
             android:name=".service.RegistrationIntentService"
             android:exported="false"/>
 
-        <activity
-            android:name=".activity.MessaginActivity"
-            android:label="@string/title_activity_messagin"
-            android:theme="@style/MiMateria"/>
+
     </application>
 
 </manifest>

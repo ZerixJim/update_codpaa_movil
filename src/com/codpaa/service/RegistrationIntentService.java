@@ -181,7 +181,9 @@ public class RegistrationIntentService extends IntentService {
         GcmPubSub pubSub = GcmPubSub.getInstance(this);
 
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
-            pubSub.subscribe(token, "/topics/" + c.getString(c.getColumnIndex("nombre")) , null);
+
+            String marca = c.getString(c.getColumnIndex("nombre"));
+            pubSub.subscribe(token, "/topics/" + marca.replace(" ", "") , null);
         }
 
 

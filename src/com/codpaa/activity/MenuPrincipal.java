@@ -479,7 +479,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 break;
 
             case R.id.buttonMensaje:
-                //dialogoEncuestas();
+                Intent iM = new Intent(this, ListaMensajesActivity.class);
+				iM.putExtra("idCelular", idUsuario);
+				startActivity(iM);
                 break;
 
 
