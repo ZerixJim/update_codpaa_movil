@@ -84,8 +84,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     private boolean isReceiverRegistered;
-
-
+	
 
 	int idUsuario;
 
@@ -343,15 +342,28 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	    gd.setCornerRadius(roundRadius);
 	    
 
-		
+		int sdk = Build.VERSION.SDK_INT;
 		if(verificarConexion()){
 			
 			conexion.setText(R.string.connection);
-			conexion.setBackgroundDrawable(gd);
+			if (sdk < Build.VERSION_CODES.JELLY_BEAN)
+				conexion.setBackgroundDrawable(gd);
+
+			else
+				conexion.setBackground(gd);
+
+
 			//conexion.setBackgroundColor(Color.GREEN);
 		}else{
 			conexion.setText(R.string.desconnect);
-			conexion.setBackgroundDrawable(gd2);
+
+			if (sdk < Build.VERSION_CODES.JELLY_BEAN)
+				conexion.setBackgroundDrawable(gd2);
+
+			else
+				conexion.setBackground(gd2);
+
+
 			//conexion.setBackgroundColor(Color.RED);
 		}
 

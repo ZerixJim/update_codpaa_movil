@@ -293,10 +293,17 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 
     private int getSelectedStatus(RadioGroup radio){
         int id = radio.getCheckedRadioButtonId();
-        if (id >= 1){
+
+
+
+        if (id >= 0){
+
+			View radioButton = radio.findViewById(id);
+
+			int idx = radio.indexOfChild(radioButton);
 
             radio.check(-1);
-            return id;
+            return idx+1;
         } else
             return 0;
     }
