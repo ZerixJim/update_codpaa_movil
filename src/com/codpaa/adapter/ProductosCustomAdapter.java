@@ -30,6 +30,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		TextView txtPresentacion;
 		TextView txtCodigoBarras;
 		ImageView imagenProducto;
+		TextView divider;
  	}
 	
 
@@ -55,7 +56,6 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 	public View getDropDownView(int position, View convertView, ViewGroup parent) {
 		 return getCustomView(position, convertView, parent);
 
-		
 	}
 	
 	
@@ -66,7 +66,13 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		return getCustomView(position, convertView, parent);
 	}
 
-	public View getCustomView(int position, View convertView, ViewGroup parent){
+    @Override
+    public int getCount() {
+
+        return _datos!=null ? _datos.size(): 0;
+    }
+
+    public View getCustomView(int position, View convertView, ViewGroup parent){
 		View row = convertView;
         ViewHolder viewHolder;
 		
@@ -78,6 +84,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
             viewHolder.txtPresentacion = (TextView) row.findViewById(R.id.text_presentacion_producto);
 			viewHolder.txtCodigoBarras = (TextView) row.findViewById(R.id.text_codigo_barras);
 			viewHolder.imagenProducto = (ImageView) row.findViewById(R.id.image_producto);
+            viewHolder.divider = (TextView) row.findViewById(R.id.divider);
 
             row.setTag(viewHolder);
 			
@@ -94,9 +101,10 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 
 		if (position == 0){
 			viewHolder.imagenProducto.setVisibility(View.GONE);
+            viewHolder.divider.setVisibility(View.INVISIBLE);
 		}else {
 
-
+            viewHolder.divider.setVisibility(View.VISIBLE);
             if (viewHolder.imagenProducto.getVisibility() == View.GONE)
                 viewHolder.imagenProducto.setVisibility(View.VISIBLE);
 
@@ -107,8 +115,12 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 					.into(viewHolder.imagenProducto);
 
 
-
+            if (getCount() == position + 1){
+                viewHolder.divider.setVisibility(View.INVISIBLE);
+            }
 		}
+
+
 
 
 

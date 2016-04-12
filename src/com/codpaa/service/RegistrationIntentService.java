@@ -74,7 +74,7 @@ public class RegistrationIntentService extends IntentService {
             // [END get_token]
             Log.i(TAG, "GCM Registration Token: " + token);
 
-            // TODO: Implement this method to send any registration to your app's servers.
+
             sendRegistrationToServer(token);
 
             // Subscribe to topic channels
@@ -127,7 +127,7 @@ public class RegistrationIntentService extends IntentService {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
-
+                        Log.d(TAG, "token send to server");
 
                         if (response != null) {
                             try {
@@ -158,7 +158,7 @@ public class RegistrationIntentService extends IntentService {
 
 
 
-            Log.d(TAG, "token send to server");
+
         }
 
 
@@ -186,6 +186,7 @@ public class RegistrationIntentService extends IntentService {
             pubSub.subscribe(token, "/topics/" + marca.replace(" ", "") , null);
         }
 
+        pubSub.subscribe(token,"/topics/vanguardia/promotores", null);
 
         c.close();
         db.close();

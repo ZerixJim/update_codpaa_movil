@@ -14,6 +14,9 @@
         <item name="android:textColorPrimary">@color/Blanco</item>
         <item name="android:textColor">@color/negroFondo</item>
         <item name="android:editTextStyle">@style/editText</item>
+
+        <item name="android:dropDownListViewStyle">@style/mySpinnerStyle</item>
+
     </style>
 
 
@@ -63,6 +66,7 @@
         <item name="android:textColorSecondary">@color/secondary_text_color</item>
 
         <item name="colorControlNormal">@color/text_primary</item>
+        <item name="android:dropDownListViewStyle">@style/mySpinnerStyle</item>
 
     </style>
 
@@ -189,6 +193,11 @@
     <style name="MiTema.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="MiTema.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="mySpinnerStyle" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
+        <item name="android:divider">#455eef</item>
+        <item name="android:dividerHeight">1dp</item>
+    </style>
 
 
 </resources>
