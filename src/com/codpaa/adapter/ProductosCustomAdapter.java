@@ -110,8 +110,12 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 
 			Picasso picasso = Picasso.with(_context);
 
+
+
 			picasso.load(Utilities.PRODUCT_PATH+temp.getIdMarca()+"/"+temp.getIdProducto()+".gif")
-					.resize(bitmapDrawable.getBitmap().getWidth(),0)
+					//.resize(bitmapDrawable.getBitmap().getWidth(), 0)
+					.fit()
+					.centerCrop()
 					.into(viewHolder.imagenProducto);
 
 

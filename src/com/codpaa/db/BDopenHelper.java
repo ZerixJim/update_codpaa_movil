@@ -476,6 +476,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     }
 
+    public void deleteTable(String table){
+        baseDatosLocal = getWritableDatabase();
+        baseDatosLocal.delete(table, null, null);
+        if (baseDatosLocal != null)
+            baseDatosLocal.close();
+    }
+
     public void insertarLocalizacion(int idTien,int idPro, String fech,String hora, double lat, double lon, int prec, String tip, int status,int semana) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
 

@@ -186,7 +186,7 @@ public class RegistrationIntentService extends IntentService {
             pubSub.subscribe(token, "/topics/" + marca.replace(" ", "") , null);
         }
 
-        pubSub.subscribe(token,"/topics/vanguardia/promotores", null);
+        pubSub.subscribe(token,"/topics/van-promotor", null);
 
         c.close();
         db.close();

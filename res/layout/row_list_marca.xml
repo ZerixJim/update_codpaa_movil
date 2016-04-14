@@ -15,14 +15,14 @@
         />
 
     <TextView
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
+
         android:id="@+id/NombreTxtMarca"
+        android:text="Marca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_toRightOf="@+id/logotipoMarca"
-        android:layout_toEndOf="@+id/logotipoMarca"
         />
 
     <TextView

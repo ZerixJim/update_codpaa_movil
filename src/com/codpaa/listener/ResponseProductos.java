@@ -76,7 +76,7 @@ public class ResponseProductos extends JsonHttpResponseHandler{
         SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
         String fecha = dFecha.format(c.getTime());
 
-        b.vaciarTabla("producto");
+        b.deleteTable("producto");
 
         for(int i= 0; i < productosArray.length(); i++) {
 
@@ -90,6 +90,7 @@ public class ResponseProductos extends JsonHttpResponseHandler{
 
 
         }
+
 
         configuracion.setProducto(fecha);
     }
