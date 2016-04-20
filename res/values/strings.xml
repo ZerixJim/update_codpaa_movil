@@ -145,6 +145,7 @@
     <string name="process">En Proceso</string>
     <string name="sent">Enviada</string>
     <string name="title_activity_messagin">Mensajes</string>
+    <string name="barcode">CB:N/A</string>
 
 
 </resources>

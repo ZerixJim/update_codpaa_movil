@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
 import com.codpaa.R;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.util.Utilities;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 
@@ -25,12 +27,15 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 	private ArrayList<SpinnerProductoModel> _datos;
     BitmapDrawable bitmapDrawable;
 
-	private class ViewHolder{
+
+
+	private static class ViewHolder{
 		TextView txtNombre;
 		TextView txtPresentacion;
 		TextView txtCodigoBarras;
 		ImageView imagenProducto;
 		TextView divider;
+		ProgressBar progressBar;
  	}
 	
 
@@ -74,7 +79,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 
     public View getCustomView(int position, View convertView, ViewGroup parent){
 		View row = convertView;
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 		
 		if(row == null){
 			LayoutInflater inflater = _context.getLayoutInflater();
@@ -85,15 +90,17 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 			viewHolder.txtCodigoBarras = (TextView) row.findViewById(R.id.text_codigo_barras);
 			viewHolder.imagenProducto = (ImageView) row.findViewById(R.id.image_producto);
             viewHolder.divider = (TextView) row.findViewById(R.id.divider);
+            viewHolder.progressBar = (ProgressBar) row.findViewById(R.id.progress);
 
             row.setTag(viewHolder);
 			
 		}else {
+
             viewHolder = (ViewHolder) row.getTag();
         }
 		
 		SpinnerProductoModel temp = _datos.get(position);
-		
+
 
 		viewHolder.txtNombre.setText(temp.getNombre());
         viewHolder.txtPresentacion.setText(temp.getPresentacion());
@@ -102,6 +109,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		if (position == 0){
 			viewHolder.imagenProducto.setVisibility(View.GONE);
             viewHolder.divider.setVisibility(View.INVISIBLE);
+            viewHolder.progressBar.setVisibility(View.GONE);
 		}else {
 
             viewHolder.divider.setVisibility(View.VISIBLE);
@@ -110,17 +118,31 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 
 			Picasso picasso = Picasso.with(_context);
 
-
+            //picasso.setIndicatorsEnabled(true);
 
 			picasso.load(Utilities.PRODUCT_PATH+temp.getIdMarca()+"/"+temp.getIdProducto()+".gif")
 					//.resize(bitmapDrawable.getBitmap().getWidth(), 0)
 					.fit()
+					//.placeholder(R.drawable.progress_animated)
 					.centerCrop()
-					.into(viewHolder.imagenProducto);
+                    //.centerInside()
+					//.noFade()
+					.into(viewHolder.imagenProducto, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            viewHolder.progressBar.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onError() {
+                            viewHolder.progressBar.setVisibility(View.GONE);
+                        }
+                    });
 
 
             if (getCount() == position + 1){
                 viewHolder.divider.setVisibility(View.INVISIBLE);
+
             }
 		}
 
@@ -136,7 +158,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
                 viewHolder.txtCodigoBarras.setText(cb);
 
             }else {
-                viewHolder.txtCodigoBarras.setText("CB:N/A");
+                viewHolder.txtCodigoBarras.setText(R.string.barcode);
             }
         }
 		if(position == 0){
