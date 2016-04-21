@@ -40,6 +40,7 @@
     <color name="alert_color">#f26e6e</color>
 
     <color name="divider_primary">#b9b9b9</color>
+    <color name="divider_vertical">#dedede</color>
     
     
 </resources>

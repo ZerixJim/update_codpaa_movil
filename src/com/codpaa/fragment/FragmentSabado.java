@@ -49,9 +49,12 @@ public class FragmentSabado extends Fragment {
         ArrayList<RutaDia> arrayRutaDia = new ArrayList<>();
 
         base = new BDopenHelper(getContext()).getReadableDatabase();
-        String Lunes="select clientes.grupo, clientes.sucursal, visitaTienda.rol, clientes.idTienda from clientes" +
-                " inner join visitaTienda on clientes.idTienda = visitaTienda.idTienda and visitaTienda.sabado=1";
-        Cursor cursor = base.rawQuery(Lunes, null);
+        String sabado="select c.grupo, c.sucursal, v.rol, c.idTienda " +
+                " from clientes as c " +
+                " left join visitaTienda as v " +
+                " on c.idTienda = v.idTienda " +
+                " where v.sabado>=1 order by v.sabado asc";
+        Cursor cursor = base.rawQuery(sabado, null);
 
 
         for (cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()){

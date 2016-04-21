@@ -48,11 +48,11 @@ public class FragmentMartes extends Fragment{
         ArrayList<RutaDia> arrayRutaDia = new ArrayList<>();
 
         base = new BDopenHelper(getContext()).getReadableDatabase();
-        String Lunes="select c.grupo, c.sucursal, v.rol, c.idTienda" +
+        String martes = "select c.grupo, c.sucursal, v.rol, c.idTienda" +
                 "  from clientes as c " +
                 "  left join visitaTienda as v " +
-                "  on c.idTienda = v.idTienda where v.martes=1";
-        Cursor cursor = base.rawQuery(Lunes, null);
+                "  on c.idTienda = v.idTienda where v.martes>=1 order by v.martes asc";
+        Cursor cursor = base.rawQuery(martes, null);
 
 
         for (cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()){

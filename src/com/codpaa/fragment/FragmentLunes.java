@@ -54,7 +54,7 @@ public class FragmentLunes extends Fragment{
                 "from clientes as c " +
                 "left join visitaTienda as v " +
                 "on c.idTienda = v.idTienda " +
-                "where v.lunes=1";
+                "where v.lunes>=1 order by v.lunes asc";
         Cursor cursor = base.rawQuery(Lunes, null);
 
 
