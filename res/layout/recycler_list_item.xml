@@ -22,7 +22,6 @@
 
         <TextView
             android:id="@+id/number"
-            android:text="1"
             android:padding="10dp"
             android:gravity="center"
             android:textColor="@color/divider_primary"

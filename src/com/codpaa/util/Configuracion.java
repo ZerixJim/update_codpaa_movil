@@ -13,6 +13,7 @@ public class Configuracion {
     private final String KEY_TIENDAS = "tiendas";
     private final String KEY_EXHIBI = "exhibiciones";
     private final String KEY_RUTA = "ruta";
+    private final String KEY_VERSION = "version";
 
 
 
@@ -87,6 +88,12 @@ public class Configuracion {
         editor.apply();
     }
 
+    public void setVersionDate(String fecha){
+        SharedPreferences.Editor editor = getSettings().edit();
+        editor.putString(KEY_VERSION, fecha);
+        editor.apply();
+    }
+
     public String getUserName() { return getSettings().getString(KEY_USER, null); }
 
     public String getDate () { return getSettings().getString(KEY_DATE, null); }
@@ -100,6 +107,10 @@ public class Configuracion {
     public String getMarca() { return getSettings().getString(KEY_MARCA, null);}
 
     public String getProducto() { return getSettings().getString(KEY_PRODUCTO, null);}
+
+    public String getVersion(){
+        return getSettings().getString(KEY_VERSION, null);
+    }
 	
 	
 

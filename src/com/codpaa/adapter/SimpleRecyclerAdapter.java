@@ -16,10 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codpaa.R;
-import com.codpaa.activity.CalendarioRuta;
 import com.codpaa.activity.MenuTienda;
 import com.codpaa.model.RutaDia;
 
@@ -49,11 +47,6 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         }
     }
 
-    public SimpleRecyclerAdapter(Context context) {
-        isHomeList = true;
-        this.context = context;
-        setHomeActivitiesList(context);
-    }
 
 
     public SimpleRecyclerAdapter(Context context, List<RutaDia> rutaDias, int idPromotor) {

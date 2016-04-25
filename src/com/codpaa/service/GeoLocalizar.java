@@ -1,6 +1,7 @@
 package com.codpaa.service;
 
 import com.codpaa.R;
+import com.codpaa.util.Configuracion;
 import com.codpaa.util.Utilities;
 import com.loopj.android.http.*;
 
@@ -425,7 +426,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 				try {
 					
 					enviarVisitas();
-					enviarVersion();
+                    verifyVersionSent();
 					enviarFrentes();
 					enviarSurtido();
 					enviarInteli();
@@ -454,7 +455,35 @@ public class GeoLocalizar extends Service implements LocationListener{
 		
 	
 	}
-	
+
+
+    private String fechaActual(){
+        Calendar c = Calendar.getInstance();
+        Locale locale = new Locale("es_MX");
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
+        return dFecha.format(c.getTime());
+    }
+
+    /*
+        this method verify if the codpaa´s version was send
+     */
+    private void verifyVersionSent(){
+        Configuracion config = new Configuracion(con);
+        if (config.getVersion() != null){
+
+            if (!config.getVersion().equals(fechaActual())){
+                enviarVersion();
+            }else {
+                Log.d("Geo_service", "version enviada");
+            }
+
+        }else {
+            enviarVersion();
+        }
+    }
+
+
+
 	
 
 	protected void enviarVersion() {
@@ -467,7 +496,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 				
 			String fecha = new SimpleDateFormat("dd-MM-yyyy",local).format(new Date());
 			
-			Context context = getApplicationContext();
+			final Context context = getApplicationContext();
 			PackageManager packageManager = context.getPackageManager();
 			String packageName = context.getPackageName();
 			
@@ -482,7 +511,27 @@ public class GeoLocalizar extends Service implements LocationListener{
 						rpV.put("ve", myVersionName);
 						rpV.put("fecha", fecha);
 						
-						clienteVersio.post(Utilities.WEB_SERVICE_CODPAA+"sendVersion.php", rpV,respuesta);
+						clienteVersio.post(Utilities.WEB_SERVICE_CODPAA + "sendVersion.php", rpV, new AsyncHttpResponseHandler(Looper.getMainLooper()) {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                                Log.d("ResponseVesion", "Success");
+
+                                if (statusCode == 200){
+
+                                    Configuracion config = new Configuracion(con);
+                                    config.setVersionDate(fechaActual());
+
+                                    Log.d("ResponseVersion", "200");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                            }
+                        });
+
 					}else{
 						Log.d("Env Version","id NO Asignado");
 					}
