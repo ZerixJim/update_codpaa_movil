@@ -14,8 +14,7 @@
         <item name="android:textColorPrimary">@color/Blanco</item>
         <item name="android:textColor">@color/negroFondo</item>
         <item name="android:editTextStyle">@style/editText</item>
-
-
+        
     </style>
 
 
