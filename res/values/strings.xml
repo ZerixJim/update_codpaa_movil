@@ -146,6 +146,8 @@
     <string name="sent">Enviada</string>
     <string name="title_activity_messagin">Mensajes</string>
     <string name="barcode">CB:N/A</string>
+    <string name="venta_promedio">Venta Promedio</string>
+    <string name="escribe_cantidad">escribe cantidad</string>
 
 
 </resources>

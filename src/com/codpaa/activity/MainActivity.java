@@ -64,7 +64,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		btnLogin = (Button) findViewById(R.id.buttonlogin);
 		valido = (TextView) findViewById(R.id.valido);
 		progressBar = (ProgressBar) findViewById(R.id.progressUser);
-        progressBar.setVisibility(View.GONE);
+
+		if (progressBar != null)
+        	progressBar.setVisibility(View.GONE);
 
 		btnLogin.setOnClickListener(this);
 
