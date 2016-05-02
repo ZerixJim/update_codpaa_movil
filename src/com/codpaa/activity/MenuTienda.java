@@ -507,6 +507,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
     private void subMenuFrentes() {
 
         Intent i = new Intent(this, VentaPromedio.class);
+		i.putExtra("idPromotor", idPromotor);
+		i.putExtra("idTienda", idTienda);
         startActivity(i);
 
     }

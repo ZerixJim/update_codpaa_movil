@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
@@ -633,6 +634,99 @@ public class EnviarDatos {
 		
 	}
 
+
+
+	public void sendVentaPromedio(){
+
+		try{
+			Cursor curVenta = DB.datosVenta();
+			base = new BDopenHelper(activity).getWritableDatabase();
+
+			if(curVenta.getCount() > 0 && verificarConexion()){
+				for(curVenta.moveToFirst(); !curVenta.isAfterLast(); curVenta.moveToNext()){
+					rp.put("idMarca", Integer.toString(curVenta.getInt(curVenta.getColumnIndex("idMarca"))));
+					rp.put("tipo", curVenta.getString(curVenta.getColumnIndex("tipo")));
+					rp.put("cantidad", Float.toString(curVenta.getFloat(curVenta.getColumnIndex("cantidad"))));
+					rp.put("fechai", curVenta.getString(curVenta.getColumnIndex("fecha_inicio")));
+                    rp.put("fechaf", curVenta.getString(curVenta.getColumnIndex("fecha_fin")));
+                    rp.put("idTienda", Integer.toString(curVenta.getInt(curVenta.getColumnIndex("idTienda"))));
+                    rp.put("idPromotor", Integer.toString(curVenta.getInt(curVenta.getColumnIndex("idPromotor"))));
+
+                    HttpVentaResponse response = new HttpVentaResponse(activity,
+                            curVenta.getInt(curVenta.getColumnIndex("idMarca")),
+                            curVenta.getString(curVenta.getColumnIndex("tipo")),
+                            curVenta.getString(curVenta.getColumnIndex("fecha_inicio")),
+                            curVenta.getString(curVenta.getColumnIndex("fecha_fin")));
+					cliente.get(Utilities.WEB_SERVICE_CODPAA+"sendVentaPromedio.php", rp, response);
+				}
+
+			}
+			base.close();
+            curVenta.close();
+			DB.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+	}
+
+
+    private class HttpVentaResponse extends JsonHttpResponseHandler{
+
+
+        private int idMarca;
+        private String tipo, fechaI, fechaF;
+        Context context;
+
+        public HttpVentaResponse(Context context,int idMarca, String tipo, String fechaI, String fechaF){
+            this.idMarca = idMarca;
+            this.tipo = tipo;
+            this.fechaI = fechaI;
+            this.fechaF = fechaF;
+            this.context = context;
+
+        }
+
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+            Log.d("Status", " "+statusCode);
+
+            if (response != null){
+
+                try {
+                    if (response.getBoolean("insert")){
+
+                        SQLiteDatabase db = new BDopenHelper(activity).getWritableDatabase();
+
+                        try {
+
+                            db.execSQL("update ventaPromedio set estatus=2 where idMarca="+idMarca+" " +
+                                    "and tipo='"+tipo+"' and fecha_inicio='"+fechaI+"' and fecha_fin='"+fechaF+"'");
+
+                            Toast.makeText(activity, "Registro Recibido", Toast.LENGTH_SHORT).show();
+
+                        }catch (SQLiteException e){
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            super.onFailure(statusCode, headers, throwable, errorResponse);
+        }
+    }
 	
 	public boolean verificarConexion() {
 	    ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);

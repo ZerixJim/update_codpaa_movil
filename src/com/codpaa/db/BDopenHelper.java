@@ -9,13 +9,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.io.File;
+import java.io.StringReader;
 
 
 public class BDopenHelper extends SQLiteOpenHelper {
 
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
-    private static final int version = 21;
+    private static final int version = 22;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -44,6 +45,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String respuesta;
     private static String respuestaTipo;
     private static String mensaje;
+    private static String ventaPromedio;
 
 
     public BDopenHelper(Context miContext) {
@@ -136,8 +138,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "content varchar(250) NOT NULL, fecha varchar(15) NOT NULL, " +
                 "estatus integer default 0, enviado integer default 0)";
 
-
-        //TODO: crear la tabla de venta promedio
+        ventaPromedio = "create table if not exists " +
+                "ventaPromedio(idMarca int NOT NULL, tipo varchar(10) NOT NULL, cantidad float NOT NULL," +
+                "fecha_inicio varchar(15),fecha_fin varchar(15), idTienda int NOT NULL, " +
+                "idPromotor int NOT NULL, estatus integer default 1)";
     }
 
     @Override
@@ -170,44 +174,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(respuesta);
         db.execSQL(respuestaTipo);
         db.execSQL(mensaje);
-
+        db.execSQL(ventaPromedio);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 
-
-
-        if (oldVersion == 17 && newVersion == 18){
-            db.execSQL("Alter table photo add column evento int(2)");
-        }
-
-
-        if (newVersion == 19){
-            db.execSQL("Alter table rastreo add column numero_telefono varchar(14)");
-            db.execSQL("Drop table visitaTienda");
-            db.execSQL(ruta);
-
-        }
-
-        if (newVersion == 20 && oldVersion==19){
-            db.execSQL(preguntas);
-            db.execSQL(respuesta);
-            db.execSQL(respuestaTipo);
-            db.execSQL("Alter table invProducto add column estatus int");
-        }
-
-        if (newVersion == 21 && oldVersion == 20){
-            db.execSQL(mensaje);
-
-            db.execSQL("Drop table if exists visitaTienda");
-            db.execSQL(ruta);
-
-
-        }
-
-        if (newVersion == 21 && oldVersion == 19){
+        if (newVersion == 22 && oldVersion == 19){
             db.execSQL(preguntas);
             db.execSQL(respuesta);
             db.execSQL(respuestaTipo);
@@ -217,6 +191,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
             db.execSQL("Drop table if exists visitaTienda");
             db.execSQL(ruta);
+
+            db.execSQL(ventaPromedio);
+        }
+
+        if (newVersion == 22 && oldVersion == 21){
+            db.execSQL(ventaPromedio);
         }
 
 
@@ -567,6 +547,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         return baseDatosLocal.rawQuery("select * from usuarios where user='"+user+"';", null);
 
+    }
+
+    public Cursor datosVenta() throws SQLiteException {
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select * from ventaPromedio where estatus=1", null);
     }
 
     public Cursor datosPhoto() throws SQLiteException{
