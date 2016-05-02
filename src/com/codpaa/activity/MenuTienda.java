@@ -56,6 +56,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	
 	
 	Button btnSalidaTi,btnEntrada, btnEncar, btnExhib, btnInven, btnFrente, btnSurtido, btnTiendaError;
+	Button btnVentaPromedio;
 	Button btnComentario, btnInteligencia, btnUpdaPro, btnFoto;
 	SQLiteDatabase base = null;
 	Location locGps,locNet;
@@ -126,6 +127,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		btnComentario = (Button) findViewById(R.id.btnComentario);
 		btnInteligencia = (Button) findViewById(R.id.btnMenInt);
 		btnFoto = (Button) findViewById(R.id.btnfoto);
+		btnVentaPromedio = (Button) findViewById(R.id.btn_venta_promedio);
+
 
 
 		DB = new BDopenHelper(this);
@@ -142,6 +145,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		btnInteligencia.setOnClickListener(this);
 		btnUpdaPro.setOnClickListener(this);
 		btnFoto.setOnClickListener(this);
+		btnVentaPromedio.setOnClickListener(this);
+
+
 
 		// textView with listener
 		frentes.setOnClickListener(this);
@@ -490,9 +496,20 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
             case R.id.text_fotos:
                 dialogoFotos();
                 break;
+
+            case R.id.btn_venta_promedio:
+                subMenuFrentes();
+                break;
 		}
 		
 	}
+
+    private void subMenuFrentes() {
+
+        Intent i = new Intent(this, VentaPromedio.class);
+        startActivity(i);
+
+    }
 
     private void dialogoFotos() {
 

@@ -143,8 +143,7 @@
 
         <activity android:name=".activity.VentaPromedio"
             android:label="@string/venta_promedio"
-            android:screenOrientation="portrait"
-            android:theme="@style/noActionBar"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.EncuestaActivity"

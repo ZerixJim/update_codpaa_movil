@@ -225,14 +225,35 @@
                     style="@style/btnStyleGenoa"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_assessment_white_24dp"
-                    android:drawableRight="@drawable/ic_assessment_white_24dp"
+                    android:drawableStart="@drawable/ic_assessment_white_24dp"
+                    android:drawableLeft="@drawable/ic_assessment_white_24dp"
                     android:text="@string/inteliMercado"/>
 
             </LinearLayout>
 
+
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="10dp">
+
+                <Button
+                    android:id="@+id/btn_venta_promedio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/btnStyleBeige"
+                    android:drawableStart="@drawable/ic_timeline_grey_600_24dp"
+                    android:drawableLeft="@drawable/ic_timeline_grey_600_24dp"
+                    android:text="@string/venta_promedio"/>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2"

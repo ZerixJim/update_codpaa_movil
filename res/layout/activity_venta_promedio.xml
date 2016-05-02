@@ -11,6 +11,7 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:id="@+id/spinner" />
 
 
@@ -57,6 +58,7 @@
     </LinearLayout>
 
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,7 +67,8 @@
         android:paddingLeft="10dp"
         android:paddingStart="10dp"
         android:paddingRight="10dp"
-        android:paddingEnd="10dp">
+        android:paddingEnd="10dp"
+        android:layout_marginBottom="24dp">
 
         <TextView
             android:text="Cantidad"
@@ -77,12 +80,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
-            android:gravity="right"
             android:ems="10"
-            android:hint=""
+            android:textColor="@color/secondary_text_color"
+            android:hint="ejemplo: 12, 12.50"
             android:id="@+id/editText" />
 
+
+
+
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:weightSum="4"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="De"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_event_white_24dp"
+            android:drawableLeft="@drawable/ic_event_white_24dp"
+            android:drawablePadding="5dp"
+            android:text="@string/fecha"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="A"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_event_white_24dp"
+            android:drawableLeft="@drawable/ic_event_white_24dp"
+            android:drawablePadding="5dp"
+            android:text="@string/fecha"/>
+
+
+    </LinearLayout>
+
+
+
 
 
 

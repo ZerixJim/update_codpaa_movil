@@ -137,7 +137,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "estatus integer default 0, enviado integer default 0)";
 
 
-
+        //TODO: crear la tabla de venta promedio
     }
 
     @Override
@@ -771,7 +771,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         Cursor cursor = baseDatosLocal.rawQuery("select id_mensaje from mensaje where estatus<1", null);
 
         count = cursor.getCount();
-
+        cursor.close();
         return count;
     }
 }
