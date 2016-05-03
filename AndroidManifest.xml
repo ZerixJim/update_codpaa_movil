@@ -105,6 +105,7 @@
         <activity
             android:name=".activity.SurtidoMueble"
             android:label="@string/surtido"
+            android:theme="@style/noActionBarNoTitle"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.Exhibiciones"
@@ -143,7 +144,8 @@
 
         <activity android:name=".activity.VentaPromedio"
             android:label="@string/venta_promedio"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppBase"/>
 
         <activity
             android:name=".activity.EncuestaActivity"

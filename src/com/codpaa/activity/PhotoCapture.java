@@ -268,9 +268,15 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
         		Uri tempUri = getImageUri(CameraActivity, imageBitmap);
 
-        		File myFile = new File(getRealPathFromURI(tempUri));
 
-        		mCurrentPhotoPath =  myFile.getAbsolutePath();
+                try {
+                    File myFile = new File(getRealPathFromURI(tempUri));
+
+                    mCurrentPhotoPath =  myFile.getAbsolutePath();
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                }
+
 
 
         		Log.v("PhothoCapture", "Data != null");

@@ -1,147 +1,335 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Blanco"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:subtitleTextAppearance="@style/ToolbarSubtitleAppearance"
+        app:titleTextAppearance="@style/ToolbarTitleAppearance"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:layout_height="wrap_content"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:orientation="vertical" >
+        android:elevation="4dp">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@color/Blue">
+    </android.support.v7.widget.Toolbar>
 
-            <TextView
-                android:id="@+id/textSurT"
-                style="@style/TextShadow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/AmarilloClaro" />
 
-            <TextView
-                android:id="@+id/textSuser"
-                style="@style/TextShadow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/Blanco" />
-        </LinearLayout>
-
-        <Spinner
-        android:id="@+id/spiSurM"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"/>
-
-        <Spinner
-        android:id="@+id/spiSurP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="2" android:baselineAligned="false"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="5dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textSalida"
-                style="@style/TextShadow"
-                android:layout_width="wrap_content"
+
+            <Spinner
+                android:id="@+id/spiSurM"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"/>
+
+            <Spinner
+                android:id="@+id/spiSurP"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_margin="2dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                android:baselineAligned="false"
                 android:layout_marginTop="10dp"
-                android:text="@string/necesario"
-                android:textColor="@color/negroFondo"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:typeface="serif" />
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp">
 
-            <RadioGroup
-                android:id="@+id/radioGroup1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/radio0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/yes" />
-
-                <RadioButton
-                    android:id="@+id/radio1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/no" />
-            </RadioGroup>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_input_cantidad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp">
-
-                <EditText
-                    android:id="@+id/editSur"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:ems="10"
-                    android:hint="@string/StringCantidadFre"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:textColor="@color/negroFondo"/>
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/textSalida"
+                        style="@style/TextShadow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/necesario"
+                        android:textColor="@color/negroFondo"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:typeface="serif" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroup1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/radio0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="@string/yes" />
+
+                        <RadioButton
+                            android:id="@+id/radio1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
 
 
-            </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/txt_input_cantidad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp">
+
+                        <EditText
+                            android:id="@+id/editSur"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:ems="10"
+                            android:hint="@string/StringCantidadFre"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:textColor="@color/negroFondo"/>
+
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true"
+                card_view:cardElevation="4dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/activity_horizontal_margin">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Unifila"
+                            android:lines="1"
+                            android:inputType="number" />
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Caja 6"
+                            android:layout_weight="1"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Caja 1"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Caja 7"
+                            android:layout_weight="1"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Caja 2"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Caja 8"
+                            android:layout_weight="1"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Caja 3"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Caja 9"
+                            android:layout_weight="1"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Caja 4"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Caja 10"
+                            android:layout_weight="1"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Caja 5"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Caja 11"
+                            android:layout_weight="1"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Caja 5"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Caja 11"
+                            android:layout_weight="1"
+                            android:lines="1"
+                            android:inputType="number"/>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnGurSur"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:drawableLeft="@drawable/save"
-        android:drawableStart="@drawable/save"
-        android:text="@string/guar"
-        style="@style/btnStyleShakespeare"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp" />
-
-    </LinearLayout>
+    </ScrollView>
 
 
-</ScrollView>
+
+
+</LinearLayout>

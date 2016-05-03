@@ -149,5 +149,8 @@
     <string name="venta_promedio">Venta Promedio</string>
     <string name="escribe_cantidad">escribe cantidad</string>
 
+    <string name="frentes_linea_caja">Frentes en linea de Caja</string>
+    <string name="resurtido_linea_caja">Resurtido en linea de Caja</string>
+
 
 </resources>

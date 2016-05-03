@@ -19,41 +19,51 @@
 
 
 
+
+
         <Spinner
             android:id="@+id/spiMarPhoto"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_marginRight="2dp"
-            android:layout_marginLeft="2dp" />
+            android:layout_marginLeft="2dp"
+            android:layout_marginBottom="24dp"/>
 
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/tipo_carga"
-            android:layout_marginTop="10dp"
-            android:id="@+id/textView3"/>
+            android:layout_marginBottom="24dp">
 
-        <RadioGroup
-            android:id="@+id/radioChoice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:layout_gravity="center_horizontal">
-            <RadioButton
-                android:id="@+id/radioNormal"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="normal"/>
-            <RadioButton
-                android:id="@+id/radioEvento"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/tipo_carga"
+                android:layout_marginTop="10dp"
+                android:id="@+id/textView3"/>
+
+            <RadioGroup
+                android:id="@+id/radioChoice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="por Evento"/>
-        </RadioGroup>
+                android:padding="5dp"
+                android:layout_gravity="center_horizontal">
+                <RadioButton
+                    android:id="@+id/radioNormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="normal"/>
+                <RadioButton
+                    android:id="@+id/radioEvento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="por Evento"/>
+            </RadioGroup>
+
+        </LinearLayout>
+
 
         <Spinner
             android:id="@+id/spiExhPho"

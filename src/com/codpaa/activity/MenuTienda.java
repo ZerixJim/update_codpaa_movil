@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -287,6 +288,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 							
 						
 						btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                        btnEntrada.setTextColor(Color.WHITE);
 						enviar.enviarVisitas();
 					}
 						
@@ -373,6 +375,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 										
 										
 										btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                        btnSalidaTi.setTextColor(Color.WHITE);
 										Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
 										
 										enviar.enviarVisitas();
@@ -498,18 +501,23 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
                 break;
 
             case R.id.btn_venta_promedio:
-                subMenuFrentes();
+                subMenuVenta();
                 break;
 		}
 		
 	}
 
-    private void subMenuFrentes() {
+    private void subMenuVenta() {
 
-        Intent i = new Intent(this, VentaPromedio.class);
-		i.putExtra("idPromotor", idPromotor);
-		i.putExtra("idTienda", idTienda);
-        startActivity(i);
+		if (Entrada){
+			Intent i = new Intent(this, VentaPromedio.class);
+			i.putExtra("idPromotor", idPromotor);
+			i.putExtra("idTienda", idTienda);
+			startActivity(i);
+		}else {
+			Toast.makeText(this, "No has registrado Entrada", Toast.LENGTH_SHORT).show();
+		}
+
 
     }
 

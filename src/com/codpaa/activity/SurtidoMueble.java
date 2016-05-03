@@ -15,6 +15,10 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,10 +28,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -44,12 +46,12 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 	Spinner spiMar, spiPro;
 	EditText cantidad;
 	TextInputLayout cantidadLayout;
-	TextView usuario,tienda;
+    Toolbar toolbar;
 	InputMethodManager im;
 	SQLiteDatabase base;
 	RadioGroup radio;
 	RadioButton si,no,selec;
-	Button guardar;
+    CardView cardView;
 	ArrayList<MarcaModel> array = new ArrayList<>();
 	int idTienda, idPromotor;
 	Locale locale;
@@ -67,18 +69,21 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		spiMar = (Spinner) findViewById(R.id.spiSurM);
 		spiPro = (Spinner) findViewById(R.id.spiSurP);
 		cantidad = (EditText) findViewById(R.id.editSur);
-		guardar = (Button) findViewById(R.id.btnGurSur);
+
+        cardView = (CardView) findViewById(R.id.card_view);
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
 		
-		usuario = (TextView) findViewById(R.id.textSuser);
-		tienda = (TextView) findViewById(R.id.textSurT);
+
 		radio = (RadioGroup) findViewById(R.id.radioGroup1);
 		si = (RadioButton) radio.findViewById(R.id.radio0);
 		no = (RadioButton) radio.findViewById(R.id.radio1);
 
 		cantidadLayout = (TextInputLayout) findViewById(R.id.txt_input_cantidad);
 		
-		guardar.setOnClickListener(this);
+
 
 
 		spiMar.setOnItemSelectedListener(this);
@@ -89,49 +94,46 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		
 		radio.setOnCheckedChangeListener(this);
 		no.setChecked(true);
-		
-		
-		
-		try {
-			
-			Cursor cNomUser = new BDopenHelper(this).nombrePromotor(idPromotor);
-			cNomUser.moveToFirst();
-			usuario.setText(cNomUser.getString(0));
-			try {
-				Cursor cTienda = new BDopenHelper(this).tienda(idTienda);
-				cTienda.moveToFirst();
-				tienda.setText(cTienda.getString(0)+" "+cTienda.getString(1));
-				
-				try {
 
-					
-					loadSpinner();
-					
-					
-				}catch(Exception e) {
-					Toast.makeText(this, "Error Surtido 3", Toast.LENGTH_SHORT).show();
-				}
-				
-			}catch(Exception e) {
-				Toast.makeText(this, "Error surtido 2", Toast.LENGTH_SHORT).show();
-			}
-			
-			
-		}catch(Exception e) {
-			Toast.makeText(this, "Error surtido 1", Toast.LENGTH_SHORT).show();
-			
-		}
+
+        ActionBar actionBar;
+        if (toolbar != null){
+            setSupportActionBar(toolbar);
+             actionBar = getSupportActionBar();
+            if (actionBar != null){
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayUseLogoEnabled(true);
+                actionBar.setHomeButtonEnabled(true);
+
+                Cursor cNomUser = new BDopenHelper(this).nombrePromotor(idPromotor);
+                cNomUser.moveToFirst();
+
+                actionBar.setSubtitle(cNomUser.getString(0));
+
+
+                Cursor cTienda = new BDopenHelper(this).tienda(idTienda);
+                cTienda.moveToFirst();
+
+                actionBar.setTitle(cTienda.getString(0) + " " + cTienda.getString(1) );
+            }
+        }
+
+
+
+        try {
+
+
+            loadSpinner();
+
+
+        }catch(Exception e) {
+            Toast.makeText(this, "Error Surtido 3", Toast.LENGTH_SHORT).show();
+        }
+
 
 		locale = new Locale("es_MX");
 
-		ActionBar actionBar = getSupportActionBar();
-		if (actionBar != null){
-			actionBar.setDisplayHomeAsUpEnabled(true);
-			actionBar.setDisplayUseLogoEnabled(true);
-			actionBar.setHomeButtonEnabled(true);
 
-
-		}
 		
 	}
 
@@ -144,15 +146,23 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
             case android.R.id.home:
                 this.finish();
                 return true;
-
+            case R.id.save_venta:
+                guardar();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-	
-	
 
-	@Override
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_venta_promedio, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
 	public void onItemSelected(AdapterView<?> adapter, View v, int id,long arg3) {
 
 		MarcaModel spM = (MarcaModel) spiMar.getSelectedItem();
@@ -170,15 +180,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 	
 	@Override
 	public void onClick(View v) {
-		
-		switch(v.getId()) {
-		
-		case R.id.btnGurSur: guardar();
 
-			break;
-		
-		}
-		
 		
 	}
 
@@ -189,16 +191,20 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		
 		switch(group.getCheckedRadioButtonId()) {
 		
-		case R.id.radio0: //cantidad.setVisibility(View.VISIBLE);
-                            cantidadLayout.setVisibility(View.VISIBLE);
-						  cantidad.requestFocus();
-						  im.showSoftInput(cantidad, 0);
-		
-						  break;
-		case R.id.radio1: //cantidad.setVisibility(View.INVISIBLE);
-                            cantidadLayout.setVisibility(View.INVISIBLE);
-						  im.hideSoftInputFromWindow(cantidad.getWindowToken(), 0);
-					      break;
+            case R.id.radio0:
+                //cantidad.setVisibility(View.VISIBLE);
+                cantidadLayout.setVisibility(View.VISIBLE);
+                cantidad.requestFocus();
+                im.showSoftInput(cantidad, 0);
+                cardView.setVisibility(View.VISIBLE);
+                break;
+            case R.id.radio1:
+                //cantidad.setVisibility(View.INVISIBLE);
+                cantidadLayout.setVisibility(View.INVISIBLE);
+                im.hideSoftInputFromWindow(cantidad.getWindowToken(), 0);
+
+                cardView.setVisibility(View.INVISIBLE);
+                break;
 		}
 		
 	}
