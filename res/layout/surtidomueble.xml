@@ -38,10 +38,12 @@
                 android:id="@+id/spiSurM"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:theme="@style/MiTema"
                 android:layout_marginTop="10dp"/>
 
             <Spinner
                 android:id="@+id/spiSurP"
+                android:theme="@style/MiTema"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp" />
@@ -53,7 +55,8 @@
                 android:baselineAligned="false"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp">
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="24dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -80,6 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:theme="@style/MiTema"
                         android:orientation="horizontal" >
 
                         <RadioButton
@@ -131,6 +135,14 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/txt_surtido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/resurtido_linea_caja"
+                android:textColor="@color/primary_text_color"
+                android:padding="10dp"/>
+
             <android.support.v7.widget.CardView
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
@@ -152,70 +164,26 @@
                         android:weightSum="2">
 
                         <EditText
+                            android:id="@+id/unifila"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:hint="Unifila"
-                            android:lines="1"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1" />
 
                         <EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:hint="Caja 6"
-                            android:layout_weight="1"
-                            android:lines="1"
-                            android:inputType="number"/>
 
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="2">
-
-                        <EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="Caja 1"
-                            android:lines="1"
-                            android:inputType="number"/>
-
-                        <EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:hint="Caja 7"
-                            android:layout_weight="1"
-                            android:lines="1"
-                            android:inputType="number"/>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:weightSum="2">
-
-                        <EditText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="Caja 2"
-                            android:lines="1"
-                            android:inputType="number"/>
-
-                        <EditText
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="Caja 8"
                             android:layout_weight="1"
                             android:lines="1"
-                            android:inputType="number"/>
+                            android:visibility="invisible"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
 
 
                     </LinearLayout>
@@ -227,20 +195,57 @@
                         android:weightSum="2">
 
                         <EditText
+                            android:id="@+id/caja1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:hint="Caja 3"
+                            android:hint="Caja 1"
                             android:lines="1"
-                            android:inputType="number"/>
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
 
                         <EditText
+                            android:id="@+id/caja8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Caja 8"
+                            android:layout_weight="1"
+                            android:lines="1"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:id="@+id/caja2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Caja 2"
+                            android:lines="1"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
+
+                        <EditText
+                            android:id="@+id/caja9"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="Caja 9"
                             android:layout_weight="1"
                             android:lines="1"
-                            android:inputType="number"/>
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
 
 
                     </LinearLayout>
@@ -252,20 +257,26 @@
                         android:weightSum="2">
 
                         <EditText
+                            android:id="@+id/caja3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:hint="Caja 4"
+                            android:hint="Caja 3"
                             android:lines="1"
-                            android:inputType="number"/>
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
 
                         <EditText
+                            android:id="@+id/caja10"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="Caja 10"
                             android:layout_weight="1"
                             android:lines="1"
-                            android:inputType="number"/>
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
 
 
                     </LinearLayout>
@@ -277,20 +288,26 @@
                         android:weightSum="2">
 
                         <EditText
+                            android:id="@+id/caja4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:hint="Caja 5"
+                            android:hint="Caja 4"
                             android:lines="1"
-                            android:inputType="number"/>
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
 
                         <EditText
+                            android:id="@+id/caja11"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="Caja 11"
                             android:layout_weight="1"
                             android:lines="1"
-                            android:inputType="number"/>
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
 
 
                     </LinearLayout>
@@ -302,20 +319,88 @@
                         android:weightSum="2">
 
                         <EditText
+                            android:id="@+id/caja5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:hint="Caja 5"
                             android:lines="1"
-                            android:inputType="number"/>
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
 
                         <EditText
+                            android:id="@+id/caja12"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="Caja 11"
+                            android:hint="Caja 12"
                             android:layout_weight="1"
                             android:lines="1"
-                            android:inputType="number"/>
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:id="@+id/caja6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Caja 6"
+                            android:lines="1"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
+
+                        <EditText
+                            android:id="@+id/caja13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Caja 13"
+                            android:layout_weight="1"
+                            android:lines="1"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:id="@+id/caja7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Caja 7"
+                            android:lines="1"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
+
+                        <EditText
+                            android:id="@+id/caja14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="Caja 14"
+                            android:layout_weight="1"
+                            android:lines="1"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:maxLines="1"/>
 
 
                     </LinearLayout>

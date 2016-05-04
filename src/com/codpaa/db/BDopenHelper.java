@@ -88,7 +88,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "idMarca int, cb varchar(45), img varchar(250))";
         surtido = "create table if not exists " +
                 "surtido(idTienda int, idPromotor int,surtido char(2), fecha char(25), " +
-                "idProducto int, cajas int)";
+                "idProducto int, cajas int, unifila int, caja1 int, caja2 int, caja3 int," +
+                "caja4 int, caja5 int, caja6 int, caja7 int, caja8 int, caja9 int, caja10 int," +
+                "caja11 int, caja12 int, caja13 int, caja14 int)";
         tipoExhibicion = "create table if not exists " +
                 "tipoexhibicion(idExhibicion int primary key, nombre char(30))";
         ruta = "create table if not exists " +
@@ -193,10 +195,16 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL(ruta);
 
             db.execSQL(ventaPromedio);
+
+            db.execSQL("drop table if exists surtido");
+            db.execSQL(surtido);
         }
 
         if (newVersion == 22 && oldVersion == 21){
             db.execSQL(ventaPromedio);
+
+            db.execSQL("drop table if exists surtido");
+            db.execSQL(surtido);
         }
 
 
@@ -486,10 +494,18 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
-    public void insertarSurtido(int idTien,int idPromo,String surtido,String fecha, int idProd, int cajas)throws SQLiteException {
+    public void insertarSurtido(int idTien,int idPromo,String surtido,String fecha, int idProd, int cajas,
+                                int unifila, int caja1, int caja2, int caja3, int caja4,
+                                int caja5, int caja6, int caja7, int caja8, int caja9, int caja10,
+                                int caja11, int caja12, int caja13, int caja14)throws SQLiteException {
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert or replace into surtido(idTienda,idPromotor,surtido,fecha,idProducto,cajas) values ("+idTien+","+idPromo+",'"+surtido+"','"+fecha+"',"+idProd+","+cajas+")");
+            baseDatosLocal.execSQL("insert or replace into surtido(idTienda," +
+                    "idPromotor,surtido,fecha,idProducto,cajas,unifila,caja1,caja2,caja3,caja4,caja5," +
+                    "caja6,caja7,caja8,caja9,caja10,caja11,caja12,caja13,caja14) values " +
+                    "("+idTien+","+idPromo+",'"+surtido+"','"+fecha+"',"+idProd+","+cajas+","+unifila+"," +
+                    caja1+","+caja2+","+caja3+","+caja4+","+caja5+","+caja6+","+caja7+","+caja8+","+caja9+"," +
+                    ""+caja10+","+caja11+","+caja12+","+caja13+","+caja14+")");
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
@@ -631,7 +647,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     public Cursor Surtido() throws SQLiteException {
         baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select idTienda, idPromotor,surtido,fecha,idProducto,cajas from surtido",null);
+        return baseDatosLocal.rawQuery("select idTienda, idPromotor,surtido,fecha,idProducto,cajas," +
+                "unifila,caja1,caja2,caja3,caja4,caja5,caja6,caja7,caja8,caja9,caja10,caja11,caja12,caja13,caja14 " +
+                " from surtido",null);
 
     }
     public Cursor SurtidoCantidad(int idTien, String fecha) throws SQLiteException{

@@ -30,6 +30,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -45,7 +46,9 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 	
 	Spinner spiMar, spiPro;
 	EditText cantidad;
+    EditText unifila, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14;
 	TextInputLayout cantidadLayout;
+	TextView txtCantidad;
     Toolbar toolbar;
 	InputMethodManager im;
 	SQLiteDatabase base;
@@ -70,7 +73,27 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		spiPro = (Spinner) findViewById(R.id.spiSurP);
 		cantidad = (EditText) findViewById(R.id.editSur);
 
+		txtCantidad = (TextView) findViewById(R.id.txt_surtido);
+
         cardView = (CardView) findViewById(R.id.card_view);
+
+        //Linea de Cajas
+        unifila = (EditText) findViewById(R.id.unifila);
+        c1 = (EditText) findViewById(R.id.caja1);
+        c2 = (EditText) findViewById(R.id.caja2);
+        c3 = (EditText) findViewById(R.id.caja3);
+        c4 = (EditText) findViewById(R.id.caja4);
+        c5 = (EditText) findViewById(R.id.caja5);
+        c6 = (EditText) findViewById(R.id.caja6);
+        c7 = (EditText) findViewById(R.id.caja7);
+        c8 = (EditText) findViewById(R.id.caja8);
+        c9 = (EditText) findViewById(R.id.caja9);
+        c10 = (EditText) findViewById(R.id.caja10);
+        c11 = (EditText) findViewById(R.id.caja11);
+        c12 = (EditText) findViewById(R.id.caja12);
+        c13 = (EditText) findViewById(R.id.caja13);
+        c14 = (EditText) findViewById(R.id.caja14);
+
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -197,6 +220,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
                 cantidad.requestFocus();
                 im.showSoftInput(cantidad, 0);
                 cardView.setVisibility(View.VISIBLE);
+				txtCantidad.setVisibility(View.VISIBLE);
                 break;
             case R.id.radio1:
                 //cantidad.setVisibility(View.INVISIBLE);
@@ -204,6 +228,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
                 im.hideSoftInputFromWindow(cantidad.getWindowToken(), 0);
 
                 cardView.setVisibility(View.INVISIBLE);
+				txtCantidad.setVisibility(View.INVISIBLE);
                 break;
 		}
 		
@@ -213,6 +238,12 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		try {
 			
 			int cajas = 0;
+            int uni=0, v1=0, v2=0, v3=0, v4=0, v5=0, v6=0, v7=0, v8=0, v9=0, v10=0, v11=0, v12=0,v13=0,v14=0;
+
+
+
+
+
 			Calendar c = Calendar.getInstance();
 			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
 			String fecha = dFecha.format(c.getTime());
@@ -231,13 +262,33 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 					if(cantidad.isShown() && cantidad.getText().length() >0) {
 						cajas = Integer.parseInt(cantidad.getText().toString());
 						
-					} 
+					}
+
+                    if (unifila.isShown()){
+                        uni = unifila.getText().length() > 0 ? Integer.parseInt(unifila.getText().toString()) : 0;
+                        v1 = c1.getText().length() > 0 ? Integer.parseInt(c1.getText().toString()) : 0;
+                        v2 = c2.getText().length() > 0 ? Integer.parseInt(c2.getText().toString()) : 0;
+                        v3 = c3.getText().length() > 0 ? Integer.parseInt(c3.getText().toString()) : 0;
+                        v4 = c4.getText().length() > 0 ? Integer.parseInt(c4.getText().toString()) : 0;
+                        v5 = c5.getText().length() > 0 ? Integer.parseInt(c5.getText().toString()) : 0;
+                        v6 = c6.getText().length() > 0 ? Integer.parseInt(c6.getText().toString()) : 0;
+                        v7 = c7.getText().length() > 0 ? Integer.parseInt(c7.getText().toString()) : 0;
+                        v8 = c8.getText().length() > 0 ? Integer.parseInt(c8.getText().toString()) : 0;
+                        v9 = c9.getText().length() > 0 ? Integer.parseInt(c9.getText().toString()) : 0;
+                        v10 = c10.getText().length() > 0 ? Integer.parseInt(c10.getText().toString()) : 0;
+                        v11 = c11.getText().length() > 0 ? Integer.parseInt(c11.getText().toString()) : 0;
+                        v12 = c12.getText().length() > 0 ? Integer.parseInt(c12.getText().toString()) : 0;
+                        v13 = c13.getText().length() > 0 ? Integer.parseInt(c12.getText().toString()) : 0;
+                        v14 = c14.getText().length() > 0 ? Integer.parseInt(c14.getText().toString()) : 0;
+                    }
 					
 					try {
 						Toast.makeText(this, "Surtido guardado de:\n "+spP.getNombre(), Toast.LENGTH_SHORT).show();
-						new BDopenHelper(this).insertarSurtido(idTienda, idPromotor, selec.getText().toString(), fecha, idProdu, cajas);
+						new BDopenHelper(this).insertarSurtido(idTienda, idPromotor, selec.getText().toString(),
+                                fecha, idProdu, cajas,uni,v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13,v14);
 						im.hideSoftInputFromWindow(cantidad.getWindowToken(), 0);
-						cantidad.setText("");
+
+                        resetCamps();
 						new EnviarDatos(this).enviarSurtido();
 					}catch(Exception e) {
 						Toast.makeText(this, "No se guardo, error", Toast.LENGTH_SHORT).show();
@@ -258,8 +309,33 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		}
 		
 	}
-	
-	private void loadSpinner(){
+
+    private void resetCamps() {
+
+        cantidad.setText("");
+        unifila.setText("");
+        c1.setText("");
+        c2.setText("");
+        c3.setText("");
+        c4.setText("");
+        c5.setText("");
+        c6.setText("");
+        c7.setText("");
+        c8.setText("");
+        c9.setText("");
+        c10.setText("");
+        c11.setText("");
+        c12.setText("");
+        c13.setText("");
+        c14.setText("");
+
+        spiPro.setSelection(0);
+
+
+
+    }
+
+    private void loadSpinner(){
 		try {
 			
 			

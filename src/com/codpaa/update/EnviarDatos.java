@@ -327,11 +327,32 @@ public class EnviarDatos {
 					rp.put("fecha", curSurtido.getString(3));
 					rp.put("idProducto", Integer.toString(curSurtido.getInt(4)));
 					rp.put("cajas",Integer.toString(curSurtido.getInt(5)));
+
+                    rp.put("unifila", Integer.toString(curSurtido.getInt(6)));
+                    rp.put("c1", Integer.toString(curSurtido.getInt(7)));
+                    rp.put("c2",Integer.toString(curSurtido.getInt(8)));
+                    rp.put("c3",Integer.toString(curSurtido.getInt(9)));
+
+                    rp.put("c4",Integer.toString(curSurtido.getInt(10)));
+                    rp.put("c5",Integer.toString(curSurtido.getInt(11)));
+                    rp.put("c6",Integer.toString(curSurtido.getInt(12)));
+                    rp.put("c7",Integer.toString(curSurtido.getInt(13)));
+
+                    rp.put("c8",Integer.toString(curSurtido.getInt(14)));
+                    rp.put("c9",Integer.toString(curSurtido.getInt(15)));
+                    rp.put("c10",Integer.toString(curSurtido.getInt(16)));
+                    rp.put("c11", Integer.toString(curSurtido.getInt(17)));
+
+                    rp.put("c12", Integer.toString(curSurtido.getInt(18)));
+                    rp.put("c13", Integer.toString(curSurtido.getInt(19)));
+                    rp.put("c14", Integer.toString(curSurtido.getInt(20)));
+
+
 					
 					
 					
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"surti.php", rp, respuesta);
-					base.execSQL("delete from surtido where idTienda="+curSurtido.getInt(0)+" and fecha='"+curSurtido.getString(3)+"' ;");
+					base.execSQL("delete from surtido where idTienda="+curSurtido.getInt(0)+" and fecha='"+curSurtido.getString(3)+"' and idProducto="+curSurtido.getInt(4)+";");
 					
 					
 					
