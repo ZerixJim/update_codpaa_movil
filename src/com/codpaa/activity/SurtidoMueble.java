@@ -278,7 +278,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
                         v10 = c10.getText().length() > 0 ? Integer.parseInt(c10.getText().toString()) : 0;
                         v11 = c11.getText().length() > 0 ? Integer.parseInt(c11.getText().toString()) : 0;
                         v12 = c12.getText().length() > 0 ? Integer.parseInt(c12.getText().toString()) : 0;
-                        v13 = c13.getText().length() > 0 ? Integer.parseInt(c12.getText().toString()) : 0;
+                        v13 = c13.getText().length() > 0 ? Integer.parseInt(c13.getText().toString()) : 0;
                         v14 = c14.getText().length() > 0 ? Integer.parseInt(c14.getText().toString()) : 0;
                     }
 					

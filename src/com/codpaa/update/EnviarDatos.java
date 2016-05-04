@@ -350,9 +350,9 @@ public class EnviarDatos {
 
 					
 					
-					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"surti.php", rp, respuesta);
-					base.execSQL("delete from surtido where idTienda="+curSurtido.getInt(0)+" and fecha='"+curSurtido.getString(3)+"' and idProducto="+curSurtido.getInt(4)+";");
+					HttpResponseSurtido http = new HttpResponseSurtido(activity, curSurtido.getInt(0),curSurtido.getString(3),curSurtido.getInt(4));
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"surti.php", rp, http);
+					//base.execSQL();
 					
 					
 					
@@ -366,6 +366,45 @@ public class EnviarDatos {
 			e.printStackTrace();
 		}
 	}
+
+
+
+    private class HttpResponseSurtido extends JsonHttpResponseHandler{
+
+        private int idTienda, idProducto;
+        private String fecha;
+        private Context context;
+        private SQLiteDatabase db;
+
+        public HttpResponseSurtido(Context context, int idTienda, String fecha, int idProducto){
+            this.context = context;
+            this.fecha = fecha;
+            this.idProducto = idProducto;
+            this.idTienda = idTienda;
+
+        }
+
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+            if (response != null){
+                try {
+                    if (response.getBoolean("insert")){
+                        db = new BDopenHelper(context).getWritableDatabase();
+                        db.execSQL("delete from surtido where idTienda="+idTienda+" and fecha='"+fecha+"' and idProducto="+idProducto+";");
+                        Log.d("ResponseSurtido", "eliminado");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            super.onFailure(statusCode, headers, throwable, errorResponse);
+        }
+    }
 	
 	public void enviarInventario() {
 		try {

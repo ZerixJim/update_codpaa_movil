@@ -1,6 +1,7 @@
 package com.codpaa.service;
 
 import com.codpaa.R;
+import com.codpaa.response.ResponseHttpSurtido;
 import com.codpaa.util.Configuracion;
 import com.codpaa.util.Utilities;
 import com.loopj.android.http.*;
@@ -428,7 +429,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 					enviarVisitas();
                     verifyVersionSent();
 					enviarFrentes();
-					enviarSurtido();
+					//enviarSurtido();
 					enviarInteli();
 					enviarInventario();
 					enviarExibiciones();
@@ -688,14 +689,11 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rp.put("c12", Integer.toString(curSurtido.getInt(18)));
 					rp.put("c13", Integer.toString(curSurtido.getInt(19)));
 					rp.put("c14", Integer.toString(curSurtido.getInt(20)));
-					
-					
-					
+
+
+					//ResponseHttpSurtido response = new ResponseHttpSurtido()
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"surti.php", rp, respuesta);
-					base.execSQL("delete from surtido where idTienda="+
-							curSurtido.getInt(0)+" and fecha='"+
-							curSurtido.getString(3)+"' and idProducto="+
-							curSurtido.getInt(4)+" ;");
+
 					
 					
 					
