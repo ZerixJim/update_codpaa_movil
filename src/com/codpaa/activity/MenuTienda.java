@@ -36,6 +36,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -229,7 +231,18 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		
 	}
 
-	@Override
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+
+        inflater.inflate(R.menu.menu_tienda, menu);
+
+
+        return true;
+    }
+
+    @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()){
 			case android.R.id.home:
@@ -241,14 +254,31 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 				}
 
 				return true;
+
+            case R.id.direccion:
+
+                saveAddress();
+
+                return true;
 			default:
 				return super.onOptionsItemSelected(item);
 
 		}
 
 	}
-	
-	public void entradaTienda() {
+
+    private void saveAddress() {
+
+        Intent i = new Intent(this, AddressActivity.class);
+        i.putExtra("idTienda", idTienda);
+        i.putExtra("idPromotor", idPromotor);
+
+        startActivity(i);
+
+    }
+
+
+    public void entradaTienda() {
 		
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);

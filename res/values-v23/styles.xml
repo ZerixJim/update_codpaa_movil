@@ -12,7 +12,7 @@
         <item name="colorPrimaryDark">@color/blue_primary_dark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@color/Blanco</item>
-        <item name="android:textColor">@color/negroFondo</item>
+        <item name="android:textColor">@color/primary_text_color</item>
         <item name="android:editTextStyle">@style/editText</item>
 
         <item name="android:datePickerDialogTheme">@style/Dialog.Theme</item>
@@ -53,9 +53,6 @@
         <item name="android:textColor">@color/primary_text_color</item>
         <item name="android:textColorPrimary">@color/primary_text_color</item>
         <item name="android:textColorSecondary">@color/secondary_white</item>
-
-        <item name="colorControlNormal">@color/text_primary</item>
-        <item name="android:colorControlNormal">@color/text_primary</item>
 
         <item name="android:colorButtonNormal">@color/blue_primary_dark</item>
         <item name="colorButtonNormal">@color/blue_primary_dark</item>

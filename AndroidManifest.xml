@@ -161,6 +161,11 @@
             android:name=".activity.ListaMensajesActivity"
             android:label="@string/title_activity_messagin" />
 
+        <activity
+            android:name=".activity.AddressActivity"
+            android:label="@string/address"
+            android:theme="@style/noActionBar"/>
+
 
         <service android:name=".service.GeoLocalizar" />
 
