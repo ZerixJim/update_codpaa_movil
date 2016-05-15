@@ -46,6 +46,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String respuestaTipo;
     private static String mensaje;
     private static String ventaPromedio;
+    private static String direcciones;
 
 
     public BDopenHelper(Context miContext) {
@@ -72,7 +73,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "puesto char(20), fecha char(15))";
         frentesCharola = "create table if not exists " +
                 "frentesCharola(idTienda int, idPromotor int,fecha char(10),idMarca int, " +
-                "idProducto int, cha1 int,cha2 int, cha3 int, cha4 int,cha5 int, cha6 int,status int)";
+                "idProducto int, cha1 int,cha2 int, cha3 int, cha4 int,cha5 int, cha6 int,status int," +
+                "unifila int, caja1 int, caja2 int, caja3 int," +
+                "caja4 int, caja5 int, caja6 int, caja7 int, caja8 int, caja9 int, caja10 int," +
+                "caja11 int, caja12 int, caja13 int, caja14 int)";
         exhibiciones = "create table if not exists " +
                 "exhibiciones(idTienda int, idPromotor int, idExhibicion int, fecha char(15), " +
                 "idProducto int, cantidad decimal (10,2), status int)";
@@ -144,6 +148,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "ventaPromedio(idMarca int NOT NULL, tipo varchar(10) NOT NULL, cantidad float NOT NULL," +
                 "fecha_inicio varchar(15),fecha_fin varchar(15), idTienda int NOT NULL, " +
                 "idPromotor int NOT NULL, estatus integer default 1)";
+
+        direcciones = "create table if not exists " +
+                "direcciones(idTienda int NOT NULL, idPromotor int NOT NULL, direccion varchar(200) NOT NULL," +
+                " estatus integer default 1)";
     }
 
     @Override
@@ -177,6 +185,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(respuestaTipo);
         db.execSQL(mensaje);
         db.execSQL(ventaPromedio);
+        db.execSQL(direcciones);
     }
 
     @Override
