@@ -640,6 +640,21 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rp.put("cha4", Integer.toString(curFrentes.getInt(8)));
 					rp.put("cha5", Integer.toString(curFrentes.getInt(9)));
 					rp.put("cha6", Integer.toString(curFrentes.getInt(10)));
+					rp.put("unifila", Integer.toString(curFrentes.getInt(11)));
+					rp.put("f1", Integer.toString(curFrentes.getInt(12)));
+					rp.put("f2", Integer.toString(curFrentes.getInt(13)));
+					rp.put("f3", Integer.toString(curFrentes.getInt(14)));
+					rp.put("f4", Integer.toString(curFrentes.getInt(15)));
+					rp.put("f5", Integer.toString(curFrentes.getInt(16)));
+					rp.put("f6", Integer.toString(curFrentes.getInt(17)));
+					rp.put("f7", Integer.toString(curFrentes.getInt(18)));
+					rp.put("f8", Integer.toString(curFrentes.getInt(19)));
+					rp.put("f9", Integer.toString(curFrentes.getInt(20)));
+					rp.put("f10", Integer.toString(curFrentes.getInt(21)));
+					rp.put("f11", Integer.toString(curFrentes.getInt(22)));
+					rp.put("f12", Integer.toString(curFrentes.getInt(23)));
+					rp.put("f13", Integer.toString(curFrentes.getInt(24)));
+					rp.put("f14", Integer.toString(curFrentes.getInt(25)));
 
 
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendfrentesnew.php", rp, respuestaFrentes);

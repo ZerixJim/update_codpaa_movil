@@ -28,15 +28,18 @@
 
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_calle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp">
 
             <EditText
+                android:id="@+id/edit_calle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:maxLength="200"
                 android:inputType="text"
                 android:hint="Calle"
                 android:singleLine="true"/>
@@ -62,12 +65,14 @@
 
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_numero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp">
 
             <EditText
+                android:id="@+id/edit_numero"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -97,16 +102,19 @@
 
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_colonia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp">
 
             <EditText
+                android:id="@+id/edit_colonia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="text"
+                android:maxLength="50"
                 android:hint="Colonia"
                 android:singleLine="true"/>
 
@@ -133,16 +141,19 @@
 
 
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/text_input_codigo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginStart="32dp">
 
             <EditText
+                android:id="@+id/edit_codigo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text"
+                android:inputType="number"
+                android:maxLength="8"
                 android:hint="C.Postal"
                 android:singleLine="true"/>
 

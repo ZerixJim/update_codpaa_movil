@@ -16,7 +16,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
-    private static final int version = 22;
+    private static final int version = 23;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -74,9 +74,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
         frentesCharola = "create table if not exists " +
                 "frentesCharola(idTienda int, idPromotor int,fecha char(10),idMarca int, " +
                 "idProducto int, cha1 int,cha2 int, cha3 int, cha4 int,cha5 int, cha6 int,status int," +
-                "unifila int, caja1 int, caja2 int, caja3 int," +
-                "caja4 int, caja5 int, caja6 int, caja7 int, caja8 int, caja9 int, caja10 int," +
-                "caja11 int, caja12 int, caja13 int, caja14 int)";
+                "unifila int(2), fila1 int(2), fila2 int(2), fila3 int(2)," +
+                "fila4 int(2), fila5 int(2), fila6 int(2), fila7 int(2), fila8 int(2), fila9 int(2), fila10 int(2)," +
+                "fila11 int(2), fila12 int(2), fila13 int(2), fila14 int(2))";
         exhibiciones = "create table if not exists " +
                 "exhibiciones(idTienda int, idPromotor int, idExhibicion int, fecha char(15), " +
                 "idProducto int, cantidad decimal (10,2), status int)";
@@ -214,6 +214,51 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
             db.execSQL("drop table if exists surtido");
             db.execSQL(surtido);
+        }
+
+        if (newVersion == 23 && oldVersion == 21){
+            db.execSQL(ventaPromedio);
+
+            db.execSQL("drop table if exists surtido");
+            db.execSQL(surtido);
+
+            db.execSQL("alter table frentesCharola add column unifila int(2)");
+            db.execSQL("alter table frentesCharola add column fila1 int(2)");
+            db.execSQL("alter table frentesCharola add column fila2 int(2)");
+            db.execSQL("alter table frentesCharola add column fila3 int(2)");
+            db.execSQL("alter table frentesCharola add column fila4 int(2)");
+            db.execSQL("alter table frentesCharola add column fila5 int(2)");
+            db.execSQL("alter table frentesCharola add column fila6 int(2)");
+            db.execSQL("alter table frentesCharola add column fila7 int(2)");
+            db.execSQL("alter table frentesCharola add column fila8 int(2)");
+            db.execSQL("alter table frentesCharola add column fila9 int(2)");
+            db.execSQL("alter table frentesCharola add column fila10 int(2)");
+            db.execSQL("alter table frentesCharola add column fila11 int(2)");
+            db.execSQL("alter table frentesCharola add column fila12 int(2)");
+            db.execSQL("alter table frentesCharola add column fila13 int(2)");
+            db.execSQL("alter table frentesCharola add column fila14 int(2)");
+
+            db.execSQL(direcciones);
+        }
+
+        if (newVersion == 23 && oldVersion == 22){
+            db.execSQL("alter table frentesCharola add column unifila int(2)");
+            db.execSQL("alter table frentesCharola add column fila1 int(2)");
+            db.execSQL("alter table frentesCharola add column fila2 int(2)");
+            db.execSQL("alter table frentesCharola add column fila3 int(2)");
+            db.execSQL("alter table frentesCharola add column fila4 int(2)");
+            db.execSQL("alter table frentesCharola add column fila5 int(2)");
+            db.execSQL("alter table frentesCharola add column fila6 int(2)");
+            db.execSQL("alter table frentesCharola add column fila7 int(2)");
+            db.execSQL("alter table frentesCharola add column fila8 int(2)");
+            db.execSQL("alter table frentesCharola add column fila9 int(2)");
+            db.execSQL("alter table frentesCharola add column fila10 int(2)");
+            db.execSQL("alter table frentesCharola add column fila11 int(2)");
+            db.execSQL("alter table frentesCharola add column fila12 int(2)");
+            db.execSQL("alter table frentesCharola add column fila13 int(2)");
+            db.execSQL("alter table frentesCharola add column fila14 int(2)");
+
+            db.execSQL(direcciones);
         }
 
 
@@ -449,10 +494,18 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
-    public void insertarFrentes(int idTien, int idPromo, String fecha, int idMarca, int idProdu, int ch1,int ch2,int ch3,int ch4,int ch5,int ch6, int status) throws SQLiteException {
+    public void insertarFrentes(int idTien, int idPromo, String fecha, int idMarca, int idProdu, int ch1,
+                                int ch2,int ch3,int ch4,int ch5,int ch6, int status, int unifila, int f1,
+                                int f2, int f3, int f4, int f5, int f6, int f7, int f8, int f9, int f10,
+                                int f11, int f12, int f13, int f14) throws SQLiteException {
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert or replace into frentesCharola(idTienda,idPromotor,fecha,idMarca,idProducto,cha1,cha2,cha3,cha4,cha5,cha6,status) values("+idTien+","+idPromo+",'"+fecha+"',"+idMarca+","+idProdu+","+ch1+","+ch2+","+ch3+","+ch4+","+ch5+","+ch6+","+status+")");
+            baseDatosLocal.execSQL("insert or replace into frentesCharola(idTienda,idPromotor,fecha," +
+                    "idMarca,idProducto,cha1,cha2,cha3,cha4,cha5,cha6,status,unifila,fila1,fila2,fila3,fila4," +
+                    "fila5,fila6,fila7,fila8,fila9,fila10,fila11,fila12,fila13,fila14) " +
+                    "values("+idTien+","+idPromo+",'"+fecha+"',"+idMarca+","+idProdu+","+ch1+","+ch2+"," +
+                    ""+ch3+","+ch4+","+ch5+","+ch6+","+status+","+unifila+","+f1+","+f2+","+f3+","+f4+","+f5+"," +
+                    ""+f6+","+f7+","+f8+","+f9+","+f10+","+f11+","+f12+","+f13+","+f14+")");
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
@@ -602,7 +655,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor datosFrentes() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,idMarca,idProducto,cha1,cha2,cha3,cha4,cha5,cha6 from frentesCharola where status=1", null);
+        return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,idMarca,idProducto,cha1,cha2," +
+                "cha3,cha4,cha5,cha6,unifila,fila1,fila2,fila3,fila4,fila5,fila6,fila7,fila8,fila9," +
+                "fila10,fila11,fila12,fila13,fila14 from frentesCharola where status=1", null);
 
     }
 
@@ -661,6 +716,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 " from surtido",null);
 
     }
+
+    public Cursor addresses() throws SQLiteException {
+        baseDatosLocal = getReadableDatabase();
+        return baseDatosLocal.rawQuery("select idTienda, idPromotor, direccion from direcciones where estatus=1", null);
+    }
+
     public Cursor SurtidoCantidad(int idTien, String fecha) throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
         return baseDatosLocal.rawQuery("select idTienda, idPromotor,surtido,fecha,idProducto,cajas from " +

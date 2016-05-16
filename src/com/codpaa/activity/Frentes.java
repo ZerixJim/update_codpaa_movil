@@ -39,7 +39,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 	
 	int idPromotor, idTienda;
 	Button btnGuar, btn1,btn2,btn3,btn4,btn5,btn6;
-	 
+    EditText unifila, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14;
 	EditText Echa1,Echa2,Echa3,Echa4,Echa5,Echa6;
 	InputMethodManager im;
 	BDopenHelper baseH;
@@ -101,9 +101,23 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		Echa4.setVisibility(View.INVISIBLE);
 		Echa5.setVisibility(View.INVISIBLE);
 		Echa6.setVisibility(View.INVISIBLE);
-		
-		
-		
+
+
+        unifila = (EditText) findViewById(R.id.unifila);
+        f1 = (EditText) findViewById(R.id.caja1);
+        f2 = (EditText) findViewById(R.id.caja2);
+        f3 = (EditText) findViewById(R.id.caja3);
+        f4 = (EditText) findViewById(R.id.caja4);
+        f5 = (EditText) findViewById(R.id.caja5);
+        f6 = (EditText) findViewById(R.id.caja6);
+        f7 = (EditText) findViewById(R.id.caja7);
+        f8 = (EditText) findViewById(R.id.caja8);
+        f9 = (EditText) findViewById(R.id.caja9);
+        f10 = (EditText) findViewById(R.id.caja10);
+        f11 = (EditText) findViewById(R.id.caja11);
+        f12 = (EditText) findViewById(R.id.caja12);
+        f13 = (EditText) findViewById(R.id.caja13);
+        f14 = (EditText) findViewById(R.id.caja14);
 		
 
 		btnGuar = (Button) findViewById(R.id.btonChFr);
@@ -229,7 +243,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 	
 	public void guardarDatos() {
-		int cha1 = 0,cha2 = 0, cha3 = 0, cha4 = 0, cha5 = 0, cha6 = 0; 
+		int cha1 = 0,cha2 = 0, cha3 = 0, cha4 = 0, cha5 = 0, cha6 = 0;
+        int uni=0, v1=0, v2=0, v3=0, v4=0, v5=0, v6=0, v7=0, v8=0, v9=0, v10=0, v11=0, v12=0,v13=0,v14=0;
 		
 		try {
 			
@@ -271,6 +286,25 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 				
 				String fecha = dFecha.format(c.getTime());
 
+
+                uni = unifila.getText().length() > 0 ? Integer.parseInt(unifila.getText().toString()) : 0;
+                v1 = f1.getText().length() > 0 ? Integer.parseInt(f1.getText().toString()) : 0;
+                v2 = f2.getText().length() > 0 ? Integer.parseInt(f2.getText().toString()) : 0;
+                v3 = f3.getText().length() > 0 ? Integer.parseInt(f3.getText().toString()) : 0;
+                v4 = f4.getText().length() > 0 ? Integer.parseInt(f4.getText().toString()) : 0;
+                v5 = f5.getText().length() > 0 ? Integer.parseInt(f5.getText().toString()) : 0;
+                v6 = f6.getText().length() > 0 ? Integer.parseInt(f6.getText().toString()) : 0;
+                v7 = f7.getText().length() > 0 ? Integer.parseInt(f7.getText().toString()) : 0;
+                v8 = f8.getText().length() > 0 ? Integer.parseInt(f8.getText().toString()) : 0;
+                v9 = f9.getText().length() > 0 ? Integer.parseInt(f9.getText().toString()) : 0;
+                v10 = f10.getText().length() > 0 ? Integer.parseInt(f10.getText().toString()) : 0;
+                v11 = f11.getText().length() > 0 ? Integer.parseInt(f11.getText().toString()) : 0;
+                v12 = f12.getText().length() > 0 ? Integer.parseInt(f12.getText().toString()) : 0;
+                v13 = f13.getText().length() > 0 ? Integer.parseInt(f13.getText().toString()) : 0;
+                v14 = f14.getText().length() > 0 ? Integer.parseInt(f14.getText().toString()) : 0;
+
+
+
 				
 				int idMarca = spm.getId();
 				int idProdu = spPm.getIdProducto();
@@ -279,14 +313,16 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 					if(idProdu != 0){
 						if(cha1 >= 0 || cha2 >= 0 || cha3 >= 0 || cha4 >= 0 || cha5 >= 0 || cha6 >= 0){
 							
-							new BDopenHelper(this).insertarFrentes(idTienda, idPromotor, fecha, idMarca, idProdu,cha1,cha2,cha3,cha4,cha5,cha6,1);
+							new BDopenHelper(this).insertarFrentes(idTienda, idPromotor,
+									fecha, idMarca, idProdu,cha1,cha2,cha3,cha4,cha5,cha6,1,uni,v1,v2,
+                                    v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13,v14);
 							int totalFrentes = cha1+cha2+cha3+cha4+cha5+cha6;
 							Toast.makeText(this,"("+totalFrentes+") Frentes Guardados de: \n  "+nombreP, Toast.LENGTH_SHORT).show();
 							//spiMarca.setSelection(0);
 							spiPro.setSelection(0);
 							
 							try {
-								
+								resetCamps();
 								new EnviarDatos(this).enviarFrentes();
 								
 								
@@ -341,6 +377,26 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		
 	}
 
+
+    private void resetCamps() {
+
+        unifila.setText("");
+        f1.setText("");
+        f2.setText("");
+        f3.setText("");
+        f4.setText("");
+        f5.setText("");
+        f6.setText("");
+        f7.setText("");
+        f8.setText("");
+        f9.setText("");
+        f10.setText("");
+        f11.setText("");
+        f12.setText("");
+        f13.setText("");
+        f14.setText("");
+
+    }
 
 
 	@Override
