@@ -346,7 +346,11 @@ public class EnviarDatos {
                     requestParams.put("idPromotor", Integer.toString(cursor.getInt(cursor.getColumnIndex("idPromotor"))));
                     requestParams.put("direccion", cursor.getString(cursor.getColumnIndex("direccion")));
 
-                    client.post(activity, Utilities.WEB_SERVICE_CODPAA + "sendAddress.php", requestParams, new HttpResponseAddress());
+                    HttpResponseAddress httpResponseAddress =
+                            new HttpResponseAddress(activity,cursor.getInt(cursor.getColumnIndex("idTienda")),
+                                    cursor.getInt(cursor.getColumnIndex("idPromotor")),cursor.getString(cursor.getColumnIndex("direccion")));
+
+                    client.post(activity, Utilities.WEB_SERVICE_CODPAA + "sendAddress.php", requestParams, httpResponseAddress );
 
                 }
             }
@@ -359,14 +363,31 @@ public class EnviarDatos {
 
     private class HttpResponseAddress extends JsonHttpResponseHandler{
 
+		Context context;
+		int idTienda, idPromotor;
+		String direcicon;
+		SQLiteDatabase db;
+
+
+		public HttpResponseAddress(Context context, int idTienda, int idPromotor, String direccion){
+			this.context = context;
+			this.idTienda = idTienda;
+			this.idPromotor = idPromotor;
+			this.direcicon = direccion;
+		}
+
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             if (response != null){
                 try {
                     if (response.getBoolean("insert")){
-                        Log.d("ResponseAddress", "insertado");
-                    } else {
-                        Log.d("ResponseAddress", "no insertado");
+
+						db = new BDopenHelper(context).getWritableDatabase();
+
+						db.execSQL("delete from direcciones where idTienda="+idTienda+" and idPromotor="+idPromotor+" and direccion='"+direcicon+"';");
+
+                        Toast.makeText(context, "Recibido", Toast.LENGTH_SHORT).show();
+                        db.close();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
