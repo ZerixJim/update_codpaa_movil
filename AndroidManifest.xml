@@ -110,6 +110,7 @@
         <activity
             android:name=".activity.Exhibiciones"
             android:label="@string/exhi"
+            android:theme="@style/noActionBarNoTitle"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.Inventario"
