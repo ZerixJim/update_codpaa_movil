@@ -15,6 +15,7 @@ import com.codpaa.R;
 import com.codpaa.update.UpdateInformation;
 import com.loopj.android.http.*;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -29,7 +30,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -279,7 +282,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 
     public void entradaTienda() {
-		
+
+        permiso();
+
 		Calendar c = Calendar.getInstance();
 		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
 		SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a",locale);
@@ -357,6 +362,20 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	
 				
 	}
+
+    private void permiso(){
+
+        final int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
+        int locationPermission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION);
+        if (locationPermission != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS);
+
+        }
+
+
+    }
 			
 		
 	

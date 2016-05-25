@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 
+import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.BroadcastReceiver;
@@ -32,6 +33,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -161,11 +164,16 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
 
+
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
             if (navigationView != null){
                 setupDrawerContent(navigationView);
+
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.GET_ACCOUNTS}, 126);
+                }
 
                 View view = navigationView.getHeaderView(0);
                 TextView nomPromo = (TextView) view.findViewById(R.id.user_name);
@@ -763,6 +771,10 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     }
 
 	public String getUserName(){
+
+
+
+
         Pattern emailPattern = Patterns.EMAIL_ADDRESS;
         Account[] acccounts = AccountManager.get(this).getAccounts();
 

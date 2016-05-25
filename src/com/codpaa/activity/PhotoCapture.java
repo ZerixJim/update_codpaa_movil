@@ -26,9 +26,12 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -42,8 +45,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -92,6 +98,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     Spinner spiMarca, spiExh;
     ArrayList<MarcaModel> array = new ArrayList<>();
  	SQLiteDatabase base;
+
+    int startCamera;
 
     RadioGroup radioChoice;
     RadioButton radioNormal, radioEvento;
@@ -202,7 +210,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private void dispatchTakePictureIntent(){
         //intention start camera
 
-
+        camaraPermission();
     	Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //if exists respost to camera
     	if(takePictureIntent.resolveActivity(getPackageManager()) != null){
@@ -216,7 +224,28 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	    		}
 
 			} catch (IOException e) {
-				
+				startCamera++;
+
+                if (startCamera >= 3){
+
+
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                    alertDialog.setTitle("Permisos").setMessage("Existen permisos no activados, es necesario" +
+                            " que esten activados para el buen funcionamiento de la aplicacion," +
+                            " ¿Abrir ventana de configuraciones de permisos?").setPositiveButton("Abrir",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                            Uri.fromParts("package", getPackageName(), null));
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                }
+                            }).setNegativeButton("Cancelar", null)
+                            .setCancelable(true).create().show();
+
+
+                }
 				e.printStackTrace();
 			}
 
@@ -241,6 +270,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		}else{
 			Log.v("PictireCir", "Directorio Ya Existe");
 		}
+
 
 		imageCaptured = File.createTempFile(imageFileName, ".jpg",storageDir);
 
@@ -462,17 +492,10 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
     //escucha cuando se selecciona un elemento en el spinner marca
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-
-
-
-    }
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {}
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
+    public void onNothingSelected(AdapterView<?> adapterView) {}
 
 
     //metod: listener response of image loaded
@@ -501,7 +524,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     //progressFoto.setVisibility(View.VISIBLE);
                     donutProgress.setVisibility(View.VISIBLE);
                     textoEnvio.setVisibility(View.VISIBLE);
-                    textoEnvio.setText("Enviando...");
+                    textoEnvio.setText(getString(R.string.sending));
                 }
             });
 
@@ -746,6 +769,13 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
     }
 
+    private void camaraPermission(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
+            }, 124);
+        }
+    }
 
 
 }

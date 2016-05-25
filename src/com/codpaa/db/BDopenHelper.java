@@ -8,8 +8,10 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.codpaa.provider.DbEstructure.Usuario;
+import com.codpaa.provider.DbEstructure.VisitaTienda;
+
 import java.io.File;
-import java.io.StringReader;
 
 
 public class BDopenHelper extends SQLiteOpenHelper {
@@ -58,16 +60,25 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
     private void fields(){
-        usuarios = "create table if not exists " +
-                "usuarios(idCelular int primary key, nombre varchar(100), " +
-                "user varchar(15), pass varchar(15) )";
+        usuarios = "create table if not exists " + Usuario.TABLE + "(" +
+                Usuario.ID_USER + " int primary key, " +
+                Usuario.NOMBRE +" varchar(100)," +
+                Usuario.USER + " varchar(15), " +
+                Usuario.PASS + " varchar(15))";
         tiendasVisitadas = "Create table if not exists " +
                 "tiendasVisitadas(idTienda int,nombre, idPromotor int,  fecha date, " +
-                "ingreso char (6), salida char(7))";
-        coordenadas = "create table if not exists " +
-                "coordenadas(idTienda int, idPromotor int, fecha char(20),hora char(10), " +
-                "latitud double, longitud double, precision int, " +
-                "tipo char(1), status int, semana int(3))";
+                "ingreso char(6), salida char(7))";
+        coordenadas = "create table if not exists " + VisitaTienda.TABLE + "(" +
+                VisitaTienda.ID_TIENDA + " int, " +
+                VisitaTienda.ID_PROMOTOR + " int, " +
+                VisitaTienda.FECHA + " char(20)," +
+                VisitaTienda.HORA + " char(10), " +
+                VisitaTienda.LATITUD + " double," +
+                VisitaTienda.LONGITUD + " double, " +
+                VisitaTienda.PRECISION + " int, " +
+                VisitaTienda.TIPO + " char(1), " +
+                VisitaTienda.ESTATUS + " int, " +
+                VisitaTienda.SEMANA + " int(3))";
         encargadoTienda = "create table if not exists " +
                 "encargadotienda(idTienda int, idPromotor int, nombre char (50), " +
                 "puesto char(20), fecha char(15))";

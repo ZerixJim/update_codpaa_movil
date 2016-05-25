@@ -8,13 +8,17 @@ import java.util.Locale;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -65,6 +69,9 @@ public class EnviarDatos {
 	
 	
 	private String getPhoneNumber(){
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(activity, new String[] {Manifest.permission.READ_PHONE_STATE}, 125);
+        }
 		TelephonyManager mTelephonyManager;
 		mTelephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE); 
 		return mTelephonyManager.getLine1Number();
@@ -93,7 +100,8 @@ public class EnviarDatos {
 					rpVisitas.put("numerocel", getPhoneNumber());
 
 
-					cliente.get(Utilities.WEB_SERVICE_CODPAA+"sendvisitasnew.php",rpVisitas, new HttpResponse(activity, curVisitas.getInt(0), curVisitas.getString(2), curVisitas.getString(6)));
+					cliente.get(Utilities.WEB_SERVICE_CODPAA+"sendvisitasnew.php",rpVisitas,
+							new HttpResponse(activity, curVisitas.getInt(0), curVisitas.getString(2), curVisitas.getString(6)));
 					
 				
 				}
