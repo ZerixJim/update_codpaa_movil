@@ -2,6 +2,7 @@ package com.codpaa.listener;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.codpaa.util.Configuracion;
@@ -38,7 +39,7 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
     @Override
     public void onStart() {
         super.onStart();
-
+        Log.d("ResponseMarcas","start");
         //Toast.makeText(_context.getApplicationContext(),"Descargando Marcas",Toast.LENGTH_SHORT).show();
 
     }
@@ -69,7 +70,7 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
     @Override
     public void onFinish() {
         super.onFinish();
-
+        Log.d("ResponseMarca","finish");
     }
 
     private void parseJSONMarca(JSONArray marcaArray) throws JSONException {

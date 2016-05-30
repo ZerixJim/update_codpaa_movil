@@ -44,7 +44,7 @@ public class ResponseRuta extends JsonHttpResponseHandler {
     public void onStart() {
         super.onStart();
        // pdia.show();
-
+        Log.d("ResponseRuta", "start");
         //Toast.makeText(_context.getApplicationContext(),"Descargando Ruta",Toast.LENGTH_SHORT).show();
 
     }
@@ -70,6 +70,8 @@ public class ResponseRuta extends JsonHttpResponseHandler {
     public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, e, errorResponse);
 
+        e.printStackTrace();
+
         Toast.makeText(_context.getApplicationContext(),"Error al descargar",Toast.LENGTH_SHORT).show();
         Log.d("RRuta","failure");
 
@@ -79,7 +81,7 @@ public class ResponseRuta extends JsonHttpResponseHandler {
     public void onFinish() {
         super.onFinish();
 
-        Log.d("RRuta","finish");
+        Log.d("ResponseRuta","finish");
     }
 
     private void parseJSONRuta(JSONArray rutasArray) throws JSONException {

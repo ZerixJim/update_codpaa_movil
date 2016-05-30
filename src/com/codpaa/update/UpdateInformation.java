@@ -14,6 +14,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 
 
+
 public class UpdateInformation{
 
 
@@ -30,12 +31,12 @@ public class UpdateInformation{
 
     public void actualizarRuta(int idPromotor){
 
+        
         AsyncHttpClient clientRuta = new AsyncHttpClient();
         ResponseRuta responseRuta = new ResponseRuta(_context);
         RequestParams rp = new RequestParams();
         rp.put("solicitud","rutas");
         rp.put("id",String.valueOf(idPromotor));
-
 
 
         clientRuta.setTimeout(5000);

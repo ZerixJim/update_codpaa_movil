@@ -2,6 +2,7 @@ package com.codpaa.listener;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.codpaa.util.Configuracion;
@@ -36,6 +37,7 @@ public class ResponseProductos extends JsonHttpResponseHandler{
     @Override
     public void onStart() {
         super.onStart();
+        Log.d("ResponseProductos","start");
         //Toast.makeText(_context.getApplicationContext(),"Descargando Productos", Toast.LENGTH_SHORT).show();
 
     }
@@ -65,7 +67,7 @@ public class ResponseProductos extends JsonHttpResponseHandler{
     @Override
     public void onFinish() {
         super.onFinish();
-
+        Log.d("ResponseProductos","finish");
     }
 
     private void parseJSONProductos(JSONArray productosArray) throws JSONException {

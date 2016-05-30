@@ -2,6 +2,7 @@ package com.codpaa.listener;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.codpaa.util.Configuracion;
@@ -39,7 +40,7 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
     public void onStart() {
         super.onStart();
         //pdia.show();
-
+        Log.d("ResponseExhibiciones", "start");
         //Toast.makeText(_context.getApplicationContext(),"Iniciando la descarga de Exhibiciones",Toast.LENGTH_SHORT).show();
     }
 
@@ -73,7 +74,7 @@ public class ResponseExhibiciones extends JsonHttpResponseHandler {
     @Override
     public void onFinish() {
         super.onFinish();
-
+        Log.d("ResponseExhibiciones", "finish");
         //pdia.dismiss();
     }
 

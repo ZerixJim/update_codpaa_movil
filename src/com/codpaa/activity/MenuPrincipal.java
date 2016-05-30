@@ -32,6 +32,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -74,6 +75,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     private static final String TAG = "MainActivity";
 	TextView nombreUsuario, conexion, bien, version, cartera;
 	Button btnTienda, btnRuta, btnEnviar, btnCajasM, btnMensaje;
+	private final int MY_PERMISSION_GET_ACCOUNDS = 126;
 
 	private DrawerLayout drawerLayout;
 
@@ -172,7 +174,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 setupDrawerContent(navigationView);
 
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.GET_ACCOUNTS}, 126);
+                    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.GET_ACCOUNTS},
+                            MY_PERMISSION_GET_ACCOUNDS);
                 }
 
                 View view = navigationView.getHeaderView(0);
@@ -265,6 +268,15 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 	}
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case MY_PERMISSION_GET_ACCOUNDS:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    // TODO: 26/05/2016 implementar cambios
+                }
+        }
+    }
 
     //metodo para registrar broadcast
     private void registerReceiver(){

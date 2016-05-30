@@ -40,7 +40,7 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
 
         //Toast.makeText(_context.getApplicationContext(),"Descargando Tiendas",Toast.LENGTH_SHORT).show();
 
-        Log.d("RTiendas","Start");
+        Log.d("ResponseTiendas","Start");
     }
 
 
@@ -70,7 +70,7 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
     @Override
     public void onFinish() {
         super.onFinish();
-
+        Log.d("ResponseTiendas", "finish");
 
     }
 
