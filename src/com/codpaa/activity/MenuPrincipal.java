@@ -167,6 +167,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
 
+
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
@@ -320,11 +321,13 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 					UpdateInformation upinfo = new UpdateInformation(this);
 					Toast.makeText(this,"Actualizando Informacion",Toast.LENGTH_SHORT).show();
-					upinfo.actualizarTiendas(idUsuario);
-					upinfo.actualizarRuta(idUsuario);
-					upinfo.actualizarExhibiciones(idUsuario);
-					upinfo.actualizarMarca(idUsuario);
-					upinfo.actualizarProducto(idUsuario);
+
+
+                    upinfo.actualizarTiendas(idUsuario);
+                    upinfo.actualizarRuta(idUsuario);
+                    upinfo.actualizarExhibiciones(idUsuario);
+                    upinfo.actualizarMarca(idUsuario);
+                    upinfo.actualizarProducto(idUsuario);
 
 				}else{
 

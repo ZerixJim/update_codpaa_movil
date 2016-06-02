@@ -261,8 +261,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(txtUserName.getWindowToken(), 0);
 		imm.hideSoftInputFromWindow(txtPassword.getWindowToken(), 0);
-		username = txtUserName.getText().toString().trim();
-		password = txtPassword.getText().toString().trim();
+		username = txtUserName.getText().toString().trim().toLowerCase();
+		password = txtPassword.getText().toString().trim().toLowerCase();
 		valido.setText("");
 
 		if (username.length() > 0 && password.length() > 0) {

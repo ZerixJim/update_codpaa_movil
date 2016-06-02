@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/escribeU"
+                android:singleLine="true"
                 android:inputType="text"
                 android:maxLength="10"
                 />
@@ -58,7 +59,7 @@
                 android:ems="10"
                 android:hint="@string/escribeP"
                 android:inputType="textPassword"
-                android:maxLines="2"
+                android:singleLine="true"
                 android:maxLength="15"/>
 
         </android.support.design.widget.TextInputLayout>
