@@ -125,10 +125,7 @@
             android:name=".activity.InteligenciaMercado"
             android:label="@string/inteligencia"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.Mayoreo"
-            android:label="@string/cajasmayoreo"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.PhotoCapture"
             android:label="@string/capIma"

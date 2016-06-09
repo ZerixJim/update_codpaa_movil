@@ -70,7 +70,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
-	Button btnRuta, btnEnviar, btnCajasM, btnMensaje;
+	Button btnRuta, btnEnviar, btnMensaje;
 	private final int MY_PERMISSION_GET_ACCOUNDS = 126;
 
 	private DrawerLayout drawerLayout;
@@ -104,7 +104,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 		btnRuta = (Button) findViewById(R.id.buttonRuta);
 		btnEnviar = (Button) findViewById(R.id.buttonEnviar);
-		btnCajasM = (Button) findViewById(R.id.btnGuCajasM);
         btnMensaje = (Button) findViewById(R.id.buttonMensaje);
 
 
@@ -113,8 +112,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 		btnRuta.setOnClickListener(this);
 		btnEnviar.setOnClickListener(this);
-	
-		btnCajasM.setOnClickListener(this);
+
 
         btnMensaje.setOnClickListener(this);
 
@@ -470,11 +468,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 Intent in = new Intent(this, EnviarInformacion.class);
                 startActivity(in);
 
-                break;
-            case R.id.btnGuCajasM:
-                Intent i = new Intent(this, Mayoreo.class);
-                i.putExtra("idCelular", idUsuario);
-                startActivity(i);
                 break;
 
             case R.id.buttonMensaje:
