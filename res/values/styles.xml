@@ -71,10 +71,6 @@
         <item name="android:textColorSecondary">@color/secondary_white</item>
 
 
-
-        <item name="android:colorButtonNormal">@color/blue_primary_dark</item>
-        <item name="colorButtonNormal">@color/blue_primary_dark</item>
-
         <item name="actionMenuTextColor">@color/Blanco</item>
 
     </style>

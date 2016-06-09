@@ -155,29 +155,29 @@
                 android:text="@string/comen"/>
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:weightSum="2">
 
                 <Button
                     android:id="@+id/buttonMensaje"
-                    style="@style/btnStyleBeige"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="3dp"
+                    android:padding="15dp"
                     android:drawableLeft="@drawable/ic_grid_on_grey600_24dp"
                     android:drawableStart="@drawable/ic_grid_on_grey600_24dp"
                     android:text="@string/frente"/>
 
                 <Button
                     android:id="@+id/buttonEnviar"
-                    style="@style/btnStyleBeige"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="3dp"
+                    android:padding="15dp"
                     android:drawableLeft="@drawable/ic_blur_linear_grey600_24dp"
                     android:drawableStart="@drawable/ic_blur_linear_grey600_24dp"
                     android:text="@string/surtido"/>
@@ -188,25 +188,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnInvenBode"
-                    style="@style/btnStyleBeige"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_margin="3dp"
+                    android:padding="15dp"
+                    android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_assignment_grey600_24dp"
                     android:drawableStart="@drawable/ic_assignment_grey600_24dp"
                     android:text="@string/inven"/>
 
                 <Button
                     android:id="@+id/buttonExhib"
-                    style="@style/btnStyleBeige"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
+                    android:padding="15dp"
                     android:layout_weight="1"
                     android:drawableStart="@drawable/ic_border_bottom_grey600_24dp"
                     android:drawableLeft="@drawable/ic_border_bottom_grey600_24dp"
@@ -244,7 +245,7 @@
                     android:id="@+id/btn_venta_promedio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/btnStyleBeige"
+                    android:padding="15dp"
                     android:drawableStart="@drawable/ic_timeline_grey_600_24dp"
                     android:drawableLeft="@drawable/ic_timeline_grey_600_24dp"
                     android:text="@string/venta_promedio"/>
@@ -262,22 +263,22 @@
 
                 <Button
                     android:id="@+id/btnEncarg"
-                    style="@style/btnStyleBeige"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="3dp"
+                    android:padding="15dp"
                     android:drawableLeft="@drawable/ic_timer_auto_grey600_24dp"
                     android:drawableStart="@drawable/ic_timer_auto_grey600_24dp"
                     android:text="@string/enca"/>
 
                 <Button
                     android:id="@+id/btnfoto"
-                    style="@style/btnStyleBeige"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
+                    android:padding="15dp"
                     android:drawableLeft="@drawable/ic_camera_grey600_24dp"
                     android:drawableStart="@drawable/ic_camera_grey600_24dp"
                     android:text="@string/foto"/>
@@ -291,7 +292,6 @@
 
                 <Button
                     android:id="@+id/btnUpdaPro"
-                    style="@style/btnStyleGenoa"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/updateProducts"/>

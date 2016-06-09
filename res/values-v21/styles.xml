@@ -12,16 +12,15 @@
         <item name="colorPrimaryDark">@color/blue_primary_dark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@color/Blanco</item>
-        <item name="android:textColorSecondary">@color/primary_text_color</item>
-
-        <item name="android:actionMenuTextColor">@color/Blanco</item>
         <item name="android:textColor">@color/primary_text_color</item>
         <item name="android:editTextStyle">@style/editText</item>
+
         <item name="android:datePickerDialogTheme">@style/Dialog.Theme</item>
 
-        <item name="android:actionBarStyle">@style/Theme.AppCompat</item>
-
         <item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
+
+
+        <item name="actionMenuTextColor">@color/Blanco</item>
 
     </style>
 
@@ -58,11 +57,7 @@
         <item name="android:textColorPrimary">@color/primary_text_color</item>
         <item name="android:textColorSecondary">@color/secondary_white</item>
 
-        <item name="colorControlNormal">@color/text_primary</item>
-        <item name="android:colorControlNormal">@color/text_primary</item>
 
-        <item name="android:colorButtonNormal">@color/blue_primary_dark</item>
-        <item name="colorButtonNormal">@color/blue_primary_dark</item>
 
     </style>
 
@@ -77,10 +72,10 @@
         <item name="colorPrimary">@color/blue_primary</item>
         <item name="colorPrimaryDark">@color/blue_primary_dark</item>
         <item name="colorAccent">@color/accent</item>
+
         <item name="android:textColor">@color/primary_text_color</item>
         <item name="android:textColorSecondary">@color/secondary_text_color</item>
 
-        <item name="colorControlNormal">@color/text_primary</item>
 
     </style>
 

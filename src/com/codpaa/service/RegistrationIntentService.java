@@ -187,6 +187,7 @@ public class RegistrationIntentService extends IntentService {
         }
 
         pubSub.subscribe(token,"/topics/van-promotor", null);
+        pubSub.subscribe(token,"/topics/test", null);
 
         c.close();
         db.close();

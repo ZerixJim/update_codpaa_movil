@@ -53,7 +53,7 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
 
-        Locale locale = new Locale("es_MX");
+        String asunto = data.getString("asunto");
         String message = data.getString("message");
         String content = data.getString("content");
         Log.d(TAG, "From: " + from);
@@ -61,7 +61,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Log.d(TAG, "Content: " + content);
 
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat dFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", locale);
+        SimpleDateFormat dFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
         String fecha = dFecha.format(c.getTime());
 
@@ -70,7 +70,7 @@ public class MyGcmListenerService extends GcmListenerService {
         ContentValues values = new ContentValues();
 
         values.put("mensaje", message);
-        values.put("asunto", data.getString("asunto"));
+        values.put("asunto", asunto);
         values.put("content", content);
         values.put("fecha", fecha);
 

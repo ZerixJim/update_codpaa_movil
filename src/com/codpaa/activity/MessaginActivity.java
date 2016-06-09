@@ -16,6 +16,8 @@ import com.codpaa.R;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.util.Utilities;
 
+import java.util.Locale;
+
 public class MessaginActivity extends AppCompatActivity {
 
 
@@ -36,35 +38,43 @@ public class MessaginActivity extends AppCompatActivity {
 
         TextView message = (TextView) findViewById(R.id.message);
         if (strMessage == null || strMessage.isEmpty()){
-            message.setText("no se pudo recibir el mensaje");
+            //message.setText("no se pudo recibir el mensaje");
+            if (message != null) {
+                message.setText(String.format("%s","no se pudo recibir el mensaje"));
+            }
         }
 
 
-        message.setText(idMensaje + ".- " + strMessage);
+        if (message != null) {
+            //message.setText(idMensaje + ".- " + strMessage);
+            message.setText(String.format(Locale.getDefault(),"%d.- %s", idMensaje, strMessage));
+        }
 
         Log.d("BundleMessage", strMessage);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Enviando Acuse de Recibido", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Enviando Acuse de Recibido", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
 
-                SQLiteDatabase db = new BDopenHelper(MessaginActivity.this).getWritableDatabase();
-                ContentValues values = new ContentValues();
-                values.put("estatus", 1);
-                db.update(Utilities.TABLE_MENSAJE, values,"id_mensaje="+idMensaje, null);
+                    SQLiteDatabase db = new BDopenHelper(MessaginActivity.this).getWritableDatabase();
+                    ContentValues values = new ContentValues();
+                    values.put("estatus", 1);
+                    db.update(Utilities.TABLE_MENSAJE, values,"id_mensaje="+idMensaje, null);
 
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                }, 1200);
-            }
-        });
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    }, 1200);
+                }
+            });
+        }
     }
 
 }

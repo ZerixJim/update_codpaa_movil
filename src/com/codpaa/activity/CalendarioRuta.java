@@ -22,6 +22,7 @@ import com.codpaa.fragment.FragmentJueves;
 import com.codpaa.fragment.FragmentLunes;
 import com.codpaa.fragment.FragmentMartes;
 import com.codpaa.fragment.FragmentMiercoles;
+import com.codpaa.fragment.FragmentNoAsignado;
 import com.codpaa.fragment.FragmentSabado;
 import com.codpaa.fragment.FragmentViernes;
 
@@ -60,7 +61,9 @@ public class CalendarioRuta extends AppCompatActivity{
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs_calendario);
-        tabLayout.setupWithViewPager(viewPager);
+        if (tabLayout != null) {
+            tabLayout.setupWithViewPager(viewPager);
+        }
 
 
     }
@@ -113,6 +116,9 @@ public class CalendarioRuta extends AppCompatActivity{
         FragmentDomingo fD = new FragmentDomingo();
         fD.setArguments(b);
 
+        FragmentNoAsignado fN = new FragmentNoAsignado();
+        fN.setArguments(b);
+
         adapter.addFrag(fD, "Domingo");
         adapter.addFrag(fL, "Lunes");
         adapter.addFrag(fM, "Martes");
@@ -120,6 +126,7 @@ public class CalendarioRuta extends AppCompatActivity{
         adapter.addFrag(fJ, "Jueves");
         adapter.addFrag(fV, "Viernes");
         adapter.addFrag(fS, "Sabado");
+        adapter.addFrag(fN, "No Asignado");
 
 
 

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,93 +15,26 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-
-    <android.support.v7.widget.CardView
-
-        android:id="@+id/card_view"
-        android:layout_gravity="center"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardCornerRadius="2dp">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation='vertical'>
-            <TextView
-                android:id="@+id/bienvenido"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="#ff3883ff"
-                android:textSize="20sp" />
+            android:text="@string/app_name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/blanco2"
+            android:layout_gravity="center"
+            android:id="@+id/title" />
 
-            <TextView
-                android:id="@+id/textV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#ff928c9a" />
-
-            <TextView
-                android:id="@+id/txtnomUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/negroFondo" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textCartera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#ffff9d1c"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="5dp" />
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="end"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/txtconexion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginRight="4dp"
-                        android:layout_marginEnd="4dp"
-                        android:textColor="@color/Blanco"
-                        android:paddingLeft="3dp"
-                        android:paddingRight="3dp" />
-
-                </LinearLayout>
+    </android.support.v7.widget.Toolbar>
 
 
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-
-
-    </android.support.v7.widget.CardView>
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,36 +44,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:weightSum="2" >
+                android:layout_marginTop="10dp">
 
-                <Button
-                    android:id="@+id/buttonTienda"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableLeft="@drawable/tienda"
-                    android:drawableStart="@drawable/tienda"
-                    android:text="@string/tienda"
-                    style="@style/btnStyleBeige"
-                    android:layout_margin="2dp" />
+
 
                 <Button
                     android:id="@+id/buttonRuta"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:drawableLeft="@drawable/ruta"
                     android:drawableStart="@drawable/ruta"
+                    android:padding="15dp"
                     android:text="@string/ruta1"
-                    style="@style/btnStyleBeige"
                     android:layout_margin="2dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:weightSum="2" >
 
                 <Button
@@ -152,7 +73,6 @@
                     android:drawableLeft="@drawable/mesaje"
                     android:drawableStart="@drawable/mesaje"
                     android:text="@string/mensaje"
-                    style="@style/btnStyleBeige"
                     android:layout_margin="2dp" />
 
                 <Button
@@ -163,7 +83,6 @@
                     android:drawableLeft="@drawable/enviar"
                     android:drawableStart="@drawable/enviar"
                     android:text="@string/send"
-                    style="@style/btnStyleBeige"
                     android:layout_margin="2dp" />
             </LinearLayout>
 
@@ -174,7 +93,6 @@
 
                 <Button
                     android:id="@+id/btnGuCajasM"
-                    style="@style/btnStyleBeige"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
@@ -191,6 +109,12 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
 
 
 

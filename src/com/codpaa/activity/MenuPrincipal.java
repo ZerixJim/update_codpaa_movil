@@ -40,12 +40,10 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -57,7 +55,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.codpaa.R;
-import com.codpaa.adapter.TiendasAdapter;
 import com.codpaa.model.TiendasModel;
 import com.codpaa.service.RegistrationIntentService;
 import com.codpaa.update.UpdateInformation;
@@ -73,8 +70,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
-	TextView nombreUsuario, conexion, bien, version, cartera;
-	Button btnTienda, btnRuta, btnEnviar, btnCajasM, btnMensaje;
+	Button btnRuta, btnEnviar, btnCajasM, btnMensaje;
 	private final int MY_PERMISSION_GET_ACCOUNDS = 126;
 
 	private DrawerLayout drawerLayout;
@@ -104,15 +100,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		Intent recibe = getIntent();
 		String valor = (String) recibe.getExtras().get("nombre");
 
-	
-		bien = (TextView) findViewById(R.id.bienvenido);
-		nombreUsuario = (TextView) findViewById(R.id.txtnomUser);
-		conexion = (TextView) findViewById(R.id.txtconexion);
-		version = (TextView) findViewById(R.id.textV);
-		cartera = (TextView) findViewById(R.id.textCartera);
-		
-		
-		btnTienda = (Button) findViewById(R.id.buttonTienda);
+
+
 		btnRuta = (Button) findViewById(R.id.buttonRuta);
 		btnEnviar = (Button) findViewById(R.id.buttonEnviar);
 		btnCajasM = (Button) findViewById(R.id.btnGuCajasM);
@@ -121,7 +110,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
 		
-		btnTienda.setOnClickListener(this);
+
 		btnRuta.setOnClickListener(this);
 		btnEnviar.setOnClickListener(this);
 	
@@ -140,8 +129,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 		try {
 		    myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
-		    bien.setText(R.string.wellcome);
-			version.setText(String.format("versión: %s", myVersionName));
 		} catch (PackageManager.NameNotFoundException e) {
 		    e.printStackTrace();
 		}
@@ -160,12 +147,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			Cursor cursorDatosUser = recibeDatos.datosUser(valor);
 			cursorDatosUser.moveToFirst();
 			idUsuario = cursorDatosUser.getInt(0);
-			nombreUsuario.setText(cursorDatosUser.getString(1));
-			cartera.setText(String.format("ID: %d", cursorDatosUser.getInt(0)));
-
-
-
-
 
 
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -182,7 +163,11 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 View view = navigationView.getHeaderView(0);
                 TextView nomPromo = (TextView) view.findViewById(R.id.user_name);
                 TextView email = (TextView) view.findViewById(R.id.user_mail);
+                TextView ver = (TextView) view.findViewById(R.id.version);
+                TextView id = (TextView) view.findViewById(R.id.id);
 
+                id.setText(String.format(Locale.getDefault(),"ID: %d", cursorDatosUser.getInt(0)));
+                ver.setText(String.format("versión: %s", myVersionName));
                 nomPromo.setText(cursorDatosUser.getString(1));
 
                 if (getUserName() != null){
@@ -211,15 +196,11 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 		
 		if(verificarConexion()){
-			conexion.setText(R.string.connection);
-			conexion.setBackgroundColor(Color.GREEN);
 
             updateInfo();
 
-
 		}else{
-			conexion.setText(R.string.desconnect);
-			conexion.setBackgroundColor(Color.RED);
+
 			Toast.makeText(this, "No fue posible Actualizar, No hay conexion a Internet", Toast.LENGTH_SHORT).show();
 		}
 		
@@ -299,6 +280,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
+			actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 	}
@@ -365,30 +347,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	    gd.setCornerRadius(roundRadius);
 	    
 
-		int sdk = Build.VERSION.SDK_INT;
-		if(verificarConexion()){
-			
-			conexion.setText(R.string.connection);
-			if (sdk < Build.VERSION_CODES.JELLY_BEAN)
-				conexion.setBackgroundDrawable(gd);
-
-			else
-				conexion.setBackground(gd);
-
-
-			//conexion.setBackgroundColor(Color.GREEN);
-		}else{
-			conexion.setText(R.string.desconnect);
-
-			if (sdk < Build.VERSION_CODES.JELLY_BEAN)
-				conexion.setBackgroundDrawable(gd2);
-
-			else
-				conexion.setBackground(gd2);
-
-
-			//conexion.setBackgroundColor(Color.RED);
-		}
 
         registerReceiver();
 
@@ -502,9 +460,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 		switch(v.getId()){
 
-            case R.id.buttonTienda:
-                crearD();
-                break;
             case R.id.buttonRuta:
                 startCalendarioActivity();
                 break;
@@ -552,73 +507,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 	}
 	
-	
-	
-	private void crearD() {
-		
-		
-		AlertDialog.Builder builder  = new AlertDialog.Builder(this);
 
-		
-		
-		View vistaLocal = LayoutInflater.from(this).inflate(R.layout.lista_tienda_spinner, null);
-		
-		spinnerTien = (Spinner) vistaLocal.findViewById(R.id.spinnerTiendas);
-
-		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-
-            spinnerTien.setPadding(70, 70, 70, 70);
-        }
-
-
-		TiendasAdapter adap = new TiendasAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
-		spinnerTien.setAdapter(adap);
-		DListener listener = new DListener();
-		
-			
-		builder.setPositiveButton("Aceptar Seleccion", listener)
-				.setNegativeButton("Cancelar", listener)
-				.setView(vistaLocal);
-		
-		
-		builder.create().show();
-		
-		base.close();
-	
-		
-	}
-
-
-	
-	private ArrayList<TiendasModel> getArrayList(){
-		
-		base = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select idTienda as _id, grupo, sucursal from clientes order by grupo asc;";
-		Cursor cursorTienda = base.rawQuery(sql, null);
-		ArrayList<TiendasModel> arrayT = new ArrayList<>();
-		for(cursorTienda.moveToFirst(); !cursorTienda.isAfterLast(); cursorTienda.moveToNext()){
-			
-			final TiendasModel spT = new TiendasModel();
-			spT.setIdTienda(cursorTienda.getInt(0));
-			spT.setNombre(cursorTienda.getString(1));
-			spT.setSucursal(cursorTienda.getString(2));
-			
-			arrayT.add(spT);			
-		}
-		
-		final TiendasModel spT2 = new TiendasModel();
-		spT2.setIdTienda(0);
-		spT2.setNombre("Seleccione Tienda");
-		spT2.setSucursal("Tienda no seleccionada");
-		
-		arrayT.add(0, spT2);
-
-		cursorTienda.close();
-		base.close();
-		return arrayT;
-		
-	}
-	
 
 	
 	public boolean verificarConexion() {

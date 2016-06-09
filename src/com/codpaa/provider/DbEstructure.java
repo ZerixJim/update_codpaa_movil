@@ -6,22 +6,18 @@ import android.provider.BaseColumns;
 
 public class DbEstructure {
 
-    public static final String NAME_TABLE = "usuarios";
-
 
     /**
      * user table
      */
     public static class Usuario implements BaseColumns{
-        private Usuario(){
-            //sin instancias
-        }
-        public static final String TABLE = "usuarios";
+        private Usuario(){/* sin instancias */ }
+        public static final String TABLE_NAME = "usuarios";
         public static final String ID_USER = "idCelular";
         public static final String NOMBRE = "nombre";
         public static final String USER = "user";
         public static final String PASS = "pass";
-
+        public static final String TIPO_PROMOTOR = "tipoPromotor";
     }
 
 
@@ -59,6 +55,39 @@ public class DbEstructure {
 
     }
 
+    /**
+     * Tabla donde se guardan los mensajes
+     */
+    public static class Mensaje implements BaseColumns{
+        private Mensaje(){}
+        public static final String TABLE_NAME = "mensaje";
+        public static final String ID_MENSAJE = "id_mensaje";
+        public static final String MENSAJE = "mensaje";
+        public static final String ASUNTO = "asunto";
+        public static final String CONTENT = "content";
+        public static final String FECHA = "fecha";
+        public static final String ESTATUS = "estatus";
+        public static final String ENVIADO = "enviado";
+        public static final String ID_SERVIDOR = "id_servidor";
+    }
+
+
+    public static class Menus implements BaseColumns{
+        private Menus(){}
+        public static final String TABLE_NAME = "menus";
+        public static final String ID_MENU = "id_menu";
+        //public static final String
+    }
+
+    public static class Tienda implements BaseColumns{
+        private Tienda(){}
+        public static final String TABLE_NAME = "clientes";
+        public static final String ID_TIENDA = "idTienda";
+        public static final String GRUPO = "grupo";
+        public static final String SUCURSAL = "sucursal";
+        public static final String LATITUD = "latitud";
+        public static final String LONGITUD = "longitud";
+    }
 
 
 

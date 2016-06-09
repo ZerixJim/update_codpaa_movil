@@ -35,12 +35,10 @@
 
         <Button
             android:id="@+id/btnGuaComentario"
-            style="@style/btnStyleShakespeare"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/save"
-            android:drawableStart="@drawable/save"
+            android:padding="20dp"
             android:text="@string/guar" />
 
 

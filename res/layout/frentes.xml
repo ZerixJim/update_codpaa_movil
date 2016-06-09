@@ -226,13 +226,10 @@
 
             <Button
                 android:id="@+id/btonChFr"
-                style="@style/btnStyleShakespeare"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:drawableLeft="@drawable/save"
-                android:drawableStart="@drawable/save"
                 android:text="@string/guar"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp" />

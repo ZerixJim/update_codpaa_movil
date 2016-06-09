@@ -10,6 +10,8 @@ import android.util.Log;
 
 import com.codpaa.provider.DbEstructure.Usuario;
 import com.codpaa.provider.DbEstructure.VisitaTienda;
+import com.codpaa.provider.DbEstructure.Mensaje;
+import com.codpaa.provider.DbEstructure.Tienda;
 
 import java.io.File;
 
@@ -18,7 +20,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
-    private static final int version = 23;
+    private static final int version = 24;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -34,7 +36,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String surtido;
     private static String tipoExhibicion;
     private static String ruta;
-    private static String clientes;
+    private static String tiendas;
     private static String marca;
     private static String coordenadasEnviar;
     private static String comentarioTienda;
@@ -60,11 +62,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
     private void fields(){
-        usuarios = "create table if not exists " + Usuario.TABLE + "(" +
+        usuarios = "create table if not exists " + Usuario.TABLE_NAME + "(" +
                 Usuario.ID_USER + " int primary key, " +
                 Usuario.NOMBRE +" varchar(100)," +
                 Usuario.USER + " varchar(15), " +
-                Usuario.PASS + " varchar(15))";
+                Usuario.PASS + " varchar(15)," +
+                Usuario.TIPO_PROMOTOR + " int(2))";
+
         tiendasVisitadas = "Create table if not exists " +
                 "tiendasVisitadas(idTienda int,nombre, idPromotor int,  fecha date, " +
                 "ingreso char(6), salida char(7))";
@@ -111,9 +115,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
         ruta = "create table if not exists " +
                 "visitaTienda(idTienda int primary key, lunes int, martes int, miercoles int, " +
                 "jueves int, viernes int, sabado int, domingo int, idCelular int, rol varchar(250))";
-        clientes = "create table if not exists " +
-                "clientes(idTienda int primary key, grupo varchar(60), sucursal varchar(60), " +
-                "latitud varchar(25), longitud varchar(25))";
+        tiendas = "create table if not exists " + Tienda.TABLE_NAME + "(" +
+                Tienda.ID_TIENDA+" int primary key, " +
+                Tienda.GRUPO + " varchar(60), " +
+                Tienda.SUCURSAL+ " varchar(60), " +
+                Tienda.LATITUD + " varchar(25), " +
+                Tienda.LONGITUD + " varchar(25))";
         marca ="create table if not exists " +
                 "marca(idMarca int primary key, nombre char(20), img varchar(250))";
         coordenadasEnviar = "create table if not exists " +
@@ -150,10 +157,15 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "respuestaTipo(id_tipo int NOT NULL, descripcion varchar(15) NOT NULL)";
 
         mensaje = "create table if not exists " +
-                "mensaje(id_mensaje integer primary key autoincrement NOT NULL, " +
-                "mensaje varchar(50) NOT NULL, asunto varchar(50) NOT NULL ," +
-                "content varchar(250) NOT NULL, fecha varchar(15) NOT NULL, " +
-                "estatus integer default 0, enviado integer default 0)";
+                Mensaje.TABLE_NAME + "("+
+                Mensaje.ID_MENSAJE + " integer primary key autoincrement NOT NULL, " +
+                Mensaje.MENSAJE + " varchar(50) NOT NULL, " +
+                Mensaje.ASUNTO + " varchar(50) NOT NULL ," +
+                Mensaje.CONTENT + " varchar(250) NOT NULL, " +
+                Mensaje.FECHA + " varchar(15) NOT NULL, " +
+                Mensaje.ESTATUS + " integer default 0, " +
+                Mensaje.ENVIADO + " integer default 0," +
+                Mensaje.ID_SERVIDOR + " integer)";
 
         ventaPromedio = "create table if not exists " +
                 "ventaPromedio(idMarca int NOT NULL, tipo varchar(10) NOT NULL, cantidad float NOT NULL," +
@@ -182,7 +194,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(surtido);
         db.execSQL(surtido);
         db.execSQL(tipoExhibicion);
-        db.execSQL(clientes);
+        db.execSQL(tiendas);
         db.execSQL(marca);
         db.execSQL(coordenadasEnviar);
         db.execSQL(comentarioTienda);
@@ -203,36 +215,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 
-        if (newVersion == 22 && oldVersion == 19){
-            db.execSQL(preguntas);
-            db.execSQL(respuesta);
-            db.execSQL(respuestaTipo);
-            db.execSQL("Alter table invProducto add column estatus int");
 
-            db.execSQL(mensaje);
-
-            db.execSQL("Drop table if exists visitaTienda");
-            db.execSQL(ruta);
-
-            db.execSQL(ventaPromedio);
-
-            db.execSQL("drop table if exists surtido");
-            db.execSQL(surtido);
-        }
-
-        if (newVersion == 22 && oldVersion == 21){
-            db.execSQL(ventaPromedio);
-
-            db.execSQL("drop table if exists surtido");
-            db.execSQL(surtido);
-        }
-
-        if (newVersion == 23 && oldVersion == 21){
-            db.execSQL(ventaPromedio);
-
-            db.execSQL("drop table if exists surtido");
-            db.execSQL(surtido);
-
+        if (newVersion == 24 && oldVersion == 22){
             db.execSQL("alter table frentesCharola add column unifila int(2)");
             db.execSQL("alter table frentesCharola add column fila1 int(2)");
             db.execSQL("alter table frentesCharola add column fila2 int(2)");
@@ -250,26 +234,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL("alter table frentesCharola add column fila14 int(2)");
 
             db.execSQL(direcciones);
+
+            db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.ID_SERVIDOR + " int");
+            db.execSQL("alter table " + Usuario.TABLE_NAME + " add column " + Usuario.TIPO_PROMOTOR + " int(2)");
         }
 
-        if (newVersion == 23 && oldVersion == 22){
-            db.execSQL("alter table frentesCharola add column unifila int(2)");
-            db.execSQL("alter table frentesCharola add column fila1 int(2)");
-            db.execSQL("alter table frentesCharola add column fila2 int(2)");
-            db.execSQL("alter table frentesCharola add column fila3 int(2)");
-            db.execSQL("alter table frentesCharola add column fila4 int(2)");
-            db.execSQL("alter table frentesCharola add column fila5 int(2)");
-            db.execSQL("alter table frentesCharola add column fila6 int(2)");
-            db.execSQL("alter table frentesCharola add column fila7 int(2)");
-            db.execSQL("alter table frentesCharola add column fila8 int(2)");
-            db.execSQL("alter table frentesCharola add column fila9 int(2)");
-            db.execSQL("alter table frentesCharola add column fila10 int(2)");
-            db.execSQL("alter table frentesCharola add column fila11 int(2)");
-            db.execSQL("alter table frentesCharola add column fila12 int(2)");
-            db.execSQL("alter table frentesCharola add column fila13 int(2)");
-            db.execSQL("alter table frentesCharola add column fila14 int(2)");
-
-            db.execSQL(direcciones);
+        if (oldVersion == 23 && newVersion == 24){
+            db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.ID_SERVIDOR + " int");
+            db.execSQL("alter table " + Usuario.TABLE_NAME + " add column " + Usuario.TIPO_PROMOTOR + " int(2)");
         }
 
 
