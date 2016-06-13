@@ -76,7 +76,7 @@
         <activity
             android:name=".activity.MenuPrincipal"
             android:icon="@drawable/ic_launcher"
-            android:label="@string/nombreAplicacion"
+            android:label="@string/menu_principal"
             android:screenOrientation="portrait"
             android:theme="@style/noActionBar" />
         <activity

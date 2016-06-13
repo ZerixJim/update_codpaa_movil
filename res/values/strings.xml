@@ -155,5 +155,7 @@
     <string name="address">Dirección</string>
     <string name="sending">Enviando....</string>
 
+    <string name="menu_principal">Menu Principal</string>
+
 
 </resources>

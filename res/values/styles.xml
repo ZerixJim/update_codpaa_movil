@@ -53,10 +53,8 @@
         <item name="colorControlHighlight">@color/accent</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:divider">@color/divider</item>
-        <item name="android:colorButtonNormal">@color/blue_primary_dark</item>
 
         <item name="actionMenuTextColor">@color/Blanco</item>
-
         <item name="android:windowActionBarOverlay">true</item>
     </style>
 

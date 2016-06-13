@@ -175,9 +175,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private void loginAsync(final String usuario, final String pass){
 
         AsyncHttpClient cliente = new AsyncHttpClient();
-		cliente.setTimeout(10000);
+		cliente.setTimeout(5000);
         RequestParams rp = new RequestParams();
-        rp.put("solicitud","user");
+        rp.put("solicitud","usersensitive");
         rp.put("user",usuario);
         rp.put("pass", pass);
 
@@ -199,7 +199,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 
 
-                            b.insertarUsuarios(response.getInt("i"), response.getString("n"), response.getString("u").trim(), response.getString("p").trim());
+                            b.insertarUsuarios(response.getInt("i"), response.getString("nombre"),
+                                    response.getString("usuario").trim(),
+                                    response.getString("password").trim());
                             act.runOnUiThread(runProgress);
                             valido.post(new Runnable() {
                                 public void run() {
@@ -210,13 +212,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
                             });
 
-                            if(dbAdapter.Login(response.getString("u").trim(),response.getString("p").trim())){
-                                Toast.makeText(MainActivity.this,"Bienvenido "+username+" que tengas un excelente dia", Toast.LENGTH_SHORT).show();
+                            if(dbAdapter.Login(response.getString("usuario").trim(),response.getString("password").trim())){
+
+                                String[] separated = response.getString("nombre").split(" ");
+
+                                Toast.makeText(MainActivity.this,"Bienvenido(a) "+separated[0]+" que tengas un excelente dia", Toast.LENGTH_SHORT).show();
                                 conf.setUserUser(username);
                                 iniciarActivity(username);
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(), "Usuario no existe", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Usuario o Contraseña incorrecto", Toast.LENGTH_SHORT).show();
                             act.runOnUiThread(runProgress);
                             valido.post(new Runnable() {
                                 public void run() {
@@ -261,16 +266,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(txtUserName.getWindowToken(), 0);
 		imm.hideSoftInputFromWindow(txtPassword.getWindowToken(), 0);
-		username = txtUserName.getText().toString().trim().toLowerCase();
-		password = txtPassword.getText().toString().trim().toLowerCase();
+		username = txtUserName.getText().toString().trim();
+		password = txtPassword.getText().toString().trim();
 		valido.setText("");
 
 		if (username.length() > 0 && password.length() > 0) {
 			try {
 				
 				if (dbAdapter.Login(username, password)) {
-					
-					Toast.makeText(MainActivity.this,"Bienvenido "+username+" que tengas un excelente dia", Toast.LENGTH_SHORT).show();
+
 					conf.setUserUser(username);
 					iniciarActivity(username);
 					
@@ -278,69 +282,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 					Toast.makeText(this, "Espere....verificando en el Servidor", Toast.LENGTH_SHORT).show();
 					progressBar.setVisibility(View.VISIBLE);
 					loginAsync(username,password);
-					
-					/*Runnable runExiste = new Runnable() {
 
-						@Override
-						public void run() {
-							
-							JSONParseUsers userExi = new JSONParseUsers(MainActivity.this);
-							try {
-								
-								if(!verificarConexion()){
-									
-									valido.post(new Runnable() {
-										public void run() {
-											valido.setText("No hay conexion, a Internet");
-											valido.setTextColor(Color.WHITE);
-
-										}
-										
-									});
-									
-								}else{
-
-
-									
-									if(userExi.leerUsuarioExiste(username, password)) {
-										valido.post(new Runnable() {
-											public void run() {
-												valido.setText("Usuario Valido, y cargado");
-												valido.setTextColor(Color.GREEN);
-											}
-											
-										});
-
-                                        act.runOnUiThread(runProgress);
-									}else {
-										valido.post(new Runnable() {
-											public void run() {
-												valido.setText("Usuario No Valido");
-												valido.setTextColor(Color.RED);
-											}
-											
-										});
-                                        act.runOnUiThread(runProgress);
-									}
-									
-								}
-							
-								
-							} catch (JSONException e) {
-								
-								e.printStackTrace();
-							}
-						}
-						
-					};
-					
-					Thread hiloUser = new Thread(runExiste);
-					
-					hiloUser.start();*/
-					
-					
-					
-					
 					
 				}
 

@@ -2,7 +2,6 @@ package com.codpaa.activity;
 
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -29,7 +28,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -74,7 +72,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	private final int MY_PERMISSION_GET_ACCOUNDS = 126;
 
 	private DrawerLayout drawerLayout;
-
+	TextView email;
 	Spinner spinnerTien;
 	SQLiteDatabase base;
 	LocationManager lM = null;
@@ -160,7 +158,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
                 View view = navigationView.getHeaderView(0);
                 TextView nomPromo = (TextView) view.findViewById(R.id.user_name);
-                TextView email = (TextView) view.findViewById(R.id.user_mail);
+                email = (TextView) view.findViewById(R.id.user_mail);
                 TextView ver = (TextView) view.findViewById(R.id.version);
                 TextView id = (TextView) view.findViewById(R.id.id);
 
@@ -253,7 +251,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         switch (requestCode){
             case MY_PERMISSION_GET_ACCOUNDS:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    // TODO: 26/05/2016 implementar cambios
+					if (getUserName() != null){
+						email.setText(getUserName());
+					}
                 }
         }
     }
@@ -277,8 +277,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
-			actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_account_circle_white_24dp);
+			//actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 	}

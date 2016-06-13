@@ -120,7 +120,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 Tienda.GRUPO + " varchar(60), " +
                 Tienda.SUCURSAL+ " varchar(60), " +
                 Tienda.LATITUD + " varchar(25), " +
-                Tienda.LONGITUD + " varchar(25))";
+                Tienda.LONGITUD + " varchar(25),  " +
+                Tienda.ID_TIPO +" int)";
         marca ="create table if not exists " +
                 "marca(idMarca int primary key, nombre char(20), img varchar(250))";
         coordenadasEnviar = "create table if not exists " +
@@ -237,11 +238,17 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
             db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.ID_SERVIDOR + " int");
             db.execSQL("alter table " + Usuario.TABLE_NAME + " add column " + Usuario.TIPO_PROMOTOR + " int(2)");
+
+            db.execSQL("alter table " + Tienda.TABLE_NAME + " add column " + Tienda.ID_TIPO + " int");
         }
 
         if (oldVersion == 23 && newVersion == 24){
             db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.ID_SERVIDOR + " int");
             db.execSQL("alter table " + Usuario.TABLE_NAME + " add column " + Usuario.TIPO_PROMOTOR + " int(2)");
+
+            db.execSQL("alter table " + Tienda.TABLE_NAME + " add column " + Tienda.ID_TIPO + " int");
+
+
         }
 
 
@@ -257,14 +264,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     }
 
-    public void remplazar(String table, ContentValues values){
-        baseDatosLocal = getWritableDatabase();
-        if (baseDatosLocal != null){
-            baseDatosLocal.replace(table, null, values);
-            baseDatosLocal.close();
-        }
-
-    }
 
     @Override
     public void close() {
@@ -321,17 +320,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         return id;
     }
-
-    public void insertarCajasMay(int idCel, int idMar, String fecha,int Cajas, int status){
-        baseDatosLocal = getWritableDatabase();
-        if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert into cajasMayoreo(idCelular,idMarca,fecha,cajas,status) values("+idCel+","+idMar+",'"+fecha+"',"+Cajas+","+status+")");
-        if(baseDatosLocal != null) baseDatosLocal.close();
-    }
-
-
-
-
 
 
 
@@ -781,11 +769,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor infoActualizada(String nombre, String fecha) throws SQLiteException{
-        baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select nombre, fecha from upInfo where nombre='"+nombre+"' and fecha='"+fecha+"'",null);
-
-    }
 
     public Cursor ComentariosTienda() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();

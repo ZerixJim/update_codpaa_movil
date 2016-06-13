@@ -41,6 +41,8 @@ public class DBAdapter {
 		mDb = mDbHelper.getReadableDatabase();
 		Cursor mCursor = mDb.rawQuery("SELECT * FROM " + DATABASE_TABLE + " WHERE user=? AND pass=?", new String[]{username,password});
 		if (mCursor != null) {
+
+
 			if(mCursor.getCount() > 0){
 				
 				mCursor.close();

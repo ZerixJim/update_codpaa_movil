@@ -87,6 +87,7 @@ public class DbEstructure {
         public static final String SUCURSAL = "sucursal";
         public static final String LATITUD = "latitud";
         public static final String LONGITUD = "longitud";
+        public static final String ID_TIPO = "idTipo";
     }
 
 
