@@ -5,11 +5,13 @@ package com.codpaa.activity;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.codpaa.R;
 import com.codpaa.adapter.MensajesRecyclerAdapter;
@@ -38,6 +40,13 @@ public class ListaMensajesActivity extends AppCompatActivity{
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, null));
 
 
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+
 
         adapter = new MensajesRecyclerAdapter(this);
 
@@ -56,6 +65,25 @@ public class ListaMensajesActivity extends AppCompatActivity{
         adapter.notifyDataSetChanged();
 
 
+
+
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+
+                finish();
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
 
 

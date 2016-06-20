@@ -15,72 +15,14 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:layout_marginBottom="4dp"
+        android:elevation="4dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 
     </android.support.v7.widget.Toolbar>
 
 
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-
-
-                <Button
-                    android:id="@+id/buttonRuta"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ruta"
-                    android:drawableStart="@drawable/ruta"
-                    android:padding="15dp"
-                    android:text="@string/ruta1"
-                    android:layout_margin="2dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:weightSum="2" >
-
-                <Button
-                    android:id="@+id/buttonMensaje"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableLeft="@drawable/mesaje"
-                    android:drawableStart="@drawable/mesaje"
-                    android:padding="15dp"
-                    android:text="@string/mensaje"
-                    android:layout_margin="2dp" />
-
-                <Button
-                    android:id="@+id/buttonEnviar"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="15dp"
-                    android:drawableLeft="@drawable/enviar"
-                    android:drawableStart="@drawable/enviar"
-                    android:text="@string/send"
-                    android:layout_margin="2dp" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-    </ScrollView>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"

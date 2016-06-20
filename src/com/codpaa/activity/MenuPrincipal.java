@@ -2,7 +2,9 @@ package com.codpaa.activity;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -22,7 +24,6 @@ import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -39,6 +40,9 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.Patterns;
@@ -53,6 +57,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.codpaa.R;
+import com.codpaa.adapter.MenuAdapter;
+import com.codpaa.model.MenuModel;
 import com.codpaa.model.TiendasModel;
 import com.codpaa.service.RegistrationIntentService;
 import com.codpaa.update.UpdateInformation;
@@ -68,7 +74,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
-	Button btnRuta, btnEnviar, btnMensaje;
 	private final int MY_PERMISSION_GET_ACCOUNDS = 126;
 
 	private DrawerLayout drawerLayout;
@@ -98,21 +103,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		Intent recibe = getIntent();
 		String valor = (String) recibe.getExtras().get("nombre");
 
-
-
-		btnRuta = (Button) findViewById(R.id.buttonRuta);
-		btnEnviar = (Button) findViewById(R.id.buttonEnviar);
-        btnMensaje = (Button) findViewById(R.id.buttonMensaje);
-
-
-
-		
-
-		btnRuta.setOnClickListener(this);
-		btnEnviar.setOnClickListener(this);
-
-
-        btnMensaje.setOnClickListener(this);
+        createMenu();
 
 
 		Context context = getApplicationContext();
@@ -246,6 +237,52 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 	}
 
+    private void createMenu() {
+
+        RecyclerView recycler = (RecyclerView) findViewById(R.id.recyclerview);
+
+        MenuAdapter adapter = new MenuAdapter(getMenus(), this);
+
+        if (recycler != null) {
+
+            recycler.setHasFixedSize(true);
+            recycler.setLayoutManager(new GridLayoutManager(this, 2));
+            recycler.setAdapter(adapter);
+        }
+
+
+    }
+
+    private List<MenuModel> getMenus() {
+
+        List<MenuModel> array = new ArrayList<>();
+
+        final MenuModel ruta = new MenuModel();
+        ruta.setId(1);
+        ruta.setImage("ic_directions_blue_grey_700_36dp");
+        ruta.setMenu("Ruta");
+        array.add(ruta);
+
+
+        final MenuModel mensajes = new MenuModel();
+        mensajes.setId(2);
+        mensajes.setImage("ic_message_blue_grey_700_36dp");
+        mensajes.setMenu("Mensajes");
+        array.add(mensajes);
+
+
+        final MenuModel enviar = new MenuModel();
+        enviar.setId(3);
+        enviar.setImage("ic_send_blue_grey_700_36dp");
+        enviar.setMenu("Enviar");
+        array.add(enviar);
+
+
+        return array;
+
+
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
@@ -329,33 +366,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	protected void onResume() {
 		super.onResume();
 		
-		// prepare
-	    
-	    int roundRadius = 15; // 8dp
-	    int fillColor = Color.parseColor("#2AF110");
-	    int fillColor2 = Color.parseColor("#FC2424");
-
-	    GradientDrawable gd = new GradientDrawable();
-	    GradientDrawable gd2 = new GradientDrawable();
-	    
-	    gd2.setColor(fillColor2);
-	    gd2.setCornerRadius(roundRadius);
-	  
-	    gd.setColor(fillColor);
-	    gd.setCornerRadius(roundRadius);
-	    
-
 
         registerReceiver();
-
-		if (new BDopenHelper(this).countMessege() > 0){
-            btnMensaje.setBackgroundColor(getResources().getColor(R.color.alert_color));
-            btnMensaje.setTextColor(Color.WHITE);
-        }else {
-            btnMensaje.setBackgroundColor(Color.WHITE);
-            btnMensaje.setTextColor(Color.BLACK);
-
-        }
 
 	}
 
@@ -458,23 +470,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 		switch(v.getId()){
 
-            case R.id.buttonRuta:
-                startCalendarioActivity();
-                break;
-
-
-            case R.id.buttonEnviar:
-
-                Intent in = new Intent(this, EnviarInformacion.class);
-                startActivity(in);
-
-                break;
-
-            case R.id.buttonMensaje:
-                Intent iM = new Intent(this, ListaMensajesActivity.class);
-				iM.putExtra("idCelular", idUsuario);
-				startActivity(iM);
-                break;
 
 
 
