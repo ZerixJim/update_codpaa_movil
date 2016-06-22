@@ -23,7 +23,6 @@ import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -41,7 +40,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -53,7 +51,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.codpaa.R;
@@ -70,24 +67,26 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 
-public class MenuPrincipal extends AppCompatActivity implements OnClickListener, LocationListener{
+public class MenuPrincipal extends AppCompatActivity implements OnClickListener, LocationListener {
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
-	private final int MY_PERMISSION_GET_ACCOUNDS = 126;
+    private final int MY_PERMISSION_GET_ACCOUNDS = 126;
 
-	private DrawerLayout drawerLayout;
-	TextView email;
-	Spinner spinnerTien;
-	SQLiteDatabase base;
-	LocationManager lM = null;
-	String myVersionName = "not available";
-	Locale locale;
+    private DrawerLayout drawerLayout;
+    TextView email;
+    Spinner spinnerTien;
+    SQLiteDatabase base;
+    LocationManager lM = null;
+    String myVersionName = "not available";
+    Locale locale;
     Configuracion configuracion;
+    RecyclerView recycler;
+    MenuAdapter adapter;
 
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private BroadcastReceiver mRegistrationBroadcastReceiver, mNewMessageBroadcastReceiver;
 
-    private boolean isReceiverRegistered;
+    private boolean isReceiverRegistered, isReceiverMessageRegistered;
 	
 
 	int idUsuario;
@@ -218,6 +217,17 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             }
         };
 
+
+        mNewMessageBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                updateMessage();
+            }
+        };
+
+
+
+
 		//Registro de Brodcast para verificar si el token fue enviado al servidor
         registerReceiver();
 		//estadisticas();
@@ -239,9 +249,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     private void createMenu() {
 
-        RecyclerView recycler = (RecyclerView) findViewById(R.id.recyclerview);
+        recycler = (RecyclerView) findViewById(R.id.recyclerview);
 
-        MenuAdapter adapter = new MenuAdapter(getMenus(), this);
+        adapter = new MenuAdapter(getMenus(), this);
 
         if (recycler != null) {
 
@@ -305,6 +315,14 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
             //Log.d("MenuPrincipal", "RegisterRecive2");
         }
+
+
+        if (!isReceiverMessageRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mNewMessageBroadcastReceiver,
+                    new IntentFilter(QuickstartPreferences.NEW_MESSAGE));
+
+            isReceiverMessageRegistered = true;
+        }
     }
 
     //metodo para implementar el toolbar
@@ -365,12 +383,46 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
+        updateMessage();
 
         registerReceiver();
 
 	}
 
+
+    private void updateMessage(){
+        int count = new BDopenHelper(this).countMessege();
+
+        if (count > 0){
+
+
+
+            List<MenuModel> menu = adapter.getAllItems();
+
+            for (MenuModel item : menu ){
+                if (item.getId() == 2){
+                    item.setChange(1);
+                    item.setCount(count);
+                }
+            }
+
+            adapter.notifyDataSetChanged();
+        }else {
+
+            List<MenuModel> menu = adapter.getAllItems();
+
+            for (MenuModel item : menu ){
+                if (item.getId() == 2){
+                    item.setChange(0);
+                    item.setCount(0);
+                }
+            }
+
+            adapter.notifyDataSetChanged();
+        }
+
+    }
 
     private void updateInfo(){
         configuracion = new Configuracion(this);
@@ -490,6 +542,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         isReceiverRegistered = false;
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mNewMessageBroadcastReceiver);
+        isReceiverMessageRegistered = false;
 
         super.onPause();
 		

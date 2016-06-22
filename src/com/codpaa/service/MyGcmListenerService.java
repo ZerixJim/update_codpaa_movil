@@ -26,11 +26,13 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.codpaa.R;
 import com.codpaa.activity.MessaginActivity;
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.util.QuickstartPreferences;
 import com.codpaa.util.Utilities;
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -99,8 +101,15 @@ public class MyGcmListenerService extends GcmListenerService {
         /**
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
+         *
          */
         sendNotification(data, idMensaje);
+
+
+        Intent newMessage = new Intent(QuickstartPreferences.NEW_MESSAGE);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(newMessage);
+
+
         // [END_EXCLUDE]
     }
     // [END receive_message]

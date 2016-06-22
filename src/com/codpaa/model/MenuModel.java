@@ -7,6 +7,24 @@ public class MenuModel {
     private int id;
     private String menu;
     private String image;
+    private int change = 0;
+    private int count = 0;
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getChange() {
+        return change;
+    }
+
+    public void setChange(int change) {
+        this.change = change;
+    }
 
     public String getImage() {
         return image;

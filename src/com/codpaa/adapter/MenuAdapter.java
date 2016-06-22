@@ -4,8 +4,11 @@ package com.codpaa.adapter;/*
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,11 +48,30 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         holder.title.setText(menuModel.getMenu());
 
 
+        if (menuModel.getChange() >= 1){
+            if (holder.count.getVisibility() == View.INVISIBLE){
+                holder.count.setVisibility(View.VISIBLE);
+
+            }
+
+            holder.count.setText(String.format("%s", menuModel.getCount()));
+        } else {
+            holder.count.setVisibility(View.INVISIBLE);
+
+        }
+
+
+
 
         Uri uri = Uri.parse("android.resource://com.codpaa/drawable/"+ menuModel.getImage());
 
         Picasso.with(context).load(uri).into(holder.imageView);
 
+    }
+
+
+    public List<MenuModel> getAllItems(){
+        return menuModels;
     }
 
     @Override
@@ -60,12 +82,15 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView imageView;
-        TextView title;
+        TextView title, count;
+        CardView card;
 
         public MenuViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.image);
             title = (TextView) itemView.findViewById(R.id.menu_title);
+            card = (CardView) itemView.findViewById(R.id.card);
+            count = (TextView) itemView.findViewById(R.id.count);
 
             itemView.setOnClickListener(this);
 
@@ -73,7 +98,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
         @Override
         public void onClick(View v) {
-            //// TODO: 20/06/2016 - implementar classes a abrir
             MenuModel menuModel = menuModels.get(getAdapterPosition());
             switch (menuModel.getId()){
                 case 1:
@@ -83,6 +107,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
                 case 2:
                     Intent mensaje = new Intent(context, ListaMensajesActivity.class);
+
+                    MenuModel item = menuModels.get(2);
+                    item.setChange(0);
+
+                    notifyDataSetChanged();
+
                     context.startActivity(mensaje);
                     break;
 
