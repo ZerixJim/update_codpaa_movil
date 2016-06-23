@@ -711,7 +711,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
 
         return baseDatosLocal.rawQuery("select mensaje, asunto, content, fecha, estatus, enviado, " +
-                " id_mensaje from mensaje order by id_mensaje desc, estatus", null);
+                " id_mensaje from mensaje order by "+ Mensaje.ESTATUS +" asc, "+ Mensaje.FECHA+ " desc", null);
     }
 
     public int contarExhibiciones(int idTienda, String fecha) throws  SQLiteException{

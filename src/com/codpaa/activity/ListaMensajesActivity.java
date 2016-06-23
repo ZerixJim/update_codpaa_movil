@@ -3,8 +3,13 @@ package com.codpaa.activity;
  * Created by Gustavo on 29/03/2016.
  */
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +22,7 @@ import com.codpaa.R;
 import com.codpaa.adapter.MensajesRecyclerAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.MensajeModel;
+import com.codpaa.util.QuickstartPreferences;
 import com.codpaa.widget.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -27,6 +33,9 @@ public class ListaMensajesActivity extends AppCompatActivity{
     private RecyclerView mRecyclerView;
     private LayoutManager mLayoutManager;
     private MensajesRecyclerAdapter adapter;
+
+    private BroadcastReceiver mNewMessageBroadcastReceiver;
+    private boolean isReceiverMessageRegistered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +60,16 @@ public class ListaMensajesActivity extends AppCompatActivity{
         adapter = new MensajesRecyclerAdapter(this);
 
         mRecyclerView.setAdapter(adapter);
+
+        mNewMessageBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(QuickstartPreferences.NEW_MESSAGE)){
+                    adapter.setItems(mensajeModels());
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        };
     }
 
 
@@ -65,11 +84,28 @@ public class ListaMensajesActivity extends AppCompatActivity{
         adapter.notifyDataSetChanged();
 
 
+        if (!isReceiverMessageRegistered){
+            LocalBroadcastManager.getInstance(this).registerReceiver(mNewMessageBroadcastReceiver,
+                    new IntentFilter(QuickstartPreferences.NEW_MESSAGE));
+            isReceiverMessageRegistered = true;
+        }
+
+
+
 
 
 
     }
 
+    @Override
+    protected void onPause() {
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mNewMessageBroadcastReceiver);
+        isReceiverMessageRegistered = false;
+
+
+        super.onPause();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

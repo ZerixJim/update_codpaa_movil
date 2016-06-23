@@ -1,6 +1,6 @@
 package com.codpaa.widget;
 
-/**
+/*
  * Created by grim on 29/03/2016.
  */
 

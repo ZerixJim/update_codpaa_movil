@@ -221,7 +221,15 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         mNewMessageBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                updateMessage();
+
+
+                switch (intent.getAction()){
+                    case QuickstartPreferences.NEW_MESSAGE:
+                        updateMessage();
+                        break;
+                }
+
+
             }
         };
 
@@ -317,7 +325,11 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         }
 
 
+
+
         if (!isReceiverMessageRegistered) {
+
+
             LocalBroadcastManager.getInstance(this).registerReceiver(mNewMessageBroadcastReceiver,
                     new IntentFilter(QuickstartPreferences.NEW_MESSAGE));
 
@@ -559,10 +571,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 	    return netInfo != null && netInfo.isConnected();
 
 	}
-	
-	
-	
-	public class DListener implements DialogInterface.OnClickListener{
+
+
+    public class DListener implements DialogInterface.OnClickListener{
 
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
