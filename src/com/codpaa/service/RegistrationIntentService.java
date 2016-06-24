@@ -21,18 +21,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
+
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.codpaa.R;
+
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.util.QuickstartPreferences;
 import com.codpaa.util.Utilities;
-import com.google.android.gms.gcm.GcmPubSub;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
+
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -68,9 +68,8 @@ public class RegistrationIntentService extends IntentService {
             // R.string.gcm_defaultSenderId (the Sender ID) is typically derived from google-services.json.
             // See https://developers.google.com/cloud-messaging/android/start for details on this file.
             // [START get_token]
-            InstanceID instanceID = InstanceID.getInstance(this);
-            String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
-                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+
+            String token = FirebaseInstanceId.getInstance().getToken();
             // [END get_token]
             Log.i(TAG, "GCM Registration Token: " + token);
 
@@ -180,16 +179,22 @@ public class RegistrationIntentService extends IntentService {
 
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
         Cursor c = db.rawQuery("select nombre from marca", null);
-        GcmPubSub pubSub = GcmPubSub.getInstance(this);
+
+
+        FirebaseMessaging messaging = FirebaseMessaging.getInstance();
 
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
 
             String marca = c.getString(c.getColumnIndex("nombre"));
-            pubSub.subscribe(token, "/topics/" + marca.replace(" ", "") , null);
+
+
+            messaging.subscribeToTopic(marca.replace(" ", ""));
         }
 
-        pubSub.subscribe(token,"/topics/van-promotor", null);
-        pubSub.subscribe(token,"/topics/test-1", null);
+        messaging.subscribeToTopic("van-promotor");
+        messaging.subscribeToTopic("test-1");
+
+
 
         c.close();
         db.close();

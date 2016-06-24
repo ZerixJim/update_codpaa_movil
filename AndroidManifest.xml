@@ -167,33 +167,25 @@
 
         <service android:name=".service.GeoLocalizar" />
 
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
+        <service android:name=".service.MyGcmListenerService"
+            android:exported="false">
+
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="com.codpaa" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+
             </intent-filter>
-        </receiver>
 
-        <service
-            android:name=".service.MyGcmListenerService"
+        </service>
+
+        <service android:name=".service.MyInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
-        <service
-            android:name=".service.MyInstanceIDListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".service.RegistrationIntentService"
+
+        <service android:name=".service.RegistrationIntentService"
             android:exported="false"/>
 
 

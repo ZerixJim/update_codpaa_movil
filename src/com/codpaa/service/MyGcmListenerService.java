@@ -34,31 +34,29 @@ import com.codpaa.activity.MessaginActivity;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.util.QuickstartPreferences;
 import com.codpaa.util.Utilities;
-import com.google.android.gms.gcm.GcmListenerService;
+
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
 
-public class MyGcmListenerService extends GcmListenerService {
+public class MyGcmListenerService extends FirebaseMessagingService{
 
     private static final String TAG = "MyGcmListenerService";
 
-    /**
-     * Called when message is received.
-     *
-     * @param from SenderID of the sender.
-     * @param data Data bundle containing message data as key/value pairs.
-     *             For Set of keys use data.keySet().
-     */
-    // [START receive_message]
-    @Override
-    public void onMessageReceived(String from, Bundle data) {
 
-        String asunto = data.getString("asunto");
-        String message = data.getString("message");
-        String content = data.getString("content");
-        Log.d(TAG, "From: " + from);
+    @Override
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+
+        Map<String, String> data = remoteMessage.getData();
+
+        String asunto = data.get("asunto");
+        String message = data.get("message");
+        String content = data.get("content");
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
         Log.d(TAG, "Message: " + message);
         Log.d(TAG, "Content: " + content);
 
@@ -82,27 +80,7 @@ public class MyGcmListenerService extends GcmListenerService {
         db.close();
 
 
-        /*
 
-        if (from.startsWith("/topics/")) {
-            // message received from some topic.
-        } else {
-            // normal downstream message.
-        }*/
-
-        // [START_EXCLUDE]
-        /**
-         * Production applications would usually process the message here.
-         * Eg: - Syncing with server.
-         *     - Store message in local database.
-         *     - Update UI.
-         */
-
-        /**
-         * In some cases it may be useful to show a notification indicating to the user
-         * that a message was received.
-         *
-         */
         sendNotification(data, idMensaje);
 
 
@@ -119,11 +97,11 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param data GCM message received.
      */
-    private void sendNotification(Bundle data, int idMensaje) {
+    private void sendNotification(Map<String, String> data, int idMensaje) {
 
-        String asunto = data.getString("asunto");
-        String message = data.getString("message");
-        String content = data.getString("content");
+        String asunto = data.get("asunto");
+        String message = data.get("message");
+        String content = data.get("content");
 
         Intent intent = new Intent(this, MessaginActivity.class);
 

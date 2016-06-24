@@ -4,7 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.2'
-        classpath 'com.google.gms:google-services:2.0.0-beta6'
+        classpath 'com.google.gms:google-services:3.0.0'
     }
 }
 apply plugin: 'com.android.application'
@@ -43,6 +43,7 @@ android {
     }
     defaultConfig {
         targetSdkVersion 23
+        applicationId "com.codpaa"
     }
 
     buildTypes {
@@ -68,7 +69,7 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
-    compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.google.firebase:firebase-messaging:9.0.2'
     compile 'com.android.support:percent:23.4.0'
 }
 
