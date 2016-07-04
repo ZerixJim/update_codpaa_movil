@@ -19,7 +19,8 @@ import cz.msebera.android.httpclient.Header;
 
 public class HttpResponse extends JsonHttpResponseHandler{
 	
-	
+
+
 	private int idTienda;
 	private String fecha;
 	private String tipo;

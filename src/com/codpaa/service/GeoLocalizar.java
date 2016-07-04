@@ -277,6 +277,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 	Runnable start = new Runnable( ) {
 	    public void run() {
+			Log.i("Geo", "start");
 	        startGPS();
 
 			try {
@@ -287,23 +288,39 @@ public class GeoLocalizar extends Service implements LocationListener{
 			}
 	        
 
-	        
-	        handler.postDelayed(stop, 60 * 1000L);
+
+	        handler.postDelayed(stop, (60 * 1000) * 2);
 	    }
 	};
 
 	Runnable stop = new Runnable( ) {
 	    public void run( ) {
+			Log.i("Geo", "stop");
 	        stopGPS();
 	    }
 	};
 
 	Runnable onePeriod = new Runnable( ) {
 	    public void run( ) {
-	        handler.postDelayed(onePeriod, 5 * 60 * 1000);
+			Log.i("Geo", "onePeriod");
+			//
+	        handler.postDelayed(onePeriod, (60 * 1000) * 5);
+
 	        handler.post(start);
 	    }
 	};
+
+	public void startGPS(){
+		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+		try {
+			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+			lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
+		}catch (SecurityException e){
+			e.printStackTrace();
+		}
+
+	}
 	
 
 	public void startContiniuosListening( ) {
@@ -325,17 +342,7 @@ public class GeoLocalizar extends Service implements LocationListener{
         }
     }
     
-    public void startGPS(){
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        try {
-			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
-			lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
-        }catch (SecurityException e){
-            e.printStackTrace();
-        }
-
-    }
 
 	@Override
 	public void onCreate() {
@@ -410,8 +417,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		
-		return super.onStartCommand(intent, flags, startId);
+		super.onStartCommand(intent, flags, startId);
+		return START_STICKY;
 	}
 
 
@@ -440,7 +447,7 @@ public class GeoLocalizar extends Service implements LocationListener{
                     enviarFotos();
 					
 					
-
+					Looper.loop();
 				}catch(Exception e){
 					
 					
@@ -559,10 +566,9 @@ public class GeoLocalizar extends Service implements LocationListener{
 			
 			@Override
 			public void run() {
-				Looper.prepare();
+
 				insertarRastreo();
-				
-				
+
 			}
 		};
 		
