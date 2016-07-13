@@ -10,6 +10,16 @@ public class MensajeModel {
     private boolean visto = false;
     private int idMensaje;
 
+    public int getIdServidor() {
+        return idServidor;
+    }
+
+    public void setIdServidor(int idServidor) {
+        this.idServidor = idServidor;
+    }
+
+    private int idServidor;
+
     public int getIdMensaje() {
         return idMensaje;
     }

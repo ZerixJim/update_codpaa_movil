@@ -93,8 +93,6 @@ public class ListaMensajesActivity extends AppCompatActivity{
 
 
 
-
-
     }
 
     @Override
@@ -135,6 +133,7 @@ public class ListaMensajesActivity extends AppCompatActivity{
             model.setDateTime(cur.getString(cur.getColumnIndex("fecha")));
             model.setVisto(cur.getInt(cur.getColumnIndex("estatus")) > 0);
             model.setIdMensaje(cur.getInt(cur.getColumnIndex("id_mensaje")));
+            model.setIdServidor(cur.getInt(cur.getColumnIndex("id_servidor")));
 
             array.add(model);
 

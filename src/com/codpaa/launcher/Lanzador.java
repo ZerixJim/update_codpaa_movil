@@ -11,7 +11,7 @@ import com.codpaa.service.GeoLocalizar;
 
 public class Lanzador extends Activity{
 	
-	private final static int SPlASH_TIME_LENGTH = 1200;
+	private final static int SPlASH_TIME_LENGTH = 2000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

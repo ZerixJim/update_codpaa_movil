@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -35,11 +36,14 @@ public class MessaginActivity extends AppCompatActivity {
 
         String strMessage = bundle.getString("content");
         final int idMensaje = bundle.getInt("idMensaje");
+        int idServer = bundle.getInt("idServidor", 0);
 
         TextView message = (TextView) findViewById(R.id.message);
+
         if (strMessage == null || strMessage.isEmpty()){
             //message.setText("no se pudo recibir el mensaje");
             if (message != null) {
+                message.setMovementMethod(LinkMovementMethod.getInstance());
                 message.setText(String.format("%s","no se pudo recibir el mensaje"));
             }
         }
@@ -47,7 +51,7 @@ public class MessaginActivity extends AppCompatActivity {
 
         if (message != null) {
             //message.setText(idMensaje + ".- " + strMessage);
-            message.setText(String.format(Locale.getDefault(),"%d.- %s", idMensaje, strMessage));
+            message.setText(String.format(Locale.getDefault(),"%s (Mensaje id:%d)", strMessage, idServer));
         }
 
         Log.d("BundleMessage", strMessage);

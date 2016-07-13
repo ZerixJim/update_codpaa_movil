@@ -87,6 +87,7 @@
         <activity
             android:name=".activity.MostrarCalendario"
             android:icon="@drawable/ic_launcher"
+            android:theme="@style/MiMateria"
             android:label="@string/ruta"
             android:screenOrientation="portrait" />
         <activity

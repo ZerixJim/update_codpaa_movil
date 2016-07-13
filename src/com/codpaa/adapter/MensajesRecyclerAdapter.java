@@ -106,7 +106,7 @@ public class MensajesRecyclerAdapter extends RecyclerView.Adapter<MensajesRecycl
 
             i.putExtra("content", mensajeModel.getMensaje());
             i.putExtra("idMensaje", mensajeModel.getIdMensaje());
-
+            i.putExtra("idServidor", mensajeModel.getIdServidor());
 
             context.startActivity(i);
         }

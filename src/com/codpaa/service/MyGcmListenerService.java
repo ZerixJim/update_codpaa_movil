@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -32,11 +31,14 @@ import android.util.Log;
 import com.codpaa.R;
 import com.codpaa.activity.MessaginActivity;
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.QuickstartPreferences;
 import com.codpaa.util.Utilities;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -51,41 +53,53 @@ public class MyGcmListenerService extends FirebaseMessagingService{
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        Map<String, String> data = remoteMessage.getData();
+        try{
+            Map<String, String> data = remoteMessage.getData();
 
-        String asunto = data.get("asunto");
-        String message = data.get("message");
-        String content = data.get("content");
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
-        Log.d(TAG, "Message: " + message);
-        Log.d(TAG, "Content: " + content);
+            //JSONObject json =
 
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat dFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            String asunto = data.get("asunto");
+            String message = data.get("message");
+            String content = data.get("content");
+            int idServer = Integer.valueOf(data.get("id_mensaje"));
 
-        String fecha = dFecha.format(c.getTime());
+            Log.d(TAG, "From: " + remoteMessage.getFrom());
+            Log.d(TAG, "Message: " + message);
+            Log.d(TAG, "Content: " + content);
+            Log.d(TAG, "ID SERVER: " + idServer );
 
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat dFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
-        SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put("mensaje", message);
-        values.put("asunto", asunto);
-        values.put("content", content);
-        values.put("fecha", fecha);
-
-        int idMensaje = (int) db.insert(Utilities.TABLE_MENSAJE, null, values);
+            String fecha = dFecha.format(c.getTime());
 
 
-        db.close();
+            SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
+            ContentValues values = new ContentValues();
+
+            values.put("mensaje", message);
+            values.put("asunto", asunto);
+            values.put("content", content);
+            values.put("fecha", fecha);
+            values.put(DbEstructure.Mensaje.ID_SERVIDOR, idServer);
+
+            int idMensaje = (int) db.insert(Utilities.TABLE_MENSAJE, null, values);
+
+
+            db.close();
 
 
 
-        sendNotification(data, idMensaje);
+            sendNotification(data, idMensaje, idServer);
 
 
-        Intent newMessage = new Intent(QuickstartPreferences.NEW_MESSAGE);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(newMessage);
+            Intent newMessage = new Intent(QuickstartPreferences.NEW_MESSAGE);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(newMessage);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
 
 
         // [END_EXCLUDE]
@@ -97,7 +111,7 @@ public class MyGcmListenerService extends FirebaseMessagingService{
      *
      * @param data GCM message received.
      */
-    private void sendNotification(Map<String, String> data, int idMensaje) {
+    private void sendNotification(Map<String, String> data, int idMensaje, int idServer) {
 
         String asunto = data.get("asunto");
         String message = data.get("message");
@@ -107,6 +121,8 @@ public class MyGcmListenerService extends FirebaseMessagingService{
 
         intent.putExtra("content", content);
         intent.putExtra("idMensaje", idMensaje);
+        intent.putExtra("idServidor", idServer);
+
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
