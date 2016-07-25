@@ -102,7 +102,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		Intent recibe = getIntent();
 		String valor = (String) recibe.getExtras().get("nombre");
 
-        createMenu();
+
 
 
 		Context context = getApplicationContext();
@@ -133,6 +133,12 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			Cursor cursorDatosUser = recibeDatos.datosUser(valor);
 			cursorDatosUser.moveToFirst();
 			idUsuario = cursorDatosUser.getInt(0);
+
+            Log.i("idPromo Menu", ""+ idUsuario);
+
+
+
+            createMenu();
 
 
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -279,6 +285,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         ruta.setId(1);
         ruta.setImage("ic_directions_blue_grey_700_36dp");
         ruta.setMenu("Ruta");
+        ruta.setIdPromotor(idUsuario);
         array.add(ruta);
 
 

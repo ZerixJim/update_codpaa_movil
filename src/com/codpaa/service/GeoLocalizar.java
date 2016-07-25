@@ -1039,6 +1039,8 @@ public class GeoLocalizar extends Service implements LocationListener{
                 rpFoto.put("ano", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("anio"))));
                 rpFoto.put("idFotoCel",Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idPhoto"))));
 				rpFoto.put("evento", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("evento"))));
+				rpFoto.put("fecha_captura", curFoto.getString(curFoto.getColumnIndex("fecha_captura")));
+
 
                 File file = new File(curFoto.getString(curFoto.getColumnIndex("imagen")));
                 try {
@@ -1049,7 +1051,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 
                 cliente.setTimeout(5000);
 
-                cliente.post(Utilities.WEB_SERVICE_CODPAA + "upimage1.php",rpFoto, jr);
+                cliente.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage.php",rpFoto, jr);
 
             }
 

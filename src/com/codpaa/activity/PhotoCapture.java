@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -410,6 +411,15 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 				String mes = new SimpleDateFormat("MM", local).format(new Date());
 				String dia = new SimpleDateFormat("dd", local).format(new Date());
 
+
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+                String date = df.format(c.getTime());
+
+
+
+
 				if(verificarConexion()){
 
                     AsyncHttpClient clienteFoto = new AsyncHttpClient();
@@ -420,7 +430,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     if(!mCurrentPhotoPath.equals("")){
 
                         long id = registraImagen.insertarImagenId(idTienda,idPromotor,idMarca,idExhibicion,timeStamp,Integer.valueOf(dia),
-                                Integer.valueOf(mes),Integer.valueOf(ano),mCurrentPhotoPath,1,getSelectedRadioGroup());
+                                Integer.valueOf(mes),Integer.valueOf(ano),mCurrentPhotoPath,1,getSelectedRadioGroup(), date);
 
                         if(id > 0){
                             Log.d("EnviarImage", "Enviando la imagen");
@@ -441,6 +451,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                             requ.put("mes", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("mes"))));
                             requ.put("ano", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("anio"))));
                             requ.put("evento", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("evento"))));
+                            requ.put("fecha_captura", datosFoto.getString(datosFoto.getColumnIndex("fecha_captura")));
                             try {
                                 requ.put("file", file );
                             } catch (FileNotFoundException e) {
@@ -448,7 +459,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                             }
 
 
-                            clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "upimage1.php", requ,
+                            clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage.php", requ,
                                     new HttpResponseImage(CameraActivity, (int)(long)id));
                             Log.d("http foto", requ.toString());
                             datosFoto.close();

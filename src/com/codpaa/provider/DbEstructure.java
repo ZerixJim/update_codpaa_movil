@@ -20,6 +20,21 @@ public class DbEstructure {
         public static final String TIPO_PROMOTOR = "tipoPromotor";
     }
 
+    /**
+     * Table photo
+     */
+
+    public static class Photo implements BaseColumns{
+        private Photo(){}
+        public static final String TABLE_NAME = "photo";
+        public static final String ID_PHOTO = "idPhoto";
+        public static final String ID_TIENDA = "idTienda";
+        public static final String ID_CELULAR = "idCelular";
+        public static final String ID_MARCA = "idExhibicion";
+        public static final String FECHA  = "fecha";
+        public static final String FECHA_CAPTURA  = "fecha_captura";
+    }
+
 
     /**
      * tinedas visitadas, tabla no utilizada

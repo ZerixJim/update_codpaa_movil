@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.codpaa.provider.DbEstructure;
 import com.codpaa.provider.DbEstructure.Usuario;
 import com.codpaa.provider.DbEstructure.VisitaTienda;
 import com.codpaa.provider.DbEstructure.Mensaje;
@@ -57,7 +58,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
         super(miContext, name, cursorfactory, version);
 
         fields();
-
 
     }
 
@@ -146,7 +146,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "photo(idPhoto integer primary key autoincrement NOT NULL, idTienda int NOT NULL, " +
                 "idCelular int NOT NULL, idMarca int NOT NULL, idExhibicion int NOT NULL, " +
                 "fecha varchar(10) NOT NULL, dia int NOT NULL, mes int NOT NULL, anio int NOT NULL, " +
-                "imagen varchar(250) NOT NULL, status int(2) NOT NULL, evento int(2))";
+                "imagen varchar(250) NOT NULL, status int(2) NOT NULL, evento int(2), fecha_captura char(20) NOT NULL)";
         preguntas = "create table if not exists " +
                     "preguntas(id_pregunta integer NOT NULL, " +
                 "descripcion varchar(250) NOT NULL, id_tipo int NOT NULL, " +
@@ -248,6 +248,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
             db.execSQL("alter table " + Tienda.TABLE_NAME + " add column " + Tienda.ID_TIPO + " int");
 
+            db.execSQL("alter table " + DbEstructure.Photo.TABLE_NAME + " add column " + DbEstructure.Photo.FECHA_CAPTURA + " char(20)");
 
         }
 
@@ -297,7 +298,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
         }
     }
 
-    public long insertarImagenId(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia, int mes, int anio, String imagen, int status, int evento){
+    public long insertarImagenId(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia,
+                                 int mes, int anio, String imagen, int status, int evento, String fechaCaptura){
         baseDatosLocal = getWritableDatabase();
         ContentValues valores = new ContentValues();
         long id = 0;
@@ -312,6 +314,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         valores.put("imagen", imagen);
         valores.put("status", status);
         valores.put("evento", evento);
+        valores.put("fecha_captura", fechaCaptura);
 
         if(baseDatosLocal != null) {
             id = baseDatosLocal.insert("photo", null, valores);
@@ -576,7 +579,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor fotos() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
         return baseDatosLocal.rawQuery("select idPhoto, idTienda, idCelular, idMarca, idExhibicion," +
-                " fecha, dia, mes, anio, imagen, evento from photo where status=1;",null);
+                " fecha, dia, mes, anio, imagen, evento, fecha_captura from photo where status=1;",null);
 
     }
 
@@ -584,7 +587,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
 
         return baseDatosLocal.rawQuery("select idTienda, idCelular, idMarca, idExhibicion," +
-                " fecha, dia, mes, anio, evento from photo where idPhoto="+idFoto+";", null);
+                " fecha, dia, mes, anio, evento, fecha_captura from photo where idPhoto="+idFoto+";", null);
 
 
     }

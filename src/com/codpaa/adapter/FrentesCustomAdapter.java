@@ -64,6 +64,7 @@ public class FrentesCustomAdapter extends ArrayAdapter<FrentesModel> {
             viewHolder.freModel = frentesModel;
         }
 
+
         viewHolder.txtMarca.setText(frentesModel.getMarca());
         viewHolder.txtProducto.setText(frentesModel.getProducto());
         viewHolder.txtCantidad.setText("Cantidad: "+String.valueOf(frentesModel.getCantidad()));

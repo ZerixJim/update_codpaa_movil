@@ -5,10 +5,22 @@ package com.codpaa.model;/*
 public class MenuModel {
 
     private int id;
+    private int idPromotor;
+
+
+
     private String menu;
     private String image;
     private int change = 0;
     private int count = 0;
+
+    public int getIdPromotor() {
+        return idPromotor;
+    }
+
+    public void setIdPromotor(int idPromotor) {
+        this.idPromotor = idPromotor;
+    }
 
     public int getCount() {
         return count;

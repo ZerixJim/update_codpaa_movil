@@ -206,6 +206,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 			try {
 
+				Log.d("idPromotor", " "+idPromotor);
 
 				Cursor cNomPromo = DB.nombrePromotor(idPromotor);
 				cNomPromo.moveToFirst();
@@ -653,6 +654,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 							}else {
 
 								btnEntrada.setBackgroundResource(R.drawable.custom_btn_orange);
+								btnEntrada.setTextColor(Color.WHITE);
 								Entrada = false;
 								
 							}
@@ -675,6 +677,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 								}else {
 									
 									btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_orange);
+									btnSalidaTi.setTextColor(Color.WHITE);
 									Salida = false;
 								}
 								

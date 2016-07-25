@@ -63,7 +63,7 @@ public class MessaginActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Snackbar.make(view, "Enviando Acuse de Recibido", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-
+                    //TODO: implementar el envio de acuse de recibido
                     SQLiteDatabase db = new BDopenHelper(MessaginActivity.this).getWritableDatabase();
                     ContentValues values = new ContentValues();
                     values.put("estatus", 1);

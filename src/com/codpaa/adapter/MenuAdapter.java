@@ -102,6 +102,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
             switch (menuModel.getId()){
                 case 1:
                     Intent ruta = new Intent(context, CalendarioRuta.class);
+                    ruta.putExtra("idCelular", menuModel.getIdPromotor());
                     context.startActivity(ruta);
                     break;
 
