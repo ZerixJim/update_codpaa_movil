@@ -65,6 +65,12 @@ public class FrentesCustomAdapter extends ArrayAdapter<FrentesModel> {
         }
 
 
+        if (datos.size() <= 1 && frentesModel.getProducto() == null){
+            viewHolder.txtStatus.setVisibility(View.INVISIBLE);
+            viewHolder.txtCantidad.setVisibility(View.INVISIBLE);
+        }
+
+
         viewHolder.txtMarca.setText(frentesModel.getMarca());
         viewHolder.txtProducto.setText(frentesModel.getProducto());
         viewHolder.txtCantidad.setText("Cantidad: "+String.valueOf(frentesModel.getCantidad()));

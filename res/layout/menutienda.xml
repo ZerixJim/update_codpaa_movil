@@ -165,6 +165,8 @@
                     android:layout_weight="1"
                     android:layout_margin="3dp"
                     android:padding="15dp"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="30dp"
                     android:drawableLeft="@drawable/ic_grid_on_grey600_24dp"
                     android:drawableStart="@drawable/ic_grid_on_grey600_24dp"
                     android:text="@string/frente"/>
@@ -176,6 +178,8 @@
                     android:layout_weight="1"
                     android:layout_margin="3dp"
                     android:padding="15dp"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="30dp"
                     android:drawableLeft="@drawable/ic_blur_linear_grey600_24dp"
                     android:drawableStart="@drawable/ic_blur_linear_grey600_24dp"
                     android:text="@string/surtido"/>
