@@ -13,6 +13,7 @@ import com.codpaa.provider.DbEstructure.Usuario;
 import com.codpaa.provider.DbEstructure.VisitaTienda;
 import com.codpaa.provider.DbEstructure.Mensaje;
 import com.codpaa.provider.DbEstructure.Tienda;
+import com.codpaa.provider.DbEstructure.ProductByTienda;
 
 import java.io.File;
 
@@ -52,6 +53,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String mensaje;
     private static String ventaPromedio;
     private static String direcciones;
+    private static String productoByTienda;
 
 
     public BDopenHelper(Context miContext) {
@@ -121,7 +123,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 Tienda.SUCURSAL+ " varchar(60), " +
                 Tienda.LATITUD + " varchar(25), " +
                 Tienda.LONGITUD + " varchar(25),  " +
-                Tienda.ID_TIPO +" int)";
+                Tienda.ID_TIPO +" int, " +
+                Tienda.ID_FORMATO + " int)";
         marca ="create table if not exists " +
                 "marca(idMarca int primary key, nombre char(20), img varchar(250))";
         coordenadasEnviar = "create table if not exists " +
@@ -176,6 +179,11 @@ public class BDopenHelper extends SQLiteOpenHelper {
         direcciones = "create table if not exists " +
                 "direcciones(idTienda int NOT NULL, idPromotor int NOT NULL, direccion varchar(200) NOT NULL," +
                 " estatus integer default 1)";
+
+        productoByTienda = "create table if not exists " +
+                ProductByTienda.TABLE_NAME + "(" +
+                ProductByTienda.ID_PRODUCTO + " int," +
+                ProductByTienda.ID_FORMATO + " int)";
     }
 
     @Override
@@ -210,6 +218,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(mensaje);
         db.execSQL(ventaPromedio);
         db.execSQL(direcciones);
+        db.execSQL(productoByTienda);
     }
 
     @Override
@@ -246,9 +255,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.ID_SERVIDOR + " int");
             db.execSQL("alter table " + Usuario.TABLE_NAME + " add column " + Usuario.TIPO_PROMOTOR + " int(2)");
 
-            db.execSQL("alter table " + Tienda.TABLE_NAME + " add column " + Tienda.ID_TIPO + " int");
+            db.execSQL("drop table if exists " + Tienda.TABLE_NAME);
+            db.execSQL(tiendas);
 
             db.execSQL("alter table " + DbEstructure.Photo.TABLE_NAME + " add column " + DbEstructure.Photo.FECHA_CAPTURA + " char(20)");
+
+            db.execSQL(productoByTienda);
 
         }
 
@@ -437,10 +449,11 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal.close();
     }
 
-    public void insertarClientes(int idTienda, String grupo,String sucur, String lon, String la) throws SQLiteException{
+    public void insertarClientes(int idTienda, String grupo,String sucur, String lon, String la, int idFormato) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert or replace into clientes(idTienda,grupo,sucursal,latitud,longitud) values("+idTienda+",'"+grupo+"','"+sucur+"','"+lon+"','"+la+"')");
+            baseDatosLocal.execSQL("insert or replace into clientes(idTienda,grupo,sucursal,latitud,longitud, idFormato) " +
+                    "values("+idTienda+",'"+grupo+"','"+sucur+"','"+lon+"','"+la+"', "+ idFormato +")");
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 

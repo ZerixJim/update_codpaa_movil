@@ -9,6 +9,7 @@ import com.codpaa.listener.ResponseMarcas;
 import com.codpaa.listener.ResponseProductos;
 import com.codpaa.listener.ResponseRuta;
 import com.codpaa.listener.ResponseTiendas;
+import com.codpaa.response.HttpResponseInfo;
 import com.codpaa.util.Utilities;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -25,6 +26,24 @@ public class UpdateInformation{
 
     public UpdateInformation(Context context){
         this._context = context;
+    }
+
+
+
+    public void updateInfo(int idPromotor){
+
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        HttpResponseInfo responseInfo = new HttpResponseInfo(_context);
+
+        RequestParams rp = new RequestParams();
+        rp.put("solicitud" , "info");
+        rp.put("id", idPromotor);
+
+        client.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, responseInfo);
+
+
+
     }
 
 

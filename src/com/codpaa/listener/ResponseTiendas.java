@@ -88,7 +88,7 @@ public class ResponseTiendas extends JsonHttpResponseHandler{
                     tiendasArray.getJSONObject(i).getString("G"),
                     tiendasArray.getJSONObject(i).getString("S"),
                     tiendasArray.getJSONObject(i).getString("X"),
-                    tiendasArray.getJSONObject(i).getString("Y"));
+                    tiendasArray.getJSONObject(i).getString("Y"), 0);
         }
 
         configuracion.setTiendas(fecha);

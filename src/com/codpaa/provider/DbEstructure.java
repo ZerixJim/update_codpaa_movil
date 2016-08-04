@@ -103,8 +103,18 @@ public class DbEstructure {
         public static final String LATITUD = "latitud";
         public static final String LONGITUD = "longitud";
         public static final String ID_TIPO = "idTipo";
+        public static final String ID_FORMATO = "idFormato";
     }
 
+    /**
+     * table producto by tienda
+     */
+    public static class ProductByTienda implements BaseColumns {
+        private ProductByTienda(){}
+        public static final String TABLE_NAME = "productoTienda";
+        public static final String ID_PRODUCTO = "idProducto";
+        public static final String ID_FORMATO = "idFormato";
+    }
 
 
 

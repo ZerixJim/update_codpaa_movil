@@ -377,11 +377,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 					Toast.makeText(this,"Actualizando Informacion",Toast.LENGTH_SHORT).show();
 
 
-                    upinfo.actualizarTiendas(idUsuario);
-                    upinfo.actualizarRuta(idUsuario);
-                    upinfo.actualizarExhibiciones(idUsuario);
-                    upinfo.actualizarMarca(idUsuario);
-                    upinfo.actualizarProducto(idUsuario);
+                    upinfo.updateInfo(idUsuario);
 
 				}else{
 
@@ -446,7 +442,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     private void updateInfo(){
         configuracion = new Configuracion(this);
         UpdateInformation uI = new UpdateInformation(this);
-
+        /*
         if (configuracion.getTiendas() != null){
             if (!configuracion.getTiendas().equals(fechaActual())){
                 uI.actualizarTiendas(idUsuario);
@@ -467,6 +463,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             uI.actualizarRuta(idUsuario);
         }
 
+
+
         if (configuracion.getExhi() != null){
             if (!configuracion.getExhi().equals(fechaActual())){
                 uI.actualizarExhibiciones(idUsuario);
@@ -475,28 +473,38 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             }
         }else {
             uI.actualizarExhibiciones(idUsuario);
-        }
+        }*/
 
-        if (configuracion.getMarca() != null){
-            if (!configuracion.getMarca().equals(fechaActual())){
-               uI.actualizarMarca(idUsuario);
+        if (configuracion.getMarca() != null
+                && configuracion.getProducto() != null
+                && configuracion.getExhi() != null
+                && configuracion.getTiendas() != null
+                && configuracion.getProductoByTienda() != null){
+            if (!configuracion.getMarca().equals(fechaActual())
+                    && !configuracion.getProducto().equals(fechaActual())
+                    && !configuracion.getExhi().equals(fechaActual())
+                    && !configuracion.getTiendas().equals(fechaActual())
+                    && !configuracion.getProductoByTienda().equals(fechaActual())){
+               //uI.actualizarMarca(idUsuario);
+                uI.updateInfo(idUsuario);
             }else {
-                Log.d("Shared", "marca:" + configuracion.getMarca());
+                Log.d("Shared", "marca:" + configuracion.getMarca() + " produ:" + configuracion.getProducto());
             }
         }else {
-            uI.actualizarMarca(idUsuario);
+            uI.updateInfo(idUsuario);
         }
 
+        /*
         if (configuracion.getProducto() != null){
             if (!configuracion.getProducto().equals(fechaActual())){
-                uI.actualizarProducto(idUsuario);
+                //uI.actualizarProducto(idUsuario);
 
             }else {
                 Log.d("Shared", "pro:" + configuracion.getProducto());
             }
         }else {
             uI.actualizarProducto(idUsuario);
-        }
+        }*/
 
 		uI.actualizarEncuesta(idUsuario);
 
