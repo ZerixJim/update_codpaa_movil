@@ -1,9 +1,9 @@
 package com.codpaa.activity;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,9 +15,19 @@ import android.widget.TextView;
 
 import com.codpaa.R;
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.provider.DbEstructure.Mensaje;
+import com.codpaa.response.MensajeHttpResponse;
 import com.codpaa.util.Utilities;
+import com.loopj.android.http.AsyncHttpClient;
 
+import com.loopj.android.http.RequestParams;
+
+
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
+
 
 public class MessaginActivity extends AppCompatActivity {
 
@@ -63,19 +73,52 @@ public class MessaginActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     Snackbar.make(view, "Enviando Acuse de Recibido", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                    //TODO: implementar el envio de acuse de recibido
+
                     SQLiteDatabase db = new BDopenHelper(MessaginActivity.this).getWritableDatabase();
+
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+                    Calendar calendar = Calendar.getInstance();
+
+                    String fechaLeido = simpleDateFormat.format(calendar.getTime());
+
                     ContentValues values = new ContentValues();
                     values.put("estatus", 1);
+                    values.put(Mensaje.FECHA_LECTURA, fechaLeido);
                     db.update(Utilities.TABLE_MENSAJE, values,"id_mensaje="+idMensaje, null);
 
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            finish();
-                        }
-                    }, 1200);
+                    String sql = String.format(Locale.getDefault(),
+                            "select %s, %s, %s from %s where %s=%d and %s=0",
+                            Mensaje.ID_SERVIDOR, Mensaje.ID_PROMOTOR, Mensaje.FECHA_LECTURA,
+                            Mensaje.TABLE_NAME,Mensaje.ID_MENSAJE, idMensaje, Mensaje.ENVIADO);
+
+                    Cursor cursor = db.rawQuery(sql, null);
+
+                    //Log.d("SQL" , sql + " Count " + cursor.getCount());
+
+                    if (cursor.getCount() > 0) {
+
+
+                        cursor.moveToFirst();
+                        AsyncHttpClient client = new AsyncHttpClient();
+
+                        RequestParams rp = new RequestParams();
+                        rp.put("idPromotor", cursor.getInt(cursor.getColumnIndex(Mensaje.ID_PROMOTOR)));
+                        rp.put("idMensaje", cursor.getInt(cursor.getColumnIndex(Mensaje.ID_SERVIDOR)));
+                        rp.put("fecha", cursor.getString(cursor.getColumnIndex(Mensaje.FECHA_LECTURA)));
+
+
+
+                        client.post(Utilities.WEB_SERVICE_CODPAA + "sendmensaje.php",
+                                rp, new MensajeHttpResponse(MessaginActivity.this, idMensaje));
+
+                    }
+
+
+                    cursor.close();
+                    db.close();
+
                 }
             });
         }

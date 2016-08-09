@@ -1,9 +1,11 @@
 package com.codpaa.activity;
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -42,6 +44,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
@@ -105,7 +109,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
 
-		Context context = getApplicationContext();
+        Context context = getApplicationContext();
 		PackageManager packageManager = context.getPackageManager();
 		String packageName = context.getPackageName();
 
@@ -546,14 +550,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 	@Override
 	public void onClick(View v) {
-		
-		switch(v.getId()){
-
-
-
-
-        }
-		
 	}
 
 	@Override
@@ -675,15 +671,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 			e.printStackTrace();
 		}
 		
-	}
-
-
-
-
-	public void startCalendarioActivity(){
-		Intent i = new Intent(this, CalendarioRuta.class);
-		i.putExtra("idCelular",idUsuario);
-		startActivity(i);
 	}
 
 

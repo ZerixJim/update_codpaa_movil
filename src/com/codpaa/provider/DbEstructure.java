@@ -18,6 +18,8 @@ public class DbEstructure {
         public static final String USER = "user";
         public static final String PASS = "pass";
         public static final String TIPO_PROMOTOR = "tipoPromotor";
+        public static final String STATUS = "estatus";
+        public static final String FECHA_SYNC = "fecha_sync";
     }
 
     /**
@@ -84,6 +86,8 @@ public class DbEstructure {
         public static final String ESTATUS = "estatus";
         public static final String ENVIADO = "enviado";
         public static final String ID_SERVIDOR = "id_servidor";
+        public static final String ID_PROMOTOR = "id_promotor";
+        public static final String FECHA_LECTURA = "fecha_lectura";
     }
 
 

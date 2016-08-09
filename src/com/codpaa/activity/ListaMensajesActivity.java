@@ -134,6 +134,7 @@ public class ListaMensajesActivity extends AppCompatActivity{
             model.setVisto(cur.getInt(cur.getColumnIndex("estatus")) > 0);
             model.setIdMensaje(cur.getInt(cur.getColumnIndex("id_mensaje")));
             model.setIdServidor(cur.getInt(cur.getColumnIndex("id_servidor")));
+            model.setEnviado(cur.getInt(cur.getColumnIndex("enviado")) > 0);
 
             array.add(model);
 

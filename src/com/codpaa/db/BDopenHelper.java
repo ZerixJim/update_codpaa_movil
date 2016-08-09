@@ -69,7 +69,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 Usuario.NOMBRE +" varchar(100)," +
                 Usuario.USER + " varchar(15), " +
                 Usuario.PASS + " varchar(15)," +
-                Usuario.TIPO_PROMOTOR + " int(2))";
+                Usuario.TIPO_PROMOTOR + " int(2)," +
+                Usuario.STATUS + " int(2))";
 
         tiendasVisitadas = "Create table if not exists " +
                 "tiendasVisitadas(idTienda int,nombre, idPromotor int,  fecha date, " +
@@ -169,7 +170,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 Mensaje.FECHA + " varchar(15) NOT NULL, " +
                 Mensaje.ESTATUS + " integer default 0, " +
                 Mensaje.ENVIADO + " integer default 0," +
-                Mensaje.ID_SERVIDOR + " integer)";
+                Mensaje.ID_SERVIDOR + " int, " +
+                Mensaje.ID_PROMOTOR + " int," +
+                Mensaje.FECHA_LECTURA + " varchar(15))";
 
         ventaPromedio = "create table if not exists " +
                 "ventaPromedio(idMarca int NOT NULL, tipo varchar(10) NOT NULL, cantidad float NOT NULL," +
@@ -253,14 +256,20 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         if (oldVersion == 23 && newVersion == 24){
             db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.ID_SERVIDOR + " int");
+            db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.ID_PROMOTOR + " int");
+            db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.FECHA_LECTURA + " varchar(15)");
             db.execSQL("alter table " + Usuario.TABLE_NAME + " add column " + Usuario.TIPO_PROMOTOR + " int(2)");
 
             db.execSQL("drop table if exists " + Tienda.TABLE_NAME);
             db.execSQL(tiendas);
 
+            db.execSQL("drop table if exists " + Usuario.TABLE_NAME);
+            db.execSQL(usuarios);
+
             db.execSQL("alter table " + DbEstructure.Photo.TABLE_NAME + " add column " + DbEstructure.Photo.FECHA_CAPTURA + " char(20)");
 
             db.execSQL(productoByTienda);
+
 
         }
 
@@ -308,6 +317,21 @@ public class BDopenHelper extends SQLiteOpenHelper {
             baseDatosLocal.insert("photo", null, valores);
             baseDatosLocal.close();
         }
+    }
+
+
+    public int getIdPromotor(){
+        baseDatosLocal = getReadableDatabase();
+        Cursor cursor = baseDatosLocal.rawQuery("select idCelular from usuarios", null);
+        int id = 0;
+        if (cursor.getCount() == 1 ){
+            cursor.moveToFirst();
+
+            id = cursor.getInt(0);
+
+        }
+        cursor.close();
+        return id;
     }
 
     public long insertarImagenId(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia,
@@ -727,7 +751,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
 
         return baseDatosLocal.rawQuery("select mensaje, asunto, content, fecha, estatus, enviado, " +
-                " id_mensaje, id_servidor from mensaje order by "+ Mensaje.ESTATUS +" asc, "+ Mensaje.FECHA+ " desc", null);
+                " id_mensaje, id_servidor, enviado from mensaje order by "+ Mensaje.ESTATUS +" asc, "+ Mensaje.FECHA+ " desc", null);
+    }
+
+    public Cursor getMensajes(int idMensaje) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select ", null);
     }
 
     public int contarExhibiciones(int idTienda, String fecha) throws  SQLiteException{

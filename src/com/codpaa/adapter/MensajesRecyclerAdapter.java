@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +18,18 @@ import com.codpaa.R;
 import com.codpaa.activity.MessaginActivity;
 import com.codpaa.model.MensajeModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MensajesRecyclerAdapter extends RecyclerView.Adapter<MensajesRecyclerAdapter.MensajesViewHolder>{
 
 
     private Context context;
     private List<MensajeModel> mensajesArray;
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
 
     public MensajesRecyclerAdapter(Context context) {
@@ -50,9 +57,14 @@ public class MensajesRecyclerAdapter extends RecyclerView.Adapter<MensajesRecycl
 
         final MensajeModel mModel = mensajesArray.get(position);
 
+
+
+        String time[] = mModel.getDateTime().split(" ");
+
         holder.txtAsunto.setText(mModel.getAsunto());
         holder.txtMensaje.setText(mModel.getMensaje());
-        holder.txtFecha.setText(mModel.getDateTime());
+        holder.txtFecha.setText(getTimeAgo(DATE_FORMAT, mModel.getDateTime()));
+        holder.txtTime.setText(time[1]);
 
         if (mModel.isVisto()){
             holder.imgVisto.setVisibility(View.VISIBLE);
@@ -60,6 +72,12 @@ public class MensajesRecyclerAdapter extends RecyclerView.Adapter<MensajesRecycl
 
             holder.txtAsunto.setTextColor(context.getResources().getColor(R.color.text_primary_leido));
             holder.txtMensaje.setTextColor(context.getResources().getColor(R.color.text_second_leido));
+
+            if (mModel.isEnviado()){
+                holder.imgVisto.setImageResource(R.drawable.ic_done_all_green_500_18dp);
+            }else {
+                holder.imgVisto.setImageResource(R.drawable.ic_done_grey_600_18dp);
+            }
 
 
         } else {
@@ -82,7 +100,7 @@ public class MensajesRecyclerAdapter extends RecyclerView.Adapter<MensajesRecycl
     }
 
     public class MensajesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView txtAsunto, txtMensaje, txtFecha;
+        TextView txtAsunto, txtMensaje, txtFecha, txtTime;
         ImageView imgVisto;
 
         public MensajesViewHolder(View itemView) {
@@ -91,6 +109,7 @@ public class MensajesRecyclerAdapter extends RecyclerView.Adapter<MensajesRecycl
             txtAsunto = (TextView) itemView.findViewById(R.id.asunto);
             txtMensaje = (TextView) itemView.findViewById(R.id.mensaje);
             txtFecha = (TextView) itemView.findViewById(R.id.fecha);
+            txtTime = (TextView) itemView.findViewById(R.id.time);
 
             imgVisto = (ImageView) itemView.findViewById(R.id.image_favorito);
 
@@ -110,5 +129,28 @@ public class MensajesRecyclerAdapter extends RecyclerView.Adapter<MensajesRecycl
 
             context.startActivity(i);
         }
+    }
+
+
+    private String getTimeAgo(String formato, String myTime){
+        String response = "";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(formato, Locale.getDefault());
+
+        try {
+            Date date = dateFormat.parse(myTime);
+
+            long dateMilli = date.getTime();
+            long currentTime = System.currentTimeMillis();
+
+            response = DateUtils.getRelativeTimeSpanString(dateMilli,
+                    currentTime, DateUtils.MINUTE_IN_MILLIS).toString();
+
+            Log.d("fecha", " " + DateUtils.getRelativeTimeSpanString(dateMilli, currentTime, DateUtils.MINUTE_IN_MILLIS));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return response;
     }
 }

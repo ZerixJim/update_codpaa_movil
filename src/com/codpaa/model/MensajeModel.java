@@ -8,10 +8,19 @@ public class MensajeModel {
     private String mensaje;
     private String dateTime;
     private boolean visto = false;
+    private boolean enviado = false;
     private int idMensaje;
 
     public int getIdServidor() {
         return idServidor;
+    }
+
+    public boolean isEnviado() {
+        return enviado;
+    }
+
+    public void setEnviado(boolean enviado) {
+        this.enviado = enviado;
     }
 
     public void setIdServidor(int idServidor) {

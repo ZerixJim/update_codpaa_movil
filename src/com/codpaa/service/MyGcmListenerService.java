@@ -58,20 +58,18 @@ public class MyGcmListenerService extends FirebaseMessagingService{
 
             //JSONObject json =
 
+            int idPromotor = new BDopenHelper(getApplicationContext()).getIdPromotor();
+
             String asunto = data.get("asunto");
             String message = data.get("message");
             String content = data.get("content");
+            String fecha = data.get("fecha");
             int idServer = Integer.valueOf(data.get("id_mensaje"));
 
             Log.d(TAG, "From: " + remoteMessage.getFrom());
             Log.d(TAG, "Message: " + message);
             Log.d(TAG, "Content: " + content);
             Log.d(TAG, "ID SERVER: " + idServer );
-
-            Calendar c = Calendar.getInstance();
-            SimpleDateFormat dFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-
-            String fecha = dFecha.format(c.getTime());
 
 
             SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
@@ -81,6 +79,7 @@ public class MyGcmListenerService extends FirebaseMessagingService{
             values.put("asunto", asunto);
             values.put("content", content);
             values.put("fecha", fecha);
+            values.put(DbEstructure.Mensaje.ID_PROMOTOR, idPromotor);
             values.put(DbEstructure.Mensaje.ID_SERVIDOR, idServer);
 
             int idMensaje = (int) db.insert(Utilities.TABLE_MENSAJE, null, values);
