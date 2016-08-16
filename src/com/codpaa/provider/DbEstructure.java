@@ -111,13 +111,27 @@ public class DbEstructure {
     }
 
     /**
-     * table producto by tienda
+     * table producto by formato
      */
-    public static class ProductByTienda implements BaseColumns {
-        private ProductByTienda(){}
-        public static final String TABLE_NAME = "productoTienda";
+    public static class ProductByFormato implements BaseColumns {
+        private ProductByFormato(){}
+        public static final String TABLE_NAME = "productoFormato";
         public static final String ID_PRODUCTO = "idProducto";
         public static final String ID_FORMATO = "idFormato";
+    }
+
+    /**
+     * table producto by tienda
+     */
+
+    public static class ProductoByTienda implements BaseColumns {
+
+        private ProductoByTienda(){}
+
+        public static final String TABLE_NAME = "productoTienda";
+        public static final String ID_PRODUCTO = "idProducto";
+        public static final String ID_TIENDA = "idTienda";
+
     }
 
 

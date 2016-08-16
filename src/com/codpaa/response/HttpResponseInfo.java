@@ -1,4 +1,5 @@
-package com.codpaa.response;/*
+package com.codpaa.response;
+/*
  * Created by grim on 03/08/2016.
  */
 
@@ -8,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.Configuracion;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -19,8 +21,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import com.codpaa.provider.DbEstructure.ProductByFormato;
+
 import cz.msebera.android.httpclient.Header;
-import com.codpaa.provider.DbEstructure.ProductByTienda;
 
 public class HttpResponseInfo extends JsonHttpResponseHandler {
 
@@ -53,11 +56,9 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                 parseJSONProductoByTinda(productoTienda);
 
 
-
+                Toast.makeText(context, "Informacion Cargada!!", Toast.LENGTH_SHORT).show();
             }catch (JSONException e){
                 e.printStackTrace();
-            }finally {
-                Toast.makeText(context, "Informacion descargada!!", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -195,6 +196,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
     private void parseJSONProductoByTinda(JSONArray array) throws JSONException{
         SQLiteDatabase db = new BDopenHelper(context).getWritableDatabase();
+        new BDopenHelper(context.getApplicationContext()).vaciarTabla(ProductByFormato.TABLE_NAME);
 
         Configuracion configuracion = new Configuracion(context);
 
@@ -210,7 +212,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                 contentValues.put("idProducto", array.getJSONObject(i).getInt("idProducto"));
                 contentValues.put("idFormato", array.getJSONObject(i).getInt("idFormato"));
 
-                db.insert(ProductByTienda.TABLE_NAME, null, contentValues);
+                db.insert(DbEstructure.ProductByFormato.TABLE_NAME, null, contentValues);
 
             }
 

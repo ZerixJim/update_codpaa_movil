@@ -145,7 +145,7 @@ public class MensajesRecyclerAdapter extends RecyclerView.Adapter<MensajesRecycl
             response = DateUtils.getRelativeTimeSpanString(dateMilli,
                     currentTime, DateUtils.MINUTE_IN_MILLIS).toString();
 
-            Log.d("fecha", " " + DateUtils.getRelativeTimeSpanString(dateMilli, currentTime, DateUtils.MINUTE_IN_MILLIS));
+            //Log.d("fecha", " " + DateUtils.getRelativeTimeSpanString(dateMilli, currentTime, DateUtils.MINUTE_IN_MILLIS));
 
         } catch (ParseException e) {
             e.printStackTrace();

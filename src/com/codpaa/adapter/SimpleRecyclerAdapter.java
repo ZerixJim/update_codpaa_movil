@@ -3,6 +3,7 @@ package com.codpaa.adapter;
  * Created by Gustavo on 20/10/2015.
  */
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -144,6 +145,14 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
 
 
                     startActivityRute(idTienda);
+
+                    try{
+
+                        ((Activity)context).finish();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
 
                 }
             }).setNegativeButton("Cancelar", null);

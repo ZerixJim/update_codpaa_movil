@@ -13,7 +13,8 @@ import com.codpaa.provider.DbEstructure.Usuario;
 import com.codpaa.provider.DbEstructure.VisitaTienda;
 import com.codpaa.provider.DbEstructure.Mensaje;
 import com.codpaa.provider.DbEstructure.Tienda;
-import com.codpaa.provider.DbEstructure.ProductByTienda;
+import com.codpaa.provider.DbEstructure.ProductByFormato;
+import com.codpaa.provider.DbEstructure.ProductoByTienda;
 
 import java.io.File;
 
@@ -53,6 +54,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String mensaje;
     private static String ventaPromedio;
     private static String direcciones;
+    private static String productoByFormato;
     private static String productoByTienda;
 
 
@@ -183,10 +185,17 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "direcciones(idTienda int NOT NULL, idPromotor int NOT NULL, direccion varchar(200) NOT NULL," +
                 " estatus integer default 1)";
 
+        productoByFormato = "create table if not exists " +
+                ProductByFormato.TABLE_NAME + "(" +
+                ProductByFormato.ID_PRODUCTO + " int," +
+                ProductByFormato.ID_FORMATO + " int)";
+
         productoByTienda = "create table if not exists " +
-                ProductByTienda.TABLE_NAME + "(" +
-                ProductByTienda.ID_PRODUCTO + " int," +
-                ProductByTienda.ID_FORMATO + " int)";
+                ProductoByTienda.TABLE_NAME + "(" +
+                ProductoByTienda.ID_PRODUCTO + " int, " +
+                ProductoByTienda.ID_TIENDA + " int)";
+
+
     }
 
     @Override
@@ -204,7 +213,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(productoPrecio);
         db.execSQL(productos);
         db.execSQL(surtido);
-        db.execSQL(surtido);
         db.execSQL(tipoExhibicion);
         db.execSQL(tiendas);
         db.execSQL(marca);
@@ -221,6 +229,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(mensaje);
         db.execSQL(ventaPromedio);
         db.execSQL(direcciones);
+        db.execSQL(productoByFormato);
         db.execSQL(productoByTienda);
     }
 
@@ -268,6 +277,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
             db.execSQL("alter table " + DbEstructure.Photo.TABLE_NAME + " add column " + DbEstructure.Photo.FECHA_CAPTURA + " char(20)");
 
+            db.execSQL(productoByFormato);
             db.execSQL(productoByTienda);
 
 
