@@ -3,6 +3,7 @@ package com.codpaa.response;
  * Created by grim on 03/08/2016.
  */
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,22 +23,42 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import com.codpaa.provider.DbEstructure.ProductByFormato;
+import com.codpaa.provider.DbEstructure.ProductoByTienda;
 
 import cz.msebera.android.httpclient.Header;
 
 public class HttpResponseInfo extends JsonHttpResponseHandler {
 
     private Context context;
+    private ProgressDialog progressDialog;
 
     public HttpResponseInfo(Context context){
 
         this.context = context;
+        this.progressDialog = new ProgressDialog(context);
+        this.progressDialog.setMessage("Descargando...");
 
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        progressDialog.show();
+
+    }
+
+    @Override
+    public void onFinish() {
+        super.onFinish();
+        progressDialog.dismiss();
     }
 
     @Override
     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         super.onSuccess(statusCode, headers, response);
+
+        //Log.d("OnSuccess Info", "1");
 
         if (response != null){
             try {
@@ -46,6 +67,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                 JSONArray exhibiciones = response.getJSONArray("exhibiciones");
                 JSONArray tiendas = response.getJSONArray("tiendas");
                 JSONArray ruta = response.getJSONArray("ruta");
+                JSONArray productoFormato = response.getJSONArray("productoFormato");
                 JSONArray productoTienda = response.getJSONArray("productoTienda");
 
                 parseJSONMarca(marcas);
@@ -53,10 +75,11 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                 parseJSONExhi(exhibiciones);
                 parseJsonTiendas(tiendas);
                 parseJSONRuta(ruta);
-                parseJSONProductoByTinda(productoTienda);
+                parseJSONProductoByFormato(productoFormato);
+                parseJSONProductoByTienda(productoTienda);
 
 
-                Toast.makeText(context, "Informacion Cargada!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Informacion Cargada con Exito!!", Toast.LENGTH_SHORT).show();
             }catch (JSONException e){
                 e.printStackTrace();
             }
@@ -194,7 +217,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
     }
 
-    private void parseJSONProductoByTinda(JSONArray array) throws JSONException{
+    private void parseJSONProductoByFormato(JSONArray array) throws JSONException{
         SQLiteDatabase db = new BDopenHelper(context).getWritableDatabase();
         new BDopenHelper(context.getApplicationContext()).vaciarTabla(ProductByFormato.TABLE_NAME);
 
@@ -219,8 +242,31 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
         }
 
-        configuracion.setProductoByTienda(fecha);
+        configuracion.setProductoByFormato(fecha);
 
+
+    }
+
+
+    private void parseJSONProductoByTienda(JSONArray array) throws JSONException {
+        SQLiteDatabase db = new BDopenHelper(context).getWritableDatabase();
+        new BDopenHelper(context.getApplicationContext()).vaciarTabla(ProductoByTienda.TABLE_NAME);
+
+        Configuracion configuracion = new Configuracion(context);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String fecha = dFecha.format(c.getTime());
+
+        for (int i = 0; i < array.length() ; i++){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(ProductoByTienda.ID_PRODUCTO, array.getJSONObject(i).getInt("idProducto"));
+            contentValues.put(ProductoByTienda.ID_TIENDA, array.getJSONObject(i).getInt("idTienda"));
+
+            db.insert(ProductoByTienda.TABLE_NAME, null, contentValues);
+        }
+
+        configuracion.setProductoByTienda(fecha);
 
     }
 

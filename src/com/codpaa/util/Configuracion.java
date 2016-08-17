@@ -15,6 +15,7 @@ public class Configuracion {
     private final String KEY_RUTA = "ruta";
     private final String KEY_VERSION = "version";
     private final String KEY_PRODUCTO_TIENDA = "productoTienda";
+    private final String KEY_PRODUCTO_FORMATO = "productoFormato";
 
 
 
@@ -96,6 +97,13 @@ public class Configuracion {
         editor.apply();
     }
 
+    public void setProductoByFormato(String fecha){
+        SharedPreferences.Editor editor = getSettings().edit();
+        editor.putString(KEY_PRODUCTO_FORMATO, fecha);
+
+        editor.apply();
+    }
+
     public void setVersionDate(String fecha){
         SharedPreferences.Editor editor = getSettings().edit();
         editor.putString(KEY_VERSION, fecha);
@@ -123,7 +131,9 @@ public class Configuracion {
     public String getProductoByTienda(){
         return getSettings().getString(KEY_PRODUCTO_TIENDA, null);
     }
-	
+	public String getProductoByFormato(){
+        return getSettings().getString(KEY_PRODUCTO_FORMATO, null);
+    }
 	
 
 }

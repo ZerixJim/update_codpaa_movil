@@ -1,11 +1,9 @@
 package com.codpaa.activity;
 
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -44,8 +42,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
@@ -378,7 +374,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 				if(verificarConexion()){
 
 					UpdateInformation upinfo = new UpdateInformation(this);
-					Toast.makeText(this,"Actualizando Informacion",Toast.LENGTH_SHORT).show();
+					//Toast.makeText(this,"Actualizando Informacion",Toast.LENGTH_SHORT).show();
 
 
                     upinfo.updateInfo(idUsuario);
@@ -446,48 +442,19 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     private void updateInfo(){
         configuracion = new Configuracion(this);
         UpdateInformation uI = new UpdateInformation(this);
-        /*
-        if (configuracion.getTiendas() != null){
-            if (!configuracion.getTiendas().equals(fechaActual())){
-                uI.actualizarTiendas(idUsuario);
-            }else {
-                Log.d("Shared", "tien:" + configuracion.getTiendas());
-            }
-        }else {
-            uI.actualizarTiendas(idUsuario);
-        }
 
-        if (configuracion.getRuta() != null){
-            if (!configuracion.getRuta().equals(fechaActual())){
-              uI.actualizarRuta(idUsuario);
-            }else {
-                Log.d("Shared", "ruta:" +configuracion.getRuta());
-            }
-        }else {
-            uI.actualizarRuta(idUsuario);
-        }
-
-
-
-        if (configuracion.getExhi() != null){
-            if (!configuracion.getExhi().equals(fechaActual())){
-                uI.actualizarExhibiciones(idUsuario);
-            }else {
-                Log.d("Shared", "exhi:" +configuracion.getExhi());
-            }
-        }else {
-            uI.actualizarExhibiciones(idUsuario);
-        }*/
 
         if (configuracion.getMarca() != null
                 && configuracion.getProducto() != null
                 && configuracion.getExhi() != null
                 && configuracion.getTiendas() != null
+                && configuracion.getProductoByFormato() != null
                 && configuracion.getProductoByTienda() != null){
             if (!configuracion.getMarca().equals(fechaActual())
                     && !configuracion.getProducto().equals(fechaActual())
                     && !configuracion.getExhi().equals(fechaActual())
                     && !configuracion.getTiendas().equals(fechaActual())
+                    && !configuracion.getProductoByFormato().equals(fechaActual())
                     && !configuracion.getProductoByTienda().equals(fechaActual())){
                //uI.actualizarMarca(idUsuario);
                 uI.updateInfo(idUsuario);
@@ -498,17 +465,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             uI.updateInfo(idUsuario);
         }
 
-        /*
-        if (configuracion.getProducto() != null){
-            if (!configuracion.getProducto().equals(fechaActual())){
-                //uI.actualizarProducto(idUsuario);
-
-            }else {
-                Log.d("Shared", "pro:" + configuracion.getProducto());
-            }
-        }else {
-            uI.actualizarProducto(idUsuario);
-        }*/
 
 		uI.actualizarEncuesta(idUsuario);
 
