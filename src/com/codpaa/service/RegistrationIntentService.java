@@ -165,27 +165,33 @@ public class RegistrationIntentService extends IntentService {
 
     private void subscribeTopics() throws IOException {
 
-        SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
-        Cursor c = db.rawQuery("select nombre from marca", null);
-
+        //SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+        //Cursor c = db.rawQuery("select nombre from marca", null);
+        int idPromotor = new BDopenHelper(this).getIdPromotor();
 
         FirebaseMessaging messaging = FirebaseMessaging.getInstance();
 
-        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+        /*for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
 
             String marca = c.getString(c.getColumnIndex("nombre"));
 
 
             messaging.subscribeToTopic(marca.replace(" ", ""));
-        }
+        }*/
 
         messaging.subscribeToTopic("van-promotor");
-        messaging.subscribeToTopic("test-1");
 
+        if (idPromotor == 1000){
 
+            messaging.subscribeToTopic("test-1");
+        }
 
-        c.close();
-        db.close();
+        if (idPromotor != 0) {
+            messaging.subscribeToTopic("promotor-" + idPromotor);
+            messaging.subscribeToTopic("ruta-" + idPromotor);
+            messaging.subscribeToTopic("user-" + idPromotor);
+            messaging.subscribeToTopic("producto-" + idPromotor);
+        }
     }
 
 

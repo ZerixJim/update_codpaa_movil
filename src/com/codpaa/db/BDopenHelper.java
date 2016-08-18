@@ -728,6 +728,22 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
         return baseDatosLocal.rawQuery("select idProducto as _id, nombre,presentacion, cb, idMarca from producto where idMarca="+idMar+" order by nombre asc;", null);
 
+
+
+    }
+
+    public Cursor productosByTienda(int idMarca, int idTienda){
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select distinct p.idProducto as _id, p.nombre, p.presentacion, p.cb, p.idMarca " +
+                " from (select p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca from productoformato as pf " +
+                " left join producto as p on p.idProducto=pf.idProducto " +
+                " left join clientes as c on c.idFormato=pf.idFormato " +
+                " where p.idMarca=" + idMarca + " and c.idTienda=" + idTienda +
+                " union all " +
+                " select p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca  from productotienda as pt " +
+                " left  join producto as p on pt.idProducto=p.idProducto " +
+                " where p.idMarca="+ idMarca +" and pt.idTienda="+ idTienda +") as p", null);
     }
 
     public Cursor Surtido() throws SQLiteException {

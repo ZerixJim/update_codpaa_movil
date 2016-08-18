@@ -121,11 +121,11 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		
 
 		btnGuar = (Button) findViewById(R.id.btonChFr);
-		
-		
-		
 
-		btnGuar.setOnClickListener(this);
+
+		if (btnGuar != null) {
+			btnGuar.setOnClickListener(this);
+		}
 		spiMarca.setOnItemSelectedListener(this);
 		btn1.setOnClickListener(this);
 		btn2.setOnClickListener(this);
@@ -435,7 +435,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 	
 	private void loadSpinnerProd(int idM){
 		try {
-			ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListPro(idM));
+			ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListProByTiensda(idM, idTienda));
 			spiPro.setAdapter(proAdap);
 			
 		} catch (Exception e) {
@@ -469,6 +469,58 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		return arrayP;
 		
 	}
+
+	private ArrayList<SpinnerProductoModel> getArrayListProByTiensda(int idMarca, int idTienda){
+
+		Cursor curProByTienda = new BDopenHelper(this).productosByTienda(idMarca, idTienda);
+		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
+		if (curProByTienda.getCount() <= 0){
+
+			Cursor curPro = new BDopenHelper(this).productos(idMarca);
+
+			for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
+				final SpinnerProductoModel spP = new SpinnerProductoModel();
+				spP.setIdProducto(curPro.getInt(0));
+				spP.setNombre(curPro.getString(1));
+				spP.setPresentacion(curPro.getString(2));
+				spP.setCodigoBarras(curPro.getString(3));
+				spP.setIdMarca(curPro.getInt(4));
+				arrayP.add(spP);
+			}
+
+
+			curPro.close();
+		} else {
+
+			for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
+				final SpinnerProductoModel spP = new SpinnerProductoModel();
+				spP.setIdProducto(curProByTienda.getInt(0));
+				spP.setNombre(curProByTienda.getString(1));
+				spP.setPresentacion(curProByTienda.getString(2));
+				spP.setCodigoBarras(curProByTienda.getString(3));
+				spP.setIdMarca(curProByTienda.getInt(4));
+				arrayP.add(spP);
+			}
+
+		}
+
+
+
+		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
+		spPinicio.setIdProducto(0);
+		spPinicio.setNombre("Seleccione Producto");
+		spPinicio.setPresentacion("producto sin seleccionar");
+		spPinicio.setCodigoBarras(" ");
+
+		arrayP.add(0,spPinicio);
+
+
+		base.close();
+		return arrayP;
+
+	}
+
+
 	
 	private ArrayList<MarcaModel> getArrayList(){
 		
