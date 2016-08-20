@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -168,6 +169,12 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 			Toast.makeText(this, "Error Frentes 1", Toast.LENGTH_SHORT).show();
 			
 		}
+
+
+		/**
+		 * keyboard soft hide
+		 */
+		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
 		
