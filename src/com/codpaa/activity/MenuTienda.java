@@ -62,7 +62,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	
 	
 	Button btnSalidaTi,btnEntrada, btnEncar, btnExhib, btnInven, btnFrente, btnSurtido, btnTiendaError;
-	Button btnVentaPromedio;
+	Button btnVentaPromedio, btnCapturaGeneral;
 	Button btnComentario, btnInteligencia, btnUpdaPro, btnFoto;
 	SQLiteDatabase base = null;
 	Location locGps,locNet;
@@ -113,53 +113,15 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		idPromotor = recibeIdTi.getIntExtra("idPromotor",0);
 
 
+		//registrar views
+		viewsRegister();
 
-		inventario = (TextView) findViewById(R.id.inventario);
-		txtEncargado = (TextView) findViewById(R.id.Encargado);
-		frentes = (TextView) findViewById(R.id.frentes);
-		surtido = (TextView) findViewById(R.id.surtido);
-		exhi = (TextView) findViewById(R.id.textExhibicio);
-        fotos = (TextView) findViewById(R.id.text_fotos);
-
-		btnFrente = (Button) findViewById(R.id.buttonMensaje);
-		btnSalidaTi = (Button) findViewById(R.id.salidaTienda);
-		btnEntrada = (Button) findViewById(R.id.btnEnTienda);
-		btnEncar = (Button) findViewById(R.id.btnEncarg);
-		btnExhib = (Button) findViewById(R.id.buttonExhib);
-		btnUpdaPro = (Button) findViewById(R.id.btnUpdaPro);
-		btnInven = (Button) findViewById(R.id.btnInvenBode);
-		btnSurtido = (Button) findViewById(R.id.buttonEnviar);
-		btnTiendaError = (Button) findViewById(R.id.btnTiendaError);
-		btnComentario = (Button) findViewById(R.id.btnComentario);
-		btnInteligencia = (Button) findViewById(R.id.btnMenInt);
-		btnFoto = (Button) findViewById(R.id.btnfoto);
-		btnVentaPromedio = (Button) findViewById(R.id.btn_venta_promedio);
 
 
 
 		DB = new BDopenHelper(this);
 
-		btnFrente.setOnClickListener(this);
-		btnEntrada.setOnClickListener(this);
-		btnSurtido.setOnClickListener(this);
-		btnInven.setOnClickListener(this);
-		btnSalidaTi.setOnClickListener(this);
-		btnTiendaError.setOnClickListener(this);
-		btnEncar.setOnClickListener(this);
-		btnExhib.setOnClickListener(this);
-		btnComentario.setOnClickListener(this);
-		btnInteligencia.setOnClickListener(this);
-		btnUpdaPro.setOnClickListener(this);
-		btnFoto.setOnClickListener(this);
-		btnVentaPromedio.setOnClickListener(this);
 
-
-
-		// textView with listener
-		frentes.setOnClickListener(this);
-		inventario.setOnClickListener(this);
-		exhi.setOnClickListener(this);
-        fotos.setOnClickListener(this);
 
         fotos.setText("fotos(0)");
 
@@ -233,6 +195,59 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 
 		
+	}
+
+
+	private void viewsRegister(){
+
+		inventario = (TextView) findViewById(R.id.inventario);
+		txtEncargado = (TextView) findViewById(R.id.Encargado);
+		frentes = (TextView) findViewById(R.id.frentes);
+		surtido = (TextView) findViewById(R.id.surtido);
+		exhi = (TextView) findViewById(R.id.textExhibicio);
+		fotos = (TextView) findViewById(R.id.text_fotos);
+
+		btnFrente = (Button) findViewById(R.id.buttonMensaje);
+		btnSalidaTi = (Button) findViewById(R.id.salidaTienda);
+		btnEntrada = (Button) findViewById(R.id.btnEnTienda);
+		btnEncar = (Button) findViewById(R.id.btnEncarg);
+		btnExhib = (Button) findViewById(R.id.buttonExhib);
+		btnUpdaPro = (Button) findViewById(R.id.btnUpdaPro);
+		btnInven = (Button) findViewById(R.id.btnInvenBode);
+		btnSurtido = (Button) findViewById(R.id.buttonEnviar);
+		btnTiendaError = (Button) findViewById(R.id.btnTiendaError);
+		btnComentario = (Button) findViewById(R.id.btnComentario);
+		btnInteligencia = (Button) findViewById(R.id.btnMenInt);
+		btnFoto = (Button) findViewById(R.id.btnfoto);
+		btnVentaPromedio = (Button) findViewById(R.id.btn_venta_promedio);
+
+		btnCapturaGeneral = (Button) findViewById(R.id.captura_general);
+
+
+		btnFrente.setOnClickListener(this);
+		btnEntrada.setOnClickListener(this);
+		btnSurtido.setOnClickListener(this);
+		btnInven.setOnClickListener(this);
+		btnSalidaTi.setOnClickListener(this);
+		btnTiendaError.setOnClickListener(this);
+		btnEncar.setOnClickListener(this);
+		btnExhib.setOnClickListener(this);
+		btnComentario.setOnClickListener(this);
+		btnInteligencia.setOnClickListener(this);
+		btnUpdaPro.setOnClickListener(this);
+		btnFoto.setOnClickListener(this);
+		btnVentaPromedio.setOnClickListener(this);
+
+		btnCapturaGeneral.setOnClickListener(this);
+
+
+
+		// textView with listener
+		frentes.setOnClickListener(this);
+		inventario.setOnClickListener(this);
+		exhi.setOnClickListener(this);
+		fotos.setOnClickListener(this);
+
 	}
 
     @Override
@@ -553,6 +568,10 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
             case R.id.btn_venta_promedio:
                 subMenuVenta();
                 break;
+
+			case R.id.captura_general:
+				capturaGeneral();
+				break;
 		}
 		
 	}
@@ -816,6 +835,18 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		
 	}
 
+
+	private void capturaGeneral(){
+		if(Entrada){
+			Intent i = new Intent(this, CapturaGeneral.class);
+			i.putExtra("idTienda", idTienda);
+			i.putExtra("idPromotor", idPromotor);
+			startActivity(i);
+		}else{
+			Toast.makeText(this, "No has registrado Entrada", Toast.LENGTH_SHORT).show();
+		}
+	}
+
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -1002,7 +1033,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
     private ArrayList<FrentesModel> getFrentesCapturados(){
         base = new BDopenHelper(this).getReadableDatabase();
-        String sql = "select m.nombre, p.nombre || ' ' || p.presentacion, (f.cha1+f.cha2+f.cha3+f.cha4+f.cha5+f.cha6) as total, f.status, f.fecha  " +
+        String sql = "select m.nombre, p.nombre || ' ' || p.presentacion, (f.cha1+f.cha2+f.cha3+f.cha4+f.cha5+f.cha6) as total, f.status, f.fecha," +
+				" (f.unifila+f.fila1+f.fila2+f.fila3+f.fila4+f.fila5+f.fila6+f.fila7+f.fila8+f.fila9+f.fila10+f.fila11+f.fila12+f.fila13+f.fila14) as filas " +
                 "from frentesCharola as f inner join marca as m on f.idMarca=m.idMarca " +
                 "inner join producto as p on f.idProducto=p.idProducto where f.idTienda="+idTienda;
         Cursor frentes = base.rawQuery(sql,null);
@@ -1016,6 +1048,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
                 fm.setCantidad(frentes.getInt(2));
                 fm.setStatus(frentes.getInt(3));
                 fm.setFecha(frentes.getString(4));
+				fm.setFilas(frentes.getInt(5));
 
 
                 arrayFrentes.add(fm);

@@ -19,10 +19,13 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Producto"
+        android:maxEms="15"
         android:id="@+id/textViewRowProducto"
         android:layout_below="@+id/textViewRowMarca"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="5dp" />
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -43,7 +46,9 @@
         android:id="@+id/textViewRowStatus"
         android:layout_below="@+id/textViewRowProducto"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,5 +58,18 @@
         android:id="@+id/textCusRowFecha"
         android:layout_alignTop="@+id/textViewRowMarca"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"/>
+
+    <TextView
+        android:id="@+id/cantidad_filas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewRowCantidad"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"/>
 </RelativeLayout>

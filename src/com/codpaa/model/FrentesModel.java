@@ -1,6 +1,6 @@
 package com.codpaa.model;
 
-/**
+/*
  * Created by Gustavo on 02/10/2014.
  */
 public class FrentesModel {
@@ -9,6 +9,15 @@ public class FrentesModel {
     private int cantidad;
     private int status;
     private String fecha;
+    private int filas;
+
+    public int getFilas() {
+        return filas;
+    }
+
+    public void setFilas(int filas) {
+        this.filas = filas;
+    }
 
     public String getFecha() {
         return fecha;
