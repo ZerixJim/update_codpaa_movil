@@ -2,6 +2,8 @@ package com.codpaa.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,14 +32,14 @@ public class RecyclerFrentesAdapter extends RecyclerView.Adapter<RecyclerFrentes
 
     private Context context;
     private List<SpinnerProductoModel> listFrentes;
-    String frentesCaptura[] = {"Charolas", "Filas"};
+    String frentesCaptura[] = {"Frentes en Mueble", "Frentes linea de Cajas", "Inventario", "Inteligencia de Mercado"};
 
     public RecyclerFrentesAdapter(Context context, List<SpinnerProductoModel> list) {
         this.context = context;
         this.listFrentes = list;
     }
 
-    public class FrentesViewHolder extends RecyclerView.ViewHolder implements AdapterView.OnItemSelectedListener {
+    public static class FrentesViewHolder extends RecyclerView.ViewHolder implements AdapterView.OnItemSelectedListener {
 
         EditText c1, c2, c3, c4, c5, c6;
         TextView nombreProducto, presentacion, codigoBarras;
@@ -98,7 +100,7 @@ public class RecyclerFrentesAdapter extends RecyclerView.Adapter<RecyclerFrentes
             String selected = parent.getItemAtPosition(position).toString();
 
             switch (selected){
-                case "Charolas":
+                case "Frentes en Mueble":
 
 
                     if (listCharola.getVisibility() == View.GONE){
@@ -109,13 +111,19 @@ public class RecyclerFrentesAdapter extends RecyclerView.Adapter<RecyclerFrentes
 
                     break;
 
-                case "Filas":
+                case "Frentes linea de Cajas":
 
                     if (listFilas.getVisibility() == View.GONE)
                         listFilas.setVisibility(View.VISIBLE);
 
                     if (listCharola.getVisibility() == View.VISIBLE)
                         listCharola.setVisibility(View.GONE);
+                    break;
+
+                case "Inventario":
+                    listFilas.setVisibility(View.GONE);
+                    listCharola.setVisibility(View.GONE);
+
                     break;
             }
 
@@ -155,12 +163,29 @@ public class RecyclerFrentesAdapter extends RecyclerView.Adapter<RecyclerFrentes
         Picasso picasso = Picasso.with(context);
         picasso.load(Utilities.PRODUCT_PATH+frentes.getIdMarca()+"/"+frentes.getIdProducto()+".gif")
                 //.resize(bitmapDrawable.getBitmap().getWidth(), 0)
-                .fit()
+                //.fit()
                 //.placeholder(R.drawable.progress_animated)
-                .centerCrop()
+                //.centerCrop()
                 //.centerInside()
                 //.noFade()
                 .into(holder.image);
+
+        holder.c1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 

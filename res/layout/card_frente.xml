@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp">
 
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +25,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:maxEms="10"
+                android:maxEms="8"
+                android:minEms="8"
                 android:text="Nombre Producto"/>
 
             <TextView
@@ -60,16 +62,29 @@
             android:background="@color/divider_vertical"
             android:layout_toRightOf="@+id/producto_informacion"
             android:layout_toEndOf="@+id/producto_informacion"
+            android:layout_alignBottom="@+id/producto_informacion"
+            android:layout_alignParentTop="true"
             android:layout_marginLeft="4dp"
             android:layout_marginStart="4dp" />
+
+        <TextView
+            android:id="@+id/txt_captura"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:text="Captura"
+            android:layout_toRightOf="@+id/divider"
+            android:layout_toEndOf="@+id/divider"/>
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+
             android:layout_toRightOf="@+id/divider"
-            android:layout_toEndOf="@+id/divider"/>
+            android:layout_toEndOf="@+id/divider"
+            android:layout_below="@+id/txt_captura"/>
 
 
         <LinearLayout

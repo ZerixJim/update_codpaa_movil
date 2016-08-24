@@ -123,7 +123,8 @@
                     android:id="@+id/btnEnTienda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_keyboard_arrow_right_grey_600_24dp"
                     android:drawableStart="@drawable/ic_keyboard_arrow_right_grey_600_24dp"

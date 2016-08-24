@@ -92,7 +92,7 @@ public class CapturaGeneral extends AppCompatActivity implements View.OnClickLis
                 Cursor cTienda = baseH.tienda(idTienda);
                 cTienda.moveToFirst();
                 if(getSupportActionBar() != null){
-                    getSupportActionBar().setSubtitle(cTienda.getString(0)+" "+cTienda.getString(1));
+                    getSupportActionBar().setTitle(cTienda.getString(0)+" "+cTienda.getString(1));
                 }
                 cTienda.close();
                 try {
@@ -182,7 +182,10 @@ public class CapturaGeneral extends AppCompatActivity implements View.OnClickLis
 
 
         int idMarca = spm.getId();
-        loadSpinnerProd(idMarca);
+        if (idMarca > 0){
+
+            loadSpinnerProd(idMarca);
+        }
 
     }
 
@@ -262,13 +265,13 @@ public class CapturaGeneral extends AppCompatActivity implements View.OnClickLis
 
 
 
-        final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
+        /*final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
         spPinicio.setIdProducto(0);
         spPinicio.setNombre("Seleccione Producto");
         spPinicio.setPresentacion("producto sin seleccionar");
         spPinicio.setCodigoBarras(" ");
 
-        arrayP.add(0,spPinicio);
+        arrayP.add(0,spPinicio);*/
 
 
         base.close();
