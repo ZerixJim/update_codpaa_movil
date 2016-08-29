@@ -1,10 +1,20 @@
 package com.codpaa.model;
 
-/**
+/*
  * Created by Gustavo Ramón Ibarra Maciel on 04/12/2014.
  */
 public class ProductosModel {
     private int _idProducto;
+    private int idMarca;
+
+    public int getIdMarca() {
+        return idMarca;
+    }
+
+    public void setIdMarca(int idMarca) {
+        this.idMarca = idMarca;
+    }
+
     private String _nombre;
     private String _presentacion;
     private boolean seleted = false;

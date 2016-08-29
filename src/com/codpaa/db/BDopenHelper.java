@@ -15,6 +15,8 @@ import com.codpaa.provider.DbEstructure.Mensaje;
 import com.codpaa.provider.DbEstructure.Tienda;
 import com.codpaa.provider.DbEstructure.ProductByFormato;
 import com.codpaa.provider.DbEstructure.ProductoByTienda;
+import com.codpaa.provider.DbEstructure.TiendaProductoCatalogo;
+
 
 import java.io.File;
 
@@ -56,6 +58,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String direcciones;
     private static String productoByFormato;
     private static String productoByTienda;
+    private static String tiendaProductoCatalogo;
 
 
     public BDopenHelper(Context miContext) {
@@ -195,6 +198,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 ProductoByTienda.ID_PRODUCTO + " int, " +
                 ProductoByTienda.ID_TIENDA + " int)";
 
+        tiendaProductoCatalogo = "create table if not exists " +
+                TiendaProductoCatalogo.TABLE_NAME + "(" +
+                TiendaProductoCatalogo.ID_PRODUCTO + " int," +
+                TiendaProductoCatalogo.ID_TIENDA + " int," +
+                TiendaProductoCatalogo.FECHA + " varchar(20), " +
+                TiendaProductoCatalogo.ID_PROMOTOR + " int)";
+
+
 
     }
 
@@ -231,6 +242,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(direcciones);
         db.execSQL(productoByFormato);
         db.execSQL(productoByTienda);
+        db.execSQL(tiendaProductoCatalogo);
     }
 
     @Override
@@ -279,6 +291,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
             db.execSQL(productoByFormato);
             db.execSQL(productoByTienda);
+            db.execSQL(tiendaProductoCatalogo);
 
 
         }

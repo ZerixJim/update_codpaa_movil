@@ -32,18 +32,13 @@ import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.update.EnviarDatos;
-import com.codpaa.util.Utilities;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
-import cz.msebera.android.httpclient.Header;
+
 
 public class VentaPromedio extends AppCompatActivity{
 
@@ -51,7 +46,6 @@ public class VentaPromedio extends AppCompatActivity{
     private int idPromotor, idTienda;
     private static Button btnFechaI, btnFechaF;
     private RadioGroup radioTipo;
-    private RadioButton radioSelected;
     private EditText editCantidad;
 
     @Override
@@ -146,10 +140,12 @@ public class VentaPromedio extends AppCompatActivity{
                         ContentValues cv = new ContentValues();
 
                         int idRadioSelect = radioTipo.getCheckedRadioButtonId();
-                        radioSelected = (RadioButton) findViewById(idRadioSelect);
+                        RadioButton radioSelected = (RadioButton) findViewById(idRadioSelect);
 
                         cv.put("idMarca", marcaModel.getId());
-                        cv.put("tipo", radioSelected.getText().toString().toUpperCase());
+                        if (radioSelected != null) {
+                            cv.put("tipo", radioSelected.getText().toString().toUpperCase());
+                        }
                         cv.put("cantidad", editCantidad.getText().toString().trim().toUpperCase());
                         cv.put("fecha_inicio", btnFechaI.getText().toString());
                         cv.put("fecha_fin", btnFechaF.getText().toString());
@@ -305,8 +301,7 @@ public class VentaPromedio extends AppCompatActivity{
                 mes = 0 + mes;
             }
 
-            btnFechaI.setText(String.format("%d-%s-%s", year, mes, dia));
-
+            btnFechaI.setText(String.format(Locale.getDefault(),"%d-%s-%s", year, mes, dia));
 
 
 
@@ -323,8 +318,14 @@ public class VentaPromedio extends AppCompatActivity{
             final Calendar c = Calendar.getInstance();
 
 
-            return new DatePickerDialog(getActivity(),this,
+            DatePickerDialog dialog = new DatePickerDialog(getActivity(),this,
                     c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+
+            dialog.getDatePicker().setMaxDate(new Date().getTime());
+            /*return new DatePickerDialog(getActivity(),this,
+                    c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));*/
+            return dialog;
+
         }
 
 
@@ -344,7 +345,7 @@ public class VentaPromedio extends AppCompatActivity{
                 mes = 0 + mes;
             }
 
-            btnFechaF.setText(String.format("%d-%s-%s", year, mes, dia));
+            btnFechaF.setText(String.format(Locale.getDefault(),"%d-%s-%s", year, mes, dia));
 
 
 

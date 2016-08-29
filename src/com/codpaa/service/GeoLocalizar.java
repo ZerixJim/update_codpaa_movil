@@ -1,7 +1,6 @@
 package com.codpaa.service;
 
 import com.codpaa.R;
-import com.codpaa.response.ResponseHttpSurtido;
 import com.codpaa.util.Configuracion;
 import com.codpaa.util.Utilities;
 import com.loopj.android.http.*;
@@ -583,7 +582,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 			Cursor curVisitas = DBhelper.datosVisitas();
 			AsyncHttpClient cli = new AsyncHttpClient();
 			RequestParams rpVis = new RequestParams();
-			base = new BDopenHelper(this).getWritableDatabase();
+
 			
 			if(verificarConexion()){
 				if(curVisitas.getCount() >= 1) {
@@ -615,7 +614,6 @@ public class GeoLocalizar extends Service implements LocationListener{
 			
 			
 			curVisitas.close();
-			base.close();
 			DBhelper.close();
 
 		}catch(Exception e) {
@@ -678,7 +676,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 		}
 	}
 	
-	public void enviarSurtido() {
+	/*public void enviarSurtido() {
 		try {
 			Cursor curSurtido = DBhelper.Surtido();
 			base = new BDopenHelper(this).getWritableDatabase();
@@ -728,7 +726,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	public void enviarInventario() {
 		try {

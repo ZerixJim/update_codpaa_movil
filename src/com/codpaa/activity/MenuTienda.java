@@ -78,6 +78,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	EditText editNombre;
 	AsyncHttpClient cliente;
 	RequestParams rp;
+	String nombreTienda;
 
 	Toolbar toolbar;
 	private Boolean Salida = false;
@@ -123,7 +124,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 
 
-        fotos.setText("fotos(0)");
+        //fotos.setText("fotos(0)");
 
 		localizar = (LocationManager) getSystemService(LOCATION_SERVICE);
 
@@ -159,7 +160,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 			Cursor cTienda = DB.tienda(idTienda);
 			cTienda.moveToFirst();
 
-			String nombreTienda = cTienda.getString(0) + " " + cTienda.getString(1);
+			nombreTienda = cTienda.getString(0) + " " + cTienda.getString(1);
 
 
 			if (getSupportActionBar() != null)
@@ -279,6 +280,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
                 saveAddress();
 
                 return true;
+
+			case R.id.producto_datos_tienda:
+
+				saveDatosTienda();
+
+				return true;
+
 			default:
 				return super.onOptionsItemSelected(item);
 
@@ -286,7 +294,16 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 	}
 
-    private void saveAddress() {
+	private void saveDatosTienda() {
+
+		Intent i = new Intent(this, TiendaDatos.class);
+		i.putExtra("idTienda", idTienda);
+		i.putExtra("idPromotor", idPromotor);
+
+		startActivity(i);
+	}
+
+	private void saveAddress() {
 
         Intent i = new Intent(this, AddressActivity.class);
         i.putExtra("idTienda", idTienda);
@@ -370,11 +387,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 						" \n -Verifique que el Gps esta activado \n - De lo contrario comuniquese con Mesa de control", Toast.LENGTH_LONG).show();
 				base.close();
 			}
-		}else{
-			Toast.makeText(this, "Ya existe una Entrada", Toast.LENGTH_LONG).show();
 		}
-		
-		
 	
 				
 	}
@@ -509,7 +522,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 			    break;
 			
 		    case R.id.btnEnTienda:
-			    entradaTienda();
+			    //entradaTienda();
+
+				if (!Entrada){
+					dialogoConfirmarEntrada();
+				}else {
+					Toast.makeText(this, "Ya existe una Entrada", Toast.LENGTH_SHORT).show();
+				}
 			
 			    break;
 			
@@ -624,36 +643,40 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 			
 			
 			Cursor cuEncargados = DB.contadorEncargados(idTienda, fecha);
-			txtEncargado.setText("Encargado ("+cuEncargados.getCount()+")");
+			//txtEncargado.setText("Encargado ("+cuEncargados.getCount()+")");
+			txtEncargado.setText(String.format(Locale.getDefault(),"Encargado %d",cuEncargados.getCount()));
 			DB.close();
 			
 			
 			try {
 				Cursor cuFrentes = DB.contadorFrentes(idTienda, fecha);
-				frentes.setText("Frentes: ("+cuFrentes.getCount()+")");
+				//frentes.setText("Frentes: ("+cuFrentes.getCount()+")");
+				frentes.setText(String.format(Locale.getDefault(), "Frentes %d", cuFrentes.getCount()));
 				DB.close();
 				
 				
 				try {
 					Cursor cuSurt = DB.SurtidoCantidad(idTienda, fecha);
-					surtido.setText("Surtido: ("+cuSurt.getCount()+")");
+					//surtido.setText("Surtido: ("+cuSurt.getCount()+")");
+					surtido.setText(String.format(Locale.getDefault(), "Surtido %d", cuSurt.getCount()));
 					DB.close();
 					
 					try {
 						Cursor cuInventario = DB.contarInventario(idTienda, fecha);
-						inventario.setText("Inventario ("+cuInventario.getCount()+")");
+						//inventario.setText("Inventario ("+cuInventario.getCount()+")");
+						inventario.setText(String.format(Locale.getDefault(), "Inventario %d", cuInventario.getCount()));
 						DB.close();
 
 
 						try {
 
-							exhi.setText("Exhibiciones("+DB.contarExhibiciones(idTienda, fecha)+")");
+							exhi.setText(String.format(Locale.getDefault(), "Exhibiciones %d", DB.contarExhibiciones(idTienda, fecha)));
 						}catch (Exception e){
 							e.printStackTrace();
 						}
 
 						try {
-							fotos.setText("Fotos("+DB.contarFotos(idTienda)+")");
+							fotos.setText(String.format(Locale.getDefault(),"Fotos %d", DB.contarFotos(idTienda)));
 
 						}catch (Exception e){
 							e.printStackTrace();
@@ -1168,6 +1191,26 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 		}
     }
+
+	private void dialogoConfirmarEntrada(){
+
+		Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("¿Estas seguro(a) que quires Registrar tu Entrada en \n " + nombreTienda + "?");
+		builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+				entradaTienda();
+
+			}
+		}).setNegativeButton("Tienda Incorrecta", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				MenuTienda.this.finish();
+			}
+		}).create().show();
+
+	}
 
     private class ListenerSAlida implements DialogInterface.OnClickListener{
 

@@ -169,6 +169,9 @@
             android:name=".activity.CapturaGeneral"
             android:theme="@style/noActionBarNoTitle"/>
 
+        <activity
+            android:name=".activity.TiendaDatos"/>
+
 
         <service android:name=".service.GeoLocalizar" />
 

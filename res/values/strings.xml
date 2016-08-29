@@ -156,7 +156,8 @@
     <string name="sending">Enviando....</string>
 
     <string name="menu_principal">Menu Principal</string>
-
+    <string name="datos_producto">Datos Producto</string>
+    <string name="captura_general">Captura General</string>
 
 
 </resources>

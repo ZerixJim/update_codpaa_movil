@@ -108,221 +108,183 @@
         android:paddingStart="5dp"
         android:paddingLeft="5dp">
 
+
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:weightSum="2">
 
-                <Button
-                    android:id="@+id/btnEnTienda"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_keyboard_arrow_right_grey_600_24dp"
-                    android:drawableStart="@drawable/ic_keyboard_arrow_right_grey_600_24dp"
-                    android:padding="15dp"
-                    android:text="@string/entrada"/>
-
-                <Button
-                    android:id="@+id/salidaTienda"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_keyboard_arrow_left_grey_600_24dp"
-                    android:drawableStart="@drawable/ic_keyboard_arrow_left_grey_600_24dp"
-                    android:padding="15dp"
-                    android:text="@string/Sal"/>
-
-            </LinearLayout>
-
-
-            <Button
-                android:id="@+id/btnComentario"
-                style="@style/btnStyleSandrift"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:drawableLeft="@drawable/ic_comment_white_24dp"
-                android:drawableStart="@drawable/ic_comment_white_24dp"
-                android:text="@string/comen"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:weightSum="2">
-
-                <Button
-                    android:id="@+id/buttonMensaje"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="3dp"
-                    android:padding="15dp"
-                    android:paddingTop="30dp"
-                    android:paddingBottom="30dp"
-                    android:drawableLeft="@drawable/ic_grid_on_grey600_24dp"
-                    android:drawableStart="@drawable/ic_grid_on_grey600_24dp"
-                    android:text="@string/frente"/>
-
-                <Button
-                    android:id="@+id/buttonEnviar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="3dp"
-                    android:padding="15dp"
-                    android:paddingTop="30dp"
-                    android:paddingBottom="30dp"
-                    android:drawableLeft="@drawable/ic_blur_linear_grey600_24dp"
-                    android:drawableStart="@drawable/ic_blur_linear_grey600_24dp"
-                    android:text="@string/surtido"/>
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/captura_general"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Captura General"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:weightSum="2"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnInvenBode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:padding="15dp"
-                    android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_assignment_grey600_24dp"
-                    android:drawableStart="@drawable/ic_assignment_grey600_24dp"
-                    android:text="@string/inven"/>
-
-                <Button
-                    android:id="@+id/buttonExhib"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:padding="15dp"
-                    android:layout_weight="1"
-                    android:drawableStart="@drawable/ic_border_bottom_grey600_24dp"
-                    android:drawableLeft="@drawable/ic_border_bottom_grey600_24dp"
-                    android:text="@string/exhi"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_marginTop="10dp">
-
-                <Button
-                    android:id="@+id/btnMenInt"
-                    style="@style/btnStyleGenoa"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_assessment_white_24dp"
-                    android:drawableLeft="@drawable/ic_assessment_white_24dp"
-                    android:text="@string/inteliMercado"/>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_marginTop="10dp">
-
-                <Button
-                    android:id="@+id/btn_venta_promedio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="15dp"
-                    android:drawableStart="@drawable/ic_timeline_grey_600_24dp"
-                    android:drawableLeft="@drawable/ic_timeline_grey_600_24dp"
-                    android:text="@string/venta_promedio"/>
-
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_marginTop="20dp">
-
-                <Button
-                    android:id="@+id/btnEncarg"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="3dp"
-                    android:padding="15dp"
-                    android:drawableLeft="@drawable/ic_timer_auto_grey600_24dp"
-                    android:drawableStart="@drawable/ic_timer_auto_grey600_24dp"
-                    android:text="@string/enca"/>
-
-                <Button
-                    android:id="@+id/btnfoto"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:padding="15dp"
-                    android:drawableLeft="@drawable/ic_camera_grey600_24dp"
-                    android:drawableStart="@drawable/ic_camera_grey600_24dp"
-                    android:text="@string/foto"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-                <Button
-                    android:id="@+id/btnUpdaPro"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/updateProducts"/>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/btnTiendaError"
-                    style="@style/btnStyleOrange"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/tiendaErronea"/>
+                <TableRow
+                    android:layout_marginBottom="5dp"
+                    android:padding="5dp">
 
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/btnEnTienda"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginRight="1dp"
+                        android:drawableLeft="@drawable/ic_keyboard_arrow_right_grey_600_24dp"
+                        android:drawableStart="@drawable/ic_keyboard_arrow_right_grey_600_24dp"
+                        android:padding="15dp"
+                        android:text="@string/entrada"/>
+
+                    <Button
+                        android:id="@+id/salidaTienda"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_keyboard_arrow_left_grey_600_24dp"
+                        android:drawableStart="@drawable/ic_keyboard_arrow_left_grey_600_24dp"
+                        android:text="@string/Sal"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="5dp">
+                    <Button
+                        android:id="@+id/btnComentario"
+                        style="@style/btnStyleSandrift"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_comment_white_24dp"
+                        android:drawableStart="@drawable/ic_comment_white_24dp"
+                        android:text="@string/comen"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="5dp">
+
+                    <Button
+                        android:id="@+id/buttonMensaje"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_grid_on_grey600_24dp"
+                        android:drawableStart="@drawable/ic_grid_on_grey600_24dp"
+                        android:text="@string/frente"/>
+
+                    <Button
+                        android:id="@+id/buttonEnviar"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_blur_linear_grey600_24dp"
+                        android:drawableStart="@drawable/ic_blur_linear_grey600_24dp"
+                        android:text="@string/surtido"/>
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="5dp">
+                    <Button
+                        android:id="@+id/captura_general"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/captura_general"
+                        />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="5dp">
+
+                    <Button
+                        android:id="@+id/btnInvenBode"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_assignment_grey600_24dp"
+                        android:drawableStart="@drawable/ic_assignment_grey600_24dp"
+                        android:text="@string/inven"/>
+
+                    <Button
+                        android:id="@+id/buttonExhib"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_border_bottom_grey600_24dp"
+                        android:drawableLeft="@drawable/ic_border_bottom_grey600_24dp"
+                        android:text="@string/exhi"/>
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="5dp">
+                    <Button
+                        android:id="@+id/btnMenInt"
+                        style="@style/btnStyleGenoa"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_assessment_white_24dp"
+                        android:drawableLeft="@drawable/ic_assessment_white_24dp"
+                        android:text="@string/inteliMercado"/>
+                </TableRow>
+
+
+                <TableRow android:layout_marginBottom="5dp">
+                    <Button
+                        android:id="@+id/btn_venta_promedio"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="15dp"
+                        android:drawableStart="@drawable/ic_timeline_grey_600_24dp"
+                        android:drawableLeft="@drawable/ic_timeline_grey_600_24dp"
+                        android:text="@string/venta_promedio"/>
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="5dp">
+                    <Button
+                        android:id="@+id/btnEncarg"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_timer_auto_grey600_24dp"
+                        android:drawableStart="@drawable/ic_timer_auto_grey600_24dp"
+                        android:text="@string/enca"/>
+
+                    <Button
+                        android:id="@+id/btnfoto"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_camera_grey600_24dp"
+                        android:drawableStart="@drawable/ic_camera_grey600_24dp"
+                        android:text="@string/foto"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="5dp">
+                    <Button
+                        android:id="@+id/btnUpdaPro"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/updateProducts"/>
+                </TableRow>
+
+                <TableRow>
+                    <Button
+                        android:id="@+id/btnTiendaError"
+                        style="@style/btnStyleOrange"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/tiendaErronea"/>
+                </TableRow>
+
+
+            </TableLayout>
+
+
 
         </LinearLayout>
     </ScrollView>

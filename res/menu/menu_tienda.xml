@@ -8,4 +8,11 @@
         android:orderInCategory="100"
         app:showAsAction="never"/>
 
+
+    <item
+        android:id="@+id/producto_datos_tienda"
+        android:title="@string/datos_producto"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
 </menu>
