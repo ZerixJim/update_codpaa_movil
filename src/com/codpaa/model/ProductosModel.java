@@ -1,11 +1,20 @@
 package com.codpaa.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 /*
  * Created by Gustavo Ramón Ibarra Maciel on 04/12/2014.
  */
 public class ProductosModel {
-    private int _idProducto;
+
+    @Expose
+    private int idProducto;
+
     private int idMarca;
+    private String nombre;
+    private String presentacion;
+    private boolean seleted = false;
 
     public int getIdMarca() {
         return idMarca;
@@ -14,10 +23,6 @@ public class ProductosModel {
     public void setIdMarca(int idMarca) {
         this.idMarca = idMarca;
     }
-
-    private String _nombre;
-    private String _presentacion;
-    private boolean seleted = false;
 
     public boolean isSeleted() {
         return seleted;
@@ -28,25 +33,25 @@ public class ProductosModel {
     }
 
     public void setIdProducto(int idProductos){
-        this._idProducto = idProductos;
+        this.idProducto = idProductos;
     }
 
     public void setNombre(String nombre){
-        this._nombre = nombre;
+        this.nombre = nombre;
     }
 
     public void setPresentacion(String presentacion){
-        this._presentacion = presentacion;
+        this.presentacion = presentacion;
     }
 
     public int getIdProducto(){
-        return this._idProducto;
+        return this.idProducto;
     }
     public String getNombre(){
-        return this._nombre;
+        return this.nombre;
     }
 
     public String getPresentacion(){
-        return this._presentacion;
+        return this.presentacion;
     }
 }

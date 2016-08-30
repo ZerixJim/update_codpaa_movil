@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,16 +24,28 @@ import com.codpaa.R;
 import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.adapter.RecyclerProductosMultiSelect;
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.model.JsonProductosView;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.ProductosModel;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 
 public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private Spinner spinner;
     private EditText metros;
+    private int idTienda, idPromotor;
     private RecyclerView recyclerView;
     RecyclerProductosMultiSelect adapter;
 
@@ -40,6 +53,9 @@ public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_datos_producto);
+
+        idTienda = getIntent().getIntExtra("idTienda", 0);
+        idPromotor = getIntent().getIntExtra("idPromotor", 0);
 
 
         ActionBar actionBar = getSupportActionBar();
@@ -69,6 +85,66 @@ public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_productos_tienda, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+
+                finish();
+
+                return true;
+
+            case R.id.save_productos:
+
+                try {
+                    jsonConverter();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+    private void jsonConverter() throws JSONException {
+
+        if (adapter != null){
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+
+            //Type listOfTestOj = new TypeToken<List<ProductosModel>>(){}.getType();
+
+
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+            JsonProductosView view = new JsonProductosView();
+            view.setProductos(adapter.getSelectedItems());
+            view.setIdTienda(idTienda);
+            view.setIdPromotor(idPromotor);
+            view.setFecha(simpleDateFormat.format(c.getTime()));
+
+            String s = gson.toJson(view);
+
+
+            Log.d("JSON:", s);
+
+        }
+
+    }
+
 
     private void loadSpinner(){
         try {
@@ -86,21 +162,7 @@ public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItem
 
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-            case android.R.id.home:
-
-                finish();
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

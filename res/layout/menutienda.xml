@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/fondo_gris"
-
     android:orientation="vertical">
 
 
@@ -27,8 +26,8 @@
 
 
     <HorizontalScrollView
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="7dp"
         android:layout_width="wrap_content"
         android:scrollbars="none"
         android:layout_height="wrap_content">

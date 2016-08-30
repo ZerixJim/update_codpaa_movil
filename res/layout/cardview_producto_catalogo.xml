@@ -17,6 +17,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_toRightOf="@+id/frame"
+            android:layout_toEndOf="@+id/frame"
+            android:layout_below="@+id/checkbox"
+            android:maxEms="10"
             android:text="Nombre"
             />
 
@@ -25,6 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_toRightOf="@+id/frame"
+            android:layout_toEndOf="@+id/frame"
             android:text="Presentacion"
             android:layout_below="@+id/txt_nombre"
             />
@@ -34,23 +40,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:focusable="false"
-            android:layout_marginRight="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginTop="-5dp"
             android:visibility="visible"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+            android:layout_alignParentTop="true"
+            />
 
 
         <FrameLayout
+            android:id="@+id/frame"
             android:layout_below="@+id/txt_presentacion"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp">
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="match_parent"
+                android:layout_width="120dp"
                 android:layout_height="98dp"
+                android:maxWidth="120dp"
                 android:layout_marginTop="5dp"/>
             <ProgressBar
                 android:id="@+id/progress"

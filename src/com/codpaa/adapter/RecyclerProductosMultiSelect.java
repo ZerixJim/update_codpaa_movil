@@ -1,9 +1,13 @@
-package com.codpaa.adapter;/*
+package com.codpaa.adapter;
+
+
+/*
  * Created by grim on 29/08/2016.
  */
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,7 @@ import com.codpaa.util.Utilities;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerProductosMultiSelect extends RecyclerView.Adapter<RecyclerProductosMultiSelect.ProductoViewHolder>{
@@ -33,6 +38,27 @@ public class RecyclerProductosMultiSelect extends RecyclerView.Adapter<RecyclerP
 
     }
 
+    public List<ProductosModel> getProductosModels() {
+        return productosModels;
+    }
+
+
+    public List<Integer> getSelectedItems(){
+
+        List<Integer> arraySelected = new ArrayList<>();
+
+        for (ProductosModel p: productosModels){
+
+            if (p.isSeleted()){
+
+                arraySelected.add(p.getIdProducto());
+            }
+
+        }
+
+        Log.d("Productos SIZE ", "" +arraySelected.size());
+        return arraySelected;
+    }
 
     @Override
     public ProductoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
