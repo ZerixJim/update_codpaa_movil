@@ -19,6 +19,7 @@ import com.codpaa.provider.DbEstructure.TiendaProductoCatalogo;
 
 
 import java.io.File;
+import java.util.Locale;
 
 
 public class BDopenHelper extends SQLiteOpenHelper {
@@ -203,7 +204,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 TiendaProductoCatalogo.ID_PRODUCTO + " int," +
                 TiendaProductoCatalogo.ID_TIENDA + " int," +
                 TiendaProductoCatalogo.FECHA + " varchar(20), " +
-                TiendaProductoCatalogo.ID_PROMOTOR + " int)";
+                TiendaProductoCatalogo.ID_PROMOTOR + " int," +
+                TiendaProductoCatalogo.ESTATUS + " integer default 1, " +
+                "primary key("+
+                TiendaProductoCatalogo.ID_TIENDA + "," +
+                TiendaProductoCatalogo.FECHA + "," +
+                TiendaProductoCatalogo.ID_PRODUCTO +") )";
 
 
 
@@ -741,8 +747,16 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
         return baseDatosLocal.rawQuery("select idProducto as _id, nombre,presentacion, cb, idMarca from producto where idMarca="+idMar+" order by nombre asc;", null);
 
+    }
 
 
+    public Cursor getProductCatalogo() throws SQLiteException {
+        baseDatosLocal = getReadableDatabase();
+        return baseDatosLocal.rawQuery(String.format(Locale.getDefault(),
+                "select group_concat(%s, ',') as productos, %s, %s, %s from %s where %s=1 group by idTienda, fecha",
+                TiendaProductoCatalogo.ID_PRODUCTO,TiendaProductoCatalogo.ID_PROMOTOR,
+                TiendaProductoCatalogo.ID_TIENDA, TiendaProductoCatalogo.FECHA,
+                TiendaProductoCatalogo.TABLE_NAME, TiendaProductoCatalogo.ESTATUS),null);
     }
 
     public Cursor productosByTienda(int idMarca, int idTienda){

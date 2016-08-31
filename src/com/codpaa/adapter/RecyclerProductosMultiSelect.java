@@ -60,6 +60,19 @@ public class RecyclerProductosMultiSelect extends RecyclerView.Adapter<RecyclerP
         return arraySelected;
     }
 
+    public boolean isJustOneSelected() {
+
+        boolean selected = false;
+
+        for ( ProductosModel p : productosModels) {
+            if (p.isSeleted())
+                selected = true;
+        }
+
+        return selected;
+
+    }
+
     @Override
     public ProductoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_producto_catalogo, parent, false);

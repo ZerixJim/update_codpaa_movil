@@ -24,7 +24,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.codpaa.listener.HttpResponse;
+import com.codpaa.model.JsonProductosView;
+import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.Utilities;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.loopj.android.http.*;
 
 import com.codpaa.db.BDopenHelper;
@@ -76,7 +80,46 @@ public class EnviarDatos {
 		mTelephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE); 
 		return mTelephonyManager.getLine1Number();
 	}
-	
+
+
+	public void sendCatalogoProducto(){
+		try{
+
+
+			Cursor cursor = DB.getProductCatalogo();
+
+			if (cursor.getCount() > 0 ){
+
+
+				Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+
+
+				for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+					JsonProductosView view = new JsonProductosView();
+
+					view.setIdPromotor(cursor.getInt(cursor.getColumnIndex(DbEstructure.TiendaProductoCatalogo.ID_PROMOTOR)));
+					view.setIdTienda(cursor.getInt(cursor.getColumnIndex(DbEstructure.TiendaProductoCatalogo.ID_TIENDA)));
+					view.setFecha(cursor.getString(cursor.getColumnIndex(DbEstructure.TiendaProductoCatalogo.FECHA)));
+
+					String[] productos = cursor.getString(cursor.getColumnIndex("productos")).split(",");
+
+					view.convert(productos);
+
+
+					Log.d("GSON", gson.toJson(view));
+
+					//TODO: implementar envio del cliente
+
+
+				}
+
+			}
+
+
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 	
 	
 	public void enviarVisitas() {
@@ -108,8 +151,9 @@ public class EnviarDatos {
 				
 				
 			}
-
+			curVisitas.close();
 			DB.close();
+
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

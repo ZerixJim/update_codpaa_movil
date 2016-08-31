@@ -1,6 +1,6 @@
 package com.codpaa.model;
 
-/**
+/*
  * Created by Gustavo on 24/11/2014.
  */
 public class InventarioModel {

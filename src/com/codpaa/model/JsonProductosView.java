@@ -6,7 +6,6 @@ package com.codpaa.model;
 
 import com.google.gson.annotations.Expose;
 
-import java.util.List;
 
 public class JsonProductosView {
 
@@ -20,11 +19,13 @@ public class JsonProductosView {
     private String fecha;
 
     @Expose
-    private List<Integer> productos;
+    private int productos[] = null;
 
-    public void setProductos(List<Integer> productos) {
+    public void setProductos(int[] productos) {
         this.productos = productos;
     }
+
+
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
@@ -34,12 +35,23 @@ public class JsonProductosView {
         this.idPromotor = idPromotor;
     }
 
-    public int getIdTienda() {
-        return idTienda;
-    }
 
     public void setIdTienda(int idTienda) {
         this.idTienda = idTienda;
+    }
+
+
+    public void convert(String[] array){
+
+        int number[] = new int[array.length];
+
+        for (int i = 0; i < number.length; i++){
+
+            number[i] = Integer.parseInt(array[i]);
+
+        }
+
+        this.productos = number;
     }
 
 

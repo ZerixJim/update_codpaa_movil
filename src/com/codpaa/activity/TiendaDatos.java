@@ -3,7 +3,9 @@ package com.codpaa.activity;
  * Created by grim on 29/08/2016.
  */
 
+import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -27,17 +29,19 @@ import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.JsonProductosView;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.ProductosModel;
+import com.codpaa.provider.DbEstructure;
+import com.codpaa.update.EnviarDatos;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -105,11 +109,7 @@ public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItem
 
             case R.id.save_productos:
 
-                try {
-                    jsonConverter();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                save();
 
                 return true;
 
@@ -119,13 +119,10 @@ public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItem
 
     }
 
-    private void jsonConverter() throws JSONException {
+    /*private String jsonConverter() throws JSONException {
 
         if (adapter != null){
             Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-
-            //Type listOfTestOj = new TypeToken<List<ProductosModel>>(){}.getType();
-
 
             Calendar c = Calendar.getInstance();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -136,12 +133,62 @@ public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItem
             view.setIdPromotor(idPromotor);
             view.setFecha(simpleDateFormat.format(c.getTime()));
 
-            String s = gson.toJson(view);
 
-
-            Log.d("JSON:", s);
+            return gson.toJson(view);
 
         }
+
+        return null;
+
+    }*/
+
+
+    private void save(){
+
+        MarcaModel mModel = (MarcaModel) spinner.getSelectedItem();
+
+        if (adapter != null && mModel.getId() > 0){
+
+            if (adapter.isJustOneSelected()){
+
+                SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                List<Integer> pro = adapter.getSelectedItems();
+                for (Integer i: pro){
+
+                    ContentValues cv = new ContentValues();
+                    cv.put(DbEstructure.TiendaProductoCatalogo.ID_PRODUCTO, i);
+                    cv.put(DbEstructure.TiendaProductoCatalogo.ID_PROMOTOR, idPromotor);
+                    cv.put(DbEstructure.TiendaProductoCatalogo.FECHA, simpleDateFormat.format(c.getTime()));
+                    cv.put(DbEstructure.TiendaProductoCatalogo.ID_TIENDA, idTienda);
+
+
+                    try {
+                        db.insertOrThrow(DbEstructure.TiendaProductoCatalogo.TABLE_NAME, null, cv);
+                    }catch (SQLiteConstraintException e){
+
+                        Toast.makeText(this, "Uno o varios Productos ya fueron registrados", Toast.LENGTH_SHORT).show();
+
+                    }
+
+
+
+                }
+
+
+                EnviarDatos enviarDatos = new EnviarDatos(this);
+                enviarDatos.sendCatalogoProducto();
+
+            }else {
+                Toast.makeText(this, "Selecciona por lo menos un producto", Toast.LENGTH_SHORT).show();
+            }
+
+        } else {
+            Toast.makeText(this, "No Seleccionaste Marca", Toast.LENGTH_SHORT).show();
+        }
+
 
     }
 

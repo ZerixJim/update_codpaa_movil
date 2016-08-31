@@ -141,11 +141,12 @@ public class DbEstructure {
     public static class TiendaProductoCatalogo implements BaseColumns {
         private TiendaProductoCatalogo(){}
 
-        public static final String TABLE_NAME = "tienda_productos_catologo";
+        public static final String TABLE_NAME = "tienda_productos_catalogo";
         public static final String ID_PRODUCTO = "idProducto";
         public static final String ID_TIENDA = "idTienda";
         public static final String FECHA = "fecha";
         public static final String ID_PROMOTOR = "idPromotor";
+        public static final String ESTATUS = "status";
 
     }
 
