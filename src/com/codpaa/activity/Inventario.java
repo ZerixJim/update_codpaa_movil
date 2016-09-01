@@ -17,6 +17,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,8 +31,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -46,14 +49,14 @@ import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
 
-public class Inventario extends AppCompatActivity implements OnClickListener,OnItemSelectedListener{
+public class Inventario extends AppCompatActivity implements OnClickListener,OnItemSelectedListener, SeekBar.OnSeekBarChangeListener{
 	
 	
 	int idTienda, idPromotor;
 	SQLiteDatabase base;
     RadioButton piezas, cajas, selec;
     RadioGroup radio, radioEstatus;
-
+	TextView txtResultado;
 	Toolbar toolbar;
 	Spinner marca,producto;
 	Button guardar;
@@ -63,6 +66,8 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 	InputMethodManager im;
 	ArrayList<MarcaModel> array = new ArrayList<>();
 	Locale locale;
+
+	SeekBar estado;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,11 +96,16 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
         piezas = (RadioButton) radio.findViewById(R.id.radioTipo1);
         cajas = (RadioButton) radio.findViewById(R.id.radioTipo2);
 
+		txtResultado = (TextView) findViewById(R.id.resultado);
+
         radioEstatus = (RadioGroup) findViewById(R.id.radio_estatus);
 
 
+		estado = (SeekBar) findViewById(R.id.estado);
 
-
+		if (estado != null) {
+			estado.setOnSeekBarChangeListener(this);
+		}
 
 		piezas.setChecked(true);
 		
@@ -121,12 +131,12 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 
                     Cursor cNomUser = new BDopenHelper(this).nombrePromotor(idPromotor);
                     cNomUser.moveToFirst();
-                    actionBar.setTitle(cNomUser.getString(0));
+                    actionBar.setSubtitle(cNomUser.getString(0));
                     cNomUser.close();
                     try {
                         Cursor cTienda = new BDopenHelper(this).tienda(idTienda);
                         cTienda.moveToFirst();
-                        actionBar.setSubtitle(cTienda.getString(0)+" "+cTienda.getString(1));
+                        actionBar.setTitle(cTienda.getString(0)+" "+cTienda.getString(1));
 
                         try {
 
@@ -189,6 +199,8 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 		MarcaModel spM = (MarcaModel) marca.getSelectedItem();
 		int idMarca = spM.getId();
 
+		Log.d("idMarca", ""+ idMarca);
+
 		loadSpinnerProd(idMarca);
 	}
 
@@ -235,43 +247,51 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 			
 			if(idMarca != 0){
 				if(idProdu != 0){
-					if(editFisico.getText().length() >0 || editSistema.getText().length() >0) {
 
-                        if(editFisico.getText().length()>0)
-						    cantidadFisico = Integer.parseInt(editFisico.getText().toString());
-                        if(editSistema.getText().length()>0)
-                            cantidadSistema = Integer.parseInt(editSistema.getText().toString());
-						
-						try {
+					if (estado.getProgress() > 0){
+						if(editFisico.getText().length() >0 || editSistema.getText().length() >0) {
 
-                            selec = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
-                            //estatusSelected = (RadioButton) findViewById(radioEstatus.getCheckedRadioButtonId());
-							
+							if(editFisico.getText().length()>0)
+								cantidadFisico = Integer.parseInt(editFisico.getText().toString());
+							if(editSistema.getText().length()>0)
+								cantidadSistema = Integer.parseInt(editSistema.getText().toString());
+
 							try {
-								new BDopenHelper(this).insertarInventario(idTienda,idPromotor ,fecha, idProdu, cantidadFisico,cantidadSistema,1
-										,selec.getText().toString(),getFechaCaducidad(),
-                                        editLote.getText().toString(), getSelectedStatus(radioEstatus));
 
-								//Log.d("RadioChecked", " " + String.valueOf(radioEstatus.getCheckedRadioButtonId()));
-								Toast.makeText(this,"Datos Guardados", Toast.LENGTH_SHORT).show();
-								editFisico.setText("");
-                                editSistema.setText("");
-								editLote.setText("");
-								btnFecha.setText("fecha");
-                                producto.setSelection(0);
-								im.hideSoftInputFromWindow(editFisico.getWindowToken(), 0);
-								new EnviarDatos(this).enviarInventario();
+								selec = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
+								//estatusSelected = (RadioButton) findViewById(radioEstatus.getCheckedRadioButtonId());
+
+								try {
+									new BDopenHelper(this).insertarInventario(idTienda,idPromotor ,fecha, idProdu, cantidadFisico,cantidadSistema,1
+											,selec.getText().toString(),getFechaCaducidad(),
+											editLote.getText().toString(), getSelectedStatus(radioEstatus), estado.getProgress());
+
+									//Log.d("RadioChecked", " " + String.valueOf(radioEstatus.getCheckedRadioButtonId()));
+									Toast.makeText(this,"Datos Guardados", Toast.LENGTH_SHORT).show();
+									editFisico.setText("");
+									editSistema.setText("");
+									editLote.setText("");
+									btnFecha.setText("fecha");
+									producto.setSelection(0);
+									estado.setProgress(0);
+									im.hideSoftInputFromWindow(editFisico.getWindowToken(), 0);
+									new EnviarDatos(this).enviarInventario();
+								}catch(Exception e) {
+									e.printStackTrace();
+								}
 							}catch(Exception e) {
 								e.printStackTrace();
+
 							}
-						}catch(Exception e) {
-							e.printStackTrace();
-							
+
+						} else {
+							Toast.makeText(this,"No se definio la cantidad", Toast.LENGTH_SHORT).show();
 						}
-						
 					} else {
-						Toast.makeText(this,"No se definio la cantidad", Toast.LENGTH_SHORT).show();
+						Toast.makeText(this, "Selecciona el estado de producto", Toast.LENGTH_SHORT).show();
 					}
+
+
 				}else{
 					Toast.makeText(this,"NO seleccionaste Producto", Toast.LENGTH_SHORT).show();
 				}
@@ -323,6 +343,7 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 	
 	private void loadSpinnerProd(int idM){
 		try {
+
 			ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListPro(idM));
 			producto.setAdapter(proAdap);
 			
@@ -332,25 +353,54 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 	}
 	
 	private ArrayList<SpinnerProductoModel> getArrayListPro(int idMarca){
-		
-		Cursor curPro = new BDopenHelper(this).productos(idMarca);
+
+
+		Cursor cursor = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
 		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
-		for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-			final SpinnerProductoModel spP = new SpinnerProductoModel();
-			spP.setIdProducto(curPro.getInt(0));
-			spP.setNombre(curPro.getString(1));
-			spP.setPresentacion(curPro.getString(2));
-			spP.setCodigoBarras(curPro.getString(3));
-			spP.setIdMarca(curPro.getInt(4));
-			arrayP.add(spP);
+
+		if (cursor.getCount() <= 0){
+			Cursor curPro = new BDopenHelper(this).productos(idMarca);
+
+
+			Log.d("Productos Inventario", "" + curPro.getCount() + " idTienda "+ idTienda);
+
+			for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
+				final SpinnerProductoModel spP = new SpinnerProductoModel();
+
+				Log.d("Nombre Producto", ""+ curPro.getString(1));
+				spP.setIdProducto(curPro.getInt(0));
+				spP.setNombre(curPro.getString(1));
+				spP.setPresentacion(curPro.getString(2));
+				spP.setCodigoBarras(curPro.getString(3));
+				spP.setIdMarca(curPro.getInt(4));
+				arrayP.add(spP);
+			}
+
+			curPro.close();
+		}else {
+
+			for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+				final SpinnerProductoModel spP = new SpinnerProductoModel();
+
+				Log.d("Nombre Producto", ""+ cursor.getString(1));
+				spP.setIdProducto(cursor.getInt(0));
+				spP.setNombre(cursor.getString(1));
+				spP.setPresentacion(cursor.getString(2));
+				spP.setCodigoBarras(cursor.getString(3));
+				spP.setIdMarca(cursor.getInt(4));
+				arrayP.add(spP);
+			}
+
 		}
+		
+
 		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
 		spPinicio.setIdProducto(0);
 		spPinicio.setNombre("Seleccione Producto");
 		spPinicio.setPresentacion("producto sin seleccionar");
 		
 		arrayP.add(0, spPinicio);
-		curPro.close();
+
 		base.close();
 		return arrayP;
 		
@@ -383,6 +433,36 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 		return array;
 		
 	}
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+		if (progress ==0 ){
+			txtResultado.setText("No Seleccionado");
+		}else if (progress ==1){
+			txtResultado.setText("Muy Malo");
+		}else if (progress ==2){
+			txtResultado.setText("Malo");
+		}else if (progress == 3){
+			txtResultado.setText("Regular");
+		}else if (progress ==4){
+			txtResultado.setText("Bueno");
+		}else if (progress == 5){
+			txtResultado.setText("Muy Bueno");
+		}
+
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {
+
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {
+
+	}
+
 
 	public static class TimePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 

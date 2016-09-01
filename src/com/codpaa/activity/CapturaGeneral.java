@@ -231,7 +231,7 @@ public class CapturaGeneral extends AppCompatActivity implements View.OnClickLis
 
     private ArrayList<SpinnerProductoModel> getArrayListProByTiensda(int idMarca, int idTienda){
 
-        Cursor curProByTienda = new BDopenHelper(this).productosByTienda(idMarca, idTienda);
+        Cursor curProByTienda = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
         ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
         if (curProByTienda.getCount() <= 0){
 

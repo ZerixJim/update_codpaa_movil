@@ -49,6 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2"
+                android:baselineAligned="false"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
@@ -62,11 +63,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="@string/tipo"
-                        android:id="@+id/tipoText"
-
-                        style="@style/TextShadow" />
+                        android:id="@+id/tipoText"/>
 
                     <RadioGroup
                         android:layout_width="wrap_content"
@@ -100,7 +98,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Estatus"/>
+                        android:text="@string/estatus"/>
 
                     <RadioGroup
                         android:id="@+id/radio_estatus"
@@ -132,22 +130,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="2"
+                android:padding="5dp"
                 android:layout_marginTop="20dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="2dp">
+                    android:layout_weight="1">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="@string/fisico"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginEnd="5dp"
                         android:minEms="6"
                         android:id="@+id/textViewRowProducto"
                         />
@@ -168,9 +164,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-
-                    android:layout_margin="2dp">
+                    android:layout_weight="1">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -206,12 +200,23 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Estado del producto"
+                    android:text="@string/estado_del_producto"
                     />
                 <SeekBar
+                    android:id="@+id/estado"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
+                    android:max="5"
                     android:paddingTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/resultado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:textColor="@color/accent"
+
+                    />
 
             </LinearLayout>
 
@@ -231,7 +236,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lote"
-                    style="@style/TextShadow"
                     android:id="@+id/textView"/>
 
                 <EditText
@@ -247,14 +251,23 @@
                     android:theme="@style/MiTema"
                     android:maxLines="2"/>
 
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/caducidad"
                     android:id="@+id/textView2"
-                    android:layout_marginTop="15dp"
-                    style="@style/TextShadow"/>
+                    />
 
                 <Button
                     android:id="@+id/button_fecha"
@@ -265,7 +278,10 @@
                     android:drawableStart="@drawable/ic_event_white_24dp"
                     android:drawableLeft="@drawable/ic_event_white_24dp"
                     android:onClick="showDatePickerDialog"
+                    android:backgroundTint="@color/blue_primary"
                     />
+
+
 
             </LinearLayout>
 
@@ -274,9 +290,8 @@
                 android:id="@+id/bInvGuar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/save"
-                android:drawableStart="@drawable/save"
                 android:textColor="@android:color/white"
+                android:backgroundTint="@color/blue_primary"
                 android:padding="25dp"
                 android:text="@string/guar"/>
 

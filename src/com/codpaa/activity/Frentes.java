@@ -479,7 +479,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 	private ArrayList<SpinnerProductoModel> getArrayListProByTiensda(int idMarca, int idTienda){
 
-		Cursor curProByTienda = new BDopenHelper(this).productosByTienda(idMarca, idTienda);
+		Cursor curProByTienda = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
 		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
 		if (curProByTienda.getCount() <= 0){
 

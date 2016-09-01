@@ -158,6 +158,8 @@
     <string name="menu_principal">Menu Principal</string>
     <string name="datos_producto">Datos Producto</string>
     <string name="captura_general">Captura General</string>
+    <string name="estatus">Estatus</string>
+    <string name="estado_del_producto">Estado del producto</string>
 
 
 </resources>

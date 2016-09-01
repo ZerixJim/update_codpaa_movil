@@ -107,7 +107,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         inventarioProducto = "create table if not exists " +
                 "invProducto(idTienda int, idPromotor int ,fecha char(25), idProducto int, cantidad int " +
                 ",cantidadFisico int, cantidadSistema int,status int,tipo varchar(10),fecha_caducidad varchar(15)," +
-                "lote varchar(20), estatus int)";
+                "lote varchar(20), estatus int, estatus_producto int)";
         productoPrecio = "Create table if not exists " +
                 "prodPrecio (idTienda int, idPromotor int, codBarpieza char(14), " +
                 "fecha date, precio  decimal(18,2))";
@@ -298,6 +298,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL(productoByFormato);
             db.execSQL(productoByTienda);
             db.execSQL(tiendaProductoCatalogo);
+
+            db.execSQL("alter table invProducto add column estatus_producto int");
 
 
         }
@@ -613,12 +615,15 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     public void insertarInventario(int idTien, int idPromo ,String fecha, int Producto, int CantidadFisico,
                                    int CantidadSistema,int sta,String tipo, String fechaCaducidad,
-                                   String lote, int estatus) throws SQLiteException {
+                                   String lote, int estatus, int estatusProducto) throws SQLiteException {
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
             baseDatosLocal.execSQL("insert or replace into invProducto (idTienda, idPromotor" +
-                    " ,fecha, idProducto, cantidadFisico,cantidadSistema,status,tipo, fecha_caducidad, lote, estatus) values ("+idTien+","+idPromo+
-                    ",'"+fecha+"',"+Producto+","+CantidadFisico+","+CantidadSistema+","+sta+",'"+tipo+"','"+fechaCaducidad+"','"+lote+"', "+estatus+")");
+                    " ,fecha, idProducto, cantidadFisico,cantidadSistema,status," +
+                    "tipo, fecha_caducidad, lote, estatus, estatus_producto) values" +
+                    " ("+idTien+","+idPromo+
+                    ",'"+fecha+"',"+Producto+","+CantidadFisico+","+CantidadSistema+","+sta+",'"+tipo+"','"+fechaCaducidad+"','"+lote+"', "+estatus+"," +
+                    estatusProducto +")");
         if(baseDatosLocal != null) baseDatosLocal.close();
 
     }
@@ -759,7 +764,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 TiendaProductoCatalogo.TABLE_NAME, TiendaProductoCatalogo.ESTATUS),null);
     }
 
-    public Cursor productosByTienda(int idMarca, int idTienda){
+    public Cursor getProductosByTienda(int idMarca, int idTienda){
         baseDatosLocal = getReadableDatabase();
 
         return baseDatosLocal.rawQuery("select distinct p.idProducto as _id, p.nombre, p.presentacion, p.cb, p.idMarca " +
