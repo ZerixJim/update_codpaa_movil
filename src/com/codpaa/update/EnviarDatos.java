@@ -5,11 +5,13 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,6 +19,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
@@ -34,6 +37,7 @@ import com.loopj.android.http.*;
 import com.codpaa.db.BDopenHelper;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.config.Lookup;
 
 
 public class EnviarDatos {
@@ -108,7 +112,70 @@ public class EnviarDatos {
 
 					Log.d("GSON", gson.toJson(view));
 
-					//TODO: implementar envio del cliente
+					//TODO: implementar url faltante
+
+					AsyncHttpClient client = new AsyncHttpClient();
+					final RequestParams requestParams = new RequestParams();
+					requestParams.put("json", gson.toJson(view));
+					client.post(activity, Utilities.WEB_SERVICE_CODPAA_TEST + "sendProdTiend.php", requestParams, new JsonHttpResponseHandler(){
+						@Override
+						public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+							super.onSuccess(statusCode, headers, response);
+
+							if (response != null){
+								try {
+
+									Log.d("Json Response", response.toString());
+									if (response.getBoolean("insert")){
+
+										SQLiteDatabase db = new BDopenHelper(activity).getWritableDatabase();
+
+										int idTienda = response.getInt("idTienda");
+
+										String fecha = response.getString("fecha");
+
+										JSONArray array = response.getJSONArray("productos");
+
+										for (int i = 0; i < array.length() ; i++){
+
+											ContentValues contentValues = new ContentValues();
+											contentValues.put(DbEstructure.TiendaProductoCatalogo.ESTATUS, 2);
+
+											db.execSQL("update tienda_productos_catalogo set status=2 " +
+													"where idTienda="+idTienda+" and fecha='"+fecha+"' and idProducto="+ array.getInt(i));
+
+										}
+
+										//int[] array  =
+
+										db.close();
+
+                                    }
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+
+						@Override
+						public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+							super.onFailure(statusCode, headers, responseString, throwable);
+
+							Log.e("Error server", responseString + " " + throwable);
+						}
+
+						@Override
+						public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+							super.onFailure(statusCode, headers, throwable, errorResponse);
+						}
+
+						@Override
+						public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+							super.onFailure(statusCode, headers, throwable, errorResponse);
+
+
+						}
+					});
 
 
 				}
@@ -565,12 +632,12 @@ public class EnviarDatos {
 					rp.put("fecha_cad",curInven.getString(8));
 					rp.put("lote",curInven.getString(9));
 					rp.put("estatus", curInven.getInt(curInven.getColumnIndex("estatus")));
+					rp.put("estatus_producto", curInven.getInt(curInven.getColumnIndex("estatus_producto")));
 
 					//Log.d("Estatus"," "+ curInven.getInt(curInven.getColumnIndex("estatus")));
-					
-					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinventario.php", rp, new HttpResponseInventario(activity, curInven.getInt(0),curInven.getString(2), curInven.getInt(3)));
-					
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinventario.php", rp,
+							new HttpResponseInventario(activity, curInven.getInt(0),curInven.getString(2), curInven.getInt(3)));
 
 				}
 				

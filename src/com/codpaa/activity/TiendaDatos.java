@@ -26,16 +26,10 @@ import com.codpaa.R;
 import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.adapter.RecyclerProductosMultiSelect;
 import com.codpaa.db.BDopenHelper;
-import com.codpaa.model.JsonProductosView;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.ProductosModel;
 import com.codpaa.provider.DbEstructure;
 import com.codpaa.update.EnviarDatos;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-
-import org.json.JSONException;
 
 
 import java.text.SimpleDateFormat;

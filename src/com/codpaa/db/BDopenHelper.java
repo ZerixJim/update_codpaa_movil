@@ -846,7 +846,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor Inventario() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
         return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,idProducto,cantidadFisico," +
-                "cantidadSistema,cantidad,tipo, fecha_caducidad, lote, estatus from invProducto where status=1",null);
+                "cantidadSistema,cantidad,tipo, fecha_caducidad, lote, estatus, estatus_producto from invProducto where status=1",null);
 
     }
 

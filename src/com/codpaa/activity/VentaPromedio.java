@@ -33,6 +33,8 @@ import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.update.EnviarDatos;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -133,37 +135,56 @@ public class VentaPromedio extends AppCompatActivity{
 
                     if (!btnFechaI.getText().equals("fecha") && !btnFechaF.getText().equals("fecha")){
 
-                        Toast.makeText(this, "Enviando..", Toast.LENGTH_SHORT).show();
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-                        BDopenHelper bd = new BDopenHelper(this);
+                        try {
+                            Date fechaInicio = simpleDateFormat.parse(btnFechaI.getText().toString());
+                            Date fechaFin = simpleDateFormat.parse(btnFechaF.getText().toString());
 
-                        ContentValues cv = new ContentValues();
+                            if (fechaInicio.getTime() < fechaFin.getTime()){
 
-                        int idRadioSelect = radioTipo.getCheckedRadioButtonId();
-                        RadioButton radioSelected = (RadioButton) findViewById(idRadioSelect);
+                                Toast.makeText(this, "Enviando..", Toast.LENGTH_SHORT).show();
 
-                        cv.put("idMarca", marcaModel.getId());
-                        if (radioSelected != null) {
-                            cv.put("tipo", radioSelected.getText().toString().toUpperCase());
+                                BDopenHelper bd = new BDopenHelper(this);
+
+                                ContentValues cv = new ContentValues();
+
+                                int idRadioSelect = radioTipo.getCheckedRadioButtonId();
+                                RadioButton radioSelected = (RadioButton) findViewById(idRadioSelect);
+
+                                cv.put("idMarca", marcaModel.getId());
+                                if (radioSelected != null) {
+                                    cv.put("tipo", radioSelected.getText().toString().toUpperCase());
+                                }
+                                cv.put("cantidad", editCantidad.getText().toString().trim().toUpperCase());
+                                cv.put("fecha_inicio", btnFechaI.getText().toString());
+                                cv.put("fecha_fin", btnFechaF.getText().toString());
+                                cv.put("idTienda", idTienda );
+                                cv.put("idPromotor", idPromotor);
+
+                                bd.insertar("ventaPromedio", cv);
+
+
+
+                                EnviarDatos envia = new EnviarDatos(this);
+                                envia.sendVentaPromedio();
+
+                                spinnerMarca.setSelection(0);
+                                radioTipo.clearCheck();
+                                editCantidad.setText("");
+                                btnFechaI.setText(getResources().getText(R.string.fecha));
+                                btnFechaF.setText(getResources().getText(R.string.fecha));
+
+                            }else {
+                                Toast.makeText(this, "La fecha de Inicio No puede se Mayor a la fecha final",
+                                        Toast.LENGTH_LONG).show();
+                            }
+
+
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
-                        cv.put("cantidad", editCantidad.getText().toString().trim().toUpperCase());
-                        cv.put("fecha_inicio", btnFechaI.getText().toString());
-                        cv.put("fecha_fin", btnFechaF.getText().toString());
-                        cv.put("idTienda", idTienda );
-                        cv.put("idPromotor", idPromotor);
 
-                        bd.insertar("ventaPromedio", cv);
-
-
-
-                        EnviarDatos envia = new EnviarDatos(this);
-                        envia.sendVentaPromedio();
-
-                        spinnerMarca.setSelection(0);
-                        radioTipo.clearCheck();
-                        editCantidad.setText("");
-                        btnFechaI.setText(getResources().getText(R.string.fecha));
-                        btnFechaF.setText(getResources().getText(R.string.fecha));
 
 
                     }else {
@@ -171,8 +192,6 @@ public class VentaPromedio extends AppCompatActivity{
                         Toast.makeText(this, "Rango de fecha no seleccionado", Toast.LENGTH_SHORT).show();
 
                     }
-
-
 
 
                 }else {
