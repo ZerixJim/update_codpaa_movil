@@ -504,11 +504,11 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal.close();
     }
 
-    public void insertarClientes(int idTienda, String grupo,String sucur, String lon, String la, int idFormato) throws SQLiteException{
+    public void insertarClientes(int idTienda, String grupo,String sucur, String lon, String la, int idFormato, int idTipoTienda) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert or replace into clientes(idTienda,grupo,sucursal,latitud,longitud, idFormato) " +
-                    "values("+idTienda+",'"+grupo+"','"+sucur+"','"+lon+"','"+la+"', "+ idFormato +")");
+            baseDatosLocal.execSQL("insert or replace into clientes(idTienda,grupo,sucursal,latitud,longitud, idFormato, idTipo) " +
+                    "values("+idTienda+",'"+grupo+"','"+sucur+"','"+lon+"','"+la+"', "+ idFormato +","+idTipoTienda+")");
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
@@ -917,5 +917,24 @@ public class BDopenHelper extends SQLiteOpenHelper {
         count = cursor.getCount();
         cursor.close();
         return count;
+    }
+
+    public int tipoTienda(int idTienda) throws SQLiteException{
+
+
+        baseDatosLocal = getReadableDatabase();
+        int tipo = 0;
+
+        Cursor c = baseDatosLocal.rawQuery("select idTipo from clientes where idTienda="+idTienda,null);
+
+        if (c.getCount() > 0){
+            c.moveToFirst();
+
+            tipo = c.getInt(0);
+
+        }
+
+        c.close();
+        return tipo;
     }
 }

@@ -26,43 +26,56 @@
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"/>
 
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText
-                android:id="@+id/editPreN"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/precioNormal"
-                android:focusableInTouchMode="true"
-                android:inputType="numberDecimal"
-                android:layout_weight="1"
-                android:textColor="#ff212121"/>
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
-            <EditText
-                android:id="@+id/editTextPreCaj"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/precioCaja"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:textColor="#ff212121"/>
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <EditText
+                    android:id="@+id/editPreN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/precioNormal"
+                    android:focusableInTouchMode="true"
+                    android:inputType="numberDecimal"
+                    android:layout_weight="1"
+                    android:textColor="#ff212121"/>
 
 
-        </android.support.design.widget.TextInputLayout>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1">
+                <EditText
+                    android:id="@+id/editTextPreCaj"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/precioCaja"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:textColor="#ff212121"/>
+
+
+            </android.support.design.widget.TextInputLayout>
+
+
+        </LinearLayout>
+
+
 
 
 
@@ -77,11 +90,9 @@
                 android:id="@+id/txtfechaPhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:clickable="false"
-                android:gravity="center_horizontal"
                 android:text="@string/infoOferta"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_margin="5dp"/>
 
 
@@ -122,7 +133,7 @@
                 android:gravity="center"
                 android:text="@string/tipoOferta"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_gravity="center_horizontal"
+
                 android:layout_margin="5dp"/>
 
             <LinearLayout
@@ -159,6 +170,8 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
+            android:layout_marginTop="15dp"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp">
 
@@ -168,21 +181,23 @@
                 android:layout_height="wrap_content"
                 android:clickable="false"
                 android:text="@string/vigencia"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"
+
                 android:layout_margin="5dp"/>
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
-                android:orientation="vertical" >
+                android:weightSum="2"
+                android:orientation="horizontal" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:background="@color/Azul3" >
+                    android:layout_weight="1"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/textView8"
@@ -190,8 +205,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
                         android:layout_marginStart="3dp"
-                        android:text="@string/inicio"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:layout_weight="1"
+                        android:text="De" />
 
                     <Button
                         android:layout_width="wrap_content"
@@ -200,6 +215,7 @@
                         android:id="@+id/btnFechaInicio"
                         android:drawableLeft="@drawable/ruta"
                         android:drawableStart="@drawable/ruta"
+                        android:layout_weight="1"
                         android:onClick="showDatePickerDialogInicio"
                         />
 
@@ -209,7 +225,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@color/Azul3" >
+                    android:layout_weight="1"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/textView9"
@@ -219,8 +237,9 @@
                         android:layout_marginStart="3dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginEnd="10dp"
-                        android:text="@string/fin"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:layout_weight="1"
+                        android:text="A"
+                        />
 
                     <Button
                         android:layout_width="wrap_content"
@@ -229,6 +248,7 @@
                         android:id="@+id/btnFechaFin"
                         android:drawableLeft="@drawable/ruta"
                         android:drawableStart="@drawable/ruta"
+                        android:layout_weight="1"
                         android:onClick="showDatePickerDialogFin"/>
 
                 </LinearLayout>
@@ -240,6 +260,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp">
 
@@ -249,7 +270,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:clickable="false"
-                android:gravity="center"
                 android:text="@string/cambioProducto"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -270,15 +290,12 @@
 
         <Button
             android:id="@+id/btnInteligua"
-            style="@style/btnStyleShakespeare"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="35dp"
             android:layout_weight="1"
-            android:drawableLeft="@drawable/save"
-            android:drawableStart="@drawable/save"
             android:text="@string/guar" />
 
 

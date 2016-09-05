@@ -63,8 +63,10 @@ import com.codpaa.update.UpdateInformation;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.util.Configuracion;
 import com.codpaa.util.QuickstartPreferences;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+
 
 
 public class MenuPrincipal extends AppCompatActivity implements OnClickListener, LocationListener {
@@ -97,6 +99,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		super.onCreate(savedInstanceState);
         locale = new Locale("es_MX");
 		setContentView(R.layout.menu_principal);
+        setToolbar();
 
 		
 		Intent recibe = getIntent();
@@ -104,11 +107,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
 
-
         Context context = getApplicationContext();
 		PackageManager packageManager = context.getPackageManager();
 		String packageName = context.getPackageName();
-
 
 
 	
@@ -199,7 +200,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		
 		borrarRegistros();
 
-        setToolbar();
+
 
 
 
@@ -260,6 +261,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
 	}
+
+
+
 
     private void createMenu() {
 
@@ -362,6 +366,12 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_principal, menu);
+
+
+
+
+
+
 
 		return super.onCreateOptionsMenu(menu);
 	}

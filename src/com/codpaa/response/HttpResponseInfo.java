@@ -181,7 +181,8 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                     tiendasArray.getJSONObject(i).getString("sucursal"),
                     tiendasArray.getJSONObject(i).getString("x"),
                     tiendasArray.getJSONObject(i).getString("y"),
-                    tiendasArray.getJSONObject(i).getInt("idFormato"));
+                    tiendasArray.getJSONObject(i).getInt("idFormato"),
+                    tiendasArray.getJSONObject(i).getInt("idTipoTienda"));
         }
 
         configuracion.setTiendas(fecha);

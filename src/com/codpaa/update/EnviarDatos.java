@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -19,7 +20,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Looper;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
@@ -37,7 +38,6 @@ import com.loopj.android.http.*;
 import com.codpaa.db.BDopenHelper;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.config.Lookup;
 
 
 public class EnviarDatos {
@@ -45,6 +45,7 @@ public class EnviarDatos {
 	AsyncHttpClient cliente = new AsyncHttpClient();
 
 	RequestParams rp = new RequestParams();
+	ProgressDialog progressDialog;
 	SQLiteDatabase base;
 	BDopenHelper DB;
 	
@@ -71,6 +72,7 @@ public class EnviarDatos {
 		activity = a;
 		DB = new BDopenHelper(activity);
 		local = new Locale("es_MX");
+
 		
 	}
 	
@@ -105,19 +107,53 @@ public class EnviarDatos {
 					view.setIdTienda(cursor.getInt(cursor.getColumnIndex(DbEstructure.TiendaProductoCatalogo.ID_TIENDA)));
 					view.setFecha(cursor.getString(cursor.getColumnIndex(DbEstructure.TiendaProductoCatalogo.FECHA)));
 
-					String[] productos = cursor.getString(cursor.getColumnIndex("productos")).split(",");
+					final String[] productos = cursor.getString(cursor.getColumnIndex("productos")).split(",");
 
 					view.convert(productos);
 
 
 					Log.d("GSON", gson.toJson(view));
 
-					//TODO: implementar url faltante
 
 					AsyncHttpClient client = new AsyncHttpClient();
 					final RequestParams requestParams = new RequestParams();
 					requestParams.put("json", gson.toJson(view));
 					client.post(activity, Utilities.WEB_SERVICE_CODPAA_TEST + "sendProdTiend.php", requestParams, new JsonHttpResponseHandler(){
+
+
+						@Override
+						public void onStart() {
+							super.onStart();
+
+							progressDialog = new ProgressDialog(activity);
+
+							progressDialog.setMessage("Enviando..");
+
+							progressDialog.show();
+
+
+						}
+
+						@Override
+						public void onFinish() {
+							super.onFinish();
+
+							progressDialog.setMessage("Se envio Correctamente!!!..");
+
+							new Handler().postDelayed(new Runnable() {
+								@Override
+								public void run() {
+
+									progressDialog.dismiss();
+
+								}
+							},2000);
+
+
+
+
+						}
+
 						@Override
 						public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 							super.onSuccess(statusCode, headers, response);
@@ -276,83 +312,10 @@ public class EnviarDatos {
 		}
 		
 	}
-	
-	public void enviarCajasMay(){
-		try {
-			Cursor curCajasM = DB.datosCajasMay();
-			base = new BDopenHelper(activity).getWritableDatabase();
-			
-			RequestParams rpC = new RequestParams();
-			
-			if(verificarConexion()){
-				if(curCajasM.getCount() != 0){
-					for(curCajasM.moveToFirst(); !curCajasM.isAfterLast(); curCajasM.moveToNext()){
-						
-						rpC.put("idCel", Integer.toString(curCajasM.getInt(0)));
-						rpC.put("idMarca", Integer.toString(curCajasM.getInt(1)));
-						rpC.put("fecha", curCajasM.getString(2));
-						rpC.put("cajas", Integer.toString(curCajasM.getInt(3)));
-						
-						cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendcajasmay.php", rpC, new HttpResponseCaMa(activity,curCajasM.getInt(1),curCajasM.getString(2)));
-					}
-					
-				}else{
-					Log.d("Enviar Caj May", "no hay registros");
-				}
-				
-			}else{
-				Log.d("Enviar Caj May", "no hay conexion");
-			}
-			
-			base.close();
-			DB.close();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private class HttpResponseCaMa extends JsonHttpResponseHandler{
-		private int idMarca;
-		private String fecha;
-	
-		SQLiteDatabase base;
-		Activity act;
-		
-		public HttpResponseCaMa(Activity activity,int idMar, String fecha){
-			
-			this.idMarca = idMar;
-			this.fecha = fecha;
-			this.act = activity;
-		}
 
 
+	
 
-		@Override
-		public void onSuccess(int statusCode,Header[] headers ,JSONObject response) {
-			if(response != null){
-				try {
-					
-					base = new BDopenHelper(act).getWritableDatabase();
-					if(response.getBoolean("insert")){
-						base.execSQL("Update cajasMayoreo set status=2 where idMarca="+idMarca+" and fecha='"+fecha+"' ");
-						Toast.makeText(act, "Registro Recibido", Toast.LENGTH_SHORT).show();
-						
-						base.close();
-						
-					}else{
-						
-						Toast.makeText(act, "No se Recibio", Toast.LENGTH_SHORT).show();
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-			
-			
-		}
-		
-	}
 	
 	public void enviarFrentes() {
 		try {

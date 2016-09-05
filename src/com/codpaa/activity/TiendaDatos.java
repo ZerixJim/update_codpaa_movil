@@ -7,6 +7,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +32,14 @@ import com.codpaa.model.MarcaModel;
 import com.codpaa.model.ProductosModel;
 import com.codpaa.provider.DbEstructure;
 import com.codpaa.update.EnviarDatos;
+import com.codpaa.util.Utilities;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,11 +47,14 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import cz.msebera.android.httpclient.Header;
+
+
 
 public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private Spinner spinner;
-    private EditText metros;
+    private EditText metros, checkouts;
     private int idTienda, idPromotor;
     private RecyclerView recyclerView;
     RecyclerProductosMultiSelect adapter;
@@ -67,6 +79,8 @@ public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItem
         spinner = (Spinner) findViewById(R.id.spinner_marca);
         metros = (EditText) findViewById(R.id.metros);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        metros = (EditText) findViewById(R.id.metros);
+        checkouts = (EditText) findViewById(R.id.checkouts);
 
 
         spinner.setOnItemSelectedListener(this);
@@ -79,6 +93,8 @@ public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItem
          * keyboard soft hide
          */
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+
 
 
     }
@@ -141,6 +157,7 @@ public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItem
 
         MarcaModel mModel = (MarcaModel) spinner.getSelectedItem();
 
+
         if (adapter != null && mModel.getId() > 0){
 
             if (adapter.isJustOneSelected()){
@@ -168,6 +185,46 @@ public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItem
                     }
 
 
+
+                }
+
+                if (metros.getText().length() > 0 && checkouts.getText().length() >0){
+
+                    AsyncHttpClient client = new AsyncHttpClient();
+
+                    RequestParams rp = new RequestParams();
+                    rp.put("solicitud", "update_datos_tienda");
+                    rp.put("tamanio", metros.getText().toString());
+                    rp.put("cajas", checkouts.getText().toString());
+                    rp.put("idTienda", idTienda);
+
+                    client.get(this, Utilities.WEB_SERVICE_CODPAA + "serv.php", rp, new JsonHttpResponseHandler(){
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                            super.onSuccess(statusCode, headers, response);
+
+                            if (response != null){
+                                try {
+                                    if (response.getBoolean("update")){
+                                        Log.d("Update", "Datos Actualizados correctamente");
+
+                                        metros.setText("");
+                                        checkouts.setText("");
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            super.onFailure(statusCode, headers, throwable, errorResponse);
+                        }
+                    });
 
                 }
 

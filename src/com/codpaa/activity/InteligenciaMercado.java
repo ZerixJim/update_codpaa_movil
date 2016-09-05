@@ -63,8 +63,8 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
         locale = new Locale("es_MX");
 		Intent i = getIntent();
 
-		idTienda = (Integer) i.getExtras().get("idTienda");
-		idPromotor = (Integer) i.getExtras().get("idPromotor");
+		idTienda = i.getIntExtra("idTienda", 0);
+		idPromotor = i.getIntExtra("idPromotor", 0);
 		
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			
@@ -122,6 +122,12 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 		}catch (NullPointerException e){
 			e.printStackTrace();
 		}
+
+
+		/**
+		 * keyboard soft hide
+		 */
+		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
 	}
 
@@ -278,7 +284,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 					MarcaModel spM = (MarcaModel) spMarca.getSelectedItem();
 					SpinnerProductoModel spP = (SpinnerProductoModel) spProducto.getSelectedItem();
 					Calendar c = Calendar.getInstance();
-					SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
+					SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
 					
 					String fecha = dFecha.format(c.getTime());
 					int idMarca = spM.getId();
@@ -461,7 +467,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
                 mes = 0 + mes;
             }
 
-            btnFechaInicio.setText(String.format("%s-%s-%d", dia, mes, year));
+            btnFechaInicio.setText(String.format(Locale.getDefault(),"%s-%s-%d", dia, mes, year));
 
 
 
@@ -500,7 +506,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
                 mes = 0 + mes;
             }
 
-            btnFechaFin.setText(String.format("%s-%s-%d", dia, mes, year));
+            btnFechaFin.setText(String.format(Locale.getDefault(),"%s-%s-%d", dia, mes, year));
 
 
 

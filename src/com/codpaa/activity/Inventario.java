@@ -93,8 +93,12 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 		editLote = (EditText) findViewById(R.id.editLote);
 
         radio = (RadioGroup) findViewById(R.id.radioInventario);
-        piezas = (RadioButton) radio.findViewById(R.id.radioTipo1);
-        cajas = (RadioButton) radio.findViewById(R.id.radioTipo2);
+		if (radio != null) {
+			piezas = (RadioButton) radio.findViewById(R.id.radioTipo1);
+		}
+		if (radio != null) {
+			cajas = (RadioButton) radio.findViewById(R.id.radioTipo2);
+		}
 
 		txtResultado = (TextView) findViewById(R.id.resultado);
 

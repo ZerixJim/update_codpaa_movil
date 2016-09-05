@@ -70,8 +70,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		locale = new Locale("es_MX");
 
 		Intent i = getIntent();
-		idTienda = (Integer) i.getExtras().get("idTienda");
-		idPromotor = (Integer) i.getExtras().get("idPromotor");
+		idTienda = i.getIntExtra("idTienda", 0);
+		idPromotor = i.getIntExtra("idPromotor", 0);
 
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -450,32 +450,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		}
 	}
 
-	private ArrayList<SpinnerProductoModel> getArrayListPro(int idMarca){
 
-		Cursor curPro = new BDopenHelper(this).productos(idMarca);
-		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
-		for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-			final SpinnerProductoModel spP = new SpinnerProductoModel();
-			spP.setIdProducto(curPro.getInt(0));
-			spP.setNombre(curPro.getString(1));
-			spP.setPresentacion(curPro.getString(2));
-			spP.setCodigoBarras(curPro.getString(3));
-			spP.setIdMarca(curPro.getInt(4));
-			arrayP.add(spP);
-		}
-		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
-		spPinicio.setIdProducto(0);
-		spPinicio.setNombre("Seleccione Producto");
-		spPinicio.setPresentacion("producto sin seleccionar");
-		spPinicio.setCodigoBarras(" ");
-
-		arrayP.add(0,spPinicio);
-
-		curPro.close();
-		base.close();
-		return arrayP;
-
-	}
 
 	private ArrayList<SpinnerProductoModel> getArrayListProByTiensda(int idMarca, int idTienda){
 

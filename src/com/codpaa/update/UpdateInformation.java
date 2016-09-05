@@ -8,7 +8,6 @@ import com.codpaa.listener.ResponseExhibiciones;
 import com.codpaa.listener.ResponseMarcas;
 import com.codpaa.listener.ResponseProductos;
 import com.codpaa.listener.ResponseRuta;
-import com.codpaa.listener.ResponseTiendas;
 import com.codpaa.response.HttpResponseInfo;
 import com.codpaa.util.Utilities;
 import com.loopj.android.http.AsyncHttpClient;
@@ -63,20 +62,6 @@ public class UpdateInformation{
 
     }
 
-    public void actualizarTiendas(int idPromotor){
-        AsyncHttpClient clientTiendas = new AsyncHttpClient();
-        ResponseTiendas responseTienda = new ResponseTiendas(_context);
-        RequestParams rp = new RequestParams();
-
-        rp.put("solicitud","client");
-        rp.put("id",String.valueOf(idPromotor));
-
-        clientTiendas.setTimeout(5000);
-        clientTiendas.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO,rp,responseTienda);
-
-
-
-    }
 
     public void actualizarExhibiciones(int idPromotor){
         AsyncHttpClient clientExh = new AsyncHttpClient();

@@ -112,6 +112,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 		idTienda = recibeIdTi.getIntExtra("idTienda",0);
 		idPromotor = recibeIdTi.getIntExtra("idPromotor",0);
+		//idTipoTienda = recibeIdTi.getIntExtra("idTipo", 0);
 
 
 		//registrar views
@@ -754,6 +755,15 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+
+
+		if (new BDopenHelper(this).tipoTienda(idTienda) ==2){
+			if (!verifyCatalogo()){
+				dialogCapturaDeCatalogo();
+			}
+		}
+
+
 		
 		
 	}
@@ -907,6 +917,55 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 				.setView(vistaEncargado);
 		builder.create().show();
 		
+	}
+
+
+	private void dialogCapturaDeCatalogo(){
+
+		Builder builder = new AlertDialog.Builder(this);
+
+		builder.setTitle("Catalogo de Producto");
+		builder.setMessage("Es necesario que captures los productos que tienes catalogados en la Tienda");
+		builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+				saveDatosTienda();
+
+			}
+		});
+
+		builder.setNegativeButton("Cancelar", null);
+
+		builder.create().show();
+
+	}
+
+	private boolean verifyCatalogo(){
+
+
+		Calendar c = Calendar.getInstance();
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
+
+		String anioMes = format.format(c.getTime());
+
+		String sql = "select * from tienda_productos_catalogo as tpc " +
+				"left join clientes as c on c.idTienda=tpc.idTienda " +
+				" where " +
+				" strftime('%Y-%m', tpc.fecha) = '"+anioMes+"'  and tpc.idTienda="+idTienda;
+
+		SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+		Cursor cursor = db.rawQuery(sql, null);
+
+		if (cursor.getCount() > 0){
+			cursor.close();
+			return true;
+		} else {
+
+			cursor.close();
+			return false;
+		}
+
 	}
 	
 

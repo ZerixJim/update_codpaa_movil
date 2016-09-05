@@ -13,6 +13,14 @@ repositories {
     mavenCentral()
 }
 
+allprojects {
+    repositories{
+        jcenter()
+
+        maven { url "https://jitpack.io" }
+    }
+}
+
 
 android {
     compileSdkVersion 23
@@ -71,6 +79,7 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:9.0.2'
     compile 'com.android.support:percent:23.4.0'
     compile 'com.google.code.gson:gson:2.7'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
