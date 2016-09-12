@@ -1254,7 +1254,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	private void dialogoConfirmarEntrada(){
 
 		Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("¿Estas seguro(a) que quires Registrar tu Entrada en \n " + nombreTienda + "?");
+		builder.setMessage("¿Estas seguro(a) que quieres Registrar tu Entrada en \n " + nombreTienda + "?");
 		builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {

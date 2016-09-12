@@ -32,7 +32,7 @@ public class MultiSelectionSpinner extends Spinner implements
     String[] _items = null;
     boolean[] mSelection = null;
 
-    ArrayAdapter<String> simple_adapter;
+    ArrayAdapter<String> simpleAdapter;
     ArrayList<ProductosModel> productos = null;
     ProductosAdapter adapterModel;
 
@@ -49,8 +49,7 @@ public class MultiSelectionSpinner extends Spinner implements
 
     public MultiSelectionSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Toast.makeText(context,"constructor 1 \nCantidad "+productosArray().size(),
-                Toast.LENGTH_SHORT).show();
+
         adapterModel = new ProductosAdapter(context,
                 android.R.layout.simple_list_item_multiple_choice,productosArray());
 
@@ -71,9 +70,9 @@ public class MultiSelectionSpinner extends Spinner implements
         if (mSelection != null && which < mSelection.length) {
             mSelection[which] = isChecked;
 
-            simple_adapter.clear();
-            simple_adapter.add(buildSelectedItemString());
-            super.setAdapter(simple_adapter);
+            simpleAdapter.clear();
+            simpleAdapter.add(buildSelectedItemString());
+            super.setAdapter(simpleAdapter);
         } else {
             throw new IllegalArgumentException(
                     "Argument 'which' is out of bounds.");
@@ -144,16 +143,16 @@ public class MultiSelectionSpinner extends Spinner implements
     public void setItems(String[] items) {
         _items = items;
         mSelection = new boolean[_items.length];
-        simple_adapter.clear();
-        simple_adapter.add(_items[0]);
+        simpleAdapter.clear();
+        simpleAdapter.add(_items[0]);
         Arrays.fill(mSelection, false);
     }
 
     public void setItems(List<String> items) {
         _items = items.toArray(new String[items.size()]);
         mSelection = new boolean[_items.length];
-        simple_adapter.clear();
-        simple_adapter.add(_items[0]);
+        simpleAdapter.clear();
+        simpleAdapter.add(_items[0]);
         Arrays.fill(mSelection, false);
     }
 
@@ -195,8 +194,8 @@ public class MultiSelectionSpinner extends Spinner implements
                 }
             }
         }
-        simple_adapter.clear();
-        simple_adapter.add(buildSelectedItemString());
+        simpleAdapter.clear();
+        simpleAdapter.add(buildSelectedItemString());
     }
 
     public void setSelection(int index) {
@@ -209,8 +208,8 @@ public class MultiSelectionSpinner extends Spinner implements
             throw new IllegalArgumentException("Index " + index
                     + " is out of bounds.");
         }
-        simple_adapter.clear();
-        simple_adapter.add(buildSelectedItemString());
+        simpleAdapter.clear();
+        simpleAdapter.add(buildSelectedItemString());
     }
 
     public void setSelection(int[] selectedIndicies) {
@@ -225,8 +224,8 @@ public class MultiSelectionSpinner extends Spinner implements
                         + " is out of bounds.");
             }
         }
-        simple_adapter.clear();
-        simple_adapter.add(buildSelectedItemString());
+        simpleAdapter.clear();
+        simpleAdapter.add(buildSelectedItemString());
     }
 
     public List<String> getSelectedStrings() {

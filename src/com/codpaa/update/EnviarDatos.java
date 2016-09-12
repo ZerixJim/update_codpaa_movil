@@ -118,7 +118,7 @@ public class EnviarDatos {
 					AsyncHttpClient client = new AsyncHttpClient();
 					final RequestParams requestParams = new RequestParams();
 					requestParams.put("json", gson.toJson(view));
-					client.post(activity, Utilities.WEB_SERVICE_CODPAA_TEST + "sendProdTiend.php", requestParams, new JsonHttpResponseHandler(){
+					client.post(activity, Utilities.WEB_SERVICE_CODPAA + "sendProdTiend.php", requestParams, new JsonHttpResponseHandler(){
 
 
 						@Override

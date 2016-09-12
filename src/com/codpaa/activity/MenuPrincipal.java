@@ -66,7 +66,9 @@ import com.codpaa.util.QuickstartPreferences;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class MenuPrincipal extends AppCompatActivity implements OnClickListener, LocationListener {
@@ -77,6 +79,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     private DrawerLayout drawerLayout;
     TextView email;
+    CircleImageView avatar;
     Spinner spinnerTien;
     SQLiteDatabase base;
     LocationManager lM = null;
@@ -111,10 +114,13 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		PackageManager packageManager = context.getPackageManager();
 		String packageName = context.getPackageName();
 
+        avatar = (CircleImageView) findViewById(R.id.avatar);
+        if (avatar != null) {
+            avatar.setOnClickListener(this);
+        }
 
-	
 
-		try {
+        try {
 		    myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
 		} catch (PackageManager.NameNotFoundException e) {
 		    e.printStackTrace();
@@ -158,6 +164,11 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 email = (TextView) view.findViewById(R.id.user_mail);
                 TextView ver = (TextView) view.findViewById(R.id.version);
                 TextView id = (TextView) view.findViewById(R.id.id);
+                CircleImageView imageView = (CircleImageView) view.findViewById(R.id.circle_image);
+
+
+                Picasso.with(this).load("http://test.plataformavanguardia.net/images/promoPic/1000/13122797_10208823644806220_2530392818702619653_o.jpg")
+                        .into(imageView);
 
                 id.setText(String.format(Locale.getDefault(),"ID: %d", cursorDatosUser.getInt(0)));
                 ver.setText(String.format("versión: %s", myVersionName));
@@ -260,6 +271,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         }
 
 
+
+
 	}
 
 
@@ -355,9 +368,11 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_account_circle_white_24dp);
-			//actionBar.setDisplayShowTitleEnabled(false);
+            //actionBar.setHomeAsUpIndicator(R.drawable.ic_account_circle_white_24dp);
+			actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+
         }
 	}
 
@@ -367,13 +382,10 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_principal, menu);
 
+        //sView view = (View) menu.getItem(R.id.toolbar);
 
 
-
-
-
-
-		return super.onCreateOptionsMenu(menu);
+		return true;
 	}
 
 	@Override
@@ -396,9 +408,15 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 				return true;
 			case android.R.id.home:
 
-				drawerLayout.openDrawer(GravityCompat.START);
-				//this.finish();
+				//drawerLayout.openDrawer(GravityCompat.START);
+				this.finish();
 				return true;
+
+            case R.id.avatar:
+
+                drawerLayout.openDrawer(GravityCompat.START);
+
+                return true;
 
 			default:
 				return super.onOptionsItemSelected(item);
@@ -516,6 +534,14 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 	@Override
 	public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.avatar:
+                drawerLayout.openDrawer(GravityCompat.START);
+                break;
+
+        }
 	}
 
 	@Override

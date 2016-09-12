@@ -15,7 +15,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.codpaa.R;
@@ -30,8 +29,6 @@ import java.util.List;
 
 public class ListaMensajesActivity extends AppCompatActivity{
 
-    private RecyclerView mRecyclerView;
-    private LayoutManager mLayoutManager;
     private MensajesRecyclerAdapter adapter;
 
     private BroadcastReceiver mNewMessageBroadcastReceiver;
@@ -42,11 +39,10 @@ public class ListaMensajesActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_mensajes);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_mensajes);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_mensajes);
 
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, null));
+        LayoutManager mLayoutManager = new LinearLayoutManager(this);
+
 
 
         ActionBar actionBar = getSupportActionBar();
@@ -57,9 +53,15 @@ public class ListaMensajesActivity extends AppCompatActivity{
 
 
 
-        adapter = new MensajesRecyclerAdapter(this);
+        if (mRecyclerView != null) {
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.addItemDecoration(new DividerItemDecoration(this, null));
+            adapter = new MensajesRecyclerAdapter(this);
 
-        mRecyclerView.setAdapter(adapter);
+            mRecyclerView.setAdapter(adapter);
+        }
+
+
 
         mNewMessageBroadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -78,7 +80,7 @@ public class ListaMensajesActivity extends AppCompatActivity{
         super.onResume();
 
 
-        Log.d("MessageList", "onResume");
+        //Log.d("MessageList", "onResume");
 
         adapter.setItems(mensajeModels());
         adapter.notifyDataSetChanged();

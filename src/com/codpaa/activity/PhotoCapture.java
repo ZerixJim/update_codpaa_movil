@@ -116,8 +116,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
         //get value by intention
         Intent i = getIntent();
-		idTienda = (Integer) i.getExtras().get("idTienda");
-		idPromotor = (Integer) i.getExtras().get("idPromotor");
+		idTienda = i.getIntExtra("idTienda", 0);
+		idPromotor = i.getIntExtra("idPromotor", 0);
 
 
         //instancia de views
@@ -134,8 +134,12 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         textoEnvio = (TextView) findViewById(R.id.textEvioFoto);
 
         radioChoice = (RadioGroup) findViewById(R.id.radioChoice);
-        radioNormal = (RadioButton) radioChoice.findViewById(R.id.radioNormal);
-        radioEvento = (RadioButton) radioChoice.findViewById(R.id.radioEvento);
+        if (radioChoice != null) {
+            radioNormal = (RadioButton) radioChoice.findViewById(R.id.radioNormal);
+        }
+        if (radioChoice != null) {
+            radioEvento = (RadioButton) radioChoice.findViewById(R.id.radioEvento);
+        }
 
         //add event listener
         enviarPhoto.setOnClickListener(this);
@@ -389,11 +393,16 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	public String getRealPathFromURI(Uri uri) {
 	    Cursor cursor = getContentResolver().query(uri, null, null, null, null);
 
+        String path = "";
 
-	    cursor.moveToFirst();
-	    int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        String path = cursor.getString(idx);
-        cursor.close();
+        if (cursor != null) {
+            cursor.moveToFirst();
+
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            path = cursor.getString(idx);
+            cursor.close();
+        }
+
 	    return path;
 	}
     //metod: sent image to server
@@ -590,7 +599,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 @Override
                 public void run() {
 
-                    textoEnvio.setText("Error el enviar");
+                    textoEnvio.setText("Error al enviar");
                     textoEnvio.setTextColor(Color.RED);
                 }
             });
