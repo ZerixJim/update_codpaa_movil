@@ -1,39 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:id="@+id/ListProductos">
+    android:id="@+id/ListProductos"
+    android:padding="@dimen/activity_horizontal_margin">
+
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_toRightOf="@+id/frame"
+        android:layout_toEndOf="@+id/frame"
+        android:layout_toLeftOf="@+id/checkProduct"
+        android:layout_toStartOf="@+id/checkProduct"
         android:text="Nombre"
-        android:id="@+id/textProNombre"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp" />
+        android:id="@+id/textProNombre"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Presentacion"
+        android:paddingTop="5dp"
+        android:layout_below="@+id/textProNombre"
         android:id="@+id/textProducPresentacion"
-        android:layout_alignBaseline="@+id/checkProduct"
-        android:layout_alignBottom="@+id/checkProduct"
-        android:layout_alignLeft="@+id/textProNombre" />
+        android:layout_alignLeft="@+id/textProNombre"
+        android:layout_alignStart="@+id/textProNombre"
+        />
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="120dp"
+            android:layout_height="98dp"
+            android:src="@drawable/ic_launcher"
+
+            android:maxWidth="120dp"
+            android:maxHeight="98dp"/>
+
+
+
+    </FrameLayout>
+
+
+
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/checkProduct"
-        android:layout_gravity="right"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:layout_marginRight="45dp"
         android:clickable="false"
         android:visibility="visible"
-        android:layout_below="@+id/textProNombre"
-        android:layout_alignParentRight="true" />
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

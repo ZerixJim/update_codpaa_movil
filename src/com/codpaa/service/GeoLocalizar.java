@@ -51,7 +51,6 @@ public class GeoLocalizar extends Service implements LocationListener{
 	
 	LocationManager lm;
 	Location loGps, loNet, loGeneral;
-	Locale local;
 	Timer tiempoEspera = null, tiempoRastreo = null;
 	SQLiteDatabase base = null;
 	BDopenHelper DBhelper;
@@ -352,7 +351,6 @@ public class GeoLocalizar extends Service implements LocationListener{
 		rp = new RequestParams();
 
 
-		local = new Locale("es_MX");
 		con = this;
 
 		startContiniuosListening();
@@ -501,7 +499,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 			//Calendar c = Calendar.getInstance();
 			//SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",local).format(new Date());
 				
-			String fecha = new SimpleDateFormat("dd-MM-yyyy",local).format(new Date());
+			String fecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault()).format(new Date());
 			
 			final Context context = getApplicationContext();
 			PackageManager packageManager = context.getPackageManager();
@@ -921,8 +919,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 			
 
 			Calendar c = Calendar.getInstance();
-			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",local);
-			SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a", local);
+			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
+			SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
 			fecha = dFecha.format(c.getTime());
 			hora = dHora.format(c.getTime());
 			

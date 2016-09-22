@@ -16,6 +16,7 @@ import com.codpaa.provider.DbEstructure.Tienda;
 import com.codpaa.provider.DbEstructure.ProductByFormato;
 import com.codpaa.provider.DbEstructure.ProductoByTienda;
 import com.codpaa.provider.DbEstructure.TiendaProductoCatalogo;
+import com.codpaa.provider.DbEstructure.PhotoProducto;
 
 
 import java.io.File;
@@ -26,7 +27,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
-    private static final int version = 24;
+
+    // v1.2.3 = 24
+    private static final int version = 25;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -60,6 +63,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String productoByFormato;
     private static String productoByTienda;
     private static String tiendaProductoCatalogo;
+    private static String photoProducto;
 
 
     public BDopenHelper(Context miContext) {
@@ -157,6 +161,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "idCelular int NOT NULL, idMarca int NOT NULL, idExhibicion int NOT NULL, " +
                 "fecha varchar(10) NOT NULL, dia int NOT NULL, mes int NOT NULL, anio int NOT NULL, " +
                 "imagen varchar(250) NOT NULL, status int(2) NOT NULL, evento int(2), fecha_captura char(20) NOT NULL)";
+
+        photoProducto = "create table if not exists " +
+                PhotoProducto.TABLE_NAME + "(" + PhotoProducto.ID_PHOTO + " int ," +
+                PhotoProducto.ID_PRODUCTO + " int)";
+
+
         preguntas = "create table if not exists " +
                     "preguntas(id_pregunta integer NOT NULL, " +
                 "descripcion varchar(250) NOT NULL, id_tipo int NOT NULL, " +
@@ -249,6 +259,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(productoByFormato);
         db.execSQL(productoByTienda);
         db.execSQL(tiendaProductoCatalogo);
+        db.execSQL(photoProducto);
     }
 
     @Override
@@ -302,6 +313,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL("alter table invProducto add column estatus_producto int");
 
 
+        }
+
+        if (oldVersion == 24 && newVersion == 25){
+            db.execSQL(photoProducto);
         }
 
 

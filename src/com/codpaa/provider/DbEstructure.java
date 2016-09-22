@@ -151,5 +151,20 @@ public class DbEstructure {
     }
 
 
+    /**
+     * table photo_producto
+     */
+
+    public static class PhotoProducto implements BaseColumns {
+
+        private PhotoProducto(){}
+
+        public static final String TABLE_NAME = "photo_producto";
+        public static final String ID_PHOTO = "idFoto";
+        public static final String ID_PRODUCTO = "idProducto";
+
+    }
+
+
 
 }

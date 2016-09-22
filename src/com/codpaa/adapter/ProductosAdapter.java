@@ -2,31 +2,39 @@ package com.codpaa.adapter;
 
 
 import android.content.Context;
-import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.codpaa.R;
 
 import java.util.ArrayList;
 import com.codpaa.model.ProductosModel;
+import com.codpaa.util.Utilities;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
-    Context _context;
+
     private ArrayList<ProductosModel> _datos;
-    LayoutInflater inflater;
-    ProductosModel productosModel = null;
+    private LayoutInflater inflater;
+    private ProductosModel productosModel = null;
+    private Context context;
 
 
-    private class ViewHolder {
+    private static class ViewHolder {
         TextView nombreProducto;
         TextView presentacion;
+        ImageView imageView;
         CheckBox checkBox;
         ProductosModel productosModel;
+        ProgressBar progressBar;
     }
 
 
@@ -36,8 +44,7 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
 
         super(context,textViewResourceId,objects);
 
-
-        this._context = context;
+        this.context = context;
 
         this._datos = objects;
 
@@ -47,9 +54,9 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
         View row = convertView;
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         if(row == null){
             row = inflater.inflate(R.layout.custom_view_productos, parent, false);
@@ -58,6 +65,8 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
             viewHolder.nombreProducto = (TextView) row.findViewById(R.id.textProNombre);
             viewHolder.presentacion = (TextView) row.findViewById(R.id.textProducPresentacion);
             viewHolder.checkBox = (CheckBox) row.findViewById(R.id.checkProduct);
+            viewHolder.imageView = (ImageView) row.findViewById(R.id.image);
+            viewHolder.progressBar = (ProgressBar) row.findViewById(R.id.progress);
 
             row.setTag(viewHolder);
 
@@ -68,6 +77,8 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
 
         productosModel = _datos.get(position);
 
+        Log.d("idMarca adapter", "" + productosModel.getIdMarca());
+
 
 
 
@@ -76,22 +87,60 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
 
 
 
-        if (position == 0 && productosModel.getIdProducto() == 0)
+        if (position == 0 ) {
             viewHolder.checkBox.setVisibility(View.INVISIBLE);
+            viewHolder.imageView.setVisibility(View.GONE);
+        }
+        else {
+            viewHolder.checkBox.setVisibility(View.VISIBLE);
+            viewHolder.imageView.setVisibility(View.VISIBLE);
 
-        if (position % 2 == 1){
-            row.setBackgroundColor(Color.rgb(243,243,243));
-        }else {
-            row.setBackgroundColor(Color.WHITE);
         }
 
-        if (productosModel.isSeleted()){
-            viewHolder.checkBox.setVisibility(View.VISIBLE);
+
+
+
+
+        if (productosModel.isChecked()){
+            //viewHolder.checkBox.setVisibility(View.VISIBLE);
             viewHolder.checkBox.setChecked(true);
         }else {
             viewHolder.checkBox.setChecked(false);
 
         }
+
+
+        if (position > 0){
+
+            Picasso picasso = Picasso.with(context);
+
+
+            //Log.d("url", Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif");
+
+            picasso.load(Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif")
+                    //.resize(bitmapDrawable.getBitmap().getWidth(), 0)
+                    //.fit()
+                    //.placeholder(R.drawable.progress_animated)
+                    //.centerCrop()
+                    //.centerInside()
+                    //.noFade()
+                    .into(viewHolder.imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            viewHolder.progressBar.setVisibility(View.GONE);
+
+                        }
+
+                        @Override
+                        public void onError() {
+                            viewHolder.progressBar.setVisibility(View.GONE);
+
+                        }
+                    });
+
+
+        }
+
 
 
 
@@ -115,6 +164,13 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
         return pm;
     }
 
+
+
+    public ArrayList<ProductosModel> getProductos(){
+
+
+        return _datos;
+    }
 
 
 

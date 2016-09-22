@@ -20,8 +20,10 @@ import com.codpaa.adapter.CustomAdapter;
 import com.codpaa.R;
 import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.model.MarcaModel;
+import com.codpaa.model.ProductosModel;
 import com.codpaa.model.SpinnerMarcaModel;
 import com.codpaa.util.Utilities;
+import com.codpaa.widget.MultiSpinnerSelect;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -77,7 +79,7 @@ import com.squareup.picasso.Picasso;
 import cz.msebera.android.httpclient.Header;
 
 
-public class PhotoCapture extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
+public class PhotoCapture extends AppCompatActivity implements OnClickListener, OnItemSelectedListener, MultiSpinnerSelect.MultiSpinnerListener{
 
 
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -91,14 +93,14 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	int idPromotor, idTienda;
 	Button enviarPhoto;
     DonutProgress donutProgress;
-    Locale local;
-    public static ImageView showImg = null;
+    public ImageView showImg = null;
     PhotoCapture CameraActivity = null;
     String mCurrentPhotoPath;
     boolean imagenEspera = false;
     Spinner spiMarca, spiExh;
     ArrayList<MarcaModel> array = new ArrayList<>();
  	SQLiteDatabase base;
+    MultiSpinnerSelect multiSpinnerSelect;
 
     int startCamera;
 
@@ -108,7 +110,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photocapture);
         //aplication context
@@ -133,6 +134,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         donutProgress = (DonutProgress) findViewById(R.id.progress_photo);
         textoEnvio = (TextView) findViewById(R.id.textEvioFoto);
 
+        multiSpinnerSelect = (MultiSpinnerSelect) findViewById(R.id.multi_spinner);
+
+
         radioChoice = (RadioGroup) findViewById(R.id.radioChoice);
         if (radioChoice != null) {
             radioNormal = (RadioButton) radioChoice.findViewById(R.id.radioNormal);
@@ -152,9 +156,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         spinnerExhi();
 
 
-
-
-        local = new Locale("es_MX");
 
         //load default image (not image loaded)
         showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
@@ -262,7 +263,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private File createImageFile() throws IOException {
 
 
-		String timeStamp = new SimpleDateFormat("ddMMyyyykm", local).format(new Date());
+		String timeStamp = new SimpleDateFormat("ddMMyyyykm", Locale.getDefault()).format(new Date());
 		String imageFileName = idTienda+timeStamp;
 		File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 		if(!storageDir.exists()){
@@ -415,10 +416,10 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		if(imagenEspera){
 			if(idMarca != 0 && idExhibicion != 0){
 
-				String timeStamp = new SimpleDateFormat("dd-MM-yyyy", local).format(new Date());
-				String ano = new SimpleDateFormat("yyyy", local).format(new Date());
-				String mes = new SimpleDateFormat("MM", local).format(new Date());
-				String dia = new SimpleDateFormat("dd", local).format(new Date());
+				String timeStamp = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+				String ano = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
+				String mes = new SimpleDateFormat("MM", Locale.getDefault()).format(new Date());
+				String dia = new SimpleDateFormat("dd", Locale.getDefault()).format(new Date());
 
 
                 Calendar c = Calendar.getInstance();
@@ -458,7 +459,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                             requ.put("fecha", datosFoto.getString(datosFoto.getColumnIndex("fecha")));
                             requ.put("dia", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("dia"))));
                             requ.put("mes", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("mes"))));
-                            requ.put("ano", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("anio"))));
+                            requ.put("anio", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("anio"))));
                             requ.put("evento", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("evento"))));
                             requ.put("fecha_captura", datosFoto.getString(datosFoto.getColumnIndex("fecha_captura")));
                             try {
@@ -510,12 +511,91 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	}
 
 
+    public void loadMultiSpinner(int idMarca){
+
+        multiSpinnerSelect.setItems(getArrayListProByTiensda(idMarca, idPromotor), "Seleccione Producto", this);
+
+    }
+
+
+
+
+    private ArrayList<ProductosModel> getArrayListProByTiensda(int idMarca, int idTienda){
+
+        Cursor curProByTienda = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
+        ArrayList<ProductosModel> arrayP = new ArrayList<>();
+        if (curProByTienda.getCount() <= 0){
+
+            Cursor curPro = new BDopenHelper(this).productos(idMarca);
+
+            for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
+                final ProductosModel spP = new ProductosModel();
+                spP.setIdProducto(curPro.getInt(0));
+                spP.setNombre(curPro.getString(1));
+                spP.setPresentacion(curPro.getString(2));
+                spP.setCodigoBarras(curPro.getString(3));
+                spP.setIdMarca(curPro.getInt(4));
+
+
+
+                arrayP.add(spP);
+            }
+
+
+            curPro.close();
+        } else {
+
+            for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
+                final ProductosModel spP = new ProductosModel();
+                spP.setIdProducto(curProByTienda.getInt(0));
+                spP.setNombre(curProByTienda.getString(1));
+                spP.setPresentacion(curProByTienda.getString(2));
+                spP.setCodigoBarras(curProByTienda.getString(3));
+                spP.setIdMarca(curProByTienda.getInt(4));
+
+
+                arrayP.add(spP);
+            }
+
+        }
+
+
+
+        final ProductosModel spPinicio = new ProductosModel();
+        spPinicio.setIdProducto(0);
+        spPinicio.setNombre("Seleccione Producto");
+        spPinicio.setPresentacion("producto sin seleccionar");
+        spPinicio.setCodigoBarras(" ");
+
+        arrayP.add(0,spPinicio);
+
+
+        base.close();
+        return arrayP;
+
+    }
+
+
     //escucha cuando se selecciona un elemento en el spinner marca
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {}
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+        MarcaModel marca = (MarcaModel) adapterView.getSelectedItem();
+
+        int idMarca = marca.getId();
+
+        loadMultiSpinner(idMarca);
+
+
+    }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {}
+
+    @Override
+    public void onItemsSelected(boolean[] selected) {
+
+    }
 
 
     //metod: listener response of image loaded

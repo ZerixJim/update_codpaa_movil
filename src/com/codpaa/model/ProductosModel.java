@@ -14,7 +14,27 @@ public class ProductosModel {
     private int idMarca;
     private String nombre;
     private String presentacion;
+    private String codigoBarras;
     private boolean seleted = false;
+    private boolean checked = false;
+
+    public String getCodigoBarras() {
+        return codigoBarras;
+    }
+
+    public void setCodigoBarras(String codigoBarras) {
+        this.codigoBarras = codigoBarras;
+    }
+
+
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 
     public int getIdMarca() {
         return idMarca;
