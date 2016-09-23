@@ -58,20 +58,24 @@ public class MultiSpinnerSelect extends Spinner implements
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        Log.d("Multi", "onCancel");
+        //Log.d("Multi", "onCancel");
         StringBuilder spinnerBuffer = new StringBuilder();
         ArrayList<ProductosModel> productos = arrayAdapter.getProductos();
+
+
         String spinnerText;
         boolean someUnSelected = false;
         for (ProductosModel producto : productos){
             if (producto.isChecked()){
                 spinnerBuffer.append(producto.getNombre());
                 spinnerBuffer.append(", ");
-                Log.d("producto selected", producto.getNombre());
+                //Log.d("producto selected", producto.getNombre());
                 someUnSelected = true;
             }
 
         }
+
+
 
         if (someUnSelected){
             spinnerText = spinnerBuffer.toString();
@@ -80,14 +84,16 @@ public class MultiSpinnerSelect extends Spinner implements
             else
                 spinnerText = defaultText;
 
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_spinner_item, new String[]{ spinnerText });
+            setAdapter(adapter);
+            listener.onItemsSelected(selected);
+
         } else {
-            spinnerText = defaultText;
+            setAdapter(arrayAdapter);
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item, new String[]{ spinnerText });
-        setAdapter(adapter);
-        listener.onItemsSelected(selected);
+
 
 
     }
@@ -115,7 +121,7 @@ public class MultiSpinnerSelect extends Spinner implements
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ProductosModel producto = (ProductosModel) parent.getItemAtPosition(position);
 
-                Log.d("Click", "" + view.getId());
+                //Log.d("Click", "" + view.getId());
 
                 if (producto.isChecked())
                     producto.setChecked(false);

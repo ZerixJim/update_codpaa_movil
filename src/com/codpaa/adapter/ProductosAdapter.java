@@ -77,9 +77,7 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
 
         productosModel = _datos.get(position);
 
-        Log.d("idMarca adapter", "" + productosModel.getIdMarca());
-
-
+        //Log.d("idMarca adapter", "" + productosModel.getIdMarca());
 
 
         viewHolder.nombreProducto.setText(productosModel.getNombre());
@@ -90,10 +88,12 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
         if (position == 0 ) {
             viewHolder.checkBox.setVisibility(View.INVISIBLE);
             viewHolder.imageView.setVisibility(View.GONE);
+            viewHolder.progressBar.setVisibility(View.GONE);
         }
         else {
             viewHolder.checkBox.setVisibility(View.VISIBLE);
             viewHolder.imageView.setVisibility(View.VISIBLE);
+            viewHolder.progressBar.setVisibility(View.VISIBLE);
 
         }
 

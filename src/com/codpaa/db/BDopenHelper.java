@@ -316,6 +316,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
         }
 
         if (oldVersion == 24 && newVersion == 25){
+
+            Log.d("OnUpgrade", "new == v25 && oldv== 24");
+
+
             db.execSQL(photoProducto);
         }
 
