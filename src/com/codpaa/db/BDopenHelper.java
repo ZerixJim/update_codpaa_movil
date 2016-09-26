@@ -164,7 +164,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         photoProducto = "create table if not exists " +
                 PhotoProducto.TABLE_NAME + "(" + PhotoProducto.ID_PHOTO + " int ," +
-                PhotoProducto.ID_PRODUCTO + " int)";
+                PhotoProducto.ID_PRODUCTO + " int, " +
+                "primary key("+PhotoProducto.ID_PHOTO+","+PhotoProducto.ID_PRODUCTO+"))";
 
 
         preguntas = "create table if not exists " +
@@ -409,6 +410,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         return id;
     }
+
 
 
 
@@ -676,8 +678,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor datosFoto(int idFoto) throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select idTienda, idCelular, idMarca, idExhibicion," +
-                " fecha, dia, mes, anio, evento, fecha_captura from photo where idPhoto="+idFoto+";", null);
+        return baseDatosLocal.rawQuery("select p.idTienda, p.idCelular, p.idMarca, p.idExhibicion," +
+                "p.fecha, p.dia, p.mes, p.anio, p.evento, p.fecha_captura, group_concat(pp.idProducto) as productos " +
+                "from photo as p left join photo_producto as pp where idPhoto="+idFoto+" group by p.idPhoto;", null);
 
 
     }

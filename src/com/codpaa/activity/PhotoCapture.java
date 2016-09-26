@@ -19,23 +19,28 @@ import org.json.JSONObject;
 import com.codpaa.adapter.CustomAdapter;
 import com.codpaa.R;
 import com.codpaa.adapter.MarcasAdapter;
+import com.codpaa.model.JsonPhotoUpload;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.ProductosModel;
 import com.codpaa.model.SpinnerMarcaModel;
+import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.Utilities;
 import com.codpaa.widget.MultiSpinnerSelect;
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
@@ -416,87 +421,139 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		if(imagenEspera){
 			if(idMarca != 0 && idExhibicion != 0){
 
-				String timeStamp = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-				String ano = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
-				String mes = new SimpleDateFormat("MM", Locale.getDefault()).format(new Date());
-				String dia = new SimpleDateFormat("dd", Locale.getDefault()).format(new Date());
+                ArrayList<ProductosModel> selected = multiSpinnerSelect.getSelectedItems();
+                if (selected.size() > 0){
+
+                    String timeStamp = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                    String ano = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
+                    String mes = new SimpleDateFormat("MM", Locale.getDefault()).format(new Date());
+                    String dia = new SimpleDateFormat("dd", Locale.getDefault()).format(new Date());
 
 
-                Calendar c = Calendar.getInstance();
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                    Calendar c = Calendar.getInstance();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
-                String date = df.format(c.getTime());
-
-
+                    String date = df.format(c.getTime());
 
 
-				if(verificarConexion()){
-
-                    AsyncHttpClient clienteFoto = new AsyncHttpClient();
-                    BDopenHelper registraImagen = new BDopenHelper(this);
-                    RequestParams requ = new RequestParams();
 
 
-                    if(!mCurrentPhotoPath.equals("")){
+                    if(verificarConexion()){
 
-                        long id = registraImagen.insertarImagenId(idTienda,idPromotor,idMarca,idExhibicion,timeStamp,Integer.valueOf(dia),
-                                Integer.valueOf(mes),Integer.valueOf(ano),mCurrentPhotoPath,1,getSelectedRadioGroup(), date);
-
-                        if(id > 0){
-                            Log.d("EnviarImage", "Enviando la imagen");
-                            Cursor datosFoto = registraImagen.datosFoto((int)(long)id);
-                            datosFoto.moveToFirst();
-
-                            //next
-
-                            File file = new File(mCurrentPhotoPath);
+                        AsyncHttpClient clienteFoto = new AsyncHttpClient();
+                        BDopenHelper registraImagen = new BDopenHelper(this);
 
 
-                            requ.put("idtienda", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("idTienda"))));
-                            requ.put("idpromo", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("idCelular"))));
-                            requ.put("idmarca", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("idMarca"))));
-                            requ.put("idex", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("idExhibicion"))));
-                            requ.put("fecha", datosFoto.getString(datosFoto.getColumnIndex("fecha")));
-                            requ.put("dia", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("dia"))));
-                            requ.put("mes", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("mes"))));
-                            requ.put("anio", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("anio"))));
-                            requ.put("evento", Integer.toString(datosFoto.getInt(datosFoto.getColumnIndex("evento"))));
-                            requ.put("fecha_captura", datosFoto.getString(datosFoto.getColumnIndex("fecha_captura")));
-                            try {
-                                requ.put("file", file );
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
+
+                        if(!mCurrentPhotoPath.equals("")){
+
+                            long id = registraImagen.insertarImagenId(idTienda,idPromotor,idMarca,idExhibicion,timeStamp,Integer.valueOf(dia),
+                                    Integer.valueOf(mes),Integer.valueOf(ano),mCurrentPhotoPath,1,getSelectedRadioGroup(), date);
+
+                            ArrayList<ProductosModel> proSelected = multiSpinnerSelect.getSelectedItems();
+                            SQLiteDatabase db = registraImagen.getWritableDatabase();
+
+                            for (ProductosModel producto : proSelected){
+
+                                ContentValues contentValues = new ContentValues();
+                                contentValues.put(DbEstructure.PhotoProducto.ID_PHOTO, id);
+                                contentValues.put(DbEstructure.PhotoProducto.ID_PRODUCTO, producto.getIdProducto());
+
+
+                                try {
+
+                                    db.insertOrThrow(DbEstructure.PhotoProducto.TABLE_NAME, null, contentValues);
+
+
+                                }catch (SQLiteConstraintException e){
+                                    e.printStackTrace();
+                                }
                             }
 
 
-                            clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage.php", requ,
-                                    new HttpResponseImage(CameraActivity, (int)(long)id));
-                            Log.d("http foto", requ.toString());
-                            datosFoto.close();
-                            radioNormal.setChecked(true);
+                            if(id > 0){
+
+
+                                Log.d("EnviarImage", "Enviando la imagen");
+                                Cursor datosFoto = registraImagen.datosFoto((int)(long)id);
+
+                                if (datosFoto.getCount() > 0){
+                                    datosFoto.moveToFirst();
+                                    File file = new File(mCurrentPhotoPath);
+                                    RequestParams requ = new RequestParams();
+
+
+                                    Gson gson = new Gson();
+                                    JsonPhotoUpload view = new JsonPhotoUpload();
+
+
+                                    view.setIdTienda(datosFoto.getInt(datosFoto.getColumnIndex("idTienda")));
+                                    view.setIdPromotor(datosFoto.getInt(datosFoto.getColumnIndex("idCelular")));
+                                    view.setIdMarca(datosFoto.getInt(datosFoto.getColumnIndex("idMarca")));
+                                    view.setIdExhibicion(datosFoto.getInt(datosFoto.getColumnIndex("idExhibicion")));
+                                    view.setFecha(datosFoto.getString(datosFoto.getColumnIndex("fecha")));
+                                    view.setDia(datosFoto.getInt(datosFoto.getColumnIndex("dia")));
+                                    view.setMes(datosFoto.getInt(datosFoto.getColumnIndex("mes")));
+                                    view.setAnio(datosFoto.getInt(datosFoto.getColumnIndex("anio")));
+                                    view.setEvento(datosFoto.getInt(datosFoto.getColumnIndex("evento")));
+                                    view.setFechaCaptura(datosFoto.getString(datosFoto.getColumnIndex("fecha_captura")));
+
+
+                                    final String[] productos = datosFoto.getString(datosFoto.getColumnIndex("productos")).split(",");
+
+                                    view.convert(productos);
+
+
+                                    requ.put("json", gson.toJson(view));
+                                    Log.d("Json", gson.toJson(view));
+                                    try {
+                                        requ.put("file", file );
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
+
+
+
+
+                                    clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php", requ,
+                                            new HttpResponseImage(CameraActivity, (int)(long)id));
+                                    Log.d("http foto", requ.toString());
+                                    datosFoto.close();
+                                    radioNormal.setChecked(true);
+                                }
+
+
+
+
+                            }
+
+                        }else{
+                            Toast.makeText(this, "Sin Imagen para enviar", Toast.LENGTH_SHORT).show();
                         }
 
                     }else{
-                        Toast.makeText(this, "Sin Imagen para enviar", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Se perdio la conexion \n a Internet", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Eviado a Imagenes pendientes\n(opcion enviar)", Toast.LENGTH_LONG).show();
+
+                        spiExh.setSelection(0);
+                        spiMarca.setSelection(0);
+
+                        BDopenHelper baseinsert = new BDopenHelper(this);
+
+                        try {
+                            baseinsert.insertarImagen(idTienda, idPromotor, idMarca, idExhibicion, timeStamp, Integer.parseInt(dia),Integer.parseInt(mes) , Integer.parseInt(ano), mCurrentPhotoPath, 1,getSelectedRadioGroup());
+                            imagenEspera = false;
+                            showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
 
-				}else{
-					Toast.makeText(this, "Se perdio la conexion \n a Internet", Toast.LENGTH_SHORT).show();
-					Toast.makeText(this, "Eviado a Imagenes pendientes\n(opcion enviar)", Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(this, "Selecciona por lo menos un producto", Toast.LENGTH_SHORT).show();
+                }
 
-					spiExh.setSelection(0);
-					spiMarca.setSelection(0);
 
-					BDopenHelper baseinsert = new BDopenHelper(this);
-
-					try {
-						baseinsert.insertarImagen(idTienda, idPromotor, idMarca, idExhibicion, timeStamp, Integer.parseInt(dia),Integer.parseInt(mes) , Integer.parseInt(ano), mCurrentPhotoPath, 1,getSelectedRadioGroup());
-						imagenEspera = false;
-						showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
 
 			}else{
 				Toast.makeText(this, "No Seleccionaste Marca o \n Tipo de Exhibicion", Toast.LENGTH_SHORT).show();
@@ -667,6 +724,13 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         }
 
         @Override
+        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+            super.onFailure(statusCode, headers, responseString, throwable);
+
+            Log.d("onFailure", responseString);
+       }
+
+        @Override
 		public void onFailure(int statusCode, Header[] header,Throwable e,JSONObject errorResponse) {
 
             Log.d("EnviarFoto", "Estatus " + statusCode);
@@ -714,9 +778,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 			if(response != null){
 				try {
 
-					Log.d("Respuestas Ima", response.getString("insert"));
-					if(response.getBoolean("bol")){
-						Toast.makeText(getApplicationContext(), response.getString("insert"), Toast.LENGTH_SHORT).show();
+					//Log.d("Respuestas Ima", response.getString("insert"));
+					if(response.getBoolean("insert")){
+						Toast.makeText(getApplicationContext(), "Imagen Recibida", Toast.LENGTH_SHORT).show();
 						showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.imagesend));
 						imagenEspera = false;
 						spiExh.setSelection(0);
@@ -738,7 +802,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 						}
                         //deleteArchivo(_imgPath);
 
-						Toast.makeText(getApplicationContext(), response.getString("insert"),
+						Toast.makeText(getApplicationContext(), response.getString("message"),
                                 Toast.LENGTH_SHORT).show();
 					}
 				} catch (JSONException e) {

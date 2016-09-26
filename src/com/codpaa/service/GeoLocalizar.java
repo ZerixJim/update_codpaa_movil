@@ -1024,6 +1024,8 @@ public class GeoLocalizar extends Service implements LocationListener{
             for(curFoto.moveToFirst(); !curFoto.isAfterLast(); curFoto.moveToNext()){
 
 
+				//todo: cambio del envio de la foto en segundo plano
+
 
                 rpFoto.put("idtienda", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idTienda"))));
                 rpFoto.put("idpromo", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idCelular"))));
@@ -1047,7 +1049,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 
                 cliente.setTimeout(5000);
 
-                cliente.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage.php",rpFoto, jr);
+                cliente.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php",rpFoto, jr);
 
             }
 

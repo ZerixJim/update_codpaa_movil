@@ -20,6 +20,7 @@ import com.codpaa.adapter.ProductosAdapter;
 import com.codpaa.model.ProductosModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MultiSpinnerSelect extends Spinner implements
@@ -49,10 +50,8 @@ public class MultiSpinnerSelect extends Spinner implements
     @Override
     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
         Log.d("Multi", "OnClick");
-        if (isChecked)
-            selected[which] = true;
-        else
-            selected[which] = false;
+
+        selected[which] = isChecked;
 
     }
 
@@ -214,6 +213,7 @@ public class MultiSpinnerSelect extends Spinner implements
 
         return arrayList;
     }
+
 
     public ArrayList<ProductosModel> getSelectedProduct(){
         return selectedProduct;

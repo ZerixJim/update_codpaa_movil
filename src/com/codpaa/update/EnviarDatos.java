@@ -112,7 +112,7 @@ public class EnviarDatos {
 					view.convert(productos);
 
 
-					Log.d("GSON", gson.toJson(view));
+					//Log.d("GSON", gson.toJson(view));
 
 
 					AsyncHttpClient client = new AsyncHttpClient();
