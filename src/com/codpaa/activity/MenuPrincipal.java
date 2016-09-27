@@ -92,27 +92,26 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     private BroadcastReceiver mRegistrationBroadcastReceiver, mNewMessageBroadcastReceiver;
 
     private boolean isReceiverRegistered, isReceiverMessageRegistered;
-	
 
-	int idUsuario;
 
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState){
-		super.onCreate(savedInstanceState);
+    int idUsuario;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         locale = new Locale("es_MX");
-		setContentView(R.layout.menu_principal);
+        setContentView(R.layout.menu_principal);
         setToolbar();
 
-		
-		Intent recibe = getIntent();
-		String valor = (String) recibe.getExtras().get("nombre");
 
+        Intent recibe = getIntent();
+        String valor = (String) recibe.getExtras().get("nombre");
 
 
         Context context = getApplicationContext();
-		PackageManager packageManager = context.getPackageManager();
-		String packageName = context.getPackageName();
+        PackageManager packageManager = context.getPackageManager();
+        String packageName = context.getPackageName();
 
         avatar = (CircleImageView) findViewById(R.id.avatar);
         if (avatar != null) {
@@ -121,28 +120,24 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
         try {
-		    myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
-		} catch (PackageManager.NameNotFoundException e) {
-		    e.printStackTrace();
-		}
-		
-	
-		
-		lM = (LocationManager) getSystemService(LOCATION_SERVICE);
-		
-		
-		
-		try{
-			
-		
-			
-			BDopenHelper recibeDatos = new BDopenHelper(this);
-			Cursor cursorDatosUser = recibeDatos.datosUser(valor);
-			cursorDatosUser.moveToFirst();
-			idUsuario = cursorDatosUser.getInt(0);
+            myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
-            Log.i("idPromo Menu", ""+ idUsuario);
 
+        lM = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+
+        try {
+
+
+            BDopenHelper recibeDatos = new BDopenHelper(this);
+            Cursor cursorDatosUser = recibeDatos.datosUser(valor);
+            cursorDatosUser.moveToFirst();
+            idUsuario = cursorDatosUser.getInt(0);
+
+            Log.i("idPromo Menu", "" + idUsuario);
 
 
             createMenu();
@@ -151,11 +146,11 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-            if (navigationView != null){
+            if (navigationView != null) {
                 setupDrawerContent(navigationView);
 
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.GET_ACCOUNTS},
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.GET_ACCOUNTS},
                             MY_PERMISSION_GET_ACCOUNDS);
                 }
 
@@ -167,49 +162,44 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 CircleImageView imageView = (CircleImageView) view.findViewById(R.id.circle_image);
 
 
-                Picasso.with(this).load("http://test.plataformavanguardia.net/images/promoPic/1000/13122797_10208823644806220_2530392818702619653_o.jpg")
-                        .into(imageView);
+                /*Picasso.with(this).load("http://test.plataformavanguardia.net/images/promoPic/1000/13122797_10208823644806220_2530392818702619653_o.jpg")
+                        .into(imageView);*/
 
-                id.setText(String.format(Locale.getDefault(),"ID: %d", cursorDatosUser.getInt(0)));
+                id.setText(String.format(Locale.getDefault(), "ID: %d", cursorDatosUser.getInt(0)));
                 ver.setText(String.format("versión: %s", myVersionName));
                 nomPromo.setText(cursorDatosUser.getString(1));
 
-                if (getUserName() != null){
+                if (getUserName() != null) {
                     email.setText(getUserName());
                 }
 
             }
 
 
-			recibeDatos.close();
-			
+            recibeDatos.close();
 
-	
-			
-		}catch(SQLiteException e){
-			Toast.makeText(this, "no se pudo asignar el usurio "+valor, Toast.LENGTH_SHORT).show();
-			e.printStackTrace();
-			
-		}catch (CursorIndexOutOfBoundsException e){
-			Toast.makeText(getApplicationContext(), "Salga de la aplicacion e inicie sesion de nuevo", Toast.LENGTH_SHORT).show();
-			e.printStackTrace();
-		}
-		
-		
-		
-		
-		
-		if(verificarConexion()){
+
+        } catch (SQLiteException e) {
+            Toast.makeText(this, "no se pudo asignar el usurio " + valor, Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+
+        } catch (CursorIndexOutOfBoundsException e) {
+            Toast.makeText(getApplicationContext(), "Salga de la aplicacion e inicie sesion de nuevo", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+
+
+        if (verificarConexion()) {
 
             updateInfo();
 
-		}else{
+        } else {
 
-			Toast.makeText(this, "No fue posible Actualizar, No hay conexion a Internet", Toast.LENGTH_SHORT).show();
-		}
-		
-		
-		borrarRegistros();
+            Toast.makeText(this, "No fue posible Actualizar, No hay conexion a Internet", Toast.LENGTH_SHORT).show();
+        }
+
+
+        borrarRegistros();
 
 
 
@@ -218,7 +208,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
         /* implementacion de BroadCast para el registro de Gcm */
-		mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 SharedPreferences sharedPreferences =
@@ -241,7 +231,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             public void onReceive(Context context, Intent intent) {
 
 
-                switch (intent.getAction()){
+                switch (intent.getAction()) {
                     case QuickstartPreferences.NEW_MESSAGE:
                         updateMessage();
                         break;
@@ -252,18 +242,16 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         };
 
 
-
-
-		//Registro de Brodcast para verificar si el token fue enviado al servidor
+        //Registro de Brodcast para verificar si el token fue enviado al servidor
         registerReceiver();
-		//estadisticas();
+        //estadisticas();
 
 
         //intent para registrar nuestro dispositivo en gcm
-        if (checkPlayServices()){
+        if (checkPlayServices()) {
             Intent intent = new Intent(this, RegistrationIntentService.class);
 
-			intent.putExtra("idPromo", idUsuario);
+            intent.putExtra("idPromo", idUsuario);
 
             startService(intent);
 
@@ -271,11 +259,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         }
 
 
-
-
-	}
-
-
+    }
 
 
     private void createMenu() {
@@ -327,28 +311,26 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case MY_PERMISSION_GET_ACCOUNDS:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-					if (getUserName() != null){
-						email.setText(getUserName());
-					}
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (getUserName() != null) {
+                        email.setText(getUserName());
+                    }
                 }
         }
     }
 
     //metodo para registrar broadcast
-    private void registerReceiver(){
-		//Log.d("MenuPrincipal", "RegisterReciver");
-        if(!isReceiverRegistered) {
+    private void registerReceiver() {
+        //Log.d("MenuPrincipal", "RegisterReciver");
+        if (!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                     new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
             isReceiverRegistered = true;
 
             //Log.d("MenuPrincipal", "RegisterRecive2");
         }
-
-
 
 
         if (!isReceiverMessageRegistered) {
@@ -362,55 +344,55 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     }
 
     //metodo para implementar el toolbar
-	private void setToolbar(){
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    private void setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null){
+        if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.ic_account_circle_white_24dp);
-			actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayShowTitleEnabled(false);
             actionBar.setDisplayHomeAsUpEnabled(true);
 
 
         }
-	}
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menu_principal, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_principal, menu);
 
         //sView view = (View) menu.getItem(R.id.toolbar);
 
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-		switch (item.getItemId()){
-			case R.id.refresh_info:
-				if(verificarConexion()){
+        switch (item.getItemId()) {
+            case R.id.refresh_info:
+                if (verificarConexion()) {
 
-					UpdateInformation upinfo = new UpdateInformation(this);
-					//Toast.makeText(this,"Actualizando Informacion",Toast.LENGTH_SHORT).show();
+                    UpdateInformation upinfo = new UpdateInformation(this);
+                    //Toast.makeText(this,"Actualizando Informacion",Toast.LENGTH_SHORT).show();
 
 
                     upinfo.updateInfo(idUsuario);
 
-				}else{
+                } else {
 
-					Toast.makeText(this, "Se perdio la conexion a Internet", Toast.LENGTH_SHORT).show();
-				}
-				return true;
-			case android.R.id.home:
+                    Toast.makeText(this, "Se perdio la conexion a Internet", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            case android.R.id.home:
 
-				//drawerLayout.openDrawer(GravityCompat.START);
-				this.finish();
-				return true;
+                //drawerLayout.openDrawer(GravityCompat.START);
+                this.finish();
+                return true;
 
             case R.id.avatar:
 
@@ -418,45 +400,44 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
                 return true;
 
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-	}
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-	@Override
-	protected void onResume() {
-		super.onResume();
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         updateMessage();
 
         registerReceiver();
 
-	}
+    }
 
 
-    private void updateMessage(){
+    private void updateMessage() {
         int count = new BDopenHelper(this).countMessege();
 
-        if (count > 0){
-
+        if (count > 0) {
 
 
             List<MenuModel> menu = adapter.getAllItems();
 
-            for (MenuModel item : menu ){
-                if (item.getId() == 2){
+            for (MenuModel item : menu) {
+                if (item.getId() == 2) {
                     item.setChange(1);
                     item.setCount(count);
                 }
             }
 
             adapter.notifyDataSetChanged();
-        }else {
+        } else {
 
             List<MenuModel> menu = adapter.getAllItems();
 
-            for (MenuModel item : menu ){
-                if (item.getId() == 2){
+            for (MenuModel item : menu) {
+                if (item.getId() == 2) {
                     item.setChange(0);
                     item.setCount(0);
                 }
@@ -467,7 +448,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     }
 
-    private void updateInfo(){
+    private void updateInfo() {
         configuracion = new Configuracion(this);
         UpdateInformation uI = new UpdateInformation(this);
 
@@ -477,36 +458,35 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 && configuracion.getExhi() != null
                 && configuracion.getTiendas() != null
                 && configuracion.getProductoByFormato() != null
-                && configuracion.getProductoByTienda() != null){
+                && configuracion.getProductoByTienda() != null) {
             if (!configuracion.getMarca().equals(fechaActual())
                     && !configuracion.getProducto().equals(fechaActual())
                     && !configuracion.getExhi().equals(fechaActual())
                     && !configuracion.getTiendas().equals(fechaActual())
                     && !configuracion.getProductoByFormato().equals(fechaActual())
-                    && !configuracion.getProductoByTienda().equals(fechaActual())){
-               //uI.actualizarMarca(idUsuario);
+                    && !configuracion.getProductoByTienda().equals(fechaActual())) {
+                //uI.actualizarMarca(idUsuario);
                 uI.updateInfo(idUsuario);
-            }else {
+            } else {
                 Log.d("Shared", "marca:" + configuracion.getMarca() + " produ:" + configuracion.getProducto());
             }
-        }else {
+        } else {
             uI.updateInfo(idUsuario);
         }
 
 
-		uI.actualizarEncuesta(idUsuario);
+        uI.actualizarEncuesta(idUsuario);
 
 
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-	@Override
-	protected void onStart() {
-		super.onStart();
 
-		
-	}
+    }
 	/* @encuesta
 	private void dialogoEncuestas(){
 		FragmentManager fragmentManager = getSupportFragmentManager();
@@ -515,45 +495,43 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		dialogEncuestas.show(fragmentManager, "Dialogo encuestas");
 	}
 	*/
-	
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		try {
-
-			lM.removeUpdates(this);
-		}catch (SecurityException e){
-			e.printStackTrace();
-		}
-
-	}
-	
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
 
-	@Override
-	public void onClick(View v) {
+            lM.removeUpdates(this);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
 
-        switch (v.getId()){
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
 
             case R.id.avatar:
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
 
         }
-	}
+    }
 
-	@Override
-	protected void onPause() {
+    @Override
+    protected void onPause() {
 
 
-		try {
-			lM.removeUpdates(this);
+        try {
+            lM.removeUpdates(this);
 
-		}catch (SecurityException e){
-			e.printStackTrace();
-		}
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         isReceiverRegistered = false;
@@ -562,108 +540,107 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         isReceiverMessageRegistered = false;
 
         super.onPause();
-		
-	}
-	
+
+    }
 
 
-	
-	public boolean verificarConexion() {
-	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
-	    return netInfo != null && netInfo.isConnected();
+    public boolean verificarConexion() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnected();
 
-	}
-
-
-    public class DListener implements DialogInterface.OnClickListener{
-
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			
-			//int posicion = spinnerTien.getSelectedItemPosition();
-			TiendasModel stm = (TiendasModel) spinnerTien.getSelectedItem();
-			//int idt = (int) spinnerTien.getItemIdAtPosition(posicion);
-			int idTienda = stm.getIdTienda();
-			if(which == DialogInterface.BUTTON_POSITIVE){
-				
-				
-				
-				if(stm.getIdTienda() != 0){
-					
-					
-					Intent abrirMenuTienda = new Intent(MenuPrincipal.this , MenuTienda.class);
-					
-					abrirMenuTienda.putExtra("idTienda", idTienda);
-					abrirMenuTienda.putExtra("idPromotor", idUsuario);
-					
-					startActivity(abrirMenuTienda);
-				}else{
-					Toast.makeText(MenuPrincipal.this, "No seleccionaste tienda", Toast.LENGTH_LONG).show();
-				}
-				
-				
-				
-			}else if(which == DialogInterface.BUTTON_NEGATIVE){
-				Toast.makeText(getApplicationContext(),"Cancelaste la Seleccion", Toast.LENGTH_SHORT).show();
-			}
-						
-				
-			
-		}
-		
-	}
+    }
 
 
-    private String fechaActual(){
+    public class DListener implements DialogInterface.OnClickListener {
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            //int posicion = spinnerTien.getSelectedItemPosition();
+            TiendasModel stm = (TiendasModel) spinnerTien.getSelectedItem();
+            //int idt = (int) spinnerTien.getItemIdAtPosition(posicion);
+            int idTienda = stm.getIdTienda();
+            if (which == DialogInterface.BUTTON_POSITIVE) {
+
+
+                if (stm.getIdTienda() != 0) {
+
+
+                    Intent abrirMenuTienda = new Intent(MenuPrincipal.this, MenuTienda.class);
+
+                    abrirMenuTienda.putExtra("idTienda", idTienda);
+                    abrirMenuTienda.putExtra("idPromotor", idUsuario);
+
+                    startActivity(abrirMenuTienda);
+                } else {
+                    Toast.makeText(MenuPrincipal.this, "No seleccionaste tienda", Toast.LENGTH_LONG).show();
+                }
+
+
+            } else if (which == DialogInterface.BUTTON_NEGATIVE) {
+                Toast.makeText(getApplicationContext(), "Cancelaste la Seleccion", Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+
+    }
+
+
+    private String fechaActual() {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
         return dFecha.format(c.getTime());
     }
-	
-	
-	@Override
-	public void onLocationChanged(Location location) {}
 
 
-	@Override
-	public void onProviderDisabled(String provider) {}
+    @Override
+    public void onLocationChanged(Location location) {
+    }
 
 
-	@Override
-	public void onProviderEnabled(String provider) {}
+    @Override
+    public void onProviderDisabled(String provider) {
+    }
 
 
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {}
-	
-	
-	private void borrarRegistros(){
-		try {
-			BDopenHelper base = new BDopenHelper(this);
-			
-			Calendar c = Calendar.getInstance();
-			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
-			String fechaActual = dFecha.format(c.getTime());
-			
-			//SimpleDateFormat dSem = new SimpleDateFormat("w");
-			//String semana = dSem.format(c.getTime());
-			//int sem = Integer.parseInt(semana);
-			
-			base.borrarInven(fechaActual, 2);
-			base.borrarExhi(fechaActual, 2);
-			base.borrarInteli(fechaActual, 2);
-			base.borrarFrentes(fechaActual, 2);
-			base.borrarCajasMa(fechaActual, 2);
+    @Override
+    public void onProviderEnabled(String provider) {
+    }
+
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+
+    private void borrarRegistros() {
+        try {
+            BDopenHelper base = new BDopenHelper(this);
+
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
+            String fechaActual = dFecha.format(c.getTime());
+
+            //SimpleDateFormat dSem = new SimpleDateFormat("w");
+            //String semana = dSem.format(c.getTime());
+            //int sem = Integer.parseInt(semana);
+
+            base.borrarInven(fechaActual, 2);
+            base.borrarExhi(fechaActual, 2);
+            base.borrarInteli(fechaActual, 2);
+            base.borrarFrentes(fechaActual, 2);
+            base.borrarCajasMa(fechaActual, 2);
             base.borrarFotos(fechaActual);
-			base.borrarVisitas(fechaActual, 2);
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
+            base.borrarVisitas(fechaActual, 2);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 
@@ -689,7 +666,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -699,35 +676,36 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     //DrawerListener
 
-    private void setupDrawerContent(NavigationView navigationView){
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 //Log.d("Item press",item.getTitle().toString());
 
-				switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.shutdown:
                         drawerLayout.closeDrawer(GravityCompat.START);
                         finish();
                         return true;
 
-					case R.id.configuracion:
-						drawerLayout.closeDrawer(GravityCompat.START);
-						return true;
-				}
+                    case R.id.configuracion:
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        return true;
+                }
 
                 return true;
             }
         });
     }
 
-	public String getUserName(){
-
-
+    public String getUserName() {
 
 
         Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+
+        }
         Account[] acccounts = AccountManager.get(this).getAccounts();
 
         String mail = null;

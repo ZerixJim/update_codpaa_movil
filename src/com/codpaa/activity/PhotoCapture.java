@@ -541,7 +541,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                         BDopenHelper baseinsert = new BDopenHelper(this);
 
                         try {
-                            baseinsert.insertarImagen(idTienda, idPromotor, idMarca, idExhibicion, timeStamp, Integer.parseInt(dia),Integer.parseInt(mes) , Integer.parseInt(ano), mCurrentPhotoPath, 1,getSelectedRadioGroup());
+                            baseinsert.insertarImagen(idTienda, idPromotor, idMarca, idExhibicion, timeStamp, Integer.parseInt(dia),Integer.parseInt(mes) , Integer.parseInt(ano), mCurrentPhotoPath, 1,getSelectedRadioGroup(),date);
                             imagenEspera = false;
                             showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
                         } catch (Exception e) {

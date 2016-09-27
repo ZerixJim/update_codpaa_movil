@@ -349,7 +349,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
 
-    public void insertarImagen(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia, int mes, int anio, String imagen, int status, int evento){
+    public void insertarImagen(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia, int mes, int anio, String imagen, int status, int evento, String fechaCaptura){
         baseDatosLocal = getWritableDatabase();
         ContentValues valores = new ContentValues();
         valores.put("idTienda", idTien);
@@ -363,7 +363,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         valores.put("imagen", imagen);
         valores.put("status", status);
         valores.put("evento", evento);
-
+        valores.put("fecha_captura", fechaCaptura);
         if(baseDatosLocal != null) {
             baseDatosLocal.insert("photo", null, valores);
             baseDatosLocal.close();
@@ -670,8 +670,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     public Cursor fotos() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select idPhoto, idTienda, idCelular, idMarca, idExhibicion," +
-                " fecha, dia, mes, anio, imagen, evento, fecha_captura from photo where status=1;",null);
+        return baseDatosLocal.rawQuery("select p.idPhoto, p.idTienda, p.idCelular, p.idMarca, p.idExhibicion," +
+                " p.fecha, p.dia, p.mes, p.anio, p.imagen, p.evento, p.fecha_captura, group_concat(pp.idProducto) as productos " +
+                " from photo as p " +
+                " left join photo_producto as pp on p.idPhoto=pp.idFoto where p.status=1 group by p.idPhoto;",null);
 
     }
 
@@ -680,7 +682,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         return baseDatosLocal.rawQuery("select p.idTienda, p.idCelular, p.idMarca, p.idExhibicion," +
                 "p.fecha, p.dia, p.mes, p.anio, p.evento, p.fecha_captura, group_concat(pp.idProducto) as productos " +
-                "from photo as p left join photo_producto as pp where idPhoto="+idFoto+" group by p.idPhoto;", null);
+                "from photo as p left join photo_producto as pp on p.idPhoto=pp.idFoto where idPhoto="+idFoto+" group by p.idPhoto;", null);
 
 
     }

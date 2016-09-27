@@ -1,8 +1,10 @@
 package com.codpaa.service;
 
 import com.codpaa.R;
+import com.codpaa.model.JsonPhotoUpload;
 import com.codpaa.util.Configuracion;
 import com.codpaa.util.Utilities;
+import com.google.gson.Gson;
 import com.loopj.android.http.*;
 
 import java.io.File;
@@ -1013,9 +1015,10 @@ public class GeoLocalizar extends Service implements LocationListener{
     public void enviarFotos(){
 
         BDopenHelper base = new BDopenHelper(this);
-        RequestParams rpFoto = new RequestParams();
-        AsyncHttpClient cliente = new AsyncHttpClient();
+
+
         Cursor curFoto = base.fotos();
+		AsyncHttpClient cliente = new AsyncHttpClient();
 
         Log.e("Geolocalizar","paso 1");
 
@@ -1024,20 +1027,32 @@ public class GeoLocalizar extends Service implements LocationListener{
             for(curFoto.moveToFirst(); !curFoto.isAfterLast(); curFoto.moveToNext()){
 
 
-				//todo: cambio del envio de la foto en segundo plano
+				Gson gson = new Gson();
+				RequestParams rpFoto = new RequestParams();
 
 
-                rpFoto.put("idtienda", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idTienda"))));
-                rpFoto.put("idpromo", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idCelular"))));
-                rpFoto.put("idmarca", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idMarca"))));
-                rpFoto.put("idex", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idExhibicion"))));
-                rpFoto.put("fecha", curFoto.getString(curFoto.getColumnIndex("fecha")));
-                rpFoto.put("dia", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("dia"))));
-                rpFoto.put("mes", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("mes"))));
-                rpFoto.put("ano", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("anio"))));
-                rpFoto.put("idFotoCel",Integer.toString(curFoto.getInt(curFoto.getColumnIndex("idPhoto"))));
-				rpFoto.put("evento", Integer.toString(curFoto.getInt(curFoto.getColumnIndex("evento"))));
-				rpFoto.put("fecha_captura", curFoto.getString(curFoto.getColumnIndex("fecha_captura")));
+				JsonPhotoUpload upload = new JsonPhotoUpload();
+
+				upload.setIdTienda(curFoto.getInt(curFoto.getColumnIndex("idTienda")));
+				upload.setIdPromotor(curFoto.getInt(curFoto.getColumnIndex("idCelular")));
+				upload.setIdMarca(curFoto.getInt(curFoto.getColumnIndex("idMarca")));
+				upload.setIdExhibicion(curFoto.getInt(curFoto.getColumnIndex("idExhibicion")));
+				upload.setFecha(curFoto.getString(curFoto.getColumnIndex("fecha")));
+				upload.setFechaCaptura(curFoto.getString(curFoto.getColumnIndex("fecha_captura")));
+				upload.setDia(curFoto.getInt(curFoto.getColumnIndex("dia")));
+				upload.setMes(curFoto.getInt(curFoto.getColumnIndex("mes")));
+				upload.setAnio(curFoto.getInt(curFoto.getColumnIndex("anio")));
+				upload.setEvento(curFoto.getInt(curFoto.getColumnIndex("evento")));
+
+
+				if (curFoto.getString(curFoto.getColumnIndex("productos")) != null){
+					Log.d("foto", "productos disponibles");
+					String[] productos = curFoto.getString(curFoto.getColumnIndex("productos")).split(",");
+					upload.convert(productos);
+				}
+
+
+				rpFoto.put("json", gson.toJson(upload));
 
 
                 File file = new File(curFoto.getString(curFoto.getColumnIndex("imagen")));
@@ -1052,8 +1067,6 @@ public class GeoLocalizar extends Service implements LocationListener{
                 cliente.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php",rpFoto, jr);
 
             }
-
-
 
 
         }
@@ -1108,9 +1121,9 @@ public class GeoLocalizar extends Service implements LocationListener{
             if(response != null){
                 try {
 
-                    Log.d("Respuestas Ima", response.getString("insert"));
+                    //Log.d("Respuestas Ima", response.getString("message"));
                     //BDopenHelper bs = new BDopenHelper(con);
-                    if(response.getBoolean("bol")){
+                    if(response.getBoolean("insert")){
 
                         notificationBuilder.setContentText("se envio correctamente")
 								.setContentIntent(pendingIntent)
@@ -1136,7 +1149,7 @@ public class GeoLocalizar extends Service implements LocationListener{
                                     "idMarca="+response.getInt("idMarca")+" and fecha='"+
                                     response.getString("fecha")+"';");
                         }
-
+						Log.d("Respuestas Ima", response.getString("message"));
 
 
                     }

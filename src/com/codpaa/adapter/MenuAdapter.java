@@ -65,7 +65,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
         Uri uri = Uri.parse("android.resource://com.codpaa/drawable/"+ menuModel.getImage());
 
-        Picasso.with(context).load(uri).into(holder.imageView);
+        //Picasso.with(context).load(uri).into(holder.imageView);
+
+        holder.imageView.setImageURI(uri);
 
     }
 
