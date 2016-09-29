@@ -681,7 +681,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
 
         return baseDatosLocal.rawQuery("select p.idTienda, p.idCelular, p.idMarca, p.idExhibicion," +
-                "p.fecha, p.dia, p.mes, p.anio, p.evento, p.fecha_captura, group_concat(pp.idProducto) as productos " +
+                "p.fecha, p.dia, p.mes, p.anio, p.evento, p.fecha_captura, group_concat(pp.idProducto) as productos, p.imagen " +
                 "from photo as p left join photo_producto as pp on p.idPhoto=pp.idFoto where idPhoto="+idFoto+" group by p.idPhoto;", null);
 
 

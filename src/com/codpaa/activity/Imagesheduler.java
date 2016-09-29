@@ -1,13 +1,16 @@
 package com.codpaa.activity;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.codpaa.R;
+import com.codpaa.model.JsonPhotoUpload;
 import com.codpaa.util.Utilities;
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -183,7 +186,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
                 holder.txtFecha = (TextView) row.findViewById(R.id.txtfechaPhoto);
 				holder.txtStatus = (TextView) row.findViewById(R.id.statusSheduler);
                 holder.img = (ImageView) row.findViewById(R.id.imgPhotoCola);
-                holder.progressBar = (ProgressBar) row.findViewById(R.id.progressBar2);
+                holder.progressBar = (ProgressBar) row.findViewById(R.id.progressbar);
                // holder.botonEnviar = (Button) row.findViewById(R.id.buttonEnviarFoto);
                 holder.temp = temp;
 
@@ -248,7 +251,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		
 	}
 	
-	class PhotoListModel{
+	private class PhotoListModel{
 		
 		private String _tienda;
 		private String _img;
@@ -355,7 +358,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 					if (_status == 2){
 						Toast.makeText(getApplicationContext(),"La imagen ya esta enviada",Toast.LENGTH_SHORT).show();
 					}else {
-						enviarFoto(_idFoto, this._img, this._position);
+						enviarFoto(_idFoto, this._position);
 						Toast.makeText(getApplicationContext(), "Enviando Imagen", Toast.LENGTH_LONG).show();
 
 					}
@@ -373,14 +376,14 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		
 	}
 	
-	public void enviarFoto(int idFoto, String img, int position) {
+	public void enviarFoto(int idFoto,int position) {
 
         if(!imagenCola){
             try {
 
 
                 BDopenHelper base = new BDopenHelper(this);
-                RequestParams rpFoto = new RequestParams();
+
                 AsyncHttpClient cliente = new AsyncHttpClient();
                 Cursor curFoto = base.datosFoto(idFoto);
 
@@ -388,20 +391,46 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
                 if(verificarConexion()){
                     if(curFoto.getCount() != 0) {
                         curFoto.moveToFirst();
-                        File file = new File(img);
 
 
-                        rpFoto.put("idtienda", Integer.toString(curFoto.getInt(0)));
-                        rpFoto.put("idpromo", Integer.toString(curFoto.getInt(1)));
-                        rpFoto.put("idmarca", Integer.toString(curFoto.getInt(2)));
-                        rpFoto.put("idex", Integer.toString(curFoto.getInt(3)));
-                        rpFoto.put("fecha", curFoto.getString(4));
-                        rpFoto.put("dia", Integer.toString(curFoto.getInt(5)));
-                        rpFoto.put("mes", Integer.toString(curFoto.getInt(6)));
-                        rpFoto.put("ano", Integer.toString(curFoto.getInt(7)));
-                        rpFoto.put("file", file);
+						Gson gson = new Gson();
+						RequestParams rpFoto = new RequestParams();
 
-                        cliente.post(Utilities.WEB_SERVICE_CODPAA + "upimage1.php",rpFoto, new HttpResponseFoto(this,idFoto,position,img) );
+
+						JsonPhotoUpload upload = new JsonPhotoUpload();
+
+						upload.setIdTienda(curFoto.getInt(curFoto.getColumnIndex("idTienda")));
+						upload.setIdPromotor(curFoto.getInt(curFoto.getColumnIndex("idCelular")));
+						upload.setIdMarca(curFoto.getInt(curFoto.getColumnIndex("idMarca")));
+						upload.setIdExhibicion(curFoto.getInt(curFoto.getColumnIndex("idExhibicion")));
+						upload.setFecha(curFoto.getString(curFoto.getColumnIndex("fecha")));
+						upload.setFechaCaptura(curFoto.getString(curFoto.getColumnIndex("fecha_captura")));
+						upload.setDia(curFoto.getInt(curFoto.getColumnIndex("dia")));
+						upload.setMes(curFoto.getInt(curFoto.getColumnIndex("mes")));
+						upload.setAnio(curFoto.getInt(curFoto.getColumnIndex("anio")));
+						upload.setEvento(curFoto.getInt(curFoto.getColumnIndex("evento")));
+
+
+						if (curFoto.getString(curFoto.getColumnIndex("productos")) != null){
+							Log.d("foto", "productos disponibles");
+							String[] productos = curFoto.getString(curFoto.getColumnIndex("productos")).split(",");
+							upload.convert(productos);
+						}
+
+
+						rpFoto.put("json", gson.toJson(upload));
+
+
+						File file = new File(curFoto.getString(curFoto.getColumnIndex("imagen")));
+						try {
+							rpFoto.put("file", file);
+						} catch (FileNotFoundException e) {
+							e.printStackTrace();
+						}
+
+						cliente.setTimeout(5000);
+
+						cliente.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php",rpFoto, new HttpResponseFoto(this, idFoto, position));
 
 
                     }
@@ -440,11 +469,13 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 
 		Activity act;
 		SQLiteDatabase db;
+		private int position;
 
 		
-		public HttpResponseFoto(Activity contex,int idFoto, int position, String imgPath){
+		public HttpResponseFoto(Activity contex,int idFoto, int position){
 			this._idFoto = idFoto;
 			this.act = contex;
+			this.position = position;
 
 			db = new BDopenHelper(act).getWritableDatabase();
 
@@ -499,7 +530,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 				try {
 					
 
-					if(response.getBoolean("bol")){
+					if(response.getBoolean("insert")){
 
                         //
 
@@ -509,9 +540,12 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
                         //removemos el elmento de la lista
 						//adp.remove(adp.getItem(_position));
                         //notificamos el cambio al adaptador
+
+						adp.getItem(position).set_status(2);
+
 						adp.notifyDataSetChanged();
                         //notificamos al usuario la respuesta del servidor
-						Toast.makeText(getApplicationContext(), response.getString("insert"), Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(), "foto enviada", Toast.LENGTH_SHORT).show();
                         //deleteArchivo(_imgPath);
 
 
@@ -519,10 +553,12 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 						if(response.getInt("code") == 3){
 
 
+							adp.getItem(position).set_status(2);
+
 							//adp.remove(adp.getItem(_position));
 							adp.notifyDataSetChanged();
                             //deleteArchivo(_imgPath);
-                            Toast.makeText(getApplicationContext(), response.getString("insert"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
                             db.execSQL("Update photo set status=2 where idPhoto="+this._idFoto);
 						}
 					}

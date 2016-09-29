@@ -1018,7 +1018,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 
         Cursor curFoto = base.fotos();
-		AsyncHttpClient cliente = new AsyncHttpClient();
+		AsyncHttpClient cliente = new SyncHttpClient();
 
         Log.e("Geolocalizar","paso 1");
 
@@ -1124,6 +1124,7 @@ public class GeoLocalizar extends Service implements LocationListener{
                     //Log.d("Respuestas Ima", response.getString("message"));
                     //BDopenHelper bs = new BDopenHelper(con);
                     if(response.getBoolean("insert")){
+						Log.d("Geolocalizar", "insertado satisfactoriamente");
 
                         notificationBuilder.setContentText("se envio correctamente")
 								.setContentIntent(pendingIntent)

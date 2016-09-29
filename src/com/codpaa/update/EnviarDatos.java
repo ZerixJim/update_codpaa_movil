@@ -42,16 +42,16 @@ import cz.msebera.android.httpclient.Header;
 
 public class EnviarDatos {
 	
-	AsyncHttpClient cliente = new AsyncHttpClient();
+	private AsyncHttpClient cliente = new AsyncHttpClient();
 
-	RequestParams rp = new RequestParams();
-	ProgressDialog progressDialog;
-	SQLiteDatabase base;
-	BDopenHelper DB;
+	private RequestParams rp = new RequestParams();
+	private ProgressDialog progressDialog;
+	private SQLiteDatabase base;
+	private BDopenHelper DB;
 	
 	private Activity activity;
 
-	AsyncHttpResponseHandler respuesta = new AsyncHttpResponseHandler(){
+	private AsyncHttpResponseHandler respuesta = new AsyncHttpResponseHandler(){
 
 		@Override
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2,Throwable arg3) {
@@ -64,14 +64,14 @@ public class EnviarDatos {
 			
 		}
 	};
-	Locale local;
+
 	
 	
 	
 	public EnviarDatos(Activity a) {
 		activity = a;
 		DB = new BDopenHelper(activity);
-		local = new Locale("es_MX");
+
 
 		
 	}
@@ -268,7 +268,7 @@ public class EnviarDatos {
 			
 			if(verificarConexion()){
 				Calendar c = Calendar.getInstance();
-				SimpleDateFormat dFecha = new SimpleDateFormat("w",local);
+				SimpleDateFormat dFecha = new SimpleDateFormat("w", Locale.getDefault());
 					
 				String semana = dFecha.format(c.getTime());
 				int sem = Integer.parseInt(semana);
@@ -958,7 +958,7 @@ public class EnviarDatos {
         }
     }
 	
-	public boolean verificarConexion() {
+	private boolean verificarConexion() {
 	    ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
 	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
