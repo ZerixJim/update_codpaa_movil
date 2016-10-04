@@ -66,7 +66,6 @@ import com.codpaa.util.QuickstartPreferences;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -159,7 +158,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 email = (TextView) view.findViewById(R.id.user_mail);
                 TextView ver = (TextView) view.findViewById(R.id.version);
                 TextView id = (TextView) view.findViewById(R.id.id);
-                CircleImageView imageView = (CircleImageView) view.findViewById(R.id.circle_image);
+                //CircleImageView imageView = (CircleImageView) view.findViewById(R.id.circle_image);
 
 
                 /*Picasso.with(this).load("http://test.plataformavanguardia.net/images/promoPic/1000/13122797_10208823644806220_2530392818702619653_o.jpg")
@@ -703,17 +702,24 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
         Pattern emailPattern = Patterns.EMAIL_ADDRESS;
+        String mail = null;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
 
-        }
-        Account[] acccounts = AccountManager.get(this).getAccounts();
+            ActivityCompat.requestPermissions(this, new String[] {
+                    Manifest.permission.GET_ACCOUNTS
+            } , MY_PERMISSION_GET_ACCOUNDS);
 
-        String mail = null;
-        for (Account account : acccounts){
-            if (emailPattern.matcher(account.name).matches()){
-                mail = account.name;
+        } else {
+            Account[] acccounts = AccountManager.get(this).getAccounts();
+
+
+            for (Account account : acccounts){
+                if (emailPattern.matcher(account.name).matches()){
+                    mail = account.name;
+                }
             }
         }
+
 
         return mail;
 

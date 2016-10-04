@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -45,13 +46,18 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 	
 	Button guardar;
 	Spinner spMarca, spProducto;
-    static Button btnFechaInicio, btnFechaFin;
+    private static Button btnFechaInicio;
+	private static Button btnFechaFin;
+
+	private TextInputLayout tilPrecioNormal;
+	private TextInputLayout tilPrecioCaja;
+	private TextInputLayout tilPrecioOferta;
 	SQLiteDatabase base;
 	EditText editProNormal, editProOfer, editPrecioCaja;
 	CheckBox chOferCr, chProExtra, chProEmp, chCambioI, chCambioP;
 	InputMethodManager im;
 	ArrayList<MarcaModel> array = new ArrayList<>();
-    Locale locale;
+
 
 	int idTienda, idPromotor;
 
@@ -60,7 +66,6 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.inteligenciamercado);
 
-        locale = new Locale("es_MX");
 		Intent i = getIntent();
 
 		idTienda = i.getIntExtra("idTienda", 0);
@@ -88,8 +93,10 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
         btnFechaInicio = (Button) findViewById(R.id.btnFechaInicio);
         btnFechaFin = (Button) findViewById(R.id.btnFechaFin);
 
-		
-		
+
+		tilPrecioNormal = (TextInputLayout) findViewById(R.id.til_precio_normal);
+		tilPrecioCaja = (TextInputLayout) findViewById(R.id.til_precio_caja);
+		tilPrecioOferta = (TextInputLayout) findViewById(R.id.til_precio_oferta);
 
 		guardar.setOnClickListener(this);
 		spMarca.setOnItemSelectedListener(this);
@@ -222,8 +229,31 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 	
 	private void guardar(){
 		try {
+
+
+			String normal = editProNormal.getText().toString();
+			String caja = editPrecioCaja.getText().toString();
+			String oferta = editProOfer.getText().toString();
+
+			if (isNotEmptyNormal(normal)){
+				tilPrecioNormal.setError(null);
+			}else {
+				tilPrecioNormal.setError("Campo Requerido");
+			}
+
+			if (isNotEmptyCaja(caja)){
+				tilPrecioCaja.setError(null);
+			}else {
+				tilPrecioCaja.setError("Campo Requerido");
+			}
+
+			if (isNotEmptyOferta(oferta)){
+				tilPrecioOferta.setError(null);
+			}else {
+				tilPrecioOferta.setError("Campo Requerido");
+			}
 			
-			String oferCru, produExtr, proEmpl, cambioImagen, precioN, precioOfer, cambioPr, precioCaja;
+			String oferCru, produExtr, proEmpl, cambioImagen, cambioPr;
 			BDopenHelper baseH = new BDopenHelper(this);
 			EnviarDatos enviar = new EnviarDatos(this);
 			
@@ -251,24 +281,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 			}else{
 				cambioImagen = "NO";
 			}
-			
-			if(editProNormal.getText().length() > 0){
-				precioN = editProNormal.getText().toString();
-			}else{
-				precioN = "---";
-			}
-			
-			if(editProOfer.getText().length() > 0){
-				precioOfer = editProOfer.getText().toString();
-			}else{
-				precioOfer = "---";
-			}
-			
-			if(editPrecioCaja.getText().length() > 0){
-				precioCaja = editPrecioCaja.getText().toString();
-			}else{
-				precioCaja = "---";
-			}
+
 			
 			if(chCambioP.isChecked()){
 				cambioPr = "SI";
@@ -276,8 +289,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 				cambioPr = "NO";
 			}
 			
-			if(oferCru.equals("NO") && produExtr.equals("NO") && proEmpl.equals("NO") && cambioImagen.equals("NO") &&
-					precioN.equals("NO") && precioOfer.equals("NO") && precioN.equals("---") && precioOfer.equals("---") ){
+			if(oferCru.equals("NO") && produExtr.equals("NO") && proEmpl.equals("NO") && cambioImagen.equals("NO")){
 				Toast.makeText(getApplicationContext(), "Seleccione un campo", Toast.LENGTH_SHORT).show();
 			}else{
 				try {
@@ -291,16 +303,22 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 					int idProdu = spP.getIdProducto();
 					if(idMarca != 0){
 						if(idProdu != 0){
-							baseH.insertarInteligencia(idPromotor, idTienda, idProdu, precioN, precioOfer, fecha, oferCru, produExtr, proEmpl, cambioImagen, 1, getFechaInicio(), getFechaFin(), precioCaja, cambioPr);
-							Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + precioN + " precOfer " + precioOfer + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
-							enviar.enviarInteli();
-							Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
 
-							resetCampos();
-							spProducto.setSelection(0);
+							if (isNotEmptyOferta(normal) && isNotEmptyCaja(caja) && isNotEmptyOferta(oferta)) {
 
-							btnFechaInicio.setText(R.string.fecha);
-                            btnFechaFin.setText(R.string.fecha);
+								baseH.insertarInteligencia(idPromotor, idTienda, idProdu, normal, oferta, fecha, oferCru, produExtr, proEmpl, cambioImagen, 1, getFechaInicio(), getFechaFin(), caja, cambioPr);
+								Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + normal + " precOfer " + oferta + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
+								enviar.enviarInteli();
+								Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
+
+								resetCampos();
+								spProducto.setSelection(0);
+
+								btnFechaInicio.setText(R.string.fecha);
+								btnFechaFin.setText(R.string.fecha);
+							} else {
+								Toast.makeText(this, "Campos de Precio son Requeridos", Toast.LENGTH_SHORT).show();
+							}
 							
 						}else{
 							Toast.makeText(getApplicationContext(), "NO seleccionaste Marca", Toast.LENGTH_SHORT).show();
@@ -348,31 +366,62 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 			Toast.makeText(this, "Error Mayoreo 4", Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	private ArrayList<SpinnerProductoModel> getArrayListPro(int idMarca){
-		
-		Cursor curPro = new BDopenHelper(this).productos(idMarca);
+
+
+		Cursor cursor = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
 		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
-		for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-			final SpinnerProductoModel spP = new SpinnerProductoModel();
-			spP.setIdProducto(curPro.getInt(0));
-			spP.setNombre(curPro.getString(1));
-			spP.setPresentacion(curPro.getString(2));
-            spP.setCodigoBarras(curPro.getString(3));
-			spP.setIdMarca(curPro.getInt(4));
-			arrayP.add(spP);
+
+		if (cursor.getCount() <= 0){
+			Cursor curPro = new BDopenHelper(this).productos(idMarca);
+
+
+			Log.d("Productos Inventario", "" + curPro.getCount() + " idTienda "+ idTienda);
+
+			for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
+				final SpinnerProductoModel spP = new SpinnerProductoModel();
+
+				Log.d("Nombre Producto", ""+ curPro.getString(1));
+				spP.setIdProducto(curPro.getInt(0));
+				spP.setNombre(curPro.getString(1));
+				spP.setPresentacion(curPro.getString(2));
+				spP.setCodigoBarras(curPro.getString(3));
+				spP.setIdMarca(curPro.getInt(4));
+				arrayP.add(spP);
+			}
+
+			curPro.close();
+		}else {
+
+			for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+				final SpinnerProductoModel spP = new SpinnerProductoModel();
+
+				Log.d("Nombre Producto", ""+ cursor.getString(1));
+				spP.setIdProducto(cursor.getInt(0));
+				spP.setNombre(cursor.getString(1));
+				spP.setPresentacion(cursor.getString(2));
+				spP.setCodigoBarras(cursor.getString(3));
+				spP.setIdMarca(cursor.getInt(4));
+				arrayP.add(spP);
+			}
+
 		}
+
+
 		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
 		spPinicio.setIdProducto(0);
 		spPinicio.setNombre("Seleccione Producto");
 		spPinicio.setPresentacion("producto sin seleccionar");
-		
-		arrayP.add(0,spPinicio);
-		
+
+		arrayP.add(0, spPinicio);
+
 		base.close();
 		return arrayP;
-		
+
 	}
+	
+
 	
 	private ArrayList<MarcaModel> getArrayList(){
 		
@@ -436,6 +485,20 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
     }
 
 
+	private boolean isNotEmptyNormal(String normal){
+		return normal.trim().length() > 0;
+	}
+
+	private boolean isNotEmptyCaja(String caja){
+		return caja.trim().length() > 0;
+	}
+
+	private boolean isNotEmptyOferta(String oferta){
+		return oferta.trim().length() > 0;
+	}
+
+
+
     public static class DatePickerInicio extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
 
@@ -468,8 +531,6 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
             }
 
             btnFechaInicio.setText(String.format(Locale.getDefault(),"%s-%s-%d", dia, mes, year));
-
-
 
 
         }
@@ -507,8 +568,6 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
             }
 
             btnFechaFin.setText(String.format(Locale.getDefault(),"%s-%s-%d", dia, mes, year));
-
-
 
 
         }

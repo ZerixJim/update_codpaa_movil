@@ -17,11 +17,10 @@
     <TextView
 
         android:id="@+id/NombreTxtMarca"
-        android:text="Marca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
         />
 
@@ -32,8 +31,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/NombreTxtMarca"
+        android:layout_alignLeft="@+id/NombreTxtMarca"
+        android:layout_alignStart="@+id/NombreTxtMarca"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_toEndOf="@+id/logotipoMarca"
-        android:layout_toRightOf="@+id/logotipoMarca"
+
         />
 </RelativeLayout>

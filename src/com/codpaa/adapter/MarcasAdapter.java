@@ -22,10 +22,10 @@ import java.util.ArrayList;
 
 public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
 
-    Context _context;
+    private Context _context;
     private ArrayList<MarcaModel> arrayMarcas;
-    LayoutInflater layoutInflater;
-    BitmapDrawable bitmapDrawable;
+    private LayoutInflater layoutInflater;
+    private BitmapDrawable bitmapDrawable;
 
     private class ViewHolder{
         TextView nombre;
@@ -63,7 +63,7 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         return getCustomView(position, convertView, parent);
     }
 
-    public View getCustomView(int position, View convertView, ViewGroup parent) {
+    private View getCustomView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
 
         if (convertView == null){

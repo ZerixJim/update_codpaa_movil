@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/fondo_gris" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/fondo_gris">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,9 +30,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+            android:baselineAligned="false"
             android:weightSum="2">
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_precio_normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -54,6 +56,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_precio_caja"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -97,6 +100,7 @@
 
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_precio_oferta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -146,22 +150,19 @@
                     android:id="@+id/checkOferC"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/ofertaCruz"
-                    android:textStyle="bold" />
+                    android:text="@string/ofertaCruz"/>
 
                 <CheckBox
                     android:id="@+id/checkProdEx"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/prodExtra"
-                    android:textStyle="bold" />
+                    android:text="@string/prodExtra"/>
 
                 <CheckBox
                     android:id="@+id/checkProEmp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/prodEmpa"
-                    android:textStyle="bold" />
+                    android:text="@string/prodEmpa"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -187,6 +188,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:baselineAligned="false"
                 android:layout_marginTop="5dp"
                 android:weightSum="2"
                 android:orientation="horizontal" >
@@ -205,6 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
                         android:layout_marginStart="3dp"
+                        android:gravity="center"
                         android:layout_weight="1"
                         android:text="De" />
 
@@ -236,6 +239,7 @@
                         android:layout_marginLeft="3dp"
                         android:layout_marginStart="3dp"
                         android:layout_marginRight="10dp"
+                        android:gravity="center"
                         android:layout_marginEnd="10dp"
                         android:layout_weight="1"
                         android:text="A"
@@ -277,15 +281,13 @@
                 android:id="@+id/checkCambio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cambioImagen"
-                android:textStyle="bold" />
+                android:text="@string/cambioImagen"/>
 
             <CheckBox
                 android:id="@+id/checkCampre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cambprecio"
-                android:textStyle="bold" />
+                android:text="@string/cambprecio"/>
         </LinearLayout>
 
         <Button
@@ -297,9 +299,6 @@
             android:layout_marginTop="35dp"
             android:layout_weight="1"
             android:text="@string/guar" />
-
-
-
 
 
     </LinearLayout>

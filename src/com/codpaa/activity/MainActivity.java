@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -349,7 +350,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 	
 	public void crearPrompt(String version){
 		LayoutInflater li = LayoutInflater.from(this);
-		View prompt = li.inflate(R.layout.promptversion, null);
+		final ViewGroup nullParent = null;
+		View prompt = li.inflate(R.layout.promptversion, nullParent);
 
         TextView textVersion = (TextView) prompt.findViewById(R.id.textVersionPrompt);
         textVersion.setText(version);
