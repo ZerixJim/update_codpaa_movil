@@ -15,7 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.LayoutManager;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.codpaa.R;
 import com.codpaa.adapter.MensajesRecyclerAdapter;
@@ -33,6 +36,7 @@ public class ListaMensajesActivity extends AppCompatActivity{
 
     private BroadcastReceiver mNewMessageBroadcastReceiver;
     private boolean isReceiverMessageRegistered;
+    private LinearLayout linearNoImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,8 @@ public class ListaMensajesActivity extends AppCompatActivity{
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_mensajes);
 
         LayoutManager mLayoutManager = new LinearLayoutManager(this);
+
+        linearNoImage = (LinearLayout) findViewById(R.id.no_message);
 
 
 
@@ -69,6 +75,12 @@ public class ListaMensajesActivity extends AppCompatActivity{
                 if (intent.getAction().equals(QuickstartPreferences.NEW_MESSAGE)){
                     adapter.setItems(mensajeModels());
                     adapter.notifyDataSetChanged();
+
+                    if (mensajeModels().size() > 0){
+                        linearNoImage.setVisibility(View.GONE);
+                    } else {
+                        linearNoImage.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         };
@@ -81,6 +93,13 @@ public class ListaMensajesActivity extends AppCompatActivity{
 
 
         //Log.d("MessageList", "onResume");
+        Log.d("Mensajes", mensajeModels().size() + "");
+
+        if (mensajeModels().size() > 0){
+            linearNoImage.setVisibility(View.GONE);
+        } else {
+            linearNoImage.setVisibility(View.VISIBLE);
+        }
 
         adapter.setItems(mensajeModels());
         adapter.notifyDataSetChanged();

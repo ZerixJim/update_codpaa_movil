@@ -28,7 +28,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
 
-    // v1.2.3 = 24
+    // v1.2.4 rc1 = 25
     private static final int version = 25;
     private static SQLiteDatabase baseDatosLocal = null;
 
