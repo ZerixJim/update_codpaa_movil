@@ -111,6 +111,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="@string/imagedescrip"
                 android:layout_centerHorizontal="true"
+                android:scaleType="fitCenter"
                 android:padding="3dp" />
 
             <com.github.lzyzsd.circleprogress.DonutProgress

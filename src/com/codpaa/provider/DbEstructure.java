@@ -165,6 +165,19 @@ public class DbEstructure {
 
     }
 
+    /**
+     * table materiales
+     */
+    public static class Materiales implements BaseColumns{
+        private Materiales(){}
 
+        public static final String TABLE_NAME = "materiales";
+        public static final String ID_MATERIAL = "idMaterial";
+        public static final String MATERIAL = "material";
+        public static final String UNIDAD = "unidad";
+        public static final String SOLICITUD_MAXIMA = "solicitudMaxima";
+        public static final String ESTATUS = "estatus";
+
+    }
 
 }

@@ -160,6 +160,8 @@
     <string name="captura_general">Captura General</string>
     <string name="estatus">Estatus</string>
     <string name="estado_del_producto">Estado del producto</string>
+    <string name="errorEnvioImagen">Error al enviar</string>
+    <string name="enviada">Enviada...</string>
 
 
 </resources>

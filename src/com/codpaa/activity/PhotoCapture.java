@@ -88,29 +88,29 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private static final int widthRequerida = 640;
-    private static final int heightRequerida = 480;
+    private static final int CAMERA_PERMISSION = 124;
 
 
-    ProgressBar progressFoto;
-    File imageCaptured = null;
-    TextView textoEnvio;
-	int idPromotor, idTienda;
-	Button enviarPhoto;
-    DonutProgress donutProgress;
-    public ImageView showImg = null;
-    PhotoCapture CameraActivity = null;
-    String mCurrentPhotoPath;
-    boolean imagenEspera = false;
-    Spinner spiMarca, spiExh;
-    ArrayList<MarcaModel> array = new ArrayList<>();
- 	SQLiteDatabase base;
-    MultiSpinnerSelect multiSpinnerSelect;
 
-    int startCamera;
 
-    RadioGroup radioChoice;
-    RadioButton radioNormal, radioEvento;
+    private ProgressBar progressFoto;
+    private File imageCaptured = null;
+    private TextView textoEnvio;
+	private int idPromotor, idTienda;
+    private DonutProgress donutProgress;
+    private ImageView showImg = null;
+    private PhotoCapture CameraActivity = null;
+    private String mCurrentPhotoPath;
+    private boolean imagenEspera = false;
+    private Spinner spiMarca, spiExh;
+    private ArrayList<MarcaModel> array = new ArrayList<>();
+ 	private SQLiteDatabase base;
+    private MultiSpinnerSelect multiSpinnerSelect;
+
+    private int startCamera;
+
+    private RadioGroup radioChoice;
+    private RadioButton radioNormal, radioEvento;
 
 
     @Override
@@ -129,7 +129,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         //instancia de views
         showImg = (ImageView) findViewById(R.id.showImg);
 
-        enviarPhoto = (Button) findViewById(R.id.btnEnviPho);
+        Button enviarPhoto = (Button) findViewById(R.id.btnEnviPho);
 
 
         spiMarca = (Spinner) findViewById(R.id.spiMarPhoto);
@@ -151,7 +151,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         }
 
         //add event listener
-        enviarPhoto.setOnClickListener(this);
+        if (enviarPhoto != null) {
+            enviarPhoto.setOnClickListener(this);
+        }
 
 
         spiMarca.setOnItemSelectedListener(this);
@@ -217,7 +219,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
     //metod start camera
-    //voy a modificar este metodo
+    //todo-gus: modificar este metodo
     private void dispatchTakePictureIntent(){
         //intention start camera
 
@@ -271,8 +273,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		String timeStamp = new SimpleDateFormat("ddMMyyyykm", Locale.getDefault()).format(new Date());
 		String imageFileName = idTienda+timeStamp;
 		File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
 		if(!storageDir.exists()){
-			Log.v("PictireCir", "Directorio No Existe");
+			//Log.v("PictireCir", "Directorio No Existe");
 			if(storageDir.mkdir()){
 				Log.v("PictireCir", "Directorio Creado");
 			}else{
@@ -295,7 +298,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	@Override
     protected void onActivityResult( int requestCode, int resultCode, Intent data){
 
-        Log.d("onActivityResult", "1");
+        //Log.d("onActivityResult", "1");
 
     	if(requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
 
@@ -345,26 +348,21 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
 
                         try {
-                            if (bitmap.getWidth() > widthRequerida && bitmap.getHeight() > heightRequerida) {
-                                File fileP = new File(mCurrentPhotoPath);
-                                FileOutputStream fileOut = new FileOutputStream(fileP);
-                                //Log.v("Tamaño imagen: ",Long.toString(fileP.length()));
-                                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fileOut);
-                            }
+
+                            File fileP = new File(mCurrentPhotoPath);
+                            FileOutputStream fileOut = new FileOutputStream(fileP);
+                            //Log.v("Tamaño imagen: ",Long.toString(fileP.length()));
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fileOut);
 
                         } catch (FileNotFoundException fe) {
                             fe.printStackTrace();
                         }
-                        Log.v("Image ", bitmap.getWidth() + "x" + bitmap.getHeight());
-                        //falta validacion
-                        //falta validacion
 
-                    /*Bitmap thum = ThumbnailUtils.extractThumbnail(bitmap,256,128);
-                    showImg.setImageBitmap(thum);*/
+
                         Picasso.with(this).load(new File(mCurrentPhotoPath))
                                 .placeholder(R.drawable.placeholder)
-                                .resize(512,256)
                                 .centerCrop()
+                                .fit()
                                 .into(showImg);
 
 
@@ -743,7 +741,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 @Override
                 public void run() {
 
-                    textoEnvio.setText("Error al enviar");
+                    textoEnvio.setText(R.string.errorEnvioImagen);
                     textoEnvio.setTextColor(Color.RED);
                 }
             });
@@ -764,11 +762,11 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		public void onSuccess(int statusCode,Header[] headers,JSONObject response) {
 
             Log.d("EnviarFoto","Estatus "+statusCode);
-            Log.d("EnviarFoto","Response" + response);
+            //Log.d("EnviarFoto","Response" + response);
             textoEnvio.post(new Runnable() {
                 @Override
                 public void run() {
-                    textoEnvio.setText("Enviada...");
+                    textoEnvio.setText(R.string.enviada);
                     textoEnvio.setTextColor(Color.GREEN);
                 }
             });
@@ -937,7 +935,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{
                     Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }, 124);
+            }, CAMERA_PERMISSION);
         }
     }
 

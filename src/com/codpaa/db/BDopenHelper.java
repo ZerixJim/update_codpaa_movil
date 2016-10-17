@@ -17,6 +17,7 @@ import com.codpaa.provider.DbEstructure.ProductByFormato;
 import com.codpaa.provider.DbEstructure.ProductoByTienda;
 import com.codpaa.provider.DbEstructure.TiendaProductoCatalogo;
 import com.codpaa.provider.DbEstructure.PhotoProducto;
+import com.codpaa.provider.DbEstructure.Materiales;
 
 
 import java.io.File;
@@ -64,6 +65,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String productoByTienda;
     private static String tiendaProductoCatalogo;
     private static String photoProducto;
+    private static String materiales;
 
 
     public BDopenHelper(Context miContext) {
@@ -221,6 +223,16 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 TiendaProductoCatalogo.ID_TIENDA + "," +
                 TiendaProductoCatalogo.FECHA + "," +
                 TiendaProductoCatalogo.ID_PRODUCTO +") )";
+
+        materiales = "create table if not exists " +
+                Materiales.TABLE_NAME + "(" +
+                Materiales.ID_MATERIAL + " int, " +
+                Materiales.MATERIAL + " varchar(50), " +
+                Materiales.UNIDAD + " varchar(25)," +
+                Materiales.SOLICITUD_MAXIMA + " int, " +
+                Materiales.ESTATUS + " int)";
+
+
 
 
 
