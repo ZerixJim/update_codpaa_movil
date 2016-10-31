@@ -271,6 +271,19 @@
                         android:text="@string/updateProducts"/>
                 </TableRow>
 
+
+                <TableRow
+                    android:layout_marginBottom="5dp"
+                    android:visibility="gone">
+                    <Button
+                        android:id="@+id/materiales"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Materiales"/>
+                </TableRow>
+
+
                 <TableRow>
                     <Button
                         android:id="@+id/btnTiendaError"
@@ -280,6 +293,8 @@
                         android:layout_weight="1"
                         android:text="@string/tiendaErronea"/>
                 </TableRow>
+
+
 
 
             </TableLayout>

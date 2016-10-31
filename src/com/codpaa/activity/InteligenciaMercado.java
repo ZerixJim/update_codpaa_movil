@@ -247,11 +247,11 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 				tilPrecioCaja.setError("Campo Requerido");
 			}
 
-			if (isNotEmptyOferta(oferta)){
+			/*if (isNotEmptyOferta(oferta)){
 				tilPrecioOferta.setError(null);
 			}else {
 				tilPrecioOferta.setError("Campo Requerido");
-			}
+			}*/
 			
 			String oferCru, produExtr, proEmpl, cambioImagen, cambioPr;
 			BDopenHelper baseH = new BDopenHelper(this);
@@ -288,50 +288,48 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 			}else{
 				cambioPr = "NO";
 			}
-			
-			if(oferCru.equals("NO") && produExtr.equals("NO") && proEmpl.equals("NO") && cambioImagen.equals("NO")){
-				Toast.makeText(getApplicationContext(), "Seleccione un campo", Toast.LENGTH_SHORT).show();
-			}else{
-				try {
-					MarcaModel spM = (MarcaModel) spMarca.getSelectedItem();
-					SpinnerProductoModel spP = (SpinnerProductoModel) spProducto.getSelectedItem();
-					Calendar c = Calendar.getInstance();
-					SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
-					
-					String fecha = dFecha.format(c.getTime());
-					int idMarca = spM.getId();
-					int idProdu = spP.getIdProducto();
-					if(idMarca != 0){
-						if(idProdu != 0){
 
-							if (isNotEmptyOferta(normal) && isNotEmptyCaja(caja) && isNotEmptyOferta(oferta)) {
+			try {
+				MarcaModel spM = (MarcaModel) spMarca.getSelectedItem();
+				SpinnerProductoModel spP = (SpinnerProductoModel) spProducto.getSelectedItem();
+				Calendar c = Calendar.getInstance();
+				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
 
-								baseH.insertarInteligencia(idPromotor, idTienda, idProdu, normal, oferta, fecha, oferCru, produExtr, proEmpl, cambioImagen, 1, getFechaInicio(), getFechaFin(), caja, cambioPr);
-								Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + normal + " precOfer " + oferta + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
-								enviar.enviarInteli();
-								Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
+				String fecha = dFecha.format(c.getTime());
+				int idMarca = spM.getId();
+				int idProdu = spP.getIdProducto();
+				if(idMarca != 0){
+					if(idProdu != 0){
 
-								resetCampos();
-								spProducto.setSelection(0);
+						if (isNotEmptyOferta(normal) && isNotEmptyCaja(caja)) {
 
-								btnFechaInicio.setText(R.string.fecha);
-								btnFechaFin.setText(R.string.fecha);
-							} else {
-								Toast.makeText(this, "Campos de Precio son Requeridos", Toast.LENGTH_SHORT).show();
-							}
-							
-						}else{
-							Toast.makeText(getApplicationContext(), "NO seleccionaste Marca", Toast.LENGTH_SHORT).show();
+							baseH.insertarInteligencia(idPromotor, idTienda, idProdu, normal, oferta, fecha, oferCru, produExtr, proEmpl, cambioImagen, 1, getFechaInicio(), getFechaFin(), caja, cambioPr);
+							Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + normal + " precOfer " + oferta + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
+							enviar.enviarInteli();
+							Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
+
+							resetCampos();
+							spProducto.setSelection(0);
+
+							btnFechaInicio.setText(R.string.fecha);
+							btnFechaFin.setText(R.string.fecha);
+						} else {
+							Toast.makeText(this, "Campos de Precio son Requeridos", Toast.LENGTH_SHORT).show();
 						}
+
 					}else{
 						Toast.makeText(getApplicationContext(), "NO seleccionaste Marca", Toast.LENGTH_SHORT).show();
 					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
+				}else{
+					Toast.makeText(getApplicationContext(), "NO seleccionaste Marca", Toast.LENGTH_SHORT).show();
 				}
+
+
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+			
+
 			
 			
 			

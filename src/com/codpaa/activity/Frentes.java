@@ -38,18 +38,17 @@ import com.codpaa.db.BDopenHelper;
 
 public class Frentes extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
 
-	int idPromotor, idTienda;
+	private int idPromotor, idTienda;
 	Button btnGuar, btn1,btn2,btn3,btn4,btn5,btn6;
-	EditText unifila, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14;
-	EditText Echa1,Echa2,Echa3,Echa4,Echa5,Echa6;
-	InputMethodManager im;
+	private EditText unifila, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14;
+	private EditText Echa1,Echa2,Echa3,Echa4,Echa5,Echa6;
+	private InputMethodManager im;
 	BDopenHelper baseH;
 	Toolbar toolbar;
-	Locale locale;
 
-	ArrayList<MarcaModel> array = new ArrayList<>();
-	SQLiteDatabase base;
-	Spinner spiMarca, spiPro;
+	private ArrayList<MarcaModel> array = new ArrayList<>();
+	private SQLiteDatabase base;
+	private Spinner spiMarca, spiPro;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +66,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 			}
 		}
 
-		locale = new Locale("es_MX");
+
 
 		Intent i = getIntent();
 		idTienda = i.getIntExtra("idTienda", 0);
@@ -286,7 +285,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 			try {
 
 				Calendar c = Calendar.getInstance();
-				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
+				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 				MarcaModel spm = (MarcaModel) spiMarca.getSelectedItem();
 				SpinnerProductoModel spPm = (SpinnerProductoModel) spiPro.getSelectedItem();
 

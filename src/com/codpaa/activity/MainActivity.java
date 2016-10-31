@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private void loginAsync(final String usuario, final String pass){
 
         AsyncHttpClient cliente = new AsyncHttpClient();
-		cliente.setTimeout(5000);
+		//cliente.setTimeout(5000);
         RequestParams rp = new RequestParams();
         rp.put("solicitud","usersensitive");
         rp.put("user",usuario);

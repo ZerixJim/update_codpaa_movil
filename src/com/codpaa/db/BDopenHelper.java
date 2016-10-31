@@ -811,7 +811,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 " union all " +
                 " select p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca  from productotienda as pt " +
                 " left  join producto as p on pt.idProducto=p.idProducto " +
-                " where p.idMarca="+ idMarca +" and pt.idTienda="+ idTienda +") as p", null);
+                " where p.idMarca="+ idMarca +" and pt.idTienda="+ idTienda +") as p order by p.nombre asc", null);
     }
 
     public Cursor Surtido() throws SQLiteException {

@@ -63,6 +63,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	
 	Button btnSalidaTi,btnEntrada, btnEncar, btnExhib, btnInven, btnFrente, btnSurtido, btnTiendaError;
 	Button btnVentaPromedio, btnCapturaGeneral;
+	//Button btnMateriales;
 	Button btnComentario, btnInteligencia, btnUpdaPro, btnFoto;
 	SQLiteDatabase base = null;
 	Location locGps,locNet;
@@ -73,7 +74,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	BDopenHelper DB = null;
 	String myVersionName = "not available";
 	EnviarDatos enviar;
-	Locale locale;
 	Spinner spinnerEnc;
 	EditText editNombre;
 	AsyncHttpClient cliente;
@@ -104,7 +104,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 			}
 		}
 
-		locale = new Locale("es_MX");
+
 		cliente = new AsyncHttpClient();
 		rp = new RequestParams();
 		Intent recibeIdTi = getIntent();
@@ -225,6 +225,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 		btnCapturaGeneral = (Button) findViewById(R.id.captura_general);
 
+		//btnMateriales = (Button) findViewById(R.id.materiales);
+
+
 
 		btnFrente.setOnClickListener(this);
 		btnEntrada.setOnClickListener(this);
@@ -241,6 +244,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		btnVentaPromedio.setOnClickListener(this);
 
 		btnCapturaGeneral.setOnClickListener(this);
+
+		//btnMateriales.setOnClickListener(this);
 
 
 
@@ -320,9 +325,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
         permiso();
 
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
-		SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a",locale);
-		SimpleDateFormat dSema = new SimpleDateFormat("w",locale);
+		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
+		SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a",Locale.getDefault());
+		SimpleDateFormat dSema = new SimpleDateFormat("w",Locale.getDefault());
 			
 		String fecha = dFecha.format(c.getTime());
 		String hora = dHora.format(c.getTime());
@@ -420,9 +425,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 						if(!Salida){
 							
 							Calendar c = Calendar.getInstance();
-							SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
-							SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a",locale);
-							SimpleDateFormat dSema = new SimpleDateFormat("w",locale);
+							SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
+							SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
+							SimpleDateFormat dSema = new SimpleDateFormat("w", Locale.getDefault());
 								
 							String fecha = dFecha.format(c.getTime());
 							String hora = dHora.format(c.getTime());
@@ -592,6 +597,11 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 			case R.id.captura_general:
 				capturaGeneral();
 				break;
+
+			case R.id.materiales:
+				Intent intent = new Intent(this, MaterialesActivity.class);
+				startActivity(intent);
+				break;
 		}
 		
 	}
@@ -637,7 +647,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		super.onResume();
 		
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
+		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 		String fecha = dFecha.format(c.getTime());
 		
 		try {
@@ -999,7 +1009,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 				String nombre = editNombre.getText().toString();
 				
 				Calendar c = Calendar.getInstance();
-				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
+				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 
 				
 				String fecha = dFecha.format(c.getTime());
@@ -1052,7 +1062,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 		@Override
 		public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-			Log.d("Localizacion", "Status "+arg0);
+			Log.d("Localizacion", "Status " + arg0);
 			
 		}
 		
