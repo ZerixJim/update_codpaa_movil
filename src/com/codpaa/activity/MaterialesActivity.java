@@ -30,10 +30,6 @@ public class MaterialesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-
-
-
-
     }
 
 
@@ -46,8 +42,8 @@ public class MaterialesActivity extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.menu_spinner);
         Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, new String[]{"marca 1", "marca 2"});
-        //adapter.setDropDownViewResource(R.layout.custom_simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"marca 1", "marca 2"});
+
         spinner.setAdapter(adapter);
 
 

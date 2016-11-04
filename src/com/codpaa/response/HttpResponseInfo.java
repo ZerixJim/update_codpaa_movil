@@ -7,8 +7,10 @@ import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
 import android.widget.Toast;
 
+import com.codpaa.R;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.Configuracion;
@@ -37,6 +39,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
         this.context = context;
         this.progressDialog = new ProgressDialog(context);
         this.progressDialog.setMessage("Descargando...");
+        this.progressDialog.setCancelable(false);
 
 
     }
@@ -51,7 +54,9 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
     @Override
     public void onFinish() {
         super.onFinish();
-        progressDialog.dismiss();
+
+
+
     }
 
     @Override
@@ -59,6 +64,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
         super.onSuccess(statusCode, headers, response);
 
         //Log.d("OnSuccess Info", "1");
+        Handler handler = new Handler();
 
         if (response != null){
             try {
@@ -78,12 +84,34 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                 parseJSONProductoByFormato(productoFormato);
                 parseJSONProductoByTienda(productoTienda);
 
+                progressDialog.setContentView(R.layout.dialog_done);
+                progressDialog.setMessage("Informacion Cargada Satisfactoriamente");
 
-                Toast.makeText(context, "Informacion Cargada con Exito!!", Toast.LENGTH_SHORT).show();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                    }
+                }, 2500);
+
+                //Toast.makeText(context, "Informacion Cargada con Exito!!", Toast.LENGTH_SHORT).show();
             }catch (JSONException e){
                 e.printStackTrace();
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.setMessage("Ocurrio un problema al guardar la informacion, intentelo mas tarde");
+                        progressDialog.dismiss();
+                    }
+                }, 4000);
+
+
             }
         }
+
+
+
 
 
 
@@ -95,6 +123,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
         super.onFailure(statusCode, headers, throwable, errorResponse);
 
         Toast.makeText(context, "Error Al descargar la Informacion!!", Toast.LENGTH_SHORT).show();
+        progressDialog.dismiss();
     }
 
 

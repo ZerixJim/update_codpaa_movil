@@ -20,7 +20,7 @@ public class UpdateInformation{
 
     private final static String URL_INFO = "serv.php";
 
-    Context _context;
+    private Context _context;
 
 
     public UpdateInformation(Context context){
