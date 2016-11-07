@@ -14,7 +14,6 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -49,14 +48,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codpaa.R;
 import com.codpaa.adapter.MenuAdapter;
 import com.codpaa.model.MenuModel;
-import com.codpaa.model.TiendasModel;
 import com.codpaa.service.RegistrationIntentService;
 import com.codpaa.update.UpdateInformation;
 
@@ -79,7 +76,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     private DrawerLayout drawerLayout;
     TextView email;
     CircleImageView avatar;
-    Spinner spinnerTien;
+
     SQLiteDatabase base;
     LocationManager lM = null;
     String myVersionName = "not available";
@@ -551,40 +548,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     }
 
 
-    public class DListener implements DialogInterface.OnClickListener {
-
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-
-            //int posicion = spinnerTien.getSelectedItemPosition();
-            TiendasModel stm = (TiendasModel) spinnerTien.getSelectedItem();
-            //int idt = (int) spinnerTien.getItemIdAtPosition(posicion);
-            int idTienda = stm.getIdTienda();
-            if (which == DialogInterface.BUTTON_POSITIVE) {
-
-
-                if (stm.getIdTienda() != 0) {
-
-
-                    Intent abrirMenuTienda = new Intent(MenuPrincipal.this, MenuTienda.class);
-
-                    abrirMenuTienda.putExtra("idTienda", idTienda);
-                    abrirMenuTienda.putExtra("idPromotor", idUsuario);
-
-                    startActivity(abrirMenuTienda);
-                } else {
-                    Toast.makeText(MenuPrincipal.this, "No seleccionaste tienda", Toast.LENGTH_LONG).show();
-                }
-
-
-            } else if (which == DialogInterface.BUTTON_NEGATIVE) {
-                Toast.makeText(getApplicationContext(), "Cancelaste la Seleccion", Toast.LENGTH_SHORT).show();
-            }
-
-
-        }
-
-    }
 
 
     private String fechaActual() {
