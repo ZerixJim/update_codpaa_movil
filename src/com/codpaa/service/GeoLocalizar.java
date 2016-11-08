@@ -1254,7 +1254,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 	
 	private String getPhoneNumber(){
 		TelephonyManager mTelephonyManager;
-		mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE); 
+		mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+		//// TODO: 08/11/2016  
 		return mTelephonyManager.getLine1Number();
 	}
 	
