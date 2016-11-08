@@ -1064,7 +1064,11 @@ public class GeoLocalizar extends Service implements LocationListener{
 
                 cliente.setTimeout(5000);
 
-                cliente.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php",rpFoto, jr);
+				if (verificarConexion()){
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php",rpFoto, jr);
+				}
+
 
             }
 
