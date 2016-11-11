@@ -67,7 +67,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 	PendingIntent pendingIntent;
 	Context con;
 	
-	public GeoLocalizar(){}
+
 	
 	AsyncHttpResponseHandler respuesta = new AsyncHttpResponseHandler(){
 		
@@ -309,6 +309,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 	        handler.post(start);
 	    }
 	};
+
+	public GeoLocalizar(){}
 
 	public void startGPS(){
 		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -1255,7 +1257,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 	private String getPhoneNumber(){
 		TelephonyManager mTelephonyManager;
 		mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-		//// TODO: 08/11/2016  
+
 		return mTelephonyManager.getLine1Number();
 	}
 	
