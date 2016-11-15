@@ -315,6 +315,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
         i.putExtra("idTienda", idTienda);
         i.putExtra("idPromotor", idPromotor);
 
+		
         startActivity(i);
 
     }
@@ -766,15 +767,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 			e.printStackTrace();
 		}
 
-
+		/*
 		if (new BDopenHelper(this).tipoTienda(idTienda) ==2){
 			if (!verifyCatalogo()){
 				dialogCapturaDeCatalogo();
 			}
-		}
+		}*/
 
-
-		
 		
 	}
 
@@ -783,8 +782,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	@Override
 	protected void onStart() {
 		super.onStart();
-		
-		
+
 		
 	}
 	

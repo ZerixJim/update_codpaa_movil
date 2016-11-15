@@ -423,6 +423,9 @@ public class GeoLocalizar extends Service implements LocationListener{
 	}
 
 
+	/**
+	 * metodo para inicir el hilo de envío de informacion en segundo plano
+	 */
 
 
 	public void iniciarTarea(){
