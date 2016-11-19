@@ -6,8 +6,29 @@ public class Pregunta {
 
     private int idPregunta;
     private int numeroPregunta;
+    private int idTipo;
     private String contenidoPregunta;
+    private String respuesta;
+
+    public String getRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(String respuesta) {
+        this.respuesta = respuesta;
+    }
+
     private int idRespesta = 0;
+
+    public int getIdTipo() {
+        return idTipo;
+    }
+
+    public void setIdTipo(int idTipo) {
+        this.idTipo = idTipo;
+    }
+
+
 
     public int getNumeroPregunta() {
         return numeroPregunta;

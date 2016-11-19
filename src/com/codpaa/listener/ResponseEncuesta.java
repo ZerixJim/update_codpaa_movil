@@ -8,6 +8,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.util.Configuracion;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -23,14 +24,11 @@ import cz.msebera.android.httpclient.Header;
 public class ResponseEncuesta extends JsonHttpResponseHandler {
 
 
-    Context _context;
-    Locale locale;
-
+    private Context _context;
 
 
     public ResponseEncuesta(Context context){
         this._context = context;
-        locale = new Locale("es_MX");
 
     }
 
@@ -58,22 +56,26 @@ public class ResponseEncuesta extends JsonHttpResponseHandler {
         BDopenHelper b = new BDopenHelper(_context.getApplicationContext());
 
         b.vaciarTabla("preguntas");
-        //Configuracion configuracion = new Configuracion(_context);
+        Configuracion configuracion = new Configuracion(_context);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String fecha = dFecha.format(c.getTime());
 
 
         for (int i=0; i<preguntasArray.length(); i++ ) {
             ContentValues v = new ContentValues();
-            v.put("id_pregunta", preguntasArray.getJSONObject(i).getInt("id_pregunta"));
-            v.put("descripcion", preguntasArray.getJSONObject(i).getString("contenido"));
-            v.put("id_encuesta", preguntasArray.getJSONObject(i).getInt("id_encuesta"));
-            v.put("id_tipo", preguntasArray.getJSONObject(i).getInt("id_tipo"));
-            v.put("id_marca", preguntasArray.getJSONObject(i).getInt("id_marca"));
-            v.put("nombre_encuesta", preguntasArray.getJSONObject(i).getString("nombre_encuesta"));
+            v.put("id_pregunta", preguntasArray.getJSONObject(i).getInt("idPregunta"));
+            v.put("descripcion", preguntasArray.getJSONObject(i).getString("pregunta"));
+            v.put("id_encuesta", preguntasArray.getJSONObject(i).getInt("idEncuesta"));
+            v.put("id_tipo", preguntasArray.getJSONObject(i).getInt("idTipo"));
+            v.put("id_marca", preguntasArray.getJSONObject(i).getInt("idMarca"));
+            v.put("nombre_encuesta", preguntasArray.getJSONObject(i).getString("nombreEncuesta"));
             b.insertar("preguntas", v);
 
         }
 
-
+        configuracion.setEncuestaDisponibleByDay(fecha);
 
     }
 

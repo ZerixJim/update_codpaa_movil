@@ -18,6 +18,7 @@ import com.codpaa.provider.DbEstructure.ProductoByTienda;
 import com.codpaa.provider.DbEstructure.TiendaProductoCatalogo;
 import com.codpaa.provider.DbEstructure.PhotoProducto;
 import com.codpaa.provider.DbEstructure.Materiales;
+import com.codpaa.provider.DbEstructure.EncuestaFoto;
 
 
 import java.io.File;
@@ -29,8 +30,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
 
-    // v1.2.4 rc3 = 25
-    private static final int version = 25;
+    // v1.2.5 = 26
+    private static final int version = 26;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -66,6 +67,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String tiendaProductoCatalogo;
     private static String photoProducto;
     private static String materiales;
+    private static String encuestaFoto;
 
 
     public BDopenHelper(Context miContext) {
@@ -175,8 +177,18 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "descripcion varchar(250) NOT NULL, id_tipo int NOT NULL, " +
                 "id_encuesta integer NOT NULL, nombre_encuesta varchar(50) NOT NULL," +
                 " id_marca int NOT NULL, PRIMARY KEY(id_pregunta, id_encuesta))";
+
+        encuestaFoto = "create table if not exists " +
+                EncuestaFoto.TABLE_NAME + " (" +
+                EncuestaFoto.ID_ENCUESTA + " int, " +
+                EncuestaFoto.PHOTO_PATH + " varchar(250), " +
+                EncuestaFoto.ID_PROMOTOR + " int, " +
+                EncuestaFoto.STATUS + " int)";
+
         respuesta = "create table if not exists " +
-                "respuestas(id_pregunta int NOT NULL, respuesta varchar, id_encuesta)";
+                "respuestas(id_pregunta int NOT NULL, respuesta varchar, id_encuesta, id_promotor)";
+
+
         respuestaTipo = "create table if not exists "+
                 "respuestaTipo(id_tipo int NOT NULL, descripcion varchar(15) NOT NULL)";
 
@@ -266,6 +278,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(preguntas);
         db.execSQL(respuesta);
         db.execSQL(respuestaTipo);
+        db.execSQL(encuestaFoto);
         db.execSQL(mensaje);
         db.execSQL(ventaPromedio);
         db.execSQL(direcciones);
@@ -334,6 +347,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
             db.execSQL(photoProducto);
+        }
+
+        if (newVersion == 26){
+            db.execSQL("drop table if exists respuestas");
+            db.execSQL(respuesta);
+            db.execSQL(encuestaFoto);
         }
 
 

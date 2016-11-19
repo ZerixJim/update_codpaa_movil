@@ -28,10 +28,12 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -53,6 +55,7 @@ import android.widget.Toast;
 
 import com.codpaa.R;
 import com.codpaa.adapter.MenuAdapter;
+import com.codpaa.fragment.DialogEncuestas;
 import com.codpaa.model.MenuModel;
 import com.codpaa.service.RegistrationIntentService;
 import com.codpaa.update.UpdateInformation;
@@ -255,6 +258,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         }
 
 
+
+
+
     }
 
 
@@ -409,6 +415,15 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         registerReceiver();
 
+        Handler handler = new Handler();
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialogoEncuestas();
+            }
+        }, 2000);
+
     }
 
 
@@ -471,7 +486,17 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         }
 
 
-        uI.actualizarEncuesta(idUsuario);
+        if (configuracion.getKEY_ENCUESTA() != null){
+
+            if (!configuracion.getKEY_ENCUESTA().equals(fechaActual())){
+                uI.actualizarEncuesta(idUsuario);
+            }
+
+        } else {
+
+            uI.actualizarEncuesta(idUsuario);
+        }
+
 
 
     }
@@ -483,14 +508,17 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
     }
-	/* @encuesta
+
 	private void dialogoEncuestas(){
+
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		DialogEncuestas dialogEncuestas = new DialogEncuestas();
 
+
+
 		dialogEncuestas.show(fragmentManager, "Dialogo encuestas");
 	}
-	*/
+
 
 
     @Override

@@ -180,4 +180,15 @@ public class DbEstructure {
 
     }
 
+
+    public static class EncuestaFoto implements BaseColumns {
+        private EncuestaFoto(){}
+
+        public static final String TABLE_NAME = "encuesta_foto";
+        public static final String PHOTO_PATH = "path";
+        public static final String ID_ENCUESTA = "idEncuesta";
+        public static final String ID_PROMOTOR = "idPromotor";
+        public static final String STATUS = "estatus";
+    }
+
 }

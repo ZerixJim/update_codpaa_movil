@@ -45,9 +45,12 @@ public class EncuestaActivity extends AppCompatActivity  {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_preguntas);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        if (recyclerView != null) {
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }
 
+        recyclerView.setItemViewCacheSize(getPreguntas(idEncuesta).size());
 
         adapter = new PregustasRecyclerAdapter(getPreguntas(idEncuesta), this);
 
@@ -86,7 +89,7 @@ public class EncuestaActivity extends AppCompatActivity  {
     private List<Pregunta> getPreguntas(int idEncuesta) {
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
         List<Pregunta> array = new ArrayList<>();
-        String sql = "select p.id_pregunta,p.descripcion as contenido " +
+        String sql = "select p.id_pregunta,p.descripcion as contenido, id_tipo " +
                 "from preguntas as p where p.id_encuesta=" + idEncuesta;
 
         Cursor cursor = db.rawQuery(sql, null);
@@ -97,6 +100,7 @@ public class EncuestaActivity extends AppCompatActivity  {
             pre.setContenidoPregunta(cursor.getString(cursor.getColumnIndex("contenido")));
             pre.setIdPregunta(cursor.getInt(cursor.getColumnIndex("id_pregunta")));
             pre.setNumeroPregunta(numero);
+            pre.setIdTipo(cursor.getInt(cursor.getColumnIndex("id_tipo")));
             array.add(pre);
         }
 

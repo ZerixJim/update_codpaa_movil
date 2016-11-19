@@ -110,8 +110,8 @@ public class UpdateInformation{
         rp.put("solicitud", "encuesta");
         rp.put("id", String.valueOf(idPromotor));
 
-        client.setTimeout(5000);
-        client.get(_context, Utilities.WEB_SERVICE_CODPAA_TEST + URL_INFO, rp, response);
+        //client.setTimeout(5000);
+        client.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, response);
 
     }
 
