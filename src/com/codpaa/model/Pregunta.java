@@ -5,6 +5,7 @@ package com.codpaa.model;/*
 public class Pregunta {
 
     private int idPregunta;
+    private int idEncuesta;
     private int numeroPregunta;
     private int idTipo;
     private String contenidoPregunta;
@@ -35,6 +36,14 @@ public class Pregunta {
 
     public void setResponded(boolean responded) {
         isResponded = responded;
+    }
+
+    public int getIdEncuesta() {
+        return idEncuesta;
+    }
+
+    public void setIdEncuesta(int idEncuesta) {
+        this.idEncuesta = idEncuesta;
     }
 
     public int getNumeroPregunta() {

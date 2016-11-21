@@ -791,7 +791,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 
 
-		if (encuestasDisponibles() && !encuestaContestada()){
+		if (encuestaContestada()){
 
 			Handler handler = new Handler();
 
@@ -835,10 +835,10 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	private boolean encuestaContestada(){
 
 		SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select id_pregunta from preguntas as pre where " +
-				" pre.id_encuesta not in " +
+		String sql = "select * from preguntas as pre where  " +
+				" pre.id_encuesta not in  " +
 				" ( select idEncuesta from  encuesta_respuestas where pre.id_encuesta=idEncuesta " +
-				" and idPromotor="+idPromotor+" and  idTienda ="+ idTienda +")";
+				"  and idPromotor=" + idPromotor + " and  idTienda =" + idTienda + " ) group by id_encuesta";
 
 		Cursor cursor = db.rawQuery(sql, null);
 
@@ -848,7 +848,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		db.close();
 
 
-		return countDisponibles <= 0;
+		return countDisponibles > 0;
 	}
 
 	private void dialogoEncuestas(){

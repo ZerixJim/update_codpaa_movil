@@ -4,6 +4,7 @@ package com.codpaa.activity;
  * Created by grim on 3/02/16.
  */
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -21,6 +22,8 @@ import com.codpaa.R;
 import com.codpaa.adapter.PregustasRecyclerAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.Pregunta;
+
+import com.codpaa.provider.DbEstructure.EncustaPreguntas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,18 +99,34 @@ public class EncuestaActivity extends AppCompatActivity  {
 
     private void guardarRespuestas() {
 
-        List<Pregunta> respuestas = adapter.getPreguntas();
+        List<Pregunta> preguntas = adapter.getPreguntas();
 
+        SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
+        ContentValues content = new ContentValues();
 
+        for (Pregunta pre : preguntas){
 
+            content.put(EncustaPreguntas.ID_PREGUNTA, pre.getIdPregunta());
+            content.put(EncustaPreguntas.ID_ENCUESTA, pre.getIdEncuesta());
+            content.put(EncustaPreguntas.ID_PROMOTOR, idPromotor);
+            content.put(EncustaPreguntas.ID_TIENDA, idTienda);
+            content.put(EncustaPreguntas.RESPUESTA, pre.getRespuesta());
 
+            db.insert(EncustaPreguntas.TABLE_NAME, null ,content);
+
+        }
+
+        Toast.makeText(this, "Encuesta Guardad", Toast.LENGTH_SHORT).show();
+
+        adapter.clearList();
+        db.close();
 
     }
 
     private List<Pregunta> getPreguntas(int idEncuesta) {
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
         List<Pregunta> array = new ArrayList<>();
-        String sql = "select p.id_pregunta,p.descripcion as contenido, id_tipo " +
+        String sql = "select p.id_pregunta,p.descripcion as contenido, id_tipo, p.id_encuesta " +
                 "from preguntas as p where p.id_encuesta=" + idEncuesta;
 
         Cursor cursor = db.rawQuery(sql, null);
@@ -119,6 +138,7 @@ public class EncuestaActivity extends AppCompatActivity  {
             pre.setIdPregunta(cursor.getInt(cursor.getColumnIndex("id_pregunta")));
             pre.setNumeroPregunta(numero);
             pre.setIdTipo(cursor.getInt(cursor.getColumnIndex("id_tipo")));
+            pre.setIdEncuesta(cursor.getInt(cursor.getColumnIndex("id_encuesta")));
             array.add(pre);
         }
 

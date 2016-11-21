@@ -171,6 +171,11 @@ public class PregustasRecyclerAdapter extends RecyclerView.Adapter<PregustasRecy
         return preguntas;
     }
 
+    public void clearList(){
+        preguntas.clear();
+        notifyDataSetChanged();
+    }
+
 
 
     @Override

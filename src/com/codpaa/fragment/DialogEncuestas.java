@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,18 @@ public class DialogEncuestas extends DialogFragment implements AdapterView.OnIte
 
     private int idPromotor, idTienda;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        idPromotor = getArguments().getInt("idPromotor");
+        idTienda = getArguments().getInt("idTienda");
+
+
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,9 +51,6 @@ public class DialogEncuestas extends DialogFragment implements AdapterView.OnIte
         ListView listView = (ListView) v.findViewById(R.id.listView);
 
         EncuestasAdapter encuestasAdapter = new EncuestasAdapter(getActivity(),R.layout.layout_encuestas, getEncuestas());
-
-        idPromotor = getArguments().getInt("idPromotor");
-        idTienda = getArguments().getInt("idTienda");
 
 
         listView.setAdapter(encuestasAdapter);
@@ -54,9 +64,16 @@ public class DialogEncuestas extends DialogFragment implements AdapterView.OnIte
 
         SQLiteDatabase db = new BDopenHelper(getActivity()).getReadableDatabase();
         List<Encuesta> array = new ArrayList<>();
-        String sql = "select p.id_encuesta, p.nombre_encuesta, m.nombre " +
-                "from preguntas as p left join marca as m on p.id_marca=m.idMarca " +
-                "group by id_encuesta;";
+        String sql = "select  p.id_encuesta, p.nombre_encuesta, m.nombre " +
+                " from preguntas as p " +
+                " left join marca as m on m.idMarca=id_marca " +
+                " where p.id_encuesta " +
+                " not in " +
+                "( select idEncuesta from  encuesta_respuestas where p.id_encuesta=idEncuesta " +
+                " and idPromotor="+idPromotor+" and  idTienda ="+idTienda+" )  group by id_encuesta";
+
+        //Log.d("SQL", sql);
+
         Cursor cursor = db.rawQuery(sql, null);
 
         for (cursor.moveToFirst();!cursor.isAfterLast(); cursor.moveToNext()){

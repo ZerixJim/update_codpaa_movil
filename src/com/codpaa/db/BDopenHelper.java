@@ -193,7 +193,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 EncustaPreguntas.ID_ENCUESTA + " int, " +
                 EncustaPreguntas.ID_PROMOTOR + " int, " +
                 EncustaPreguntas.ID_TIENDA + " int, " +
-                EncustaPreguntas.ESTATUS + " int)";
+                EncustaPreguntas.ESTATUS + " integer default 1)";
 
 
         respuestaTipo = "create table if not exists "+
