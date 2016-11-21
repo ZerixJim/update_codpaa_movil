@@ -33,6 +33,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -417,12 +418,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         Handler handler = new Handler();
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialogoEncuestas();
-            }
-        }, 2000);
+
 
     }
 
@@ -486,7 +482,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         }
 
 
-        if (configuracion.getKEY_ENCUESTA() != null){
+        /*if (configuracion.getKEY_ENCUESTA() != null){
 
             if (!configuracion.getKEY_ENCUESTA().equals(fechaActual())){
                 uI.actualizarEncuesta(idUsuario);
@@ -495,7 +491,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         } else {
 
             uI.actualizarEncuesta(idUsuario);
-        }
+        }*/
 
 
 
@@ -509,15 +505,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     }
 
-	private void dialogoEncuestas(){
 
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		DialogEncuestas dialogEncuestas = new DialogEncuestas();
-
-
-
-		dialogEncuestas.show(fragmentManager, "Dialogo encuestas");
-	}
 
 
 

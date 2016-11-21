@@ -43,6 +43,9 @@
 
 
 
+    <style name="CustomDialog" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="android:windowNoTitle">false</item>
+    </style>
 
     <style name="MiMateria" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/blue_primary</item>

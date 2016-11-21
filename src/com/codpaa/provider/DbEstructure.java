@@ -191,4 +191,17 @@ public class DbEstructure {
         public static final String STATUS = "estatus";
     }
 
+    public static class EncustaPreguntas implements BaseColumns{
+        private EncustaPreguntas(){}
+
+        public static final String TABLE_NAME = "encuesta_respuestas";
+        public static final String ID_PREGUNTA = "idPregunta";
+        public static final String RESPUESTA = "respuesta";
+        public static final String ID_ENCUESTA = "idEncuesta";
+        public static final String ID_PROMOTOR = "idPromotor";
+        public static final String ID_TIENDA = "idTienda";
+        public static final String ESTATUS = "estatus";
+
+    }
+
 }

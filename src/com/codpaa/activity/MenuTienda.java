@@ -8,11 +8,13 @@ import java.util.Locale;
 
 
 import com.codpaa.adapter.ExhibicionesAdapter;
+import com.codpaa.fragment.DialogEncuestas;
 import com.codpaa.fragment.DialogFragmentFotos;
 import com.codpaa.model.ExhibicionesModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.R;
 import com.codpaa.update.UpdateInformation;
+import com.codpaa.util.Configuracion;
 import com.loopj.android.http.*;
 
 import android.Manifest;
@@ -29,8 +31,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -290,6 +294,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 			case R.id.producto_datos_tienda:
 
 				saveDatosTienda();
+
+				return true;
+
+
+			case R.id.actualizar_encuesta:
+
+				descargarEncuesta();
 
 				return true;
 
@@ -774,14 +785,129 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 			}
 		}*/
 
+
+
+
+
+
+
+		if (encuestasDisponibles() && !encuestaContestada()){
+
+			Handler handler = new Handler();
+
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					dialogoEncuestas();
+				}
+			}, 3000);
+
+
+
+		}else {
+			verificarEncuesta();
+		}
+
+
 		
 	}
 
 
+	private boolean encuestasDisponibles(){
+
+
+		SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+		String sql = "select id_pregunta from preguntas";
+
+		Cursor cursor = db.rawQuery(sql, null);
+
+		int countDisponibles = cursor.getCount();
+
+		cursor.close();
+		db.close();
+
+
+
+
+		return countDisponibles > 0;
+	}
+
+	private boolean encuestaContestada(){
+
+		SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+		String sql = "select id_pregunta from preguntas as pre where " +
+				" pre.id_encuesta not in " +
+				" ( select idEncuesta from  encuesta_respuestas where pre.id_encuesta=idEncuesta " +
+				" and idPromotor="+idPromotor+" and  idTienda ="+ idTienda +")";
+
+		Cursor cursor = db.rawQuery(sql, null);
+
+		int countDisponibles = cursor.getCount();
+
+		cursor.close();
+		db.close();
+
+
+		return countDisponibles <= 0;
+	}
+
+	private void dialogoEncuestas(){
+
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		DialogEncuestas dialogEncuestas = new DialogEncuestas();
+
+		Bundle bundle = new Bundle();
+		bundle.putInt("idTienda", idTienda);
+		bundle.putInt("idPromotor", idPromotor);
+
+		dialogEncuestas.setArguments(bundle);
+		dialogEncuestas.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
+
+
+
+		dialogEncuestas.show(fragmentManager, "Dialogo encuestas");
+	}
+
+
+
+	private void verificarEncuesta(){
+		Configuracion configuracion = new Configuracion(this);
+		UpdateInformation uI = new UpdateInformation(this);
+
+		if (configuracion.getKEY_ENCUESTA() != null){
+
+			if (!configuracion.getKEY_ENCUESTA().equals(fechaActual())){
+				uI.actualizarEncuesta(idPromotor, idTienda);
+			}
+
+		} else {
+
+			uI.actualizarEncuesta(idPromotor, idTienda);
+		}
+
+
+	}
+
+
+	private void descargarEncuesta(){
+
+		UpdateInformation uI = new UpdateInformation(this);
+
+		uI.actualizarEncuesta(idPromotor, idTienda);
+
+	}
+
+	private String fechaActual() {
+		Calendar c = Calendar.getInstance();
+		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+		return dFecha.format(c.getTime());
+	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
+
+		verificarEncuesta();
 
 		
 	}

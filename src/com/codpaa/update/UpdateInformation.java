@@ -102,13 +102,14 @@ public class UpdateInformation{
 
     }
 
-    public void actualizarEncuesta(int idPromotor){
+    public void actualizarEncuesta(int idPromotor, int idTienda){
         AsyncHttpClient client = new AsyncHttpClient();
         ResponseEncuesta response = new ResponseEncuesta(_context);
         RequestParams rp = new RequestParams();
 
         rp.put("solicitud", "encuesta");
         rp.put("id", String.valueOf(idPromotor));
+        rp.put("idTienda", String.valueOf(idTienda));
 
         //client.setTimeout(5000);
         client.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, response);

@@ -16,10 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.codpaa.R;
@@ -49,7 +47,7 @@ public class PregustasRecyclerAdapter extends RecyclerView.Adapter<PregustasRecy
     }
 
     @Override
-    public void onBindViewHolder(PreguntaViewHolder holder, int position) {
+    public void onBindViewHolder(final PreguntaViewHolder holder, int position) {
 
         final Pregunta pregunta = preguntas.get(position);
 
@@ -71,15 +69,30 @@ public class PregustasRecyclerAdapter extends RecyclerView.Adapter<PregustasRecy
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+
+
                 }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    //texto[position] = s.toString();
+
+
+                    if (holder.editText.getText().length() == 0){
+
+                        pregunta.setRespuesta("");
+
+                    }else {
+                        pregunta.setRespuesta(holder.editText.getText().toString());
+                    }
+
+
+
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
+
+
 
                 }
             });
@@ -105,11 +118,19 @@ public class PregustasRecyclerAdapter extends RecyclerView.Adapter<PregustasRecy
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    //texto[position] = s.toString();
+
+                    if (holder.editText.getText().length() == 0){
+
+                        pregunta.setRespuesta("");
+
+                    }else {
+                        pregunta.setRespuesta(holder.editText.getText().toString());
+                    }
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
+
 
                 }
             });
@@ -135,14 +156,22 @@ public class PregustasRecyclerAdapter extends RecyclerView.Adapter<PregustasRecy
 
     }
 
-    public boolean getRespuestaFaltante(){
+    public boolean faltanPreguntas(){
 
         for (Pregunta pr : preguntas){
-            if (pr.getIdRespesta() <= 0)
+            if (pr.getRespuesta().equals(""))
                 return true;
         }
         return false;
     }
+
+
+    public List<Pregunta> getPreguntas(){
+
+        return preguntas;
+    }
+
+
 
     @Override
     public int getItemCount() {

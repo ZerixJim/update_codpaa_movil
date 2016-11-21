@@ -31,6 +31,7 @@ public class EncuestaActivity extends AppCompatActivity  {
     RecyclerView recyclerView;
     PregustasRecyclerAdapter adapter;
     int idEncuesta;
+    private int idPromotor, idTienda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,8 @@ public class EncuestaActivity extends AppCompatActivity  {
 
         Intent intent = getIntent();
         idEncuesta = intent.getIntExtra("idEncuesta", 0);
+        idPromotor = intent.getIntExtra("idPromotor", 0);
+        idTienda = intent.getIntExtra("idTienda", 0);
 
         //Log.d("EncuestaActivity", "idEncuesta: "+idEncuesta);
 
@@ -75,15 +78,30 @@ public class EncuestaActivity extends AppCompatActivity  {
 
             case R.id.save_encuesta:
 
+
                 //Log.d("Save Encuesta", "Menu " + adapter.getItemCount());
-                if(adapter.getRespuestaFaltante()){
-                    Toast.makeText(this, "Faltan preguntas por contestar", Toast.LENGTH_SHORT).show();
+
+                if (adapter.faltanPreguntas()){
+                    Toast.makeText(this, "Contesta todas las preguntas", Toast.LENGTH_SHORT).show();
+                } else {
+                    guardarRespuestas();
                 }
+
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void guardarRespuestas() {
+
+        List<Pregunta> respuestas = adapter.getPreguntas();
+
+
+
+
+
     }
 
     private List<Pregunta> getPreguntas(int idEncuesta) {

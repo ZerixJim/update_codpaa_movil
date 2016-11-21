@@ -19,6 +19,7 @@ import com.codpaa.provider.DbEstructure.TiendaProductoCatalogo;
 import com.codpaa.provider.DbEstructure.PhotoProducto;
 import com.codpaa.provider.DbEstructure.Materiales;
 import com.codpaa.provider.DbEstructure.EncuestaFoto;
+import com.codpaa.provider.DbEstructure.EncustaPreguntas;
 
 
 import java.io.File;
@@ -186,7 +187,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 EncuestaFoto.STATUS + " int)";
 
         respuesta = "create table if not exists " +
-                "respuestas(id_pregunta int NOT NULL, respuesta varchar, id_encuesta, id_promotor)";
+                EncustaPreguntas.TABLE_NAME +"(" +
+                EncustaPreguntas.ID_PREGUNTA + " int NOT NULL, " +
+                EncustaPreguntas.RESPUESTA + " varchar(250), " +
+                EncustaPreguntas.ID_ENCUESTA + " int, " +
+                EncustaPreguntas.ID_PROMOTOR + " int, " +
+                EncustaPreguntas.ID_TIENDA + " int, " +
+                EncustaPreguntas.ESTATUS + " int)";
 
 
         respuestaTipo = "create table if not exists "+

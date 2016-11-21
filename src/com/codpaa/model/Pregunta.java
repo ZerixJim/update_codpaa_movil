@@ -8,7 +8,8 @@ public class Pregunta {
     private int numeroPregunta;
     private int idTipo;
     private String contenidoPregunta;
-    private String respuesta;
+    private String respuesta = "";
+    private boolean isResponded = false;
 
     public String getRespuesta() {
         return respuesta;
@@ -28,7 +29,13 @@ public class Pregunta {
         this.idTipo = idTipo;
     }
 
+    public boolean isResponded() {
+        return isResponded;
+    }
 
+    public void setResponded(boolean responded) {
+        isResponded = responded;
+    }
 
     public int getNumeroPregunta() {
         return numeroPregunta;

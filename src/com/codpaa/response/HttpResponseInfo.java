@@ -40,6 +40,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
         this.progressDialog = new ProgressDialog(context);
         this.progressDialog.setMessage("Descargando...");
         this.progressDialog.setCancelable(false);
+        this.progressDialog.setMax(100);
 
 
     }
@@ -84,8 +85,10 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                 parseJSONProductoByFormato(productoFormato);
                 parseJSONProductoByTienda(productoTienda);
 
-                progressDialog.setContentView(R.layout.dialog_done);
+                //progressDialog.setContentView(R.layout.dialog_done);
                 progressDialog.setMessage("Informacion Cargada Satisfactoriamente");
+
+
 
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -93,6 +96,8 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                         progressDialog.dismiss();
                     }
                 }, 2500);
+
+                Toast.makeText(context, "informacion cargada ", Toast.LENGTH_SHORT).show();
 
                 //Toast.makeText(context, "Informacion Cargada con Exito!!", Toast.LENGTH_SHORT).show();
             }catch (JSONException e){

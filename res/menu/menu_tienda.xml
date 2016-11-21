@@ -12,7 +12,13 @@
     <item
         android:id="@+id/producto_datos_tienda"
         android:title="@string/datos_producto"
-        android:orderInCategory="100"
+        android:orderInCategory="99"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/actualizar_encuesta"
+        android:title="Actualizar Encuestas"
+        android:orderInCategory="101"
+        app:showAsAction="never"/>
 
 </menu>

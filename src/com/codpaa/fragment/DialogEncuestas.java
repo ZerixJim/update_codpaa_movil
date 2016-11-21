@@ -27,19 +27,28 @@ import java.util.List;
 
 public class DialogEncuestas extends DialogFragment implements AdapterView.OnItemClickListener {
 
+
+    private int idPromotor, idTienda;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.layout_encuestas, container, false);
         ListView listView = (ListView) v.findViewById(R.id.listView);
 
         EncuestasAdapter encuestasAdapter = new EncuestasAdapter(getActivity(),R.layout.layout_encuestas, getEncuestas());
+
+        idPromotor = getArguments().getInt("idPromotor");
+        idTienda = getArguments().getInt("idTienda");
+
 
         listView.setAdapter(encuestasAdapter);
         listView.setOnItemClickListener(this);
 
         return v;
     }
+
 
     private List<Encuesta> getEncuestas() {
 
@@ -60,7 +69,14 @@ public class DialogEncuestas extends DialogFragment implements AdapterView.OnIte
 
         }
 
-        getDialog().setTitle("Encuestas" + "(" +cursor.getCount() + ")");
+        if (cursor.getCount()  == 1){
+            getDialog().setTitle("Tienes una Encuesta");
+        } else if (cursor.getCount() > 1) {
+
+            getDialog().setTitle("Tienes Encuestas");
+        }
+
+
 
         cursor.close();
 
@@ -77,6 +93,8 @@ public class DialogEncuestas extends DialogFragment implements AdapterView.OnIte
 
         Intent i = new Intent(getActivity(), EncuestaActivity.class);
         i.putExtra("idEncuesta", encuesta.getIdEncuesta());
+        i.putExtra("idPromotor", idPromotor);
+        i.putExtra("idTienda", idTienda);
         getActivity().startActivity(i);
 
 
