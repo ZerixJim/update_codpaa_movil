@@ -24,6 +24,7 @@ import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.Pregunta;
 
 import com.codpaa.provider.DbEstructure.EncustaPreguntas;
+import com.codpaa.update.EnviarDatos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +89,13 @@ public class EncuestaActivity extends AppCompatActivity  {
                     Toast.makeText(this, "Contesta todas las preguntas", Toast.LENGTH_SHORT).show();
                 } else {
                     guardarRespuestas();
+
+                    EnviarDatos datos = new EnviarDatos(this);
+
+                    datos.sendEncuesta();
                 }
+
+
 
                 return true;
 

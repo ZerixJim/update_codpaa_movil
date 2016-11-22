@@ -1,6 +1,7 @@
 package com.codpaa.update;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -28,8 +29,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.codpaa.listener.HttpResponse;
+import com.codpaa.model.JsonEncuestaVeiw;
 import com.codpaa.model.JsonProductosView;
+import com.codpaa.model.Respuesta;
 import com.codpaa.provider.DbEstructure;
+import com.codpaa.response.EncuestaResponse;
 import com.codpaa.util.Utilities;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -220,6 +224,54 @@ public class EnviarDatos {
 
 
 		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public void sendEncuesta(){
+		try {
+
+			Cursor cursor = DB.getRespuestas();
+			if (cursor.getCount() > 0){
+
+				ArrayList<Respuesta> respuestas = new ArrayList<>();
+
+				for (cursor.moveToFirst(); !cursor.isAfterLast() ; cursor.moveToNext()){
+					final Respuesta res = new Respuesta();
+					res.setIdEncuesta(cursor.getInt(cursor.getColumnIndex("idEncuesta")));
+					res.setIdPregunta(cursor.getInt(cursor.getColumnIndex("idPregunta")));
+					res.setRespuesta(cursor.getString(cursor.getColumnIndex("respuesta")));
+					res.setIdPromotor(cursor.getInt(cursor.getColumnIndex("idPromotor")));
+					res.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
+
+					respuestas.add(res);
+
+				}
+
+				Gson gson = new Gson();
+
+				JsonEncuestaVeiw view = new JsonEncuestaVeiw();
+				view.setRespuestas(respuestas);
+
+
+				//Log.d("json", gson.toJson(view));
+
+
+				AsyncHttpClient client = new AsyncHttpClient();
+				RequestParams rp = new RequestParams();
+				rp.put("json", gson.toJson(view));
+
+
+				client.post(Utilities.WEB_SERVICE_CODPAA + "sendEncuesta.php",rp, new EncuestaResponse(activity));
+
+
+
+			}
+
+
+
+
+		}catch (Exception e){
 			e.printStackTrace();
 		}
 	}

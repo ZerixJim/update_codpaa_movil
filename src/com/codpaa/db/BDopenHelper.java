@@ -826,6 +826,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 TiendaProductoCatalogo.TABLE_NAME, TiendaProductoCatalogo.ESTATUS),null);
     }
 
+
+    public Cursor getRespuestas() throws SQLiteException {
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select  r.idEncuesta, r.idPregunta, r.respuesta, r.idPromotor," +
+                " r.idTienda from encuesta_respuestas as r where estatus=1", null);
+    }
+
     public Cursor getProductosByTienda(int idMarca, int idTienda){
         baseDatosLocal = getReadableDatabase();
 
