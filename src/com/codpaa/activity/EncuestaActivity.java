@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.codpaa.R;
@@ -25,6 +26,7 @@ import com.codpaa.model.Pregunta;
 
 import com.codpaa.provider.DbEstructure.EncustaPreguntas;
 import com.codpaa.update.EnviarDatos;
+import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +64,21 @@ public class EncuestaActivity extends AppCompatActivity  {
         adapter = new PregustasRecyclerAdapter(getPreguntas(idEncuesta), this);
 
         recyclerView.setAdapter(adapter);
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.menu_item_2);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "Menu item 1", Toast.LENGTH_SHORT).show();
+
+                    adapter.addItem(getPreguntas(idEncuesta));
+
+                }
+            });
+        }
+
 
     }
 

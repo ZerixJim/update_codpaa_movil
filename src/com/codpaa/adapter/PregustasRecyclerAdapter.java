@@ -51,7 +51,7 @@ public class PregustasRecyclerAdapter extends RecyclerView.Adapter<PregustasRecy
 
         final Pregunta pregunta = preguntas.get(position);
 
-        holder.pregunta.setText(pregunta.getNumeroPregunta() + ".- " + pregunta.getContenidoPregunta());
+        holder.pregunta.setText(pregunta.getNumeroPregunta() + " " + pregunta.getContenidoPregunta());
         //holder.editText.setText(texto[position]);
 
 
@@ -173,6 +173,11 @@ public class PregustasRecyclerAdapter extends RecyclerView.Adapter<PregustasRecy
 
     public void clearList(){
         preguntas.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addItem(List<Pregunta> items){
+        preguntas.addAll(items);
         notifyDataSetChanged();
     }
 

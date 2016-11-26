@@ -7,16 +7,18 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     app:cardPreventCornerOverlap="false"
-    app:cardUseCompatPadding="true"
-    android:layout_margin="5dp"
+
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+
     android:padding="@dimen/activity_horizontal_margin"
     card_view:cardElevation="0dp">
 
     <RelativeLayout
         android:id="@+id/content"
-        android:padding="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin">
         <TextView
             android:text="Pregunta"
             android:textSize="20sp"
