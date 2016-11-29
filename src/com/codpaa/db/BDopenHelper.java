@@ -20,6 +20,7 @@ import com.codpaa.provider.DbEstructure.PhotoProducto;
 import com.codpaa.provider.DbEstructure.Materiales;
 import com.codpaa.provider.DbEstructure.EncuestaFoto;
 import com.codpaa.provider.DbEstructure.EncustaPreguntas;
+import com.codpaa.provider.DbEstructure.Preguntas;
 
 
 import java.io.File;
@@ -174,10 +175,15 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
         preguntas = "create table if not exists " +
-                    "preguntas(id_pregunta integer NOT NULL, " +
-                "descripcion varchar(250) NOT NULL, id_tipo int NOT NULL, " +
-                "id_encuesta integer NOT NULL, nombre_encuesta varchar(50) NOT NULL," +
-                " id_marca int NOT NULL, PRIMARY KEY(id_pregunta, id_encuesta))";
+                Preguntas.TABLE_NAME + "(" +
+                Preguntas.ID_PREGUNTA + " integer NOT NULL, " +
+                Preguntas.DESCRIPCION + " varchar(250) NOT NULL, " +
+                Preguntas.ID_TIPO_PREGUNTA + " int NOT NULL, " +
+                Preguntas.ID_ENCUESTA + " integer NOT NULL, " +
+                Preguntas.NOMBRE_ENCUESTA + " varchar(50) NOT NULL," +
+                Preguntas.ID_MARCA + " int NOT NULL, " +
+                Preguntas.ID_TIPO_ENCUESTA + " int, " +
+                "PRIMARY KEY("+ Preguntas.ID_PREGUNTA +", "+ Preguntas.ID_ENCUESTA +"))";
 
         encuestaFoto = "create table if not exists " +
                 EncuestaFoto.TABLE_NAME + " (" +
@@ -299,32 +305,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 
-
-        if (newVersion == 24 && oldVersion == 22){
-            db.execSQL("alter table frentesCharola add column unifila int(2)");
-            db.execSQL("alter table frentesCharola add column fila1 int(2)");
-            db.execSQL("alter table frentesCharola add column fila2 int(2)");
-            db.execSQL("alter table frentesCharola add column fila3 int(2)");
-            db.execSQL("alter table frentesCharola add column fila4 int(2)");
-            db.execSQL("alter table frentesCharola add column fila5 int(2)");
-            db.execSQL("alter table frentesCharola add column fila6 int(2)");
-            db.execSQL("alter table frentesCharola add column fila7 int(2)");
-            db.execSQL("alter table frentesCharola add column fila8 int(2)");
-            db.execSQL("alter table frentesCharola add column fila9 int(2)");
-            db.execSQL("alter table frentesCharola add column fila10 int(2)");
-            db.execSQL("alter table frentesCharola add column fila11 int(2)");
-            db.execSQL("alter table frentesCharola add column fila12 int(2)");
-            db.execSQL("alter table frentesCharola add column fila13 int(2)");
-            db.execSQL("alter table frentesCharola add column fila14 int(2)");
-
-            db.execSQL(direcciones);
-
-            db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.ID_SERVIDOR + " int");
-            db.execSQL("alter table " + Usuario.TABLE_NAME + " add column " + Usuario.TIPO_PROMOTOR + " int(2)");
-
-            db.execSQL("alter table " + Tienda.TABLE_NAME + " add column " + Tienda.ID_TIPO + " int");
-        }
-
         if (oldVersion == 23 && newVersion == 24){
             db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.ID_SERVIDOR + " int");
             db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.ID_PROMOTOR + " int");
@@ -357,7 +337,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
         }
 
         if (newVersion == 26){
+
+            Log.d("OnUpgrade", "new Version=26");
+
             db.execSQL("drop table if exists respuestas");
+            db.execSQL("drop table if exists " + Preguntas.TABLE_NAME);
+            db.execSQL(preguntas);
             db.execSQL(respuesta);
             db.execSQL(encuestaFoto);
         }

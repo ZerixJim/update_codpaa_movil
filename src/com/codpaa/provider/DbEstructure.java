@@ -204,4 +204,18 @@ public class DbEstructure {
 
     }
 
+    public static class Preguntas implements BaseColumns{
+        private Preguntas(){}
+
+        public static final String TABLE_NAME = "preguntas";
+        public static final String ID_PREGUNTA = "id_pregunta";
+        public static final String DESCRIPCION = "descripcion";
+        public static final String ID_ENCUESTA = "id_encuesta";
+        public static final String ID_TIPO_PREGUNTA = "id_tipo";
+        public static final String ID_TIPO_ENCUESTA = "tipo_encuesta";
+        public static final String NOMBRE_ENCUESTA = "nombre_encuesta";
+        public static final String ID_MARCA = "id_marca";
+
+    }
+
 }
