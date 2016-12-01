@@ -218,4 +218,15 @@ public class DbEstructure {
 
     }
 
+
+    public static class Opciones implements BaseColumns{
+
+        private Opciones(){}
+
+        public static final String TABLE_NAME = "opciones";
+        public static final String ID_OPCION = "idOpcion";
+        public static final String OPCION = "opcion";
+        public static final String ID_PREGUNTA = "idPregunta";
+    }
+
 }

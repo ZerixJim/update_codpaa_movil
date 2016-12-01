@@ -21,6 +21,7 @@ import com.codpaa.provider.DbEstructure.Materiales;
 import com.codpaa.provider.DbEstructure.EncuestaFoto;
 import com.codpaa.provider.DbEstructure.EncustaPreguntas;
 import com.codpaa.provider.DbEstructure.Preguntas;
+import com.codpaa.provider.DbEstructure.Opciones;
 
 
 import java.io.File;
@@ -60,7 +61,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String photo;
     private static String preguntas;
     private static String respuesta;
-    private static String respuestaTipo;
     private static String mensaje;
     private static String ventaPromedio;
     private static String direcciones;
@@ -70,6 +70,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String photoProducto;
     private static String materiales;
     private static String encuestaFoto;
+    private static String opciones;
 
 
     public BDopenHelper(Context miContext) {
@@ -185,6 +186,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 Preguntas.ID_TIPO_ENCUESTA + " int, " +
                 "PRIMARY KEY("+ Preguntas.ID_PREGUNTA +", "+ Preguntas.ID_ENCUESTA +"))";
 
+        opciones = "create table if not exists " +
+                Opciones.TABLE_NAME + "(" +
+                Opciones.ID_OPCION + " int," +
+                Opciones.OPCION + " varchar(25)," +
+                Opciones.ID_PREGUNTA + " int)";
+
         encuestaFoto = "create table if not exists " +
                 EncuestaFoto.TABLE_NAME + " (" +
                 EncuestaFoto.ID_ENCUESTA + " int, " +
@@ -202,8 +209,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 EncustaPreguntas.ESTATUS + " integer default 1)";
 
 
-        respuestaTipo = "create table if not exists "+
-                "respuestaTipo(id_tipo int NOT NULL, descripcion varchar(15) NOT NULL)";
 
         mensaje = "create table if not exists " +
                 Mensaje.TABLE_NAME + "("+
@@ -290,7 +295,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(photo);
         db.execSQL(preguntas);
         db.execSQL(respuesta);
-        db.execSQL(respuestaTipo);
+        // TODO: 29/11/2016 eliminar la tabla de respuestas tipos
+        //db.execSQL(respuestaTipo);
+        db.execSQL(opciones);
         db.execSQL(encuestaFoto);
         db.execSQL(mensaje);
         db.execSQL(ventaPromedio);
@@ -342,6 +349,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
             db.execSQL("drop table if exists respuestas");
             db.execSQL("drop table if exists " + Preguntas.TABLE_NAME);
+            db.execSQL("drop table if exists respuestaTipo");
+            db.execSQL(opciones);
             db.execSQL(preguntas);
             db.execSQL(respuesta);
             db.execSQL(encuestaFoto);

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.Configuracion;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -64,14 +65,49 @@ public class ResponseEncuesta extends JsonHttpResponseHandler {
 
 
         for (int i=0; i<preguntasArray.length(); i++ ) {
-            ContentValues v = new ContentValues();
-            v.put("id_pregunta", preguntasArray.getJSONObject(i).getInt("idPregunta"));
-            v.put("descripcion", preguntasArray.getJSONObject(i).getString("pregunta"));
-            v.put("id_encuesta", preguntasArray.getJSONObject(i).getInt("idEncuesta"));
-            v.put("id_tipo", preguntasArray.getJSONObject(i).getInt("idTipo"));
-            v.put("id_marca", preguntasArray.getJSONObject(i).getInt("idMarca"));
-            v.put("nombre_encuesta", preguntasArray.getJSONObject(i).getString("nombreEncuesta"));
-            b.insertar("preguntas", v);
+
+
+            try {
+                ContentValues v = new ContentValues();
+                v.put("id_pregunta", preguntasArray.getJSONObject(i).getInt("idPregunta"));
+                v.put("descripcion", preguntasArray.getJSONObject(i).getString("pregunta"));
+                v.put("id_encuesta", preguntasArray.getJSONObject(i).getInt("idEncuesta"));
+                v.put("id_tipo", preguntasArray.getJSONObject(i).getInt("idTipo"));
+                v.put("id_marca", preguntasArray.getJSONObject(i).getInt("idMarca"));
+                v.put("nombre_encuesta", preguntasArray.getJSONObject(i).getString("nombreEncuesta"));
+                v.put("tipo_encuesta", preguntasArray.getJSONObject(i).getInt("tipoEncuesta"));
+                b.insertar("preguntas", v);
+
+                if(preguntasArray.getJSONObject(i).getInt("idTipo") == 3){
+
+                    JSONArray jsonArray = preguntasArray.getJSONObject(i).getJSONArray("opciones");
+                    for (int j=0; j < jsonArray.length() ; j++){
+
+
+                        try {
+                            ContentValues cV = new ContentValues();
+                            cV.put("idOpcion", jsonArray.getJSONObject(j).getInt("idOpcion"));
+                            cV.put("opcion", jsonArray.getJSONObject(j).getString("opcion"));
+                            cV.put("idPregunta", jsonArray.getJSONObject(j).getInt("idPregunta"));
+
+                            b.insertar(DbEstructure.Opciones.TABLE_NAME, cV);
+
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+
+                }
+
+            }catch (JSONException e){
+                e.printStackTrace();
+
+            }
+
+
 
         }
 
