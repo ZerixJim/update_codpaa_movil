@@ -1,8 +1,12 @@
 package com.codpaa.response;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.codpaa.db.BDopenHelper;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -20,10 +24,16 @@ import cz.msebera.android.httpclient.Header;
 public class EncuestaResponse extends JsonHttpResponseHandler {
 
     private Context context;
+    private ProgressDialog progressDialog;
 
 
     public EncuestaResponse(Context context){
         this.context = context;
+
+        progressDialog = new ProgressDialog(context);
+
+        progressDialog.setMessage("Enviando Encuesta");
+        progressDialog.setCancelable(false);
     }
 
 
@@ -56,7 +66,24 @@ public class EncuestaResponse extends JsonHttpResponseHandler {
 
                     }
 
+                    progressDialog.setMessage("Encuesta Enviada Gracias!!!");
 
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            progressDialog.dismiss();
+
+                            ((Activity)context).finish();
+
+
+                        }
+                    }, 2000);
+
+
+                    Toast.makeText(context, "Encuesta Recibida", Toast.LENGTH_SHORT).show();
                     db.close();
 
                 }
@@ -69,11 +96,25 @@ public class EncuestaResponse extends JsonHttpResponseHandler {
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
+
+        Toast.makeText(context, "ocurrio un error al enviar la encuesta", Toast.LENGTH_SHORT).show();
+
+        Handler handler = new Handler();
+
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+            }
+        }, 2000);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
+        progressDialog.show();
+
     }
 
     @Override

@@ -37,7 +37,9 @@ public class EncuestaActivity extends AppCompatActivity  {
     RecyclerView recyclerView;
     PregustasRecyclerAdapter adapter;
     int idEncuesta;
-    private int idPromotor, idTienda;
+    private int idPromotor;
+    private int idTienda;
+    private int tipoEncuesta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class EncuestaActivity extends AppCompatActivity  {
         idEncuesta = intent.getIntExtra("idEncuesta", 0);
         idPromotor = intent.getIntExtra("idPromotor", 0);
         idTienda = intent.getIntExtra("idTienda", 0);
+        tipoEncuesta = intent.getIntExtra("tipoEncuesta", 0);
 
         //Log.d("EncuestaActivity", "idEncuesta: "+idEncuesta);
 
@@ -66,18 +69,31 @@ public class EncuestaActivity extends AppCompatActivity  {
         recyclerView.setAdapter(adapter);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.menu_item_2);
-        if (fab != null) {
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Menu item 1", Toast.LENGTH_SHORT).show();
 
-                    adapter.addItem(getPreguntas(idEncuesta));
+        if (tipoEncuesta > 0 && tipoEncuesta == 4){
 
-                }
-            });
+            Log.d("TipoEncuesta" , "" + tipoEncuesta);
+
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.menu_item_2);
+
+            if (fab != null) {
+
+                fab.setVisibility(View.VISIBLE);
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "Menu item 1", Toast.LENGTH_SHORT).show();
+
+                        adapter.addItem(getPreguntas(idEncuesta));
+
+                    }
+                });
+            }
+
         }
+
+
+
 
 
     }
@@ -140,7 +156,7 @@ public class EncuestaActivity extends AppCompatActivity  {
 
         }
 
-        Toast.makeText(this, "Encuesta Guardad", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Encuesta Guardada", Toast.LENGTH_SHORT).show();
 
         adapter.clearList();
         db.close();

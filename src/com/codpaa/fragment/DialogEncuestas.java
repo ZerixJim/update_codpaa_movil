@@ -64,7 +64,7 @@ public class DialogEncuestas extends DialogFragment implements AdapterView.OnIte
 
         SQLiteDatabase db = new BDopenHelper(getActivity()).getReadableDatabase();
         List<Encuesta> array = new ArrayList<>();
-        String sql = "select  p.id_encuesta, p.nombre_encuesta, m.nombre " +
+        String sql = "select  p.id_encuesta, p.nombre_encuesta, m.nombre, p.tipo_encuesta " +
                 " from preguntas as p " +
                 " left join marca as m on m.idMarca=id_marca " +
                 " where p.id_encuesta " +
@@ -81,6 +81,7 @@ public class DialogEncuestas extends DialogFragment implements AdapterView.OnIte
             encuesta.setIdEncuesta(cursor.getInt(cursor.getColumnIndex("id_encuesta")));
             encuesta.setNombreEncuesta(cursor.getString(cursor.getColumnIndex("nombre_encuesta")));
             encuesta.setNombreMarca(cursor.getString(cursor.getColumnIndex("nombre")));
+            encuesta.setTipoEncuesta(cursor.getInt(cursor.getColumnIndex("tipo_encuesta")));
 
             array.add(encuesta);
 
@@ -112,6 +113,8 @@ public class DialogEncuestas extends DialogFragment implements AdapterView.OnIte
         i.putExtra("idEncuesta", encuesta.getIdEncuesta());
         i.putExtra("idPromotor", idPromotor);
         i.putExtra("idTienda", idTienda);
+        i.putExtra("tipoEncuesta", encuesta.getTipoEncuesta());
+
         getActivity().startActivity(i);
 
 

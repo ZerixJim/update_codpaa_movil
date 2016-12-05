@@ -8,6 +8,15 @@ public class Encuesta {
     private int idEncuesta;
     private String nombreEncuesta;
     private String nombreMarca;
+    private int tipoEncuesta;
+
+    public int getTipoEncuesta() {
+        return tipoEncuesta;
+    }
+
+    public void setTipoEncuesta(int tipoEncuesta) {
+        this.tipoEncuesta = tipoEncuesta;
+    }
 
     public String getNombreMarca() {
         return nombreMarca;

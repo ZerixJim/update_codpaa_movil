@@ -57,6 +57,7 @@ public class ResponseEncuesta extends JsonHttpResponseHandler {
         BDopenHelper b = new BDopenHelper(_context.getApplicationContext());
 
         b.vaciarTabla("preguntas");
+        b.vaciarTabla(DbEstructure.Opciones.TABLE_NAME);
         Configuracion configuracion = new Configuracion(_context);
 
         Calendar c = Calendar.getInstance();

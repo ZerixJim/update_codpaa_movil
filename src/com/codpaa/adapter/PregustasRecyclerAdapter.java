@@ -1,4 +1,5 @@
 package com.codpaa.adapter;
+
 /*
  * Created by Gustavo on 04/02/2016.
  */
@@ -58,6 +59,7 @@ public class PregustasRecyclerAdapter extends RecyclerView.Adapter<PregustasRecy
         if (pregunta.getIdTipo() == 1){
 
             holder.editText.setVisibility(View.VISIBLE);
+            holder.radioGroup.setVisibility(View.GONE);
 
 
             holder.editText.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -100,9 +102,10 @@ public class PregustasRecyclerAdapter extends RecyclerView.Adapter<PregustasRecy
 
 
 
-        } else if(pregunta.getIdTipo() == 3){
+        } else if(pregunta.getIdTipo() == 2){
 
             holder.editText.setVisibility(View.VISIBLE);
+            holder.radioGroup.setVisibility(View.GONE);
 
 
             holder.editText.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -136,19 +139,46 @@ public class PregustasRecyclerAdapter extends RecyclerView.Adapter<PregustasRecy
             });
 
 
+        } else if (pregunta.getIdTipo() == 3){
+            holder.editText.setVisibility(View.GONE);
+            holder.radioGroup.setVisibility(View.VISIBLE);
+            SQLiteDatabase db = new BDopenHelper(context).getReadableDatabase();
+
+            Cursor cursor = db.rawQuery("select opcion from opciones where idPregunta=" + pregunta.getIdPregunta(), null);
+
+            for (cursor.moveToFirst(); !cursor.isAfterLast() ; cursor.moveToNext()){
+
+                RadioButton radio = new RadioButton(context);
+
+                radio.setText("" +cursor.getString(cursor.getColumnIndex("opcion")));
+
+                holder.radioGroup.addView(radio);
+
+            }
+
+
+            cursor.close();
+            db.close();
+
         }
 
 
-
-
-        /*
         holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                Log.d("RadioGroup", " " + group.getCheckedRadioButtonId());
-                pregunta.setIdRespesta(group.getCheckedRadioButtonId());
+                int checkIdButton = holder.radioGroup.getCheckedRadioButtonId();
+                if (checkIdButton > -1){
+                    RadioButton radioButton = (RadioButton) holder.radioGroup.findViewById(checkIdButton);
+
+                    String value = radioButton.getText().toString();
+
+                    pregunta.setRespuesta(value);
+                }
             }
         });
+
+        /*
+
 
         holder.radioGroup.check(pregunta.getIdRespesta());
         */
@@ -202,7 +232,7 @@ public class PregustasRecyclerAdapter extends RecyclerView.Adapter<PregustasRecy
 
 
 
-            getRespuestas(radioGroup);
+            //getRespuestas(radioGroup);
 
 
         }
