@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codpaa.R;
@@ -88,10 +90,18 @@ public class DialogEncuestas extends DialogFragment implements AdapterView.OnIte
         }
 
         if (cursor.getCount()  == 1){
-            getDialog().setTitle("Tienes una Encuesta");
+            getDialog().setTitle("Tienes un Encuesta por contestar");
+            TextView textView = (TextView) getDialog().findViewById(android.R.id.title);
+            textView.setSingleLine(false);
+
         } else if (cursor.getCount() > 1) {
 
-            getDialog().setTitle("Tienes Encuestas");
+            getDialog().setTitle("Tienes Encuestas por contestar");
+
+            TextView textView = (TextView) getDialog().findViewById(android.R.id.title);
+            textView.setSingleLine(false);
+
+
         }
 
 

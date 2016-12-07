@@ -4,6 +4,7 @@ package com.codpaa.adapter;
  */
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class EncuestasAdapter extends ArrayAdapter<Encuesta>{
 
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
 
     public EncuestasAdapter(Context context, int resource, List<Encuesta> objects) {
         super(context, resource, objects);
@@ -30,6 +31,7 @@ public class EncuestasAdapter extends ArrayAdapter<Encuesta>{
         TextView marca;
     }
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
@@ -39,8 +41,8 @@ public class EncuestasAdapter extends ArrayAdapter<Encuesta>{
             convertView = inflater.inflate(R.layout.row_encuestas, parent, false);
             viewHolder = new ViewHolder();
 
-            viewHolder.marca = (TextView) convertView.findViewById(R.id.textView1);
-            viewHolder.nombreEncuesta = (TextView) convertView.findViewById(R.id.textView2);
+            viewHolder.marca = (TextView) convertView.findViewById(R.id.textView2);
+            viewHolder.nombreEncuesta = (TextView) convertView.findViewById(R.id.textView1);
 
             convertView.setTag(viewHolder);
 
@@ -51,9 +53,10 @@ public class EncuestasAdapter extends ArrayAdapter<Encuesta>{
         }
 
 
-        viewHolder.nombreEncuesta.setText(encuesta.getNombreEncuesta());
-        viewHolder.marca.setText(encuesta.getNombreMarca());
-
+        if (encuesta != null) {
+            viewHolder.nombreEncuesta.setText(encuesta.getNombreEncuesta());
+            viewHolder.marca.setText(encuesta.getNombreMarca());
+        }
 
         return convertView;
 

@@ -7,7 +7,6 @@ import com.codpaa.listener.ResponseEncuesta;
 import com.codpaa.listener.ResponseExhibiciones;
 import com.codpaa.listener.ResponseMarcas;
 import com.codpaa.listener.ResponseProductos;
-import com.codpaa.listener.ResponseRuta;
 import com.codpaa.response.HttpResponseInfo;
 import com.codpaa.util.Utilities;
 import com.loopj.android.http.AsyncHttpClient;
@@ -47,7 +46,7 @@ public class UpdateInformation{
 
 
 
-    public void actualizarRuta(int idPromotor){
+    /*public void actualizarRuta(int idPromotor){
 
         
         AsyncHttpClient clientRuta = new AsyncHttpClient();
@@ -60,7 +59,7 @@ public class UpdateInformation{
         clientRuta.setTimeout(5000);
         clientRuta.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, responseRuta);
 
-    }
+    }*/
 
 
     public void actualizarExhibiciones(int idPromotor){
