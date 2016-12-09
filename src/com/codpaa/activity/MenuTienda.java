@@ -791,7 +791,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 
 
-		if (encuestaContestada()){
+		if (encuestaDisponible()){
 
 			Handler handler = new Handler();
 
@@ -813,26 +813,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	}
 
 
-	private boolean encuestasDisponibles(){
 
+	private boolean encuestaDisponible(){
 
-		SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select id_pregunta from preguntas";
-
-		Cursor cursor = db.rawQuery(sql, null);
-
-		int countDisponibles = cursor.getCount();
-
-		cursor.close();
-		db.close();
-
-
-
-
-		return countDisponibles > 0;
-	}
-
-	private boolean encuestaContestada(){
 
 		SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 		String sql = "select * from preguntas as pre where  " +
@@ -1373,11 +1356,32 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 			this.finish();
 		}else {
 			if (Entrada){
-				Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage("¿Estas Seguro(a) que quieres Registrar tu Salida?");
-				ListenerSAlida listener = new ListenerSAlida();
-				builder.setPositiveButton("Aceptar", listener).setNegativeButton("Cancelar", listener);
-				builder.create().show();
+
+				if (!encuestaDisponible()){
+
+					Builder builder = new AlertDialog.Builder(this);
+					builder.setMessage("¿Estas Seguro(a) que quieres Registrar tu Salida?");
+					ListenerSAlida listener = new ListenerSAlida();
+					builder.setPositiveButton("Aceptar", listener).setNegativeButton("Cancelar", listener);
+					builder.create().show();
+
+				}else {
+					Toast.makeText(this, "Tienes encuenstas disponibles", Toast.LENGTH_LONG).show();
+
+					Handler handler = new Handler();
+					handler.postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							dialogoEncuestas();
+						}
+					}, 1000);
+
+
+
+				}
+
+
+
 			}else {
 				Toast.makeText(this,"Entrada no Registrada", Toast.LENGTH_SHORT).show();
 			}
