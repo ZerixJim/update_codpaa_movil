@@ -857,6 +857,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		Configuracion configuracion = new Configuracion(this);
 		UpdateInformation uI = new UpdateInformation(this);
 
+		//// TODO: 09/12/2016 demover despues
+		uI.actualizarEncuesta(idPromotor, idTienda);
+
 		if (configuracion.getKEY_ENCUESTA() != null){
 
 			if (!configuracion.getKEY_ENCUESTA().equals(fechaActual())){
