@@ -30,6 +30,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -48,6 +49,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -727,7 +729,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 								Cursor cuSalida = DB.VisitaTienda(idTienda, fecha, "S");
 
 								//auto time
-								Settings.System.putInt(getContentResolver(), Settings.System.AUTO_TIME,1);
+
+								if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+									Settings.Global.putInt(getContentResolver(), Settings.Global.AUTO_TIME,1);
 
 								
 								if(cuSalida.getCount() >0) {
@@ -857,12 +861,10 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		Configuracion configuracion = new Configuracion(this);
 		UpdateInformation uI = new UpdateInformation(this);
 
-		//// TODO: 09/12/2016 demover despues
-		uI.actualizarEncuesta(idPromotor, idTienda);
 
-		if (configuracion.getKEY_ENCUESTA() != null){
+		if (configuracion.getKeyByTag(String.valueOf(idTienda)) != null){
 
-			if (!configuracion.getKEY_ENCUESTA().equals(fechaActual())){
+			if (!configuracion.getKeyByTag(String.valueOf(idTienda)).equals(fechaActual())){
 				uI.actualizarEncuesta(idPromotor, idTienda);
 			}
 
@@ -1019,7 +1021,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		
 		
 		Builder builder  = new AlertDialog.Builder(this);
-		View vistaEncargado = LayoutInflater.from(this).inflate(R.layout.encargadotienda, null);
+		final ViewGroup nullParent = null;
+		View vistaEncargado = LayoutInflater.from(this).inflate(R.layout.encargadotienda, nullParent);
 		String[] tipoEncargado = new String[] {"ENCARGADO","AUXILIAR"};
 		spinnerEnc = (Spinner) vistaEncargado.findViewById(R.id.spinnerMarca);
 		editNombre = (EditText) vistaEncargado.findViewById(R.id.nombreEnca);
@@ -1040,7 +1043,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	}
 
 
-	private void dialogCapturaDeCatalogo(){
+
+
+	/*private void dialogCapturaDeCatalogo(){
 
 		Builder builder = new AlertDialog.Builder(this);
 
@@ -1058,9 +1063,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 		builder.create().show();
 
-	}
+	}*/
 
-	private boolean verifyCatalogo(){
+	/*private boolean verifyCatalogo(){
 
 
 		Calendar c = Calendar.getInstance();
@@ -1086,14 +1091,14 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 			return false;
 		}
 
-	}
-	
+	}*/
 
 
-	
+
+
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK){
-        	
+
         	if(Entrada && !Salida){
         		Toast.makeText(this,"No has Registrado Salida", Toast.LENGTH_SHORT).show();
         	}else if(!Entrada && !Salida){
@@ -1101,47 +1106,47 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
         	}else{
         		finish();
         	}
-        		
-        	
+
+
         }
         return true;
 	}
-	
+
 	private class EscucharDialogoEncargado implements DialogInterface.OnClickListener{
-		
+
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			
+
 			if(which == DialogInterface.BUTTON_POSITIVE){
-				
-				
+
+
 				String tipo = spinnerEnc.getSelectedItem().toString();
 				String nombre = editNombre.getText().toString();
-				
+
 				Calendar c = Calendar.getInstance();
 				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 
-				
+
 				String fecha = dFecha.format(c.getTime());
 				if(!nombre.trim().equals("") && !nombre.isEmpty()) {
 					new BDopenHelper(MenuTienda.this).insertarEncargadoTienda(idTienda, idPromotor, nombre, tipo, fecha);
-					txtEncargado.setText("Encargado: OK");
+					txtEncargado.setText(R.string.encargado_ok);
 					new EnviarDatos(MenuTienda.this).enviarEncargado();
 				}else {
 					Toast.makeText(getApplicationContext(),"no escribiste nombre del encargado", Toast.LENGTH_SHORT).show();
 				}
-				
-				
-				
-				
+
+
+
+
 			}else if(which == DialogInterface.BUTTON_NEGATIVE){
 				Toast.makeText(getApplicationContext(),"Cancelaste la Seleccion", Toast.LENGTH_SHORT).show();
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	private void tiendaErronea(){
 		if(!Entrada && !Salida){
 			finish();
@@ -1183,7 +1188,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
         Builder builder = new AlertDialog.Builder(this);
         LayoutInflater layoutInflater =  (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View frentes = layoutInflater.inflate(R.layout.lista_frentes_capturados,null);
+		final ViewGroup nullParent = null;
+
+        View frentes = layoutInflater.inflate(R.layout.lista_frentes_capturados, nullParent);
         Listener flistener = new Listener();
         ListView listView = (ListView) frentes.findViewById(R.id.listFrentesCap);
         FrentesCustomAdapter adapter = new FrentesCustomAdapter(this,R.layout.lista_frentes_capturados,getFrentesCapturados());
@@ -1199,7 +1206,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
         Builder builder = new AlertDialog.Builder(this);
         LayoutInflater layoutInflater =  (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View frentes = layoutInflater.inflate(R.layout.lista_capturados,null);
+		final ViewGroup nullParent = null;
+        View frentes = layoutInflater.inflate(R.layout.lista_capturados, nullParent);
         Listener flistener = new Listener();
         ListView listView = (ListView) frentes.findViewById(R.id.listCapturados);
 
@@ -1217,7 +1225,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
     private void dialogoExhibiciones(){
         Builder builder = new AlertDialog.Builder(this);
         LayoutInflater layoutInflater =  (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View exhiList = layoutInflater.inflate(R.layout.list_view_exhi,null);
+		final ViewGroup nullParent = null;
+        View exhiList = layoutInflater.inflate(R.layout.list_view_exhi, nullParent);
         Listener flistener = new Listener();
         ListView listView = (ListView) exhiList.findViewById(R.id.list_exhi);
 

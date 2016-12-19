@@ -26,10 +26,12 @@ public class ResponseEncuesta extends JsonHttpResponseHandler {
 
 
     private Context _context;
+    private int idTienda;
 
 
-    public ResponseEncuesta(Context context){
+    public ResponseEncuesta(Context context, int idTienda){
         this._context = context;
+        this.idTienda = idTienda;
 
     }
 
@@ -103,6 +105,8 @@ public class ResponseEncuesta extends JsonHttpResponseHandler {
 
                 }
 
+
+
             }catch (JSONException e){
                 e.printStackTrace();
 
@@ -112,7 +116,7 @@ public class ResponseEncuesta extends JsonHttpResponseHandler {
 
         }
 
-        configuracion.setEncuestaDisponibleByDay(fecha);
+        configuracion.setKey(String.valueOf(idTienda), fecha);
 
     }
 

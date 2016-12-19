@@ -3,11 +3,11 @@ package com.codpaa.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+
 public class Configuracion {
 	
 
 	private final String KEY_USER = "user";
-	private final String KEY_DATE = "fecha";
     private final String KEY_PRODUCTO = "producto";
     private final String KEY_MARCA = "marca";
     private final String KEY_TIENDAS = "tiendas";
@@ -16,7 +16,7 @@ public class Configuracion {
     private final String KEY_VERSION = "version";
     private final String KEY_PRODUCTO_TIENDA = "productoTienda";
     private final String KEY_PRODUCTO_FORMATO = "productoFormato";
-    private final String KEY_ENCUESTA = "encuestaDisponible";
+    //private final String KEY_ENCUESTA = "encuestaDisponible";
 
 
     private Context mContext;
@@ -44,7 +44,8 @@ public class Configuracion {
 	public void setFecha(String fecha){
 		SharedPreferences.Editor editor = getSettings().edit();
 
-		editor.putString(KEY_DATE, fecha);
+        String KEY_DATE = "fecha";
+        editor.putString(KEY_DATE, fecha);
 		//editor.commit();
         editor.apply();
 	}
@@ -104,14 +105,14 @@ public class Configuracion {
         editor.apply();
     }
 
-    public void setEncuestaDisponibleByDay(String fecha){
+    /*public void setEncuestaDisponibleByDay(String fecha){
         SharedPreferences.Editor editor = getSettings().edit();
 
         editor.putString(KEY_ENCUESTA, fecha);
 
         editor.apply();
 
-    }
+    }*/
 
     public void setVersionDate(String fecha){
         SharedPreferences.Editor editor = getSettings().edit();
@@ -121,7 +122,7 @@ public class Configuracion {
 
     public String getUserName() { return getSettings().getString(KEY_USER, null); }
 
-    public String getDate () { return getSettings().getString(KEY_DATE, null); }
+    //public String getDate () { return getSettings().getString(KEY_DATE, null); }
 
     public String getRuta() {return getSettings().getString(KEY_RUTA, null);}
 
@@ -143,9 +144,19 @@ public class Configuracion {
 	public String getProductoByFormato(){
         return getSettings().getString(KEY_PRODUCTO_FORMATO, null);
     }
-
-    public String getKEY_ENCUESTA(){
+    /*public String getKEY_ENCUESTA(){
         return getSettings().getString(KEY_ENCUESTA, null);
+    }
+*/
+
+    public String getKeyByTag(String tag){
+        return getSettings().getString(tag, null);
+    }
+
+    public void setKey(String tag, String value){
+        SharedPreferences.Editor editor = getSettings().edit();
+        editor.putString(tag, value);
+        editor.apply();
     }
 	
 

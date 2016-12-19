@@ -103,7 +103,7 @@ public class UpdateInformation{
 
     public void actualizarEncuesta(int idPromotor, int idTienda){
         AsyncHttpClient client = new AsyncHttpClient();
-        ResponseEncuesta response = new ResponseEncuesta(_context);
+        ResponseEncuesta response = new ResponseEncuesta(_context, idTienda);
         RequestParams rp = new RequestParams();
 
         rp.put("solicitud", "encuesta");

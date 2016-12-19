@@ -163,6 +163,7 @@
     <string name="errorEnvioImagen">Error al enviar</string>
     <string name="enviada">Enviada...</string>
     <string name="materiales">Materiales</string>
+    <string name="encargado_ok">Encargado: OK</string>
 
 
 </resources>
