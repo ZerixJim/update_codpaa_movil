@@ -28,13 +28,10 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -56,7 +53,6 @@ import android.widget.Toast;
 
 import com.codpaa.R;
 import com.codpaa.adapter.MenuAdapter;
-import com.codpaa.fragment.DialogEncuestas;
 import com.codpaa.model.MenuModel;
 import com.codpaa.service.RegistrationIntentService;
 import com.codpaa.update.UpdateInformation;
@@ -90,11 +86,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     MenuAdapter adapter;
 
     private BroadcastReceiver mRegistrationBroadcastReceiver, mNewMessageBroadcastReceiver;
-
     private boolean isReceiverRegistered, isReceiverMessageRegistered;
-
-
-    int idUsuario;
+    private int idUsuario;
 
 
     @Override
@@ -416,8 +409,13 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         registerReceiver();
 
-        Handler handler = new Handler();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Calendar c = Calendar.getInstance();
 
+        String fecha = simpleDateFormat.format(c.getTime());
+
+
+        openTienda(idUsuario, fecha);
 
 
     }
@@ -720,6 +718,39 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 		}
         return true;
 	}
+
+    private Cursor tiendaPendiente(String fecha, int idPromotor){
+
+        SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+
+
+        return db.rawQuery("select co1.idTienda, co1.tipo, co1.fecha, co1.hora, co1.idPromotor from coordenadas as co1 " +
+                " where co1.fecha='"+fecha+"' and co1.tipo='E' and co1.idPromotor=" + idPromotor +
+                " and idTienda not in " +
+                " (select co2.idTienda from coordenadas as co2 " +
+                " where co2.idTienda=co1.idTienda and co2.fecha=co1.fecha " +
+                "  and co2.idPromotor=co1.idPromotor and co2.tipo='S') order by co1.hora asc limit 1;", null);
+    }
+
+    private void openTienda(int idPromotor, String fecha){
+
+        Cursor cursor = tiendaPendiente(fecha, idPromotor);
+
+        if (cursor.getCount() > 0){
+            cursor.moveToFirst();
+
+            Intent i = new Intent(this, MenuTienda.class);
+            i.putExtra("idTienda", cursor.getInt(cursor.getColumnIndex("idTienda")));
+            i.putExtra("idPromotor", cursor.getInt(cursor.getColumnIndex("idPromotor")));
+            startActivity(i);
+
+        }
+
+        cursor.close();
+
+
+
+    }
 
 
 

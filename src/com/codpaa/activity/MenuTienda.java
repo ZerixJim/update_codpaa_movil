@@ -30,7 +30,6 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -730,8 +729,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 								//auto time
 
-								if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-									Settings.Global.putInt(getContentResolver(), Settings.Global.AUTO_TIME,1);
+								//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+								Settings.System.putInt(getContentResolver(), Settings.System.AUTO_TIME,1);
 
 								
 								if(cuSalida.getCount() >0) {
