@@ -68,8 +68,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	
 	Button btnSalidaTi,btnEntrada, btnEncar, btnExhib, btnInven, btnFrente, btnSurtido, btnTiendaError;
 	Button btnVentaPromedio, btnCapturaGeneral;
-	//Button btnMateriales;
-	Button btnComentario, btnInteligencia, btnUpdaPro, btnFoto;
+	Button btnComentario, btnInteligencia, btnUpdaPro, btnFoto, btnMateriales;
 	SQLiteDatabase base = null;
 	Location locGps,locNet;
 	LocationManager localizar = null;
@@ -230,7 +229,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 		btnCapturaGeneral = (Button) findViewById(R.id.captura_general);
 
-		//btnMateriales = (Button) findViewById(R.id.materiales);
+		btnMateriales = (Button) findViewById(R.id.btnMateriales);
 
 
 
@@ -249,8 +248,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		btnVentaPromedio.setOnClickListener(this);
 
 		btnCapturaGeneral.setOnClickListener(this);
-
-		//btnMateriales.setOnClickListener(this);
+		btnMateriales.setOnClickListener(this);
 
 
 
@@ -349,8 +347,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		
 		
 		if(!Entrada){
-			btnTiendaError.setVisibility(View.GONE);
-			
 
 			try {
 
@@ -611,15 +607,23 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 				capturaGeneral();
 				break;
 
-			case R.id.materiales:
-				Intent intent = new Intent(this, MaterialesActivity.class);
-				startActivity(intent);
+			case R.id.btnMateriales:
+				openMateriales();
 				break;
 		}
 		
 	}
 
-    private void subMenuVenta() {
+	private void openMateriales() {
+
+		Intent intent = new Intent(this, MaterialesActivity.class);
+		intent.putExtra("idTienda", idTienda);
+		intent.putExtra("idPromotor", idPromotor);
+		startActivity(intent);
+
+	}
+
+	private void subMenuVenta() {
 
 		if (Entrada){
 			Intent i = new Intent(this, VentaPromedio.class);
@@ -757,11 +761,11 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 							}
 							
 							//Mostrar Tienda Erronea
-							if(!Entrada && !Salida){
+							/*if(!Entrada && !Salida){
 								btnTiendaError.setVisibility(View.VISIBLE);
 							}else if(Entrada){
 								btnTiendaError.setVisibility(View.GONE);
-							}
+							}*/
 						}catch(Exception e){
                             e.printStackTrace();
 						}
@@ -787,10 +791,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 				dialogCapturaDeCatalogo();
 			}
 		}*/
-
-
-
-
 
 
 

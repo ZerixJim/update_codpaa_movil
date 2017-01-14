@@ -126,13 +126,13 @@
                     <Button
                         android:id="@+id/btnEnTienda"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="70dp"
                         android:layout_weight="1"
                         android:layout_marginEnd="1dp"
                         android:layout_marginRight="1dp"
                         android:drawableLeft="@drawable/ic_keyboard_arrow_right_grey_600_24dp"
                         android:drawableStart="@drawable/ic_keyboard_arrow_right_grey_600_24dp"
-                        android:padding="15dp"
+                        android:padding="10dp"
                         android:text="@string/entrada"/>
 
                     <Button
@@ -213,22 +213,34 @@
                         android:drawableStart="@drawable/ic_border_bottom_grey600_24dp"
                         android:drawableLeft="@drawable/ic_border_bottom_grey600_24dp"
                         android:text="@string/exhi"/>
+
                 </TableRow>
 
                 <TableRow android:layout_marginBottom="5dp">
+
                     <Button
                         android:id="@+id/btnMenInt"
-                        style="@style/btnStyleGenoa"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:drawableStart="@drawable/ic_assessment_white_24dp"
-                        android:drawableLeft="@drawable/ic_assessment_white_24dp"
+                        android:drawableStart="@drawable/ic_assessment_grey_600_24dp"
+                        android:drawableLeft="@drawable/ic_assessment_grey_600_24dp"
                         android:text="@string/inteliMercado"/>
+
+                    <Button
+                        android:id="@+id/btnMateriales"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_apps_grey_600_24dp"
+                        android:drawableLeft="@drawable/ic_apps_grey_600_24dp"
+                        android:text="@string/materiales" />
+
                 </TableRow>
 
 
                 <TableRow android:layout_marginBottom="5dp">
+
                     <Button
                         android:id="@+id/btn_venta_promedio"
                         android:layout_width="0dp"
@@ -291,6 +303,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:text="@string/tiendaErronea"/>
                 </TableRow>
 

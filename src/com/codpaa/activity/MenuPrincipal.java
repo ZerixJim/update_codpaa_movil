@@ -80,7 +80,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     SQLiteDatabase base;
     LocationManager lM = null;
     String myVersionName = "not available";
-    Locale locale;
+
     Configuracion configuracion;
     RecyclerView recycler;
     MenuAdapter adapter;
@@ -93,7 +93,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        locale = new Locale("es_MX");
+
         setContentView(R.layout.menu_principal);
         setToolbar();
 
@@ -566,7 +566,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     private String fechaActual() {
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         return dFecha.format(c.getTime());
     }
 
@@ -596,7 +596,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             BDopenHelper base = new BDopenHelper(this);
 
             Calendar c = Calendar.getInstance();
-            SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
+            SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             String fechaActual = dFecha.format(c.getTime());
 
             //SimpleDateFormat dSem = new SimpleDateFormat("w");
