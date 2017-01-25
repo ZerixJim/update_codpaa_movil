@@ -4,17 +4,21 @@ package com.codpaa.activity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 
 import com.codpaa.adapter.ExhibicionesAdapter;
+import com.codpaa.adapter.MenuTiendaAdapter;
 import com.codpaa.fragment.DialogEncuestas;
 import com.codpaa.fragment.DialogFragmentFotos;
 import com.codpaa.model.ExhibicionesModel;
+import com.codpaa.model.MenuTiendaModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.R;
 import com.codpaa.update.UpdateInformation;
 import com.codpaa.util.Configuracion;
+import com.codpaa.widget.DividerItemDecoration;
 import com.loopj.android.http.*;
 
 import android.Manifest;
@@ -39,6 +43,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -62,8 +68,9 @@ import com.codpaa.adapter.FrentesCustomAdapter;
 import com.codpaa.adapter.InventariosCustomAdapter;
 import com.codpaa.model.FrentesModel;
 import com.codpaa.model.InventarioModel;
+import com.codpaa.adapter.MenuTiendaAdapter.MenuTiendaListener;
 
-public class MenuTienda extends AppCompatActivity implements OnClickListener{
+public class MenuTienda extends AppCompatActivity implements OnClickListener, MenuTiendaListener{
 	
 	
 	Button btnSalidaTi,btnEntrada, btnEncar, btnExhib, btnInven, btnFrente, btnSurtido, btnTiendaError;
@@ -83,7 +90,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 	AsyncHttpClient cliente;
 	RequestParams rp;
 	String nombreTienda;
-
+    RecyclerView menuRecycler;
 	Toolbar toolbar;
 	private Boolean Salida = false;
 	private Boolean Entrada = false;
@@ -94,6 +101,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menutienda);
+
+
 
 		toolbar = (Toolbar) findViewById(R.id.toolbar_menu_principal);
 
@@ -108,6 +117,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 			}
 		}
 
+
+		setUpMenu();
 
 		cliente = new AsyncHttpClient();
 		rp = new RequestParams();
@@ -203,8 +214,90 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
 		
 	}
 
+    private void setUpMenu() {
 
-	private void viewsRegister(){
+        menuRecycler = (RecyclerView) findViewById(R.id.recycler_menu_tienda);
+        if (menuRecycler != null) {
+            menuRecycler.setHasFixedSize(true);
+            LinearLayoutManager linear = new LinearLayoutManager(this);
+            menuRecycler.setLayoutManager(linear);
+			menuRecycler.addItemDecoration(new DividerItemDecoration(this,null));
+
+            MenuTiendaAdapter adapter = new MenuTiendaAdapter(getMenuItems(), this);
+            menuRecycler.setAdapter(adapter);
+
+        }
+
+
+
+
+    }
+
+
+    public List<MenuTiendaModel> getMenuItems(){
+        List<MenuTiendaModel> array = new ArrayList<>();
+
+        final MenuTiendaModel item1 = new MenuTiendaModel();
+        item1.setIdMenu(1);
+        item1.setNombreMenu("Frentes");
+		item1.setImage("");
+        array.add(item1);
+
+        final MenuTiendaModel item2 = new MenuTiendaModel();
+        item2.setIdMenu(2);
+        item2.setNombreMenu("Surtido de mueble");
+        array.add(item2);
+
+		final MenuTiendaModel item3 = new MenuTiendaModel();
+		item3.setIdMenu(3);
+		item3.setNombreMenu("Comentarios");
+		array.add(item3);
+
+		final MenuTiendaModel item4 = new MenuTiendaModel();
+		item4.setIdMenu(4);
+		item4.setNombreMenu("Inventario");
+		array.add(item4);
+
+		final MenuTiendaModel item5 = new MenuTiendaModel();
+		item5.setIdMenu(5);
+		item5.setNombreMenu("Exhibiciones Especiales");
+		array.add(item5);
+
+		final MenuTiendaModel item6 = new MenuTiendaModel();
+		item6.setIdMenu(6);
+		item6.setNombreMenu("Inteligencia de mercado");
+		array.add(item6);
+
+		final MenuTiendaModel item7 = new MenuTiendaModel();
+		item7.setIdMenu(7);
+		item7.setNombreMenu("Materiales");
+		array.add(item7);
+
+		final MenuTiendaModel item8 = new MenuTiendaModel();
+		item8.setIdMenu(8);
+		item8.setNombreMenu("Venta Promedio");
+		array.add(item8);
+
+		final MenuTiendaModel item9 = new MenuTiendaModel();
+		item9.setIdMenu(9);
+		item9.setNombreMenu("Encargado de tienda");
+		array.add(item9);
+
+		final MenuTiendaModel item10 = new MenuTiendaModel();
+		item10.setIdMenu(10);
+		item10.setNombreMenu("Foto");
+		array.add(item10);
+
+		final MenuTiendaModel item11 = new MenuTiendaModel();
+		item11.setIdMenu(11);
+		item11.setNombreMenu("Actualizar producto");
+		array.add(item11);
+
+        return array;
+    }
+
+
+    private void viewsRegister(){
 
 		inventario = (TextView) findViewById(R.id.inventario);
 		txtEncargado = (TextView) findViewById(R.id.Encargado);
@@ -1111,7 +1204,56 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener{
         return true;
 	}
 
-	private class EscucharDialogoEncargado implements DialogInterface.OnClickListener{
+    @Override
+    public void onMenuItemClick(MenuTiendaModel clickMenuItem) {
+
+		switch (clickMenuItem.getIdMenu()){
+			case 1:
+				menuFrentes();
+				break;
+			case 2:
+				menuSurtido();
+				break;
+
+			case 3:
+				menuComentario();
+				break;
+
+			case 4:
+				menuInventario();
+				break;
+
+			case 5:
+				menuExhibicion();
+				break;
+
+			case 6:
+				inteligenciaMercado();
+				break;
+
+			case 7:
+				openMateriales();
+				break;
+			case 8:
+				subMenuVenta();
+				break;
+			case 9:
+				dialogoEncargado();
+				break;
+			case 10:
+				capturaFoto();
+				break;
+
+			case 11:
+				actualizarPro();
+				break;
+
+		}
+
+
+    }
+
+    private class EscucharDialogoEncargado implements DialogInterface.OnClickListener{
 
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
