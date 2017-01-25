@@ -228,9 +228,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         }
 
-
-
-
     }
 
 
@@ -240,57 +237,67 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         final MenuTiendaModel item1 = new MenuTiendaModel();
         item1.setIdMenu(1);
         item1.setNombreMenu("Frentes");
-		item1.setImage("");
+		item1.setImage("ic_grid_on_grey600_24dp");
         array.add(item1);
 
         final MenuTiendaModel item2 = new MenuTiendaModel();
         item2.setIdMenu(2);
         item2.setNombreMenu("Surtido de mueble");
+		item2.setImage("ic_blur_linear_grey600_24dp");
         array.add(item2);
 
 		final MenuTiendaModel item3 = new MenuTiendaModel();
 		item3.setIdMenu(3);
 		item3.setNombreMenu("Comentarios");
+		item3.setImage("ic_comment_grey_600_24dp");
 		array.add(item3);
 
 		final MenuTiendaModel item4 = new MenuTiendaModel();
 		item4.setIdMenu(4);
 		item4.setNombreMenu("Inventario");
+		item4.setImage("ic_assignment_grey600_24dp");
 		array.add(item4);
 
 		final MenuTiendaModel item5 = new MenuTiendaModel();
 		item5.setIdMenu(5);
 		item5.setNombreMenu("Exhibiciones Especiales");
+		item5.setImage("ic_border_bottom_grey600_24dp");
 		array.add(item5);
 
 		final MenuTiendaModel item6 = new MenuTiendaModel();
 		item6.setIdMenu(6);
 		item6.setNombreMenu("Inteligencia de mercado");
+		item6.setImage("ic_assessment_grey_600_24dp");
 		array.add(item6);
 
 		final MenuTiendaModel item7 = new MenuTiendaModel();
 		item7.setIdMenu(7);
 		item7.setNombreMenu("Materiales");
+		item7.setImage("ic_apps_grey_600_24dp");
 		array.add(item7);
 
 		final MenuTiendaModel item8 = new MenuTiendaModel();
 		item8.setIdMenu(8);
 		item8.setNombreMenu("Venta Promedio");
+		item8.setImage("ic_timeline_grey_600_24dp");
 		array.add(item8);
 
 		final MenuTiendaModel item9 = new MenuTiendaModel();
 		item9.setIdMenu(9);
 		item9.setNombreMenu("Encargado de tienda");
+		item9.setImage("ic_timer_auto_grey600_24dp");
 		array.add(item9);
 
 		final MenuTiendaModel item10 = new MenuTiendaModel();
 		item10.setIdMenu(10);
 		item10.setNombreMenu("Foto");
+		item10.setImage("ic_camera_grey600_24dp");
 		array.add(item10);
 
 		final MenuTiendaModel item11 = new MenuTiendaModel();
 		item11.setIdMenu(11);
 		item11.setNombreMenu("Actualizar producto");
+		item11.setImage("ic_autorenew_grey_600_24dp");
 		array.add(item11);
 
         return array;

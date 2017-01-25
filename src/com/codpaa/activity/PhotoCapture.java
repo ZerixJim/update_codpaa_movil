@@ -91,8 +91,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private static final int CAMERA_PERMISSION = 124;
 
 
-
-
     private ProgressBar progressFoto;
     private File imageCaptured = null;
     private TextView textoEnvio;
@@ -364,6 +362,17 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                 .centerCrop()
                                 .fit()
                                 .into(showImg);
+
+
+                        showImg.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent();
+                                intent.setAction(Intent.ACTION_VIEW);
+                                intent.setDataAndType(Uri.fromFile(new File(mCurrentPhotoPath)), "image/*");
+                                startActivity(intent);
+                            }
+                        });
 
 
                     } else {

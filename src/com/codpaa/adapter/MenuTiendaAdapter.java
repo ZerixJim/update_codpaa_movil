@@ -4,6 +4,7 @@ package com.codpaa.adapter;
  * Created by grim on 24/01/17.
  */
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,9 @@ public class MenuTiendaAdapter extends RecyclerView.Adapter<MenuTiendaAdapter.Vi
         MenuTiendaModel model = getItem(position);
         holder.nombre.setText(model.getNombreMenu());
 
+        Uri uri = Uri.parse("android.resource://com.codpaa/drawable/"+ model.getImage());
+        holder.image.setImageURI(uri);
+
     }
 
     @Override
@@ -45,7 +49,7 @@ public class MenuTiendaAdapter extends RecyclerView.Adapter<MenuTiendaAdapter.Vi
         return menuModels.size();
     }
 
-    public MenuTiendaModel getItem(int position){
+    private MenuTiendaModel getItem(int position){
         return menuModels.get(position);
     }
 
