@@ -260,7 +260,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 		final MenuTiendaModel item5 = new MenuTiendaModel();
 		item5.setIdMenu(5);
-		item5.setNombreMenu("Exhibiciones Especiales");
+		item5.setNombreMenu("Exhibiciones especiales");
 		item5.setImage("ic_border_bottom_grey600_24dp");
 		array.add(item5);
 
@@ -278,7 +278,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 		final MenuTiendaModel item8 = new MenuTiendaModel();
 		item8.setIdMenu(8);
-		item8.setNombreMenu("Venta Promedio");
+		item8.setNombreMenu("Venta promedio");
 		item8.setImage("ic_timeline_grey_600_24dp");
 		array.add(item8);
 
