@@ -260,7 +260,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 Materiales.MATERIAL + " varchar(50), " +
                 Materiales.UNIDAD + " varchar(25)," +
                 Materiales.SOLICITUD_MAXIMA + " int, " +
-                Materiales.ESTATUS + " int)";
+                Materiales.ESTATUS + " int," +
+                Materiales.TIPO_MATERIAL + " int)";
 
 
 
@@ -306,6 +307,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(productoByTienda);
         db.execSQL(tiendaProductoCatalogo);
         db.execSQL(photoProducto);
+        db.execSQL(materiales);
     }
 
     @Override
@@ -354,6 +356,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL(preguntas);
             db.execSQL(respuesta);
             db.execSQL(encuestaFoto);
+            db.execSQL(materiales);
         }
 
 

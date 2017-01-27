@@ -752,9 +752,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     private void actualizarPro() {
         UpdateInformation updateInformation = new UpdateInformation(this);
-        updateInformation.actualizarMarca(idPromotor);
-        updateInformation.actualizarProducto(idPromotor);
-        updateInformation.actualizarExhibiciones(idPromotor);
+        updateInformation.updateInfo(idPromotor);
 		
 		
 	}

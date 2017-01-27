@@ -177,6 +177,7 @@ public class DbEstructure {
         public static final String UNIDAD = "unidad";
         public static final String SOLICITUD_MAXIMA = "solicitudMaxima";
         public static final String ESTATUS = "estatus";
+        public static final String TIPO_MATERIAL = "tipo_material";
 
     }
 
