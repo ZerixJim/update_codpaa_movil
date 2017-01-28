@@ -260,7 +260,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 Materiales.MATERIAL + " varchar(50), " +
                 Materiales.UNIDAD + " varchar(25)," +
                 Materiales.SOLICITUD_MAXIMA + " int, " +
-                Materiales.ESTATUS + " int," +
                 Materiales.TIPO_MATERIAL + " int)";
 
 
@@ -296,8 +295,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(photo);
         db.execSQL(preguntas);
         db.execSQL(respuesta);
-        // TODO: 29/11/2016 eliminar la tabla de respuestas tipos
-        //db.execSQL(respuestaTipo);
         db.execSQL(opciones);
         db.execSQL(encuestaFoto);
         db.execSQL(mensaje);

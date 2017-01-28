@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.codpaa.R;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.Configuracion;
@@ -26,6 +25,7 @@ import java.util.Locale;
 
 import com.codpaa.provider.DbEstructure.ProductByFormato;
 import com.codpaa.provider.DbEstructure.ProductoByTienda;
+import com.codpaa.provider.DbEstructure.Materiales;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -76,6 +76,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                 JSONArray ruta = response.getJSONArray("ruta");
                 JSONArray productoFormato = response.getJSONArray("productoFormato");
                 JSONArray productoTienda = response.getJSONArray("productoTienda");
+                JSONArray materiales = response.getJSONArray("materiales");
 
                 parseJSONMarca(marcas);
                 parseJSONProductos(productos);
@@ -84,6 +85,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                 parseJSONRuta(ruta);
                 parseJSONProductoByFormato(productoFormato);
                 parseJSONProductoByTienda(productoTienda);
+                parseJSONMateriales(materiales);
 
                 //progressDialog.setContentView(R.layout.dialog_done);
                 progressDialog.setMessage("Informacion Cargada Satisfactoriamente");
@@ -122,13 +124,39 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
     }
 
-
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
 
         Toast.makeText(context, "Error Al descargar la Informacion!!", Toast.LENGTH_SHORT).show();
         progressDialog.dismiss();
+    }
+
+
+    private void parseJSONMateriales(JSONArray materiales) throws JSONException{
+
+        BDopenHelper b = new BDopenHelper(context.getApplicationContext());
+        b.vaciarTabla(DbEstructure.Materiales.TABLE_NAME);
+        Configuracion config = new Configuracion(context);
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String fecha = dFecha.format(c.getTime());
+
+        int length = materiales.length();
+
+        for (int i = 0; i < length; i++ ){
+            ContentValues content = new ContentValues();
+            content.put(Materiales.ID_MATERIAL, materiales.getJSONObject(i).getInt("idMateria"));
+            content.put(Materiales.MATERIAL, materiales.getJSONObject(i).getString("nombre"));
+            content.put(Materiales.UNIDAD, materiales.getJSONObject(i).getString("unidad"));
+            content.put(Materiales.SOLICITUD_MAXIMA, materiales.getJSONObject(i).getInt("solicitudMaxima"));
+            content.put(Materiales.TIPO_MATERIAL, materiales.getJSONObject(i).getInt("tipoMaterial"));
+
+            b.insertar(Materiales.TABLE_NAME, content);
+        }
+
+        config.setMaterialesUpdate(fecha);
+
     }
 
 

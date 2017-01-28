@@ -5,4 +5,10 @@ package com.codpaa.model;
  */
 
 public class MaterialModel {
+
+    private int idMaterial;
+    private int idProducto;
+    private int idTipoMaterial;
+    private int cantidad;
+
 }

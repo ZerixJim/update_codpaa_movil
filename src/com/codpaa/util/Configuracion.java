@@ -16,6 +16,7 @@ public class Configuracion {
     private final String KEY_VERSION = "version";
     private final String KEY_PRODUCTO_TIENDA = "productoTienda";
     private final String KEY_PRODUCTO_FORMATO = "productoFormato";
+    private final String KEY_MATERIALES = "materiales";
     //private final String KEY_ENCUESTA = "encuestaDisponible";
 
 
@@ -105,6 +106,12 @@ public class Configuracion {
         editor.apply();
     }
 
+    public void setMaterialesUpdate(String fechaUpdate){
+        SharedPreferences.Editor editor = getSettings().edit();
+        editor.putString(KEY_MATERIALES, fechaUpdate);
+        editor.apply();
+    }
+
     /*public void setEncuestaDisponibleByDay(String fecha){
         SharedPreferences.Editor editor = getSettings().edit();
 
@@ -143,6 +150,10 @@ public class Configuracion {
     }
 	public String getProductoByFormato(){
         return getSettings().getString(KEY_PRODUCTO_FORMATO, null);
+    }
+
+    public String getMaterialesUpdate(){
+        return getSettings().getString(KEY_MATERIALES, null);
     }
     /*public String getKEY_ENCUESTA(){
         return getSettings().getString(KEY_ENCUESTA, null);

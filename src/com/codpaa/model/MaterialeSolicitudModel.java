@@ -12,7 +12,6 @@ public class MaterialeSolicitudModel {
     private int idTienda;
     private String fechaSolicitud;
 
-    private List<ProductoTester> productoTest;
     private List<MaterialModel> materiales;
 
 
