@@ -67,8 +67,57 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		
-		return getCustomView(position, convertView, parent);
+
+		View row = convertView;
+		final ViewHolder viewHolder;
+
+		if(row == null){
+			LayoutInflater inflater = _context.getLayoutInflater();
+			row = inflater.inflate(R.layout.row_spinner_product, parent, false);
+			viewHolder = new ViewHolder();
+			viewHolder.txtNombre = (TextView) row.findViewById(R.id.text_nombre_producto);
+			viewHolder.txtPresentacion = (TextView) row.findViewById(R.id.text_presentacion_producto);
+			viewHolder.txtCodigoBarras = (TextView) row.findViewById(R.id.text_codigo_barras);
+			viewHolder.imagenProducto = (ImageView) row.findViewById(R.id.image_producto);
+			viewHolder.divider = (TextView) row.findViewById(R.id.divider);
+			viewHolder.progressBar = (ProgressBar) row.findViewById(R.id.progress);
+
+			row.setTag(viewHolder);
+
+		}else {
+
+			viewHolder = (ViewHolder) row.getTag();
+		}
+
+		SpinnerProductoModel temp = _datos.get(position);
+
+
+		viewHolder.txtNombre.setText(temp.getNombre());
+		viewHolder.txtPresentacion.setText(temp.getPresentacion());
+		viewHolder.progressBar.setVisibility(View.GONE);
+		viewHolder.divider.setVisibility(View.GONE);
+
+
+		if(temp.getCodigoBarras() != null){
+
+			if (!temp.getCodigoBarras().equals("")){
+				String cb = "CB: " + temp.getCodigoBarras();
+				viewHolder.txtCodigoBarras.setText(cb);
+
+			}else {
+				viewHolder.txtCodigoBarras.setText(R.string.barcode);
+			}
+		}
+		if(position == 0){
+
+			viewHolder.txtCodigoBarras.setText("");
+		}
+
+
+
+
+
+		return row;
 	}
 
     @Override

@@ -174,8 +174,7 @@
 
         <activity
             android:name=".activity.MaterialesActivity"
-            android:label="@string/materiales"
-            android:theme="@style/noActionBar"/>
+            android:label="@string/materiales" />
 
 
         <service android:name=".service.GeoLocalizar" />
