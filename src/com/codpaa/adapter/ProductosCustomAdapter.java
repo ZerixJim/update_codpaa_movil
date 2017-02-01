@@ -92,8 +92,9 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		SpinnerProductoModel temp = _datos.get(position);
 
 
-		viewHolder.txtNombre.setText(temp.getNombre());
-		viewHolder.txtPresentacion.setText(temp.getPresentacion());
+		viewHolder.txtNombre.setText(temp.getNombre() + " " + temp.getPresentacion());
+		//viewHolder.txtPresentacion.setText(temp.getPresentacion());
+		viewHolder.txtPresentacion.setVisibility(View.GONE);
 		viewHolder.progressBar.setVisibility(View.GONE);
 		viewHolder.divider.setVisibility(View.GONE);
 
@@ -110,7 +111,9 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		}
 		if(position == 0){
 
-			viewHolder.txtCodigoBarras.setText("");
+			viewHolder.txtCodigoBarras.setVisibility(View.GONE);
+			viewHolder.txtPresentacion.setVisibility(View.GONE);
+			viewHolder.txtCodigoBarras.setVisibility(View.GONE);
 		}
 
 
@@ -159,8 +162,11 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 			viewHolder.imagenProducto.setVisibility(View.GONE);
             viewHolder.divider.setVisibility(View.INVISIBLE);
             viewHolder.progressBar.setVisibility(View.GONE);
+			viewHolder.txtPresentacion.setVisibility(View.GONE);
+			viewHolder.txtCodigoBarras.setVisibility(View.GONE);
 		}else {
-
+			viewHolder.txtCodigoBarras.setVisibility(View.VISIBLE);
+			viewHolder.txtPresentacion.setVisibility(View.VISIBLE);
             viewHolder.divider.setVisibility(View.VISIBLE);
             if (viewHolder.imagenProducto.getVisibility() == View.GONE)
                 viewHolder.imagenProducto.setVisibility(View.VISIBLE);
@@ -171,9 +177,11 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 
 			picasso.load(Utilities.PRODUCT_PATH+temp.getIdMarca()+"/"+temp.getIdProducto()+".gif")
 					//.resize(bitmapDrawable.getBitmap().getWidth(), 0)
-					.fit()
+					//.fit()
 					//.placeholder(R.drawable.progress_animated)
-					.centerCrop()
+					//.centerCrop()
+					.resize(600,200)
+					.centerInside()
                     //.centerInside()
 					//.noFade()
 					.into(viewHolder.imagenProducto, new Callback() {

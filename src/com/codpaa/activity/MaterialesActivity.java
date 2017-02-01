@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.codpaa.R;
 import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.adapter.MaterialSpinnerAdapter;
+import com.codpaa.adapter.MaterialesSolicitudAdapter;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.MarcaModel;
@@ -32,12 +33,13 @@ import com.codpaa.model.SpinnerProductoModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MaterialesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MaterialesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     Spinner material, marca, producto;
     RecyclerView recyclerMateriales;
     Button btnAgregar;
     EditText cantidad;
+    List<MaterialModel> materialList = new ArrayList<>();
 
     private int idTienda, idPromor;
 
@@ -56,8 +58,6 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
         // poblar spinner material
         setUpMaterial();
 
-        //inicializar el listado de materiales agregados
-        setUpRecyclerView();
 
 
 
@@ -81,7 +81,7 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
         List<MaterialModel> array = new ArrayList<>();
 
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
-        String sql = "select idMaterial, material,  unidad, solicitudMaxima, tipo_material from materiales";
+        String sql = "select idMaterial, material,  unidad, solicitudMaxima, tipo_material from materiales order by material asc";
 
 
         Cursor cursor = db.rawQuery(sql, null);
@@ -110,7 +110,88 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
         return array;
     }
 
+
+    private ArrayList<SpinnerProductoModel> getProductTester(){
+
+        Cursor curProByTienda = new BDopenHelper(this).getProductosTester();
+        ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
+
+        for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
+            final SpinnerProductoModel spP = new SpinnerProductoModel();
+            spP.setIdProducto(curProByTienda.getInt(0));
+            spP.setNombre(curProByTienda.getString(1));
+            spP.setPresentacion(curProByTienda.getString(2));
+            spP.setCodigoBarras(curProByTienda.getString(3));
+            spP.setIdMarca(curProByTienda.getInt(4));
+            arrayP.add(spP);
+        }
+
+        final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
+        spPinicio.setIdProducto(0);
+        spPinicio.setNombre("Seleccione Producto");
+        spPinicio.setPresentacion("");
+        spPinicio.setCodigoBarras("");
+
+        arrayP.add(0,spPinicio);
+
+        curProByTienda.close();
+        return arrayP;
+
+
+    }
+
+
+    private void addItem(MaterialModel item){
+
+        materialList.add(item);
+        setUpRecyclerView();
+    }
+
+
+    private void addMaterial(){
+
+        MaterialModel mMterial = (MaterialModel) material.getSelectedItem();
+
+        if (mMterial.getIdMaterial() >= 1){
+
+            //si el tipo de material es de producto
+            if (mMterial.getIdTipoMaterial() == 2){
+                // si el tipo de material es un probador
+                if (mMterial.getIdMaterial() == 18){
+                    MaterialModel material = new MaterialModel();
+                    material.setIdMaterial(mMterial.getIdMaterial());
+
+                    SpinnerProductoModel sProdMod = (SpinnerProductoModel) producto.getSelectedItem();
+
+                    material.setIdProducto(sProdMod.getIdProducto());
+                    material.setNombreMaterial(mMterial.getNombreMaterial());
+                    material.setNombreProducto(sProdMod.getNombre());
+
+                    if (cantidad.getText().length() > 0){
+
+                        material.setCantidad(Integer.parseInt(cantidad.getText().toString()));
+
+
+                    } else {
+                        Toast.makeText(this, "Debes escribir una cantidad", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    addItem(material);
+
+                }
+            }
+        }else {
+            Toast.makeText(this, "Selecciona un material", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void setUpRecyclerView() {
+
+        MaterialesSolicitudAdapter adapter = new MaterialesSolicitudAdapter(materialList);
+        recyclerMateriales.setAdapter(adapter);
+
+        Log.d("List Size", "" + materialList.size());
 
 
 
@@ -122,6 +203,9 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
         producto = (Spinner) findViewById(R.id.producto);
         marca = (Spinner) findViewById(R.id.marca);
         cantidad = (EditText) findViewById(R.id.cantidad);
+        btnAgregar = (Button) findViewById(R.id.btn_add);
+
+
 
         recyclerMateriales = (RecyclerView) findViewById(R.id.recycler_material);
 
@@ -133,6 +217,8 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
 
 
         }
+
+        btnAgregar.setOnClickListener(this);
 
 
     }
@@ -191,9 +277,16 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
 
                         marca.setVisibility(View.GONE);
                         producto.setVisibility(View.VISIBLE);
+
+                        loadProductoTester();
                     }
 
-                }else {
+                }else if(material.getIdMaterial() == 0){
+
+                    producto.setVisibility(View.GONE);
+                    marca.setVisibility(View.GONE);
+
+                } else {
                     producto.setVisibility(View.GONE);
                 }
 
@@ -203,6 +296,8 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
 
 
                 MarcaModel marca = (MarcaModel) adapterView.getSelectedItem();
+
+
                 productoSpinner(marca.getId());
 
                 break;
@@ -210,6 +305,12 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
 
 
 
+    }
+
+    private void loadProductoTester() {
+
+        ProductosCustomAdapter adapter = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getProductTester());
+        producto.setAdapter(adapter);
     }
 
     private void loadSpinnerMarca(){
@@ -306,13 +407,16 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
         final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
         spPinicio.setIdProducto(0);
         spPinicio.setNombre("Seleccione Producto");
-        spPinicio.setPresentacion("producto sin seleccionar");
-        spPinicio.setCodigoBarras(" ");
 
         arrayP.add(0,spPinicio);
 
         curProByTienda.close();
         return arrayP;
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        addMaterial();
     }
 }

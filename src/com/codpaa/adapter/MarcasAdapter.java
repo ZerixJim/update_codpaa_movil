@@ -55,7 +55,60 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        return getCustomView(position, convertView, parent);
+        ViewHolder viewHolder;
+
+        if (convertView == null){
+            convertView = layoutInflater.inflate(R.layout.row_list_marca, parent, false);
+            viewHolder = new ViewHolder();
+
+            viewHolder.nombre = (TextView) convertView.findViewById(R.id.NombreTxtMarca);
+            viewHolder.descrip = (TextView) convertView.findViewById(R.id.DescriTxtMarca);
+            viewHolder.img = (ImageView) convertView.findViewById(R.id.logotipoMarca);
+
+            convertView.setTag(viewHolder);
+
+        }else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+
+        MarcaModel spm = arrayMarcas.get(position);
+        viewHolder.nombre.setText(spm.getNombre());
+        viewHolder.descrip.setText("");
+
+
+
+        //Log.d("Url",":" + spm.getUrl());
+
+
+        Picasso picasso = Picasso.with(_context);
+
+        //picasso.setIndicatorsEnabled(true);
+
+
+
+        if (position == 0){
+            viewHolder.img.setVisibility(View.GONE);
+        }else {
+
+            if (viewHolder.img.getVisibility() == View.INVISIBLE || viewHolder.img.getVisibility() == View.GONE)
+                viewHolder.img.setVisibility(View.VISIBLE);
+
+            //Log.d("url encode", ":"+url);
+            picasso.load(Utilities.MARCA_PATH + "/" + spm.getId() + ".gif")
+                    .resize(bitmapDrawable.getBitmap().getWidth(),0)
+                    .placeholder(R.drawable.ic_crop_original_grey600_36dp)
+                    .error(R.drawable.ic_error_grey600_36dp)
+                    .into(viewHolder.img);
+
+
+
+        }
+
+
+
+
+        return convertView;
     }
 
     @Override
@@ -84,6 +137,12 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         MarcaModel spm = arrayMarcas.get(position);
         viewHolder.nombre.setText(spm.getNombre());
         viewHolder.descrip.setText("");
+        viewHolder.img.setVisibility(View.GONE);
+
+
+        if (position == 0){
+            viewHolder.img.setVisibility(View.GONE);
+        }
 
         //Log.d("Url",":" + spm.getUrl());
 

@@ -124,7 +124,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "fecha date, precio  decimal(18,2))";
         productos = "Create table if not exists " +
                 "producto(idProducto int primary key, nombre varchar(50), presentacion varchar(10)," +
-                "idMarca int, cb varchar(45), img varchar(250))";
+                "idMarca int, cb varchar(45), img varchar(250), tester int)";
         surtido = "create table if not exists " +
                 "surtido(idTienda int, idPromotor int,surtido char(2), fecha char(25), " +
                 "idProducto int, cajas int, unifila int, caja1 int, caja2 int, caja3 int," +
@@ -354,6 +354,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL(respuesta);
             db.execSQL(encuestaFoto);
             db.execSQL(materiales);
+
+            db.execSQL("alter table producto add column tester int");
+
+
         }
 
 
@@ -582,10 +586,11 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
-    public void insertarProducto(int idProd, String nombre, String presentacion, int idMarc, String cb) throws SQLiteException{
+    public void insertarProducto(int idProd, String nombre, String presentacion, int idMarc, String cb, int tester) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert or replace into producto(idProducto,nombre,presentacion,idMarca,cb) values("+idProd+",'"+nombre+"','"+presentacion+"',"+idMarc+",'"+cb+"')");
+            baseDatosLocal.execSQL("insert or replace into producto(idProducto,nombre,presentacion,idMarca,cb,tester) " +
+                    "values("+idProd+",'"+nombre+"','"+presentacion+"',"+idMarc+",'"+cb+"', "+tester+")");
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
@@ -840,6 +845,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 " select p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca  from productotienda as pt " +
                 " left  join producto as p on pt.idProducto=p.idProducto " +
                 " where p.idMarca="+ idMarca +" and pt.idTienda="+ idTienda +") as p order by p.nombre asc", null);
+    }
+
+    public Cursor getProductosTester(){
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select * from producto where tester = 1 order by nombre asc", null);
     }
 
     public Cursor Surtido() throws SQLiteException {

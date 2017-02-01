@@ -37,8 +37,8 @@ public class MaterialesSolicitudAdapter extends RecyclerView.Adapter<MaterialesS
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
-
+        MaterialModel materialModel = materiales.get(position);
+        holder.nombreMaterial.setText(materialModel.getNombreMaterial());
 
     }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -12,26 +12,25 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/frame"
+        android:layout_toStartOf="@+id/frame"
         app:layout_widthPercent="60%"
         android:padding="15dp"
         android:orientation="vertical">
-
 
 
         <TextView
             android:id="@+id/text_nombre_producto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text" />
 
         <TextView
             android:id="@+id/text_presentacion_producto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
             android:paddingTop="3dp" />
 
@@ -39,7 +38,6 @@
             android:id="@+id/text_codigo_barras"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
             android:paddingTop="3dp" />
 
@@ -47,28 +45,30 @@
 
 
 
-
-    <ImageView
-        app:layout_widthPercent="40%"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignBottom="@+id/linear"
-        android:layout_centerVertical="true"
-        android:id="@+id/image_producto"
-        android:padding="5dp"/>
-
-    <ProgressBar
-        android:id="@+id/progress"
-        app:layout_widthPercent="40%"
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_alignBottom="@+id/linear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_margin="15dp">
+
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/image_producto" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            app:layout_widthPercent="40%"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </FrameLayout>
+
     
     <TextView
         android:id="@+id/divider"
@@ -78,4 +78,4 @@
         android:layout_alignParentBottom="true"/>
 
 
-</android.support.percent.PercentRelativeLayout>
+</RelativeLayout>

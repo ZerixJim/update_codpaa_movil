@@ -8,18 +8,31 @@
     android:padding="@dimen/activity_horizontal_margin">
 
 
-    <Spinner
-        android:id="@+id/material"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"/>
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-    <Spinner
-        android:id="@+id/marca"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_marginBottom="10dp"/>
+        <Spinner
+            android:id="@+id/material"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
+
+        <Spinner
+            android:id="@+id/marca"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+
+
+
 
 
     <Spinner
@@ -51,6 +64,7 @@
 
 
         <Button
+            android:id="@+id/btn_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -71,14 +85,15 @@
             android:layout_height="wrap_content"
             android:text="No hay Materiales Agregados"
             android:textColor="#878787"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:visibility="invisible"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_material"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
 
     </RelativeLayout>
 

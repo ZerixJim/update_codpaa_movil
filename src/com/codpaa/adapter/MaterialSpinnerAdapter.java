@@ -71,7 +71,7 @@ public class MaterialSpinnerAdapter extends ArrayAdapter<MaterialModel>{
 
 
         viewHolder.nombreMaterial.setText(materialModel.getNombreMaterial());
-        //viewHolder.image.setVisibility(View.GONE);
+        viewHolder.image.setVisibility(View.GONE);
 
 
 
