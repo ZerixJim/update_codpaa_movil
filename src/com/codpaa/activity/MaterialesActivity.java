@@ -7,10 +7,13 @@ package com.codpaa.activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +29,7 @@ import com.codpaa.adapter.MaterialSpinnerAdapter;
 import com.codpaa.adapter.MaterialesSolicitudAdapter;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.fragment.DialogMaterialRequest;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.MaterialModel;
 import com.codpaa.model.SpinnerProductoModel;
@@ -33,13 +37,15 @@ import com.codpaa.model.SpinnerProductoModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MaterialesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class MaterialesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, DialogMaterialRequest.SelectMaterial {
 
     Spinner material, marca, producto;
     RecyclerView recyclerMateriales;
+
     Button btnAgregar;
     EditText cantidad;
     List<MaterialModel> materialList = new ArrayList<>();
+    FloatingActionButton floatingActionButton;
 
     private int idTienda, idPromor;
 
@@ -57,9 +63,6 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
 
         // poblar spinner material
         setUpMaterial();
-
-
-
 
 
 
@@ -199,12 +202,11 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
 
     private void setUpWidgets() {
 
-        material = (Spinner) findViewById(R.id.material);
-        producto = (Spinner) findViewById(R.id.producto);
-        marca = (Spinner) findViewById(R.id.marca);
-        cantidad = (EditText) findViewById(R.id.cantidad);
-        btnAgregar = (Button) findViewById(R.id.btn_add);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.float_add);
 
+        if (floatingActionButton != null) {
+            floatingActionButton.setOnClickListener(this);
+        }
 
 
         recyclerMateriales = (RecyclerView) findViewById(R.id.recycler_material);
@@ -218,10 +220,19 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
 
         }
 
-        btnAgregar.setOnClickListener(this);
-
 
     }
+
+
+    private void showDialog(){
+        FragmentManager ft = getSupportFragmentManager();
+
+        // Create and show the dialog.
+        DialogMaterialRequest newFragment = DialogMaterialRequest.newInstance();
+        newFragment.setOnMaterialListener(this);
+        newFragment.show(ft, "dialog");
+    }
+
 
 
     /*@Override
@@ -254,56 +265,6 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-        Spinner spinner = (Spinner) adapterView;
-
-        switch (spinner.getId()){
-            case R.id.material:
-
-                Log.d("Entro", "materiales listener");
-                MaterialModel material = (MaterialModel) adapterView.getSelectedItem();
-
-                if (material.getUnidad() != null)
-                    cantidad.setHint( "Maximo: " + material.getSolicitudMaxima() + material.getUnidad()+"s");
-
-
-                if (material.getIdTipoMaterial() == 2){
-                    producto.setVisibility(View.VISIBLE);
-                    marca.setVisibility(View.VISIBLE);
-                    marca.setOnItemSelectedListener(this);
-                    loadSpinnerMarca();
-                    if (material.getIdMaterial() == 18){
-
-
-                        marca.setVisibility(View.GONE);
-                        producto.setVisibility(View.VISIBLE);
-
-                        loadProductoTester();
-                    }
-
-                }else if(material.getIdMaterial() == 0){
-
-                    producto.setVisibility(View.GONE);
-                    marca.setVisibility(View.GONE);
-
-                } else {
-                    producto.setVisibility(View.GONE);
-                }
-
-                break;
-
-            case R.id.marca:
-
-
-                MarcaModel marca = (MarcaModel) adapterView.getSelectedItem();
-
-
-                productoSpinner(marca.getId());
-
-                break;
-        }
-
-
 
     }
 
@@ -417,6 +378,26 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onClick(View view) {
-        addMaterial();
+
+        switch (view.getId()){
+            case R.id.float_add:
+
+                showDialog();
+
+                break;
+        }
+    }
+
+    @Override
+    public void onAddMaterial(MaterialModel model) {
+
+    }
+
+    @Override
+    public void onTestId(int idMaterial) {
+
+
+        Log.d("idMaterial", "" + idMaterial);
+
     }
 }
