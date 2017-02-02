@@ -39,6 +39,15 @@ public class MaterialesSolicitudAdapter extends RecyclerView.Adapter<MaterialesS
     public void onBindViewHolder(ViewHolder holder, int position) {
         MaterialModel materialModel = materiales.get(position);
         holder.nombreMaterial.setText(materialModel.getNombreMaterial());
+        holder.cantidad.setText(materialModel.getCantidad()+materialModel.getUnidad()+ "s");
+
+        holder.producto.setVisibility(View.GONE);
+
+        if (materialModel.getIdTipoMaterial() == 2){
+            holder.producto.setVisibility(View.VISIBLE);
+            holder.producto.setText(materialModel.getNombreProducto());
+        }
+
 
     }
 
@@ -51,7 +60,7 @@ public class MaterialesSolicitudAdapter extends RecyclerView.Adapter<MaterialesS
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView image;
-        private TextView nombreMaterial, fecha, cantidad, status;
+        private TextView nombreMaterial, fecha, cantidad, status, producto;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -61,6 +70,7 @@ public class MaterialesSolicitudAdapter extends RecyclerView.Adapter<MaterialesS
             fecha = (TextView) itemView.findViewById(R.id.txt_fecha);
             cantidad = (TextView) itemView.findViewById(R.id.cantidad);
             status = (TextView) itemView.findViewById(R.id.status);
+            producto = (TextView) itemView.findViewById(R.id.producto);
 
 
         }

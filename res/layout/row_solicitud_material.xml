@@ -43,21 +43,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nombre_material"
-        android:layout_alignLeft="@+id/nombre_material"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:visibility="gone"
-        android:text="Nombre Producto"
-        android:layout_alignStart="@+id/nombre_material"/>
+        android:visibility="visible"
+        android:layout_toRightOf="@+id/cantidad"
+        android:layout_toEndOf="@+id/cantidad"
+        android:text="Nombre Producto" />
 
 
     <TextView
         android:id="@+id/cantidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/producto"
+        android:layout_below="@+id/nombre_material"
         android:layout_alignLeft="@+id/nombre_material"
         android:layout_alignStart="@+id/nombre_material"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
         android:text="1 pieza"/>
+
+
 
     <TextView
         android:id="@+id/status"
@@ -69,6 +73,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
+        android:textColor="#878787"
+        android:visibility="gone"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
 

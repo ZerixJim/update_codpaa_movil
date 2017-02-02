@@ -26,13 +26,22 @@
                 android:id="@+id/spinner_marca"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="25dp"/>
+                android:layout_marginBottom="25dp"
+                android:visibility="gone"/>
 
             <Spinner
                 android:id="@+id/spinner_producto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="25dp"/>
+                android:layout_marginBottom="25dp"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/cantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/negroFondo"
+                android:inputType="number"/>
 
 
 

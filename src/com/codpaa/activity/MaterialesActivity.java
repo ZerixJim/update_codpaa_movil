@@ -9,41 +9,37 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.codpaa.R;
-import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.adapter.MaterialSpinnerAdapter;
 import com.codpaa.adapter.MaterialesSolicitudAdapter;
-import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.fragment.DialogMaterialRequest;
-import com.codpaa.model.MarcaModel;
 import com.codpaa.model.MaterialModel;
-import com.codpaa.model.SpinnerProductoModel;
+import com.codpaa.widget.DividerItemDecoration;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MaterialesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, DialogMaterialRequest.SelectMaterial {
+public class MaterialesActivity extends AppCompatActivity implements View.OnClickListener, DialogMaterialRequest.SelectMaterial {
 
-    Spinner material, marca, producto;
+
     RecyclerView recyclerMateriales;
-
-    Button btnAgregar;
-    EditText cantidad;
+    TextView txtVacio;
     List<MaterialModel> materialList = new ArrayList<>();
     FloatingActionButton floatingActionButton;
 
@@ -61,24 +57,17 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
         // instaciar todos los widgets
         setUpWidgets();
 
-        // poblar spinner material
-        setUpMaterial();
-
-
-
-    }
-
-    private void setUpMaterial() {
-
-        MaterialSpinnerAdapter adapter = new MaterialSpinnerAdapter(this,
-                android.R.layout.simple_spinner_item, getMaterials());
-
-        if (material != null){
-            material.setAdapter(adapter);
-            material.setOnItemSelectedListener(this);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+
+
+
     }
+
+
 
     private List<MaterialModel> getMaterials() {
         List<MaterialModel> array = new ArrayList<>();
@@ -114,87 +103,28 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
     }
 
 
-    private ArrayList<SpinnerProductoModel> getProductTester(){
 
-        Cursor curProByTienda = new BDopenHelper(this).getProductosTester();
-        ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
-
-        for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
-            final SpinnerProductoModel spP = new SpinnerProductoModel();
-            spP.setIdProducto(curProByTienda.getInt(0));
-            spP.setNombre(curProByTienda.getString(1));
-            spP.setPresentacion(curProByTienda.getString(2));
-            spP.setCodigoBarras(curProByTienda.getString(3));
-            spP.setIdMarca(curProByTienda.getInt(4));
-            arrayP.add(spP);
-        }
-
-        final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
-        spPinicio.setIdProducto(0);
-        spPinicio.setNombre("Seleccione Producto");
-        spPinicio.setPresentacion("");
-        spPinicio.setCodigoBarras("");
-
-        arrayP.add(0,spPinicio);
-
-        curProByTienda.close();
-        return arrayP;
-
-
-    }
 
 
     private void addItem(MaterialModel item){
 
         materialList.add(item);
+
         setUpRecyclerView();
     }
 
-
-    private void addMaterial(){
-
-        MaterialModel mMterial = (MaterialModel) material.getSelectedItem();
-
-        if (mMterial.getIdMaterial() >= 1){
-
-            //si el tipo de material es de producto
-            if (mMterial.getIdTipoMaterial() == 2){
-                // si el tipo de material es un probador
-                if (mMterial.getIdMaterial() == 18){
-                    MaterialModel material = new MaterialModel();
-                    material.setIdMaterial(mMterial.getIdMaterial());
-
-                    SpinnerProductoModel sProdMod = (SpinnerProductoModel) producto.getSelectedItem();
-
-                    material.setIdProducto(sProdMod.getIdProducto());
-                    material.setNombreMaterial(mMterial.getNombreMaterial());
-                    material.setNombreProducto(sProdMod.getNombre());
-
-                    if (cantidad.getText().length() > 0){
-
-                        material.setCantidad(Integer.parseInt(cantidad.getText().toString()));
-
-
-                    } else {
-                        Toast.makeText(this, "Debes escribir una cantidad", Toast.LENGTH_SHORT).show();
-
-                    }
-
-                    addItem(material);
-
-                }
-            }
-        }else {
-            Toast.makeText(this, "Selecciona un material", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void setUpRecyclerView() {
 
         MaterialesSolicitudAdapter adapter = new MaterialesSolicitudAdapter(materialList);
         recyclerMateriales.setAdapter(adapter);
+        recyclerMateriales.addItemDecoration(new DividerItemDecoration(this, null));
 
-        Log.d("List Size", "" + materialList.size());
+        if (materialList.size() > 0){
+            txtVacio.setVisibility(View.INVISIBLE);
+        } else {
+            txtVacio.setVisibility(View.VISIBLE);
+        }
 
 
 
@@ -203,6 +133,7 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
     private void setUpWidgets() {
 
         floatingActionButton = (FloatingActionButton) findViewById(R.id.float_add);
+        txtVacio = (TextView) findViewById(R.id.txt_mensaje_vacio);
 
         if (floatingActionButton != null) {
             floatingActionButton.setOnClickListener(this);
@@ -229,33 +160,39 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
 
         // Create and show the dialog.
         DialogMaterialRequest newFragment = DialogMaterialRequest.newInstance();
+        Bundle args = new Bundle();
+        args.putInt("idPromotor", idPromor);
+        args.putInt("idTienda", idTienda);
+        newFragment.setArguments(args);
         newFragment.setOnMaterialListener(this);
         newFragment.show(ft, "dialog");
     }
 
 
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menu_materiales, menu);
 
 
-        MenuItem item = menu.findItem(R.id.menu_spinner);
-        Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{"marca 1", "marca 2"});
-
-        spinner.setAdapter(adapter);
-
 
 
         return true;
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     @Override
@@ -263,118 +200,7 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
         super.onResume();
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-    }
-
-    private void loadProductoTester() {
-
-        ProductosCustomAdapter adapter = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getProductTester());
-        producto.setAdapter(adapter);
-    }
-
-    private void loadSpinnerMarca(){
-        try {
-
-
-            MarcasAdapter adapter = new MarcasAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
-            marca.setAdapter(adapter);
-
-        }catch(Exception e) {
-            Toast.makeText(this, "Error Mayoreo 3", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-    //
-    private ArrayList<MarcaModel> getArrayList(){
-
-        SQLiteDatabase base = new BDopenHelper(this).getReadableDatabase();
-        ArrayList<MarcaModel> array = new ArrayList<>();
-        String sql = "select idMarca as _id, nombre, img from marca order by nombre asc;";
-        Cursor cursorMarca = base.rawQuery(sql, null);
-
-        for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){
-
-            final MarcaModel spiM = new MarcaModel();
-            spiM.setNombre(cursorMarca.getString(1));
-            spiM.setId(cursorMarca.getInt(0));
-            spiM.setUrl(cursorMarca.getString(2));
-
-            array.add(spiM);
-        }
-
-        final MarcaModel spiMfirst = new MarcaModel();
-        spiMfirst.setNombre("Selecciona Marca");
-        spiMfirst.setId(0);
-
-        array.add(0,spiMfirst);
-        cursorMarca.close();
-        base.close();
-
-        return array;
-
-    }
-
-    private void productoSpinner(int idMarca){
-
-        ProductosCustomAdapter adapter = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListProByTienda(idMarca,idTienda));
-        producto.setAdapter(adapter);
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
-
-    private ArrayList<SpinnerProductoModel> getArrayListProByTienda(int idMarca, int idTienda){
-
-        Cursor curProByTienda = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
-        ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
-        if (curProByTienda.getCount() <= 0){
-
-            Cursor curPro = new BDopenHelper(this).productos(idMarca);
-
-            for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-                final SpinnerProductoModel spP = new SpinnerProductoModel();
-                spP.setIdProducto(curPro.getInt(0));
-                spP.setNombre(curPro.getString(1));
-                spP.setPresentacion(curPro.getString(2));
-                spP.setCodigoBarras(curPro.getString(3));
-                spP.setIdMarca(curPro.getInt(4));
-                arrayP.add(spP);
-            }
-
-
-            curPro.close();
-        } else {
-
-            for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
-                final SpinnerProductoModel spP = new SpinnerProductoModel();
-                spP.setIdProducto(curProByTienda.getInt(0));
-                spP.setNombre(curProByTienda.getString(1));
-                spP.setPresentacion(curProByTienda.getString(2));
-                spP.setCodigoBarras(curProByTienda.getString(3));
-                spP.setIdMarca(curProByTienda.getInt(4));
-                arrayP.add(spP);
-            }
-
-        }
-
-
-
-        final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
-        spPinicio.setIdProducto(0);
-        spPinicio.setNombre("Seleccione Producto");
-
-        arrayP.add(0,spPinicio);
-
-        curProByTienda.close();
-        return arrayP;
-
-    }
 
     @Override
     public void onClick(View view) {
@@ -390,14 +216,13 @@ public class MaterialesActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onAddMaterial(MaterialModel model) {
-
+        addItem(model);
     }
 
     @Override
     public void onTestId(int idMaterial) {
 
 
-        Log.d("idMaterial", "" + idMaterial);
 
     }
 }
