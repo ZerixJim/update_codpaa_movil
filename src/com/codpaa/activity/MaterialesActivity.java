@@ -4,6 +4,8 @@ package com.codpaa.activity;
  * Created by grim on 06/07/2016.
  */
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -20,25 +22,25 @@ import android.widget.Toast;
 
 import com.codpaa.R;
 import com.codpaa.adapter.MaterialesSolicitudAdapter;
+import com.codpaa.db.BDopenHelper;
 import com.codpaa.fragment.DialogMaterialRequest;
 import com.codpaa.model.JsonMaterialModel;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.MaterialModel;
+import com.codpaa.provider.DbEstructure;
 import com.codpaa.response.MaterialesJsonResponse;
+import com.codpaa.update.EnviarDatos;
 import com.codpaa.widget.DividerItemDecoration;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
+
 import com.loopj.android.http.RequestParams;
 
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
+
 
 public class MaterialesActivity extends AppCompatActivity implements View.OnClickListener, DialogMaterialRequest.SelectMaterial {
 
@@ -114,8 +116,6 @@ public class MaterialesActivity extends AppCompatActivity implements View.OnClic
 
             recyclerMateriales.setLayoutManager(linear);
 
-
-
         }
 
 
@@ -141,8 +141,6 @@ public class MaterialesActivity extends AppCompatActivity implements View.OnClic
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menu_materiales, menu);
-
-
 
 
         return true;
@@ -172,24 +170,27 @@ public class MaterialesActivity extends AppCompatActivity implements View.OnClic
 
         if (materialList.size() > 0){
 
-            RequestParams reques = new RequestParams();
-            reques.put("solicitud", "upload_materials");
 
-            Gson gson = new Gson();
-            JsonMaterialModel materialModel = new JsonMaterialModel();
+            BDopenHelper base = new BDopenHelper(this);
 
-            materialModel.setMateriales(materialList);
-            materialModel.setIdPromotor(idPromor);
+            for (MaterialModel model: materialList){
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DbEstructure.MaterialesSolicitud.ID_MATERIAL, model.getIdMaterial());
+                contentValues.put(DbEstructure.MaterialesSolicitud.FECHA, model.getFecha());
+                contentValues.put(DbEstructure.MaterialesSolicitud.ID_PROMOTOR, model.getIdPromotor());
+                contentValues.put(DbEstructure.MaterialesSolicitud.ID_PRODUCTO, model.getIdProducto());
+                contentValues.put(DbEstructure.MaterialesSolicitud.ID_TIENDA, model.getIdTienda());
+                contentValues.put(DbEstructure.MaterialesSolicitud.CANTIDAD, model.getCantidad());
 
 
-            reques.put("json", gson.toJson(materialModel));
+                base.insertar(DbEstructure.MaterialesSolicitud.TABLE_NAME, contentValues);
 
-            Log.d("json", gson.toJson(materialModel));
+            }
 
-            AsyncHttpClient cliente = new AsyncHttpClient();
 
-            MaterialesJsonResponse response = new MaterialesJsonResponse(this);
-            cliente.get("http://plataformavanguardia.net/test/webservice/serv.php", reques, response);
+            EnviarDatos enviar = new EnviarDatos(this);
+
+            enviar.enviarMateriales(idPromor);
 
             materialList.clear();
             setUpRecyclerView();
@@ -198,13 +199,6 @@ public class MaterialesActivity extends AppCompatActivity implements View.OnClic
         }else {
             Toast.makeText(this, "No hay Materiales seleccionados", Toast.LENGTH_SHORT).show();
         }
-
-
-
-
-
-
-
 
 
     }
@@ -236,8 +230,6 @@ public class MaterialesActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onTestId(int idMaterial) {
-
-
 
     }
 }

@@ -22,6 +22,7 @@ import com.codpaa.provider.DbEstructure.EncuestaFoto;
 import com.codpaa.provider.DbEstructure.EncustaPreguntas;
 import com.codpaa.provider.DbEstructure.Preguntas;
 import com.codpaa.provider.DbEstructure.Opciones;
+import com.codpaa.provider.DbEstructure.MaterialesSolicitud;
 
 
 import java.io.File;
@@ -69,6 +70,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String tiendaProductoCatalogo;
     private static String photoProducto;
     private static String materiales;
+    private static String materialesSolicitud;
     private static String encuestaFoto;
     private static String opciones;
 
@@ -262,6 +264,17 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 Materiales.SOLICITUD_MAXIMA + " int, " +
                 Materiales.TIPO_MATERIAL + " int)";
 
+        materialesSolicitud = "create table if not exists " +
+                MaterialesSolicitud.TABLE_NAME + "(" +
+                MaterialesSolicitud.ID_SOLICITUD + " integer primary key autoincrement, " +
+                MaterialesSolicitud.ID_MATERIAL + " int," +
+                MaterialesSolicitud.ID_PROMOTOR + " int," +
+                MaterialesSolicitud.ID_PRODUCTO + " int," +
+                MaterialesSolicitud.ID_TIENDA + " int," +
+                MaterialesSolicitud.FECHA + " varchar(25)," +
+                MaterialesSolicitud.CANTIDAD + " int," +
+                MaterialesSolicitud.STATUS + " integer default 1)";
+
 
 
 
@@ -305,6 +318,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(tiendaProductoCatalogo);
         db.execSQL(photoProducto);
         db.execSQL(materiales);
+        db.execSQL(materialesSolicitud);
     }
 
     @Override
@@ -357,6 +371,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
             db.execSQL("alter table producto add column tester int");
             db.execSQL("alter table ventaPromedio add column idProducto int");
+
+            db.execSQL(materialesSolicitud);
 
 
         }

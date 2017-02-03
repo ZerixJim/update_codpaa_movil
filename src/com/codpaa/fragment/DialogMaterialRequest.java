@@ -265,6 +265,7 @@ public class DialogMaterialRequest extends DialogFragment implements AdapterView
 
         spinnerMaterial.setSelection(0);
         cantidad.setText("");
+        cantidad.setHint("Cantidad");
 
     }
 

@@ -3,6 +3,7 @@ package com.codpaa.update;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -30,10 +31,13 @@ import android.widget.Toast;
 
 import com.codpaa.listener.HttpResponse;
 import com.codpaa.model.JsonEncuestaVeiw;
+import com.codpaa.model.JsonMaterialModel;
 import com.codpaa.model.JsonProductosView;
+import com.codpaa.model.MaterialModel;
 import com.codpaa.model.Respuesta;
 import com.codpaa.provider.DbEstructure;
 import com.codpaa.response.EncuestaResponse;
+import com.codpaa.response.MaterialesJsonResponse;
 import com.codpaa.util.Utilities;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -365,8 +369,56 @@ public class EnviarDatos {
 		
 	}
 
+	public void enviarMateriales(int idPromor){
 
-	
+		SQLiteDatabase base = new BDopenHelper(activity).getReadableDatabase();
+
+		String sql = "select * from materiales_solicitud where estatus=1;";
+
+		Cursor cursor = base.rawQuery(sql, null);
+
+		if (cursor.getCount() > 0){
+			List<MaterialModel> materialList = new ArrayList<>();
+
+			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+
+				MaterialModel material = new MaterialModel();
+				material.setIdMaterial(cursor.getInt(cursor.getColumnIndex(DbEstructure.MaterialesSolicitud.ID_MATERIAL)));
+				material.setIdPromotor(cursor.getInt(cursor.getColumnIndex(DbEstructure.MaterialesSolicitud.ID_PROMOTOR)));
+				material.setIdTienda(cursor.getInt(cursor.getColumnIndex(DbEstructure.MaterialesSolicitud.ID_TIENDA)));
+				material.setFecha(cursor.getString(cursor.getColumnIndex(DbEstructure.MaterialesSolicitud.FECHA)));
+				material.setCantidad(cursor.getInt(cursor.getColumnIndex(DbEstructure.MaterialesSolicitud.CANTIDAD)));
+				material.setIdProducto(cursor.getInt(cursor.getColumnIndex(DbEstructure.MaterialesSolicitud.ID_PRODUCTO)));
+				materialList.add(material);
+
+			}
+
+			RequestParams reques = new RequestParams();
+			reques.put("solicitud", "upload_materials");
+
+			Gson gson = new Gson();
+			JsonMaterialModel materialModel = new JsonMaterialModel();
+
+			materialModel.setMateriales(materialList);
+			materialModel.setIdPromotor(idPromor);
+
+
+			reques.put("json", gson.toJson(materialModel));
+
+			Log.d("json", gson.toJson(materialModel));
+
+			AsyncHttpClient cliente = new AsyncHttpClient();
+
+			MaterialesJsonResponse response = new MaterialesJsonResponse(activity);
+			cliente.get("http://plataformavanguardia.net/test/webservice/serv.php", reques, response);
+
+		}
+
+
+
+		cursor.close();
+
+	}
 
 	
 	public void enviarFrentes() {
