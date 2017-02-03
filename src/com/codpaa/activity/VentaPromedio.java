@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -29,8 +30,11 @@ import android.widget.Toast;
 
 import com.codpaa.R;
 import com.codpaa.adapter.MarcasAdapter;
+import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.MarcaModel;
+import com.codpaa.model.ProductosModel;
+import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.update.EnviarDatos;
 
 import java.text.ParseException;
@@ -42,9 +46,9 @@ import java.util.Locale;
 
 
 
-public class VentaPromedio extends AppCompatActivity{
+public class VentaPromedio extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Spinner spinnerMarca;
+    private Spinner spinnerMarca, spinnerProducto;
     private int idPromotor, idTienda;
     private static Button btnFechaI, btnFechaF;
     private RadioGroup radioTipo;
@@ -61,9 +65,6 @@ public class VentaPromedio extends AppCompatActivity{
         idTienda = i.getIntExtra("idTienda", 0);
 
 
-
-
-
         btnFechaI = (Button) findViewById(R.id.btnI);
         btnFechaF = (Button) findViewById(R.id.btnF);
 
@@ -71,7 +72,11 @@ public class VentaPromedio extends AppCompatActivity{
 
         editCantidad = (EditText) findViewById(R.id.edit_cantidad);
 
-
+        spinnerMarca = (Spinner) findViewById(R.id.spinner);
+        if (spinnerMarca != null) {
+            spinnerMarca.setOnItemSelectedListener(this);
+        }
+        spinnerProducto = (Spinner) findViewById(R.id.producto);
 
 
         loadSpinner();
@@ -111,7 +116,7 @@ public class VentaPromedio extends AppCompatActivity{
 
 
     private void loadSpinner(){
-        spinnerMarca = (Spinner) findViewById(R.id.spinner);
+
 
         MarcasAdapter marcasAdapter = new MarcasAdapter(this,android.R.layout.simple_spinner_item, getArrayList());
         spinnerMarca.setAdapter(marcasAdapter);
@@ -124,83 +129,94 @@ public class VentaPromedio extends AppCompatActivity{
 
         MarcaModel marcaModel = (MarcaModel) spinnerMarca.getSelectedItem();
 
+
         if (marcaModel.getId() > 0){
+            ProductosModel productoModel = (ProductosModel) spinnerProducto.getSelectedItem();
 
-            if (radioTipo.getCheckedRadioButtonId() == -1){
-                Toast.makeText(this, "Tipo no Seleccionado", Toast.LENGTH_SHORT).show();
-            }else {
+            if (productoModel.getIdProducto() > 0){
 
-                if (editCantidad.getText().toString().trim().length() > 0){
+                if (radioTipo.getCheckedRadioButtonId() == -1){
+                    Toast.makeText(this, "Tipo no Seleccionado", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    if (editCantidad.getText().toString().trim().length() > 0){
 
 
-                    if (!btnFechaI.getText().equals("fecha") && !btnFechaF.getText().equals("fecha")){
+                        if (!btnFechaI.getText().equals("fecha") && !btnFechaF.getText().equals("fecha")){
 
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-                        try {
-                            Date fechaInicio = simpleDateFormat.parse(btnFechaI.getText().toString());
-                            Date fechaFin = simpleDateFormat.parse(btnFechaF.getText().toString());
+                            try {
+                                Date fechaInicio = simpleDateFormat.parse(btnFechaI.getText().toString());
+                                Date fechaFin = simpleDateFormat.parse(btnFechaF.getText().toString());
 
-                            if (fechaInicio.getTime() < fechaFin.getTime()){
+                                if (fechaInicio.getTime() < fechaFin.getTime()){
 
-                                Toast.makeText(this, "Enviando..", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(this, "Enviando..", Toast.LENGTH_SHORT).show();
 
-                                BDopenHelper bd = new BDopenHelper(this);
+                                    BDopenHelper bd = new BDopenHelper(this);
 
-                                ContentValues cv = new ContentValues();
+                                    ContentValues cv = new ContentValues();
 
-                                int idRadioSelect = radioTipo.getCheckedRadioButtonId();
-                                RadioButton radioSelected = (RadioButton) findViewById(idRadioSelect);
+                                    int idRadioSelect = radioTipo.getCheckedRadioButtonId();
+                                    RadioButton radioSelected = (RadioButton) findViewById(idRadioSelect);
 
-                                cv.put("idMarca", marcaModel.getId());
-                                if (radioSelected != null) {
-                                    cv.put("tipo", radioSelected.getText().toString().toUpperCase());
+                                    cv.put("idMarca", marcaModel.getId());
+                                    if (radioSelected != null) {
+                                        cv.put("tipo", radioSelected.getText().toString().toUpperCase());
+                                    }
+                                    cv.put("cantidad", editCantidad.getText().toString().trim().toUpperCase());
+                                    cv.put("fecha_inicio", btnFechaI.getText().toString());
+                                    cv.put("fecha_fin", btnFechaF.getText().toString());
+                                    cv.put("idTienda", idTienda );
+                                    cv.put("idPromotor", idPromotor);
+                                    cv.put("idProducto", productoModel.getIdProducto());
+
+                                    bd.insertar("ventaPromedio", cv);
+
+
+
+                                    EnviarDatos envia = new EnviarDatos(this);
+                                    envia.sendVentaPromedio();
+
+                                    spinnerMarca.setSelection(0);
+                                    radioTipo.clearCheck();
+                                    editCantidad.setText("");
+                                    btnFechaI.setText(getResources().getText(R.string.fecha));
+                                    btnFechaF.setText(getResources().getText(R.string.fecha));
+
+                                }else {
+                                    Toast.makeText(this, "La fecha de Inicio No puede se Mayor a la fecha final",
+                                            Toast.LENGTH_LONG).show();
                                 }
-                                cv.put("cantidad", editCantidad.getText().toString().trim().toUpperCase());
-                                cv.put("fecha_inicio", btnFechaI.getText().toString());
-                                cv.put("fecha_fin", btnFechaF.getText().toString());
-                                cv.put("idTienda", idTienda );
-                                cv.put("idPromotor", idPromotor);
-
-                                bd.insertar("ventaPromedio", cv);
 
 
-
-                                EnviarDatos envia = new EnviarDatos(this);
-                                envia.sendVentaPromedio();
-
-                                spinnerMarca.setSelection(0);
-                                radioTipo.clearCheck();
-                                editCantidad.setText("");
-                                btnFechaI.setText(getResources().getText(R.string.fecha));
-                                btnFechaF.setText(getResources().getText(R.string.fecha));
-
-                            }else {
-                                Toast.makeText(this, "La fecha de Inicio No puede se Mayor a la fecha final",
-                                        Toast.LENGTH_LONG).show();
+                            } catch (ParseException e) {
+                                e.printStackTrace();
                             }
 
 
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+
+                        }else {
+
+                            Toast.makeText(this, "Rango de fecha no seleccionado", Toast.LENGTH_SHORT).show();
+
                         }
 
 
-
                     }else {
-
-                        Toast.makeText(this, "Rango de fecha no seleccionado", Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(this, "Escribe la cantidad", Toast.LENGTH_SHORT).show();
                     }
 
 
-                }else {
-                    Toast.makeText(this, "Escribe la cantidad", Toast.LENGTH_SHORT).show();
+
                 }
 
-
-
+            }else {
+                Toast.makeText(this, "Selecciona Producto", Toast.LENGTH_SHORT).show();
             }
+
+
 
         }else {
             Toast.makeText(this, "Selecciona Marca", Toast.LENGTH_SHORT).show();
@@ -288,6 +304,30 @@ public class VentaPromedio extends AppCompatActivity{
 
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+        MarcaModel model = (MarcaModel) adapterView.getSelectedItem();
+
+        if (model.getId() > 0){
+
+            spinnerProducto.setVisibility(View.VISIBLE);
+
+            loadSpinnerProd(model.getId());
+
+
+        }else {
+            spinnerProducto.setVisibility(View.GONE);
+        }
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
 
     public static class DatePickerInicio extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
@@ -325,6 +365,68 @@ public class VentaPromedio extends AppCompatActivity{
 
 
         }
+    }
+
+    private void loadSpinnerProd(int idM){
+        try {
+            ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListProByTiensda(idM, idTienda));
+            spinnerProducto.setAdapter(proAdap);
+
+        } catch (Exception e) {
+            Toast.makeText(this, "Error Mayoreo 4", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+    private ArrayList<SpinnerProductoModel> getArrayListProByTiensda(int idMarca, int idTienda){
+
+        Cursor curProByTienda = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
+        ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
+        if (curProByTienda.getCount() <= 0){
+
+            Cursor curPro = new BDopenHelper(this).productos(idMarca);
+
+            for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
+                final SpinnerProductoModel spP = new SpinnerProductoModel();
+                spP.setIdProducto(curPro.getInt(0));
+                spP.setNombre(curPro.getString(1));
+                spP.setPresentacion(curPro.getString(2));
+                spP.setCodigoBarras(curPro.getString(3));
+                spP.setIdMarca(curPro.getInt(4));
+                arrayP.add(spP);
+            }
+
+
+            curPro.close();
+        } else {
+
+            for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
+                final SpinnerProductoModel spP = new SpinnerProductoModel();
+                spP.setIdProducto(curProByTienda.getInt(0));
+                spP.setNombre(curProByTienda.getString(1));
+                spP.setPresentacion(curProByTienda.getString(2));
+                spP.setCodigoBarras(curProByTienda.getString(3));
+                spP.setIdMarca(curProByTienda.getInt(4));
+                arrayP.add(spP);
+            }
+
+        }
+
+
+
+        final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
+        spPinicio.setIdProducto(0);
+        spPinicio.setNombre("Seleccione Producto");
+        spPinicio.setPresentacion("producto sin seleccionar");
+        spPinicio.setCodigoBarras(" ");
+
+        arrayP.add(0,spPinicio);
+
+
+        curProByTienda.close();
+        return arrayP;
+
     }
 
     public static class DatePickerFin extends DialogFragment implements DatePickerDialog.OnDateSetListener{

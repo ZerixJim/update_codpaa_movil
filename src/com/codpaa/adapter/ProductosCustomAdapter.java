@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		ImageView imagenProducto;
 		TextView divider;
 		ProgressBar progressBar;
+		FrameLayout frameLayout;
  	}
 	
 
@@ -81,6 +83,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 			viewHolder.imagenProducto = (ImageView) row.findViewById(R.id.image_producto);
 			viewHolder.divider = (TextView) row.findViewById(R.id.divider);
 			viewHolder.progressBar = (ProgressBar) row.findViewById(R.id.progress);
+			viewHolder.frameLayout = (FrameLayout) row.findViewById(R.id.frame);
 
 			row.setTag(viewHolder);
 
@@ -92,11 +95,17 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		SpinnerProductoModel temp = _datos.get(position);
 
 
-		viewHolder.txtNombre.setText(temp.getNombre() + " " + temp.getPresentacion());
+
+		if (position != 0){
+
+			viewHolder.txtNombre.setText(temp.getNombre() + " " + temp.getPresentacion());
+		}else {
+			viewHolder.txtNombre.setText(temp.getNombre());
+		}
 		//viewHolder.txtPresentacion.setText(temp.getPresentacion());
 		viewHolder.txtPresentacion.setVisibility(View.GONE);
 		viewHolder.progressBar.setVisibility(View.GONE);
-		viewHolder.divider.setVisibility(View.GONE);
+		viewHolder.frameLayout.setVisibility(View.GONE);
 
 
 		if(temp.getCodigoBarras() != null){

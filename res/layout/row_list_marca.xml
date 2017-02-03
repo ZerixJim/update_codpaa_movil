@@ -2,8 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/logotipoMarca"
@@ -12,8 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_margin="20dp"
         />
 
     <TextView
@@ -23,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/logotipoMarca"
         android:layout_toEndOf="@+id/logotipoMarca"
+        android:layout_centerVertical="true"
         />
 
     <TextView
@@ -38,4 +37,13 @@
         android:visibility="gone"
 
         />
+
+    <TextView
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#c4c4c4"
+        android:visibility="visible"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

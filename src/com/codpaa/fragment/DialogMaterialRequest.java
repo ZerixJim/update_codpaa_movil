@@ -24,8 +24,11 @@ import com.codpaa.model.MarcaModel;
 import com.codpaa.model.MaterialModel;
 import com.codpaa.model.SpinnerProductoModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /*
  * Created by grim on 30/01/17.
@@ -180,45 +183,73 @@ public class DialogMaterialRequest extends DialogFragment implements AdapterView
             if (mMterial.getIdTipoMaterial() == 2){
                 // si el tipo de material es un probador
 
-
-                MaterialModel material = new MaterialModel();
-                material.setIdMaterial(mMterial.getIdMaterial());
-
-                SpinnerProductoModel sProdMod = (SpinnerProductoModel) spinnerProducto.getSelectedItem();
-
-                material.setIdProducto(sProdMod.getIdProducto());
-                material.setNombreMaterial(mMterial.getNombreMaterial());
-                material.setNombreProducto(sProdMod.getNombre());
-                material.setIdTipoMaterial(mMterial.getIdTipoMaterial());
-                material.setNombreMaterial(mMterial.getNombreMaterial());
-                material.setUnidad(mMterial.getUnidad());
-
                 if (cantidad.getText().length() > 0){
 
-                    material.setCantidad(Integer.parseInt(cantidad.getText().toString()));
+                    if (Integer.parseInt(cantidad.getText().toString()) <= mMterial.getSolicitudMaxima()){
+
+                        MaterialModel material = new MaterialModel();
+                        material.setIdMaterial(mMterial.getIdMaterial());
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        Calendar c = Calendar.getInstance();
+
+                        String fecha = dateFormat.format(c.getTime());
+
+                        SpinnerProductoModel sProdMod = (SpinnerProductoModel) spinnerProducto.getSelectedItem();
+
+                        material.setIdProducto(sProdMod.getIdProducto());
+                        material.setNombreMaterial(mMterial.getNombreMaterial());
+                        material.setNombreProducto(sProdMod.getNombre());
+                        material.setIdTipoMaterial(mMterial.getIdTipoMaterial());
+                        material.setNombreMaterial(mMterial.getNombreMaterial());
+                        material.setUnidad(mMterial.getUnidad());
+                        material.setIdPromotor(idPromotor);
+                        material.setFecha(fecha);
+                        material.setIdTienda(idTienda);
+
+                        material.setCantidad(Integer.parseInt(cantidad.getText().toString()));
+                        materialListener.onAddMaterial(material);
+                        clearData();
+
+                    }else {
+                        Toast.makeText(getActivity(), "Cantidad Maxima sobrepasada", Toast.LENGTH_SHORT).show();
+                    }
+
+
 
 
                 } else {
-                    Toast.makeText(getActivity(), "Debes escribir una cantidad", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Cantidad Requerida", Toast.LENGTH_SHORT).show();
 
                 }
-
-                materialListener.onAddMaterial(material);
-                clearData();
 
 
             } else {
                 if (cantidad.getText().length() > 0){
 
-                    MaterialModel material = new MaterialModel();
-                    material.setIdTipoMaterial(mMterial.getIdTipoMaterial());
-                    material.setIdMaterial(mMterial.getIdMaterial());
-                    material.setCantidad(Integer.parseInt(cantidad.getText().toString()));
-                    material.setNombreMaterial(mMterial.getNombreMaterial());
-                    material.setUnidad(mMterial.getUnidad());
+                    if (Integer.parseInt(cantidad.getText().toString()) <= mMterial.getSolicitudMaxima()){
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        Calendar c = Calendar.getInstance();
 
-                    materialListener.onAddMaterial(material);
-                    clearData();
+                        String fecha = dateFormat.format(c.getTime());
+
+                        MaterialModel material = new MaterialModel();
+                        material.setIdTipoMaterial(mMterial.getIdTipoMaterial());
+                        material.setIdMaterial(mMterial.getIdMaterial());
+                        material.setCantidad(Integer.parseInt(cantidad.getText().toString()));
+                        material.setNombreMaterial(mMterial.getNombreMaterial());
+                        material.setUnidad(mMterial.getUnidad());
+                        material.setIdPromotor(idPromotor);
+                        material.setFecha(fecha);
+                        material.setIdTienda(idTienda);
+
+                        materialListener.onAddMaterial(material);
+                        clearData();
+                    }else {
+                        Toast.makeText(getActivity(), "Cantidad Maxima sobrepasada", Toast.LENGTH_SHORT).show();
+                    }
+
+
 
                 }else {
                     Toast.makeText(getActivity(), "Cantidad Requerida", Toast.LENGTH_SHORT).show();

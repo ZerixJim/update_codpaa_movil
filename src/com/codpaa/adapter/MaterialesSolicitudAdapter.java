@@ -42,6 +42,7 @@ public class MaterialesSolicitudAdapter extends RecyclerView.Adapter<MaterialesS
         holder.cantidad.setText(materialModel.getCantidad()+materialModel.getUnidad()+ "s");
 
         holder.producto.setVisibility(View.GONE);
+        holder.fecha.setText(materialModel.getFecha());
 
         if (materialModel.getIdTipoMaterial() == 2){
             holder.producto.setVisibility(View.VISIBLE);

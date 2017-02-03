@@ -226,7 +226,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         ventaPromedio = "create table if not exists " +
                 "ventaPromedio(idMarca int NOT NULL, tipo varchar(10) NOT NULL, cantidad float NOT NULL," +
                 "fecha_inicio varchar(15),fecha_fin varchar(15), idTienda int NOT NULL, " +
-                "idPromotor int NOT NULL, estatus integer default 1)";
+                "idPromotor int NOT NULL, estatus integer default 1, int idProducto)";
 
         direcciones = "create table if not exists " +
                 "direcciones(idTienda int NOT NULL, idPromotor int NOT NULL, direccion varchar(200) NOT NULL," +
@@ -356,6 +356,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL(materiales);
 
             db.execSQL("alter table producto add column tester int");
+            db.execSQL("alter table ventaPromedio add column idProducto int");
 
 
         }

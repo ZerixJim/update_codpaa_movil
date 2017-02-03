@@ -933,12 +933,14 @@ public class EnviarDatos {
                     rp.put("fechaf", curVenta.getString(curVenta.getColumnIndex("fecha_fin")));
                     rp.put("idTienda", Integer.toString(curVenta.getInt(curVenta.getColumnIndex("idTienda"))));
                     rp.put("idPromotor", Integer.toString(curVenta.getInt(curVenta.getColumnIndex("idPromotor"))));
+					rp.put("idProducto", Integer.toString(curVenta.getInt(curVenta.getColumnIndex("idProducto"))));
 
                     HttpVentaResponse response = new HttpVentaResponse(activity,
                             curVenta.getInt(curVenta.getColumnIndex("idMarca")),
                             curVenta.getString(curVenta.getColumnIndex("tipo")),
                             curVenta.getString(curVenta.getColumnIndex("fecha_inicio")),
-                            curVenta.getString(curVenta.getColumnIndex("fecha_fin")));
+                            curVenta.getString(curVenta.getColumnIndex("fecha_fin")),
+							curVenta.getInt(curVenta.getColumnIndex("idProducto")));
 					cliente.get(Utilities.WEB_SERVICE_CODPAA+"sendVentaPromedio.php", rp, response);
 				}
 
@@ -956,16 +958,17 @@ public class EnviarDatos {
     private class HttpVentaResponse extends JsonHttpResponseHandler{
 
 
-        private int idMarca;
+        private int idMarca, idProducto;
         private String tipo, fechaI, fechaF;
         Context context;
 
-        public HttpVentaResponse(Context context,int idMarca, String tipo, String fechaI, String fechaF){
+        public HttpVentaResponse(Context context,int idMarca, String tipo, String fechaI, String fechaF, int idProducto){
             this.idMarca = idMarca;
             this.tipo = tipo;
             this.fechaI = fechaI;
             this.fechaF = fechaF;
             this.context = context;
+			this.idProducto = idProducto;
 
         }
 
@@ -984,7 +987,7 @@ public class EnviarDatos {
                         try {
 
                             db.execSQL("update ventaPromedio set estatus=2 where idMarca="+idMarca+" " +
-                                    "and tipo='"+tipo+"' and fecha_inicio='"+fechaI+"' and fecha_fin='"+fechaF+"'");
+                                    "and tipo='"+tipo+"' and fecha_inicio='"+fechaI+"' and fecha_fin='"+fechaF+"' and idProducto="+idProducto);
 
                             Toast.makeText(activity, "Registro Recibido", Toast.LENGTH_SHORT).show();
 

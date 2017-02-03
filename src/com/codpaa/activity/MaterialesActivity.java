@@ -4,8 +4,6 @@ package com.codpaa.activity;
  * Created by grim on 06/07/2016.
  */
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -13,27 +11,34 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codpaa.R;
-import com.codpaa.adapter.MaterialSpinnerAdapter;
 import com.codpaa.adapter.MaterialesSolicitudAdapter;
-import com.codpaa.db.BDopenHelper;
 import com.codpaa.fragment.DialogMaterialRequest;
+import com.codpaa.model.JsonMaterialModel;
+import com.codpaa.model.MarcaModel;
 import com.codpaa.model.MaterialModel;
+import com.codpaa.response.MaterialesJsonResponse;
 import com.codpaa.widget.DividerItemDecoration;
+import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 public class MaterialesActivity extends AppCompatActivity implements View.OnClickListener, DialogMaterialRequest.SelectMaterial {
 
@@ -66,44 +71,6 @@ public class MaterialesActivity extends AppCompatActivity implements View.OnClic
 
 
     }
-
-
-
-    private List<MaterialModel> getMaterials() {
-        List<MaterialModel> array = new ArrayList<>();
-
-        SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
-        String sql = "select idMaterial, material,  unidad, solicitudMaxima, tipo_material from materiales order by material asc";
-
-
-        Cursor cursor = db.rawQuery(sql, null);
-
-        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-            final MaterialModel material = new MaterialModel();
-
-            material.setNombreMaterial(cursor.getString(cursor.getColumnIndex("material")));
-
-            material.setIdMaterial(cursor.getInt(cursor.getColumnIndex("idMaterial")));
-            material.setIdTipoMaterial(cursor.getInt(cursor.getColumnIndex("tipo_material")));
-            material.setUnidad(cursor.getString(cursor.getColumnIndex("unidad")));
-            material.setSolicitudMaxima(cursor.getInt(cursor.getColumnIndex("solicitudMaxima")));
-
-            array.add(material);
-        }
-
-        final MaterialModel materialDefault = new MaterialModel();
-        materialDefault.setNombreMaterial("Selecciona Material");
-        materialDefault.setIdMaterial(0);
-
-        array.add(0, materialDefault);
-
-
-        cursor.close();
-        return array;
-    }
-
-
-
 
 
     private void addItem(MaterialModel item){
@@ -189,9 +156,56 @@ public class MaterialesActivity extends AppCompatActivity implements View.OnClic
                 finish();
                 return true;
 
+            case R.id.enviar:
+
+                enviarDatos();
+
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+    }
+
+    private void enviarDatos() {
+
+        if (materialList.size() > 0){
+
+            RequestParams reques = new RequestParams();
+            reques.put("solicitud", "upload_materials");
+
+            Gson gson = new Gson();
+            JsonMaterialModel materialModel = new JsonMaterialModel();
+
+            materialModel.setMateriales(materialList);
+            materialModel.setIdPromotor(idPromor);
+
+
+            reques.put("json", gson.toJson(materialModel));
+
+            Log.d("json", gson.toJson(materialModel));
+
+            AsyncHttpClient cliente = new AsyncHttpClient();
+
+            MaterialesJsonResponse response = new MaterialesJsonResponse(this);
+            cliente.get("http://plataformavanguardia.net/test/webservice/serv.php", reques, response);
+
+            materialList.clear();
+            setUpRecyclerView();
+
+
+        }else {
+            Toast.makeText(this, "No hay Materiales seleccionados", Toast.LENGTH_SHORT).show();
+        }
+
+
+
+
+
+
+
+
 
     }
 
@@ -207,6 +221,7 @@ public class MaterialesActivity extends AppCompatActivity implements View.OnClic
 
         switch (view.getId()){
             case R.id.float_add:
+
 
                 showDialog();
 

@@ -9,6 +9,25 @@ public class MaterialModel {
     private int idMaterial;
     private int idProducto;
     private int idTipoMaterial;
+    private int idPromotor;
+    private int idTienda;
+
+    public int getIdTienda() {
+        return idTienda;
+    }
+
+    public void setIdTienda(int idTienda) {
+        this.idTienda = idTienda;
+    }
+
+    public int getIdPromotor() {
+        return idPromotor;
+    }
+
+    public void setIdPromotor(int idPromotor) {
+        this.idPromotor = idPromotor;
+    }
+
     private int cantidad;
     private String unidad;
     private int solicitudMaxima;
