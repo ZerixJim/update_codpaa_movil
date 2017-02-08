@@ -39,7 +39,7 @@ public class MaterialesSolicitudAdapter extends RecyclerView.Adapter<MaterialesS
     public void onBindViewHolder(ViewHolder holder, int position) {
         MaterialModel materialModel = materiales.get(position);
         holder.nombreMaterial.setText(materialModel.getNombreMaterial());
-        holder.cantidad.setText(materialModel.getCantidad()+materialModel.getUnidad()+ "s");
+        holder.cantidad.setText(materialModel.getCantidad()+" "+materialModel.getUnidad()+ "s");
 
         holder.producto.setVisibility(View.GONE);
         holder.fecha.setText(materialModel.getFecha());

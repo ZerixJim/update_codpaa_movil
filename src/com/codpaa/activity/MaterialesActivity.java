@@ -5,15 +5,16 @@ package com.codpaa.activity;
  */
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,17 +25,11 @@ import com.codpaa.R;
 import com.codpaa.adapter.MaterialesSolicitudAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.fragment.DialogMaterialRequest;
-import com.codpaa.model.JsonMaterialModel;
-import com.codpaa.model.MarcaModel;
 import com.codpaa.model.MaterialModel;
 import com.codpaa.provider.DbEstructure;
-import com.codpaa.response.MaterialesJsonResponse;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.widget.DividerItemDecoration;
-import com.google.gson.Gson;
-import com.loopj.android.http.AsyncHttpClient;
 
-import com.loopj.android.http.RequestParams;
 
 
 import java.util.ArrayList;
@@ -151,7 +146,13 @@ public class MaterialesActivity extends AppCompatActivity implements View.OnClic
 
         switch (item.getItemId()){
             case android.R.id.home:
-                finish();
+
+                if (materialList.size() > 0){
+                    dialogoConfirmacion();
+                }else {
+
+                    finish();
+                }
                 return true;
 
             case R.id.enviar:
@@ -231,5 +232,32 @@ public class MaterialesActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onTestId(int idMaterial) {
 
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+
+            if (materialList.size() > 0){
+                dialogoConfirmacion();
+            }else {
+                finish();
+            }
+
+
+        }
+        return true;
+    }
+
+    private void dialogoConfirmacion(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        dialog.setTitle("Existen materiales pendientes de enviar, desea salir sin enviar")
+                .setPositiveButton("Cancelar", null)
+                .setNegativeButton("Salir", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                }).create().show();
     }
 }

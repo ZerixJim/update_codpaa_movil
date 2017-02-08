@@ -246,7 +246,8 @@ public class DialogMaterialRequest extends DialogFragment implements AdapterView
                         materialListener.onAddMaterial(material);
                         clearData();
                     }else {
-                        Toast.makeText(getActivity(), "Cantidad Maxima sobrepasada", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Cantidad Maxima " + mMterial.getSolicitudMaxima() +
+                                " " + mMterial.getUnidad() + "s", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -368,7 +369,7 @@ public class DialogMaterialRequest extends DialogFragment implements AdapterView
 
                     if (material.getIdMaterial() > 0){
 
-                        cantidad.setHint("Maximo "+material.getSolicitudMaxima() + material.getUnidad() + "s");
+                        cantidad.setHint("Maximo "+material.getSolicitudMaxima() + " " +material.getUnidad() + "s");
 
                     }
                     if (material.getIdTipoMaterial() == 2){

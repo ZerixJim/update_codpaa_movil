@@ -410,7 +410,7 @@ public class EnviarDatos {
 			AsyncHttpClient cliente = new AsyncHttpClient();
 
 			MaterialesJsonResponse response = new MaterialesJsonResponse(activity);
-			cliente.get("http://plataformavanguardia.net/test/webservice/serv.php", reques, response);
+			cliente.get(Utilities.WEB_SERVICE_CODPAA + Utilities.SERV_PHP, reques, response);
 
 		}
 
