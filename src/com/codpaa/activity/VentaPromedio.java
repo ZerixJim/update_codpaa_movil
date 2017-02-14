@@ -131,7 +131,7 @@ public class VentaPromedio extends AppCompatActivity implements AdapterView.OnIt
 
 
         if (marcaModel.getId() > 0){
-            ProductosModel productoModel = (ProductosModel) spinnerProducto.getSelectedItem();
+            SpinnerProductoModel productoModel = (SpinnerProductoModel) spinnerProducto.getSelectedItem();
 
             if (productoModel.getIdProducto() > 0){
 
