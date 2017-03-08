@@ -1210,15 +1210,9 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 	@Override
 	public void onLocationChanged(Location location) {
-		
-		
-		if(location != null){
-			
-			loGeneral = location;
-			//Log.d("Cambio Localizacion", "lat: "+location.getLatitude()+" lon: "+location.getLongitude());
-			
-		}
-		
+
+        loGeneral = location;
+
 		
 	}
 
