@@ -280,15 +280,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 			Log.i("Geo", "start");
 	        startGPS();
 
-			try {
-				loNet = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-				loGps = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-			}catch(SecurityException e){
-				e.printStackTrace();
-			}
-	        
 
-
+			//tiempo location activo (60 * 1000) = 1min * 2 = 2min activo
 	        handler.postDelayed(stop, (60 * 1000) * 2);
 	    }
 	};
@@ -303,10 +296,13 @@ public class GeoLocalizar extends Service implements LocationListener{
 	Runnable onePeriod = new Runnable( ) {
 	    public void run( ) {
 			Log.i("Geo", "onePeriod");
-			//
-	        handler.postDelayed(onePeriod, (60 * 1000) * 5);
 
-	        handler.post(start);
+			//iniciamos rastreo
+			handler.post(start);
+
+			//periodo de espera para iniciar 5min
+			handler.postDelayed(onePeriod, (60 * 1000) * 5);
+
 	    }
 	};
 
@@ -316,8 +312,10 @@ public class GeoLocalizar extends Service implements LocationListener{
 		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 		try {
-			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
-			lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
+
+			// requestLocationUpdates(string=provider, long=minTime, float=minDistance, LocationListener = listener )
+			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, this);
+			lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, this);
 		}catch (SecurityException e){
 			e.printStackTrace();
 		}
@@ -357,6 +355,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 		con = this;
 
+		/*iniciamos el timer para encendido de gps*/
 		startContiniuosListening();
 		
 
@@ -1211,6 +1210,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 	@Override
 	public void onLocationChanged(Location location) {
 
+		Log.d("onLocationChange", " Provider "+location.getProvider() +" La "+ location.getLatitude() + " Lo " + location.getLongitude());
         loGeneral = location;
 
 		

@@ -177,7 +177,8 @@
             android:label="@string/materiales" />
 
 
-        <service android:name=".service.GeoLocalizar" />
+        <service android:name=".service.GeoLocalizar"
+            android:exported="false"/>
 
         <service android:name=".service.MyGcmListenerService"
             android:exported="false">
