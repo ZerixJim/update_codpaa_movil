@@ -165,6 +165,7 @@
     <string name="materiales">Materiales</string>
     <string name="encargado_ok">Encargado: OK</string>
     <string name="agregar">Agregar</string>
+    <string name="user_disable">Usuario Desactivado</string>
 
 
 </resources>

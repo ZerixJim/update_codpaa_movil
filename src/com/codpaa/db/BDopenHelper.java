@@ -467,13 +467,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
 
-    public void insertarUsuarios(int idcelular, String nombre, String user, String pass ) throws SQLiteException {
+    public void insertarUsuarios(int idcelular, String nombre, String user, String pass, String status ) throws SQLiteException {
 
         baseDatosLocal = getWritableDatabase();
 
         if(baseDatosLocal != null)
 
-            baseDatosLocal.execSQL("insert or replace into usuarios(idCelular,nombre,user,pass) values("+idcelular+",'"+nombre+"','"+user+"','"+pass+"') ");
+            baseDatosLocal.execSQL("insert or replace into usuarios(idCelular,nombre,user,pass,estatus) values("+idcelular+",'"+nombre+"','"+user+"','"+pass+"', '"+status+"') ");
 
         if(baseDatosLocal != null)baseDatosLocal.close();
 

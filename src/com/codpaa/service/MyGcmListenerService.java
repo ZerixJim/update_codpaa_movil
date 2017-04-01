@@ -60,40 +60,17 @@ public class MyGcmListenerService extends FirebaseMessagingService{
 
             int idPromotor = new BDopenHelper(getApplicationContext()).getIdPromotor();
 
-            String asunto = data.get("asunto");
-            String message = data.get("message");
-            String content = data.get("content");
-            String fecha = data.get("fecha");
-            int idServer = Integer.valueOf(data.get("id_mensaje"));
+            String tipo = data.get("tipo");
 
-            Log.d(TAG, "From: " + remoteMessage.getFrom());
-            Log.d(TAG, "Message: " + message);
-            Log.d(TAG, "Content: " + content);
-            Log.d(TAG, "ID SERVER: " + idServer );
+            if (tipo.equals("mensaje")){
+                mensaje(data, remoteMessage.getFrom(), idPromotor);
+            } else if(tipo.equals("baja")){
 
+                 setBajaPromotor(data);
 
-            SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
-            ContentValues values = new ContentValues();
-
-            values.put("mensaje", message);
-            values.put("asunto", asunto);
-            values.put("content", content);
-            values.put("fecha", fecha);
-            values.put(DbEstructure.Mensaje.ID_PROMOTOR, idPromotor);
-            values.put(DbEstructure.Mensaje.ID_SERVIDOR, idServer);
-
-            int idMensaje = (int) db.insert(Utilities.TABLE_MENSAJE, null, values);
+            }
 
 
-            db.close();
-
-
-
-            sendNotification(data, idMensaje, idServer);
-
-
-            Intent newMessage = new Intent(QuickstartPreferences.NEW_MESSAGE);
-            LocalBroadcastManager.getInstance(this).sendBroadcast(newMessage);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -103,7 +80,9 @@ public class MyGcmListenerService extends FirebaseMessagingService{
 
         // [END_EXCLUDE]
     }
+
     // [END receive_message]
+
 
     /**
      * Create and show a simple notification containing the received GCM message.
@@ -141,6 +120,60 @@ public class MyGcmListenerService extends FirebaseMessagingService{
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+
+
+    private void mensaje(Map<String, String> data, String from, int idPromotor){
+
+
+
+        String asunto = data.get("asunto");
+        String message = data.get("message");
+        String content = data.get("content");
+        String fecha = data.get("fecha");
+        int idServer = Integer.valueOf(data.get("id_mensaje"));
+
+
+        SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("mensaje", message);
+        values.put("asunto", asunto);
+        values.put("content", content);
+        values.put("fecha", fecha);
+        values.put(DbEstructure.Mensaje.ID_PROMOTOR, idPromotor);
+        values.put(DbEstructure.Mensaje.ID_SERVIDOR, idServer);
+
+        int idMensaje = (int) db.insert(Utilities.TABLE_MENSAJE, null, values);
+
+
+        db.close();
+
+
+
+        sendNotification(data, idMensaje, idServer);
+
+
+        Intent newMessage = new Intent(QuickstartPreferences.NEW_MESSAGE);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(newMessage);
+
+    }
+
+    private void setBajaPromotor(Map<String, String> data) {
+
+
+        Log.d("Promotor" , "Baja");
+
+        int idPromotor = Integer.parseInt(data.get("idPromotor"));
+        SQLiteDatabase db = new BDopenHelper(getApplicationContext()).getWritableDatabase();
+
+        db.execSQL("update " + DbEstructure.Usuario.TABLE_NAME + " set " + DbEstructure.Usuario.STATUS + "='b' " +
+                "where " + DbEstructure.Usuario.ID_USER + "=" + idPromotor);
+
+
+        db.close();
+
+
     }
 
 

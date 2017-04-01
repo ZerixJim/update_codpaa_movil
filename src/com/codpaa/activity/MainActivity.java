@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
@@ -39,6 +40,9 @@ import com.loopj.android.http.RequestParams;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.db.DBAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cz.msebera.android.httpclient.Header;
 
 
@@ -53,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 	String username, password;
 	ProgressBar progressBar;
     Activity act;
- 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -89,6 +93,26 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		}
 
 
+		PackageManager pm = getPackageManager();
+
+		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+		List<ApplicationInfo> packageReporter = new ArrayList<>();
+
+		for (ApplicationInfo packageInfo : packages) {
+
+			if (packageInfo.packageName.contains("gps")){
+
+				if (packageInfo.packageName.contains("fake"))
+					packageReporter.add(packageInfo);
+
+			}
+
+		}
+
+
+		for (ApplicationInfo packagess: packageReporter){
+			Log.d("Application Gps", "Package:" + packagess.packageName);
+		}
 
 
 
@@ -184,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 
 
+
         cliente.get(this, Utilities.WEB_SERVICE_CODPAA+"serv.php", rp, new JsonHttpResponseHandler() {
 
 
@@ -202,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
                             b.insertarUsuarios(response.getInt("i"), response.getString("nombre"),
                                     response.getString("usuario").trim(),
-                                    response.getString("password").trim());
+                                    response.getString("password").trim(), response.getString("status"));
                             act.runOnUiThread(runProgress);
                             valido.post(new Runnable() {
                                 public void run() {
@@ -220,7 +245,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                                 Toast.makeText(MainActivity.this,"Bienvenido(a) "+separated[0]+" que tengas un excelente dia", Toast.LENGTH_SHORT).show();
                                 conf.setUserUser(username);
                                 iniciarActivity(username);
-                            }
+                            }else {
+
+								valido.post(new Runnable() {
+									public void run() {
+										valido.setText(R.string.user_disable);
+										valido.setTextColor(Color.RED);
+
+									}
+
+								});
+
+							}
                         } else {
                             Toast.makeText(getApplicationContext(), "Usuario o Contraseña incorrecto", Toast.LENGTH_SHORT).show();
                             act.runOnUiThread(runProgress);

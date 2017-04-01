@@ -39,7 +39,7 @@ public class DBAdapter {
 	public boolean Login(String username, String password) throws SQLException{
 		
 		mDb = mDbHelper.getReadableDatabase();
-		Cursor mCursor = mDb.rawQuery("SELECT * FROM " + DATABASE_TABLE + " WHERE user=? AND pass=?", new String[]{username,password});
+		Cursor mCursor = mDb.rawQuery("SELECT * FROM " + DATABASE_TABLE + " WHERE user=? AND pass=? AND estatus='a' ", new String[]{username,password});
 		if (mCursor != null) {
 
 
