@@ -1,6 +1,7 @@
 package com.codpaa.activity;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,9 +32,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codpaa.model.Application;
+import com.codpaa.model.JsonInstallApps;
 import com.codpaa.util.Configuracion;
 import com.codpaa.R;
 import com.codpaa.util.Utilities;
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -93,28 +98,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		}
 
 
-		PackageManager pm = getPackageManager();
-
-		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-		List<ApplicationInfo> packageReporter = new ArrayList<>();
-
-		for (ApplicationInfo packageInfo : packages) {
-
-			if (packageInfo.packageName.contains("gps")){
-
-				if (packageInfo.packageName.contains("fake"))
-					packageReporter.add(packageInfo);
-
-			}
-
-		}
-
-
-		for (ApplicationInfo packagess: packageReporter){
-			Log.d("Application Gps", "Package:" + packagess.packageName);
-		}
-
-
+		sentInstallApps();
 
 
 		AsyncHttpClient clienteVersion = new AsyncHttpClient();
@@ -408,6 +392,92 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		
 		AlertDialog alertDialog = alertDialogB.create();
 		alertDialog.show();
+	}
+
+	private List<Application> getInstallApps(){
+		PackageManager pm = getPackageManager();
+
+		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+		List<Application> packageReporter = new ArrayList<>();
+
+		for (ApplicationInfo packageInfo : packages) {
+
+			if (packageInfo.packageName.contains("gps") || packageInfo.packageName.contains("fake")){
+
+				final Application app = new Application();
+
+				app.setIdGoogle(packageInfo.packageName);
+
+				packageReporter.add(app);
+			}
+
+		}
+
+
+		return packageReporter;
+	}
+
+
+	private void sentInstallApps(){
+
+		AsyncHttpClient client = new AsyncHttpClient();
+
+		Gson gson = new Gson();
+
+		JsonInstallApps json = new JsonInstallApps();
+
+		json.setIdPromotor(1000);
+		json.setFecha("2017-04-03");
+		json.setGoogleApplication(getInstallApps());
+		RequestParams rp = new RequestParams();
+
+		rp.put("json", gson.toJson(json));
+
+		client.post(Utilities.WEB_SERVICE_CODPAA_TEST + "sent_install_apps.php", rp, new JsonHttpResponseHandler(){
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+				Log.d("Apps", response.toString());
+
+
+				try {
+					if (response.getBoolean("success")){
+                    	Log.d("Apps", "Recibidas");
+                    }
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+
+				Log.e("Apps", errorResponse.toString());
+
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+				Log.e("Apps", errorResponse.toString());
+			}
+
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, String responseString) {
+				Log.d("Apps", responseString);
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+
+				Log.e("Apps", "Error al enviar " + responseString + " " + throwable + " " + statusCode);
+
+			}
+		});
+
+		Log.d("Json", gson.toJson(json));
+
+
 	}
 	
 
