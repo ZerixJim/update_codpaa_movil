@@ -282,7 +282,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 
 			//tiempo location activo (60 * 1000) = 1min * 2 = 2min activo
-	        handler.postDelayed(stop, (60 * 1000) * 2);
+	        handler.postDelayed(stop, (60 * 1000));
 	    }
 	};
 
@@ -1212,6 +1212,10 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 		Log.d("onLocationChange", " Provider "+location.getProvider() +" La "+ location.getLatitude() + " Lo " + location.getLongitude());
         loGeneral = location;
+
+		if (location.getProvider().equals("gps")){
+			loGps = location;
+		}
 
 		
 	}

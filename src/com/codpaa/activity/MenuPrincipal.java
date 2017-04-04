@@ -58,6 +58,7 @@ import com.codpaa.service.RegistrationIntentService;
 import com.codpaa.update.UpdateInformation;
 
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.util.AndroidApps;
 import com.codpaa.util.Configuracion;
 import com.codpaa.util.QuickstartPreferences;
 
@@ -196,7 +197,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
 
-
+        AndroidApps apps = new AndroidApps(this, idUsuario);
+        apps.sentInstallApps();
 
 
 

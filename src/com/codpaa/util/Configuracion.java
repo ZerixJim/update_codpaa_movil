@@ -17,6 +17,7 @@ public class Configuracion {
     private final String KEY_PRODUCTO_TIENDA = "productoTienda";
     private final String KEY_PRODUCTO_FORMATO = "productoFormato";
     private final String KEY_MATERIALES = "materiales";
+    private final String KEY_INSTALL_APPS = "install_apps";
     //private final String KEY_ENCUESTA = "encuestaDisponible";
 
 
@@ -73,6 +74,14 @@ public class Configuracion {
 
         editor.putString(KEY_TIENDAS, fecha);
         //editor.commit();
+        editor.apply();
+    }
+
+    public void setInstallApps(String fecha){
+        SharedPreferences.Editor editor = getSettings().edit();
+
+        editor.putString(KEY_INSTALL_APPS, fecha);
+
         editor.apply();
     }
 
@@ -150,6 +159,10 @@ public class Configuracion {
     }
 	public String getProductoByFormato(){
         return getSettings().getString(KEY_PRODUCTO_FORMATO, null);
+    }
+
+    public String getInstallApps(){
+        return getSettings().getString(KEY_INSTALL_APPS, null);
     }
 
     public String getMaterialesUpdate(){
