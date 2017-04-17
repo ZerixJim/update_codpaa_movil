@@ -12,11 +12,20 @@ public class JsonInstallApps {
 
     private int idPromotor;
     private String fecha;
+    private String imei;
     private List<Application> gApps;
 
 
     public List<Application> getGoogleApplication() {
         return gApps;
+    }
+
+    public String getImei() {
+        return imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
     }
 
     public void setGoogleApplication(List<Application> googleApplication) {

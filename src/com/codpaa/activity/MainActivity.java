@@ -5,6 +5,7 @@ package com.codpaa.activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,6 +15,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -131,12 +134,24 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             }
         });
 		
-		
+		checkPermisos();
 		
 		
 	}
 
-    Runnable runProgress = new Runnable() {
+	private void checkPermisos() {
+
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
+
+			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 130);
+
+
+		}
+
+
+	}
+
+	Runnable runProgress = new Runnable() {
         @Override
         public void run() {
             progressBar.setVisibility(View.GONE);

@@ -199,6 +199,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         AndroidApps apps = new AndroidApps(this, idUsuario);
         apps.sentInstallApps();
+        apps.sentInstallAppsByWeek();
+
 
 
 

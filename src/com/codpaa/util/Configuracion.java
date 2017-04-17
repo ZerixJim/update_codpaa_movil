@@ -18,6 +18,7 @@ public class Configuracion {
     private final String KEY_PRODUCTO_FORMATO = "productoFormato";
     private final String KEY_MATERIALES = "materiales";
     private final String KEY_INSTALL_APPS = "install_apps";
+    private final String KEY_INSTALL_APPS_WEEK = "install_apps_week";
     //private final String KEY_ENCUESTA = "encuestaDisponible";
 
 
@@ -85,6 +86,14 @@ public class Configuracion {
         editor.apply();
     }
 
+    public void setInstallApssWeek(int semana){
+        SharedPreferences.Editor editor = getSettings().edit();
+        editor.putInt(KEY_INSTALL_APPS_WEEK, semana);
+
+        editor.apply();
+
+    }
+
     public void setMarca(String fecha){
         SharedPreferences.Editor editor = getSettings().edit();
 
@@ -120,6 +129,7 @@ public class Configuracion {
         editor.putString(KEY_MATERIALES, fechaUpdate);
         editor.apply();
     }
+
 
     /*public void setEncuestaDisponibleByDay(String fecha){
         SharedPreferences.Editor editor = getSettings().edit();
@@ -164,6 +174,7 @@ public class Configuracion {
     public String getInstallApps(){
         return getSettings().getString(KEY_INSTALL_APPS, null);
     }
+    public int getInstallAppsWeek(){ return getSettings().getInt(KEY_INSTALL_APPS_WEEK, -1); }
 
     public String getMaterialesUpdate(){
         return getSettings().getString(KEY_MATERIALES, null);

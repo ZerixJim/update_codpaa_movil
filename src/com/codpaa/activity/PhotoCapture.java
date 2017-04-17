@@ -214,10 +214,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
 
-
-
     //metod start camera
-    //todo-gus: modificar este metodo
     private void dispatchTakePictureIntent(){
         //intention start camera
 
