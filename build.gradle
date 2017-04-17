@@ -51,6 +51,7 @@ android {
     defaultConfig {
         targetSdkVersion 23
         applicationId "com.codpaa"
+        setProperty("archivesBaseName", "MyCompany-MyAppName-$versionName")
     }
 
     buildTypes {
