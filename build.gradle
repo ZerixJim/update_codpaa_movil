@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.android.tools.build:gradle:2.3.2'
         classpath 'com.google.gms:google-services:3.0.0'
     }
 }
@@ -51,7 +51,6 @@ android {
     defaultConfig {
         targetSdkVersion 23
         applicationId "com.codpaa"
-        setProperty("archivesBaseName", "MyCompany-MyAppName-$versionName")
     }
 
     buildTypes {
