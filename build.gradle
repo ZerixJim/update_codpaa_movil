@@ -24,7 +24,7 @@ allprojects {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '25.0.2'
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

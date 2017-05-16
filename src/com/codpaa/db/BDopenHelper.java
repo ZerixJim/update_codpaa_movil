@@ -34,8 +34,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
 
-    // v1.2.5 = 26
-    private static final int version = 26;
+    // v1.2.8 = 27
+    private static final int version = 27;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -136,7 +136,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "tipoexhibicion(idExhibicion int primary key, nombre char(30))";
         ruta = "create table if not exists " +
                 "visitaTienda(idTienda int primary key, lunes int, martes int, miercoles int, " +
-                "jueves int, viernes int, sabado int, domingo int, idCelular int, rol varchar(250))";
+                "jueves int, viernes int, sabado int, domingo int, idCelular int, rol varchar(250), idModo int)";
         tiendas = "create table if not exists " + Tienda.TABLE_NAME + "(" +
                 Tienda.ID_TIENDA+" int primary key, " +
                 Tienda.GRUPO + " varchar(60), " +
@@ -377,6 +377,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         }
 
+        if (newVersion == 27){
+
+            db.execSQL("drop table if exists visitaTienda");
+            db.execSQL(ruta);
+
+        }
+
 
 
     }
@@ -568,12 +575,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
 
-    public void insertarRutaVisitas(int idTienda, int lu, int ma, int mi, int ju, int vi, int sa, int dom, int idCel, String rol) throws SQLiteException{
+    public void insertarRutaVisitas(int idTienda, int lu, int ma, int mi, int ju, int vi, int sa, int dom, int idCel, String rol, int modo) throws SQLiteException{
 
         baseDatosLocal = getWritableDatabase();
 
 
-        baseDatosLocal.execSQL("insert or replace into visitaTienda(idTienda, lunes, martes, miercoles, jueves, viernes, sabado, domingo, idCelular, rol) values("+idTienda+","+lu+","+ma+","+mi+","+ju+","+vi+","+sa+","+dom+","+idCel+",'"+rol+"')");
+        baseDatosLocal.execSQL("insert or replace into visitaTienda(idTienda, lunes, martes, miercoles, jueves, viernes, sabado, domingo, idCelular, rol, idModo) " +
+                " values("+idTienda+","+lu+","+ma+","+mi+","+ju+","+vi+","+sa+","+dom+","+idCel+",'"+rol+"', " + modo + ")");
 
         baseDatosLocal.close();
     }

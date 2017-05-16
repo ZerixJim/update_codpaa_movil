@@ -273,7 +273,9 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                     rutasArray.getJSONObject(i).getInt("sa"),
                     rutasArray.getJSONObject(i).getInt("do"),
                     rutasArray.getJSONObject(i).getInt("idPromotor"),
-                    rutasArray.getJSONObject(i).getString("rol"));
+                    rutasArray.getJSONObject(i).getString("rol"),
+                    rutasArray.getJSONObject(i).getInt("idModo"));
+
 
         }
 

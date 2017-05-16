@@ -45,25 +45,6 @@ public class UpdateInformation{
 
 
 
-    /*public void actualizarRuta(int idPromotor){
-
-        
-        AsyncHttpClient clientRuta = new AsyncHttpClient();
-        ResponseRuta responseRuta = new ResponseRuta(_context);
-        RequestParams rp = new RequestParams();
-        rp.put("solicitud","rutas");
-        rp.put("id",String.valueOf(idPromotor));
-
-
-        clientRuta.setTimeout(5000);
-        clientRuta.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, responseRuta);
-
-    }*/
-
-
-
-
-
     public void actualizarEncuesta(int idPromotor, int idTienda){
         AsyncHttpClient client = new AsyncHttpClient();
         ResponseEncuesta response = new ResponseEncuesta(_context, idTienda);

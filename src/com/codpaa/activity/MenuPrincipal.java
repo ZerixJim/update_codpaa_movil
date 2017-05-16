@@ -131,12 +131,12 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             cursorDatosUser.moveToFirst();
             idUsuario = cursorDatosUser.getInt(0);
 
-            Log.i("idPromo Menu", "" + idUsuario);
+            //Log.i("idPromo Menu", "" + idUsuario);
 
 
             createMenu();
 
-
+            //Navigation view
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
@@ -671,12 +671,27 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
                     case R.id.configuracion:
                         drawerLayout.closeDrawer(GravityCompat.START);
+
+                        startConfigActivity();
                         return true;
+
                 }
 
                 return true;
             }
         });
+    }
+
+    public void startConfigActivity(){
+
+        Intent i = new Intent(this, SettingsApplication.class);
+
+        i.putExtra("idPromotor", idUsuario);
+
+        startActivity(i);
+
+
+
     }
 
     public String getUserName() {

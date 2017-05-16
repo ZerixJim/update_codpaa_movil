@@ -19,6 +19,7 @@ public class Configuracion {
     private final String KEY_MATERIALES = "materiales";
     private final String KEY_INSTALL_APPS = "install_apps";
     private final String KEY_INSTALL_APPS_WEEK = "install_apps_week";
+    private final String KEY_PROMOTOR_MODE = "promotorModo";
     //private final String KEY_ENCUESTA = "encuestaDisponible";
 
 
@@ -130,6 +131,14 @@ public class Configuracion {
         editor.apply();
     }
 
+    public void setPromotorMode(int mode){
+
+        SharedPreferences.Editor editor = getSettings().edit();
+        editor.putInt(KEY_PROMOTOR_MODE, mode);
+        editor.apply();
+
+    }
+
 
     /*public void setEncuestaDisponibleByDay(String fecha){
         SharedPreferences.Editor editor = getSettings().edit();
@@ -163,6 +172,12 @@ public class Configuracion {
     public String getVersion(){
         return getSettings().getString(KEY_VERSION, null);
     }
+
+
+    public int getPromotorMode(){
+        return getSettings().getInt(KEY_PROMOTOR_MODE, 1);
+    }
+
 
     public String getProductoByTienda(){
         return getSettings().getString(KEY_PRODUCTO_TIENDA, null);

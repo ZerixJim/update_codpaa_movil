@@ -161,11 +161,19 @@
     <string name="estatus">Estatus</string>
     <string name="estado_del_producto">Estado del producto</string>
     <string name="errorEnvioImagen">Error al enviar</string>
-    <string name="enviada">Enviada...</string>
+    <string name="enviada">Enviada…</string>
     <string name="materiales">Materiales</string>
     <string name="encargado_ok">Encargado: OK</string>
     <string name="agregar">Agregar</string>
     <string name="user_disable">Usuario Desactivado</string>
+    <string name="principal">Principal</string>
+    <string name="otras_opciones">Otras opciones</string>
+    <string name="configuracion">Configuracion</string>
+    <string name="cerrar_aplicacion">Cerrar Aplicacion</string>
+    <string name="tipo_promotor">Tipo promotor</string>
+    <string name="impulsor">Modo Impulsor</string>
+    <string name="impulsor_descripcion">en esté apartado de podra activar el modo impulsor</string>
+    <string name="tienda_ruta">Tienda</string>
 
 
 </resources>

@@ -47,12 +47,31 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="8dp">
 
-            <TextView
-                android:id="@+id/rutadia_tienda"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tienda"
-                android:textSize="@dimen/abc_text_size_subhead_material"/>
+                android:layout_weight="2">
+                <TextView
+                    android:id="@+id/rutadia_tienda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tienda_ruta"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/abc_text_size_subhead_material" />
+
+
+                <TextView
+                    android:id="@+id/modo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="12sp"
+                    android:gravity="end"
+                    android:textColor="#7d9ba7"
+                    android:text="protomotor"/>
+
+            </LinearLayout>
+
 
 
 

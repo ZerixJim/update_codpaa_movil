@@ -17,6 +17,7 @@ import com.codpaa.R;
 import com.codpaa.adapter.SimpleRecyclerAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.RutaDia;
+import com.codpaa.util.Configuracion;
 
 import java.util.ArrayList;
 
@@ -46,15 +47,17 @@ public class FragmentNoAsignado extends Fragment {
     }
 
     public ArrayList<RutaDia> rutaDia(){
+        Configuracion c = new Configuracion(getContext());
         ArrayList<RutaDia> arrayRutaDia = new ArrayList<>();
 
         base = new BDopenHelper(getContext()).getReadableDatabase();
-        String noAsign="select c.grupo, c.sucursal, v.rol, c.idTienda " +
+        String noAsign="select c.grupo, c.sucursal, v.rol, c.idTienda, v.idModo " +
                 "from clientes as c " +
-                "left join visitaTienda as v " +
-                "on c.idTienda = v.idTienda " +
-                "where (lunes + martes + miercoles + jueves + viernes + sabado + domingo)<=0 " +
-                "order by c.grupo asc";
+                " left join visitaTienda as v " +
+                " on c.idTienda = v.idTienda " +
+                " where (lunes + martes + miercoles + jueves + viernes + sabado + domingo)<=0 " +
+                " and idModo=" + c.getPromotorMode() +
+                " order by c.grupo asc";
         Cursor cursor = base.rawQuery(noAsign, null);
 
 
@@ -64,6 +67,7 @@ public class FragmentNoAsignado extends Fragment {
             ruta.setSucursal(cursor.getString(1));
             ruta.setRol(cursor.getString(2));
             ruta.setIdTienda(cursor.getInt(3));
+            ruta.setModo(cursor.getInt(cursor.getColumnIndex("idModo")));
 
             arrayRutaDia.add(ruta);
 

@@ -16,6 +16,7 @@ import com.codpaa.R;
 import com.codpaa.adapter.SimpleRecyclerAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.RutaDia;
+import com.codpaa.util.Configuracion;
 
 import java.util.ArrayList;
 
@@ -46,14 +47,16 @@ public class FragmentJueves extends Fragment {
 
 
     public ArrayList<RutaDia> rutaDia(){
+        Configuracion c = new Configuracion(getContext());
         ArrayList<RutaDia> arrayRutaDia = new ArrayList<>();
 
         base = new BDopenHelper(getContext()).getReadableDatabase();
-        String jueves="select c.grupo, c.sucursal, v.rol, c.idTienda " +
+        String jueves="select c.grupo, c.sucursal, v.rol, c.idTienda, v.idModo  " +
                 " from clientes as c " +
                 " left join visitaTienda as v " +
                 " on c.idTienda = v.idTienda " +
-                " where v.jueves>=1 order by v.jueves asc";
+                " where v.jueves>=1 and idModo=" + c.getPromotorMode() +
+                " order by v.jueves asc";
         Cursor cursor = base.rawQuery(jueves, null);
 
 
@@ -63,6 +66,7 @@ public class FragmentJueves extends Fragment {
             ruta.setSucursal(cursor.getString(1));
             ruta.setRol(cursor.getString(2));
             ruta.setIdTienda(cursor.getInt(3));
+            ruta.setModo(cursor.getInt(cursor.getColumnIndex("idModo")));
 
             arrayRutaDia.add(ruta);
 

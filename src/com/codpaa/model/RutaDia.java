@@ -9,6 +9,15 @@ public class RutaDia {
     private String sucursal;
     private String rol;
     private String hora;
+    private int modo;
+
+    public int getModo() {
+        return modo;
+    }
+
+    public void setModo(int modo) {
+        this.modo = modo;
+    }
 
     public String getHora() {
         return hora;

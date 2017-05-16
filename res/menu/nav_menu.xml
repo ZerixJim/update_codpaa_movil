@@ -6,14 +6,13 @@
 
         <item
             android:id="@+id/principal"
-            android:title="Principal"/>
-
+            android:title="@string/principal"/>
 
 
 
         <item
             android:id="@+id/otra_seccion"
-            android:title="Otras opciones">
+            android:title="@string/otras_opciones">
 
             <menu >
 
@@ -21,12 +20,12 @@
                 <item android:checkable="true"
                     android:id="@+id/configuracion"
                     android:icon="@drawable/ic_settings_grey_500_18dp"
-                    android:title="Configuracion"/>
+                    android:title="@string/configuracion"/>
 
                 <item android:checkable="true"
                     android:id="@+id/shutdown"
                     android:icon="@drawable/ic_power_settings_new_black_18dp"
-                    android:title="Cerrar Aplicacion"/>
+                    android:title="@string/cerrar_aplicacion"/>
 
             </menu>
 

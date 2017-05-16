@@ -12,7 +12,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 
 
-import android.util.Log;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +25,7 @@ import com.codpaa.model.RutaDia;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAdapter.DiaViewHolder>{
 
@@ -77,7 +78,14 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             dia.subTitle.setText(diaModel.getSucursal());
             dia.rol.setText(diaModel.getRol());
             dia.hora.setText(diaModel.getHora());
-            dia.number.setText(String.format("%d", i + 1));
+            dia.number.setText(String.format(Locale.getDefault(),"%d", i + 1));
+
+            if (diaModel.getModo() == 1){
+                dia.modo.setText("promotoria");
+            }else if(diaModel.getModo() == 2){
+                dia.modo.setText("impulsor");
+            }
+
 
         }
     }
@@ -98,6 +106,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         TextView rol;
         TextView hora;
         TextView number;
+        TextView modo;
 
         public DiaViewHolder(View itemView) {
             super(itemView);
@@ -108,6 +117,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             rol = (TextView) itemView.findViewById(R.id.rutadia_rol);
             hora = (TextView) itemView.findViewById(R.id.hora);
             number = (TextView) itemView.findViewById(R.id.number);
+            modo = (TextView) itemView.findViewById(R.id.modo);
 
             itemView.setOnClickListener(this);
 
@@ -118,7 +128,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         public void onClick(View v) {
 
             RutaDia rutaDia = rutaDias.get(getAdapterPosition());
-            Log.d("Onclick", "Element: " + rutaDia.getIdTienda());
+            //Log.d("Onclick", "Element: " + rutaDia.getIdTienda());
 
             dialodStartComfirm(rutaDia.getIdTienda(), rutaDia);
 
