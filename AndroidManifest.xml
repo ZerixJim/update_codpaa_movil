@@ -180,6 +180,10 @@
             android:label="@string/configuracion"
             />
 
+        <activity android:name=".activity.ProcesoAceptacion"
+            android:label="@string/proceso_aceptacion"
+            android:screenOrientation="portrait"/>
+
 
         <service android:name=".service.GeoLocalizar"
             android:exported="false"/>

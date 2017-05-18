@@ -36,7 +36,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -234,71 +233,89 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     public List<MenuTiendaModel> getMenuItems(){
         List<MenuTiendaModel> array = new ArrayList<>();
 
-        final MenuTiendaModel item1 = new MenuTiendaModel();
-        item1.setIdMenu(1);
-        item1.setNombreMenu("Frentes");
-		item1.setImage("ic_grid_on_grey600_24dp");
-        array.add(item1);
+		Configuracion c = new Configuracion(this);
 
-        final MenuTiendaModel item2 = new MenuTiendaModel();
-        item2.setIdMenu(2);
-        item2.setNombreMenu("Surtido de mueble");
-		item2.setImage("ic_blur_linear_grey600_24dp");
-        array.add(item2);
+		if(c.getPromotorMode() == 1){
 
-		final MenuTiendaModel item3 = new MenuTiendaModel();
-		item3.setIdMenu(3);
-		item3.setNombreMenu("Comentarios");
-		item3.setImage("ic_comment_grey_600_24dp");
-		array.add(item3);
+			final MenuTiendaModel item1 = new MenuTiendaModel();
+			item1.setIdMenu(1);
+			item1.setNombreMenu("Frentes");
+			item1.setImage("ic_grid_on_grey600_24dp");
+			array.add(item1);
 
-		final MenuTiendaModel item4 = new MenuTiendaModel();
-		item4.setIdMenu(4);
-		item4.setNombreMenu("Inventario");
-		item4.setImage("ic_assignment_grey600_24dp");
-		array.add(item4);
+			final MenuTiendaModel item2 = new MenuTiendaModel();
+			item2.setIdMenu(2);
+			item2.setNombreMenu("Surtido de mueble");
+			item2.setImage("ic_blur_linear_grey600_24dp");
+			array.add(item2);
 
-		final MenuTiendaModel item5 = new MenuTiendaModel();
-		item5.setIdMenu(5);
-		item5.setNombreMenu("Exhibiciones especiales");
-		item5.setImage("ic_border_bottom_grey600_24dp");
-		array.add(item5);
+			final MenuTiendaModel item3 = new MenuTiendaModel();
+			item3.setIdMenu(3);
+			item3.setNombreMenu("Comentarios");
+			item3.setImage("ic_comment_grey_600_24dp");
+			array.add(item3);
 
-		final MenuTiendaModel item6 = new MenuTiendaModel();
-		item6.setIdMenu(6);
-		item6.setNombreMenu("Inteligencia de mercado");
-		item6.setImage("ic_assessment_grey_600_24dp");
-		array.add(item6);
+			final MenuTiendaModel item4 = new MenuTiendaModel();
+			item4.setIdMenu(4);
+			item4.setNombreMenu("Inventario");
+			item4.setImage("ic_assignment_grey600_24dp");
+			array.add(item4);
 
-		final MenuTiendaModel item7 = new MenuTiendaModel();
-		item7.setIdMenu(7);
-		item7.setNombreMenu("Materiales");
-		item7.setImage("ic_apps_grey_600_24dp");
-		array.add(item7);
+			final MenuTiendaModel item5 = new MenuTiendaModel();
+			item5.setIdMenu(5);
+			item5.setNombreMenu("Exhibiciones especiales");
+			item5.setImage("ic_border_bottom_grey600_24dp");
+			array.add(item5);
 
-		final MenuTiendaModel item8 = new MenuTiendaModel();
-		item8.setIdMenu(8);
-		item8.setNombreMenu("Venta promedio");
-		item8.setImage("ic_timeline_grey_600_24dp");
-		array.add(item8);
+			final MenuTiendaModel item6 = new MenuTiendaModel();
+			item6.setIdMenu(6);
+			item6.setNombreMenu("Inteligencia de mercado");
+			item6.setImage("ic_assessment_grey_600_24dp");
+			array.add(item6);
 
-		final MenuTiendaModel item9 = new MenuTiendaModel();
-		item9.setIdMenu(9);
-		item9.setNombreMenu("Encargado de tienda");
-		item9.setImage("ic_timer_auto_grey600_24dp");
-		array.add(item9);
+			final MenuTiendaModel item7 = new MenuTiendaModel();
+			item7.setIdMenu(7);
+			item7.setNombreMenu("Materiales");
+			item7.setImage("ic_apps_grey_600_24dp");
+			array.add(item7);
 
-		final MenuTiendaModel item10 = new MenuTiendaModel();
-		item10.setIdMenu(10);
-		item10.setNombreMenu("Foto");
-		item10.setImage("ic_camera_grey600_24dp");
-		array.add(item10);
+			final MenuTiendaModel item8 = new MenuTiendaModel();
+			item8.setIdMenu(8);
+			item8.setNombreMenu("Venta promedio");
+			item8.setImage("ic_timeline_grey_600_24dp");
+			array.add(item8);
 
-		final MenuTiendaModel item11 = new MenuTiendaModel();
-		item11.setIdMenu(11);
-		item11.setNombreMenu("Actualizar producto");
-		item11.setImage("ic_autorenew_grey_600_24dp");
-		array.add(item11);
+			final MenuTiendaModel item9 = new MenuTiendaModel();
+			item9.setIdMenu(9);
+			item9.setNombreMenu("Encargado de tienda");
+			item9.setImage("ic_timer_auto_grey600_24dp");
+			array.add(item9);
+
+			final MenuTiendaModel item10 = new MenuTiendaModel();
+			item10.setIdMenu(10);
+			item10.setNombreMenu("Foto");
+			item10.setImage("ic_camera_grey600_24dp");
+			array.add(item10);
+
+			final MenuTiendaModel item11 = new MenuTiendaModel();
+			item11.setIdMenu(11);
+			item11.setNombreMenu("Actualizar producto");
+			item11.setImage("ic_autorenew_grey_600_24dp");
+			array.add(item11);
+		}else if(c.getPromotorMode() == 2){
+
+
+
+			final MenuTiendaModel item12 = new MenuTiendaModel();
+			item12.setIdMenu(12);
+			item12.setNombreMenu("Proceso aceptacion");
+			item12.setImage("ic_description_grey_600_24dp");
+			array.add(item12);
+
+
+
+
+		}
 
         return array;
     }
@@ -402,6 +419,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 				descargarEncuesta();
 
 				return true;
+
 
 			default:
 				return super.onOptionsItemSelected(item);
@@ -710,6 +728,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 			case R.id.btnMateriales:
 				openMateriales();
 				break;
+
+
 		}
 		
 	}
@@ -832,7 +852,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 								//auto time
 
 								//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-								Settings.System.putInt(getContentResolver(), Settings.System.AUTO_TIME,1);
+
+								//// TODO: 17/05/2017 investigar la forma de implementar el autotime
+								//Settings.System.putInt(getContentResolver(), Settings.System.AUTO_TIME,1);
 
 								
 								if(cuSalida.getCount() >0) {
@@ -894,6 +916,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 		if (encuestaDisponible()){
 
+
 			Handler handler = new Handler();
 
 			handler.postDelayed(new Runnable() {
@@ -918,6 +941,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 	private boolean encuestaDisponible(){
 
 
+
+
 		SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 		String sql = "select * from preguntas as pre where  " +
 				" pre.id_encuesta not in  " +
@@ -925,6 +950,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 				"  and idPromotor=" + idPromotor + " and  idTienda =" + idTienda + " ) group by id_encuesta";
 
 		Cursor cursor = db.rawQuery(sql, null);
+		cursor.moveToFirst();
+
+
 
 		int countDisponibles = cursor.getCount();
 
@@ -958,14 +986,17 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 		Configuracion configuracion = new Configuracion(this);
 		UpdateInformation uI = new UpdateInformation(this);
 
+		Log.d("menuPrincipal" , "verificar");
 
 		if (configuracion.getKeyByTag(String.valueOf(idTienda)) != null){
-
+			Log.d("menuPrincipal" , "verificar2");
 			if (!configuracion.getKeyByTag(String.valueOf(idTienda)).equals(fechaActual())){
 				uI.actualizarEncuesta(idPromotor, idTienda);
+				Log.d("menuPrincipal" , "verificar2.5");
 			}
 
 		} else {
+			Log.d("menuPrincipal" , "verificar3");
 
 			uI.actualizarEncuesta(idPromotor, idTienda);
 		}
@@ -1251,6 +1282,10 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 			case 11:
 				actualizarPro();
+				break;
+
+			case 12:
+				procesoAceptacion();
 				break;
 
 		}
@@ -1581,6 +1616,20 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         }
 
     }
+
+
+    private void procesoAceptacion(){
+
+		Intent i = new Intent(this, ProcesoAceptacion.class);
+
+		i.putExtra("idPromotor", idPromotor);
+		i.putExtra("idTienda", idTienda);
+
+		startActivity(i);
+
+
+	}
+
 
 	
 
