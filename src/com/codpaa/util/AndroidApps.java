@@ -213,7 +213,7 @@ public class AndroidApps {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-                        Log.d("Apps", response.toString());
+                        //Log.d("Apps", response.toString());
 
 
                         try {
@@ -234,24 +234,24 @@ public class AndroidApps {
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 
-                        Log.e("Apps", errorResponse.toString());
+                        //Log.e("Apps", errorResponse.toString());
 
                     }
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                        Log.e("Apps", errorResponse.toString());
+                        //Log.e("Apps", errorResponse.toString());
                     }
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                        Log.d("Apps", responseString);
+                        //Log.d("Apps", responseString);
                     }
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
 
-                        Log.e("Apps", "Error al enviar " + responseString + " " + throwable + " " + statusCode);
+                        //Log.e("Apps", "Error al enviar " + responseString + " " + throwable + " " + statusCode);
 
                     }
                 });
