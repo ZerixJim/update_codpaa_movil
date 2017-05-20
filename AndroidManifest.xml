@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codpaa"
     android:versionCode="56"
-    android:versionName="1.2.7 rc1">
+    android:versionName="1.2.7 rc2">
 
     <uses-sdk android:minSdkVersion="14" />
 
