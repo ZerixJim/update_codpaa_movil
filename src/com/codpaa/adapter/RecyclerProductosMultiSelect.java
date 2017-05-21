@@ -28,7 +28,7 @@ import java.util.List;
 public class RecyclerProductosMultiSelect extends RecyclerView.Adapter<RecyclerProductosMultiSelect.ProductoViewHolder>{
 
 
-    List<ProductosModel> productosModels;
+    private List<ProductosModel> productosModels;
     private Context context;
 
     public RecyclerProductosMultiSelect(List<ProductosModel> productosModels, Context context){

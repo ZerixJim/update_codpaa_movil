@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Locale;
 
 
+import com.codpaa.activity.impulsor.Estatus;
+import com.codpaa.activity.impulsor.ProcesoAceptacion;
 import com.codpaa.adapter.ExhibicionesAdapter;
 import com.codpaa.adapter.MenuTiendaAdapter;
 import com.codpaa.fragment.DialogEncuestas;
@@ -306,11 +308,18 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
 
-			final MenuTiendaModel item4 = new MenuTiendaModel();
+			/*final MenuTiendaModel item4 = new MenuTiendaModel();
 			item4.setIdMenu(4);
 			item4.setNombreMenu("Inventario");
 			item4.setImage("ic_assignment_grey600_24dp");
-			array.add(item4);
+			array.add(item4);*/
+
+			final MenuTiendaModel item13 = new MenuTiendaModel();
+            item13.setIdMenu(13);
+            item13.setNombreMenu("Estatus");
+            item13.setImage("ic_assignment_grey_600_24dp");
+            array.add(item13);
+
 
 			final MenuTiendaModel item12 = new MenuTiendaModel();
 			item12.setIdMenu(12);
@@ -1296,12 +1305,26 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 				procesoAceptacion();
 				break;
 
+			case 13:
+				estatusProducto();
+				break;
+
 		}
 
 
     }
 
-    private class EscucharDialogoEncargado implements DialogInterface.OnClickListener{
+	private void estatusProducto() {
+
+		Intent i = new Intent(this, Estatus.class);
+        i.putExtra("idPromotor", idPromotor);
+        i.putExtra("idTienda", idTienda);
+
+        startActivity(i);
+
+	}
+
+	private class EscucharDialogoEncargado implements DialogInterface.OnClickListener{
 
 		@Override
 		public void onClick(DialogInterface dialog, int which) {

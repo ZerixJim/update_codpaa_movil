@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginBottom="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:contentDescription="@string/imadescrip" />
+
+        <TextView
+            android:id="@+id/nombre_producto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/image"
+            android:layout_toEndOf="@+id/image"
+            android:layout_alignTop="@+id/image"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:text="Nombre Producto"/>
+        <TextView
+            android:id="@+id/presentacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nombre_producto"
+            android:layout_alignLeft="@+id/nombre_producto"
+            android:layout_alignStart="@+id/nombre_producto"
+            android:text="presentacion"/>
+
+
+        <TextView
+            android:id="@+id/bar_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/presentacion"
+            android:layout_alignLeft="@+id/nombre_producto"
+            android:layout_alignStart="@+id/nombre_producto"
+            android:textSize="12sp"
+            android:text="cb"/>
+
+
+
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/nombre_producto"
+            android:layout_alignStart="@+id/nombre_producto"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            android:weightSum="2"
+            android:layout_below="@+id/bar_code">
+
+            <RadioButton
+                android:id="@+id/catalogado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Catalogado"/>
+
+            <RadioButton
+                android:id="@+id/por_catalogar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Por Catalogar"/>
+
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textSize="12sp"
+            android:visibility="invisible"
+            android:text="$12.50"/>
+
+
+
+        <EditText
+            android:id="@+id/cantidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/escribe_cantidad"
+            android:layout_below="@+id/radio_group"
+            android:visibility="gone"
+            android:textColor="#6b6b6b"
+            android:layout_marginTop="20dp"/>
+
+
+
+
+    </RelativeLayout>
+
+
+
+
+</android.support.v7.widget.CardView>

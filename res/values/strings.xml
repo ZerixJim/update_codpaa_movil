@@ -175,6 +175,8 @@
     <string name="impulsor_descripcion">en esté apartado de podra activar el modo impulsor</string>
     <string name="tienda_ruta">Tienda</string>
     <string name="proceso_aceptacion">Proceso Aceptacion</string>
+    <string name="estatus_activity">Estatus</string>
+    <string name="spinner_estatus">Spinner Estatus</string>
 
 
 </resources>
