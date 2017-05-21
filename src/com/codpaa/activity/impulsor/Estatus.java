@@ -212,8 +212,6 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
 
-
-
     private void loadProducto(int idMarca){
 
         try{
@@ -234,8 +232,6 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
 
     }
-
-
 
 
 
