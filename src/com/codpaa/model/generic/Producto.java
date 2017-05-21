@@ -7,13 +7,57 @@ public class Producto {
 
     private int idProducto;
     private int idMarca;
+    private int idTienda;
+    private String fecha;
     private float price;
     private String nombre;
     private String presentacion;
     private String codeBarras;
-    private String estatus;
+    private String estatus = null;
+    private int inventario;
 
 
+
+    public class EstatusTypes{
+
+        public static final String CATALOGADO = "catalogado";
+        public static final String POR_CATALOGAR = "por_catalogar";
+
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public int getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(int inventario) {
+        this.inventario = inventario;
+    }
+
+
+    public int getIdTienda() {
+        return idTienda;
+    }
+
+    public void setIdTienda(int idTienda) {
+        this.idTienda = idTienda;
+    }
+
+
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
+    }
 
     public int getIdProducto() {
         return idProducto;

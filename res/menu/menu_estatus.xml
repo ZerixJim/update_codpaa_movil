@@ -7,8 +7,18 @@
         android:id="@+id/spinner_marca_estatus"
         android:title="@string/spinner_estatus"
         app:actionViewClass="android.widget.Spinner"
-        android:background="#ff00"
         app:showAsAction="always"
         />
+
+
+    <item
+        android:id="@+id/send_status"
+        android:title="@string/send"
+        app:showAsAction="always"/>
+
+
+
+
+
 
 </menu>

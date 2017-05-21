@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.codpaa.provider.DbEstructure;
+
 import com.codpaa.provider.DbEstructure.Usuario;
 import com.codpaa.provider.DbEstructure.VisitaTienda;
 import com.codpaa.provider.DbEstructure.Mensaje;
@@ -23,6 +23,7 @@ import com.codpaa.provider.DbEstructure.EncustaPreguntas;
 import com.codpaa.provider.DbEstructure.Preguntas;
 import com.codpaa.provider.DbEstructure.Opciones;
 import com.codpaa.provider.DbEstructure.MaterialesSolicitud;
+import com.codpaa.provider.DbEstructure.ProductoCatalogadoTienda;
 
 
 import java.io.File;
@@ -34,8 +35,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
 
-    // v1.2.8 = 27
-    private static final int version = 27;
+    // v1.2.7 rc2 = 27
+    // v1.2.8 = 28
+    private static final int version = 28;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -73,6 +75,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String materialesSolicitud;
     private static String encuestaFoto;
     private static String opciones;
+    private static String productoCatalogadoTienda;
 
 
     public BDopenHelper(Context miContext) {
@@ -276,6 +279,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 MaterialesSolicitud.STATUS + " integer default 1)";
 
 
+        productoCatalogadoTienda = "create table if not exists " + ProductoCatalogadoTienda.TABLE_NAME + "  (" +
+                ProductoCatalogadoTienda.ID_PRODUCTO + " int, " +
+                ProductoCatalogadoTienda.ID_PROMOTOR + " int, " +
+                ProductoCatalogadoTienda.ID_TIENDA + " int, " +
+                ProductoCatalogadoTienda.FECHA_CAPTURA + " varchar(25), " +
+                ProductoCatalogadoTienda.ESTATUS_PRODUCTO + " varchar(30), " +
+                ProductoCatalogadoTienda.INVENTARIO + " int, " +
+                ProductoCatalogadoTienda.ESTATUS_REGISTRO + " integer default 1)";
 
 
 
@@ -319,70 +330,30 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(photoProducto);
         db.execSQL(materiales);
         db.execSQL(materialesSolicitud);
+        db.execSQL(productoCatalogadoTienda);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 
-        if (oldVersion == 23 && newVersion == 24){
-            db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.ID_SERVIDOR + " int");
-            db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.ID_PROMOTOR + " int");
-            db.execSQL("alter table " + Mensaje.TABLE_NAME + " add column " + Mensaje.FECHA_LECTURA + " varchar(15)");
-            db.execSQL("alter table " + Usuario.TABLE_NAME + " add column " + Usuario.TIPO_PROMOTOR + " int(2)");
+        if (oldVersion == 27 && newVersion == 28){
 
-            db.execSQL("drop table if exists " + Tienda.TABLE_NAME);
-            db.execSQL(tiendas);
 
-            db.execSQL("drop table if exists " + Usuario.TABLE_NAME);
-            db.execSQL(usuarios);
-
-            db.execSQL("alter table " + DbEstructure.Photo.TABLE_NAME + " add column " + DbEstructure.Photo.FECHA_CAPTURA + " char(20)");
-
-            db.execSQL(productoByFormato);
-            db.execSQL(productoByTienda);
-            db.execSQL(tiendaProductoCatalogo);
-
-            db.execSQL("alter table invProducto add column estatus_producto int");
-
+            db.execSQL(productoCatalogadoTienda);
 
         }
 
-        if (oldVersion == 24 && newVersion == 25){
-
-            Log.d("OnUpgrade", "new == v25 && oldv== 24");
-
-
-            db.execSQL(photoProducto);
-        }
-
-        if (newVersion == 26){
-
-            Log.d("OnUpgrade", "new Version=26");
-
-            db.execSQL("drop table if exists respuestas");
-            db.execSQL("drop table if exists " + Preguntas.TABLE_NAME);
-            db.execSQL("drop table if exists respuestaTipo");
-            db.execSQL(opciones);
-            db.execSQL(preguntas);
-            db.execSQL(respuesta);
-            db.execSQL(encuestaFoto);
-            db.execSQL(materiales);
-
-            db.execSQL("alter table producto add column tester int");
-            db.execSQL("alter table ventaPromedio add column idProducto int");
-
-            db.execSQL(materialesSolicitud);
-
-
-        }
-
-        if (newVersion == 27){
+        if(oldVersion == 26 && newVersion == 28){
 
             db.execSQL("drop table if exists visitaTienda");
             db.execSQL(ruta);
 
+            db.execSQL(productoCatalogadoTienda);
+
+
         }
+
 
 
 

@@ -248,4 +248,19 @@ public class DbEstructure {
         public static final String ID_PREGUNTA = "idPregunta";
     }
 
+    public static class ProductoCatalogadoTienda implements BaseColumns{
+
+        private ProductoCatalogadoTienda(){}
+
+        public static final String TABLE_NAME = "producto_catalogado_tienda";
+        public static final String ID_PROMOTOR = "idPromotor";
+        public static final String ID_TIENDA = "idTienda";
+        public static final String ID_PRODUCTO = "idProducto";
+        public static final String FECHA_CAPTURA = "fecha_captura";
+        public static final String ESTATUS_PRODUCTO = "estatus_producto";
+        public static final String INVENTARIO = "inventario";
+        public static final String ESTATUS_REGISTRO = "estatus_registro";
+
+    }
+
 }

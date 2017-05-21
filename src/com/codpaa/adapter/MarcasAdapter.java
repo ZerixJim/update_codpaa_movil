@@ -31,7 +31,6 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         TextView nombre;
         TextView descrip;
         ImageView img;
-        TextView divider;
     }
 
     public MarcasAdapter(Context context, int resource, ArrayList<MarcaModel> objects) {
@@ -65,7 +64,6 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
             viewHolder.nombre = (TextView) convertView.findViewById(R.id.NombreTxtMarca);
             viewHolder.descrip = (TextView) convertView.findViewById(R.id.DescriTxtMarca);
             viewHolder.img = (ImageView) convertView.findViewById(R.id.logotipoMarca);
-            viewHolder.divider = (TextView) convertView.findViewById(R.id.divider);
 
             convertView.setTag(viewHolder);
 
@@ -78,8 +76,6 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         viewHolder.nombre.setText(spm.getNombre());
         viewHolder.descrip.setText("");
 
-        if (position == 0)
-            viewHolder.divider.setVisibility(View.INVISIBLE);
 
 
 

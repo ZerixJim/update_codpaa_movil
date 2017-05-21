@@ -3,6 +3,8 @@ package com.codpaa.adapter.generic;
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import com.codpaa.util.Utilities;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -45,26 +48,26 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
     @Override
     public void onBindViewHolder(final ProductoViewHolder holder, int position) {
 
-        Producto producto = mProductosList.get(position);
+        final Producto producto = mProductosList.get(position);
+
 
         holder.nombre.setText(producto.getNombre());
         holder.presentacion.setText(producto.getPresentacion());
         holder.barCode.setText(producto.getCodeBarras());
 
 
+        if (producto.getInventario() > 0 && holder.cantidad.getVisibility() == View.VISIBLE){
+
+            holder.cantidad.setText(producto.getInventario());
+
+        }
+
 
         Picasso picasso = Picasso.with(context);
 
 
-        //Log.d("url", Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif");
-
         picasso.load(Utilities.PRODUCT_PATH+producto.getIdMarca()+"/"+producto.getIdProducto()+".gif")
-                //.resize(bitmapDrawable.getBitmap().getWidth(), 0)
-                //.fit()
-                //.placeholder(R.drawable.progress_animated)
-                //.centerCrop()
-                //.centerInside()
-                //.noFade()
+
                 .into(holder.imageView, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -84,12 +87,42 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
 
+
                 switch (checkedId){
                     case R.id.catalogado:
 
                         if(holder.cantidad.getVisibility() == View.GONE){
                             holder.cantidad.setVisibility(View.VISIBLE);
+
+
+
+
+                            holder.cantidad.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                                    if (holder.cantidad.getText().length() > 0){
+                                        producto.setInventario(Integer.parseInt(holder.cantidad.getText().toString()));
+                                    }
+
+
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+
                         }
+
+                        producto.setEstatus(Producto.EstatusTypes.CATALOGADO);
 
                         break;
 
@@ -97,12 +130,19 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
                     case R.id.por_catalogar:
 
                         holder.cantidad.setVisibility(View.GONE);
+                        producto.setEstatus(Producto.EstatusTypes.POR_CATALOGAR);
+                        producto.setInventario(0);
+
+
 
                         break;
                 }
 
             }
         });
+
+
+
 
     }
 
@@ -132,6 +172,35 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
             cantidad = (EditText) itemView.findViewById(R.id.cantidad);
 
         }
+    }
+
+
+
+    public List<Producto> getProductListValidation(){
+        List<Producto> list = new ArrayList<>();
+
+
+        if (mProductosList.size() > 0){
+
+            for (Producto producto: mProductosList){
+
+
+                if (producto.getEstatus() != null){
+
+                    list.add(producto);
+
+
+                }
+
+
+            }
+
+
+        }
+
+
+        return list;
+
     }
 
 

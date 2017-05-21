@@ -1,5 +1,6 @@
 package com.codpaa.activity.impulsor;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -14,16 +15,34 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.codpaa.R;
 import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.adapter.generic.ProductoRecyclerAdapter;
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.model.JsonProductoImpulsor;
 import com.codpaa.model.MarcaModel;
-import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.model.generic.Producto;
+import com.codpaa.provider.DbEstructure;
 
+
+import com.codpaa.provider.DbEstructure.ProductoCatalogadoTienda;
+import com.codpaa.response.ProductoCatalogoResponse;
+import com.codpaa.util.Utilities;
+import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
 
 /*
  * Created by grim on 18/05/2017.
@@ -104,6 +123,155 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+
+            case android.R.id.home:
+
+                finish();
+
+                return true;
+
+
+            case R.id.send_status:
+
+                sendEstatus();
+
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
+    }
+
+    private void sendEstatus() {
+
+        ProductoRecyclerAdapter adapter = (ProductoRecyclerAdapter) mRecyclerView.getAdapter();
+
+        List<Producto> productos = adapter.getProductListValidation();
+
+
+        if (productos.size() > 0){
+
+
+
+            SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
+
+            Calendar calendar = Calendar.getInstance();
+
+            SimpleDateFormat fFecha = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+            String fecha = fFecha.format(calendar.getTime());
+
+
+            for (Producto producto: productos){
+
+                ContentValues contentValues = new ContentValues();
+
+                contentValues.put(ProductoCatalogadoTienda.ID_PRODUCTO, producto.getIdProducto());
+                contentValues.put(ProductoCatalogadoTienda.ID_PROMOTOR, idPromotor);
+                contentValues.put(ProductoCatalogadoTienda.ID_TIENDA, idTienda);
+                contentValues.put(ProductoCatalogadoTienda.FECHA_CAPTURA,  fecha);
+                contentValues.put(ProductoCatalogadoTienda.ESTATUS_PRODUCTO, producto.getEstatus());
+                contentValues.put(ProductoCatalogadoTienda.INVENTARIO, producto.getInventario());
+
+                db.insert(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME, null, contentValues);
+
+
+            }
+
+            Toast.makeText(this, "Productos Guardados", Toast.LENGTH_SHORT).show();
+
+
+
+
+        }else {
+
+            Toast.makeText(this, "Debes seleccionar por lo menos un producto", Toast.LENGTH_SHORT).show();
+
+
+        }
+
+        sendToServer();
+
+
+
+
+
+
+    }
+
+
+    private void sendToServer(){
+
+
+        if (getProductListSendToServer().size() > 0){
+
+
+            AsyncHttpClient client = new AsyncHttpClient();
+
+            RequestParams rp = new RequestParams();
+
+
+            Gson gson = new Gson();
+
+
+            JsonProductoImpulsor json = new JsonProductoImpulsor(getProductListSendToServer(), idPromotor);
+
+            rp.put("solicitud", "sendCatalogo");
+            rp.put("json", gson.toJson(json));
+
+            Log.d("JSON", gson.toJson(json));
+
+            client.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_impulsor.php", rp , new ProductoCatalogoResponse(this));
+
+        }
+
+
+
+
+
+
+    }
+
+    private List<Producto> getProductListSendToServer(){
+        List<Producto> list = new ArrayList<>();
+
+        SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select * from producto_catalogado_tienda where estatus_registro = 1", null);
+
+
+        if(cursor.getCount() > 0){
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+
+
+                final Producto producto = new Producto();
+                producto.setIdProducto(cursor.getInt(cursor.getColumnIndex("idProducto")));
+                producto.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
+                producto.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
+                producto.setEstatus(cursor.getString(cursor.getColumnIndex("estatus_producto")));
+                producto.setInventario(cursor.getInt(cursor.getColumnIndex("inventario")));
+
+                list.add(producto);
+            }
+        }
+
+
+        cursor.close();
+        db.close();
+        return list;
+    }
+
+
+
 
     @Override
     protected void onStart() {
