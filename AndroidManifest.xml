@@ -180,12 +180,19 @@
             android:label="@string/configuracion"
             />
 
-        <activity android:name=".activity.impulsor.ProcesoAceptacion"
+        <activity
+            android:name=".activity.impulsor.ProcesoAceptacion"
             android:label="@string/proceso_aceptacion"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".activity.impulsor.Estatus"
+        <activity
+            android:name=".activity.impulsor.Estatus"
             android:label="@string/estatus_activity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.impulsor.AvanceGestion"
+            android:label="Avance de la gestion"
             android:screenOrientation="portrait"/>
 
 

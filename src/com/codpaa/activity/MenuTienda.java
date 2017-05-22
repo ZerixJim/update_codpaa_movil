@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 
+import com.codpaa.activity.impulsor.AvanceGestion;
 import com.codpaa.activity.impulsor.Estatus;
 import com.codpaa.activity.impulsor.ProcesoAceptacion;
 import com.codpaa.adapter.ExhibicionesAdapter;
@@ -59,6 +60,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -232,7 +234,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 		Configuracion c = new Configuracion(this);
 
+		HorizontalScrollView horizontal = (HorizontalScrollView) findViewById(R.id.horizontal_view);
+
 		if(c.getPromotorMode() == 1){
+
+			if (horizontal != null) {
+				horizontal.setVisibility(View.VISIBLE);
+			}
 
 			final MenuTiendaModel item1 = new MenuTiendaModel();
 			item1.setIdMenu(1);
@@ -1303,10 +1311,28 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 				estatusProducto();
 				break;
 
+			case 14:
+				avanceGestion();
+
+				break;
+
 		}
 
 
     }
+
+	private void avanceGestion() {
+
+		Intent intent = new Intent(this, AvanceGestion.class);
+
+		intent.putExtra("idTienda", idTienda);
+		intent.putExtra("idPromotor", idPromotor);
+
+		startActivity(intent);
+
+
+
+	}
 
 	private void estatusProducto() {
 
