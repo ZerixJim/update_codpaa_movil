@@ -92,19 +92,14 @@
                 android:layout_weight="1"
                 android:text="Catalogado"/>
 
-            <RadioButton
-                android:id="@+id/por_catalogar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Por Catalogar"/>
+
 
             <RadioButton
                 android:id="@+id/acepta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Catalogar"/>
+                android:text="Proceso catalogacion"/>
 
             <RadioButton
                 android:id="@+id/no_acepta"

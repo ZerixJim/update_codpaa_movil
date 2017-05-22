@@ -285,7 +285,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 ProductoCatalogadoTienda.ID_TIENDA + " int, " +
                 ProductoCatalogadoTienda.FECHA_CAPTURA + " varchar(25), " +
                 ProductoCatalogadoTienda.ESTATUS_PRODUCTO + " int, " +
-                ProductoCatalogadoTienda.INVENTARIO + " int, " +
+                ProductoCatalogadoTienda.CANTIDAD + " int, " +
                 ProductoCatalogadoTienda.ESTATUS_REGISTRO + " integer default 1)";
 
 

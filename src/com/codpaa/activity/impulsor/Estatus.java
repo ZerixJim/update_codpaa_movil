@@ -178,7 +178,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 contentValues.put(ProductoCatalogadoTienda.ID_TIENDA, idTienda);
                 contentValues.put(ProductoCatalogadoTienda.FECHA_CAPTURA,  fecha);
                 contentValues.put(ProductoCatalogadoTienda.ESTATUS_PRODUCTO, producto.getEstatus());
-                contentValues.put(ProductoCatalogadoTienda.INVENTARIO, producto.getInventario());
+                contentValues.put(ProductoCatalogadoTienda.CANTIDAD, producto.getCantidad());
 
                 db.insert(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME, null, contentValues);
 
@@ -256,7 +256,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 producto.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
                 producto.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
                 producto.setEstatus(cursor.getInt(cursor.getColumnIndex("estatus_producto")));
-                producto.setInventario(cursor.getInt(cursor.getColumnIndex("inventario")));
+                producto.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad")));
 
                 list.add(producto);
             }

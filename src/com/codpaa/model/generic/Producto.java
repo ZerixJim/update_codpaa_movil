@@ -14,8 +14,8 @@ public class Producto {
     private String presentacion;
     private String codeBarras;
     private int estatus;
-    private int inventario;
     private int cantidad;
+
 
 
 
@@ -31,13 +31,7 @@ public class Producto {
     }
 
 
-    public int getCantidad() {
-        return cantidad;
-    }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
 
     public String getFecha() {
         return fecha;
@@ -47,12 +41,12 @@ public class Producto {
         this.fecha = fecha;
     }
 
-    public int getInventario() {
-        return inventario;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public void setInventario(int inventario) {
-        this.inventario = inventario;
+    public void setCantidad(int inventario) {
+        this.cantidad = inventario;
     }
 
 

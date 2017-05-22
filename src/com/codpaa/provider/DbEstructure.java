@@ -258,7 +258,7 @@ public class DbEstructure {
         public static final String ID_PRODUCTO = "idProducto";
         public static final String FECHA_CAPTURA = "fecha_captura";
         public static final String ESTATUS_PRODUCTO = "estatus_producto";
-        public static final String INVENTARIO = "inventario";
+        public static final String CANTIDAD = "cantidad";
         public static final String ESTATUS_REGISTRO = "estatus_registro";
 
     }

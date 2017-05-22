@@ -62,13 +62,13 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
             String fecha = producto.getFecha();
 
-            if (producto.getEstatus() == 1){
+            if (producto.getEstatus() == Producto.EstatusTypes.DESCATALOGADO){
                 holder.estatus.setText("Descatalogado " + fecha);
-            }else if(producto.getEstatus() == 2){
+            }else if(producto.getEstatus() == Producto.EstatusTypes.CATALOGADO){
                 holder.estatus.setText("Catalogado " + fecha);
-            }else if(producto.getEstatus() == 3){
+            }else if(producto.getEstatus() == Producto.EstatusTypes.NO_ACEPTO_CATALOGACION){
                 holder.estatus.setText("No Aceptado " + fecha);
-            }else if(producto.getEstatus() == 4){
+            }else if(producto.getEstatus() == Producto.EstatusTypes.POR_CATALOGAR){
 
                 holder.estatus.setText("Proceso Catalogoar " + fecha);
 
@@ -78,9 +78,9 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
 
 
-        if (producto.getInventario() > 0 && holder.cantidad.getVisibility() == View.VISIBLE){
+        if (producto.getCantidad() > 0 && holder.cantidad.getVisibility() == View.VISIBLE){
 
-            holder.cantidad.setText(producto.getInventario());
+            holder.cantidad.setText(producto.getCantidad());
 
         }
 
@@ -129,7 +129,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
 
                                     if (holder.inventario.getText().length() > 0){
-                                        producto.setInventario(Integer.parseInt(holder.inventario.getText().toString()));
+                                        producto.setCantidad(Integer.parseInt(holder.inventario.getText().toString()));
                                     }
 
 
@@ -146,19 +146,6 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
                         producto.setEstatus(Producto.EstatusTypes.CATALOGADO);
 
                         break;
-
-
-                    case R.id.por_catalogar:
-
-                        if (holder.cantidad.getVisibility() == View.VISIBLE)
-                            holder.cantidad.setVisibility(View.GONE);
-                        producto.setEstatus(Producto.EstatusTypes.POR_CATALOGAR);
-                        producto.setInventario(0);
-
-
-
-                        break;
-
 
 
                     case R.id.acepta:
@@ -208,7 +195,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
 
 
-                        producto.setInventario(0);
+                        producto.setCantidad(0);
                         producto.setCantidad(0);
 
 
@@ -280,7 +267,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
             for (Producto producto: mProductosList){
 
 
-                if (producto.getEstatus() != 0){
+                if (producto.getEstatus() > 0){
 
                     list.add(producto);
 
