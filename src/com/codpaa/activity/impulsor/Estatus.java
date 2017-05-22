@@ -32,10 +32,8 @@ import com.codpaa.response.ProductoCatalogoResponse;
 import com.codpaa.util.Utilities;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -257,7 +255,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 producto.setIdProducto(cursor.getInt(cursor.getColumnIndex("idProducto")));
                 producto.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
                 producto.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
-                producto.setEstatus(cursor.getString(cursor.getColumnIndex("estatus_producto")));
+                producto.setEstatus(cursor.getInt(cursor.getColumnIndex("estatus_producto")));
                 producto.setInventario(cursor.getInt(cursor.getColumnIndex("inventario")));
 
                 list.add(producto);
@@ -321,25 +319,21 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
     private ArrayList<Producto> getArrayListProByTienda(int idMarca, int idTienda){
 
-        Cursor curProByTienda = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
         ArrayList<Producto> arrayP = new ArrayList<>();
-        if (curProByTienda.getCount() <= 0){
 
-            Cursor curPro = new BDopenHelper(this).productos(idMarca);
-
-            for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-                final Producto spP = new Producto();
-                spP.setIdProducto(curPro.getInt(0));
-                spP.setNombre(curPro.getString(1));
-                spP.setPresentacion(curPro.getString(2));
-                spP.setCodeBarras(curPro.getString(3));
-                spP.setIdMarca(curPro.getInt(4));
-                arrayP.add(spP);
-            }
+        SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
 
-            curPro.close();
-        } else {
+        String sql = "select  p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca, pc.estatus_producto, pc.fecha_captura " +
+                     " from productotienda as pt " +
+                     " left  join producto as p on pt.idProducto=p.idProducto "+
+                     " left join producto_catalogado_tienda as pc on pc.idProducto=p.idProducto " +
+                     " where p.idMarca=" + idMarca +  " and pt.idTienda=" + idTienda;
+
+        Cursor curProByTienda = db.rawQuery(sql, null);
+
+
+        if(curProByTienda.getCount() > 0){
 
             for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
                 final Producto spP = new Producto();
@@ -348,18 +342,19 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 spP.setPresentacion(curProByTienda.getString(2));
                 spP.setCodeBarras(curProByTienda.getString(3));
                 spP.setIdMarca(curProByTienda.getInt(4));
+                spP.setEstatus(curProByTienda.getInt(curProByTienda.getColumnIndex("estatus_producto")));
+                spP.setFecha(curProByTienda.getString(curProByTienda.getColumnIndex("fecha_captura")));
+
                 arrayP.add(spP);
             }
-
         }
 
-
         curProByTienda.close();
+        db.close();
 
         return arrayP;
 
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

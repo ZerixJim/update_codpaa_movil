@@ -19,5 +19,10 @@ public class AvanceGestion extends AppCompatActivity {
         setContentView(R.layout.activity_avance_gestion);
 
 
+
+
+
+
+
     }
 }

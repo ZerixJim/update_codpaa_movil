@@ -13,16 +13,30 @@ public class Producto {
     private String nombre;
     private String presentacion;
     private String codeBarras;
-    private String estatus = null;
+    private int estatus;
     private int inventario;
+    private int cantidad;
 
 
 
     public class EstatusTypes{
 
-        public static final String CATALOGADO = "catalogado";
-        public static final String POR_CATALOGAR = "por_catalogar";
 
+        public static final int DESCATALOGADO = 1;
+
+        public static final int CATALOGADO = 2;
+        public static final int NO_ACEPTO_CATALOGACION = 3;
+        public static final int POR_CATALOGAR = 4;
+
+    }
+
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     public String getFecha() {
@@ -50,12 +64,11 @@ public class Producto {
         this.idTienda = idTienda;
     }
 
-
-    public String getEstatus() {
+    public int getEstatus() {
         return estatus;
     }
 
-    public void setEstatus(String estatus) {
+    public void setEstatus(int estatus) {
         this.estatus = estatus;
     }
 

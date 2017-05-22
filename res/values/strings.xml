@@ -177,6 +177,7 @@
     <string name="proceso_aceptacion">Proceso Aceptacion</string>
     <string name="estatus_activity">Estatus</string>
     <string name="spinner_estatus">Spinner Estatus</string>
+    <string name="cantidad_cajas">cantidad inventario cajas</string>
 
 
 </resources>

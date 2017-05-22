@@ -90,7 +90,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 	EditText editNombre;
 	AsyncHttpClient cliente;
 	RequestParams rp;
-	String nombreTienda;
+	String grupo;
     RecyclerView menuRecycler;
 	Toolbar toolbar;
 	private Boolean Salida = false;
@@ -177,24 +177,19 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 			Cursor cTienda = DB.tienda(idTienda);
 			cTienda.moveToFirst();
 
-			nombreTienda = cTienda.getString(0) + " " + cTienda.getString(1);
+			grupo = cTienda.getString(0);
+			String sucursal = cTienda.getString(1);
 
 
 			if (getSupportActionBar() != null)
-				getSupportActionBar().setTitle(nombreTienda);
+				getSupportActionBar().setTitle(grupo);
 			cTienda.close();
 
 			try {
 
-				Log.d("idPromotor", " "+idPromotor);
-
-				Cursor cNomPromo = DB.nombrePromotor(idPromotor);
-				cNomPromo.moveToFirst();
 
 				if(getSupportActionBar() != null)
-					getSupportActionBar().setSubtitle(cNomPromo.getString(0));
-				cNomPromo.close();
-
+					getSupportActionBar().setSubtitle(sucursal);
 
 
 			}catch(Exception e) {
@@ -327,8 +322,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 			item12.setNombreMenu("Proceso aceptacion");
 			item12.setImage("ic_description_grey_600_24dp");
 			array.add(item12);
-
-
 
 
 
@@ -1617,7 +1610,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 	private void dialogoConfirmarEntrada(){
 
 		Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("¿Estas seguro(a) que quieres Registrar tu Entrada en \n " + nombreTienda + "?");
+		builder.setMessage("¿Estas seguro(a) que quieres Registrar tu Entrada en \n " + grupo + "?");
 		builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
