@@ -4,15 +4,21 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 
 import com.codpaa.R;
 import com.codpaa.adapter.generic.AvanceGestionRecyclerAdaptar;
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.fragment.DialogFragmentContrato;
 import com.codpaa.model.AvanceGestionModel;
 
 import java.util.ArrayList;
@@ -22,11 +28,12 @@ import java.util.List;
  * Created by Grim on 21/05/2017.
  */
 
-public class AvanceGestion extends AppCompatActivity implements AvanceGestionRecyclerAdaptar.ItemCheckListener{
+public class AvanceGestion extends AppCompatActivity implements AvanceGestionRecyclerAdaptar.ItemCheckListener, View.OnClickListener{
 
     private int idPromotor, idTienda;
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
+    private SignatureListener signatureListener;
 
 
     @Override
@@ -44,6 +51,19 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.float_button);
 
+        if (floatingActionButton != null) {
+            floatingActionButton.setOnClickListener(this);
+        }
+
+        ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null){
+
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
+        }
+
+
         if(recyclerView != null){
 
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -56,7 +76,6 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
             recyclerView.setAdapter(adaptar);
             recyclerView.setItemViewCacheSize(list.size());
 
-            Log.d("listSize", list.size() + " ");
 
 
         }
@@ -64,6 +83,13 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
     }
 
+
+    public void setOnSignatureListener(SignatureListener listener){
+
+
+
+
+    }
 
 
     private List<AvanceGestionModel> getList(){
@@ -73,8 +99,8 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
         String sql = "select pct.idTienda, pct.idPromotor, pct.fecha_captura, pct.idProducto, p.nombre, p.presentacion, pct.cantidad " +
                 " from producto_catalogado_tienda as pct " +
                 " left join producto as p on p.idProducto=pct.idProducto " +
-                " where pct.idTienda=" + idTienda + "  and pct.estatus_producto=4 " +
-                "group by pct.idTienda, pct.fecha_captura, pct.idProducto order by pct.fecha_captura desc";
+                " where pct.idTienda=" + idTienda + "  and pct.estatus_producto=4 and pct.firma is null " +
+                " group by pct.idTienda, pct.fecha_captura, pct.idProducto order by pct.fecha_captura desc";
 
 
         Cursor cursor = db.rawQuery(sql, null);
@@ -151,6 +177,80 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
         }
 
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_avance_gestion, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        switch (item.getItemId()){
+
+            case android.R.id.home:
+                finish();
+                return true;
+
+            case R.id.enviar:
+
+
+
+
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+
+    private void showDialogContrato(){
+
+        FragmentManager fm = getSupportFragmentManager();
+
+
+        DialogFragmentContrato dialog = DialogFragmentContrato.getIntance();
+
+        dialog.show(fm, "dialog_contrato");
+
+
+    }
+
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+
+            case R.id.float_button:
+
+                showDialogContrato();
+
+
+                break;
+
+
+        }
+
+
+    }
+
+
+
+    public interface SignatureListener{
+
+        void onSigatureComplete();
 
     }
 }

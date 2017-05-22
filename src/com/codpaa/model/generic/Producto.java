@@ -3,6 +3,9 @@ package com.codpaa.model.generic;
  * Created by Grim on 20/05/2017.
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Producto {
 
     private int idProducto;
@@ -16,6 +19,7 @@ public class Producto {
     private int estatus;
     private int cantidad;
 
+    private List<String> objeciones = new ArrayList<>();
 
 
 
@@ -30,7 +34,31 @@ public class Producto {
 
     }
 
+    public void addOjecion(String element){
+        if(!objeciones.contains(element)){
 
+            objeciones.add(element);
+        }
+    }
+
+    public void removeObjecion(String element){
+
+        if(objeciones.contains(element)){
+
+            objeciones.remove(element);
+
+        }
+
+    }
+
+
+    public List<String> getObjeciones() {
+        return objeciones;
+    }
+
+    public void setObjeciones(List<String> objeciones) {
+        this.objeciones = objeciones;
+    }
 
 
     public String getFecha() {

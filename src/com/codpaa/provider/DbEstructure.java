@@ -260,6 +260,7 @@ public class DbEstructure {
         public static final String ESTATUS_PRODUCTO = "estatus_producto";
         public static final String CANTIDAD = "cantidad";
         public static final String ESTATUS_REGISTRO = "estatus_registro";
+        public static final String FIRMA = "firma";
 
     }
 

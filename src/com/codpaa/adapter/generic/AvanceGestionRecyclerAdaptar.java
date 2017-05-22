@@ -10,8 +10,10 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.codpaa.R;
+import com.codpaa.activity.impulsor.AvanceGestion;
 import com.codpaa.model.AvanceGestionModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -89,6 +91,24 @@ public class AvanceGestionRecyclerAdaptar extends RecyclerView.Adapter<AvanceGes
         return count;
 
     }
+
+    public List<AvanceGestionModel> getSelectedItems(){
+
+        List<AvanceGestionModel> array = new ArrayList<>();
+
+        for (AvanceGestionModel item: list){
+
+            if (item.isCheck()){
+
+                array.add(item);
+
+            }
+
+        }
+
+        return array;
+    }
+
 
 
 

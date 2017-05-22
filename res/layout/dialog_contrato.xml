@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp">
+
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Acepto la catalogacion del producto"/>
+
+
+    <com.github.gcacace.signaturepad.views.SignaturePad
+        android:layout_below="@+id/description"
+        android:layout_width="match_parent"
+        android:id="@+id/signature"
+        android:layout_height="200dp"
+        bind:clearOnDoubleClick="true"/>
+
+
+    <TextView
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/signature"
+        android:background="#ccc"/>
+
+    <TextView
+        android:id="@+id/divider_text"
+        android:layout_below="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Firma de conformidad"/>
+
+
+    <Button
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:attr/buttonBarStyle"
+        android:textColor="?android:attr/colorAccent"
+        android:layout_alignBottom="@+id/button"
+        android:layout_toLeftOf="@+id/button"
+        android:layout_toStartOf="@+id/button"
+        android:text="Cerrar"/>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:layout_gravity="end"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/divider_text"
+        style="?android:attr/buttonBarStyle"
+        android:textColor="?android:attr/colorAccent"
+        android:text="Aceptar"/>
+
+
+
+
+
+
+
+
+</RelativeLayout>

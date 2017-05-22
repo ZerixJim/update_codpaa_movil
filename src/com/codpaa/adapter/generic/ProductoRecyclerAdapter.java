@@ -5,9 +5,12 @@ import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -67,10 +70,10 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
             }else if(producto.getEstatus() == Producto.EstatusTypes.CATALOGADO){
                 holder.estatus.setText("Catalogado " + fecha);
             }else if(producto.getEstatus() == Producto.EstatusTypes.NO_ACEPTO_CATALOGACION){
-                holder.estatus.setText("No Aceptado " + fecha);
+                holder.estatus.setText("Proceso Catalogar " + fecha);
             }else if(producto.getEstatus() == Producto.EstatusTypes.POR_CATALOGAR){
 
-                holder.estatus.setText("Proceso Catalogoar " + fecha);
+                holder.estatus.setText("Acepto Catalogar " + fecha);
 
             }
         }
@@ -210,6 +213,66 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
 
 
+        holder.faltaEspacio.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    producto.addOjecion(buttonView.getText().toString());
+                }else {
+
+                    producto.removeObjecion(buttonView.getText().toString());
+
+                }
+
+            }
+        });
+
+
+        holder.falteRecurso.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    producto.addOjecion(buttonView.getText().toString());
+                }else {
+
+                    producto.removeObjecion(buttonView.getText().toString());
+
+                }
+            }
+        });
+
+
+        holder.competitividad.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    producto.addOjecion(buttonView.getText().toString());
+                }else {
+
+                    producto.removeObjecion(buttonView.getText().toString());
+
+                }
+            }
+        });
+
+
+        holder.seConsulta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    producto.addOjecion(buttonView.getText().toString());
+                }else {
+
+                    producto.removeObjecion(buttonView.getText().toString());
+
+                }
+            }
+        });
+
+
+
+
+
 
     }
 
@@ -238,6 +301,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
         EditText cantidad,inventario;
         LinearLayout viewCheck;
         Spinner spinner;
+        CheckBox faltaEspacio, falteRecurso, competitividad, seConsulta;
 
 
         ProductoViewHolder(View itemView) {
@@ -253,6 +317,13 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
             viewCheck = (LinearLayout) itemView.findViewById(R.id.view_check);
             spinner = (Spinner) itemView.findViewById(R.id.spinner);
             estatus = (TextView) itemView.findViewById(R.id.estatus);
+
+
+            faltaEspacio = (CheckBox) itemView.findViewById(R.id.falta_espacio);
+            falteRecurso = (CheckBox) itemView.findViewById(R.id.faltan_recursos);
+            competitividad = (CheckBox) itemView.findViewById(R.id.competitividad);
+            seConsulta = (CheckBox) itemView.findViewById(R.id.se_consultara);
+
 
         }
     }
