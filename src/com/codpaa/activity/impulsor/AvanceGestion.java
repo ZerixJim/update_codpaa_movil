@@ -21,8 +21,13 @@ import com.codpaa.adapter.generic.AvanceGestionRecyclerAdaptar;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.fragment.DialogFragmentContrato;
 import com.codpaa.model.AvanceGestionModel;
+import com.codpaa.model.JsonUpdateFirma;
 import com.codpaa.provider.DbEstructure;
+import com.codpaa.response.ResponseUpdateFirmaProducto;
+import com.codpaa.util.Utilities;
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -253,7 +258,7 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
 
 
-
+            sendFirmasToServer();
 
 
             refreshRecycler();
@@ -267,13 +272,56 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
     private void sendFirmasToServer(){
 
-        AsyncHttpClient client = new AsyncHttpClient();
 
 
 
+        SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+
+
+        Cursor cursor = db.rawQuery("select * from producto_catalogado_tienda where firma is not null  and estatus_registro=2", null);
+
+        if (cursor.getCount() > 0){
+
+            List<AvanceGestionModel> lista = new ArrayList<>();
+
+            for (cursor.moveToFirst(); !cursor.isAfterLast() ; cursor.moveToNext()){
+                final AvanceGestionModel model = new AvanceGestionModel();
+
+
+                model.setIdProducto(cursor.getInt(cursor.getColumnIndex("idProducto")));
+                model.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
+                model.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
+                model.setFirma(cursor.getString(cursor.getColumnIndex("firma")));
+
+
+                lista.add(model);
+
+            }
+
+
+            JsonUpdateFirma json = new JsonUpdateFirma();
+
+            json.setList(lista);
+
+            Gson gson = new Gson();
+
+            AsyncHttpClient client = new AsyncHttpClient();
+
+            RequestParams rp = new RequestParams();
+
+            rp.put("solicitud", "update_firma_producto");
+            rp.put("json", gson.toJson(json));
+
+            Log.d("Json", gson.toJson(json));
+
+            client.post(this, Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
 
 
 
+        }
+
+
+        cursor.close();
 
     }
 
