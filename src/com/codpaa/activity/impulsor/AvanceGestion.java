@@ -1,11 +1,16 @@
 package com.codpaa.activity.impulsor;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +19,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
+
 
 import com.codpaa.R;
 import com.codpaa.adapter.generic.AvanceGestionRecyclerAdaptar;
@@ -24,6 +29,7 @@ import com.codpaa.model.AvanceGestionModel;
 import com.codpaa.model.JsonUpdateFirma;
 import com.codpaa.provider.DbEstructure;
 import com.codpaa.response.ResponseUpdateFirmaProducto;
+import com.codpaa.util.QuickstartPreferences;
 import com.codpaa.util.Utilities;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -42,6 +48,8 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     AvanceGestionRecyclerAdaptar adaptar;
+    private BroadcastReceiver broadcastReceiver;
+    private boolean isReceiverMessageRegistered;
 
 
     @Override
@@ -84,7 +92,41 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
         }
 
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(QuickstartPreferences.SEND)) {
 
+                    refreshRecycler();
+                }
+
+
+            }
+        };
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (!isReceiverMessageRegistered){
+            LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver,
+                    new IntentFilter(QuickstartPreferences.SEND));
+            isReceiverMessageRegistered = true;
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+        isReceiverMessageRegistered = false;
+
+
+        super.onPause();
     }
 
 
@@ -274,7 +316,6 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
             refreshRecycler();
 
         }
-
 
 
     }

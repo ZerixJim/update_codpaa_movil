@@ -1336,11 +1336,19 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 	private void estatusProducto() {
 
-		Intent i = new Intent(this, Estatus.class);
-        i.putExtra("idPromotor", idPromotor);
-        i.putExtra("idTienda", idTienda);
+		if(Entrada){
+			Intent i = new Intent(this, Estatus.class);
+			i.putExtra("idPromotor", idPromotor);
+			i.putExtra("idTienda", idTienda);
 
-        startActivity(i);
+			startActivity(i);
+		}else {
+
+			Toast.makeText(this, "Debe registrar entrada", Toast.LENGTH_SHORT).show();
+
+		}
+
+
 
 	}
 

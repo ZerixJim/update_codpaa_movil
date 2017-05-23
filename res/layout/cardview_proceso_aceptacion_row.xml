@@ -23,12 +23,20 @@
             />
 
         <TextView
+            android:id="@+id/estatus_registro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+
+        <TextView
             android:id="@+id/cantidad"
-            android:layout_alignBottom="@+id/producto_nombre"
+
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
 
 
         <TextView
@@ -89,7 +97,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/radio_group"
             android:inputType="number"
+            android:layout_marginTop="20dp"
             android:hint="Cantidad entregada"
+            android:layout_toLeftOf="@+id/cantidad"
+            android:layout_toStartOf="@+id/cantidad"
+            android:textColor="#898989"
             android:visibility="gone"/>
 
 

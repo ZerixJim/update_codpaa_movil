@@ -1,8 +1,12 @@
 package com.codpaa.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +70,40 @@ public class ProcesoAceptacionRecyclerAdapter extends RecyclerView.Adapter<Proce
 
         holder.estatus.setText(data.getFecha());
 
+        if (data.getEstatus() == 4){
+
+            holder.estatusRegistro.setText("Proceso Actualizado");
+            holder.estatusRegistro.setTextColor(Color.BLUE);
+
+            holder.editText.setVisibility(View.VISIBLE);
+
+            holder.editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if(holder.editText.getText().length() > 0){
+
+                        data.setCantidad(Integer.parseInt(holder.editText.getText().toString()));
+
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+
+
+
+        }
+
+
         holder.cantidad.setText("Cantidad: " + data.getCantidad());
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -104,6 +142,9 @@ public class ProcesoAceptacionRecyclerAdapter extends RecyclerView.Adapter<Proce
             });
 
         }
+
+
+
 
 
 
@@ -158,7 +199,7 @@ public class ProcesoAceptacionRecyclerAdapter extends RecyclerView.Adapter<Proce
     class ViewHolder extends RecyclerView.ViewHolder{
 
 
-        TextView estatus, nombre, presentacion, cantidad;
+        TextView estatus, nombre, presentacion, cantidad, estatusRegistro;
         RadioGroup radioGroup;
         CheckBox checkBox;
         EditText editText;
@@ -176,6 +217,8 @@ public class ProcesoAceptacionRecyclerAdapter extends RecyclerView.Adapter<Proce
 
             editText = (EditText) itemView.findViewById(R.id.cantidad_entrega);
             cantidad = (TextView) itemView.findViewById(R.id.cantidad);
+
+            estatusRegistro = (TextView) itemView.findViewById(R.id.estatus_registro);
 
 
         }

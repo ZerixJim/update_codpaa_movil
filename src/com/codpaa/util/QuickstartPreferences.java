@@ -22,4 +22,6 @@ public class QuickstartPreferences {
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
     public static final String NEW_MESSAGE = "newMessage";
 
+    public static final String SEND = "send";
+
 }

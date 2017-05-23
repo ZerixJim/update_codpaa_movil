@@ -2,10 +2,13 @@ package com.codpaa.response;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.content.LocalBroadcastManager;
 
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.provider.DbEstructure;
+import com.codpaa.util.QuickstartPreferences;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -56,6 +59,9 @@ public class ResponseUpdateFirmaProducto extends JsonHttpResponseHandler {
 
 
                     }
+
+                    Intent intent = new Intent(QuickstartPreferences.SEND);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
 
 

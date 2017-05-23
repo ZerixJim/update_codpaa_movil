@@ -291,13 +291,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 ProductoCatalogadoTienda.CANTIDAD + " int," +
                 ProductoCatalogadoTienda.FIRMA +" text," +
                 ProductoCatalogadoTienda.ESTATUS_PROCESO + " varchar(50)," +
+                ProductoCatalogadoTienda.CANTIDAD_ENTREGA + " int," +
                 ProductoCatalogadoTienda.ESTATUS_REGISTRO + " integer default 1)";
 
         procesoCatalogacionObjeciones = "create table if not exists " +
                 ProcesoCatalogacionObjeciones.TABLE_NAME + "(" +
                 ProcesoCatalogacionObjeciones.ID_PRODUCTO +  " int," +
                 ProcesoCatalogacionObjeciones.ID_TIENDA + " int, " +
-                ProcesoCatalogacionObjeciones.DESCRIPCION + " varchar(50), " +
+                ProcesoCatalogacionObjeciones.DESCRIPCION + " varchar(50)," +
                 ProcesoCatalogacionObjeciones.FECHA + " varchar(25))";
 
 

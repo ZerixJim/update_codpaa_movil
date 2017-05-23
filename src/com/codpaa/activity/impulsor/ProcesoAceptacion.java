@@ -19,6 +19,7 @@ import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.JsonProductoImpulsor;
 import com.codpaa.model.generic.Producto;
 import com.codpaa.provider.DbEstructure;
+import com.codpaa.response.JsonResponseUpdateProceso;
 import com.codpaa.util.Utilities;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -94,11 +95,11 @@ public class ProcesoAceptacion extends AppCompatActivity implements ProcesoAcept
 
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("select pct.idProducto, pct.idTienda, pct.fecha_captura, pct.cantidad , p.nombre, p.presentacion, pct.estatus_proceso " +
+        Cursor cursor = db.rawQuery("select pct.idProducto, pct.idTienda, pct.fecha_captura, pct.cantidad , p.nombre, p.presentacion, pct.estatus_proceso, pct.estatus_registro  " +
                 "        from producto_catalogado_tienda as pct " +
                 " left join producto as p on p.idProducto=pct.idProducto " +
                 " where pct.idTienda=" + idTienda +  " and pct.firma is not null " +
-                " and estatus_registro=3", null);
+                " and estatus_registro>=3", null);
 
         if(cursor.getCount() > 0){
 
@@ -113,6 +114,7 @@ public class ProcesoAceptacion extends AppCompatActivity implements ProcesoAcept
                 producto.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad")));
                 producto.setNombre(cursor.getString(cursor.getColumnIndex("nombre")));
                 producto.setPresentacion(cursor.getString(cursor.getColumnIndex("presentacion")));
+                producto.setEstatus(cursor.getInt(cursor.getColumnIndex("estatus_registro")));
 
                 producto.setEstatusProceso(cursor.getString(cursor.getColumnIndex("estatus_proceso")));
 
@@ -145,6 +147,7 @@ public class ProcesoAceptacion extends AppCompatActivity implements ProcesoAcept
             ContentValues values = new ContentValues();
 
             values.put("estatus_proceso", producto.getEstatusProceso());
+            values.put("cantidad_entrega", producto.getCantidad());
 
             db.update(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME, values, "" +
                     DbEstructure.ProductoCatalogadoTienda.ID_PRODUCTO + "=" + producto.getIdProducto() + " and " +
@@ -165,10 +168,10 @@ public class ProcesoAceptacion extends AppCompatActivity implements ProcesoAcept
 
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("select pct.idProducto, pct.idTienda, pct.fecha_captura, pct.estatus_proceso " +
+        Cursor cursor = db.rawQuery("select pct.idProducto, pct.idTienda, pct.fecha_captura, pct.estatus_proceso, pct.cantidad_entrega " +
                 "                 from producto_catalogado_tienda as pct " +
                 "                 where pct.estatus_proceso is not null " +
-                "                 and estatus_registro=3", null);
+                "                 and estatus_registro>=3", null);
         if (cursor.getCount() > 0){
 
             List<Producto> list = new ArrayList<>();
@@ -181,6 +184,7 @@ public class ProcesoAceptacion extends AppCompatActivity implements ProcesoAcept
                 producto.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
                 producto.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
                 producto.setEstatusProceso(cursor.getString(cursor.getColumnIndex("estatus_proceso")));
+                producto.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad_entrega")));
 
                 list.add(producto);
 
@@ -203,65 +207,7 @@ public class ProcesoAceptacion extends AppCompatActivity implements ProcesoAcept
 
             Log.d("json", gson.toJson(json));
 
-            client.post(this, Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_proceso.php", rp, new JsonHttpResponseHandler(){
-
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
-
-                    if (response != null){
-
-                        try {
-                            if (response.getBoolean("update")){
-
-                                JSONArray jsonArray = response.getJSONArray("productos");
-
-                                int length = jsonArray.length();
-
-                                SQLiteDatabase db = new BDopenHelper(ProcesoAceptacion.this).getWritableDatabase();
-
-
-                                for (int i=0; i< length; i++){
-                                    ContentValues cv = new ContentValues();
-                                    cv.put("estatus_registro", 4);
-
-                                    db.update(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME, cv, "" +
-                                            DbEstructure.ProductoCatalogadoTienda.ID_PRODUCTO + "=" + jsonArray.getJSONObject(i).getInt("idProducto") + " and " +
-                                            DbEstructure.ProductoCatalogadoTienda.ID_TIENDA + "=" + jsonArray.getJSONObject(i).getInt("idTienda") + " and " +
-                                            DbEstructure.ProductoCatalogadoTienda.FECHA_CAPTURA +"='" + jsonArray.getJSONObject(i).getString("fecha") + "'", null);
-
-
-                                }
-
-
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    super.onFailure(statusCode, headers, responseString, throwable);
-                }
-            });
-
-
+            client.post(this, Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_proceso.php", rp, new JsonResponseUpdateProceso(this));
 
 
         }

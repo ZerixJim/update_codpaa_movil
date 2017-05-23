@@ -1,6 +1,9 @@
 package com.codpaa.activity.impulsor;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -29,6 +32,7 @@ import com.codpaa.provider.DbEstructure;
 
 import com.codpaa.provider.DbEstructure.ProductoCatalogadoTienda;
 import com.codpaa.response.ProductoCatalogoResponse;
+import com.codpaa.util.QuickstartPreferences;
 import com.codpaa.util.Utilities;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -51,6 +55,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
     private RecyclerView mRecyclerView;
     private int idPromotor, idTienda;
+    private BroadcastReceiver broadcastReceiver;
 
 
     @Override
@@ -84,6 +89,9 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
 
         }
+
+
+
 
 
 

@@ -262,6 +262,7 @@ public class DbEstructure {
         public static final String CANTIDAD = "cantidad";
         public static final String ESTATUS_REGISTRO = "estatus_registro";
         public static final String ESTATUS_PROCESO = "estatus_proceso";
+        public static final String CANTIDAD_ENTREGA = "cantidad_entrega";
         public static final String FIRMA = "firma";
 
     }
