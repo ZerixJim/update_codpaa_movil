@@ -363,7 +363,6 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
             Log.d("Json", gson.toJson(json));
 
-            //// TODO: 23/05/2017 cambiar server a produccion
 
             client.post(this, Utilities.WEB_SERVICE_CODPAA + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
 
