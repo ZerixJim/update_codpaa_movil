@@ -1,5 +1,6 @@
 package com.codpaa.activity.impulsor;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ import com.codpaa.adapter.generic.AvanceGestionRecyclerAdaptar;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.fragment.DialogFragmentContrato;
 import com.codpaa.model.AvanceGestionModel;
+import com.codpaa.provider.DbEstructure;
+import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +31,12 @@ import java.util.List;
  * Created by Grim on 21/05/2017.
  */
 
-public class AvanceGestion extends AppCompatActivity implements AvanceGestionRecyclerAdaptar.ItemCheckListener, View.OnClickListener{
+public class AvanceGestion extends AppCompatActivity implements AvanceGestionRecyclerAdaptar.ItemCheckListener, View.OnClickListener, DialogFragmentContrato.SignatureListener {
 
     private int idPromotor, idTienda;
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
-    private SignatureListener signatureListener;
+    AvanceGestionRecyclerAdaptar adaptar;
 
 
     @Override
@@ -70,12 +73,8 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
             recyclerView.setLayoutManager(linearLayoutManager);
 
-            List<AvanceGestionModel> list = getList();
 
-            AvanceGestionRecyclerAdaptar adaptar = new AvanceGestionRecyclerAdaptar(this, list, this);
-            recyclerView.setAdapter(adaptar);
-            recyclerView.setItemViewCacheSize(list.size());
-
+            refreshRecycler();
 
 
         }
@@ -84,22 +83,28 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
     }
 
 
-    public void setOnSignatureListener(SignatureListener listener){
 
+    private void refreshRecycler(){
 
+        List<AvanceGestionModel> list = getList();
 
+        adaptar = new AvanceGestionRecyclerAdaptar(this, list, this);
+        recyclerView.setAdapter(adaptar);
+        recyclerView.setItemViewCacheSize(list.size());
 
     }
 
 
+
     private List<AvanceGestionModel> getList(){
+
         List<AvanceGestionModel> array = new ArrayList<>();
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
-        String sql = "select pct.idTienda, pct.idPromotor, pct.fecha_captura, pct.idProducto, p.nombre, p.presentacion, pct.cantidad " +
+        String sql = "select pct.idTienda, pct.idPromotor, pct.fecha_captura, pct.idProducto, p.nombre, p.presentacion, pct.cantidad, pct.firma " +
                 " from producto_catalogado_tienda as pct " +
                 " left join producto as p on p.idProducto=pct.idProducto " +
-                " where pct.idTienda=" + idTienda + "  and pct.estatus_producto=4 and pct.firma is null " +
+                " where pct.idTienda=" + idTienda + "  and pct.estatus_producto=4 " +
                 " group by pct.idTienda, pct.fecha_captura, pct.idProducto order by pct.fecha_captura desc";
 
 
@@ -120,32 +125,9 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
                         " Cantidad: " + cursor.getInt(cursor.getColumnIndex("cantidad"));
 
                 model.setContent(content);
-
-                /*Cursor cursorProductos = db.rawQuery("select p.nombre, p.presentacion, pct.cantidad " +
-                        " from producto_catalogado_tienda as pct " +
-                        " left join producto as p on p.idProducto=pct.idProducto " +
-                        " where pct.fecha_captura='" + cursor.getString(cursor.getColumnIndex("fecha_captura")) +  "' " +
-                        " and pct.idTienda="  + cursor.getInt(cursor.getColumnIndex("idTienda")) +  "  " +
-                        " and pct.idProducto=" + cursor.getInt(cursor.getColumnIndex("idProducto")) +
-                        " and pct.estatus_producto=4", null);
-
-                String list = "";
-
-                for (cursorProductos.moveToFirst(); !cursorProductos.isAfterLast() ; cursorProductos.moveToNext()){
-
-                    String data = cursorProductos.getString(cursorProductos.getColumnIndex("nombre")) + " " +
-                            " " + cursorProductos.getString(cursorProductos.getColumnIndex("presentacion")) +
-                            " Cantidad:"+ cursorProductos.getInt(cursorProductos.getColumnIndex("cantidad")) +
-                            " \n";
-
-                    list += data;
+                model.setFirma(cursor.getString(cursor.getColumnIndex("firma")));
 
 
-                }
-
-                cursorProductos.close();
-
-                model.setContent(list);*/
 
                 array.add(model);
 
@@ -221,6 +203,8 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
         DialogFragmentContrato dialog = DialogFragmentContrato.getIntance();
 
+        dialog.setOnSignatureListener(this);
+
         dialog.show(fm, "dialog_contrato");
 
 
@@ -247,10 +231,60 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
     }
 
 
+    private void firmarProductos(String firma){
 
-    public interface SignatureListener{
+        List<AvanceGestionModel> list = adaptar.getSelectedItems();
 
-        void onSigatureComplete();
+
+        if (list.size() > 0){
+
+            SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
+            for (AvanceGestionModel model : list){
+
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(DbEstructure.ProductoCatalogadoTienda.FIRMA, firma);
+
+                db.update(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME, contentValues, "" +
+                        DbEstructure.ProductoCatalogadoTienda.ID_PRODUCTO + "=" + model.getIdProducto() + " and " +
+                        DbEstructure.ProductoCatalogadoTienda.ID_TIENDA + "=" + model.getIdTienda() + " and " +
+                        DbEstructure.ProductoCatalogadoTienda.FECHA_CAPTURA +"='" + model.getFecha() + "'", null);
+
+            }
+
+
+
+
+
+
+            refreshRecycler();
+
+        }
+
+
+
+    }
+
+
+    private void sendFirmasToServer(){
+
+        AsyncHttpClient client = new AsyncHttpClient();
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+    @Override
+    public void onCompleteSignature(String firma) {
+
+        firmarProductos(firma);
 
     }
 }

@@ -9,11 +9,19 @@ public class AvanceGestionModel {
 
     private String estatus;
     private String fecha;
+    private String firma;
     private int idTienda;
     private int idProducto;
     private boolean check = false;
     private String content;
 
+    public String getFirma() {
+        return firma;
+    }
+
+    public void setFirma(String firma) {
+        this.firma = firma;
+    }
 
     public int getIdProducto() {
         return idProducto;

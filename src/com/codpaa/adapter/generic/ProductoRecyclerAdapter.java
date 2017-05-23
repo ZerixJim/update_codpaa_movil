@@ -69,9 +69,9 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
                 holder.estatus.setText("Descatalogado " + fecha);
             }else if(producto.getEstatus() == Producto.EstatusTypes.CATALOGADO){
                 holder.estatus.setText("Catalogado " + fecha);
-            }else if(producto.getEstatus() == Producto.EstatusTypes.NO_ACEPTO_CATALOGACION){
+            }else if(producto.getEstatus() == Producto.EstatusTypes.PROCESO_CATALOGACION){
                 holder.estatus.setText("Proceso Catalogar " + fecha);
-            }else if(producto.getEstatus() == Producto.EstatusTypes.POR_CATALOGAR){
+            }else if(producto.getEstatus() == Producto.EstatusTypes.ACEPTO_CATALOGACION){
 
                 holder.estatus.setText("Acepto Catalogar " + fecha);
 
@@ -79,11 +79,9 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
         }
 
 
-
-
         if (producto.getCantidad() > 0 && holder.cantidad.getVisibility() == View.VISIBLE){
 
-            holder.cantidad.setText(producto.getCantidad());
+            holder.cantidad.setText(String.valueOf(producto.getCantidad()));
 
         }
 
@@ -184,14 +182,14 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
                         }
 
-                        producto.setEstatus(Producto.EstatusTypes.POR_CATALOGAR);
+                        producto.setEstatus(Producto.EstatusTypes.ACEPTO_CATALOGACION);
 
                         break;
 
 
                     case R.id.no_acepta:
 
-                        producto.setEstatus(Producto.EstatusTypes.NO_ACEPTO_CATALOGACION);
+                        producto.setEstatus(Producto.EstatusTypes.PROCESO_CATALOGACION);
 
                         if (holder.viewCheck.getVisibility() == View.GONE)
                             holder.viewCheck.setVisibility(View.VISIBLE);
@@ -200,9 +198,6 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
                         producto.setCantidad(0);
                         producto.setCantidad(0);
-
-
-
 
 
                         break;
@@ -222,8 +217,10 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
                     producto.removeObjecion(buttonView.getText().toString());
 
+
                 }
 
+                Log.d("arraitems", producto.getObjeciones().toString());
             }
         });
 
@@ -238,6 +235,8 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
                     producto.removeObjecion(buttonView.getText().toString());
 
                 }
+
+                Log.d("arraitems", producto.getObjeciones().toString());
             }
         });
 

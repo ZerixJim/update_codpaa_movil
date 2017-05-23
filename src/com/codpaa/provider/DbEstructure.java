@@ -264,4 +264,18 @@ public class DbEstructure {
 
     }
 
+    public static class ProcesoCatalogacionObjeciones{
+
+        private ProcesoCatalogacionObjeciones(){}
+
+
+        public static final String TABLE_NAME = "proceso_catalogacion_objeciones";
+        public static final String ID_PRODUCTO = "idProducto";
+        public static final String ID_TIENDA = "idTienda";
+        public static final String DESCRIPCION = "descripcion";
+        public static final String FECHA = "fecha_captura";
+
+
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.codpaa.adapter.generic;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,6 +74,20 @@ public class AvanceGestionRecyclerAdaptar extends RecyclerView.Adapter<AvanceGes
 
         viewHolder.content.setText(data.getContent());
 
+
+
+        if(data.getFirma() != null){
+
+
+            viewHolder.checkBox.setVisibility(View.INVISIBLE);
+
+            viewHolder.estatusFirma.setText("firmada");
+            viewHolder.estatusFirma.setTextColor(Color.rgb(145, 255, 137));
+
+        }
+
+
+
     }
 
     private int getCountItemsSelecteds(){
@@ -119,7 +134,7 @@ public class AvanceGestionRecyclerAdaptar extends RecyclerView.Adapter<AvanceGes
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView estatus, content;
+        TextView estatus, content, estatusFirma;
         CheckBox checkBox;
 
         public ViewHolder(View itemView) {
@@ -128,6 +143,7 @@ public class AvanceGestionRecyclerAdaptar extends RecyclerView.Adapter<AvanceGes
             estatus = (TextView) itemView.findViewById(R.id.estatus);
             checkBox = (CheckBox) itemView.findViewById(R.id.check);
             content = (TextView) itemView.findViewById(R.id.content);
+            estatusFirma = (TextView) itemView.findViewById(R.id.estatus_firma);
 
 
         }

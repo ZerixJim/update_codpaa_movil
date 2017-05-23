@@ -156,6 +156,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
         List<Producto> productos = adapter.getProductListValidation();
 
 
+
         if (productos.size() > 0){
 
 
@@ -181,6 +182,36 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 contentValues.put(ProductoCatalogadoTienda.CANTIDAD, producto.getCantidad());
 
                 db.insert(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME, null, contentValues);
+
+
+                if (producto.getEstatus() == Producto.EstatusTypes.PROCESO_CATALOGACION){
+
+
+                    List<String> objeciones = producto.getObjeciones();
+
+                    if(objeciones.size() > 0){
+
+                        for (String s: objeciones){
+
+                            ContentValues contentValues1 = new ContentValues();
+
+                            contentValues1.put(DbEstructure.ProcesoCatalogacionObjeciones.ID_TIENDA, idTienda);
+                            contentValues1.put(DbEstructure.ProcesoCatalogacionObjeciones.ID_PRODUCTO, producto.getIdProducto());
+                            contentValues1.put(DbEstructure.ProcesoCatalogacionObjeciones.DESCRIPCION, s);
+                            contentValues1.put(DbEstructure.ProcesoCatalogacionObjeciones.FECHA, fecha);
+
+                            db.insert(DbEstructure.ProcesoCatalogacionObjeciones.TABLE_NAME, null, contentValues1);
+
+                        }
+
+                    }
+
+
+
+
+                }
+
+
 
 
             }
@@ -226,10 +257,14 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
             rp.put("solicitud", "sendCatalogo");
             rp.put("json", gson.toJson(json));
 
-            Log.d("JSON", gson.toJson(json));
+            //Log.d("json", gson.toJson(json));
+
+
 
             client.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_impulsor.php", rp , new ProductoCatalogoResponse(this));
 
+
+            //mRecyclerView.getAdapter().notifyDataSetChanged();
         }
 
 
@@ -257,6 +292,37 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 producto.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
                 producto.setEstatus(cursor.getInt(cursor.getColumnIndex("estatus_producto")));
                 producto.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad")));
+
+                if(cursor.getInt(cursor.getColumnIndex("estatus_producto")) == Producto.EstatusTypes.PROCESO_CATALOGACION){
+
+
+                    String sql = "select * from "
+                            + DbEstructure.ProcesoCatalogacionObjeciones.TABLE_NAME +" " +
+                            " where idProducto="+ cursor.getInt(cursor.getColumnIndex("idProducto")) + " and idTienda=" +
+                            cursor.getInt(cursor.getColumnIndex("idTienda")) + " and fecha_captura='" +
+                            cursor.getString(cursor.getColumnIndex("fecha_captura")) + "'";
+
+                    Cursor cursorObjeciones = db.rawQuery( sql, null);
+
+                    Log.d("sql", sql );
+
+                    if (cursorObjeciones.getCount() > 0){
+
+                        List<String> lista = new ArrayList<>();
+                        for (cursorObjeciones.moveToFirst() ; !cursorObjeciones.isAfterLast() ; cursorObjeciones.moveToNext()){
+
+                            lista.add(cursorObjeciones.getString(cursorObjeciones.getColumnIndex("descripcion")));
+
+                        }
+
+                        producto.setObjeciones(lista);
+
+                    }
+
+                    cursorObjeciones.close();
+
+                }
+
 
                 list.add(producto);
             }

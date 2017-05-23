@@ -2,7 +2,6 @@ package com.codpaa.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,9 @@ public class DialogFragmentContrato extends DialogFragment {
 
     private SignaturePad firma;
     private Button button, buttonClose;
+    private SignatureListener listener;
+
+
 
 
     public static DialogFragmentContrato getIntance(){
@@ -35,6 +37,29 @@ public class DialogFragmentContrato extends DialogFragment {
         firma = (SignaturePad) view.findViewById(R.id.signature);
         button = (Button) view.findViewById(R.id.button);
         buttonClose = (Button) view.findViewById(R.id.btn_close);
+        button = (Button) view.findViewById(R.id.button);
+
+
+
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(!firma.isEmpty()){
+
+                    getDialog().dismiss();
+
+
+                    listener.onCompleteSignature(firma.getSignatureSvg());
+                }
+
+
+
+            }
+        });
+
+
 
         buttonClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,5 +74,17 @@ public class DialogFragmentContrato extends DialogFragment {
 
         return view;
     }
+
+
+    public void setOnSignatureListener(SignatureListener listener){
+
+        this.listener = listener;
+
+    }
+
+    public interface SignatureListener{
+        void onCompleteSignature(String firma);
+    }
+
 
 }

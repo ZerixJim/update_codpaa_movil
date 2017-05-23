@@ -24,17 +24,15 @@ public class Producto {
 
 
     public class EstatusTypes{
-
-
         public static final int DESCATALOGADO = 1;
-
         public static final int CATALOGADO = 2;
-        public static final int NO_ACEPTO_CATALOGACION = 3;
-        public static final int POR_CATALOGAR = 4;
+        public static final int PROCESO_CATALOGACION = 3;
+        public static final int ACEPTO_CATALOGACION = 4;
 
     }
 
     public void addOjecion(String element){
+
         if(!objeciones.contains(element)){
 
             objeciones.add(element);

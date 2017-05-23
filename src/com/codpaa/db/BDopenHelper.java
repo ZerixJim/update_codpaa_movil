@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 
+import com.codpaa.provider.DbEstructure;
 import com.codpaa.provider.DbEstructure.Usuario;
 import com.codpaa.provider.DbEstructure.VisitaTienda;
 import com.codpaa.provider.DbEstructure.Mensaje;
@@ -24,6 +25,7 @@ import com.codpaa.provider.DbEstructure.Preguntas;
 import com.codpaa.provider.DbEstructure.Opciones;
 import com.codpaa.provider.DbEstructure.MaterialesSolicitud;
 import com.codpaa.provider.DbEstructure.ProductoCatalogadoTienda;
+import com.codpaa.provider.DbEstructure.ProcesoCatalogacionObjeciones;
 
 
 import java.io.File;
@@ -76,6 +78,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String encuestaFoto;
     private static String opciones;
     private static String productoCatalogadoTienda;
+    private static String procesoCatalogacionObjeciones;
 
 
     public BDopenHelper(Context miContext) {
@@ -289,6 +292,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 ProductoCatalogadoTienda.FIRMA +" text, " +
                 ProductoCatalogadoTienda.ESTATUS_REGISTRO + " integer default 1)";
 
+        procesoCatalogacionObjeciones = "create table if not exists " +
+                ProcesoCatalogacionObjeciones.TABLE_NAME + "(" +
+                ProcesoCatalogacionObjeciones.ID_PRODUCTO +  " int," +
+                ProcesoCatalogacionObjeciones.ID_TIENDA + " int, " +
+                ProcesoCatalogacionObjeciones.DESCRIPCION + " varchar(50), " +
+                ProcesoCatalogacionObjeciones.FECHA + " varchar(25))";
+
 
 
     }
@@ -332,6 +342,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(materiales);
         db.execSQL(materialesSolicitud);
         db.execSQL(productoCatalogadoTienda);
+        db.execSQL(procesoCatalogacionObjeciones);
     }
 
     @Override
@@ -342,6 +353,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
             db.execSQL(productoCatalogadoTienda);
+            db.execSQL(procesoCatalogacionObjeciones);
 
         }
 
@@ -351,6 +363,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL(ruta);
 
             db.execSQL(productoCatalogadoTienda);
+            db.execSQL(procesoCatalogacionObjeciones);
 
 
         }
