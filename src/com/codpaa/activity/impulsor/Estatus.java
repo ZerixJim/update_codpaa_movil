@@ -271,7 +271,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
             //// TODO: 23/05/2017 cambiar server a produccion
 
-            client.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_impulsor.php", rp , new ProductoCatalogoResponse(this));
+            client.post(Utilities.WEB_SERVICE_CODPAA + "send_impulsor.php", rp , new ProductoCatalogoResponse(this));
 
 
             //mRecyclerView.getAdapter().notifyDataSetChanged();
