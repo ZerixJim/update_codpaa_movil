@@ -27,6 +27,17 @@
             android:text="fecha" />
 
 
+
+        <TextView
+            android:id="@+id/estatus_envio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:textSize="12sp"
+            android:layout_alignBottom="@+id/estatus"/>
+
+
         <TextView
             android:id="@+id/content"
             android:layout_width="match_parent"

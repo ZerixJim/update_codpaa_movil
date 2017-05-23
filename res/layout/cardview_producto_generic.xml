@@ -137,6 +137,7 @@
             android:layout_marginTop="20dp"
             android:hint="@string/escribe_cantidad"
             android:textColor="#6b6b6b"
+            android:inputType="number"
             android:visibility="gone" />
 
 
@@ -147,6 +148,7 @@
             android:layout_below="@+id/divider_bottom"
             android:hint="@string/cantidad_cajas"
             android:textColor="#6b6b6b"
+            android:inputType="number"
             android:visibility="gone" />
 
 

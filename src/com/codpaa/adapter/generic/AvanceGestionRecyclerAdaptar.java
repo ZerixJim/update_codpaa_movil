@@ -60,6 +60,12 @@ public class AvanceGestionRecyclerAdaptar extends RecyclerView.Adapter<AvanceGes
 
         viewHolder.checkBox.setChecked(data.isCheck());
 
+
+        if(data.getEstatus() != null){
+
+            viewHolder.estatusEnvio.setText(data.getEstatus());
+        }
+
         viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -134,7 +140,7 @@ public class AvanceGestionRecyclerAdaptar extends RecyclerView.Adapter<AvanceGes
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView estatus, content, estatusFirma;
+        TextView estatus, content, estatusFirma, estatusEnvio;
         CheckBox checkBox;
 
         public ViewHolder(View itemView) {
@@ -144,6 +150,7 @@ public class AvanceGestionRecyclerAdaptar extends RecyclerView.Adapter<AvanceGes
             checkBox = (CheckBox) itemView.findViewById(R.id.check);
             content = (TextView) itemView.findViewById(R.id.content);
             estatusFirma = (TextView) itemView.findViewById(R.id.estatus_firma);
+            estatusEnvio = (TextView) itemView.findViewById(R.id.estatus_envio);
 
 
         }

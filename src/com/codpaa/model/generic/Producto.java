@@ -19,6 +19,10 @@ public class Producto {
     private int estatus;
     private int cantidad;
 
+    private String estatusProceso;
+
+    private boolean checked = false;
+
     private List<String> objeciones = new ArrayList<>();
 
 
@@ -28,7 +32,24 @@ public class Producto {
         public static final int CATALOGADO = 2;
         public static final int PROCESO_CATALOGACION = 3;
         public static final int ACEPTO_CATALOGACION = 4;
+        public static final int PROCESO_CONCRESION = 5;
 
+    }
+
+    public String getEstatusProceso() {
+        return estatusProceso;
+    }
+
+    public void setEstatusProceso(String estatusProceso) {
+        this.estatusProceso = estatusProceso;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public void addOjecion(String element){

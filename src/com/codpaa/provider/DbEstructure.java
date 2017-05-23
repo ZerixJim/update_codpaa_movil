@@ -2,6 +2,7 @@ package com.codpaa.provider;/*
  * Created by grim on 24/05/2016.
  */
 
+import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
 public class DbEstructure {
@@ -260,6 +261,7 @@ public class DbEstructure {
         public static final String ESTATUS_PRODUCTO = "estatus_producto";
         public static final String CANTIDAD = "cantidad";
         public static final String ESTATUS_REGISTRO = "estatus_registro";
+        public static final String ESTATUS_PROCESO = "estatus_proceso";
         public static final String FIRMA = "firma";
 
     }

@@ -106,7 +106,7 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
         List<AvanceGestionModel> array = new ArrayList<>();
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
-        String sql = "select pct.idTienda, pct.idPromotor, pct.fecha_captura, pct.idProducto, p.nombre, p.presentacion, pct.cantidad, pct.firma " +
+        String sql = "select pct.idTienda, pct.idPromotor, pct.fecha_captura, pct.idProducto, p.nombre, p.presentacion, pct.cantidad, pct.firma, pct.estatus_registro  " +
                 " from producto_catalogado_tienda as pct " +
                 " left join producto as p on p.idProducto=pct.idProducto " +
                 " where pct.idTienda=" + idTienda + "  and pct.estatus_producto=4 " +
@@ -131,6 +131,17 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
                 model.setContent(content);
                 model.setFirma(cursor.getString(cursor.getColumnIndex("firma")));
+
+                int estatus = cursor.getInt(cursor.getColumnIndex("estatus_registro"));
+
+                if (estatus == 3){
+
+                    model.setEstatus("firma enviada");
+
+
+                }else if(estatus == 2){
+                    model.setEstatus("no enviada");
+                }
 
 
 
@@ -188,8 +199,7 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
             case R.id.enviar:
 
-
-
+                sendFirmasToServer();
 
                 return true;
 
@@ -273,8 +283,6 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
     private void sendFirmasToServer(){
 
 
-
-
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
 
@@ -314,8 +322,9 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
             Log.d("Json", gson.toJson(json));
 
-            client.post(this, Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
+            //// TODO: 23/05/2017 cambiar server a produccion
 
+            client.post(this, Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
 
 
         }
