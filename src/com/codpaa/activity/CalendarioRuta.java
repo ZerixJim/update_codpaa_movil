@@ -26,6 +26,7 @@ import com.codpaa.fragment.FragmentMiercoles;
 import com.codpaa.fragment.FragmentNoAsignado;
 import com.codpaa.fragment.FragmentSabado;
 import com.codpaa.fragment.FragmentViernes;
+import com.codpaa.util.Configuracion;
 
 import java.util.Calendar;
 
@@ -43,7 +44,7 @@ public class CalendarioRuta extends AppCompatActivity{
         Intent i = getIntent();
         idPromotor = i.getIntExtra("idCelular", 0);
 
-        Log.d("idPromo Calen", " "+ idPromotor);
+        //Log.d("idPromo Calen", " "+ idPromotor);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_calendario);
 
@@ -54,6 +55,22 @@ public class CalendarioRuta extends AppCompatActivity{
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null){
                 actionBar.setDisplayHomeAsUpEnabled(true);
+
+                Configuracion config = new Configuracion(this);
+                String modo = "";
+
+                if(config.getPromotorMode() == 1){
+
+                    modo = "Promotor";
+
+                }else if(config.getPromotorMode() == 2){
+
+                    modo = "Impulsor";
+
+                }
+
+
+                actionBar.setSubtitle(modo);
 
             }
 

@@ -139,7 +139,7 @@
             android:name=".activity.CalendarioRuta"
             android:label="@string/ruta"
             android:screenOrientation="portrait"
-            android:theme="@style/noActionBar" />
+            android:theme="@style/noActionBarNoTitle" />
 
         <activity android:name=".activity.VentaPromedio"
             android:label="@string/venta_promedio"
