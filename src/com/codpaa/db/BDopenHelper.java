@@ -39,7 +39,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     // v1.2.7 rc2 = 27
     // v1.2.8 = 28
-    private static final int version = 28;
+    // v1.2.8 rc1 = 29
+    private static final int version = 29;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -132,7 +133,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "fecha date, precio  decimal(18,2))";
         productos = "Create table if not exists " +
                 "producto(idProducto int primary key, nombre varchar(50), presentacion varchar(10)," +
-                "idMarca int, cb varchar(45), img varchar(250), tester int)";
+                "idMarca int, cb varchar(45), img varchar(250), tester int, precio_compra float, " +
+                "precio_sugerido float, fecha_precio varchar(15))";
         surtido = "create table if not exists " +
                 "surtido(idTienda int, idPromotor int,surtido char(2), fecha char(25), " +
                 "idProducto int, cajas int, unifila int, caja1 int, caja2 int, caja3 int," +
@@ -366,6 +368,15 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
             db.execSQL(productoCatalogadoTienda);
             db.execSQL(procesoCatalogacionObjeciones);
+
+
+        }
+
+
+        if (newVersion == 29){
+
+            db.execSQL("drop table if exists producto");
+            db.execSQL(productos);
 
 
         }

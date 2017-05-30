@@ -269,8 +269,8 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
 
 
-
-            client.post(Utilities.WEB_SERVICE_CODPAA + "send_impulsor.php", rp , new ProductoCatalogoResponse(this));
+            //// TODO: 30/05/2017 cambiar a produccion
+            client.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_impulsor.php", rp , new ProductoCatalogoResponse(this));
 
 
             //mRecyclerView.getAdapter().notifyDataSetChanged();
@@ -403,7 +403,8 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                      " from productotienda as pt " +
                      " left  join producto as p on pt.idProducto=p.idProducto "+
                      " left join producto_catalogado_tienda as pc on pc.idProducto=p.idProducto " +
-                     " where p.idMarca=" + idMarca +  " and pt.idTienda=" + idTienda;
+                     " where p.idMarca=" + idMarca +  " and pt.idTienda=" + idTienda + " " +
+                     " group by p.idProducto order by p.nombre asc";
 
         Cursor curProByTienda = db.rawQuery(sql, null);
 
