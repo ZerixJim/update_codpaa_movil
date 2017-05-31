@@ -332,6 +332,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 			array.add(item12);
 
 
+			final MenuTiendaModel item3 = new MenuTiendaModel();
+			item3.setIdMenu(3);
+			item3.setNombreMenu("Comentarios");
+			item3.setImage("ic_comment_grey_600_24dp");
+			array.add(item3);
+
+
 
 
 		}
