@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.provider.DbEstructure;
@@ -49,6 +50,7 @@ public class ResponseUpdateFirmaProducto extends JsonHttpResponseHandler {
 
                         ContentValues contentValues = new ContentValues();
                         contentValues.put(DbEstructure.ProductoCatalogadoTienda.ESTATUS_REGISTRO, 3);
+                        contentValues.put(DbEstructure.ProductoCatalogadoTienda.FOLIO, array.getJSONObject(i).getInt("folio") );
 
                         db.update(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME, contentValues,"" +
                                 DbEstructure.ProductoCatalogadoTienda.ID_PRODUCTO + "=" + array.getJSONObject(i).getInt("idProducto") + " and " +
@@ -94,6 +96,9 @@ public class ResponseUpdateFirmaProducto extends JsonHttpResponseHandler {
     @Override
     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
         super.onFailure(statusCode, headers, responseString, throwable);
+
+       // Log.d("error", responseString + " " + throwable);
+
     }
 
     @Override

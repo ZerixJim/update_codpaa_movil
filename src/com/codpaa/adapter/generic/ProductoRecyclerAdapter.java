@@ -61,6 +61,15 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
         holder.barCode.setText(producto.getCodeBarras());
 
 
+        holder.precioCompra.setText("precio compra $" + producto.getPrecioCompra());
+        holder.precioVenta.setText("precio sugerido venta $" + producto.getPrecioVenta());
+
+        holder.utilidad.setText("margen utilidad " + producto.getUtilidad() + "%");
+
+        holder.fechaPrecio.setText("fecha precio " + producto.getFechaPrecio());
+
+
+
         if (producto.getEstatus() > 0){
 
             String fecha = producto.getFecha();
@@ -109,6 +118,8 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
         holder.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+
+                producto.setChanges(true);
 
                 hideViews(holder);
                 switch (checkedId){
@@ -294,7 +305,8 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
     class ProductoViewHolder extends RecyclerView.ViewHolder{
 
-        TextView nombre, presentacion, barCode, estatus;
+        TextView nombre, presentacion, barCode, estatus, precioCompra, precioVenta, utilidad;
+        TextView fechaPrecio;
         ImageView imageView;
         RadioGroup radioGroup;
         EditText cantidad,inventario;
@@ -324,6 +336,13 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
             seConsulta = (CheckBox) itemView.findViewById(R.id.se_consultara);
 
 
+            precioCompra = (TextView) itemView.findViewById(R.id.precio_compra);
+            precioVenta = (TextView) itemView.findViewById(R.id.precio_venta);
+            utilidad = (TextView) itemView.findViewById(R.id.utilidad);
+
+            fechaPrecio = (TextView) itemView.findViewById(R.id.fecha_precio);
+
+
         }
     }
 
@@ -337,10 +356,10 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
             for (Producto producto: mProductosList){
 
 
-                if (producto.getEstatus() > 0){
+
+                if (producto.isChanges()){
 
                     list.add(producto);
-
 
                 }
 

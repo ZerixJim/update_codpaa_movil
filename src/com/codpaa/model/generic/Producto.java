@@ -13,6 +13,8 @@ public class Producto {
     private int idTienda;
     private String fecha;
     private float price;
+    private float precioCompra, precioVenta;
+    private String fechaPrecio;
     private String nombre;
     private String presentacion;
     private String codeBarras;
@@ -22,6 +24,7 @@ public class Producto {
     private String estatusProceso;
 
     private boolean checked = false;
+    private boolean changes = false;
 
     private List<String> objeciones = new ArrayList<>();
 
@@ -70,6 +73,43 @@ public class Producto {
 
     }
 
+    public int getUtilidad(){
+
+        return Math.round(((precioVenta - precioCompra) / precioCompra) * 100);
+    }
+
+
+    public float getPrecioCompra() {
+        return precioCompra;
+    }
+
+    public void setPrecioCompra(float precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+
+    public float getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public void setPrecioVenta(float precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+
+    public String getFechaPrecio() {
+        return fechaPrecio;
+    }
+
+    public void setFechaPrecio(String fechaPrecio) {
+        this.fechaPrecio = fechaPrecio;
+    }
+
+    public boolean isChanges() {
+        return changes;
+    }
+
+    public void setChanges(boolean changes) {
+        this.changes = changes;
+    }
 
     public List<String> getObjeciones() {
         return objeciones;

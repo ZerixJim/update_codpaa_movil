@@ -294,6 +294,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 ProductoCatalogadoTienda.FIRMA +" text," +
                 ProductoCatalogadoTienda.ESTATUS_PROCESO + " varchar(50)," +
                 ProductoCatalogadoTienda.CANTIDAD_ENTREGA + " int," +
+                ProductoCatalogadoTienda.FOLIO + " int," +
                 ProductoCatalogadoTienda.ESTATUS_REGISTRO + " integer default 1)";
 
         procesoCatalogacionObjeciones = "create table if not exists " +
@@ -361,10 +362,22 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         }
 
-        if(oldVersion == 26 && newVersion == 28){
+        if(newVersion == 29 && oldVersion == 28){
 
-            db.execSQL("drop table if exists visitaTienda");
-            db.execSQL(ruta);
+            db.execSQL("drop table if exists producto");
+            db.execSQL(productos);
+
+            db.execSQL("alter table " + ProductoCatalogadoTienda.TABLE_NAME + " " +
+                    "add column "+ ProductoCatalogadoTienda.FOLIO + " int");
+
+
+        }
+
+        if(newVersion == 29 && oldVersion == 27){
+
+            db.execSQL("drop table if exists producto");
+            db.execSQL(productos);
+
 
             db.execSQL(productoCatalogadoTienda);
             db.execSQL(procesoCatalogacionObjeciones);
@@ -373,13 +386,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
         }
 
 
-        if (newVersion == 29){
-
-            db.execSQL("drop table if exists producto");
-            db.execSQL(productos);
-
-
-        }
 
 
 
@@ -609,11 +615,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
-    public void insertarProducto(int idProd, String nombre, String presentacion, int idMarc, String cb, int tester) throws SQLiteException{
+    public void insertarProducto(int idProd, String nombre, String presentacion, int idMarc, String cb, int tester, double precioComp, double precioSuge, String fechaPrecio) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert or replace into producto(idProducto,nombre,presentacion,idMarca,cb,tester) " +
-                    "values("+idProd+",'"+nombre+"','"+presentacion+"',"+idMarc+",'"+cb+"', "+tester+")");
+            baseDatosLocal.execSQL("insert or replace into producto(idProducto,nombre,presentacion,idMarca,cb,tester, " +
+                    "precio_compra,precio_sugerido, fecha_precio) " +
+                    "values("+idProd+",'"+nombre+"','"+presentacion+"',"+idMarc+",'"+cb+"', "+tester+", " +
+                    precioComp + ", " + precioSuge + ", '" + fechaPrecio + "')");
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 

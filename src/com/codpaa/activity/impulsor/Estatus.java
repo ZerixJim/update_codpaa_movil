@@ -265,12 +265,12 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
             rp.put("solicitud", "sendCatalogo");
             rp.put("json", gson.toJson(json));
 
-            //Log.d("json", gson.toJson(json));
+            Log.d("json", gson.toJson(json));
 
 
 
-            //// TODO: 30/05/2017 cambiar a produccion
-            client.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_impulsor.php", rp , new ProductoCatalogoResponse(this));
+
+            client.post(Utilities.WEB_SERVICE_CODPAA + "send_impulsor.php", rp , new ProductoCatalogoResponse(this));
 
 
             //mRecyclerView.getAdapter().notifyDataSetChanged();
@@ -399,7 +399,8 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
 
-        String sql = "select  p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca, pc.estatus_producto, pc.fecha_captura " +
+        String sql = "select  p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca, pc.estatus_producto, pc.fecha_captura," +
+                " p.precio_compra, p.precio_sugerido, fecha_precio " +
                      " from productotienda as pt " +
                      " left  join producto as p on pt.idProducto=p.idProducto "+
                      " left join producto_catalogado_tienda as pc on pc.idProducto=p.idProducto " +
@@ -420,6 +421,11 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 spP.setIdMarca(curProByTienda.getInt(4));
                 spP.setEstatus(curProByTienda.getInt(curProByTienda.getColumnIndex("estatus_producto")));
                 spP.setFecha(curProByTienda.getString(curProByTienda.getColumnIndex("fecha_captura")));
+
+                spP.setPrecioCompra(curProByTienda.getFloat(curProByTienda.getColumnIndex("precio_compra")));
+                spP.setPrecioVenta(curProByTienda.getFloat(curProByTienda.getColumnIndex("precio_sugerido")));
+                spP.setFechaPrecio(curProByTienda.getString(curProByTienda.getColumnIndex("fecha_precio")));
+
 
                 arrayP.add(spP);
             }

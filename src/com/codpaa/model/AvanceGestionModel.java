@@ -14,7 +14,16 @@ public class AvanceGestionModel {
     private int idProducto;
     private boolean check = false;
     private String content;
+    private int folio;
 
+
+    public int getFolio() {
+        return folio;
+    }
+
+    public void setFolio(int folio) {
+        this.folio = folio;
+    }
 
     public String getFirma() {
         return firma;

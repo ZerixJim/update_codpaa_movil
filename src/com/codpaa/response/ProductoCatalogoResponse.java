@@ -74,7 +74,9 @@ public class ProductoCatalogoResponse extends JsonHttpResponseHandler {
 
                     for (int i = 0; i < lenght ; i++){
                         db.execSQL("update " + DbEstructure.ProductoCatalogadoTienda.TABLE_NAME +   " " +
-                                "set " + DbEstructure.ProductoCatalogadoTienda.ESTATUS_REGISTRO + "=2 where " +
+                                "set " + DbEstructure.ProductoCatalogadoTienda.ESTATUS_REGISTRO + "=2, " +
+                                DbEstructure.ProductoCatalogadoTienda.ESTATUS_PRODUCTO +"="
+                                + array.getJSONObject(i).getInt("estatus") + " where " +
                                 DbEstructure.ProductoCatalogadoTienda.ID_PRODUCTO +  "=" +
                                 array.getJSONObject(i).getInt("idProducto") +
                                 " and " + DbEstructure.ProductoCatalogadoTienda.ID_TIENDA +  "=" +

@@ -7,13 +7,13 @@ import java.util.List;
 
 public class JsonUpdateFirma {
 
+    private int idPromotor;
+
+
     private List<AvanceGestionModel> list;
 
-    public List<AvanceGestionModel> getList() {
-        return list;
-    }
-
-    public void setList(List<AvanceGestionModel> list) {
+    public JsonUpdateFirma(int idPromotor, List<AvanceGestionModel> list) {
+        this.idPromotor = idPromotor;
         this.list = list;
     }
 }

@@ -148,7 +148,7 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
         List<AvanceGestionModel> array = new ArrayList<>();
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
-        String sql = "select pct.idTienda, pct.idPromotor, pct.fecha_captura, pct.idProducto, p.nombre, p.presentacion, pct.cantidad, pct.firma, pct.estatus_registro  " +
+        String sql = "select pct.idTienda, pct.idPromotor, pct.fecha_captura, pct.idProducto, p.nombre, p.presentacion, pct.cantidad, pct.firma, pct.estatus_registro, pct.folio  " +
                 " from producto_catalogado_tienda as pct " +
                 " left join producto as p on p.idProducto=pct.idProducto " +
                 " where pct.idTienda=" + idTienda + "  and pct.estatus_producto=4 " +
@@ -184,6 +184,11 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
                 }else if(estatus == 2){
                     model.setEstatus("no enviada");
                 }
+
+
+                model.setFolio(cursor.getInt(cursor.getColumnIndex("folio")));
+
+                //Log.d("Avance en la gestion", " " + cursor.getInt(cursor.getColumnIndex("folio")));
 
 
 
@@ -327,7 +332,8 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
 
-        Cursor cursor = db.rawQuery("select * from producto_catalogado_tienda where firma is not null  and estatus_registro=2", null);
+        Cursor cursor = db.rawQuery("select * from producto_catalogado_tienda where firma" +
+                " is not null  and estatus_registro=2", null);
 
         if (cursor.getCount() > 0){
 
@@ -348,9 +354,8 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
             }
 
 
-            JsonUpdateFirma json = new JsonUpdateFirma();
+            JsonUpdateFirma json = new JsonUpdateFirma(idPromotor, lista);
 
-            json.setList(lista);
 
             Gson gson = new Gson();
 
@@ -362,6 +367,7 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
             rp.put("json", gson.toJson(json));
 
             Log.d("Json", gson.toJson(json));
+
 
 
             client.post(this, Utilities.WEB_SERVICE_CODPAA + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
