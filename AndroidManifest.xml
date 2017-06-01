@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.codpaa"
-    android:versionCode="59"
-    android:versionName="1.2.8 rc2">
+    android:versionCode="60"
+    android:versionName="1.2.8 rc3">
 
     <uses-sdk android:minSdkVersion="14" />
 
