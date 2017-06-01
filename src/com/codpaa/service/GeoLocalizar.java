@@ -1210,7 +1210,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 	@Override
 	public void onLocationChanged(Location location) {
 
-		Log.d("onLocationChange", " Provider "+location.getProvider() +" La "+ location.getLatitude() + " Lo " + location.getLongitude());
+		Log.d("onLocationChangeService", " Provider "+location.getProvider() +" La "+ location.getLatitude() + " Lo " + location.getLongitude());
         loGeneral = location;
 
 		if (location.getProvider().equals("gps")){

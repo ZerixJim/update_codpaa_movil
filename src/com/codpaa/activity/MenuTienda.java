@@ -27,6 +27,7 @@ import com.loopj.android.http.*;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,10 +40,11 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -73,144 +75,150 @@ import com.codpaa.model.FrentesModel;
 import com.codpaa.model.InventarioModel;
 import com.codpaa.adapter.MenuTiendaAdapter.MenuTiendaListener;
 
-public class MenuTienda extends AppCompatActivity implements OnClickListener, MenuTiendaListener{
-	
-	
-	Button btnSalidaTi,btnEntrada, btnEncar, btnExhib, btnInven, btnFrente, btnSurtido, btnTiendaError;
-	Button btnVentaPromedio, btnCapturaGeneral;
-	Button btnComentario, btnInteligencia, btnUpdaPro, btnFoto, btnMateriales;
-	SQLiteDatabase base = null;
-	Location locGps,locNet;
-	LocationManager localizar = null;
-	TextView txtEncargado, frentes, surtido, exhi,inventario, fotos;
-	int idPromotor, idTienda;
-	String gpsProvedor, netProvedor;
-	BDopenHelper DB = null;
-	String myVersionName = "not available";
-	EnviarDatos enviar;
-	Spinner spinnerEnc;
-	EditText editNombre;
-	AsyncHttpClient cliente;
-	RequestParams rp;
-	String grupo;
+public class MenuTienda extends AppCompatActivity implements OnClickListener, MenuTiendaListener, LocationListener {
+
+
+    Button btnSalidaTi, btnEntrada, btnEncar, btnExhib, btnInven, btnFrente, btnSurtido, btnTiendaError;
+    Button btnVentaPromedio, btnCapturaGeneral;
+    Button btnComentario, btnInteligencia, btnUpdaPro, btnFoto, btnMateriales;
+    SQLiteDatabase base = null;
+    Location locGps, locNet;
+    LocationManager localizar = null;
+    TextView txtEncargado, frentes, surtido, exhi, inventario, fotos;
+    final int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    int idPromotor, idTienda;
+    String gpsProvedor, netProvedor;
+    BDopenHelper DB = null;
+    String myVersionName = "not available";
+    EnviarDatos enviar;
+    Spinner spinnerEnc;
+    EditText editNombre;
+    AsyncHttpClient cliente;
+    RequestParams rp;
+    String grupo;
     RecyclerView menuRecycler;
-	Toolbar toolbar;
-	private Boolean Salida = false;
-	private Boolean Entrada = false;
+    Toolbar toolbar;
+    public static final String TAG = "MenuTienda";
+    private Boolean Salida = false;
+    private Boolean Entrada = false;
+    private LocationManager locationManager;
+    private ProgressDialog progress;
 
+    private int intento = 0;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.menutienda);
-
-
-
-		toolbar = (Toolbar) findViewById(R.id.toolbar_menu_principal);
-
-
-		if(toolbar != null){
-
-			setSupportActionBar(toolbar);
-			ActionBar actionBar = getSupportActionBar();
-			if (actionBar != null){
-				actionBar.setDisplayHomeAsUpEnabled(true);
-
-			}
-		}
-
-
-		setUpMenu();
-
-		cliente = new AsyncHttpClient();
-		rp = new RequestParams();
-		Intent recibeIdTi = getIntent();
-		enviar = new EnviarDatos(this);
-
-		idTienda = recibeIdTi.getIntExtra("idTienda",0);
-		idPromotor = recibeIdTi.getIntExtra("idPromotor",0);
-		//idTipoTienda = recibeIdTi.getIntExtra("idTipo", 0);
-
-
-		//registrar views
-		viewsRegister();
+    Handler handler;
 
 
 
 
-		DB = new BDopenHelper(this);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.menutienda);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar_menu_principal);
+
+
+        if (toolbar != null) {
+
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+
+            }
+        }
+
+
+        setUpMenu();
+
+        cliente = new AsyncHttpClient();
+        rp = new RequestParams();
+        Intent recibeIdTi = getIntent();
+        enviar = new EnviarDatos(this);
+
+        idTienda = recibeIdTi.getIntExtra("idTienda", 0);
+        idPromotor = recibeIdTi.getIntExtra("idPromotor", 0);
+        //idTipoTienda = recibeIdTi.getIntExtra("idTipo", 0);
+
+
+        //registrar views
+        viewsRegister();
+
+
+        DB = new BDopenHelper(this);
 
 
         //fotos.setText("fotos(0)");
 
-		localizar = (LocationManager) getSystemService(LOCATION_SERVICE);
+        localizar = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-		Context context = getApplicationContext();
-		PackageManager packageManager = context.getPackageManager();
-		String packageName = context.getPackageName();
-
-
-		try {
-			myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
-
-		} catch (PackageManager.NameNotFoundException e) {
-			e.printStackTrace();
-		}
+        Context context = getApplicationContext();
+        PackageManager packageManager = context.getPackageManager();
+        String packageName = context.getPackageName();
 
 
+        try {
+            myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
 
-		gpsProvedor = LocationManager.GPS_PROVIDER;
-		netProvedor = LocationManager.NETWORK_PROVIDER;
-
-
-		try {
-
-			localizar.requestLocationUpdates(netProvedor, 30000, 10, new localizacion());
-		}catch (SecurityException e){
-			e.printStackTrace();
-		}
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
 
-
-		try{
-
-			Cursor cTienda = DB.tienda(idTienda);
-			cTienda.moveToFirst();
-
-			grupo = cTienda.getString(0);
-			String sucursal = cTienda.getString(1);
+        gpsProvedor = LocationManager.GPS_PROVIDER;
+        netProvedor = LocationManager.NETWORK_PROVIDER;
 
 
-			if (getSupportActionBar() != null)
-				getSupportActionBar().setTitle(grupo);
-			cTienda.close();
+        try {
 
-			try {
-
-
-				if(getSupportActionBar() != null)
-					getSupportActionBar().setSubtitle(sucursal);
+            localizar.requestLocationUpdates(netProvedor, 30000, 10, new localizacion());
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
 
 
-			}catch(Exception e) {
-				Toast.makeText(this, "error menuTienda 2", Toast.LENGTH_SHORT).show();
-			}
+        try {
+
+            Cursor cTienda = DB.tienda(idTienda);
+            cTienda.moveToFirst();
+
+            grupo = cTienda.getString(0);
+            String sucursal = cTienda.getString(1);
 
 
+            if (getSupportActionBar() != null)
+                getSupportActionBar().setTitle(grupo);
+            cTienda.close();
 
-		}catch(Exception e){
-
-			Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
-		}finally {
-			DB.close();
-		}
+            try {
 
 
+                if (getSupportActionBar() != null)
+                    getSupportActionBar().setSubtitle(sucursal);
 
-		
-	}
+
+            } catch (Exception e) {
+                Toast.makeText(this, "error menuTienda 2", Toast.LENGTH_SHORT).show();
+            }
+
+
+        } catch (Exception e) {
+
+            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+        } finally {
+            DB.close();
+        }
+
+
+        handler = new Handler();
+
+
+    }
 
     private void setUpMenu() {
 
@@ -219,7 +227,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             menuRecycler.setHasFixedSize(true);
             LinearLayoutManager linear = new LinearLayoutManager(this);
             menuRecycler.setLayoutManager(linear);
-			menuRecycler.addItemDecoration(new DividerItemDecoration(this,null));
+            menuRecycler.addItemDecoration(new DividerItemDecoration(this, null));
 
             MenuTiendaAdapter adapter = new MenuTiendaAdapter(getMenuItems(), this);
             menuRecycler.setAdapter(adapter);
@@ -229,179 +237,174 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     }
 
 
-    public List<MenuTiendaModel> getMenuItems(){
+    public List<MenuTiendaModel> getMenuItems() {
         List<MenuTiendaModel> array = new ArrayList<>();
 
-		Configuracion c = new Configuracion(this);
+        Configuracion c = new Configuracion(this);
 
-		HorizontalScrollView horizontal = (HorizontalScrollView) findViewById(R.id.horizontal_view);
+        HorizontalScrollView horizontal = (HorizontalScrollView) findViewById(R.id.horizontal_view);
 
-		if(c.getPromotorMode() == 1){
+        if (c.getPromotorMode() == 1) {
 
-			if (horizontal != null) {
-				horizontal.setVisibility(View.VISIBLE);
-			}
+            if (horizontal != null) {
+                horizontal.setVisibility(View.VISIBLE);
+            }
 
-			final MenuTiendaModel item1 = new MenuTiendaModel();
-			item1.setIdMenu(1);
-			item1.setNombreMenu("Frentes");
-			item1.setImage("ic_grid_on_grey600_24dp");
-			array.add(item1);
+            final MenuTiendaModel item1 = new MenuTiendaModel();
+            item1.setIdMenu(1);
+            item1.setNombreMenu("Frentes");
+            item1.setImage("ic_grid_on_grey600_24dp");
+            array.add(item1);
 
-			final MenuTiendaModel item2 = new MenuTiendaModel();
-			item2.setIdMenu(2);
-			item2.setNombreMenu("Surtido de mueble");
-			item2.setImage("ic_blur_linear_grey600_24dp");
-			array.add(item2);
+            final MenuTiendaModel item2 = new MenuTiendaModel();
+            item2.setIdMenu(2);
+            item2.setNombreMenu("Surtido de mueble");
+            item2.setImage("ic_blur_linear_grey600_24dp");
+            array.add(item2);
 
-			final MenuTiendaModel item3 = new MenuTiendaModel();
-			item3.setIdMenu(3);
-			item3.setNombreMenu("Comentarios");
-			item3.setImage("ic_comment_grey_600_24dp");
-			array.add(item3);
+            final MenuTiendaModel item3 = new MenuTiendaModel();
+            item3.setIdMenu(3);
+            item3.setNombreMenu("Comentarios");
+            item3.setImage("ic_comment_grey_600_24dp");
+            array.add(item3);
 
-			final MenuTiendaModel item4 = new MenuTiendaModel();
-			item4.setIdMenu(4);
-			item4.setNombreMenu("Inventario");
-			item4.setImage("ic_assignment_grey600_24dp");
-			array.add(item4);
+            final MenuTiendaModel item4 = new MenuTiendaModel();
+            item4.setIdMenu(4);
+            item4.setNombreMenu("Inventario");
+            item4.setImage("ic_assignment_grey600_24dp");
+            array.add(item4);
 
-			final MenuTiendaModel item5 = new MenuTiendaModel();
-			item5.setIdMenu(5);
-			item5.setNombreMenu("Exhibiciones especiales");
-			item5.setImage("ic_border_bottom_grey600_24dp");
-			array.add(item5);
+            final MenuTiendaModel item5 = new MenuTiendaModel();
+            item5.setIdMenu(5);
+            item5.setNombreMenu("Exhibiciones especiales");
+            item5.setImage("ic_border_bottom_grey600_24dp");
+            array.add(item5);
 
-			final MenuTiendaModel item6 = new MenuTiendaModel();
-			item6.setIdMenu(6);
-			item6.setNombreMenu("Inteligencia de mercado");
-			item6.setImage("ic_assessment_grey_600_24dp");
-			array.add(item6);
+            final MenuTiendaModel item6 = new MenuTiendaModel();
+            item6.setIdMenu(6);
+            item6.setNombreMenu("Inteligencia de mercado");
+            item6.setImage("ic_assessment_grey_600_24dp");
+            array.add(item6);
 
-			final MenuTiendaModel item7 = new MenuTiendaModel();
-			item7.setIdMenu(7);
-			item7.setNombreMenu("Materiales");
-			item7.setImage("ic_apps_grey_600_24dp");
-			array.add(item7);
+            final MenuTiendaModel item7 = new MenuTiendaModel();
+            item7.setIdMenu(7);
+            item7.setNombreMenu("Materiales");
+            item7.setImage("ic_apps_grey_600_24dp");
+            array.add(item7);
 
-			final MenuTiendaModel item8 = new MenuTiendaModel();
-			item8.setIdMenu(8);
-			item8.setNombreMenu("Venta promedio");
-			item8.setImage("ic_timeline_grey_600_24dp");
-			array.add(item8);
+            final MenuTiendaModel item8 = new MenuTiendaModel();
+            item8.setIdMenu(8);
+            item8.setNombreMenu("Venta promedio");
+            item8.setImage("ic_timeline_grey_600_24dp");
+            array.add(item8);
 
-			final MenuTiendaModel item9 = new MenuTiendaModel();
-			item9.setIdMenu(9);
-			item9.setNombreMenu("Encargado de tienda");
-			item9.setImage("ic_timer_auto_grey600_24dp");
-			array.add(item9);
+            final MenuTiendaModel item9 = new MenuTiendaModel();
+            item9.setIdMenu(9);
+            item9.setNombreMenu("Encargado de tienda");
+            item9.setImage("ic_timer_auto_grey600_24dp");
+            array.add(item9);
 
-			final MenuTiendaModel item10 = new MenuTiendaModel();
-			item10.setIdMenu(10);
-			item10.setNombreMenu("Foto");
-			item10.setImage("ic_camera_grey600_24dp");
-			array.add(item10);
+            final MenuTiendaModel item10 = new MenuTiendaModel();
+            item10.setIdMenu(10);
+            item10.setNombreMenu("Foto");
+            item10.setImage("ic_camera_grey600_24dp");
+            array.add(item10);
 
-			final MenuTiendaModel item11 = new MenuTiendaModel();
-			item11.setIdMenu(11);
-			item11.setNombreMenu("Actualizar producto");
-			item11.setImage("ic_autorenew_grey_600_24dp");
-			array.add(item11);
-		}else if(c.getPromotorMode() == 2){
+            final MenuTiendaModel item11 = new MenuTiendaModel();
+            item11.setIdMenu(11);
+            item11.setNombreMenu("Actualizar producto");
+            item11.setImage("ic_autorenew_grey_600_24dp");
+            array.add(item11);
+        } else if (c.getPromotorMode() == 2) {
 
 
-
-			final MenuTiendaModel item13 = new MenuTiendaModel();
+            final MenuTiendaModel item13 = new MenuTiendaModel();
             item13.setIdMenu(13);
             item13.setNombreMenu("Estatus");
             item13.setImage("ic_assignment_grey_600_24dp");
             array.add(item13);
 
 
-			final MenuTiendaModel item14 = new MenuTiendaModel();
-			item14.setIdMenu(14);
-			item14.setNombreMenu("Avance de la Gestion");
-			item14.setImage("ic_input_grey_600_24dp");
-			array.add(item14);
+            final MenuTiendaModel item14 = new MenuTiendaModel();
+            item14.setIdMenu(14);
+            item14.setNombreMenu("Avance de la Gestion");
+            item14.setImage("ic_input_grey_600_24dp");
+            array.add(item14);
 
 
-			final MenuTiendaModel item12 = new MenuTiendaModel();
-			item12.setIdMenu(12);
-			item12.setNombreMenu("Proceso aceptacion");
-			item12.setImage("ic_description_grey_600_24dp");
-			array.add(item12);
+            final MenuTiendaModel item12 = new MenuTiendaModel();
+            item12.setIdMenu(12);
+            item12.setNombreMenu("Proceso aceptacion");
+            item12.setImage("ic_description_grey_600_24dp");
+            array.add(item12);
 
 
-			final MenuTiendaModel item3 = new MenuTiendaModel();
-			item3.setIdMenu(3);
-			item3.setNombreMenu("Comentarios");
-			item3.setImage("ic_comment_grey_600_24dp");
-			array.add(item3);
+            final MenuTiendaModel item3 = new MenuTiendaModel();
+            item3.setIdMenu(3);
+            item3.setNombreMenu("Comentarios");
+            item3.setImage("ic_comment_grey_600_24dp");
+            array.add(item3);
 
 
-
-
-		}
+        }
 
         return array;
     }
 
 
-    private void viewsRegister(){
+    private void viewsRegister() {
 
-		inventario = (TextView) findViewById(R.id.inventario);
-		txtEncargado = (TextView) findViewById(R.id.Encargado);
-		frentes = (TextView) findViewById(R.id.frentes);
-		surtido = (TextView) findViewById(R.id.surtido);
-		exhi = (TextView) findViewById(R.id.textExhibicio);
-		fotos = (TextView) findViewById(R.id.text_fotos);
+        inventario = (TextView) findViewById(R.id.inventario);
+        txtEncargado = (TextView) findViewById(R.id.Encargado);
+        frentes = (TextView) findViewById(R.id.frentes);
+        surtido = (TextView) findViewById(R.id.surtido);
+        exhi = (TextView) findViewById(R.id.textExhibicio);
+        fotos = (TextView) findViewById(R.id.text_fotos);
 
-		btnFrente = (Button) findViewById(R.id.buttonMensaje);
-		btnSalidaTi = (Button) findViewById(R.id.salidaTienda);
-		btnEntrada = (Button) findViewById(R.id.btnEnTienda);
-		btnEncar = (Button) findViewById(R.id.btnEncarg);
-		btnExhib = (Button) findViewById(R.id.buttonExhib);
-		btnUpdaPro = (Button) findViewById(R.id.btnUpdaPro);
-		btnInven = (Button) findViewById(R.id.btnInvenBode);
-		btnSurtido = (Button) findViewById(R.id.buttonEnviar);
-		btnTiendaError = (Button) findViewById(R.id.btnTiendaError);
-		btnComentario = (Button) findViewById(R.id.btnComentario);
-		btnInteligencia = (Button) findViewById(R.id.btnMenInt);
-		btnFoto = (Button) findViewById(R.id.btnfoto);
-		btnVentaPromedio = (Button) findViewById(R.id.btn_venta_promedio);
+        btnFrente = (Button) findViewById(R.id.buttonMensaje);
+        btnSalidaTi = (Button) findViewById(R.id.salidaTienda);
+        btnEntrada = (Button) findViewById(R.id.btnEnTienda);
+        btnEncar = (Button) findViewById(R.id.btnEncarg);
+        btnExhib = (Button) findViewById(R.id.buttonExhib);
+        btnUpdaPro = (Button) findViewById(R.id.btnUpdaPro);
+        btnInven = (Button) findViewById(R.id.btnInvenBode);
+        btnSurtido = (Button) findViewById(R.id.buttonEnviar);
+        btnTiendaError = (Button) findViewById(R.id.btnTiendaError);
+        btnComentario = (Button) findViewById(R.id.btnComentario);
+        btnInteligencia = (Button) findViewById(R.id.btnMenInt);
+        btnFoto = (Button) findViewById(R.id.btnfoto);
+        btnVentaPromedio = (Button) findViewById(R.id.btn_venta_promedio);
 
-		btnCapturaGeneral = (Button) findViewById(R.id.captura_general);
+        btnCapturaGeneral = (Button) findViewById(R.id.captura_general);
 
-		btnMateriales = (Button) findViewById(R.id.btnMateriales);
-
-
-
-		btnFrente.setOnClickListener(this);
-		btnEntrada.setOnClickListener(this);
-		btnSurtido.setOnClickListener(this);
-		btnInven.setOnClickListener(this);
-		btnSalidaTi.setOnClickListener(this);
-		btnTiendaError.setOnClickListener(this);
-		btnEncar.setOnClickListener(this);
-		btnExhib.setOnClickListener(this);
-		btnComentario.setOnClickListener(this);
-		btnInteligencia.setOnClickListener(this);
-		btnUpdaPro.setOnClickListener(this);
-		btnFoto.setOnClickListener(this);
-		btnVentaPromedio.setOnClickListener(this);
-
-		btnCapturaGeneral.setOnClickListener(this);
-		btnMateriales.setOnClickListener(this);
+        btnMateriales = (Button) findViewById(R.id.btnMateriales);
 
 
+        btnFrente.setOnClickListener(this);
+        btnEntrada.setOnClickListener(this);
+        btnSurtido.setOnClickListener(this);
+        btnInven.setOnClickListener(this);
+        btnSalidaTi.setOnClickListener(this);
+        btnTiendaError.setOnClickListener(this);
+        btnEncar.setOnClickListener(this);
+        btnExhib.setOnClickListener(this);
+        btnComentario.setOnClickListener(this);
+        btnInteligencia.setOnClickListener(this);
+        btnUpdaPro.setOnClickListener(this);
+        btnFoto.setOnClickListener(this);
+        btnVentaPromedio.setOnClickListener(this);
 
-		// textView with listener
-		frentes.setOnClickListener(this);
-		inventario.setOnClickListener(this);
-		exhi.setOnClickListener(this);
-		fotos.setOnClickListener(this);
+        btnCapturaGeneral.setOnClickListener(this);
+        btnMateriales.setOnClickListener(this);
 
-	}
+
+        // textView with listener
+        frentes.setOnClickListener(this);
+        inventario.setOnClickListener(this);
+        exhi.setOnClickListener(this);
+        fotos.setOnClickListener(this);
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -415,17 +418,17 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     }
 
     @Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()){
-			case android.R.id.home:
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
 
-				if(!Entrada && !Salida){
-					this.finish();
-				}else {
-					dialogoConfirmacionSalida();
-				}
+                if (!Entrada && !Salida) {
+                    this.finish();
+                } else {
+                    dialogoConfirmacionSalida();
+                }
 
-				return true;
+                return true;
 
             case R.id.direccion:
 
@@ -433,270 +436,379 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
                 return true;
 
-			case R.id.producto_datos_tienda:
+            case R.id.producto_datos_tienda:
 
-				saveDatosTienda();
+                saveDatosTienda();
 
-				return true;
-
-
-			case R.id.actualizar_encuesta:
-
-				descargarEncuesta();
-
-				return true;
+                return true;
 
 
-			default:
-				return super.onOptionsItemSelected(item);
+            case R.id.actualizar_encuesta:
 
-		}
+                descargarEncuesta();
 
-	}
+                return true;
 
-	private void saveDatosTienda() {
 
-		Intent i = new Intent(this, TiendaDatos.class);
-		i.putExtra("idTienda", idTienda);
-		i.putExtra("idPromotor", idPromotor);
+            default:
+                return super.onOptionsItemSelected(item);
 
-		startActivity(i);
-	}
+        }
 
-	private void saveAddress() {
+    }
+
+    private void saveDatosTienda() {
+
+        Intent i = new Intent(this, TiendaDatos.class);
+        i.putExtra("idTienda", idTienda);
+        i.putExtra("idPromotor", idPromotor);
+
+        startActivity(i);
+    }
+
+    private void saveAddress() {
 
         Intent i = new Intent(this, AddressActivity.class);
         i.putExtra("idTienda", idTienda);
         i.putExtra("idPromotor", idPromotor);
 
-		
+
         startActivity(i);
+
+    }
+
+
+    private void activateGps(String tipo) {
+
+        if (locGps == null) {
+
+
+            Log.d(TAG, " locgps nullo");
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS);
+            }else {
+
+                activeGps(tipo);
+            }
+
+
+        } else {
+
+            Log.d(TAG, " " + locGps.getLatitude());
+
+
+        }
+
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+
+
+
+    }
+
+
+    private void activeGps(final String tipo){
+
+
+        intento++;
+        if (intento <=3){
+
+
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+
+                    progress = new ProgressDialog(MenuTienda.this);
+                    progress.setMessage("Registrando intento " + intento);
+                    progress.setCancelable(false);
+                    progress.show();
+
+
+                    if(ActivityCompat.checkSelfPermission(MenuTienda.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED
+                            && ActivityCompat.checkSelfPermission(MenuTienda.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED){
+
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, MenuTienda.this);
+
+                    }
+
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            locationManager.removeUpdates(MenuTienda.this);
+                            progress.dismiss();
+
+                            if(tipo.equals("entrada")){
+                                entradaTienda();
+
+                            }else if(tipo.equals("salida")){
+
+                                salidaTienda();
+
+                            }
+
+
+                        }
+                    }, 10000);
+
+
+                }
+            });
+
+
+        }else if(intento >3){
+
+            Handler mainLoop = new Handler(Looper.getMainLooper());
+
+            mainLoop.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(MenuTienda.this, "No fue posible registrar la Entrada" +
+                    " \n -Verifique que el Gps esta activado \n - De lo contrario comuniquese " +
+                    "con Mesa de control", Toast.LENGTH_LONG).show();
+                }
+            });
+
+
+
+
+        }
+
+
+
+
+
+
+
 
     }
 
 
     public void entradaTienda() {
 
-        permiso();
+        //permiso();
 
-		Calendar c = Calendar.getInstance();
-		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
-		SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a",Locale.getDefault());
-		SimpleDateFormat dSema = new SimpleDateFormat("w",Locale.getDefault());
-			
-		String fecha = dFecha.format(c.getTime());
-		String hora = dHora.format(c.getTime());
-		String sem = dSema.format(c.getTime());
-		int semana = Integer.parseInt(sem);
-		
-		
-		if(!Entrada){
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
+        SimpleDateFormat dSema = new SimpleDateFormat("w", Locale.getDefault());
 
-			try {
+        String fecha = dFecha.format(c.getTime());
+        String hora = dHora.format(c.getTime());
+        String sem = dSema.format(c.getTime());
+        int semana = Integer.parseInt(sem);
 
-				locGps = localizar.getLastKnownLocation(gpsProvedor);
-				locNet = localizar.getLastKnownLocation(netProvedor);
-			}catch (SecurityException e){
-				e.printStackTrace();
-			}
 
-			BDopenHelper base = new BDopenHelper(getApplicationContext());
-				
-		
-			if(locGps != null) {
-				
-				Entrada = true;
-				base.insertarLocalizacion(idTienda, idPromotor, fecha ,hora ,locGps.getLatitude(), locGps.getLongitude(), 12, "E",1,semana);
+        if (!Entrada) {
 
-				Toast.makeText(this, "Entrada Guardada", Toast.LENGTH_SHORT).show();
-				btnEntrada.post(new Runnable() {
-					
-					public void run() {
-							
-						
-						btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+            try {
+
+                locGps = localizar.getLastKnownLocation(gpsProvedor);
+                locNet = localizar.getLastKnownLocation(netProvedor);
+            } catch (SecurityException e) {
+                e.printStackTrace();
+
+
+            }
+
+            BDopenHelper base = new BDopenHelper(getApplicationContext());
+
+
+            if (locGps != null) {
+
+                Entrada = true;
+                base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locGps.getLatitude(), locGps.getLongitude(), 12, "E", 1, semana);
+
+                Toast.makeText(this, "Entrada Guardada", Toast.LENGTH_SHORT).show();
+                btnEntrada.post(new Runnable() {
+
+                    public void run() {
+
+
+                        btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
                         btnEntrada.setTextColor(Color.WHITE);
-						enviar.enviarVisitas();
-					}
-						
-				});
-					
-			}else if(locNet != null){
-				
-				Entrada = true;
-				base.insertarLocalizacion(idTienda, idPromotor, fecha ,hora ,locNet.getLatitude(), locNet.getLongitude(), 12, "E",1,semana);
-			
-				
-				Toast.makeText(this, "Entrada Guardada", Toast.LENGTH_SHORT).show();
-				btnEntrada.post(new Runnable() {
-					
-					public void run() {
-							
-					
-						btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-						enviar.enviarVisitas();
-					}
-						
-				});
-				
-				
-			}else {
-				
-				Toast.makeText(this, "No fue posible registrar la Entrada" +
-						" \n -Verifique que el Gps esta activado \n - De lo contrario comuniquese con Mesa de control", Toast.LENGTH_LONG).show();
-				base.close();
-			}
-		}
-	
-				
-	}
+                        enviar.enviarVisitas();
+                    }
 
-    private void permiso(){
+                });
 
-        final int REQUEST_CODE_ASK_PERMISSIONS = 123;
+            } else if (locNet != null) {
 
-        int locationPermission = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION);
-        if (locationPermission != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS);
+                Entrada = true;
+                base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locNet.getLatitude(), locNet.getLongitude(), 12, "E", 1, semana);
 
+
+                Toast.makeText(this, "Entrada Guardada", Toast.LENGTH_SHORT).show();
+                btnEntrada.post(new Runnable() {
+
+                    public void run() {
+
+
+                        btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                        enviar.enviarVisitas();
+                    }
+
+                });
+
+
+            } else {
+
+                activateGps("entrada");
+
+
+
+                base.close();
+            }
         }
 
 
     }
-			
-		
-	
-
-	private void salidaTienda() {
-		
-		if(Entrada){
-			Thread hiloSalida = new Thread() {
-				public void run() {
-	
-					
-						if(!Salida){
-							
-							Calendar c = Calendar.getInstance();
-							SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
-							SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
-							SimpleDateFormat dSema = new SimpleDateFormat("w", Locale.getDefault());
-								
-							String fecha = dFecha.format(c.getTime());
-							String hora = dHora.format(c.getTime());
-							String sem = dSema.format(c.getTime());
-							int semana = Integer.parseInt(sem);
 
 
-							try{
+    private void salidaTienda() {
 
-								locGps = localizar.getLastKnownLocation(gpsProvedor);
-								locNet = localizar.getLastKnownLocation(netProvedor);
-							}catch (SecurityException e){
-								e.printStackTrace();
-							}
+        if (Entrada) {
+            Thread hiloSalida = new Thread() {
+                public void run() {
 
 
-							BDopenHelper base = new BDopenHelper(getApplicationContext());
-							
-							
-							
-							if(locGps != null) {
-								
-								base.insertarLocalizacion(idTienda, idPromotor, fecha ,hora ,locGps.getLatitude(), locGps.getLongitude(), 12, "S",1,semana);
-							
-								Salida = true;
-								
-								btnSalidaTi.post(new Runnable() {
-									public void run() {
-										
-										
-										btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-                                        btnSalidaTi.setTextColor(Color.WHITE);
-										Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
-										
-										enviar.enviarVisitas();
+                    if (!Salida) {
 
-									}
-									
-								});
-								
-								try {
-									sleep(2000);
-								} catch (InterruptedException e) {
-									
-									e.printStackTrace();
-								}
-								MenuTienda.this.finish();
-							}else if(locNet != null){
-								base.insertarLocalizacion(idTienda, idPromotor, fecha ,hora ,locNet.getLatitude(), locNet.getLongitude(), 12, "S",1,semana);
-							
-								
-								
-								Salida = true;
-								
-								btnSalidaTi.post(new Runnable() {
-									public void run() {
-										
-										btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-										Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
-										
-										enviar.enviarVisitas();
-										
-									}
-									
-								});
-								
-								try {
-									sleep(2000);
-								} catch (InterruptedException e) {
-									
-									e.printStackTrace();
-								}
-								MenuTienda.this.finish();
-								
-							}
-						}else{
-							MenuTienda.this.finish();
-						}
-					
-					
-				}
-				
-			};
-		hiloSalida.start();
-		
-		}else{
-			Toast.makeText(this, "No has registrado Entrada", Toast.LENGTH_SHORT).show();
-		}
-	}
-	
+                        Calendar c = Calendar.getInstance();
+                        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                        SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
+                        SimpleDateFormat dSema = new SimpleDateFormat("w", Locale.getDefault());
 
-	public void onClick(View v) {
-		switch(v.getId()) {
-		
-		    case R.id.buttonMensaje:
-			    menuFrentes();
-			
-			    break;
-			
-		    case R.id.btnEnTienda:
-			    //entradaTienda();
+                        String fecha = dFecha.format(c.getTime());
+                        String hora = dHora.format(c.getTime());
+                        String sem = dSema.format(c.getTime());
+                        int semana = Integer.parseInt(sem);
 
-				if (!Entrada){
-					dialogoConfirmarEntrada();
-				}else {
-					Toast.makeText(this, "Ya existe una Entrada", Toast.LENGTH_SHORT).show();
-				}
-			
-			    break;
-			
+
+                        try {
+
+                            locGps = localizar.getLastKnownLocation(gpsProvedor);
+                            locNet = localizar.getLastKnownLocation(netProvedor);
+                        } catch (SecurityException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        BDopenHelper base = new BDopenHelper(getApplicationContext());
+
+
+                        if (locGps != null) {
+
+                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locGps.getLatitude(), locGps.getLongitude(), 12, "S", 1, semana);
+
+                            Salida = true;
+
+                            btnSalidaTi.post(new Runnable() {
+                                public void run() {
+
+
+                                    btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                    btnSalidaTi.setTextColor(Color.WHITE);
+                                    Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
+
+                                    enviar.enviarVisitas();
+
+                                }
+
+                            });
+
+                            try {
+                                sleep(2000);
+                            } catch (InterruptedException e) {
+
+                                e.printStackTrace();
+                            }
+                            MenuTienda.this.finish();
+                        } else if (locNet != null) {
+                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locNet.getLatitude(), locNet.getLongitude(), 12, "S", 1, semana);
+
+
+                            Salida = true;
+
+                            btnSalidaTi.post(new Runnable() {
+                                public void run() {
+
+                                    btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                    Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
+
+                                    enviar.enviarVisitas();
+
+                                }
+
+                            });
+
+                            try {
+                                sleep(2000);
+                            } catch (InterruptedException e) {
+
+                                e.printStackTrace();
+                            }
+                            MenuTienda.this.finish();
+
+                        }else {
+
+                            activateGps("salida");
+
+
+                        }
+                    } else {
+                        MenuTienda.this.finish();
+                    }
+
+
+                }
+
+            };
+            hiloSalida.start();
+
+        } else {
+            Toast.makeText(this, "No has registrado Entrada", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.buttonMensaje:
+                menuFrentes();
+
+                break;
+
+            case R.id.btnEnTienda:
+                //entradaTienda();
+
+                if (!Entrada) {
+                    dialogoConfirmarEntrada();
+                } else {
+                    Toast.makeText(this, "Ya existe una Entrada", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+
             case R.id.salidaTienda:
 
                 dialogoConfirmacionSalida();
 
                 break;
-			
+
             case R.id.btnEncarg:
                 dialogoEncargado();
 
@@ -730,7 +842,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 actualizarPro();
                 break;
             case R.id.frentes:
-                Log.v("TextFrentes","Onclick");
+                Log.v("TextFrentes", "Onclick");
                 dialogoFrentesCapturados();
                 break;
             case R.id.inventario:
@@ -747,38 +859,38 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 subMenuVenta();
                 break;
 
-			case R.id.captura_general:
-				capturaGeneral();
-				break;
+            case R.id.captura_general:
+                capturaGeneral();
+                break;
 
-			case R.id.btnMateriales:
-				openMateriales();
-				break;
+            case R.id.btnMateriales:
+                openMateriales();
+                break;
 
 
-		}
-		
-	}
+        }
 
-	private void openMateriales() {
+    }
 
-		Intent intent = new Intent(this, MaterialesActivity.class);
-		intent.putExtra("idTienda", idTienda);
-		intent.putExtra("idPromotor", idPromotor);
-		startActivity(intent);
+    private void openMateriales() {
 
-	}
+        Intent intent = new Intent(this, MaterialesActivity.class);
+        intent.putExtra("idTienda", idTienda);
+        intent.putExtra("idPromotor", idPromotor);
+        startActivity(intent);
 
-	private void subMenuVenta() {
+    }
 
-		if (Entrada){
-			Intent i = new Intent(this, VentaPromedio.class);
-			i.putExtra("idPromotor", idPromotor);
-			i.putExtra("idTienda", idTienda);
-			startActivity(i);
-		}else {
-			Toast.makeText(this, "No has registrado Entrada", Toast.LENGTH_SHORT).show();
-		}
+    private void subMenuVenta() {
+
+        if (Entrada) {
+            Intent i = new Intent(this, VentaPromedio.class);
+            i.putExtra("idPromotor", idPromotor);
+            i.putExtra("idTienda", idTienda);
+            startActivity(i);
+        } else {
+            Toast.makeText(this, "No has registrado Entrada", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
@@ -799,137 +911,139 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     private void actualizarPro() {
         UpdateInformation updateInformation = new UpdateInformation(this);
         updateInformation.updateInfo(idPromotor);
-		
-		
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		Calendar c = Calendar.getInstance();
-		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-		String fecha = dFecha.format(c.getTime());
-		
-		try {
-			
-			
-			Cursor cuEncargados = DB.contadorEncargados(idTienda, fecha);
-			//txtEncargado.setText("Encargado ("+cuEncargados.getCount()+")");
-			txtEncargado.setText(String.format(Locale.getDefault(),"Encargado %d",cuEncargados.getCount()));
-			DB.close();
-			
-			
-			try {
-				Cursor cuFrentes = DB.contadorFrentes(idTienda, fecha);
-				//frentes.setText("Frentes: ("+cuFrentes.getCount()+")");
-				frentes.setText(String.format(Locale.getDefault(), "Frentes %d", cuFrentes.getCount()));
-				DB.close();
-				
-				
-				try {
-					Cursor cuSurt = DB.SurtidoCantidad(idTienda, fecha);
-					//surtido.setText("Surtido: ("+cuSurt.getCount()+")");
-					surtido.setText(String.format(Locale.getDefault(), "Surtido %d", cuSurt.getCount()));
-					DB.close();
-					
-					try {
-						Cursor cuInventario = DB.contarInventario(idTienda, fecha);
-						//inventario.setText("Inventario ("+cuInventario.getCount()+")");
-						inventario.setText(String.format(Locale.getDefault(), "Inventario %d", cuInventario.getCount()));
-						DB.close();
 
 
-						try {
+    }
 
-							exhi.setText(String.format(Locale.getDefault(), "Exhibiciones %d", DB.contarExhibiciones(idTienda, fecha)));
-						}catch (Exception e){
-							e.printStackTrace();
-						}
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-						try {
-							fotos.setText(String.format(Locale.getDefault(),"Fotos %d", DB.contarFotos(idTienda)));
+        intento = 0;
 
-						}catch (Exception e){
-							e.printStackTrace();
-						}
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String fecha = dFecha.format(c.getTime());
+
+        try {
 
 
-						try {
-							Cursor cuEntra = DB.VisitaTienda(idTienda, fecha, "E");
+            Cursor cuEncargados = DB.contadorEncargados(idTienda, fecha);
+            //txtEncargado.setText("Encargado ("+cuEncargados.getCount()+")");
+            txtEncargado.setText(String.format(Locale.getDefault(), "Encargado %d", cuEncargados.getCount()));
+            DB.close();
 
-							if(cuEntra.getCount() >0) {
-								
-								
-								btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-								Entrada = true;
-								DB.close();
-								
-							}else {
 
-								btnEntrada.setBackgroundResource(R.drawable.custom_btn_orange);
-								btnEntrada.setTextColor(Color.WHITE);
-								Entrada = false;
-								
-							}
-							try {
-								Cursor cuSalida = DB.VisitaTienda(idTienda, fecha, "S");
+            try {
+                Cursor cuFrentes = DB.contadorFrentes(idTienda, fecha);
+                //frentes.setText("Frentes: ("+cuFrentes.getCount()+")");
+                frentes.setText(String.format(Locale.getDefault(), "Frentes %d", cuFrentes.getCount()));
+                DB.close();
 
-								//auto time
 
-								//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                try {
+                    Cursor cuSurt = DB.SurtidoCantidad(idTienda, fecha);
+                    //surtido.setText("Surtido: ("+cuSurt.getCount()+")");
+                    surtido.setText(String.format(Locale.getDefault(), "Surtido %d", cuSurt.getCount()));
+                    DB.close();
 
-								//// TODO: 17/05/2017 investigar la forma de implementar el autotime
-								//Settings.System.putInt(getContentResolver(), Settings.System.AUTO_TIME,1);
+                    try {
+                        Cursor cuInventario = DB.contarInventario(idTienda, fecha);
+                        //inventario.setText("Inventario ("+cuInventario.getCount()+")");
+                        inventario.setText(String.format(Locale.getDefault(), "Inventario %d", cuInventario.getCount()));
+                        DB.close();
 
-								
-								if(cuSalida.getCount() >0) {
-									
-									
-									btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-									Salida = true;
-									DB.close();
-									
-									if(Entrada && Salida)
-										btnTiendaError.setVisibility(View.GONE);
-								}else {
-									
-									btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_orange);
-									btnSalidaTi.setTextColor(Color.WHITE);
-									Salida = false;
-								}
-								
-								DB.close();
-								if(base != null)
-									base.close();
-							}catch(Exception e) {
+
+                        try {
+
+                            exhi.setText(String.format(Locale.getDefault(), "Exhibiciones %d", DB.contarExhibiciones(idTienda, fecha)));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            fotos.setText(String.format(Locale.getDefault(), "Fotos %d", DB.contarFotos(idTienda)));
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                        try {
+                            Cursor cuEntra = DB.VisitaTienda(idTienda, fecha, "E");
+
+                            if (cuEntra.getCount() > 0) {
+
+
+                                btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                Entrada = true;
+                                DB.close();
+
+                            } else {
+
+                                btnEntrada.setBackgroundResource(R.drawable.custom_btn_orange);
+                                btnEntrada.setTextColor(Color.WHITE);
+                                Entrada = false;
+
+                            }
+                            try {
+                                Cursor cuSalida = DB.VisitaTienda(idTienda, fecha, "S");
+
+                                //auto time
+
+                                //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+
+                                //// TODO: 17/05/2017 investigar la forma de implementar el autotime
+                                //Settings.System.putInt(getContentResolver(), Settings.System.AUTO_TIME,1);
+
+
+                                if (cuSalida.getCount() > 0) {
+
+
+                                    btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                    Salida = true;
+                                    DB.close();
+
+                                    if (Entrada && Salida)
+                                        btnTiendaError.setVisibility(View.GONE);
+                                } else {
+
+                                    btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_orange);
+                                    btnSalidaTi.setTextColor(Color.WHITE);
+                                    Salida = false;
+                                }
+
+                                DB.close();
+                                if (base != null)
+                                    base.close();
+                            } catch (Exception e) {
                                 e.printStackTrace();
-							}
-							
-							//Mostrar Tienda Erronea
+                            }
+
+                            //Mostrar Tienda Erronea
 							/*if(!Entrada && !Salida){
 								btnTiendaError.setVisibility(View.VISIBLE);
 							}else if(Entrada){
 								btnTiendaError.setVisibility(View.GONE);
 							}*/
-						}catch(Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
-						}
-						
-					}catch(Exception e) {
+                        }
+
+                    } catch (Exception e) {
                         e.printStackTrace();
-					}
-				}catch(Exception e) {
+                    }
+                } catch (Exception e) {
                     e.printStackTrace();
-				}
-				
-			}catch(Exception e) {
+                }
+
+            } catch (Exception e) {
                 e.printStackTrace();
-			}
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 		/*
 		if (new BDopenHelper(this).tipoTienda(idTienda) ==2){
@@ -939,115 +1053,108 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 		}*/
 
 
-
-		if (encuestaDisponible()){
-
-
-			Handler handler = new Handler();
-
-			handler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					dialogoEncuestas();
-				}
-			}, 3000);
+        if (encuestaDisponible()) {
 
 
+            Handler handler = new Handler();
 
-		}else {
-			verificarEncuesta();
-		}
-
-
-		
-	}
-
-
-
-	private boolean encuestaDisponible(){
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dialogoEncuestas();
+                }
+            }, 3000);
 
 
+        } else {
+            verificarEncuesta();
+        }
 
 
-		SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select * from preguntas as pre where  " +
-				" pre.id_encuesta not in  " +
-				" ( select idEncuesta from  encuesta_respuestas where pre.id_encuesta=idEncuesta " +
-				"  and idPromotor=" + idPromotor + " and  idTienda =" + idTienda + " ) group by id_encuesta";
-
-		Cursor cursor = db.rawQuery(sql, null);
-		cursor.moveToFirst();
+    }
 
 
-
-		int countDisponibles = cursor.getCount();
-
-		cursor.close();
-		db.close();
+    private boolean encuestaDisponible() {
 
 
-		return countDisponibles > 0;
-	}
+        SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+        String sql = "select * from preguntas as pre where  " +
+                " pre.id_encuesta not in  " +
+                " ( select idEncuesta from  encuesta_respuestas where pre.id_encuesta=idEncuesta " +
+                "  and idPromotor=" + idPromotor + " and  idTienda =" + idTienda + " ) group by id_encuesta";
 
-	private void dialogoEncuestas(){
-
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		DialogEncuestas dialogEncuestas = new DialogEncuestas();
-
-		Bundle bundle = new Bundle();
-		bundle.putInt("idTienda", idTienda);
-		bundle.putInt("idPromotor", idPromotor);
-
-		dialogEncuestas.setArguments(bundle);
-		dialogEncuestas.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToFirst();
 
 
+        int countDisponibles = cursor.getCount();
 
-		dialogEncuestas.show(fragmentManager, "Dialogo encuestas");
-	}
-
-
-
-	private void verificarEncuesta(){
-		Configuracion configuracion = new Configuracion(this);
-		UpdateInformation uI = new UpdateInformation(this);
-
-		Log.d("menuPrincipal" , "verificar");
-
-		if (configuracion.getKeyByTag(String.valueOf(idTienda)) != null){
-			Log.d("menuPrincipal" , "verificar2");
-			if (!configuracion.getKeyByTag(String.valueOf(idTienda)).equals(fechaActual())){
-				uI.actualizarEncuesta(idPromotor, idTienda);
-				Log.d("menuPrincipal" , "verificar2.5");
-			}
-
-		} else {
-			Log.d("menuPrincipal" , "verificar3");
-
-			uI.actualizarEncuesta(idPromotor, idTienda);
-		}
+        cursor.close();
+        db.close();
 
 
-	}
+        return countDisponibles > 0;
+    }
+
+    private void dialogoEncuestas() {
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DialogEncuestas dialogEncuestas = new DialogEncuestas();
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("idTienda", idTienda);
+        bundle.putInt("idPromotor", idPromotor);
+
+        dialogEncuestas.setArguments(bundle);
+        dialogEncuestas.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
 
 
-	private void descargarEncuesta(){
+        dialogEncuestas.show(fragmentManager, "Dialogo encuestas");
+    }
 
-		UpdateInformation uI = new UpdateInformation(this);
 
-		uI.actualizarEncuesta(idPromotor, idTienda);
+    private void verificarEncuesta() {
+        Configuracion configuracion = new Configuracion(this);
+        UpdateInformation uI = new UpdateInformation(this);
 
-	}
+        Log.d("menuPrincipal", "verificar");
 
-	private String fechaActual() {
-		Calendar c = Calendar.getInstance();
-		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-		return dFecha.format(c.getTime());
-	}
+        if (configuracion.getKeyByTag(String.valueOf(idTienda)) != null) {
+            Log.d("menuPrincipal", "verificar2");
+            if (!configuracion.getKeyByTag(String.valueOf(idTienda)).equals(fechaActual())) {
+                uI.actualizarEncuesta(idPromotor, idTienda);
+                Log.d("menuPrincipal", "verificar2.5");
+            }
 
-	@Override
-	protected void onStart() {
-		super.onStart();
+        } else {
+            Log.d("menuPrincipal", "verificar3");
+
+            uI.actualizarEncuesta(idPromotor, idTienda);
+        }
+
+
+    }
+
+
+    private void descargarEncuesta() {
+
+        UpdateInformation uI = new UpdateInformation(this);
+
+        uI.actualizarEncuesta(idPromotor, idTienda);
+
+    }
+
+    private String fechaActual() {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        return dFecha.format(c.getTime());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
 
 		verificarEncuesta();
 
@@ -1161,6 +1268,14 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 		super.onPause();
 
 	}
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+
+
+    }
 
     @Override
     protected void onDestroy() {
@@ -1359,7 +1474,36 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 	}
 
-	private class EscucharDialogoEncargado implements DialogInterface.OnClickListener{
+    @Override
+    public void onLocationChanged(Location location) {
+
+        Log.d("onLocaChangeActivity", "provider " + location.getProvider());
+
+        if(location.getProvider().equals("gps")){
+
+            locGps = location;
+
+        }
+
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    private class EscucharDialogoEncargado implements DialogInterface.OnClickListener{
 
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
@@ -1589,10 +1733,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         return arrayList;
 	}
-
-
-
-
 
 
     private class Listener implements DialogInterface.OnClickListener{

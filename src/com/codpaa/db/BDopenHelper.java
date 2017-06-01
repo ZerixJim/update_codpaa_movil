@@ -40,7 +40,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
     // v1.2.7 rc2 = 27
     // v1.2.8 = 28
     // v1.2.8 rc1 = 29
-    private static final int version = 29;
+    // v1.2.8 rc2 = 29
+
+    // v1.2.8 rc3 = 30
+    private static final int version = 30;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -354,18 +357,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 
-        if (oldVersion == 27 && newVersion == 28){
 
+        if(newVersion == 30 && oldVersion == 28){
 
-            db.execSQL(productoCatalogadoTienda);
-            db.execSQL(procesoCatalogacionObjeciones);
-
-        }
-
-        if(newVersion == 29 && oldVersion == 28){
-
-            db.execSQL("drop table if exists producto");
-            db.execSQL(productos);
 
             db.execSQL("alter table " + ProductoCatalogadoTienda.TABLE_NAME + " " +
                     "add column "+ ProductoCatalogadoTienda.FOLIO + " int");
@@ -373,22 +367,23 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         }
 
-        if(newVersion == 29 && oldVersion == 27){
+
+        if(newVersion == 30 ){
 
             db.execSQL("drop table if exists producto");
             db.execSQL(productos);
+
+
+            db.execSQL("drop table if exists " + Tienda.TABLE_NAME);
+            db.execSQL(tiendas);
 
 
             db.execSQL(productoCatalogadoTienda);
             db.execSQL(procesoCatalogacionObjeciones);
 
 
+
         }
-
-
-
-
-
 
     }
 
