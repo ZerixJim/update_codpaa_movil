@@ -41,9 +41,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
     // v1.2.8 = 28
     // v1.2.8 rc1 = 29
     // v1.2.8 rc2 = 29
-
     // v1.2.8 rc3 = 30
-    private static final int version = 30;
+
+    // v1.2.8 rc4 = 31
+    private static final int version = 31;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -358,7 +359,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
 
-        if(newVersion == 30 && oldVersion == 28){
+        if(newVersion == 31 && oldVersion == 28){
 
 
             db.execSQL("alter table " + ProductoCatalogadoTienda.TABLE_NAME + " " +
@@ -368,14 +369,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
         }
 
 
-        if(newVersion == 30 ){
+        if(newVersion == 31 ){
 
             db.execSQL("drop table if exists producto");
             db.execSQL(productos);
 
 
-            db.execSQL("drop table if exists " + Tienda.TABLE_NAME);
-            db.execSQL(tiendas);
+            db.execSQL("drop table if exists visitaTienda");
+            db.execSQL(ruta);
 
 
             db.execSQL(productoCatalogadoTienda);
