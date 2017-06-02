@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="?android:attr/buttonBarStyle"
-        android:textColor="?android:attr/colorAccent"
+        android:textColor="@color/accent"
         android:layout_alignBottom="@+id/button"
         android:layout_toLeftOf="@+id/button"
         android:layout_toStartOf="@+id/button"
@@ -57,9 +57,10 @@
         android:layout_marginTop="55dp"
         android:layout_gravity="end"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/divider_text"
         style="?android:attr/buttonBarStyle"
-        android:textColor="?android:attr/colorAccent"
+        android:textColor="@color/accent"
         android:text="Aceptar"/>
 
 

@@ -366,18 +366,29 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
         ArrayList<MarcaModel> array = new ArrayList<>();
 
         SQLiteDatabase base = new BDopenHelper(this).getReadableDatabase();
-        String sql = "select idMarca, nombre, img from marca order by nombre asc;";
+        String sql = "select m.idMarca, m.nombre from marca as m " +
+                " left join producto as p on p.idMarca=m.idMarca " +
+                " left join productotienda as pt on pt.idProducto=p.idProducto " +
+                " where pt.idTienda=" + idTienda +
+                " group by m.idMarca " +
+                " order by m.nombre asc";
         Cursor cursorMarca = base.rawQuery(sql, null);
 
-        for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){
 
-            final MarcaModel spiM = new MarcaModel();
-            spiM.setNombre(cursorMarca.getString(1));
-            spiM.setId(cursorMarca.getInt(0));
-            spiM.setUrl(cursorMarca.getString(2));
 
-            array.add(spiM);
+        if (cursorMarca.getCount() > 0){
+
+            for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){
+
+                final MarcaModel spiM = new MarcaModel();
+                spiM.setNombre(cursorMarca.getString(cursorMarca.getColumnIndex("nombre")));
+                spiM.setId(cursorMarca.getInt(cursorMarca.getColumnIndex("idMarca")));
+
+                array.add(spiM);
+            }
         }
+
+
 
         final MarcaModel spiMfirst = new MarcaModel();
         spiMfirst.setNombre("Selecciona Marca");

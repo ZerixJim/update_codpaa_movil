@@ -99,16 +99,14 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     RecyclerView menuRecycler;
     Toolbar toolbar;
     public static final String TAG = "MenuTienda";
-    private Boolean Salida = false;
-    private Boolean Entrada = false;
+    private boolean Salida = false;
+    private boolean Entrada = false;
     private LocationManager locationManager;
     private ProgressDialog progress;
 
     private int intento = 0;
 
-    Handler handler;
-
-
+    private Handler handler;
 
 
     @Override
@@ -492,7 +490,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS);
-            }else {
+            } else {
 
                 activeGps(tipo);
             }
@@ -513,16 +511,14 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
 
-
-
     }
 
 
-    private void activeGps(final String tipo){
+    private void activeGps(final String tipo) {
 
 
         intento++;
-        if (intento <=3){
+        if (intento <= 3) {
 
 
             handler.post(new Runnable() {
@@ -535,10 +531,10 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                     progress.show();
 
 
-                    if(ActivityCompat.checkSelfPermission(MenuTienda.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    if (ActivityCompat.checkSelfPermission(MenuTienda.this, Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED
                             && ActivityCompat.checkSelfPermission(MenuTienda.this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED){
+                            == PackageManager.PERMISSION_GRANTED) {
 
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, MenuTienda.this);
 
@@ -550,10 +546,10 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                             locationManager.removeUpdates(MenuTienda.this);
                             progress.dismiss();
 
-                            if(tipo.equals("entrada")){
+                            if (tipo.equals("entrada")) {
                                 entradaTienda();
 
-                            }else if(tipo.equals("salida")){
+                            } else if (tipo.equals("salida")) {
 
                                 salidaTienda();
 
@@ -568,7 +564,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             });
 
 
-        }else if(intento >3){
+        } else if (intento > 3) {
 
             Handler mainLoop = new Handler(Looper.getMainLooper());
 
@@ -576,21 +572,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 @Override
                 public void run() {
                     Toast.makeText(MenuTienda.this, "No fue posible registrar la Entrada" +
-                    " \n -Verifique que el Gps esta activado \n - De lo contrario comuniquese " +
-                    "con Mesa de control", Toast.LENGTH_LONG).show();
+                            " \n -Verifique que el Gps esta activado \n - De lo contrario comuniquese " +
+                            "con Mesa de control", Toast.LENGTH_LONG).show();
                 }
             });
 
 
-
-
         }
-
-
-
-
-
-
 
 
     }
@@ -666,7 +654,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             } else {
 
                 activateGps("entrada");
-
 
 
                 base.close();
@@ -762,7 +749,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                             }
                             MenuTienda.this.finish();
 
-                        }else {
+                        } else {
 
                             activateGps("salida");
 
@@ -915,15 +902,55 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     }
 
+    private void startGps() {
+
+        final Handler handler = new Handler();
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                if (ActivityCompat.checkSelfPermission(MenuTienda.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(MenuTienda.this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0, MenuTienda.this);
+
+                }
+
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        locationManager.removeUpdates(MenuTienda.this);
+
+
+                    }
+                }, 10000);
+
+            }
+        });
+
+
+
+
+
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+
+        startGps();
 
         intento = 0;
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         String fecha = dFecha.format(c.getTime());
+
+
+        checkIns(fecha);
 
         try {
 
@@ -969,67 +996,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                         }
 
 
-                        try {
-                            Cursor cuEntra = DB.VisitaTienda(idTienda, fecha, "E");
-
-                            if (cuEntra.getCount() > 0) {
-
-
-                                btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-                                Entrada = true;
-                                DB.close();
-
-                            } else {
-
-                                btnEntrada.setBackgroundResource(R.drawable.custom_btn_orange);
-                                btnEntrada.setTextColor(Color.WHITE);
-                                Entrada = false;
-
-                            }
-                            try {
-                                Cursor cuSalida = DB.VisitaTienda(idTienda, fecha, "S");
-
-                                //auto time
-
-                                //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-
-                                //// TODO: 17/05/2017 investigar la forma de implementar el autotime
-                                //Settings.System.putInt(getContentResolver(), Settings.System.AUTO_TIME,1);
-
-
-                                if (cuSalida.getCount() > 0) {
-
-
-                                    btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-                                    Salida = true;
-                                    DB.close();
-
-                                    if (Entrada && Salida)
-                                        btnTiendaError.setVisibility(View.GONE);
-                                } else {
-
-                                    btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_orange);
-                                    btnSalidaTi.setTextColor(Color.WHITE);
-                                    Salida = false;
-                                }
-
-                                DB.close();
-                                if (base != null)
-                                    base.close();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                            //Mostrar Tienda Erronea
-							/*if(!Entrada && !Salida){
-								btnTiendaError.setVisibility(View.VISIBLE);
-							}else if(Entrada){
-								btnTiendaError.setVisibility(View.GONE);
-							}*/
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -1071,6 +1037,67 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         }
 
 
+    }
+
+    private void checkIns(String fecha) {
+        try {
+            Cursor cuEntra = DB.VisitaTienda(idTienda, fecha, "E");
+
+            if (cuEntra.getCount() > 0) {
+
+                Entrada = true;
+                btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+
+
+            } else {
+
+                btnEntrada.setBackgroundResource(R.drawable.custom_btn_orange);
+                btnEntrada.setTextColor(Color.WHITE);
+                Entrada = false;
+
+            }
+            cuEntra.close();
+            DB.close();
+
+            try {
+                Cursor cuSalida = DB.VisitaTienda(idTienda, fecha, "S");
+
+                //auto time
+
+                //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+
+                //// TODO: 17/05/2017 investigar la forma de implementar el autotime
+                //Settings.System.putInt(getContentResolver(), Settings.System.AUTO_TIME,1);
+
+
+                if (cuSalida.getCount() > 0) {
+
+
+                    btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                    Salida = true;
+                    DB.close();
+
+                    if (Entrada && Salida)
+                        btnTiendaError.setVisibility(View.GONE);
+                } else {
+
+                    btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_orange);
+                    btnSalidaTi.setTextColor(Color.WHITE);
+                    Salida = false;
+                }
+
+                cuSalida.close();
+                DB.close();
+                if (base != null)
+                    base.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
