@@ -208,7 +208,6 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
 
                         producto.setCantidad(0);
-                        producto.setCantidad(0);
 
 
                         break;
@@ -231,7 +230,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
                 }
 
-                Log.d("arraitems", producto.getObjeciones().toString());
+                //Log.d("arraitems", producto.getObjeciones().toString());
             }
         });
 
@@ -247,7 +246,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
                 }
 
-                Log.d("arraitems", producto.getObjeciones().toString());
+                //Log.d("arraitems", producto.getObjeciones().toString());
             }
         });
 
