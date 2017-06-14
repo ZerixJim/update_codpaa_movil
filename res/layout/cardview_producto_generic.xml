@@ -24,23 +24,81 @@
             android:textSize="12sp" />
 
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+        <FrameLayout
+            android:id="@+id/image_layout"
+            android:layout_width="140dp"
+            android:layout_height="200dp"
             android:layout_below="@+id/estatus"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@string/imadescrip" />
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/imadescrip" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:padding="10dp"
+                android:textSize="12sp"
+                android:textColor="@color/blanco2"
+                android:background="#924d4d4d"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/precio_compra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blanco2"
+                    style="@style/TextShadow"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/precio_venta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blanco2"
+                    style="@style/TextShadow"
+                    android:textSize="12sp" />
+
+
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/utilidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_layout"
+            android:textColor="@color/blue_primary_dark"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/fecha_precio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/utilidad"
+            android:textColor="#ababab"
+            android:textSize="11sp" />
+
+
 
         <TextView
             android:id="@+id/nombre_producto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/image"
+            android:layout_alignTop="@+id/image_layout"
             android:layout_marginLeft="15dp"
             android:layout_marginStart="15dp"
-            android:layout_toEndOf="@+id/image"
-            android:layout_toRightOf="@+id/image"
+            android:layout_toEndOf="@+id/image_layout"
+            android:layout_toRightOf="@+id/image_layout"
+            android:textStyle="bold"
             android:text="Nombre Producto" />
 
         <TextView
@@ -49,9 +107,10 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/nombre_producto"
             android:layout_alignStart="@+id/nombre_producto"
-            android:textColor="#787a8b"
             android:layout_below="@+id/nombre_producto"
-            android:text="presentacion" />
+            android:text="presentacion"
+            android:textStyle="normal"
+            android:textColor="#787a8b" />
 
 
         <TextView
@@ -81,7 +140,6 @@
             android:layout_alignLeft="@+id/nombre_producto"
             android:layout_alignStart="@+id/nombre_producto"
             android:layout_below="@+id/bar_code"
-            android:layout_alignTop="@+id/layout_precio"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:orientation="vertical"
@@ -127,7 +185,7 @@
             android:id="@+id/divider_bottom"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/radio_group"
+            android:layout_below="@+id/fecha_precio"
             android:layout_marginTop="20dp"
             android:background="#dfdfdf" />
 
@@ -193,42 +251,6 @@
         </LinearLayout>
 
 
-        <LinearLayout
-            android:id="@+id/layout_precio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/image"
-            android:layout_toLeftOf="@+id/radio_group"
-            android:layout_toStartOf="@+id/radio_group"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/precio_compra"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/precio_venta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/utilidad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/fecha_precio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="11sp" />
-
-
-        </LinearLayout>
 
 
     </RelativeLayout>

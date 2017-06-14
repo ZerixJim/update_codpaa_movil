@@ -122,6 +122,8 @@
         <item name="android:shadowRadius">1</item>
     </style>
 
+
+
     <style name="btnStyleGenoa" parent="@android:style/Widget.Button">
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
