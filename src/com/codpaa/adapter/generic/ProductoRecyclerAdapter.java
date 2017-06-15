@@ -1,7 +1,10 @@
 package com.codpaa.adapter.generic;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.codpaa.R;
+import com.codpaa.fragment.DetalleProductoDialogFragment;
 import com.codpaa.model.generic.Producto;
 import com.codpaa.util.Utilities;
 import com.squareup.picasso.Callback;
@@ -66,6 +70,16 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
         holder.utilidad.setText("margen utilidad " + producto.getUtilidad() + "%");
 
         holder.fechaPrecio.setText("fecha precio " + producto.getFechaPrecio());
+
+
+        holder.detalle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                createDialogDetalle(producto.getIdProducto());
+
+            }
+        });
 
 
 
@@ -306,7 +320,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
     class ProductoViewHolder extends RecyclerView.ViewHolder{
 
         TextView nombre, presentacion, barCode, estatus, precioCompra, precioVenta, utilidad;
-        TextView fechaPrecio;
+        TextView fechaPrecio, detalle;
         ImageView imageView;
         RadioGroup radioGroup;
         EditText cantidad,inventario;
@@ -341,9 +355,34 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
             utilidad = (TextView) itemView.findViewById(R.id.utilidad);
 
             fechaPrecio = (TextView) itemView.findViewById(R.id.fecha_precio);
+            detalle = (TextView) itemView.findViewById(R.id.detalle);
 
 
         }
+    }
+
+
+
+    private void createDialogDetalle(int idProducto){
+
+        FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+
+
+        DetalleProductoDialogFragment dialog = DetalleProductoDialogFragment.newInstance();
+
+
+        Bundle bundle = new Bundle();
+
+        bundle.putInt("idProducto", idProducto);
+
+        dialog.setArguments(bundle);
+
+
+        dialog.show(fragmentManager, "dialog");
+
+
+
+
     }
 
 

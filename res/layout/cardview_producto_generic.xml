@@ -37,6 +37,16 @@
                 android:layout_height="match_parent"
                 android:contentDescription="@string/imadescrip" />
 
+            <TextView
+                android:id="@+id/detalle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beneficios"
+                android:background="#bc009b00"
+                android:textColor="@color/blanco2"
+                style="@style/TextShadow"
+                android:padding="5dp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
