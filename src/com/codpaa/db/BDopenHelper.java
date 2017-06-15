@@ -45,7 +45,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     // v1.2.8 rc4 = 31
     // v1.2.9 rc1 = 32
-    private static final int version = 32;
+    // v1.3.1 = 33
+    private static final int version = 33;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -388,7 +389,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         }
 
 
-        if (newVersion == 32){
+        if (newVersion == 33){
 
             db.execSQL("drop table if exists producto");
             db.execSQL(productos);
