@@ -109,8 +109,8 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
         Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
 
         if(spinner != null){
-            MarcasAdapter adapter = new MarcasAdapter(this,
-                    android.R.layout.simple_spinner_item, getArrayList());
+            MarcasAdapter adapter = new MarcasAdapter(getSupportActionBar().getThemedContext(),
+                    android.R.layout.simple_spinner_dropdown_item, getArrayList());
 
 
 

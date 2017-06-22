@@ -37,6 +37,9 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
     public HttpResponseInfo(Context context){
 
         this.context = context;
+
+
+
         this.progressDialog = new ProgressDialog(context);
         this.progressDialog.setMessage("Descargando...");
         this.progressDialog.setCancelable(false);
@@ -48,7 +51,12 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
     @Override
     public void onStart() {
         super.onStart();
+
+
         progressDialog.show();
+
+        //Log.d("Thread" ,  );
+
 
     }
 
@@ -59,6 +67,9 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
 
     }
+
+
+
 
     @Override
     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -88,16 +99,23 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                 parseJSONMateriales(materiales);
 
                 //progressDialog.setContentView(R.layout.dialog_done);
+
+
                 progressDialog.setMessage("Informacion Cargada Satisfactoriamente");
+
 
 
 
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+
                         progressDialog.dismiss();
+
                     }
                 }, 2500);
+
+
 
                 Toast.makeText(context, "informacion cargada ", Toast.LENGTH_SHORT).show();
 
