@@ -17,10 +17,9 @@
 
         <item name="android:datePickerDialogTheme">@style/Dialog.Theme</item>
 
-        <item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>
+        <!--<item name="android:itemTextAppearance">@style/myCustomMenuTextApearance</item>-->
 
 
-        <item name="actionMenuTextColor">@color/Blanco</item>
 
     </style>
 

@@ -3,6 +3,7 @@ package com.codpaa.adapter.generic;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,7 +139,7 @@ public class AvanceGestionRecyclerAdaptar extends RecyclerView.Adapter<AvanceGes
         return list.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         TextView estatus, content, estatusFirma, estatusEnvio;
         CheckBox checkBox;
@@ -152,7 +153,17 @@ public class AvanceGestionRecyclerAdaptar extends RecyclerView.Adapter<AvanceGes
             estatusFirma = (TextView) itemView.findViewById(R.id.estatus_firma);
             estatusEnvio = (TextView) itemView.findViewById(R.id.estatus_envio);
 
+            itemView.setOnCreateContextMenuListener(this);
 
+
+        }
+
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.setHeaderTitle("Selecciona la accion");
+            menu.add(0,v.getId(),0, "Eliminar");
+            menu.add(0, v.getId(), 0, "Modificar");
         }
     }
 

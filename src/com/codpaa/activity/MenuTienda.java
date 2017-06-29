@@ -670,94 +670,116 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             Thread hiloSalida = new Thread() {
                 public void run() {
 
-
-                    if (!Salida) {
-
-                        Calendar c = Calendar.getInstance();
-                        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                        SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
-                        SimpleDateFormat dSema = new SimpleDateFormat("w", Locale.getDefault());
-
-                        String fecha = dFecha.format(c.getTime());
-                        String hora = dHora.format(c.getTime());
-                        String sem = dSema.format(c.getTime());
-                        int semana = Integer.parseInt(sem);
+                    Configuracion co = new Configuracion(getApplicationContext());
+                    if (co.getPromotorMode() == 2 &&  folioPendiente()){
 
 
-                        try {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "Productos No firmados", Toast.LENGTH_SHORT).show();
 
-                            locGps = localizar.getLastKnownLocation(gpsProvedor);
-                            locNet = localizar.getLastKnownLocation(netProvedor);
-                        } catch (SecurityException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        BDopenHelper base = new BDopenHelper(getApplicationContext());
+                            }
+                        });
 
 
-                        if (locGps != null) {
-
-                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locGps.getLatitude(), locGps.getLongitude(), 12, "S", 1, semana);
-
-                            Salida = true;
-
-                            btnSalidaTi.post(new Runnable() {
-                                public void run() {
+                    }else {
 
 
-                                    btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-                                    btnSalidaTi.setTextColor(Color.WHITE);
-                                    Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
+                        if (!Salida) {
 
-                                    enviar.enviarVisitas();
+                            Calendar c = Calendar.getInstance();
+                            SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                            SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
+                            SimpleDateFormat dSema = new SimpleDateFormat("w", Locale.getDefault());
 
-                                }
+                            String fecha = dFecha.format(c.getTime());
+                            String hora = dHora.format(c.getTime());
+                            String sem = dSema.format(c.getTime());
+                            int semana = Integer.parseInt(sem);
 
-                            });
 
                             try {
-                                sleep(2000);
-                            } catch (InterruptedException e) {
 
+                                locGps = localizar.getLastKnownLocation(gpsProvedor);
+                                locNet = localizar.getLastKnownLocation(netProvedor);
+                            } catch (SecurityException e) {
                                 e.printStackTrace();
                             }
-                            MenuTienda.this.finish();
-                        } else if (locNet != null) {
-                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locNet.getLatitude(), locNet.getLongitude(), 12, "S", 1, semana);
 
 
-                            Salida = true;
+                            BDopenHelper base = new BDopenHelper(getApplicationContext());
 
-                            btnSalidaTi.post(new Runnable() {
-                                public void run() {
 
-                                    btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-                                    Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
+                            if (locGps != null) {
 
-                                    enviar.enviarVisitas();
+                                base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locGps.getLatitude(), locGps.getLongitude(), 12, "S", 1, semana);
 
+                                Salida = true;
+
+                                btnSalidaTi.post(new Runnable() {
+                                    public void run() {
+
+
+                                        btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                        btnSalidaTi.setTextColor(Color.WHITE);
+                                        Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
+
+                                        enviar.enviarVisitas();
+
+                                    }
+
+                                });
+
+                                try {
+                                    sleep(2000);
+                                } catch (InterruptedException e) {
+
+                                    e.printStackTrace();
                                 }
+                                MenuTienda.this.finish();
+                            } else if (locNet != null) {
+                                base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locNet.getLatitude(), locNet.getLongitude(), 12, "S", 1, semana);
 
-                            });
 
-                            try {
-                                sleep(2000);
-                            } catch (InterruptedException e) {
+                                Salida = true;
 
-                                e.printStackTrace();
+                                btnSalidaTi.post(new Runnable() {
+                                    public void run() {
+
+                                        btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                        Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
+
+                                        enviar.enviarVisitas();
+
+                                    }
+
+                                });
+
+                                try {
+                                    sleep(2000);
+                                } catch (InterruptedException e) {
+
+                                    e.printStackTrace();
+                                }
+                                MenuTienda.this.finish();
+
+                            } else {
+
+                                activateGps("salida");
+
+
                             }
-                            MenuTienda.this.finish();
-
                         } else {
-
-                            activateGps("salida");
-
-
+                            MenuTienda.this.finish();
                         }
-                    } else {
-                        MenuTienda.this.finish();
+
+
                     }
+
+
+
+
 
 
                 }
@@ -1862,6 +1884,30 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
 	}
+
+
+	private boolean folioPendiente(){
+        int count = 0;
+        String sql = "select * from producto_catalogado_tienda as pct " +
+                " where idTienda="+ idTienda +" and " +
+                " folio is null and estatus_producto >= 3";
+
+        SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+
+        Cursor cursor =  db.rawQuery(sql, null);
+
+
+        if (cursor.getCount() > 0){
+
+            count=cursor.getCount();
+
+        }
+
+        cursor.close();
+        db.close();
+        return count > 0;
+
+    }
 
 
 	

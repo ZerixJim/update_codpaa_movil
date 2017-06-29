@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Acepto la catalogacion del producto"/>
+        android:text="La presente firma no es un compromiso de compra, es la confirmación de su interés por la catalogación de estos productos"/>
 
 
     <com.github.gcacace.signaturepad.views.SignaturePad

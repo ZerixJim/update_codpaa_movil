@@ -2,12 +2,16 @@ package com.codpaa.response;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
+import android.support.v4.content.LocalBroadcastManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.provider.DbEstructure;
+import com.codpaa.util.QuickstartPreferences;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -94,6 +98,12 @@ public class ProductoCatalogoResponse extends JsonHttpResponseHandler {
                     }, 2500);
 
                     Toast.makeText(mContext, "informacion enviada ", Toast.LENGTH_SHORT).show();
+
+
+                    Intent intent = new Intent(QuickstartPreferences.SEND);
+
+                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+
 
 
                 }

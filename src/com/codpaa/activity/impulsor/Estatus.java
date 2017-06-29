@@ -4,9 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -56,6 +59,12 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
     private RecyclerView mRecyclerView;
     private int idPromotor, idTienda;
     private BroadcastReceiver broadcastReceiver;
+    private Spinner spinner;
+    private boolean isReceiverMessageRegistered;
+
+
+
+
 
 
     @Override
@@ -91,13 +100,49 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
         }
 
 
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(QuickstartPreferences.SEND)){
+
+                    refreshList();
 
 
+                }
+            }
+        };
 
 
 
     }
 
+
+
+    @Override
+    protected void onPause() {
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+        isReceiverMessageRegistered = false;
+
+
+        super.onPause();
+    }
+
+    private void refreshList() {
+
+        if (spinner != null){
+
+
+            MarcaModel marca = (MarcaModel) spinner.getSelectedItem();
+
+            if (marca.getId() > 0){
+
+                loadProducto(marca.getId());
+            }
+
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -106,10 +151,10 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
         MenuItem item = menu.findItem(R.id.spinner_marca_estatus);
 
-        Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
+        spinner = (Spinner) MenuItemCompat.getActionView(item);
 
         if(spinner != null){
-            MarcasAdapter adapter = new MarcasAdapter(getSupportActionBar().getThemedContext(),
+            MarcasAdapter adapter = new MarcasAdapter(this,
                     android.R.layout.simple_spinner_dropdown_item, getArrayList());
 
 
@@ -122,8 +167,6 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
         }else {
             Log.d("Estatus", "spinner null");
         }
-
-
 
 
 
@@ -249,6 +292,12 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
     private void sendToServer(){
 
 
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mRecyclerView.getWindowToken(), 0);
+
+
+
+
         if (getProductListSendToServer().size() > 0){
 
 
@@ -354,6 +403,15 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
     @Override
     protected void onResume() {
         super.onResume();
+
+
+        if (!isReceiverMessageRegistered){
+            LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver,
+                    new IntentFilter(QuickstartPreferences.SEND));
+            isReceiverMessageRegistered = true;
+        }
+
+
     }
 
     @Override

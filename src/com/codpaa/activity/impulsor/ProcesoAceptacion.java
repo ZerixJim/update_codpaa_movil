@@ -98,8 +98,8 @@ public class ProcesoAceptacion extends AppCompatActivity implements ProcesoAcept
         Cursor cursor = db.rawQuery("select pct.idProducto, pct.idTienda, pct.fecha_captura, pct.cantidad , p.nombre, p.presentacion, pct.estatus_proceso, pct.estatus_registro  " +
                 "        from producto_catalogado_tienda as pct " +
                 " left join producto as p on p.idProducto=pct.idProducto " +
-                " where pct.idTienda=" + idTienda +  " and pct.firma is not null " +
-                " and estatus_registro>=3", null);
+                " where pct.idTienda=" + idTienda +  " and pct.folio is not null " +
+                " and estatus_registro>=3 group by pct.idProducto,pct.fecha_captura ", null);
 
         if(cursor.getCount() > 0){
 
