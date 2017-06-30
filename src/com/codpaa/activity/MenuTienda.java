@@ -677,7 +677,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getApplicationContext(), "Productos No firmados", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Productos pendientes de firma", Toast.LENGTH_SHORT).show();
 
                             }
                         });
@@ -1890,7 +1890,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         int count = 0;
         String sql = "select * from producto_catalogado_tienda as pct " +
                 " where idTienda="+ idTienda +" and " +
-                " folio is null and estatus_producto >= 3";
+                " folio is null and estatus_producto = 4";
 
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
