@@ -1888,9 +1888,17 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 	private boolean folioPendiente(){
         int count = 0;
+
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        String fecha = formato.format(c.getTime());
+
+
         String sql = "select * from producto_catalogado_tienda as pct " +
                 " where idTienda="+ idTienda +" and " +
-                " folio is null and estatus_producto = 4";
+                " folio is null and estatus_producto = 4 and fecha_captura='" + fecha + "'";
 
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 

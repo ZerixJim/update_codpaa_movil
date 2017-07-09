@@ -83,7 +83,7 @@ public class AvanceGestionRecyclerAdaptar extends RecyclerView.Adapter<AvanceGes
 
 
 
-        if(data.getFirma() != null){
+        if(data.getFolio() > 0 && data.getFirma() != null){
 
 
             viewHolder.checkBox.setVisibility(View.INVISIBLE);
