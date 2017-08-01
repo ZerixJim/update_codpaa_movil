@@ -2,6 +2,7 @@ package com.codpaa.service;
 
 import com.codpaa.R;
 import com.codpaa.model.JsonPhotoUpload;
+import com.codpaa.update.EnviarDatos;
 import com.codpaa.util.Configuracion;
 import com.codpaa.util.Utilities;
 import com.google.gson.Gson;
@@ -396,7 +397,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 	
 	
 	
-	public class MyBinder extends Binder{
+	private class MyBinder extends Binder{
 
 
 
@@ -580,49 +581,12 @@ public class GeoLocalizar extends Service implements LocationListener{
 	
 	
 	public void enviarVisitas() {
-		try {
-			
-			
-			Cursor curVisitas = DBhelper.datosVisitas();
-			AsyncHttpClient cli = new AsyncHttpClient();
-			RequestParams rpVis = new RequestParams();
 
-			
-			if(verificarConexion()){
-				if(curVisitas.getCount() >= 1) {
-					
-					
-					for(curVisitas.moveToFirst(); !curVisitas.isAfterLast(); curVisitas.moveToNext()) {
-						rpVis.put("idTien", Integer.toString(curVisitas.getInt(0)));
-						rpVis.put("idCel", Integer.toString(curVisitas.getInt(1)));
-						rpVis.put("fecha", curVisitas.getString(2));
-						rpVis.put("hora", curVisitas.getString(3));
-						rpVis.put("lati", Double.toString(curVisitas.getDouble(4)));
-						rpVis.put("lon", Double.toString(curVisitas.getDouble(5)));
-						rpVis.put("tipo", curVisitas.getString(6));
-						rpVis.put("numerocel", getPhoneNumber());
-						
-						cli.get(Utilities.WEB_SERVICE_CODPAA+"sendvisitasnewresponse.php",rpVis, resVisitas);
-						
 
-						
-					}
-					
-				}else{
-					Log.d("Visitas pendientes","no hay registros");
-				}
-				
-			}else{
-				Log.d("Visitas pendientes","no hay connexion");
-			}
-			
-			
-			curVisitas.close();
-			DBhelper.close();
+		EnviarDatos enviarDatos = new EnviarDatos(this);
 
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		enviarDatos.enviarVisitasPendientes();
+
 	}
 	
 
@@ -910,12 +874,12 @@ public class GeoLocalizar extends Service implements LocationListener{
 			
 			bases.close();
 			DBhelper.close();
-			Log.d("TimerRastreo", "Termino");
+
 		}catch(Exception e){
-			Log.d("enviarRastreo", "Excep", e);
+			e.printStackTrace();
+
 		}
-		
-		Log.d("enviarRastreo", "termino envio de rastreo");
+
 		
 	}
 	
@@ -941,8 +905,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 			
 			
 			if(idCel != 0){
-				
-				Log.d("IdCEl", Integer.toString(idCel));
+
 				
 				if(loGps != null){
 					

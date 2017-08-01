@@ -70,11 +70,9 @@ public class EnviarInformacion extends AppCompatActivity implements OnClickListe
 			Intent i = new Intent(this,Imagesheduler.class);
 			startActivity(i);
 			break;
-		
-		
+
 		}
 
-		
 	}
 
 	@Override
@@ -97,7 +95,7 @@ public class EnviarInformacion extends AppCompatActivity implements OnClickListe
 		
 		Toast.makeText(this, "Enviando..",Toast.LENGTH_LONG).show();
 		
-		enviar.vistasPendientes();
+		enviar.enviarVisitas();
 		
 	}
 	

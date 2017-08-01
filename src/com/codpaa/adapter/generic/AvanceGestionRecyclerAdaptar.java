@@ -17,6 +17,7 @@ import com.codpaa.model.AvanceGestionModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /*
  * Created by grim on 22/05/2017.
@@ -88,8 +89,8 @@ public class AvanceGestionRecyclerAdaptar extends RecyclerView.Adapter<AvanceGes
 
             viewHolder.checkBox.setVisibility(View.INVISIBLE);
 
-            viewHolder.estatusFirma.setText("firmada");
-            viewHolder.estatusFirma.setTextColor(Color.rgb(145, 255, 137));
+            viewHolder.estatusFirma.setText(String.format(Locale.getDefault(),"folio: %d", data.getFolio()));
+            //viewHolder.estatusFirma.setTextColor(Color.rgb(145, 255, 137));
 
         }
 

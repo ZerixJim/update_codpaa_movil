@@ -12,10 +12,19 @@ public class AvanceGestionModel {
     private String firma;
     private int idTienda;
     private int idProducto;
+    private int cantidad;
     private boolean check = false;
     private String content;
     private int folio;
 
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
 
     public int getFolio() {
         return folio;

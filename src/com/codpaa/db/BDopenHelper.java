@@ -798,7 +798,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor datosVisitas() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,hora,latitud,longitud,tipo from coordenadas where status=1", null);
+        return baseDatosLocal.rawQuery("select idTienda,idPromotor," +
+                "fecha,hora,latitud,longitud,tipo from coordenadas where status=1" +
+                " order by time(substr(hora, 1,8)) asc", null);
 
 
     }
@@ -981,15 +983,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor VisitaTienda(int idTien, String fecha, String tipo)throws SQLiteException {
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select * from coordenadas where idTienda="+idTien+" and" +
+        return baseDatosLocal.rawQuery("select * from coordenadas where idTienda="+idTien+" and " +
                 " fecha='"+fecha+"' and tipo='"+tipo+"';", null);
-
-    }
-
-    public Cursor visitaPendiente(int semana) throws SQLiteException{
-        baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,hora,latitud,longitud,tipo from coordenadas where (semana="+(semana-1)+" or semana="+semana+");", null);
-
 
     }
 

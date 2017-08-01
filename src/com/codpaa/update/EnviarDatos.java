@@ -1,10 +1,7 @@
 package com.codpaa.update;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 
 import org.json.JSONArray;
@@ -29,12 +26,14 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.codpaa.listener.HttpResponse;
+import com.codpaa.listener.ResponseVisitasJson;
 import com.codpaa.model.JsonEncuestaVeiw;
 import com.codpaa.model.JsonMaterialModel;
 import com.codpaa.model.JsonProductosView;
+import com.codpaa.model.JsonVisitas;
 import com.codpaa.model.MaterialModel;
 import com.codpaa.model.Respuesta;
+import com.codpaa.model.VisitasModel;
 import com.codpaa.provider.DbEstructure;
 import com.codpaa.response.EncuestaResponse;
 import com.codpaa.response.MaterialesJsonResponse;
@@ -57,7 +56,7 @@ public class EnviarDatos {
 	private SQLiteDatabase base;
 	private BDopenHelper DB;
 	
-	private Activity activity;
+	private Context context;
 
 	private AsyncHttpResponseHandler respuesta = new AsyncHttpResponseHandler(){
 
@@ -76,9 +75,9 @@ public class EnviarDatos {
 	
 	
 	
-	public EnviarDatos(Activity a) {
-		activity = a;
-		DB = new BDopenHelper(activity);
+	public EnviarDatos(Context a) {
+		context = a;
+		DB = new BDopenHelper(context);
 
 
 		
@@ -87,13 +86,15 @@ public class EnviarDatos {
 	
 	
 	private String getPhoneNumber(){
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(activity, new String[] {Manifest.permission.READ_PHONE_STATE}, 125);
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions((Activity) context, new String[] {Manifest.permission.READ_PHONE_STATE}, 125);
         }
 		TelephonyManager mTelephonyManager;
-		mTelephonyManager = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE); 
+		mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		return mTelephonyManager.getLine1Number();
 	}
+
+
 
 
 	public void sendCatalogoProducto(){
@@ -126,14 +127,14 @@ public class EnviarDatos {
 					AsyncHttpClient client = new AsyncHttpClient();
 					final RequestParams requestParams = new RequestParams();
 					requestParams.put("json", gson.toJson(view));
-					client.post(activity, Utilities.WEB_SERVICE_CODPAA + "sendProdTiend.php", requestParams, new JsonHttpResponseHandler(){
+					client.post(context, Utilities.WEB_SERVICE_CODPAA + "sendProdTiend.php", requestParams, new JsonHttpResponseHandler(){
 
 
 						@Override
 						public void onStart() {
 							super.onStart();
 
-							progressDialog = new ProgressDialog(activity);
+							progressDialog = new ProgressDialog(context);
 
 							progressDialog.setMessage("Enviando..");
 
@@ -172,7 +173,7 @@ public class EnviarDatos {
 									Log.d("Json Response", response.toString());
 									if (response.getBoolean("insert")){
 
-										SQLiteDatabase db = new BDopenHelper(activity).getWritableDatabase();
+										SQLiteDatabase db = new BDopenHelper(context).getWritableDatabase();
 
 										int idTienda = response.getInt("idTienda");
 
@@ -266,7 +267,7 @@ public class EnviarDatos {
 				rp.put("json", gson.toJson(view));
 
 
-				client.post(Utilities.WEB_SERVICE_CODPAA + "sendEncuesta.php",rp, new EncuestaResponse(activity));
+				client.post(Utilities.WEB_SERVICE_CODPAA + "sendEncuesta.php",rp, new EncuestaResponse(context));
 
 
 
@@ -279,36 +280,161 @@ public class EnviarDatos {
 			e.printStackTrace();
 		}
 	}
+
+
+
+
+	public void enviarVisitasPendientes(){
+
+
+		try {
+
+			Cursor curVisitas = DB.datosVisitas();
+
+			Log.d("entro", "enviar visitas");
+
+
+			if(curVisitas.getCount() > 0) {
+
+
+				List<VisitasModel> visitas = new ArrayList<>();
+
+
+				for(curVisitas.moveToFirst(); !curVisitas.isAfterLast(); curVisitas.moveToNext()) {
+
+					final VisitasModel model = new VisitasModel();
+
+					model.setIdTienda(curVisitas.getInt(0));
+					model.setIdPromotor(curVisitas.getInt(1));
+					model.setFechaCaptura(curVisitas.getString(2));
+					model.setHora(curVisitas.getString(3));
+					model.setLatitud(curVisitas.getDouble(4));
+					model.setLongitud(curVisitas.getDouble(5));
+					model.setTipo(curVisitas.getString(6));
+					model.setNumeroTelefono(getPhoneNumber());
+
+
+					visitas.add(model);
+
+
+				}
+
+
+
+				RequestParams rp = new RequestParams();
+
+				JsonVisitas jsonVisitas = new JsonVisitas();
+				jsonVisitas.setVisitas(visitas);
+
+				Gson json = new Gson();
+
+				rp.put("json", json.toJson(jsonVisitas));
+
+				AsyncHttpClient client = new AsyncHttpClient();
+
+
+				//Log.d("registros" ,json.toJson(jsonVisitas));
+
+
+				if (verificarConexion()){
+
+					//// TODO: 01/08/2017 change to production
+					client.post(Utilities.WEB_SERVICE_CODPAA_TEST+"send_visitas_json.php",rp,
+
+							new ResponseVisitasJson(context));
+
+
+				}
+
+				//Log.d("url",Utilities.WEB_SERVICE_CODPAA_TEST + "send_visitas_json.php");
+
+
+
+
+			}else {
+				//Toast.makeText(context, "No hay Registros pendientes", Toast.LENGTH_SHORT).show();
+				Log.d("visitas Pendientes", "no hay visitas por enviar");
+			}
+			curVisitas.close();
+			DB.close();
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+
+	}
 	
 	
 	public void enviarVisitas() {
 		try {
-			
-			RequestParams rpVisitas = new RequestParams();
+
 			Cursor curVisitas = DB.datosVisitas();
+
+			Log.d("entro", "enviar visitas");
 		
 			
-			if(curVisitas.getCount() != 0 && verificarConexion()) {
-				
-				
+			if(curVisitas.getCount() > 0) {
+
+
+				List<VisitasModel> visitas = new ArrayList<>();
+
+
 				for(curVisitas.moveToFirst(); !curVisitas.isAfterLast(); curVisitas.moveToNext()) {
-					rpVisitas.put("idTien", Integer.toString(curVisitas.getInt(0)));
-					rpVisitas.put("idCel", Integer.toString(curVisitas.getInt(1)));
-					rpVisitas.put("fecha", curVisitas.getString(2));
-					rpVisitas.put("hora", curVisitas.getString(3));
-					rpVisitas.put("lati", Double.toString(curVisitas.getDouble(4)));
-					rpVisitas.put("lon", Double.toString(curVisitas.getDouble(5)));
-					rpVisitas.put("tipo", curVisitas.getString(6));
-					rpVisitas.put("numerocel", getPhoneNumber());
+
+					final VisitasModel model = new VisitasModel();
+
+					model.setIdTienda(curVisitas.getInt(0));
+					model.setIdPromotor(curVisitas.getInt(1));
+					model.setFechaCaptura(curVisitas.getString(2));
+					model.setHora(curVisitas.getString(3));
+					model.setLatitud(curVisitas.getDouble(4));
+					model.setLongitud(curVisitas.getDouble(5));
+					model.setTipo(curVisitas.getString(6));
+					model.setNumeroTelefono(getPhoneNumber());
 
 
-					cliente.get(Utilities.WEB_SERVICE_CODPAA+"sendvisitasnew.php",rpVisitas,
-							new HttpResponse(activity, curVisitas.getInt(0), curVisitas.getString(2), curVisitas.getString(6)));
-					
-				
+					visitas.add(model);
+
+
 				}
+
+
+
+				RequestParams rp = new RequestParams();
+
+				JsonVisitas jsonVisitas = new JsonVisitas();
+				jsonVisitas.setVisitas(visitas);
+
+				Gson json = new Gson();
+
+				rp.put("json", json.toJson(jsonVisitas));
+
+				AsyncHttpClient client = new AsyncHttpClient();
+
+
+				//Log.d("registros" ,json.toJson(jsonVisitas));
+
+
+				if (verificarConexion()){
+
+					//// TODO: 01/08/2017 change to production
+					client.post(Utilities.WEB_SERVICE_CODPAA_TEST+"send_visitas_json.php",rp,
+
+							new ResponseVisitasJson(context));
+
+
+				}
+
+				//Log.d("url",Utilities.WEB_SERVICE_CODPAA_TEST + "send_visitas_json.php");
+
 				
 				
+
+				
+				
+			}else {
+				Toast.makeText(context, "No hay Registros pendientes", Toast.LENGTH_SHORT).show();
 			}
 			curVisitas.close();
 			DB.close();
@@ -318,60 +444,11 @@ public class EnviarDatos {
 		}
 	}
 	
-	public void vistasPendientes(){
-		try {
-			
-			
-			if(verificarConexion()){
-				Calendar c = Calendar.getInstance();
-				SimpleDateFormat dFecha = new SimpleDateFormat("w", Locale.getDefault());
-					
-				String semana = dFecha.format(c.getTime());
-				int sem = Integer.parseInt(semana);
-				Cursor curVisitas = DB.visitaPendiente(sem);
-				
-				base = new BDopenHelper(activity).getWritableDatabase();
-				AsyncHttpClient clienteVP = new AsyncHttpClient();
-				RequestParams rpVP = new RequestParams();
-				if(curVisitas.getCount() != 0) {
-					
-					Toast.makeText(activity, "Se van a enviar \n("+curVisitas.getCount()+") Registros", Toast.LENGTH_SHORT).show();
-					for(curVisitas.moveToFirst(); !curVisitas.isAfterLast(); curVisitas.moveToNext()) {
-						
-						rpVP.put("idTien", Integer.toString(curVisitas.getInt(0)));
-						rpVP.put("idCel", Integer.toString(curVisitas.getInt(1)));
-						rpVP.put("fecha", curVisitas.getString(2));
-						rpVP.put("hora", curVisitas.getString(3));
-						rpVP.put("lati", Double.toString(curVisitas.getDouble(4)));
-						rpVP.put("lon", Double.toString(curVisitas.getDouble(5)));
-						rpVP.put("tipo", curVisitas.getString(6));
-						
-						
-						
-						clienteVP.post(Utilities.WEB_SERVICE_CODPAA+"sentInfo.php", rpVP,respuesta);
-						
-					
-					}
-					
-					
-				}else{
-					Toast.makeText(activity, "No hay Registros", Toast.LENGTH_SHORT).show();
-				}
-			}else{
-				Toast.makeText(activity, "No hay conexion a internet", Toast.LENGTH_SHORT).show();
-			}
-			
-			base.close();
-			DB.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
+
 
 	public void enviarMateriales(int idPromor){
 
-		SQLiteDatabase base = new BDopenHelper(activity).getReadableDatabase();
+		SQLiteDatabase base = new BDopenHelper(context).getReadableDatabase();
 
 		String sql = "select * from materiales_solicitud where estatus=1;";
 
@@ -405,11 +482,11 @@ public class EnviarDatos {
 
 			reques.put("json", gson.toJson(materialModel));
 
-			Log.d("json", gson.toJson(materialModel));
+			//Log.d("json", gson.toJson(materialModel));
 
 			AsyncHttpClient cliente = new AsyncHttpClient();
 
-			MaterialesJsonResponse response = new MaterialesJsonResponse(activity);
+			MaterialesJsonResponse response = new MaterialesJsonResponse(context);
 			cliente.get(Utilities.WEB_SERVICE_CODPAA + Utilities.SERV_PHP, reques, response);
 
 		}
@@ -461,7 +538,7 @@ public class EnviarDatos {
 					
 					
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendfront.php", rp,
-							new HttpResponseFrentes(activity, curFrentes.getInt(0),curFrentes.getString(2), curFrentes.getInt(3)));
+							new HttpResponseFrentes(context, curFrentes.getInt(0),curFrentes.getString(2), curFrentes.getInt(3)));
 					
 
 				}
@@ -484,9 +561,9 @@ public class EnviarDatos {
 		private int idMarca;
 		
 		SQLiteDatabase base;
-		Activity act;
+		Context act;
 		
-		public HttpResponseFrentes(Activity activi,int idTi,String fecha, int idMar){
+		public HttpResponseFrentes(Context activi,int idTi,String fecha, int idMar){
 			this.act = activi;
 			this.idTienda = idTi;
 			this.fecha = fecha;
@@ -533,10 +610,10 @@ public class EnviarDatos {
                     requestParams.put("direccion", cursor.getString(cursor.getColumnIndex("direccion")));
 
                     HttpResponseAddress httpResponseAddress =
-                            new HttpResponseAddress(activity,cursor.getInt(cursor.getColumnIndex("idTienda")),
+                            new HttpResponseAddress(context,cursor.getInt(cursor.getColumnIndex("idTienda")),
                                     cursor.getInt(cursor.getColumnIndex("idPromotor")),cursor.getString(cursor.getColumnIndex("direccion")));
 
-                    client.post(activity, Utilities.WEB_SERVICE_CODPAA + "sendAddress.php", requestParams, httpResponseAddress );
+                    client.post(context, Utilities.WEB_SERVICE_CODPAA + "sendAddress.php", requestParams, httpResponseAddress );
 
                 }
             }
@@ -624,7 +701,7 @@ public class EnviarDatos {
 
 					
 					
-					HttpResponseSurtido http = new HttpResponseSurtido(activity, curSurtido.getInt(0),curSurtido.getString(3),curSurtido.getInt(4));
+					HttpResponseSurtido http = new HttpResponseSurtido(context, curSurtido.getInt(0),curSurtido.getString(3),curSurtido.getInt(4));
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"surti.php", rp, http);
 					//base.execSQL();
 					
@@ -704,7 +781,7 @@ public class EnviarDatos {
 					//Log.d("Estatus"," "+ curInven.getInt(curInven.getColumnIndex("estatus")));
 
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinventario.php", rp,
-							new HttpResponseInventario(activity, curInven.getInt(0),curInven.getString(2), curInven.getInt(3)));
+							new HttpResponseInventario(context, curInven.getInt(0),curInven.getString(2), curInven.getInt(3)));
 
 				}
 				
@@ -723,9 +800,9 @@ public class EnviarDatos {
 		private int idPro;
 		
 		SQLiteDatabase base;
-		Activity act;
+		Context act;
 		
-		public HttpResponseInventario(Activity activi,int idTi,String fecha, int idProd){
+		public HttpResponseInventario(Context activi,int idTi,String fecha, int idProd){
 			this.act = activi;
 			this.idTienda = idTi;
 			this.fecha = fecha;
@@ -775,7 +852,7 @@ public class EnviarDatos {
 					
 					
 					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendexhi.php", rp, new HttpResponseExhi(activity, curExhi.getInt(0), curExhi.getString(3), curExhi.getInt(4), curExhi.getInt(2)));
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendexhi.php", rp, new HttpResponseExhi(context, curExhi.getInt(0), curExhi.getString(3), curExhi.getInt(4), curExhi.getInt(2)));
 
 				}
 				
@@ -796,9 +873,9 @@ public class EnviarDatos {
 		private int idExhi;
 		
 		SQLiteDatabase base;
-		Activity act;
+		Context act;
 		
-		public HttpResponseExhi(Activity activi,int idTi,String fecha, int idProd, int idExh){
+		public HttpResponseExhi(Context activi,int idTi,String fecha, int idProd, int idExh){
 			this.act = activi;
 			this.idTienda = idTi;
 			this.fecha = fecha;
@@ -835,7 +912,7 @@ public class EnviarDatos {
 		
 		try{
 			Cursor curEncargado = DB.encargadoTienda();
-			base = new BDopenHelper(activity).getWritableDatabase();
+			base = new BDopenHelper(context).getWritableDatabase();
 			
 			if(curEncargado.getCount() > 0 && verificarConexion()) {
 				for(curEncargado.moveToFirst(); !curEncargado.isAfterLast(); curEncargado.moveToNext()) {
@@ -865,7 +942,7 @@ public class EnviarDatos {
 		
 		try{
 			Cursor curComentario = DB.ComentariosTienda();
-			base = new BDopenHelper(activity).getWritableDatabase();
+			base = new BDopenHelper(context).getWritableDatabase();
 			
 			if(curComentario.getCount() > 0 && verificarConexion()){
 				for(curComentario.moveToFirst(); !curComentario.isAfterLast(); curComentario.moveToNext()){
@@ -912,7 +989,7 @@ public class EnviarDatos {
 					rpIn.put("cambioprecio",curInteli.getString(13));
 					
 					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinteligencia2.php", rpIn, new HttpResponseInteligen(activity, curInteli.getInt(1), curInteli.getString(5),curInteli.getInt(2)));
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinteligencia2.php", rpIn, new HttpResponseInteligen(context, curInteli.getInt(1), curInteli.getString(5),curInteli.getInt(2)));
 					
 				}
 			}
@@ -933,9 +1010,9 @@ public class EnviarDatos {
 		
 		
 		SQLiteDatabase base;
-		Activity act;
+		Context act;
 		
-		public HttpResponseInteligen(Activity activi,int idTi,String fecha, int idProd){
+		public HttpResponseInteligen(Context activi,int idTi,String fecha, int idProd){
 			this.act = activi;
 			this.idTienda = idTi;
 			this.fecha = fecha;
@@ -974,7 +1051,7 @@ public class EnviarDatos {
 
 		try{
 			Cursor curVenta = DB.datosVenta();
-			base = new BDopenHelper(activity).getWritableDatabase();
+			base = new BDopenHelper(context).getWritableDatabase();
 
 			if(curVenta.getCount() > 0 && verificarConexion()){
 				for(curVenta.moveToFirst(); !curVenta.isAfterLast(); curVenta.moveToNext()){
@@ -987,7 +1064,7 @@ public class EnviarDatos {
                     rp.put("idPromotor", Integer.toString(curVenta.getInt(curVenta.getColumnIndex("idPromotor"))));
 					rp.put("idProducto", Integer.toString(curVenta.getInt(curVenta.getColumnIndex("idProducto"))));
 
-                    HttpVentaResponse response = new HttpVentaResponse(activity,
+                    HttpVentaResponse response = new HttpVentaResponse(context,
                             curVenta.getInt(curVenta.getColumnIndex("idMarca")),
                             curVenta.getString(curVenta.getColumnIndex("tipo")),
                             curVenta.getString(curVenta.getColumnIndex("fecha_inicio")),
@@ -1034,14 +1111,14 @@ public class EnviarDatos {
                 try {
                     if (response.getBoolean("insert")){
 
-                        SQLiteDatabase db = new BDopenHelper(activity).getWritableDatabase();
+                        SQLiteDatabase db = new BDopenHelper(EnviarDatos.this.context).getWritableDatabase();
 
                         try {
 
                             db.execSQL("update ventaPromedio set estatus=2 where idMarca="+idMarca+" " +
                                     "and tipo='"+tipo+"' and fecha_inicio='"+fechaI+"' and fecha_fin='"+fechaF+"' and idProducto="+idProducto);
 
-                            Toast.makeText(activity, "Registro Recibido", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EnviarDatos.this.context, "Registro Recibido", Toast.LENGTH_SHORT).show();
 
                         }catch (SQLiteException e){
                             e.printStackTrace();
@@ -1066,7 +1143,7 @@ public class EnviarDatos {
     }
 	
 	private boolean verificarConexion() {
-	    ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+	    ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
 	    return netInfo != null && netInfo.isConnected();

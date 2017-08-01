@@ -7,7 +7,6 @@
     android:layout_margin="@dimen/activity_horizontal_margin">
 
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,28 +14,27 @@
 
 
         <TextView
+            android:id="@+id/estatus_proceso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/estatus_proceso"
-            android:textColor="#ccc"
-            android:textSize="12sp"
-            />
+            android:textColor="#9c9c9c"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/estatus_registro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
 
         <TextView
             android:id="@+id/cantidad"
 
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
 
 
         <TextView
@@ -45,27 +43,29 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/estatus_proceso"
             android:layout_marginTop="15dp"
-            android:text="nombre producto"/>
+            android:text="nombre producto" />
+
         <TextView
             android:id="@+id/presentacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/producto_nombre"
-            android:text="presentacion"/>
+            android:text="presentacion" />
 
         <RadioGroup
             android:id="@+id/radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_below="@+id/presentacion">
+            android:layout_below="@+id/presentacion"
+            android:layout_marginTop="15dp">
 
 
             <RadioButton
                 android:id="@+id/sin_pedir_vendedor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sin pedir al vendedor"/>
+                android:text="Sin pedir al vendedor" />
+
             <RadioButton
                 android:id="@+id/ya_pedido_vendedor"
                 android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                 android:id="@+id/producto_sin_llegar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Producto sin llegar"/>
+                android:text="Producto sin llegar" />
 
 
         </RadioGroup>
@@ -86,9 +86,9 @@
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
 
 
         <EditText
@@ -96,19 +96,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/radio_group"
-            android:inputType="number"
             android:layout_marginTop="20dp"
-            android:hint="Cantidad entregada"
             android:layout_toLeftOf="@+id/cantidad"
             android:layout_toStartOf="@+id/cantidad"
+            android:hint="Cantidad entregada"
+            android:inputType="number"
             android:textColor="#898989"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
 
     </RelativeLayout>
-
-
-
 
 
 </android.support.v7.widget.CardView>

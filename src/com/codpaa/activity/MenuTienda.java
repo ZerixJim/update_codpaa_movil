@@ -313,6 +313,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             item11.setNombreMenu("Actualizar producto");
             item11.setImage("ic_autorenew_grey_600_24dp");
             array.add(item11);
+
         } else if (c.getPromotorMode() == 2) {
 
 
@@ -342,6 +343,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             item3.setNombreMenu("Comentarios");
             item3.setImage("ic_comment_grey_600_24dp");
             array.add(item3);
+
+
+            final MenuTiendaModel item11 = new MenuTiendaModel();
+            item11.setIdMenu(11);
+            item11.setNombreMenu("Actualizar producto");
+            item11.setImage("ic_autorenew_grey_600_24dp");
+            array.add(item11);
 
 
         }
@@ -590,7 +598,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
+        SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         SimpleDateFormat dSema = new SimpleDateFormat("w", Locale.getDefault());
 
         String fecha = dFecha.format(c.getTime());
@@ -690,7 +698,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
                             Calendar c = Calendar.getInstance();
                             SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                            SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
+                            SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
                             SimpleDateFormat dSema = new SimpleDateFormat("w", Locale.getDefault());
 
                             String fecha = dFecha.format(c.getTime());

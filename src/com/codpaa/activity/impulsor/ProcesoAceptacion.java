@@ -6,10 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -87,6 +89,31 @@ public class ProcesoAceptacion extends AppCompatActivity implements ProcesoAcept
             floatingActionButton.setOnClickListener(this);
         }
 
+        ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null){
+
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
+        }
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        switch (item.getItemId()){
+
+            case android.R.id.home:
+                finish();
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 

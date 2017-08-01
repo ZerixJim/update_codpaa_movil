@@ -347,6 +347,8 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
                 model.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
                 model.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
                 model.setFirma(cursor.getString(cursor.getColumnIndex("firma")));
+                model.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad")));
+
 
 
                 lista.add(model);
@@ -366,11 +368,12 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
             rp.put("solicitud", "update_firma_producto");
             rp.put("json", gson.toJson(json));
 
-            Log.d("Json", gson.toJson(json));
+            //Log.d("Json", gson.toJson(json));
 
 
 
-            client.post(this, Utilities.WEB_SERVICE_CODPAA + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
+            //TODO-gus: implementar servidor de produccion
+            client.post(this, Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
 
 
         }
