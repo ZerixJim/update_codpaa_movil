@@ -94,6 +94,25 @@ public class AvanceGestionRecyclerAdaptar extends RecyclerView.Adapter<AvanceGes
 
         }
 
+        if (data.getFolio() == 0 && data.getFirma() != null){
+
+
+            viewHolder.checkBox.setVisibility(View.INVISIBLE);
+
+            viewHolder.estatusFirma.setText("Firmado");
+
+            viewHolder.estatusEnvio.setText("no enviado");
+
+
+        }
+
+
+        if (data.getFolio() > 0 ){
+
+            viewHolder.estatus.setText("Folio Generado " + data.getFecha());
+
+        }
+
 
 
     }

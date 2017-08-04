@@ -52,7 +52,7 @@ public class ResponseUpdateFirmaProducto extends JsonHttpResponseHandler {
                         contentValues.put(DbEstructure.ProductoCatalogadoTienda.ESTATUS_REGISTRO, 3);
                         contentValues.put(DbEstructure.ProductoCatalogadoTienda.FOLIO, array.getJSONObject(i).getInt("folio") );
 
-                        db.update(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME, contentValues,"" +
+                        db.update(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME, contentValues,
                                 DbEstructure.ProductoCatalogadoTienda.ID_PRODUCTO + "=" + array.getJSONObject(i).getInt("idProducto") + " and " +
                                 DbEstructure.ProductoCatalogadoTienda.ID_TIENDA + "=" + array.getJSONObject(i).getInt("idTienda") + " and " +
                                 DbEstructure.ProductoCatalogadoTienda.FECHA_CAPTURA +"='" + array.getJSONObject(i).getString("fecha") + "'",null);

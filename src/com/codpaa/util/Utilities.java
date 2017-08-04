@@ -1,5 +1,9 @@
 package com.codpaa.util;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 public class Utilities {
     static final String SERVER_IP = "162.144.139.133";
     static final String SERVER_IP_2 = "162.144.139.31";
@@ -13,6 +17,16 @@ public class Utilities {
 
 
     public static final String TABLE_MENSAJE = "mensaje";
+
+
+
+    public static boolean verificarConexion(Context context) {
+
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+
+        return netInfo != null && netInfo.isConnected();
+    }
 
 
 }

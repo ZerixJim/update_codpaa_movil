@@ -79,46 +79,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 		public void onFailure(int arg0, Header[] arg1, byte[] arg2,Throwable arg3) {}
 	
 	};
-	
-	JsonHttpResponseHandler resVisitas = new JsonHttpResponseHandler(){
-		
-		SQLiteDatabase baseEven=null;
-		@Override
-		public void onSuccess(int statusCode,Header[] headers,JSONObject response) {
-			try {
-				if(response.getBoolean("insert")){
-					
-					baseEven = new BDopenHelper(con).getWritableDatabase();
 
-					baseEven.execSQL("UPDATE coordenadas SET status=2 WHERE idTienda="+
-							response.getInt("idTienda")+" and fecha='"+
-							response.getString("fecha")+"' and tipo='"+
-							response.getString("tipo")+"';");
-					if (baseEven != null)
-						baseEven.close();
-
-				}else{
-					Log.d("EnvioRegistroThread", response.getString("mensaje"));
-				}
-			} catch (JSONException e) {
-				
-				e.printStackTrace();
-			}
-		}
-
-		@Override
-		public void onFailure(int statusCode, Header[] headers,
-				String responseString, Throwable throwable) {
-			
-			super.onFailure(statusCode, headers, responseString, throwable);
-			
-			Log.d("EnvioRegistroThread", "onFailure :(");
-			throwable.printStackTrace();
-			
-		}
-		
-		
-	};
 
     JsonHttpResponseHandler respuestaFrentes = new JsonHttpResponseHandler(){
 
@@ -436,19 +397,33 @@ public class GeoLocalizar extends Service implements LocationListener{
 			public void run(){
 				Looper.prepare();
 				try {
-					
+
+
 					enviarVisitas();
-                    verifyVersionSent();
+
+					verifyVersionSent();
+
 					enviarFrentes();
 					//enviarSurtido();
+
 					enviarInteli();
+
 					enviarInventario();
+
 					enviarExibiciones();
+
 					enviarEncargado();
+
 					enviarComentario();
+
 					enviarRastreo();
 
-                    enviarFotos();
+
+
+
+					enviarFotos();
+
+
 					
 					
 					Looper.loop();
@@ -987,7 +962,7 @@ public class GeoLocalizar extends Service implements LocationListener{
         Cursor curFoto = base.fotos();
 		AsyncHttpClient cliente = new SyncHttpClient();
 
-        Log.e("Geolocalizar","paso 1");
+        //Log.e("Geolocalizar","paso 1");
 
         if(curFoto.getCount() >= 1) {
 

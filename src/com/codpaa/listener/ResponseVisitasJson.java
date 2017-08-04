@@ -51,6 +51,8 @@ public class ResponseVisitasJson extends JsonHttpResponseHandler{
 
                     }
 
+
+
                     Toast.makeText(context,"Visita Recibida",Toast.LENGTH_SHORT).show();
 
                     /*if (lenght == 1){
@@ -93,11 +95,11 @@ public class ResponseVisitasJson extends JsonHttpResponseHandler{
 
     @Override
     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-        Log.d("error", responseString);
+        //Log.d("error", responseString);
     }
 
     @Override
     public void onSuccess(int statusCode, Header[] headers, String responseString) {
-        Log.d("success", responseString);
+        //Log.d("success", responseString);
     }
 }

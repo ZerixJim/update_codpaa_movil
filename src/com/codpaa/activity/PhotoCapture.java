@@ -194,6 +194,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 dispatchTakePictureIntent();
                 return true;
             case R.id.save_photo:
+
                 EnviarImagen();
                 return true;
 
@@ -415,7 +416,10 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 	    return path;
 	}
-    //metod: sent image to server
+
+
+
+    //method: sent image to server
 	public void EnviarImagen(){
 		MarcaModel spm = (MarcaModel) spiMarca.getSelectedItem();
 		SpinnerMarcaModel spe = (SpinnerMarcaModel) spiExh.getSelectedItem();
@@ -445,6 +449,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     if(verificarConexion()){
 
                         AsyncHttpClient clienteFoto = new AsyncHttpClient();
+                        clienteFoto.setTimeout(10000);
                         BDopenHelper registraImagen = new BDopenHelper(this);
 
 
@@ -517,8 +522,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                     }
 
 
-
-
                                     clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php", requ,
                                             new HttpResponseImage(CameraActivity, (int)(long)id));
                                     Log.d("http foto", requ.toString());
@@ -543,6 +546,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                         spiMarca.setSelection(0);
 
                         BDopenHelper baseinsert = new BDopenHelper(this);
+
 
                         try {
                             baseinsert.insertarImagen(idTienda, idPromotor, idMarca, idExhibicion, timeStamp, Integer.parseInt(dia),Integer.parseInt(mes) , Integer.parseInt(ano), mCurrentPhotoPath, 1,getSelectedRadioGroup(),date);

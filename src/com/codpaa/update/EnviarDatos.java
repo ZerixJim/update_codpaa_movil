@@ -291,7 +291,7 @@ public class EnviarDatos {
 
 			Cursor curVisitas = DB.datosVisitas();
 
-			Log.d("entro", "enviar visitas");
+			//Log.d("entro", "enviar visitas");
 
 
 			if(curVisitas.getCount() > 0) {
@@ -338,8 +338,8 @@ public class EnviarDatos {
 
 				if (verificarConexion()){
 
-					//// TODO: 01/08/2017 change to production
-					client.post(Utilities.WEB_SERVICE_CODPAA_TEST+"send_visitas_json.php",rp,
+
+					client.post(Utilities.WEB_SERVICE_CODPAA+"send_visitas_json.php",rp,
 
 							new ResponseVisitasJson(context));
 

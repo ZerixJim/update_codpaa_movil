@@ -679,6 +679,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 public void run() {
 
                     Configuracion co = new Configuracion(getApplicationContext());
+
                     if (co.getPromotorMode() == 2 &&  folioPendiente()){
 
 
@@ -1809,7 +1810,21 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     private void dialogoConfirmacionSalida(){
 
 		if (Salida){
-			this.finish();
+
+            Configuracion configuracion = new Configuracion(this);
+
+
+
+            if(configuracion.getPromotorMode() == 2 && folioPendiente()){
+
+
+                Toast.makeText(this,"Productos sin firmar", Toast.LENGTH_SHORT).show();
+
+            }else {
+
+                this.finish();
+            }
+
 		}else {
 			if (Entrada){
 
@@ -1906,7 +1921,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         String sql = "select * from producto_catalogado_tienda as pct " +
                 " where idTienda="+ idTienda +" and " +
-                " folio is null and estatus_producto = 4 and fecha_captura='" + fecha + "'";
+                " firma is null and estatus_producto = 4 and fecha_captura='" + fecha + "'";
 
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 

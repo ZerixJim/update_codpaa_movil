@@ -15,10 +15,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.codpaa.R;
@@ -248,6 +248,7 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
                 sendFirmasToServer();
 
+
                 return true;
 
 
@@ -327,13 +328,22 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
 
     private void sendFirmasToServer(){
+        //todo verificar conexion a internet
+
+        if (!Utilities.verificarConexion(this)){
+
+            Toast.makeText(this, "no hay conexion a internet", Toast.LENGTH_SHORT).show();
+
+
+        }
 
 
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
 
-        Cursor cursor = db.rawQuery("select * from producto_catalogado_tienda where firma" +
-                " is not null  and estatus_registro=2", null);
+        Cursor cursor = db.rawQuery("select * from producto_catalogado_tienda where firma " +
+                          " is not null and estatus_registro <= 2 and estatus_producto = 4 " +
+                          " and folio is null", null);
 
         if (cursor.getCount() > 0){
 
@@ -370,12 +380,16 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
             //Log.d("Json", gson.toJson(json));
 
+            Toast.makeText(this, "Generando Folio..", Toast.LENGTH_SHORT).show();
+
 
 
             //TODO-gus: implementar servidor de produccion
             client.post(this, Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
 
 
+        }else{
+            Toast.makeText(this, "no hay productos pendientes de folio", Toast.LENGTH_SHORT).show();
         }
 
 
