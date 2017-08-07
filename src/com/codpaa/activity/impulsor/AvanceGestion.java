@@ -328,7 +328,7 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
 
     private void sendFirmasToServer(){
-        //todo verificar conexion a internet
+
 
         if (!Utilities.verificarConexion(this)){
 

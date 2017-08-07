@@ -4,8 +4,6 @@ package com.codpaa.update;
 import android.content.Context;
 
 import com.codpaa.listener.ResponseEncuesta;
-import com.codpaa.listener.ResponseExhibiciones;
-import com.codpaa.listener.ResponseMarcas;
 import com.codpaa.response.HttpResponseInfo;
 import com.codpaa.util.Utilities;
 import com.loopj.android.http.AsyncHttpClient;
@@ -36,6 +34,7 @@ public class UpdateInformation{
         RequestParams rp = new RequestParams();
         rp.put("solicitud" , "info");
         rp.put("id", idPromotor);
+
 
         client.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, responseInfo);
 

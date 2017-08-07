@@ -83,6 +83,15 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
 
 
+        if (producto.getIdEstatusCatalogacion() == 2 || producto.getIdEstatusCatalogacion() == 4){
+
+
+            holder.radioGroup.setVisibility(View.INVISIBLE);
+
+        }
+
+
+
         if (producto.getEstatus() > 0){
 
             String fecha = producto.getFecha();

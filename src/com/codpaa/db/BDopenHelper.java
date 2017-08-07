@@ -361,33 +361,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
 
-        if(newVersion == 31 && oldVersion == 28){
-
-
-            db.execSQL("alter table " + ProductoCatalogadoTienda.TABLE_NAME + " " +
-                    "add column "+ ProductoCatalogadoTienda.FOLIO + " int");
-
-
-        }
-
-
-        if(newVersion == 31 ){
-
-            db.execSQL("drop table if exists producto");
-            db.execSQL(productos);
-
-
-            db.execSQL("drop table if exists visitaTienda");
-            db.execSQL(ruta);
-
-
-            db.execSQL(productoCatalogadoTienda);
-            db.execSQL(procesoCatalogacionObjeciones);
-
-
-
-        }
-
 
         if (newVersion == 33){
 

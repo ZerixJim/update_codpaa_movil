@@ -21,6 +21,8 @@ public class Producto {
     private int estatus;
     private int cantidad;
 
+    private int idEstatusCatalogacion;
+
     private String estatusProceso;
 
     private boolean checked = false;
@@ -37,6 +39,14 @@ public class Producto {
         public static final int ACEPTO_CATALOGACION = 4;
         public static final int PROCESO_CONCRESION = 5;
 
+    }
+
+    public int getIdEstatusCatalogacion() {
+        return idEstatusCatalogacion;
+    }
+
+    public void setIdEstatusCatalogacion(int idEstatusCatalogacion) {
+        this.idEstatusCatalogacion = idEstatusCatalogacion;
     }
 
     public String getEstatusProceso() {

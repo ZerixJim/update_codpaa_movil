@@ -1,7 +1,10 @@
 package com.codpaa.service;
 
 import com.codpaa.R;
+import com.codpaa.model.AvanceGestionModel;
 import com.codpaa.model.JsonPhotoUpload;
+import com.codpaa.model.JsonUpdateFirma;
+import com.codpaa.response.ResponseUpdateFirmaProducto;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.util.Configuracion;
 import com.codpaa.util.Utilities;
@@ -11,8 +14,10 @@ import com.loopj.android.http.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -424,6 +429,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 					enviarFotos();
 
 
+					createFolioAtServer();
+
 					
 					
 					Looper.loop();
@@ -441,6 +448,69 @@ public class GeoLocalizar extends Service implements LocationListener{
 		hiloP.start();
 		
 	
+	}
+
+
+	public void createFolioAtServer(){
+		SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+
+
+		Cursor cursor = db.rawQuery("select * from producto_catalogado_tienda where firma " +
+				" is not null and estatus_registro <= 2 and estatus_producto = 4 " +
+				" and folio is null", null);
+
+		if (cursor.getCount() > 0){
+
+			List<AvanceGestionModel> lista = new ArrayList<>();
+
+			for (cursor.moveToFirst(); !cursor.isAfterLast() ; cursor.moveToNext()){
+				final AvanceGestionModel model = new AvanceGestionModel();
+
+
+				model.setIdProducto(cursor.getInt(cursor.getColumnIndex("idProducto")));
+				model.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
+				model.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
+				model.setFirma(cursor.getString(cursor.getColumnIndex("firma")));
+				model.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad")));
+
+
+
+				lista.add(model);
+
+			}
+
+
+			cursor.moveToFirst();
+
+			JsonUpdateFirma json = new JsonUpdateFirma(
+					cursor.getInt(cursor.getColumnIndex("idPromotor")), lista);
+
+
+			Gson gson = new Gson();
+
+			AsyncHttpClient client = new AsyncHttpClient();
+
+			RequestParams rp = new RequestParams();
+
+			rp.put("solicitud", "update_firma_producto");
+			rp.put("json", gson.toJson(json));
+
+			//Log.d("Json", gson.toJson(json));
+
+
+
+
+
+			//TODO-gus: implementar servidor de produccion
+			client.post(Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
+
+
+		}else{
+			Log.d("service", "no hay folios pendientes");
+		}
+
+
+		cursor.close();
 	}
 
 
