@@ -1,9 +1,7 @@
 # Android Studio
 *.iml
 .idea/
-.idea/tasks.xml
-.idea/datasources.xml
-.idea/dataSources.ids
+
 build/
 .gradle/
 

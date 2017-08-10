@@ -384,8 +384,7 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
 
 
-            //TODO-gus: implementar servidor de produccion
-            client.post(this, Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
+            client.post(this, Utilities.WEB_SERVICE_CODPAA + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
 
 
         }else{

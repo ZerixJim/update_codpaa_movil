@@ -499,10 +499,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 
 
-
-
-			//TODO-gus: implementar servidor de produccion
-			client.post(Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
+			client.post(Utilities.WEB_SERVICE_CODPAA + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
 
 
 		}else{
