@@ -465,7 +465,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
 
         String sql = "select  p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca, pc.estatus_producto, pc.fecha_captura," +
-                " p.precio_compra, p.precio_sugerido, fecha_precio, idEstatus " +
+                " p.precio_compra, p.precio_sugerido, fecha_precio  " +
                      " from productotienda as pt " +
                      " left  join producto as p on pt.idProducto=p.idProducto "+
                      " left join producto_catalogado_tienda as pc on pc.idProducto=p.idProducto " +
@@ -490,7 +490,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 spP.setPrecioCompra(curProByTienda.getFloat(curProByTienda.getColumnIndex("precio_compra")));
                 spP.setPrecioVenta(curProByTienda.getFloat(curProByTienda.getColumnIndex("precio_sugerido")));
                 spP.setFechaPrecio(curProByTienda.getString(curProByTienda.getColumnIndex("fecha_precio")));
-                spP.setIdEstatusCatalogacion(curProByTienda.getInt(curProByTienda.getColumnIndex("idEstatus")));
+
 
 
                 arrayP.add(spP);
