@@ -90,6 +90,94 @@ public class AndroidApps {
     }
 
 
+
+    public void sentSingleApp(String appName){
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("w", Locale.getDefault());
+        final SimpleDateFormat fFecha = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        final String semana = dFecha.format(c.getTime());
+        final String fecha = fFecha.format(c.getTime());
+
+
+
+        final Configuracion conf = new Configuracion(context);
+
+        //Log.d(LOG, "Entro " + conf.getInstallAppsWeek());
+
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        Gson gson = new Gson();
+
+        JsonInstallApps json = new JsonInstallApps();
+
+        final Application app = new Application();
+        app.setIdGoogle(appName);
+
+        List<Application> list = new ArrayList<>();
+
+        list.add(app);
+
+
+        json.setIdPromotor(idUsuario);
+        json.setFecha(fecha);
+        json.setImei(getIMEI());
+        json.setGoogleApplication(list);
+        RequestParams rp = new RequestParams();
+
+        rp.put("json", gson.toJson(json));
+
+        client.post(context,Utilities.WEB_SERVICE_CODPAA + "sent_install_apps.php", rp, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                //Log.d("Apps", response.toString());
+
+
+                try {
+                    if (response.getBoolean("success")){
+                        Log.d("Apps", "Recibidas");
+
+                        conf.setInstallApssWeek(Integer.valueOf(semana));
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+
+                //Log.e("Apps", errorResponse.toString());
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                //Log.e("Apps", errorResponse.toString());
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                //Log.d("Apps", responseString);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+
+                //Log.e("Apps", "Error al enviar " + responseString + " " + throwable + " " + statusCode);
+
+            }
+        });
+
+
+
+    }
+
+
     public void sentInstallAppsByWeek() {
 
         Calendar c = Calendar.getInstance();
@@ -103,7 +191,7 @@ public class AndroidApps {
 
         final Configuracion conf = new Configuracion(context);
 
-        Log.d(LOG, "Entro " + conf.getInstallAppsWeek());
+        //Log.d(LOG, "Entro " + conf.getInstallAppsWeek());
 
         if (conf.getInstallAppsWeek() == -1 || conf.getInstallAppsWeek() != Integer.valueOf(semana)){
             AsyncHttpClient client = new AsyncHttpClient();
@@ -189,7 +277,7 @@ public class AndroidApps {
 
         Log.d(LOG, "IMEI " + getIMEI());
 
-        if (conf.getInstallApps() == null || !conf.getInstallApps().equals(fecha)){
+        if (conf.getInstallApps() == null /*|| !conf.getInstallApps().equals(fecha)*/){
 
             if (getGpsInstallApps().size() > 0){
 
