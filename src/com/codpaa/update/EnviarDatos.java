@@ -335,16 +335,10 @@ public class EnviarDatos {
 
 				//Log.d("registros" ,json.toJson(jsonVisitas));
 
+                client.post(Utilities.WEB_SERVICE_CODPAA+"send_visitas_json.php",rp,
 
-				if (verificarConexion()){
+                        new ResponseVisitasJson(context));
 
-
-					client.post(Utilities.WEB_SERVICE_CODPAA+"send_visitas_json.php",rp,
-
-							new ResponseVisitasJson(context));
-
-
-				}
 
 				//Log.d("url",Utilities.WEB_SERVICE_CODPAA_TEST + "send_visitas_json.php");
 
@@ -415,15 +409,10 @@ public class EnviarDatos {
 
 				//Log.d("registros" ,json.toJson(jsonVisitas));
 
+                client.post(Utilities.WEB_SERVICE_CODPAA+"send_visitas_json.php",rp,
 
-				if (verificarConexion()){
+                        new ResponseVisitasJson(context));
 
-					client.post(Utilities.WEB_SERVICE_CODPAA+"send_visitas_json.php",rp,
-
-							new ResponseVisitasJson(context));
-
-
-				}
 
 				//Log.d("url",Utilities.WEB_SERVICE_CODPAA_TEST + "send_visitas_json.php");
 

@@ -84,8 +84,6 @@ public class ResponseVisitasJson extends JsonHttpResponseHandler{
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
 
-
-
     }
 
     @Override
