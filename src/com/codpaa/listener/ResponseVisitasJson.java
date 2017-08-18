@@ -94,6 +94,8 @@ public class ResponseVisitasJson extends JsonHttpResponseHandler{
     @Override
     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
         //Log.d("error", responseString);
+
+        Toast.makeText(context,"Error de conexion",Toast.LENGTH_SHORT).show();
     }
 
     @Override

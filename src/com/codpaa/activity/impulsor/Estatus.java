@@ -27,19 +27,16 @@ import com.codpaa.R;
 import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.adapter.generic.ProductoRecyclerAdapter;
 import com.codpaa.db.BDopenHelper;
-import com.codpaa.model.JsonProductoImpulsor;
+
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.generic.Producto;
 import com.codpaa.provider.DbEstructure;
 
 
 import com.codpaa.provider.DbEstructure.ProductoCatalogadoTienda;
-import com.codpaa.response.ProductoCatalogoResponse;
+
+import com.codpaa.update.EnviarDatos;
 import com.codpaa.util.QuickstartPreferences;
-import com.codpaa.util.Utilities;
-import com.google.gson.Gson;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.RequestParams;
 
 
 import java.text.SimpleDateFormat;
@@ -293,100 +290,14 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
         imm.hideSoftInputFromWindow(mRecyclerView.getWindowToken(), 0);
 
 
-
-
-        if (getProductListSendToServer().size() > 0){
-
-
-            AsyncHttpClient client = new AsyncHttpClient();
-
-            RequestParams rp = new RequestParams();
-
-
-            Gson gson = new Gson();
-
-
-            JsonProductoImpulsor json = new JsonProductoImpulsor(getProductListSendToServer(), idPromotor);
-
-            rp.put("solicitud", "sendCatalogo");
-            rp.put("json", gson.toJson(json));
-
-            Log.d("json", gson.toJson(json));
-
-
-
-            client.post(Utilities.WEB_SERVICE_CODPAA + "send_impulsor.php", rp , new ProductoCatalogoResponse(this));
-
-
-            //mRecyclerView.getAdapter().notifyDataSetChanged();
-        }
-
-
+        EnviarDatos enviarDatos = new EnviarDatos(this);
+        enviarDatos.sentEstatusToServer(idPromotor);
 
 
 
 
     }
 
-    private List<Producto> getProductListSendToServer(){
-        List<Producto> list = new ArrayList<>();
-
-        SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("select * from producto_catalogado_tienda where estatus_registro = 1", null);
-
-
-        if(cursor.getCount() > 0){
-            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-
-
-                final Producto producto = new Producto();
-                producto.setIdProducto(cursor.getInt(cursor.getColumnIndex("idProducto")));
-                producto.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
-                producto.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
-                producto.setEstatus(cursor.getInt(cursor.getColumnIndex("estatus_producto")));
-                producto.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad")));
-
-                if(cursor.getInt(cursor.getColumnIndex("estatus_producto")) == Producto.EstatusTypes.PROCESO_CATALOGACION){
-
-
-                    String sql = "select * from "
-                            + DbEstructure.ProcesoCatalogacionObjeciones.TABLE_NAME +" " +
-                            " where idProducto="+ cursor.getInt(cursor.getColumnIndex("idProducto")) + " and idTienda=" +
-                            cursor.getInt(cursor.getColumnIndex("idTienda")) + " and fecha_captura='" +
-                            cursor.getString(cursor.getColumnIndex("fecha_captura")) + "'";
-
-                    Cursor cursorObjeciones = db.rawQuery( sql, null);
-
-                    Log.d("sql", sql );
-
-                    if (cursorObjeciones.getCount() > 0){
-
-                        List<String> lista = new ArrayList<>();
-                        for (cursorObjeciones.moveToFirst() ; !cursorObjeciones.isAfterLast() ; cursorObjeciones.moveToNext()){
-
-                            lista.add(cursorObjeciones.getString(cursorObjeciones.getColumnIndex("descripcion")));
-
-                        }
-
-                        producto.setObjeciones(lista);
-
-                    }
-
-                    cursorObjeciones.close();
-
-                }
-
-
-                list.add(producto);
-            }
-        }
-
-
-        cursor.close();
-        db.close();
-        return list;
-    }
 
 
 

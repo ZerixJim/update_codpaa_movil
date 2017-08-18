@@ -29,14 +29,17 @@ import android.widget.Toast;
 import com.codpaa.listener.ResponseVisitasJson;
 import com.codpaa.model.JsonEncuestaVeiw;
 import com.codpaa.model.JsonMaterialModel;
+import com.codpaa.model.JsonProductoImpulsor;
 import com.codpaa.model.JsonProductosView;
 import com.codpaa.model.JsonVisitas;
 import com.codpaa.model.MaterialModel;
 import com.codpaa.model.Respuesta;
 import com.codpaa.model.VisitasModel;
+import com.codpaa.model.generic.Producto;
 import com.codpaa.provider.DbEstructure;
 import com.codpaa.response.EncuestaResponse;
 import com.codpaa.response.MaterialesJsonResponse;
+import com.codpaa.response.ProductoCatalogoResponse;
 import com.codpaa.util.Utilities;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -365,7 +368,7 @@ public class EnviarDatos {
 
 			Cursor curVisitas = DB.datosVisitas();
 
-			Log.d("entro", "enviar visitas");
+			//Log.d("entro", "enviar visitas");
 		
 			
 			if(curVisitas.getCount() > 0) {
@@ -1135,6 +1138,101 @@ public class EnviarDatos {
 	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
 	    return netInfo != null && netInfo.isConnected();
+	}
+
+
+	public void sentEstatusToServer(int idPromotor){
+
+
+
+		if (getProductListSendToServer().size() > 0){
+
+
+			AsyncHttpClient client = new AsyncHttpClient();
+
+			RequestParams rp = new RequestParams();
+
+
+			Gson gson = new Gson();
+
+
+			JsonProductoImpulsor json = new JsonProductoImpulsor(getProductListSendToServer(), idPromotor);
+
+			rp.put("solicitud", "sendCatalogo");
+			rp.put("json", gson.toJson(json));
+
+			Log.d("json", gson.toJson(json));
+
+
+			client.post(Utilities.WEB_SERVICE_CODPAA + "send_impulsor.php", rp , new ProductoCatalogoResponse(context));
+
+
+			//mRecyclerView.getAdapter().notifyDataSetChanged();
+		}
+
+
+
+	}
+
+
+	private List<Producto> getProductListSendToServer(){
+		List<Producto> list = new ArrayList<>();
+
+		SQLiteDatabase db = new BDopenHelper(context).getReadableDatabase();
+
+		Cursor cursor = db.rawQuery("select * from producto_catalogado_tienda where estatus_registro = 1", null);
+
+
+		if(cursor.getCount() > 0){
+			for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+
+
+				final Producto producto = new Producto();
+				producto.setIdProducto(cursor.getInt(cursor.getColumnIndex("idProducto")));
+				producto.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
+				producto.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
+				producto.setEstatus(cursor.getInt(cursor.getColumnIndex("estatus_producto")));
+				producto.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad")));
+
+				if(cursor.getInt(cursor.getColumnIndex("estatus_producto")) == Producto.EstatusTypes.PROCESO_CATALOGACION){
+
+
+					String sql = "select * from "
+							+ DbEstructure.ProcesoCatalogacionObjeciones.TABLE_NAME +" " +
+							" where idProducto="+ cursor.getInt(cursor.getColumnIndex("idProducto")) + " and idTienda=" +
+							cursor.getInt(cursor.getColumnIndex("idTienda")) + " and fecha_captura='" +
+							cursor.getString(cursor.getColumnIndex("fecha_captura")) + "'";
+
+					Cursor cursorObjeciones = db.rawQuery( sql, null);
+
+					Log.d("sql", sql );
+
+					if (cursorObjeciones.getCount() > 0){
+
+						List<String> lista = new ArrayList<>();
+						for (cursorObjeciones.moveToFirst() ; !cursorObjeciones.isAfterLast() ; cursorObjeciones.moveToNext()){
+
+							lista.add(cursorObjeciones.getString(cursorObjeciones.getColumnIndex("descripcion")));
+
+						}
+
+						producto.setObjeciones(lista);
+
+					}
+
+					cursorObjeciones.close();
+
+				}
+
+
+				list.add(producto);
+			}
+		}
+
+
+		cursor.close();
+		db.close();
+		return list;
 	}
 	
 

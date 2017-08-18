@@ -3,7 +3,12 @@ package com.codpaa.service;
 import com.codpaa.R;
 import com.codpaa.model.AvanceGestionModel;
 import com.codpaa.model.JsonPhotoUpload;
+import com.codpaa.model.JsonProductoImpulsor;
 import com.codpaa.model.JsonUpdateFirma;
+import com.codpaa.model.generic.Producto;
+import com.codpaa.provider.DbEstructure;
+import com.codpaa.response.ProductoCatalogoResponse;
+import com.codpaa.response.ProductoEstatusResponse;
 import com.codpaa.response.ResponseUpdateFirmaProducto;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.util.Configuracion;
@@ -431,6 +436,8 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 					createFolioAtServer();
 
+					enviarEstatus();
+
 					
 					
 					Looper.loop();
@@ -442,12 +449,129 @@ public class GeoLocalizar extends Service implements LocationListener{
 				
 			}
 
-			
+
+
+
 		};
 		
 		hiloP.start();
 		
 	
+	}
+
+	private void enviarEstatus() {
+
+
+
+        if (getProductListSendToServer().size() > 0){
+
+
+            AsyncHttpClient client = new AsyncHttpClient();
+
+            RequestParams rp = new RequestParams();
+
+
+            Gson gson = new Gson();
+
+
+            JsonProductoImpulsor json = new JsonProductoImpulsor(getProductListSendToServer(), getUser());
+
+            rp.put("solicitud", "sendCatalogo");
+            rp.put("json", gson.toJson(json));
+
+
+
+            client.post(Utilities.WEB_SERVICE_CODPAA + "send_impulsor.php", rp , new ProductoEstatusResponse(con));
+
+        }
+
+
+	}
+
+
+    private List<Producto> getProductListSendToServer(){
+        List<Producto> list = new ArrayList<>();
+
+        SQLiteDatabase db = new BDopenHelper(con).getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select * from producto_catalogado_tienda where estatus_registro = 1", null);
+
+
+        if(cursor.getCount() > 0){
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+
+
+                final Producto producto = new Producto();
+                producto.setIdProducto(cursor.getInt(cursor.getColumnIndex("idProducto")));
+                producto.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
+                producto.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
+                producto.setEstatus(cursor.getInt(cursor.getColumnIndex("estatus_producto")));
+                producto.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad")));
+
+                if(cursor.getInt(cursor.getColumnIndex("estatus_producto")) == Producto.EstatusTypes.PROCESO_CATALOGACION){
+
+
+                    String sql = "select * from "
+                            + DbEstructure.ProcesoCatalogacionObjeciones.TABLE_NAME +" " +
+                            " where idProducto="+ cursor.getInt(cursor.getColumnIndex("idProducto")) + " and idTienda=" +
+                            cursor.getInt(cursor.getColumnIndex("idTienda")) + " and fecha_captura='" +
+                            cursor.getString(cursor.getColumnIndex("fecha_captura")) + "'";
+
+                    Cursor cursorObjeciones = db.rawQuery( sql, null);
+
+                    Log.d("sql", sql );
+
+                    if (cursorObjeciones.getCount() > 0){
+
+                        List<String> lista = new ArrayList<>();
+                        for (cursorObjeciones.moveToFirst() ; !cursorObjeciones.isAfterLast() ; cursorObjeciones.moveToNext()){
+
+                            lista.add(cursorObjeciones.getString(cursorObjeciones.getColumnIndex("descripcion")));
+
+                        }
+
+                        producto.setObjeciones(lista);
+
+                    }
+
+                    cursorObjeciones.close();
+
+                }
+
+
+                list.add(producto);
+            }
+        }
+
+
+        cursor.close();
+        db.close();
+        return list;
+    }
+
+	private int getUser(){
+
+		SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+
+        int id = 0;
+        Cursor c = db.rawQuery("select idCelular from usuarios ", null);
+
+        if (c.getCount() > 0){
+
+            c.moveToFirst();
+
+            id = c.getInt(c.getColumnIndex("idCelular"));
+
+            c.close();
+
+
+            return id;
+        }
+
+        c.close();
+
+		return id;
+
 	}
 
 
