@@ -383,8 +383,8 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
             Toast.makeText(this, "Generando Folio..", Toast.LENGTH_SHORT).show();
 
 
-
-            client.post(this, Utilities.WEB_SERVICE_CODPAA + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
+            //todo change to production
+            client.post(this, Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
 
 
         }else{

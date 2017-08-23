@@ -226,7 +226,14 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 contentValues.put(ProductoCatalogadoTienda.ESTATUS_PRODUCTO, producto.getEstatus());
                 contentValues.put(ProductoCatalogadoTienda.CANTIDAD, producto.getCantidad());
 
-                db.insert(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME, null, contentValues);
+
+                db.replace(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME,null
+                ,contentValues);
+
+
+                //db.insert(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME, null, contentValues);
+
+
 
 
                 if (producto.getEstatus() == Producto.EstatusTypes.PROCESO_CATALOGACION){

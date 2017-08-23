@@ -68,6 +68,11 @@ public class MyGcmListenerService extends FirebaseMessagingService{
 
                  setBajaPromotor(data);
 
+            } else if (tipo.equals("cambio_estatus_producto")){
+
+
+
+
             }
 
 
@@ -175,6 +180,7 @@ public class MyGcmListenerService extends FirebaseMessagingService{
 
 
     }
+
 
 
 
