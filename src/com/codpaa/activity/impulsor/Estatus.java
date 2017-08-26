@@ -230,6 +230,17 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 db.replace(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME,null
                 ,contentValues);
 
+                ContentValues cVE = new ContentValues();
+
+                cVE.put(DbEstructure.ProductoByTienda.ID_PRODUCTO, producto.getIdProducto());
+                cVE.put(DbEstructure.ProductoByTienda.ID_TIENDA, idTienda);
+                cVE.put(DbEstructure.ProductoByTienda.ESTATUS, producto.getEstatus());
+
+
+                db.replace(DbEstructure.ProductoByTienda.TABLE_NAME,null, cVE);
+
+
+
 
                 //db.insert(DbEstructure.ProductoCatalogadoTienda.TABLE_NAME, null, contentValues);
 
@@ -382,13 +393,13 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
 
-        String sql = "select  p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca, pc.estatus_producto, pc.fecha_captura," +
-                " p.precio_compra, p.precio_sugerido, fecha_precio  " +
-                     " from productotienda as pt " +
-                     " left  join producto as p on pt.idProducto=p.idProducto "+
-                     " left join producto_catalogado_tienda as pc on pc.idProducto=p.idProducto " +
-                     " where p.idMarca=" + idMarca +  " and pt.idTienda=" + idTienda + " " +
-                     " group by p.idProducto order by p.nombre asc";
+        String sql = "select  p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca," +
+                " pt.estatus, " +
+                " p.precio_compra, p.precio_sugerido, p.fecha_precio  " +
+                " from productotienda as pt " +
+                " left  join producto as p on pt.idProducto=p.idProducto " +
+                " where p.idMarca=" + idMarca + " and pt.idTienda=" + idTienda + " " +
+                " order by p.nombre asc ";
 
         Cursor curProByTienda = db.rawQuery(sql, null);
 
@@ -402,8 +413,8 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 spP.setPresentacion(curProByTienda.getString(2));
                 spP.setCodeBarras(curProByTienda.getString(3));
                 spP.setIdMarca(curProByTienda.getInt(4));
-                spP.setEstatus(curProByTienda.getInt(curProByTienda.getColumnIndex("estatus_producto")));
-                spP.setFecha(curProByTienda.getString(curProByTienda.getColumnIndex("fecha_captura")));
+                spP.setEstatus(curProByTienda.getInt(curProByTienda.getColumnIndex("estatus")));
+                //spP.setFecha(curProByTienda.getString(curProByTienda.getColumnIndex("fecha_captura")));
 
                 spP.setPrecioCompra(curProByTienda.getFloat(curProByTienda.getColumnIndex("precio_compra")));
                 spP.setPrecioVenta(curProByTienda.getFloat(curProByTienda.getColumnIndex("precio_sugerido")));

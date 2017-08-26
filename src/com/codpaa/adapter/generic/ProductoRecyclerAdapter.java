@@ -91,20 +91,23 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
         }
 
 
-
         if (producto.getEstatus() > 0){
 
-            String fecha = producto.getFecha();
 
             if (producto.getEstatus() == Producto.EstatusTypes.DESCATALOGADO){
-                holder.estatus.setText("Descatalogado " + fecha);
+                holder.estatus.setText("Descatalogado ");
             }else if(producto.getEstatus() == Producto.EstatusTypes.CATALOGADO){
-                holder.estatus.setText("Catalogado " + fecha);
+
+                holder.radioGroup.setVisibility(View.INVISIBLE);
+
+                holder.estatus.setText("Catalogado ");
             }else if(producto.getEstatus() == Producto.EstatusTypes.PROCESO_CATALOGACION){
-                holder.estatus.setText("Proceso Catalogar " + fecha);
+                holder.estatus.setText("Proceso Catalogar");
             }else if(producto.getEstatus() == Producto.EstatusTypes.ACEPTO_CATALOGACION){
 
-                holder.estatus.setText("Acepto Catalogar " + fecha);
+                holder.radioGroup.setVisibility(View.INVISIBLE);
+
+                holder.estatus.setText("Acepto Catalogar ");
 
             }
         }

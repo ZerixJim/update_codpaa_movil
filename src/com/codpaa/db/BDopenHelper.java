@@ -257,7 +257,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
         productoByTienda = "create table if not exists " +
                 ProductoByTienda.TABLE_NAME + "(" +
                 ProductoByTienda.ID_PRODUCTO + " int, " +
-                ProductoByTienda.ID_TIENDA + " int)";
+                ProductoByTienda.ID_TIENDA + " int," +
+                ProductoByTienda.ESTATUS + " int," +
+                "primary key(" + ProductoByTienda.ID_PRODUCTO  + "," +
+                ProductoByTienda.ID_TIENDA+"))";
 
         tiendaProductoCatalogo = "create table if not exists " +
                 TiendaProductoCatalogo.TABLE_NAME + "(" +
@@ -432,9 +435,11 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL(ruta);
 
 
+            db.execSQL("drop table if exists " + ProductoByTienda.TABLE_NAME);
+            db.execSQL(productoByTienda);
+
 
         }
-
 
 
 

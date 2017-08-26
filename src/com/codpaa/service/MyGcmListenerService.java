@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2015 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,16 +38,12 @@ import com.codpaa.util.Utilities;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
 import java.util.Map;
 
 public class MyGcmListenerService extends FirebaseMessagingService{
 
-    private static final String TAG = "MyGcmListenerService";
+    //private static final String TAG = "MyGcmListenerService";
 
 
     @Override
@@ -68,12 +64,12 @@ public class MyGcmListenerService extends FirebaseMessagingService{
 
                  setBajaPromotor(data);
 
-            } else if (tipo.equals("cambio_estatus_producto")){
+            } /*else if (tipo.equals("cambio_estatus_producto")){
 
 
 
 
-            }
+            }*/
 
 
         }catch (Exception e){

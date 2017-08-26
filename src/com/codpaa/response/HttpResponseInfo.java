@@ -350,6 +350,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
             ContentValues contentValues = new ContentValues();
             contentValues.put(ProductoByTienda.ID_PRODUCTO, array.getJSONObject(i).getInt("idProducto"));
             contentValues.put(ProductoByTienda.ID_TIENDA, array.getJSONObject(i).getInt("idTienda"));
+            contentValues.put(ProductoByTienda.ESTATUS, array.getJSONObject(i).getInt("estatus"));
 
             db.insert(ProductoByTienda.TABLE_NAME, null, contentValues);
         }

@@ -132,6 +132,7 @@ public class DbEstructure {
         public static final String TABLE_NAME = "productoTienda";
         public static final String ID_PRODUCTO = "idProducto";
         public static final String ID_TIENDA = "idTienda";
+        public static final String ESTATUS = "estatus";
 
     }
 
