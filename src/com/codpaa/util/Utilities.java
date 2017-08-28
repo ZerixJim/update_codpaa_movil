@@ -3,6 +3,12 @@ package com.codpaa.util;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.format.DateUtils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class Utilities {
     static final String SERVER_IP = "162.144.139.133";
@@ -18,6 +24,9 @@ public class Utilities {
 
     public static final String TABLE_MENSAJE = "mensaje";
 
+    public static final String DATE_FORMAT_USA = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT_MX = "dd-MM-yyyy HH:mm:ss";
+
 
 
     public static boolean verificarConexion(Context context) {
@@ -26,6 +35,28 @@ public class Utilities {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
         return netInfo != null && netInfo.isConnected();
+    }
+
+    public static String getTimeAgo(String formato, String myTime){
+        String response = "";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(formato, Locale.getDefault());
+
+        try {
+            Date date = dateFormat.parse(myTime);
+
+            long dateMilli = date.getTime();
+            long currentTime = System.currentTimeMillis();
+
+            response = DateUtils.getRelativeTimeSpanString(dateMilli,
+                    currentTime, DateUtils.SECOND_IN_MILLIS).toString();
+
+            //Log.d("fecha", " " + DateUtils.getRelativeTimeSpanString(dateMilli, currentTime, DateUtils.MINUTE_IN_MILLIS));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return response;
     }
 
 

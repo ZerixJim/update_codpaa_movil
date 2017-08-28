@@ -133,6 +133,7 @@ public class DbEstructure {
         public static final String ID_PRODUCTO = "idProducto";
         public static final String ID_TIENDA = "idTienda";
         public static final String ESTATUS = "estatus";
+        public static final String FECHA_UPDATE = "fecha_update";
 
     }
 

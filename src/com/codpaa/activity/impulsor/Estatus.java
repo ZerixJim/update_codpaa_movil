@@ -37,6 +37,7 @@ import com.codpaa.provider.DbEstructure.ProductoCatalogadoTienda;
 
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.util.QuickstartPreferences;
+import com.codpaa.util.Utilities;
 
 
 import java.text.SimpleDateFormat;
@@ -210,7 +211,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
             Calendar calendar = Calendar.getInstance();
 
-            SimpleDateFormat fFecha = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat fFecha = new SimpleDateFormat(Utilities.DATE_FORMAT_USA, Locale.getDefault());
 
             String fecha = fFecha.format(calendar.getTime());
 
@@ -235,6 +236,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 cVE.put(DbEstructure.ProductoByTienda.ID_PRODUCTO, producto.getIdProducto());
                 cVE.put(DbEstructure.ProductoByTienda.ID_TIENDA, idTienda);
                 cVE.put(DbEstructure.ProductoByTienda.ESTATUS, producto.getEstatus());
+                cVE.put(DbEstructure.ProductoByTienda.FECHA_UPDATE, fecha);
 
 
                 db.replace(DbEstructure.ProductoByTienda.TABLE_NAME,null, cVE);
@@ -395,7 +397,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
         String sql = "select  p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca," +
                 " pt.estatus, " +
-                " p.precio_compra, p.precio_sugerido, p.fecha_precio  " +
+                " p.precio_compra, p.precio_sugerido, p.fecha_precio, pt.fecha_update  " +
                 " from productotienda as pt " +
                 " left  join producto as p on pt.idProducto=p.idProducto " +
                 " where p.idMarca=" + idMarca + " and pt.idTienda=" + idTienda + " " +
@@ -414,7 +416,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 spP.setCodeBarras(curProByTienda.getString(3));
                 spP.setIdMarca(curProByTienda.getInt(4));
                 spP.setEstatus(curProByTienda.getInt(curProByTienda.getColumnIndex("estatus")));
-                //spP.setFecha(curProByTienda.getString(curProByTienda.getColumnIndex("fecha_captura")));
+                spP.setFecha(curProByTienda.getString(curProByTienda.getColumnIndex("fecha_update")));
 
                 spP.setPrecioCompra(curProByTienda.getFloat(curProByTienda.getColumnIndex("precio_compra")));
                 spP.setPrecioVenta(curProByTienda.getFloat(curProByTienda.getColumnIndex("precio_sugerido")));

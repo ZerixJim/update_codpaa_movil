@@ -259,6 +259,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 ProductoByTienda.ID_PRODUCTO + " int, " +
                 ProductoByTienda.ID_TIENDA + " int," +
                 ProductoByTienda.ESTATUS + " int," +
+                ProductoByTienda.FECHA_UPDATE + " varchar(25)," +
                 "primary key(" + ProductoByTienda.ID_PRODUCTO  + "," +
                 ProductoByTienda.ID_TIENDA+"))";
 
