@@ -403,6 +403,8 @@ public class EnviarDatos {
 				JsonVisitas jsonVisitas = new JsonVisitas();
 				jsonVisitas.setVisitas(visitas);
 
+				Toast.makeText(context, "Enviando " + visitas.size() + " visitas ", Toast.LENGTH_SHORT).show();
+
 				Gson json = new Gson();
 
 				rp.put("json", json.toJson(jsonVisitas));
@@ -412,7 +414,7 @@ public class EnviarDatos {
 
 				//Log.d("registros" ,json.toJson(jsonVisitas));
 
-                client.post(Utilities.WEB_SERVICE_CODPAA+"send_visitas_json.php",rp,
+                client.post(context, Utilities.WEB_SERVICE_CODPAA+"send_visitas_json.php",rp,
 
                         new ResponseVisitasJson(context));
 
@@ -425,7 +427,7 @@ public class EnviarDatos {
 				
 				
 			}else {
-				Toast.makeText(context, "No hay Registros pendientes", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "No hay Visitas sin enviar", Toast.LENGTH_SHORT).show();
 			}
 			curVisitas.close();
 			DB.close();

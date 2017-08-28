@@ -6,7 +6,6 @@ package com.codpaa.listener;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.codpaa.db.BDopenHelper;
@@ -53,15 +52,13 @@ public class ResponseVisitasJson extends JsonHttpResponseHandler{
 
 
 
-                    Toast.makeText(context,"Visita Recibida",Toast.LENGTH_SHORT).show();
-
-                    /*if (lenght == 1){
+                    if (lenght == 1){
 
                         Toast.makeText(context,"Visita Recibida",Toast.LENGTH_SHORT).show();
 
                     }else if (lenght > 1){
                         Toast.makeText(context,"Visitas Recibidas",Toast.LENGTH_SHORT).show();
-                    }*/
+                    }
 
 
                 }
@@ -82,8 +79,10 @@ public class ResponseVisitasJson extends JsonHttpResponseHandler{
 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-        super.onFailure(statusCode, headers, throwable, errorResponse);
 
+        Toast.makeText(context,"No hay conexion",Toast.LENGTH_SHORT).show();
+
+        super.onFailure(statusCode, headers, throwable, errorResponse);
     }
 
     @Override
@@ -95,7 +94,7 @@ public class ResponseVisitasJson extends JsonHttpResponseHandler{
     public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
         //Log.d("error", responseString);
 
-        Toast.makeText(context,"Error de conexion",Toast.LENGTH_SHORT).show();
+        Toast.makeText(context,"No hay conexion",Toast.LENGTH_SHORT).show();
     }
 
     @Override

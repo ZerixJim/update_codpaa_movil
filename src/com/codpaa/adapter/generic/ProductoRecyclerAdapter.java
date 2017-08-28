@@ -1,10 +1,12 @@
 package com.codpaa.adapter.generic;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -101,6 +103,11 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
                 holder.radioGroup.setVisibility(View.INVISIBLE);
 
                 holder.estatus.setText("Catalogado ");
+
+                holder.cardView.setBackgroundColor(Color.parseColor("#adffc9"));
+
+
+
             }else if(producto.getEstatus() == Producto.EstatusTypes.PROCESO_CATALOGACION){
                 holder.estatus.setText("Proceso Catalogar");
             }else if(producto.getEstatus() == Producto.EstatusTypes.ACEPTO_CATALOGACION){
@@ -108,6 +115,10 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
                 holder.radioGroup.setVisibility(View.INVISIBLE);
 
                 holder.estatus.setText("Acepto Catalogar ");
+
+                holder.cardView.setBackgroundColor(Color.parseColor("#efffad"));
+
+
 
             }
         }
@@ -333,6 +344,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
         TextView nombre, presentacion, barCode, estatus, precioCompra, precioVenta, utilidad;
         TextView fechaPrecio, detalle;
+        CardView cardView;
         ImageView imageView;
         RadioGroup radioGroup;
         EditText cantidad,inventario;
@@ -368,6 +380,8 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
             fechaPrecio = (TextView) itemView.findViewById(R.id.fecha_precio);
             detalle = (TextView) itemView.findViewById(R.id.detalle);
+
+            cardView = (CardView) itemView.findViewById(R.id.card);
 
 
         }
