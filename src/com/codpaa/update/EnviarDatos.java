@@ -414,7 +414,8 @@ public class EnviarDatos {
 
 				//Log.d("registros" ,json.toJson(jsonVisitas));
 
-                client.post(context, Utilities.WEB_SERVICE_CODPAA+"send_visitas_json.php",rp,
+
+                client.post(context, Utilities.WEB_SERVICE_CODPAA +"send_visitas_json.php",rp,
 
                         new ResponseVisitasJson(context));
 
@@ -422,9 +423,7 @@ public class EnviarDatos {
 				//Log.d("url",Utilities.WEB_SERVICE_CODPAA_TEST + "send_visitas_json.php");
 
 				
-				
 
-				
 				
 			}else {
 				Toast.makeText(context, "No hay Visitas sin enviar", Toast.LENGTH_SHORT).show();

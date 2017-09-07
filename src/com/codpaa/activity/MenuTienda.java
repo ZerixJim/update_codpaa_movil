@@ -1921,7 +1921,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         String sql = "select * from producto_catalogado_tienda as pct " +
                 " where idTienda="+ idTienda +" and " +
-                " firma is null and estatus_producto = 4 and fecha_captura='" + fecha + "'";
+                " firma is null and estatus_producto = 4 and date(fecha_captura)='" + fecha + "'";
+
+        Log.d("sql", sql);
 
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
