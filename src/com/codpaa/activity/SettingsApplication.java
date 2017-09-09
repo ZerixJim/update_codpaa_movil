@@ -43,7 +43,6 @@ public class SettingsApplication extends AppCompatActivity {
                     configuracion.setPromotorMode(1);
                 }
 
-
             }
         });
 

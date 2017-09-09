@@ -202,9 +202,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
         List<Producto> productos = adapter.getProductListValidation();
 
 
-
         if (productos.size() > 0){
-
 
 
             SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
@@ -272,10 +270,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                     }
 
 
-
-
                 }
-
 
 
 
