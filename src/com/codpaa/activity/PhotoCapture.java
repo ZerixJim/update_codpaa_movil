@@ -3,7 +3,6 @@ package com.codpaa.activity;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.io.InputStream;
@@ -88,7 +87,7 @@ import cz.msebera.android.httpclient.Header;
 public class PhotoCapture extends AppCompatActivity implements OnClickListener, OnItemSelectedListener, MultiSpinnerSelect.MultiSpinnerListener{
 
 
-	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+	//private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int CAMERA_PERMISSION = 124;
     private static final int CAMERA_PHOTO = 111;
 
@@ -300,7 +299,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	@Override
     protected void onActivityResult( int requestCode, int resultCode, Intent data){
 
-        Log.d("onActivityResult", "code: " + requestCode + " result: "+ resultCode);
+        //Log.d("onActivityResult", "code: " + requestCode + " result: "+ resultCode);
 
         //Bitmap bitmap = (Bitmap) data.getExtras().get
 
@@ -318,7 +317,27 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
                 if (reduceImageSize != null){
 
-                    showImg.setImageBitmap(reduceImageSize);
+                    //showImg.setImageBitmap(reduceImageSize);
+
+                    Picasso.with(this).load(new File(mCurrentPhotoPath))
+                            .placeholder(R.drawable.placeholder)
+                            .centerCrop()
+                            .fit()
+                            .into(showImg);
+
+
+                    showImg.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.setDataAndType(Uri.fromFile(new File(mCurrentPhotoPath)), "image");
+                            startActivity(intent);
+                        }
+                    });
+
+
+
 
                     /*try {
                         Bitmap imageCompress = BitmapFactory.decodeFile(mCurrentPhotoPath);
