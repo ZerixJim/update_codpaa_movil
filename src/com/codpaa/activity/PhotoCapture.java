@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -89,6 +90,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int CAMERA_PERMISSION = 124;
+    private static final int CAMERA_PHOTO = 111;
 
 
     private ProgressBar progressFoto;
@@ -106,6 +108,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private MultiSpinnerSelect multiSpinnerSelect;
 
     private int startCamera;
+
+    private Uri imageToUploadUri;
 
     private RadioGroup radioChoice;
     private RadioButton radioNormal, radioEvento;
@@ -229,7 +233,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 				if(photoFile != null){
 
 	    			takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-	    			startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+	    			imageToUploadUri = Uri.fromFile(photoFile);
+
+                    startActivityForResult(takePictureIntent, CAMERA_PHOTO);
 	    		}
 
 			} catch (IOException e) {
@@ -294,9 +300,48 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	@Override
     protected void onActivityResult( int requestCode, int resultCode, Intent data){
 
-        //Log.d("onActivityResult", "1");
+        Log.d("onActivityResult", "code: " + requestCode + " result: "+ resultCode);
 
-    	if(requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
+        //Bitmap bitmap = (Bitmap) data.getExtras().get
+
+
+        if (requestCode == CAMERA_PHOTO && resultCode == RESULT_OK){
+
+
+            imagenEspera = true;
+            if (imageToUploadUri != null){
+
+                Uri selectedImage = imageToUploadUri;
+                getContentResolver().notifyChange(selectedImage, null);
+                Bitmap reduceImageSize = getBitmap(imageToUploadUri.getPath());
+                mCurrentPhotoPath = imageToUploadUri.getPath();
+
+                if (reduceImageSize != null){
+
+                    showImg.setImageBitmap(reduceImageSize);
+
+                    /*try {
+                        Bitmap imageCompress = BitmapFactory.decodeFile(mCurrentPhotoPath);
+
+                        File image = new File(mCurrentPhotoPath);
+                        FileOutputStream fileOut = new FileOutputStream(image);
+
+                        imageCompress.compress(Bitmap.CompressFormat.JPEG, 100, fileOut);
+
+
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }*/
+                }
+
+
+            }
+
+
+        }
+
+
+    	/*if(requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
 
     		imagenEspera = true;
     		if(data != null){
@@ -325,8 +370,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     			Log.v("PhothoCapture", "Data == null");
 
 
-                /*BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 0;*/
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 0;
                 try {
 
                     mCurrentPhotoPath = imageCaptured.getAbsolutePath();
@@ -334,6 +379,10 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     long tamano = archivo.length();
                     double kb = tamano/1024;
                     double mb = kb/1024;
+
+                    //Bitmap image = (Bitmap) data.getExtras().get("data");
+
+                    //Log.d("Image Size ", String.valueOf(image.getRowBytes()));
 
                     Log.e("Imagen","Tamaño de imagen: "+mb+"mb");
 
@@ -367,7 +416,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                             public void onClick(View view) {
                                 Intent intent = new Intent();
                                 intent.setAction(Intent.ACTION_VIEW);
-                                intent.setDataAndType(Uri.fromFile(new File(mCurrentPhotoPath)), "image/*");
+                                intent.setDataAndType(Uri.fromFile(new File(mCurrentPhotoPath)), "image");
                                 startActivity(intent);
                             }
                         });
@@ -388,7 +437,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
     	}else {
             imageCaptured = null;
-        }
+        }*/
 
     }
 
@@ -416,6 +465,72 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 	    return path;
 	}
+
+
+    private Bitmap getBitmap(String path) {
+
+        Uri uri = Uri.fromFile(new File(path));
+        InputStream in = null;
+        try {
+            final int IMAGE_MAX_SIZE = 1200000; // 1.2MP
+            in = getContentResolver().openInputStream(uri);
+
+            // Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(in, null, o);
+            if (in != null) {
+                in.close();
+            }
+
+
+            int scale = 1;
+            while ((o.outWidth * o.outHeight) * (1 / Math.pow(scale, 2)) >
+                    IMAGE_MAX_SIZE) {
+                scale++;
+            }
+            Log.d("", "scale = " + scale + ", orig-width: " + o.outWidth + ", orig-height: " + o.outHeight);
+
+            Bitmap b;
+            in = getContentResolver().openInputStream(uri);
+            if (scale > 1) {
+                scale--;
+                // scale to max possible inSampleSize that still yields an image
+                // larger than target
+                o = new BitmapFactory.Options();
+                o.inSampleSize = scale;
+                b = BitmapFactory.decodeStream(in, null, o);
+
+                // resize to desired dimensions
+                int height = b.getHeight();
+                int width = b.getWidth();
+                Log.d("", "1th scale operation dimenions - width: " + width + ", height: " + height);
+
+                double y = Math.sqrt(IMAGE_MAX_SIZE
+                        / (((double) width) / height));
+                double x = (y / height) * width;
+
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(b, (int) x,
+                        (int) y, true);
+                b.recycle();
+                b = scaledBitmap;
+
+                System.gc();
+            } else {
+                b = BitmapFactory.decodeStream(in);
+            }
+            if (in != null) {
+                in.close();
+            }
+
+            Log.d("", "bitmap size - width: " + b.getWidth() + ", height: " +
+                    b.getHeight());
+            return b;
+        } catch (IOException e) {
+            Log.e("", e.getMessage(), e);
+            return null;
+        }
+    }
 
 
 
@@ -549,7 +664,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
                         try {
-                            baseinsert.insertarImagen(idTienda, idPromotor, idMarca, idExhibicion, timeStamp, Integer.parseInt(dia),Integer.parseInt(mes) , Integer.parseInt(ano), mCurrentPhotoPath, 1,getSelectedRadioGroup(),date);
+                            baseinsert.insertarImagen(idTienda, idPromotor, idMarca, idExhibicion,
+                                    timeStamp, Integer.parseInt(dia),Integer.parseInt(mes) ,
+                                    Integer.parseInt(ano), mCurrentPhotoPath, 1,getSelectedRadioGroup(),date);
                             imagenEspera = false;
                             showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
                         } catch (Exception e) {
