@@ -93,7 +93,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
     private ProgressBar progressFoto;
-    private File imageCaptured = null;
     private TextView textoEnvio;
 	private int idPromotor, idTienda;
     private DonutProgress donutProgress;
@@ -229,15 +228,13 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     		File photoFile;
     		try {
 				photoFile = createImageFile();
-				if(photoFile != null){
 
-	    			takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-	    			imageToUploadUri = Uri.fromFile(photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                imageToUploadUri = Uri.fromFile(photoFile);
 
-                    startActivityForResult(takePictureIntent, CAMERA_PHOTO);
-	    		}
+                startActivityForResult(takePictureIntent, CAMERA_PHOTO);
 
-			} catch (IOException e) {
+            } catch (IOException e) {
 				startCamera++;
 
                 if (startCamera >= 3){
@@ -275,23 +272,36 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		String imageFileName = idTienda+timeStamp;
 		File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
+
+        File codpaaDir = new File(storageDir.getPath() + "/codpaa/");
 		if(!storageDir.exists()){
 			//Log.v("PictireCir", "Directorio No Existe");
+
 			if(storageDir.mkdir()){
 				Log.v("PictireCir", "Directorio Creado");
+
+                if (!codpaaDir.exists()){
+                    if (codpaaDir.mkdir())
+                        Log.v("PictireCir", "Directorio Creado");
+                }
+
 			}else{
 				Log.v("PictireCir", "Directorio No Creado");
 			}
 		}else{
+
+            if (!codpaaDir.exists()){
+                if (codpaaDir.mkdir())
+                    Log.v("PictireCir", "Directorio Creado");
+            }
+
 			Log.v("PictireCir", "Directorio Ya Existe");
 		}
 
 
-		imageCaptured = File.createTempFile(imageFileName, ".jpg",storageDir);
+        //mCurrentPhotoPath = image.getAbsolutePath();
 
-		//mCurrentPhotoPath = image.getAbsolutePath();
-
-		return imageCaptured;
+		return File.createTempFile(imageFileName, ".jpg", codpaaDir);
 	}
 
 
@@ -312,17 +322,23 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
                 Uri selectedImage = imageToUploadUri;
                 getContentResolver().notifyChange(selectedImage, null);
-                Bitmap reduceImageSize = getBitmap(imageToUploadUri.getPath());
-                mCurrentPhotoPath = imageToUploadUri.getPath();
+                Bitmap reduceImageSize = getBitmap(selectedImage.getPath());
+
+
+
+
+                mCurrentPhotoPath = selectedImage.getPath();
+
 
                 if (reduceImageSize != null){
 
                     //showImg.setImageBitmap(reduceImageSize);
 
-                    Picasso.with(this).load(new File(mCurrentPhotoPath))
+
+                    File photo = new File(mCurrentPhotoPath);
+
+                    Picasso.with(this).load(photo)
                             .placeholder(R.drawable.placeholder)
-                            .centerCrop()
-                            .fit()
                             .into(showImg);
 
 
@@ -491,7 +507,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         Uri uri = Uri.fromFile(new File(path));
         InputStream in = null;
         try {
-            final int IMAGE_MAX_SIZE = 1200000; // 1.2MP
+            final int IMAGE_MAX_SIZE = 1000000; // 1.0MP
             in = getContentResolver().openInputStream(uri);
 
             // Decode image size
@@ -508,7 +524,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     IMAGE_MAX_SIZE) {
                 scale++;
             }
-            Log.d("", "scale = " + scale + ", orig-width: " + o.outWidth + ", orig-height: " + o.outHeight);
+            Log.d("", "scale = " + scale + ", orig-width: " +
+                    o.outWidth + ", orig-height: " + o.outHeight);
 
             Bitmap b;
             in = getContentResolver().openInputStream(uri);
@@ -523,7 +540,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 // resize to desired dimensions
                 int height = b.getHeight();
                 int width = b.getWidth();
-                Log.d("", "1th scale operation dimenions - width: " + width + ", height: " + height);
+                Log.d("", "1th scale operation dimenions - width: " +
+                        width + ", height: " + height);
 
                 double y = Math.sqrt(IMAGE_MAX_SIZE
                         / (((double) width) / height));
@@ -654,7 +672,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
-
 
                                     clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php", requ,
                                             new HttpResponseImage(CameraActivity, (int)(long)id));

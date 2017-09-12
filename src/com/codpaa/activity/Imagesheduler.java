@@ -223,11 +223,11 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
                 Bitmap thumbImage = ThumbnailUtils.extractThumbnail(bitmap,64,64);
                 holder.img.setImageBitmap(thumbImage);*/
 
+                Log.d("temp", temp.get_img());
+
                 Picasso.with(_context)
                         .load(new File(temp.get_img()))
                         .placeholder(R.drawable.placeholder)
-                        .resize(50,50)
-                        .centerCrop()
                         .into(holder.img);
             }catch (Exception ex){
                 ex.printStackTrace();
@@ -326,6 +326,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 				.load(new File(img))
 				.placeholder(R.drawable.placeholder)
 				.into(imagen);
+
 		
 		EnviarFotoListener listener = new EnviarFotoListener(idFoto, img, position, status);
 		
