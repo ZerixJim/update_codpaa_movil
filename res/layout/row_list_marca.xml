@@ -15,7 +15,6 @@
         />
 
     <TextView
-
         android:id="@+id/NombreTxtMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,7 +34,6 @@
         android:layout_alignStart="@+id/NombreTxtMarca"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:visibility="gone"
-
         />
 
 </RelativeLayout>

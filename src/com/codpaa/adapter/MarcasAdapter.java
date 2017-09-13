@@ -87,8 +87,26 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         //picasso.setIndicatorsEnabled(true);
 
 
+        if (spm.getId() != 0){
 
-        if (position == 0){
+            viewHolder.img.setVisibility(View.VISIBLE);
+
+
+            picasso.load(Utilities.MARCA_PATH + "/" + spm.getId() + ".gif")
+                    .resize(bitmapDrawable.getBitmap().getWidth(),0)
+                    .placeholder(R.drawable.ic_crop_original_grey600_36dp)
+                    .error(R.drawable.ic_error_grey600_36dp)
+                    .into(viewHolder.img);
+        }else {
+            viewHolder.img.setVisibility(View.GONE);
+        }
+
+
+
+
+
+
+        /*if (position == 0){
             viewHolder.img.setVisibility(View.GONE);
         }else {
 
@@ -96,15 +114,11 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
                 viewHolder.img.setVisibility(View.VISIBLE);
 
             //Log.d("url encode", ":"+url);
-            picasso.load(Utilities.MARCA_PATH + "/" + spm.getId() + ".gif")
-                    .resize(bitmapDrawable.getBitmap().getWidth(),0)
-                    .placeholder(R.drawable.ic_crop_original_grey600_36dp)
-                    .error(R.drawable.ic_error_grey600_36dp)
-                    .into(viewHolder.img);
 
 
 
-        }
+
+        }*/
 
 
 

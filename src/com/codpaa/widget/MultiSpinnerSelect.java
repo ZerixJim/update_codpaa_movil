@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MultiSpinnerSelect extends Spinner implements
+public class MultiSpinnerSelect extends android.support.v7.widget.AppCompatSpinner implements
         OnMultiChoiceClickListener, OnCancelListener {
 
     private ArrayList<ProductosModel> items;
