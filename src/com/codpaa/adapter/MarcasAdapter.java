@@ -4,6 +4,8 @@ package com.codpaa.adapter;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +55,7 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
     }
 
 
+
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
@@ -74,10 +77,8 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
 
         MarcaModel spm = arrayMarcas.get(position);
         viewHolder.nombre.setText(spm.getNombre());
+
         viewHolder.descrip.setText("");
-
-
-
 
         //Log.d("Url",":" + spm.getUrl());
 
@@ -100,27 +101,6 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         }else {
             viewHolder.img.setVisibility(View.GONE);
         }
-
-
-
-
-
-
-        /*if (position == 0){
-            viewHolder.img.setVisibility(View.GONE);
-        }else {
-
-            if (viewHolder.img.getVisibility() == View.INVISIBLE || viewHolder.img.getVisibility() == View.GONE)
-                viewHolder.img.setVisibility(View.VISIBLE);
-
-            //Log.d("url encode", ":"+url);
-
-
-
-
-        }*/
-
-
 
 
         return convertView;
@@ -152,40 +132,11 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         MarcaModel spm = arrayMarcas.get(position);
         viewHolder.nombre.setText(spm.getNombre());
         viewHolder.descrip.setText("");
+
+
+
+
         viewHolder.img.setVisibility(View.GONE);
-
-
-        if (position == 0){
-            viewHolder.img.setVisibility(View.GONE);
-        }
-
-        //Log.d("Url",":" + spm.getUrl());
-
-
-        Picasso picasso = Picasso.with(_context);
-
-        //picasso.setIndicatorsEnabled(true);
-
-
-
-        if (position == 0){
-            viewHolder.img.setVisibility(View.INVISIBLE);
-        }else {
-
-            if (viewHolder.img.getVisibility() == View.INVISIBLE)
-                viewHolder.img.setVisibility(View.VISIBLE);
-
-            //Log.d("url encode", ":"+url);
-            picasso.load(Utilities.MARCA_PATH + "/" + spm.getId() + ".gif")
-                    .resize(bitmapDrawable.getBitmap().getWidth(),0)
-                    .placeholder(R.drawable.ic_crop_original_grey600_36dp)
-                    .error(R.drawable.ic_error_grey600_36dp)
-                    .into(viewHolder.img);
-
-
-
-        }
-
 
 
 

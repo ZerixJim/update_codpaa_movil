@@ -72,8 +72,7 @@
                 android:layout_height="wrap_content"
                 app:cardPreventCornerOverlap="false"
                 app:cardUseCompatPadding="true"
-                android:layout_marginBottom="10dp"
-                card_view:cardElevation="4dp">
+                android:layout_marginBottom="10dp">
 
 
                 <LinearLayout
