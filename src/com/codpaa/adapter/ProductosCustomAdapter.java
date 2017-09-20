@@ -106,6 +106,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		viewHolder.txtPresentacion.setVisibility(View.GONE);
 		viewHolder.progressBar.setVisibility(View.GONE);
 		viewHolder.frameLayout.setVisibility(View.GONE);
+		viewHolder.divider.setVisibility(View.GONE);
 
 
 		if(temp.getCodigoBarras() != null){

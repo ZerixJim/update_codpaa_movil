@@ -80,8 +80,6 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
 
         viewHolder.descrip.setText("");
 
-        //Log.d("Url",":" + spm.getUrl());
-
 
         Picasso picasso = Picasso.with(_context);
 

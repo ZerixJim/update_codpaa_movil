@@ -102,46 +102,41 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="#646464">
 
             <ImageView
                 android:id="@+id/showImg"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:layout_gravity="center"
                 android:contentDescription="@string/imagedescrip"
-                android:layout_centerHorizontal="true"
-                android:scaleType="fitCenter"
-                android:padding="3dp" />
+                android:scaleType="fitCenter" />
 
             <com.github.lzyzsd.circleprogress.DonutProgress
-                android:layout_centerInParent="true"
                 android:id="@+id/progress_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 custom:donut_unfinished_color="#ffffff"
                 custom:donut_finished_color="#76df74"
+                android:layout_gravity="center"
                 android:visibility="gone"/>
 
-        </RelativeLayout>
+            <ImageView
+                android:id="@+id/add_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add_a_photo_grey_600_36dp"
+                android:layout_gravity="center"
+                android:tint="@color/Blanco"
+                />
+
+        </FrameLayout>
 
 
 
-        <android.support.v7.widget.AppCompatButton
-
-            android:id="@+id/btnEnviPho"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:padding="20dp"
-            app:backgroundTint="@color/accent"
-            android:textColor="@android:color/white"
-            android:text="@string/button"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp" />
 
 
 

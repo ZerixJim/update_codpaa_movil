@@ -34,6 +34,7 @@ import com.loopj.android.http.RequestParams;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -96,7 +97,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private TextView textoEnvio;
 	private int idPromotor, idTienda;
     private DonutProgress donutProgress;
-    private ImageView showImg = null;
+    private ImageView showImg = null, imgAdd;
     private PhotoCapture CameraActivity = null;
     private String mCurrentPhotoPath;
     private boolean imagenEspera = false;
@@ -128,8 +129,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
         //instancia de views
         showImg = (ImageView) findViewById(R.id.showImg);
+        imgAdd = (ImageView) findViewById(R.id.add_photo);
 
-        Button enviarPhoto = (Button) findViewById(R.id.btnEnviPho);
+
 
 
         spiMarca = (Spinner) findViewById(R.id.spiMarPhoto);
@@ -141,6 +143,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
         multiSpinnerSelect = (MultiSpinnerSelect) findViewById(R.id.multi_spinner);
 
+        imgAdd.setOnClickListener(this);
+
 
         radioChoice = (RadioGroup) findViewById(R.id.radioChoice);
         if (radioChoice != null) {
@@ -150,10 +154,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
             radioEvento = (RadioButton) radioChoice.findViewById(R.id.radioEvento);
         }
 
-        //add event listener
-        if (enviarPhoto != null) {
-            enviarPhoto.setOnClickListener(this);
-        }
 
 
         spiMarca.setOnItemSelectedListener(this);
@@ -165,7 +165,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
         //load default image (not image loaded)
-        showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
+        //showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
 
         try {
             //assert getSupportActionBar() != null;
@@ -192,9 +192,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
             case android.R.id.home:
                 this.finish();
                 return true;
-            case R.id.iniciar_camara:
+            /*case R.id.iniciar_camara:
                 dispatchTakePictureIntent();
-                return true;
+                return true;*/
             case R.id.save_photo:
 
                 EnviarImagen();
@@ -309,9 +309,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	@Override
     protected void onActivityResult( int requestCode, int resultCode, Intent data){
 
-        //Log.d("onActivityResult", "code: " + requestCode + " result: "+ resultCode);
-
-        //Bitmap bitmap = (Bitmap) data.getExtras().get
 
 
         if (requestCode == CAMERA_PHOTO && resultCode == RESULT_OK){
@@ -326,7 +323,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
 
-
                 mCurrentPhotoPath = selectedImage.getPath();
 
 
@@ -335,9 +331,14 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     //showImg.setImageBitmap(reduceImageSize);
 
 
-                    File photo = new File(mCurrentPhotoPath);
+                    final File photo = new File(mCurrentPhotoPath);
 
-                    Picasso.with(this).load(photo)
+
+                    Picasso picasso = Picasso.with(this);
+                    picasso.setIndicatorsEnabled(true);
+                    
+
+                    picasso.load(photo)
                             .placeholder(R.drawable.placeholder)
                             .into(showImg);
 
@@ -345,10 +346,18 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     showImg.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent();
-                            intent.setAction(Intent.ACTION_VIEW);
-                            intent.setDataAndType(Uri.fromFile(new File(mCurrentPhotoPath)), "image");
-                            startActivity(intent);
+
+                            try {
+
+                                Intent intent = new Intent();
+                                intent.setAction(Intent.ACTION_VIEW);
+                                intent.setDataAndType(Uri.fromFile(photo), "image");
+                                startActivity(intent);
+
+                            }catch (ActivityNotFoundException e){
+                                e.printStackTrace();
+                            }
+
                         }
                     });
 
@@ -916,7 +925,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 				//db.insertarImagen(_idTienda, _idPromo, _idMarca, _idExhib, _timeStamp, _dia, _mes, _ano, mCurrentPhotoPath, 1);
 				imagenEspera = false;
-				showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.noimage));
+				//showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.noimage));
 			} catch (SQLiteException e1) {
 				e1.printStackTrace();
 			}
@@ -954,7 +963,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.noimage));
+                                showImg.setImageDrawable(null);
                             }
                         },3000);
 					}else{
@@ -987,9 +996,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	public void onClick(View v) {
 		switch(v.getId()){
 
-            case R.id.btnEnviPho:
-                EnviarImagen();
-			break;
+            case R.id.add_photo:
+                dispatchTakePictureIntent();
+                break;
 
 		}
 

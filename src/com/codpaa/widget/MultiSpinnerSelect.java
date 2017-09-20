@@ -13,25 +13,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import android.widget.ListView;
-import android.widget.Spinner;
 
 
 import com.codpaa.adapter.ProductosAdapter;
 import com.codpaa.model.ProductosModel;
 
 import java.util.ArrayList;
-import java.util.List;
-
 
 public class MultiSpinnerSelect extends android.support.v7.widget.AppCompatSpinner implements
         OnMultiChoiceClickListener, OnCancelListener {
 
-    private ArrayList<ProductosModel> items;
     private boolean[] selected;
     private String defaultText;
     private MultiSpinnerListener listener;
     ProductosAdapter arrayAdapter;
-    ArrayList<ProductosModel> selectedProduct = new ArrayList<>();
 
 
     public MultiSpinnerSelect(Context context) {
@@ -164,7 +159,6 @@ public class MultiSpinnerSelect extends android.support.v7.widget.AppCompatSpinn
 
     public void setItems(ArrayList<ProductosModel> items, String allText, MultiSpinnerListener listener){
 
-        this.items = items;
         this.defaultText = allText;
         this.listener = listener;
 
@@ -186,7 +180,7 @@ public class MultiSpinnerSelect extends android.support.v7.widget.AppCompatSpinn
 
 
     public interface MultiSpinnerListener {
-        public void onItemsSelected(boolean[] selected);
+        void onItemsSelected(boolean[] selected);
     }
 
     public ArrayList<ProductosModel> getSelectedItems(){
@@ -199,23 +193,5 @@ public class MultiSpinnerSelect extends android.support.v7.widget.AppCompatSpinn
         }
         return produtoSelected;
     }
-    private ArrayList<ProductosModel> getProductos(){
-        ArrayList<ProductosModel> arrayList = new ArrayList<>();
-        for (int i=0; i < 20; i++){
-            final ProductosModel producto = new ProductosModel();
-            producto.setIdProducto(i + 1);
-            producto.setNombre("Producto " + i);
-            producto.setPresentacion("gr2" + i);
 
-            arrayList.add(producto);
-        }
-
-
-        return arrayList;
-    }
-
-
-    public ArrayList<ProductosModel> getSelectedProduct(){
-        return selectedProduct;
-    }
 }
