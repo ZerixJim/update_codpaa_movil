@@ -18,6 +18,8 @@
         <item name="actionMenuTextColor">@color/Blanco</item>
 
 
+
+
     </style>
 
     <style name="AppBase" parent="Theme.AppCompat.Light">

@@ -129,6 +129,7 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
 
         MarcaModel spm = arrayMarcas.get(position);
         viewHolder.nombre.setText(spm.getNombre());
+        viewHolder.nombre.setPadding(0,15,0,0);
         viewHolder.descrip.setText("");
 
 

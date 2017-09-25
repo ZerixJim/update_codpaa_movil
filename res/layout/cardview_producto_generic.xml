@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/nombre_producto_layout"
             android:textColor="#01b342"
             style="@style/TextShadow"
             android:textSize="12sp" />
@@ -99,60 +99,49 @@
             android:textSize="11sp" />
 
 
-
-        <TextView
-            android:id="@+id/nombre_producto"
+        <LinearLayout
+            android:id="@+id/nombre_producto_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/image_layout"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_toEndOf="@+id/image_layout"
-            android:layout_toRightOf="@+id/image_layout"
-            android:textStyle="bold"
-            android:text="Nombre Producto" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/presentacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/nombre_producto"
-            android:layout_alignStart="@+id/nombre_producto"
-            android:layout_below="@+id/nombre_producto"
-            android:text="presentacion"
-            android:textStyle="normal"
-            android:textColor="#787a8b" />
+            <TextView
+                android:id="@+id/nombre_producto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Nombre Producto" />
+
+            <TextView
+                android:id="@+id/presentacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="presentacion"
+                android:textStyle="normal"
+                android:textColor="#787a8b" />
 
 
-        <TextView
-            android:id="@+id/bar_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/nombre_producto"
-            android:layout_alignStart="@+id/nombre_producto"
-            android:layout_below="@+id/presentacion"
-            android:text="cb"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/bar_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/presentacion"
+                android:text="cb"
+                android:textSize="12sp" />
 
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/nombre_producto"
-            android:layout_alignStart="@+id/nombre_producto"
-            android:layout_below="@+id/bar_code"
-            android:visibility="gone" />
+
+        </LinearLayout>
+
+
 
         <RadioGroup
             android:id="@+id/radio_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/nombre_producto"
-            android:layout_alignStart="@+id/nombre_producto"
-            android:layout_below="@+id/bar_code"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_alignTop="@+id/image_layout"
+            android:layout_toRightOf="@+id/image_layout"
+            android:layout_toEndOf="@+id/image_layout"
             android:orientation="vertical"
             android:weightSum="2">
 
@@ -200,6 +189,7 @@
             android:layout_height="1dp"
             android:layout_below="@+id/fecha_precio"
             android:layout_marginTop="20dp"
+            android:visibility="gone"
             android:background="#dfdfdf" />
 
 
@@ -207,8 +197,11 @@
             android:id="@+id/cantidad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/divider_bottom"
-            android:layout_marginTop="20dp"
+            android:layout_below="@+id/radio_group"
+            android:layout_toEndOf="@+id/image_layout"
+            android:layout_toRightOf="@+id/image_layout"
+            android:layout_marginTop="30dp"
+
             android:hint="@string/escribe_cantidad"
             android:inputType="number"
             android:textColor="#6b6b6b"
@@ -219,8 +212,11 @@
             android:id="@+id/inventario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/divider_bottom"
+            android:layout_below="@+id/radio_group"
+            android:layout_toEndOf="@+id/image_layout"
+            android:layout_toRightOf="@+id/image_layout"
             android:hint="@string/cantidad_cajas"
+            android:layout_marginTop="30dp"
             android:inputType="number"
             android:textColor="#6b6b6b"
             android:visibility="gone" />

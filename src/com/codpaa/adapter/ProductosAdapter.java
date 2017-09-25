@@ -52,6 +52,9 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
 
     }
 
+
+
+
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
         View row = convertView;
@@ -95,9 +98,6 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
             viewHolder.progressBar.setVisibility(View.VISIBLE);
 
         }
-
-
-
 
 
         if (productosModel.isChecked()){

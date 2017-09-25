@@ -61,7 +61,6 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
     private boolean isReceiverMessageRegistered;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +109,6 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
 
     }
-
 
 
     @Override
@@ -312,9 +310,6 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
 
     }
-
-
-
 
 
     @Override

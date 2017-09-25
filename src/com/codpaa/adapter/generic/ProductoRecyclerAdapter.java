@@ -50,7 +50,8 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
     @Override
     public ProductoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_producto_generic, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.cardview_producto_generic, parent, false);
 
         return new ProductoViewHolder(view);
     }
@@ -360,7 +361,6 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
         RadioGroup radioGroup;
         EditText cantidad,inventario;
         LinearLayout viewCheck;
-        Spinner spinner;
         CheckBox faltaEspacio, falteRecurso, competitividad, seConsulta;
 
 
@@ -375,7 +375,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
             cantidad = (EditText) itemView.findViewById(R.id.cantidad);
             inventario = (EditText) itemView.findViewById(R.id.inventario);
             viewCheck = (LinearLayout) itemView.findViewById(R.id.view_check);
-            spinner = (Spinner) itemView.findViewById(R.id.spinner);
+
             estatus = (TextView) itemView.findViewById(R.id.estatus);
 
 

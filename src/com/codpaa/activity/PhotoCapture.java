@@ -60,6 +60,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -97,7 +98,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private TextView textoEnvio;
 	private int idPromotor, idTienda;
     private DonutProgress donutProgress;
-    private ImageView showImg = null, imgAdd;
+    private CardView cardView;
+    private ImageView showImg = null;
     private PhotoCapture CameraActivity = null;
     private String mCurrentPhotoPath;
     private boolean imagenEspera = false;
@@ -129,7 +131,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
         //instancia de views
         showImg = (ImageView) findViewById(R.id.showImg);
-        imgAdd = (ImageView) findViewById(R.id.add_photo);
+        //imgAdd = (ImageView) findViewById(R.id.add_photo);
 
 
 
@@ -143,7 +145,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
         multiSpinnerSelect = (MultiSpinnerSelect) findViewById(R.id.multi_spinner);
 
-        imgAdd.setOnClickListener(this);
+        cardView = (CardView) findViewById(R.id.card);
+
+        //imgAdd.setOnClickListener(this);
 
 
         radioChoice = (RadioGroup) findViewById(R.id.radioChoice);
@@ -192,9 +196,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
             case android.R.id.home:
                 this.finish();
                 return true;
-            /*case R.id.iniciar_camara:
+            case R.id.iniciar_camara:
                 dispatchTakePictureIntent();
-                return true;*/
+                return true;
             case R.id.save_photo:
 
                 EnviarImagen();
@@ -333,9 +337,11 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
                     final File photo = new File(mCurrentPhotoPath);
 
+                    cardView.setVisibility(View.VISIBLE);
+
 
                     Picasso picasso = Picasso.with(this);
-                    picasso.setIndicatorsEnabled(true);
+                    //picasso.setIndicatorsEnabled(true);
                     
 
                     picasso.load(photo)
@@ -382,106 +388,12 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
             }
 
 
+        }else{
+            cardView.setVisibility(View.GONE);
         }
 
 
-    	/*if(requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
 
-    		imagenEspera = true;
-    		if(data != null){
-
-
-        		Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-                //Log.v("Image ",imageBitmap.getWidth()+"x"+imageBitmap.getHeight());
-        		showImg.setImageBitmap(imageBitmap);
-
-        		Uri tempUri = getImageUri(CameraActivity, imageBitmap);
-
-
-                try {
-                    File myFile = new File(getRealPathFromURI(tempUri));
-
-                    mCurrentPhotoPath =  myFile.getAbsolutePath();
-                }catch (NullPointerException e){
-                    e.printStackTrace();
-                }
-
-
-
-        		Log.v("PhothoCapture", "Data != null");
-    		}else{
-
-    			Log.v("PhothoCapture", "Data == null");
-
-
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 0;
-                try {
-
-                    mCurrentPhotoPath = imageCaptured.getAbsolutePath();
-                    File archivo = new File(mCurrentPhotoPath);
-                    long tamano = archivo.length();
-                    double kb = tamano/1024;
-                    double mb = kb/1024;
-
-                    //Bitmap image = (Bitmap) data.getExtras().get("data");
-
-                    //Log.d("Image Size ", String.valueOf(image.getRowBytes()));
-
-                    Log.e("Imagen","Tamaño de imagen: "+mb+"mb");
-
-
-                    if (tamano > 0 ) {
-
-
-                        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
-
-                        try {
-
-                            File fileP = new File(mCurrentPhotoPath);
-                            FileOutputStream fileOut = new FileOutputStream(fileP);
-                            //Log.v("Tamaño imagen: ",Long.toString(fileP.length()));
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fileOut);
-
-                        } catch (FileNotFoundException fe) {
-                            fe.printStackTrace();
-                        }
-
-
-                        Picasso.with(this).load(new File(mCurrentPhotoPath))
-                                .placeholder(R.drawable.placeholder)
-                                .centerCrop()
-                                .fit()
-                                .into(showImg);
-
-
-                        showImg.setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent();
-                                intent.setAction(Intent.ACTION_VIEW);
-                                intent.setDataAndType(Uri.fromFile(new File(mCurrentPhotoPath)), "image");
-                                startActivity(intent);
-                            }
-                        });
-
-
-                    } else {
-                        Toast.makeText(getApplicationContext(),"Error al cargar " +
-                                "la foto \n intente tomar la foto de nuevo",Toast.LENGTH_SHORT).show();
-                    }
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
-
-
-    		}
-
-    	}else {
-            imageCaptured = null;
-        }*/
 
     }
 
@@ -684,7 +596,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
                                     clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php", requ,
                                             new HttpResponseImage(CameraActivity, (int)(long)id));
-                                    Log.d("http foto", requ.toString());
+                                    //Log.d("http foto", requ.toString());
                                     datosFoto.close();
                                     radioNormal.setChecked(true);
                                 }
@@ -714,6 +626,13 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                     Integer.parseInt(ano), mCurrentPhotoPath, 1,getSelectedRadioGroup(),date);
                             imagenEspera = false;
                             showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    cardView.setVisibility(View.GONE);
+                                }
+                            }, 3000);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -964,8 +883,11 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                             @Override
                             public void run() {
                                 showImg.setImageDrawable(null);
+                                cardView.setVisibility(View.GONE);
                             }
                         },3000);
+
+
 					}else{
 						if(response.getInt("code") == 3){
 							showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.imagesend));
@@ -994,13 +916,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()){
 
-            case R.id.add_photo:
-                dispatchTakePictureIntent();
-                break;
-
-		}
 
 	}
 

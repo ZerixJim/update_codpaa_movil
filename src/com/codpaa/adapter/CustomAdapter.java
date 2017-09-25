@@ -68,7 +68,6 @@ public class CustomAdapter extends ArrayAdapter<SpinnerMarcaModel>{
 		SpinnerMarcaModel temp = _datos.get(position);
 
 		viewHolder.txtNombre.setText(temp.getNombre());
-		viewHolder.txtNombre.setGravity(Gravity.CENTER);
 		//viewHolder.txtDescrip.setText(temp.getImgUrl());
 
 
