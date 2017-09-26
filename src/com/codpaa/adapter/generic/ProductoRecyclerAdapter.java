@@ -64,7 +64,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
         holder.nombre.setText(producto.getNombre());
         holder.presentacion.setText(producto.getPresentacion());
-        holder.barCode.setText("CB:" + producto.getCodeBarras());
+        holder.barCode.setText(producto.getCodeBarras());
 
 
         holder.precioCompra.setText("precio compra $" + producto.getPrecioCompra());
