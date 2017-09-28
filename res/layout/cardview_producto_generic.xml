@@ -116,20 +116,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/add_photo"
+            android:layout_toStartOf="@+id/add_photo"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/nombre_producto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_weight="2"
+                    android:layout_weight="2.5"
                     android:textSize="14sp"
 
                     android:text="Nombre Producto"
@@ -148,7 +148,7 @@
                     android:layout_height="wrap_content"
                     android:text="presentacion"
                     android:textStyle="normal"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1"
                     android:textColor="#787a8b"
                     android:textSize="12sp"
                     />
