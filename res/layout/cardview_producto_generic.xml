@@ -232,8 +232,7 @@
             android:background="#dfdfdf" />
 
 
-        <EditText
-            android:id="@+id/cantidad"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/radio_group"
@@ -241,27 +240,51 @@
             android:layout_toRightOf="@+id/image_layout"
             android:layout_alignStart="@+id/radio_group"
             android:layout_alignLeft="@+id/radio_group"
-            android:layout_marginTop="30dp"
-            android:hint="@string/escribe_cantidad"
-            android:inputType="number"
-            android:textColor="#6b6b6b"
-            android:visibility="gone" />
+            android:layout_marginTop="30dp">
+
+            <EditText
+                android:id="@+id/cantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/escribe_cantidad"
+                android:inputType="number"
+                android:textColor="#6b6b6b"
+                android:visibility="gone" />
 
 
-        <EditText
-            android:id="@+id/inventario"
+
+
+
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/radio_group"
-            android:layout_alignStart="@+id/radio_group"
-            android:layout_alignLeft="@+id/radio_group"
             android:layout_toEndOf="@+id/image_layout"
             android:layout_toRightOf="@+id/image_layout"
-            android:hint="@string/cantidad_cajas"
-            android:layout_marginTop="30dp"
-            android:inputType="number"
-            android:textColor="#6b6b6b"
-            android:visibility="gone" />
+            android:layout_alignStart="@+id/radio_group"
+            android:layout_alignLeft="@+id/radio_group"
+            android:layout_marginTop="30dp">
+
+            <EditText
+                android:id="@+id/inventario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/cantidad_cajas"
+                android:layout_marginTop="30dp"
+                android:inputType="number"
+                android:textColor="#6b6b6b"
+                android:visibility="gone" />
+
+
+
+        </android.support.design.widget.TextInputLayout>
+
+
+
 
 
         <LinearLayout

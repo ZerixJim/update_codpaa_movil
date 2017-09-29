@@ -118,6 +118,8 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
                         producto.getFecha()));
 
 
+
+
                 holder.estatus.setTextColor(Color.parseColor("#ff0000"));
 
                 holder.cardView.setBackgroundColor(Color.parseColor("#ff8c8c"));
@@ -255,6 +257,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
                         if (holder.viewCheck.getVisibility() == View.GONE)
                             holder.viewCheck.setVisibility(View.VISIBLE);
 
+                        holder.viewCheck.scrollBy(0,holder.viewCheck.getScrollY());
 
 
                         producto.setCantidad(0);
