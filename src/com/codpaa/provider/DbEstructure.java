@@ -271,6 +271,24 @@ public class DbEstructure {
 
     }
 
+    public static class InventarioProducto implements BaseColumns{
+        private InventarioProducto(){}
+
+        public static final String TABLE_NAME = "invProducto";
+        public static final String ID_TIENDA = "idTienda";
+        public static final String ID_PROMOTOR = "idPromotor";
+        public static final String FECHA = "fecha";
+        public static final String ID_PRODUCTO = "idProducto";
+        public static final String CANTIDAD_FISICO = "cantidadFisico";
+        public static final String CANTIDAD_SISTEMA = "cantidadSistema";
+        public static final String ESTATUS = "status";
+        public static final String TIPO = "tipo";
+        public static final String FECHA_CADUCIDAD = "fecha_caducidad";
+        public static final String LOTE = "lote";
+
+
+    }
+
     public static class ProcesoCatalogacionObjeciones{
 
         private ProcesoCatalogacionObjeciones(){}

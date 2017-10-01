@@ -1,6 +1,8 @@
 package com.codpaa.adapter.generic;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -10,9 +12,11 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -23,14 +27,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.codpaa.R;
+import com.codpaa.db.BDopenHelper;
 import com.codpaa.fragment.DetalleProductoDialogFragment;
 import com.codpaa.model.generic.Producto;
+import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.Utilities;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /*
  * Created by Grim on 20/05/2017.
@@ -41,10 +50,12 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
     private List<Producto> mProductosList;
     private Context context;
+    private ProductoListener listener;
 
-    public ProductoRecyclerAdapter(Context context, List<Producto> mProductosList) {
+    public ProductoRecyclerAdapter(Context context, List<Producto> mProductosList, ProductoListener listener) {
         this.mProductosList = mProductosList;
         this.context = context;
+        this.listener = listener;
     }
 
     @Override
@@ -57,7 +68,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
     }
 
     @Override
-    public void onBindViewHolder(final ProductoViewHolder holder, int position) {
+    public void onBindViewHolder(final ProductoViewHolder holder, final int position) {
 
         final Producto producto = mProductosList.get(position);
 
@@ -65,6 +76,9 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
         holder.nombre.setText(producto.getNombre());
         holder.presentacion.setText(producto.getPresentacion());
         holder.barCode.setText(producto.getCodeBarras());
+
+
+        holder.addPhoto.setVisibility(View.INVISIBLE);
 
 
         holder.precioCompra.setText("precio compra $" + producto.getPrecioCompra());
@@ -86,14 +100,6 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
 
 
-        if (producto.getIdEstatusCatalogacion() == 2 || producto.getIdEstatusCatalogacion() == 4){
-
-
-            holder.radioGroup.setVisibility(View.INVISIBLE);
-
-        }
-
-
         if (producto.getEstatus() > 0){
 
 
@@ -105,10 +111,65 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
                 holder.radioGroup.setVisibility(View.INVISIBLE);
 
+
+                Log.d("inventario ", " " + producto.getInventario());
+
+                if (producto.getInventario() > 0){
+
+                    holder.cantidadInventario.setText("" + producto.getInventario());
+                    holder.cantidadInventario.setVisibility(View.VISIBLE);
+
+                }else {
+                    holder.inventarioLayout.setVisibility(View.VISIBLE);
+                }
+
                 holder.estatus.setText("Catalogado " +
                         Utilities.getTimeAgo(Utilities.DATE_FORMAT_USA, producto.getFecha()));
 
                 holder.cardView.setBackgroundColor(Color.parseColor("#adffc9"));
+
+                holder.inventario.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                        if (holder.inventario.getText().length() > 0){
+                            producto.setCantidad(Integer.parseInt(holder.inventario.getText().toString()));
+
+                            holder.btnGuardarInventario.setVisibility(View.VISIBLE);
+
+                            holder.btnGuardarInventario.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    producto.setInventario(Integer.parseInt(holder.inventario.getText().toString()));
+
+                                    listener.onInventarioSave(producto.getIdProducto(),producto.getInventario(),position);
+
+                                    hideViews(holder);
+                                }
+                            });
+
+                        }else {
+
+                            producto.setCantidad(0);
+
+                            holder.btnGuardarInventario.setVisibility(View.INVISIBLE);
+                        }
+
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
 
 
 
@@ -118,8 +179,6 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
                         producto.getFecha()));
 
 
-
-
                 holder.estatus.setTextColor(Color.parseColor("#ff0000"));
 
                 holder.cardView.setBackgroundColor(Color.parseColor("#ff8c8c"));
@@ -127,6 +186,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
             }else if(producto.getEstatus() == Producto.EstatusTypes.ACEPTO_CATALOGACION){
 
                 holder.radioGroup.setVisibility(View.INVISIBLE);
+
 
                 holder.estatus.setText("Acepto Catalogar " +
                         Utilities.getTimeAgo(Utilities.DATE_FORMAT_USA, producto.getFecha()));
@@ -178,8 +238,8 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
                     case R.id.catalogado:
 
 
-                        if(holder.inventario.getVisibility() == View.GONE){
-                            holder.inventario.setVisibility(View.VISIBLE);
+                        if(holder.inventarioLayout.getVisibility() == View.GONE){
+                            holder.inventarioLayout.setVisibility(View.VISIBLE);
 
 
                             holder.inventario.addTextChangedListener(new TextWatcher() {
@@ -194,6 +254,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
                                     if (holder.inventario.getText().length() > 0){
                                         producto.setCantidad(Integer.parseInt(holder.inventario.getText().toString()));
+                                        producto.setInventario(Integer.parseInt(holder.inventario.getText().toString()));
                                     }
 
 
@@ -232,6 +293,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
                                     if (holder.cantidad.getText().length() > 0){
                                         producto.setCantidad(Integer.parseInt(holder.cantidad.getText().toString()));
+
                                     }
 
 
@@ -342,10 +404,12 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
     private void hideViews(ProductoViewHolder holder){
 
         holder.viewCheck.setVisibility(View.GONE);
-        holder.inventario.setVisibility(View.GONE);
+        holder.inventarioLayout.setVisibility(View.GONE);
         holder.cantidad.setVisibility(View.GONE);
 
     }
+
+
 
 
 
@@ -358,12 +422,13 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
     class ProductoViewHolder extends RecyclerView.ViewHolder{
 
         TextView nombre, presentacion, barCode, estatus, precioCompra, precioVenta, utilidad;
-        TextView fechaPrecio, detalle;
+        TextView fechaPrecio, detalle, cantidadInventario;
         CardView cardView;
-        ImageView imageView;
+        Button btnGuardarInventario;
+        ImageView imageView, addPhoto;
         RadioGroup radioGroup;
         EditText cantidad,inventario;
-        LinearLayout viewCheck;
+        LinearLayout viewCheck, inventarioLayout;
         CheckBox faltaEspacio, falteRecurso, competitividad, seConsulta;
 
 
@@ -373,7 +438,12 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
             nombre = (TextView) itemView.findViewById(R.id.nombre_producto);
             presentacion = (TextView) itemView.findViewById(R.id.presentacion);
             barCode = (TextView) itemView.findViewById(R.id.bar_code);
+
+            cantidadInventario = (TextView) itemView.findViewById(R.id.cantidad_inventario);
+
             imageView = (ImageView) itemView.findViewById(R.id.image);
+            addPhoto = (ImageView) itemView.findViewById(R.id.add_photo);
+
             radioGroup = (RadioGroup) itemView.findViewById(R.id.radio_group);
             cantidad = (EditText) itemView.findViewById(R.id.cantidad);
             inventario = (EditText) itemView.findViewById(R.id.inventario);
@@ -396,6 +466,10 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
             detalle = (TextView) itemView.findViewById(R.id.detalle);
 
             cardView = (CardView) itemView.findViewById(R.id.card);
+
+            inventarioLayout = (LinearLayout) itemView.findViewById(R.id.layout_inventario);
+
+            btnGuardarInventario = (Button) itemView.findViewById(R.id.btn_guardar);
 
 
         }
@@ -451,6 +525,10 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
         return list;
 
+    }
+
+    public interface ProductoListener{
+        public void onInventarioSave(int idProducto, int cantidad, int position);
     }
 
 

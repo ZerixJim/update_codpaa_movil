@@ -51,7 +51,7 @@ import java.util.Locale;
  * Created by grim on 18/05/2017.
  */
 
-public class Estatus extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Estatus extends AppCompatActivity implements AdapterView.OnItemSelectedListener, ProductoRecyclerAdapter.ProductoListener {
 
 
     private RecyclerView mRecyclerView;
@@ -59,6 +59,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
     private BroadcastReceiver broadcastReceiver;
     private Spinner spinner;
     private boolean isReceiverMessageRegistered;
+    private ProductoRecyclerAdapter adapter;
 
 
     @Override
@@ -384,13 +385,21 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
+        SimpleDateFormat dFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Calendar c = Calendar.getInstance();
+
+        String fecha = dFormat.format(c.getTime());
+
 
         String sql = "select  p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca," +
                 " pt.estatus, " +
-                " p.precio_compra, p.precio_sugerido, p.fecha_precio, pt.fecha_update  " +
+                " p.precio_compra, p.precio_sugerido, p.fecha_precio, pt.fecha_update, ip.cantidadFisico " +
                 " from productotienda as pt " +
                 " left  join producto as p on pt.idProducto=p.idProducto " +
+                " left join invProducto as ip on (ip.idTienda=pt.idTienda and ip.idProducto=p.idProducto " +
+                " and ip.fecha='" + fecha+ "')" +
                 " where p.idMarca=" + idMarca + " and pt.idTienda=" + idTienda + " " +
+                " group by pt.idProducto, pt.idTienda " +
                 " order by p.nombre asc ";
 
         Cursor curProByTienda = db.rawQuery(sql, null);
@@ -411,6 +420,8 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
                 spP.setPrecioCompra(curProByTienda.getFloat(curProByTienda.getColumnIndex("precio_compra")));
                 spP.setPrecioVenta(curProByTienda.getFloat(curProByTienda.getColumnIndex("precio_sugerido")));
                 spP.setFechaPrecio(curProByTienda.getString(curProByTienda.getColumnIndex("fecha_precio")));
+
+                spP.setInventario(curProByTienda.getInt(curProByTienda.getColumnIndex("cantidadFisico")));
 
 
 
@@ -452,7 +463,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
             int size = productos.size();
 
-            ProductoRecyclerAdapter adapter = new ProductoRecyclerAdapter(this, productos);
+            adapter = new ProductoRecyclerAdapter(this, productos, this);
 
             mRecyclerView.setAdapter(adapter);
             mRecyclerView.setItemViewCacheSize(size);
@@ -466,5 +477,21 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
 
+    @Override
+    public void onInventarioSave(int idProducto, int cantidad, int position) {
 
+        BDopenHelper db = new BDopenHelper(this);
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Calendar c = Calendar.getInstance();
+
+        String fecha = dFecha.format(c.getTime());
+
+        db.insertarInventario(idTienda,idPromotor,fecha,idProducto,cantidad,cantidad,1,"Cajas","","",0,5);
+
+        adapter.notifyItemChanged(position);
+
+
+        //Toast.makeText(this, "idPro" + idProducto + " cant "+ cantidad, Toast.LENGTH_SHORT).show();
+
+    }
 }

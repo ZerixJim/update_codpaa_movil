@@ -20,6 +20,7 @@ public class Producto {
     private String codeBarras;
     private int estatus;
     private int cantidad;
+    private int inventario;
 
     private int idEstatusCatalogacion;
 
@@ -39,6 +40,14 @@ public class Producto {
         public static final int ACEPTO_CATALOGACION = 4;
         public static final int PROCESO_CONCRESION = 5;
 
+    }
+
+    public int getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(int inventario) {
+        this.inventario = inventario;
     }
 
     public int getIdEstatusCatalogacion() {

@@ -235,11 +235,8 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/radio_group"
-            android:layout_toEndOf="@+id/image_layout"
-            android:layout_toRightOf="@+id/image_layout"
-            android:layout_alignStart="@+id/radio_group"
-            android:layout_alignLeft="@+id/radio_group"
+            android:layout_below="@+id/fecha_precio"
+
             android:layout_marginTop="30dp">
 
             <EditText
@@ -249,39 +246,74 @@
                 android:hint="@string/escribe_cantidad"
                 android:inputType="number"
                 android:textColor="#6b6b6b"
+                android:drawableStart="@drawable/ic_assignment_grey600_24dp"
+                android:drawableLeft="@drawable/ic_assignment_grey600_24dp"
+                android:drawablePadding="5dp"
                 android:visibility="gone" />
-
-
-
 
 
 
         </android.support.design.widget.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
+            android:id="@+id/layout_inventario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/radio_group"
-            android:layout_toEndOf="@+id/image_layout"
-            android:layout_toRightOf="@+id/image_layout"
-            android:layout_alignStart="@+id/radio_group"
-            android:layout_alignLeft="@+id/radio_group"
-            android:layout_marginTop="30dp">
+            android:orientation="horizontal"
+            android:layout_below="@+id/fecha_precio"
+            android:layout_marginTop="30dp"
+            android:visibility="gone">
 
-            <EditText
-                android:id="@+id/inventario"
-                android:layout_width="match_parent"
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/cantidad_cajas"
-                android:layout_marginTop="30dp"
-                android:inputType="number"
-                android:textColor="#6b6b6b"
-                android:visibility="gone" />
+                android:layout_weight="3">
+
+                <EditText
+                    android:id="@+id/inventario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/cantidad_cajas"
+                    android:layout_marginTop="30dp"
+                    android:drawableStart="@drawable/ic_assignment_grey600_24dp"
+                    android:drawableLeft="@drawable/ic_assignment_grey600_24dp"
+                    android:drawablePadding="5dp"
+                    android:inputType="number"
+                    android:textColor="#6b6b6b" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/btn_guardar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"
+                android:visibility="invisible"
+                android:text="Guardar"/>
 
 
 
-        </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/cantidad_inventario"
+
+            android:drawableStart="@drawable/ic_assignment_grey600_24dp"
+            android:drawableLeft="@drawable/ic_assignment_grey600_24dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fecha_precio"
+            android:visibility="gone"/>
+
+
+
 
 
 
