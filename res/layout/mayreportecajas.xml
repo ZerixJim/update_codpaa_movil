@@ -42,8 +42,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="20dp"
-            android:drawableLeft="@drawable/save"
-            android:drawableStart="@drawable/save"
+
             android:text="@string/guar" />
 
         <Button
@@ -55,8 +54,7 @@
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/delete"
-            android:drawableStart="@drawable/delete"
+
             android:text="@string/exit" />
 
     </LinearLayout>
