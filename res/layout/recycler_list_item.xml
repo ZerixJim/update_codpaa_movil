@@ -15,100 +15,106 @@
     card_view:cardElevation="2dp">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/number"
-            android:padding="10dp"
-            android:gravity="center"
+            android:padding="5dp"
             android:textColor="@color/divider_primary"
             android:textStyle="bold"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
+
+
 
         <TextView
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/divider_vertical"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"/>
+            android:id="@+id/modo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textSize="12sp"
+            android:gravity="end"
+            android:textColor="#7d9ba7"
+            android:text="protomotor"/>
 
 
         <LinearLayout
+            android:id="@+id/layout_tienda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_toRightOf="@+id/number"
+            android:layout_toEndOf="@+id/number"
+            android:layout_toStartOf="@+id/modo"
+            android:layout_toLeftOf="@+id/modo"
             android:orientation="vertical"
-            android:paddingBottom="8dp"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="8dp">
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:padding="5dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/rutadia_tienda"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3">
-                <TextView
-                    android:id="@+id/rutadia_tienda"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/tienda_ruta"
-                    android:textSize="@dimen/abc_text_size_subhead_material" />
-
-
-                <TextView
-                    android:id="@+id/modo"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textSize="12sp"
-                    android:gravity="end"
-                    android:textColor="#7d9ba7"
-                    android:text="protomotor"/>
-
-            </LinearLayout>
-
-
-
+                android:text="@string/tienda_ruta"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/rutadia_sucursal"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="3dp"
+                android:textColor="#8e8e8e"
                 android:text="Sucursal"
                 android:textSize="@dimen/abc_text_size_caption_material"/>
 
-            <TextView
-                android:id="@+id/rutadia_rol"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="3dp"
-                android:textSize="12sp"
-                android:text="rol"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/rutadia_rol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/secondary_text_color"
+                    android:text="rol"/>
+
                 <TextView
                     android:id="@+id/hora"
                     android:text="hora"
                     android:gravity="end"
                     android:textSize="12sp"
                     android:textColor="@color/secondary_text_color"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
+
 
 
         </LinearLayout>
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/ubicacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_place_deep_orange_a200_24dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_below="@+id/layout_tienda"
+            android:layout_marginBottom="5dp"/>
+
+    </RelativeLayout>
 
 
 

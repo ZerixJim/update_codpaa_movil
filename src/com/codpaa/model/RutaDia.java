@@ -10,6 +10,23 @@ public class RutaDia {
     private String rol;
     private String hora;
     private int modo;
+    private String latitud, longitud;
+
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
+    }
 
     public int getModo() {
         return modo;

@@ -8,15 +8,19 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 
 
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codpaa.R;
 import com.codpaa.activity.MenuTienda;
@@ -30,12 +34,12 @@ import java.util.Locale;
 public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAdapter.DiaViewHolder>{
 
 
-    List<RutaDia> rutaDias;
-    Boolean isHomeList = false;
+    private List<RutaDia> rutaDias;
+    private Boolean isHomeList = false;
 
-    public static List<String> homeActivitiesList = new ArrayList<>();
-    public static List<String> homeActivitiesSubList = new ArrayList<>();
-    Context context;
+    private static List<String> homeActivitiesList = new ArrayList<>();
+    private static List<String> homeActivitiesSubList = new ArrayList<>();
+    private Context context;
     private int idPromotor;
 
 
@@ -73,7 +77,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             dia.title.setText(homeActivitiesList.get(i));
             dia.subTitle.setText(homeActivitiesSubList.get(i));
         } else {
-            RutaDia diaModel = rutaDias.get(i);
+            final RutaDia diaModel = rutaDias.get(i);
             dia.title.setText(diaModel.getNombreTienda());
             dia.subTitle.setText(diaModel.getSucursal());
             dia.rol.setText(diaModel.getRol());
@@ -85,6 +89,51 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             }else if(diaModel.getModo() == 2){
                 dia.modo.setText("impulsor");
             }
+
+            if (!diaModel.getLongitud().isEmpty() && !diaModel.getLatitud().isEmpty()){
+
+
+                dia.ubicacion.setVisibility(View.VISIBLE);
+                dia.ubicacion.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri.Builder builder = new Uri.Builder();
+                        builder.scheme("https")
+                                .authority("maps.googleapis.com")
+                                .appendPath("maps")
+                                .appendPath("api")
+                                .appendPath("staticmap")
+                                .appendQueryParameter("center", diaModel.getLatitud() + "," + diaModel.getLongitud())
+                                .appendQueryParameter("zoom", "15")
+                                .appendQueryParameter("scale", "false")
+                                .appendQueryParameter("format", "png")
+                                //.appendQueryParameter("key", "AIzaSyCSdyBL0a7eYhfUhZPKVGKcyI3A5A_xQwY")
+                                .appendQueryParameter("markers", "color:orange|" +
+                                        "label:T|"+ diaModel.getLatitud() + "," +
+                                        diaModel.getLongitud())
+                                .appendQueryParameter("size", "400x400");
+
+                        String url = builder.build().toString();
+
+                        Log.d("url", url);
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        //intent.setType("image/png");
+                        context.startActivity(intent);
+
+
+                        //Toast.makeText(context, "pulsaste", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+            }else {
+                dia.ubicacion.setVisibility(View.INVISIBLE);
+            }
+
+
+
 
 
         }
@@ -107,6 +156,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         TextView hora;
         TextView number;
         TextView modo;
+        ImageView ubicacion;
 
         public DiaViewHolder(View itemView) {
             super(itemView);
@@ -118,6 +168,8 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             hora = (TextView) itemView.findViewById(R.id.hora);
             number = (TextView) itemView.findViewById(R.id.number);
             modo = (TextView) itemView.findViewById(R.id.modo);
+            ubicacion = (ImageView) itemView.findViewById(R.id.ubicacion);
+
 
             itemView.setOnClickListener(this);
 

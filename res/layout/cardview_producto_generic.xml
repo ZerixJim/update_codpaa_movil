@@ -269,7 +269,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3">
+                android:layout_weight="2.5">
 
                 <EditText
                     android:id="@+id/inventario"
@@ -291,7 +291,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 style="?android:attr/buttonBarButtonStyle"
                 android:visibility="invisible"
                 android:text="Guardar"/>

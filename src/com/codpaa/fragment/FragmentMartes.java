@@ -51,7 +51,8 @@ public class FragmentMartes extends Fragment{
 
         base = new BDopenHelper(getContext()).getReadableDatabase();
 
-        String martes = "select c.grupo, c.sucursal, v.rol, c.idTienda, c.idTipo, v.idModo " +
+        String martes = "select c.grupo, c.sucursal, v.rol, c.idTienda, c.idTipo, v.idModo," +
+                " c.latitud, c.longitud  " +
                 "  from clientes as c " +
                 "  left join visitaTienda as v " +
                 "  on c.idTienda = v.idTienda where v.martes>=1 and idModo=" + c.getPromotorMode() +
@@ -66,6 +67,9 @@ public class FragmentMartes extends Fragment{
             ruta.setRol(cursor.getString(2));
             ruta.setIdTienda(cursor.getInt(3));
             ruta.setModo(cursor.getInt(cursor.getColumnIndex("idModo")));
+
+            ruta.setLatitud(cursor.getString(cursor.getColumnIndex("latitud")));
+            ruta.setLongitud(cursor.getString(cursor.getColumnIndex("longitud")));
 
             arrayRutaDia.add(ruta);
 

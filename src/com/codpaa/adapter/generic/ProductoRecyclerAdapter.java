@@ -68,7 +68,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
     }
 
     @Override
-    public void onBindViewHolder(final ProductoViewHolder holder, final int position) {
+    public void onBindViewHolder(final ProductoViewHolder holder, int position) {
 
         final Producto producto = mProductosList.get(position);
 
@@ -105,6 +105,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
             if (producto.getEstatus() == Producto.EstatusTypes.DESCATALOGADO){
                 holder.estatus.setText("Descatalogado " + producto.getFecha());
+                
                 holder.cardView.setBackgroundColor(Color.parseColor("#ff8c8c"));
                 holder.estatus.setTextColor(Color.parseColor("#ff0000"));
             }else if(producto.getEstatus() == Producto.EstatusTypes.CATALOGADO){
@@ -149,7 +150,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
                                     producto.setInventario(Integer.parseInt(holder.inventario.getText().toString()));
 
-                                    listener.onInventarioSave(producto.getIdProducto(),producto.getInventario(),position);
+                                    listener.onInventarioSave(producto.getIdProducto(),producto.getInventario(),holder.getAdapterPosition());
 
                                     hideViews(holder);
                                 }

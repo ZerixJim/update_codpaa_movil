@@ -17,7 +17,6 @@ import com.github.gcacace.signaturepad.views.SignaturePad;
 public class DialogFragmentContrato extends DialogFragment {
 
     private SignaturePad firma;
-    private Button button, buttonClose;
     private SignatureListener listener;
 
 
@@ -35,10 +34,8 @@ public class DialogFragmentContrato extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_contrato, container, false);
 
         firma = (SignaturePad) view.findViewById(R.id.signature);
-        button = (Button) view.findViewById(R.id.button);
-        buttonClose = (Button) view.findViewById(R.id.btn_close);
-        button = (Button) view.findViewById(R.id.button);
-
+        Button button = (Button) view.findViewById(R.id.button);
+        Button buttonClose = (Button) view.findViewById(R.id.btn_close);
 
 
 
