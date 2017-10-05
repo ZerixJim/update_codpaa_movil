@@ -5,25 +5,29 @@ package com.codpaa.adapter;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 
 
-import android.telephony.TelephonyManager;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.codpaa.R;
 import com.codpaa.activity.MenuTienda;
+import com.codpaa.fragment.UbicacionDialogFragment;
 import com.codpaa.model.RutaDia;
 
 
@@ -115,14 +119,32 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
 
                         String url = builder.build().toString();
 
-                        Log.d("url", url);
+                        /*String uri = "geo:" + diaModel.getLatitud() + ","
+                                + diaModel.getLongitud() + "?q=" + diaModel.getLatitud()
+                                + "," + diaModel.getLongitud();*/
 
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        //Log.d("url", url);
+
+                        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                         //intent.setType("image/png");
-                        context.startActivity(intent);
+                        //context.startActivity(intent);
 
 
                         //Toast.makeText(context, "pulsaste", Toast.LENGTH_SHORT).show();
+
+                        UbicacionDialogFragment dialog =
+                                UbicacionDialogFragment.getInstance(url,diaModel.getLatitud(),
+                                        diaModel.getLongitud());
+
+                        FragmentTransaction ft = ((Activity) context).getFragmentManager().beginTransaction();
+                        Fragment prev = ((Activity)context).getFragmentManager().findFragmentByTag("dialog");
+                        if (prev != null){
+                            ft.remove(prev);
+                        }
+
+                        ft.addToBackStack(null);
+
+                        dialog.show(ft, "dialog");
 
                     }
                 });
