@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.codpaa.R;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /*
@@ -51,6 +53,7 @@ public class UbicacionDialogFragment extends DialogFragment {
 
 
         ImageView imageView = (ImageView) view.findViewById(R.id.image);
+        final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress);
         Button button = (Button) view.findViewById(R.id.btn_ubicacion);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +66,7 @@ public class UbicacionDialogFragment extends DialogFragment {
 
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
 
-                getContext().startActivity(intent);
+                getActivity().startActivity(intent);
 
 
 
@@ -71,7 +74,19 @@ public class UbicacionDialogFragment extends DialogFragment {
         });
 
 
-        Picasso.with(getContext()).load(url).into(imageView);
+        Picasso.with(getActivity()).load(url).into(imageView, new Callback() {
+            @Override
+            public void onSuccess() {
+
+                progressBar.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onError() {
+                progressBar.setVisibility(View.GONE);
+            }
+        });
 
 
         return view;

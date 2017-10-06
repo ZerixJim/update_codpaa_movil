@@ -11,8 +11,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 
@@ -108,14 +106,14 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
                                 .appendPath("api")
                                 .appendPath("staticmap")
                                 .appendQueryParameter("center", diaModel.getLatitud() + "," + diaModel.getLongitud())
-                                .appendQueryParameter("zoom", "15")
+                                .appendQueryParameter("zoom", "17")
                                 .appendQueryParameter("scale", "false")
                                 .appendQueryParameter("format", "png")
                                 //.appendQueryParameter("key", "AIzaSyCSdyBL0a7eYhfUhZPKVGKcyI3A5A_xQwY")
                                 .appendQueryParameter("markers", "color:orange|" +
                                         "label:T|"+ diaModel.getLatitud() + "," +
                                         diaModel.getLongitud())
-                                .appendQueryParameter("size", "400x400");
+                                .appendQueryParameter("size", "500x400");
 
                         String url = builder.build().toString();
 

@@ -110,6 +110,8 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:clickable="true"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:foreground="?android:attr/selectableItemBackground"
             android:layout_below="@+id/layout_tienda"
             android:layout_marginBottom="5dp"/>
