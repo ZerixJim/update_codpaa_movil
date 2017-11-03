@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 
 import com.codpaa.R;
+import com.codpaa.activity.impulsor.TiendaNueva;
 import com.codpaa.adapter.ViewPagerAdapter;
 import com.codpaa.fragment.FragmentDomingo;
 import com.codpaa.fragment.FragmentJueves;
@@ -102,6 +103,17 @@ public class CalendarioRuta extends AppCompatActivity{
         switch (item.getItemId()){
             case android.R.id.home:
                 this.finish();
+                return true;
+
+            case R.id.nueva_tienda:
+
+                Intent i = new Intent(this, TiendaNueva.class);
+
+                i.putExtra("idPromotor", idPromotor);
+
+                startActivity(i);
+
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

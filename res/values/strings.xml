@@ -178,6 +178,7 @@
     <string name="estatus_activity">Estatus</string>
     <string name="spinner_estatus">Spinner Estatus</string>
     <string name="cantidad_cajas">Inventario cajas</string>
+    <string name="estudio_de_marcado">Estudio de marcado</string>
 
 
 </resources>

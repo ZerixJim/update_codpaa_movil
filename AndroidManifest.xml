@@ -207,6 +207,10 @@
             android:label="Avance de la gestion"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".activity.impulsor.TiendaNueva"
+            android:label="Estudio de mercado"
+            />
+
 
         <service android:name=".service.GeoLocalizar"
             android:exported="false"/>

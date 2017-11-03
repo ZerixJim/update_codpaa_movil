@@ -423,7 +423,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	}
 
 
-    private Bitmap getBitmap(String path) {
+    public Bitmap getBitmap(String path) {
 
         Uri uri = Uri.fromFile(new File(path));
         InputStream in = null;
