@@ -286,14 +286,6 @@
             </LinearLayout>
 
 
-            <Button
-                android:id="@+id/bInvGuar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/blue_primary"
-                android:padding="25dp"
-                android:text="@string/guar"/>
 
         </LinearLayout>
 

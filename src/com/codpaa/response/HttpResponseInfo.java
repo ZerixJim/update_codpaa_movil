@@ -43,7 +43,6 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
         this.progressDialog = new ProgressDialog(context);
         this.progressDialog.setMessage("Descargando...");
         this.progressDialog.setCancelable(false);
-        this.progressDialog.setMax(100);
 
 
     }
@@ -77,6 +76,9 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
         //Log.d("OnSuccess Info", "1");
         Handler handler = new Handler();
+
+
+
 
         if (response != null){
             try {

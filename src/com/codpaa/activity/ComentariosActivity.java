@@ -11,11 +11,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
+
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -23,15 +23,15 @@ import com.codpaa.update.EnviarDatos;
 import com.codpaa.R;
 import com.codpaa.db.BDopenHelper;
 
-public class ComentariosActivity extends AppCompatActivity implements OnClickListener{
+public class ComentariosActivity extends AppCompatActivity {
 	
 	
-	Button btnGuardar;
+
 	EditText editComentario;
 	BDopenHelper BD;
 	EnviarDatos EnviaDatos;
 	private int idTienda, idPromotor;
-	Locale local;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,20 +39,15 @@ public class ComentariosActivity extends AppCompatActivity implements OnClickLis
 		setContentView(R.layout.comentarios);
 		
 		Intent recibeIdTi = getIntent();
-		idTienda = (Integer) recibeIdTi.getExtras().get("idTienda");
-		idPromotor = (Integer) recibeIdTi.getExtras().get("idPromotor");
-		
-		btnGuardar = (Button) findViewById(R.id.btnGuaComentario);
+		idTienda = recibeIdTi.getExtras().getInt("idTienda", 0);
+		idPromotor = recibeIdTi.getExtras().getInt("idPromotor", 0);
 
 		editComentario = (EditText) findViewById(R.id.editComen);
 		
-		
-		btnGuardar.setOnClickListener(this);
 
 		
 		EnviaDatos = new EnviarDatos(this);
-		
-		local = new Locale("es_MX");
+
 
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null){
@@ -67,11 +62,27 @@ public class ComentariosActivity extends AppCompatActivity implements OnClickLis
             case android.R.id.home:
                 finish();
                 return true;
+
+
+			case R.id.save_comentarios:
+
+				guardarComentario();
+
+				return true;
             default: return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		getMenuInflater().inflate(R.menu.comentarios, menu);
+
+		return true;
+	}
+
+	@Override
 	protected void onPause() {
 		super.onPause();
 		
@@ -89,25 +100,13 @@ public class ComentariosActivity extends AppCompatActivity implements OnClickLis
 		
 	}
 
-	@Override
-	public void onClick(View v) {
-		
-		switch(v.getId()){
-		case R.id.btnGuaComentario:
-			guardarComentario();
 
-			break;
-
-		}
-		
-		
-	}
 	
 	private void guardarComentario(){
-		Toast.makeText(this, "guardando..", Toast.LENGTH_SHORT).show();
+
 		BD = new BDopenHelper(this);
 		Calendar c = Calendar.getInstance();
-		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",local);
+		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 		
 			
 		String fecha = dFecha.format(c.getTime());
@@ -119,8 +118,11 @@ public class ComentariosActivity extends AppCompatActivity implements OnClickLis
 				String comentario = editComentario.getText().toString();
 				BD.insertarComentarios(idTienda, idPromotor, fecha, comentario);
 				editComentario.setText("");
+				Toast.makeText(this, "Guardado", Toast.LENGTH_SHORT).show();
 				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(editComentario.getWindowToken(), 0);
+				if (imm != null) {
+					imm.hideSoftInputFromWindow(editComentario.getWindowToken(), 0);
+				}
 				Toast.makeText(this, "Comentario Guardado", Toast.LENGTH_SHORT).show();
 				EnviaDatos.enviarComentario();
 				

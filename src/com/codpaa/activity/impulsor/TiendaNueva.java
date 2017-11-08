@@ -34,7 +34,6 @@ import java.util.Locale;
 public class TiendaNueva extends AppCompatActivity implements View.OnClickListener {
 
     private final int TAKE_PHOTO_CODE = 0;
-    private Button btnPhto;
     private Uri imageToUpload;
     private ImageView imageView;
 
@@ -45,8 +44,7 @@ public class TiendaNueva extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.nueva_tienda_activity);
 
 
-
-        btnPhto = (Button) findViewById(R.id.btn_captura);
+        Button btnPhto = (Button) findViewById(R.id.btn_captura);
         imageView = (ImageView) findViewById(R.id.image);
 
 

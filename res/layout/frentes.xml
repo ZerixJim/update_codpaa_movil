@@ -224,15 +224,6 @@
             <include layout="@layout/content_linea_caja" />
 
 
-            <Button
-                android:id="@+id/btonChFr"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:text="@string/guar"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp" />
 
         </LinearLayout>
 

@@ -12,27 +12,25 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
+
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
+
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.codpaa.adapter.CustomAdapter;
 import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.model.MarcaModel;
-import com.codpaa.model.SpinnerExhibicionesModel;
 import com.codpaa.model.SpinnerMarcaModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.adapter.ProductosCustomAdapter;
@@ -40,14 +38,12 @@ import com.codpaa.R;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
-public class Exhibiciones extends AppCompatActivity implements OnClickListener,OnItemSelectedListener{
+public class Exhibiciones extends AppCompatActivity implements OnItemSelectedListener{
 	
 	int idTienda, idPromotor;
 	SQLiteDatabase base;
 	Spinner marca,producto,exhibicion;
     EditText cantidadExhi;
-    Locale locale;
-	Button guardar;
 	InputMethodManager im;
 
 	ArrayList<MarcaModel> array = new ArrayList<>();
@@ -57,10 +53,9 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.exhibiciones);
 
-        locale = new Locale("es_MX");
 		Intent i = getIntent();
-		idTienda = (Integer) i.getExtras().get("idTienda");
-		idPromotor = (Integer) i.getExtras().get("idPromotor");
+		idTienda =  i.getExtras().getInt("idTienda");
+		idPromotor =  i.getExtras().getInt("idPromotor");
 
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		
@@ -68,7 +63,7 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
 		marca = (Spinner) findViewById(R.id.spiExhMarca);
 		producto = (Spinner) findViewById(R.id.spiExhProd);
 		exhibicion = (Spinner) findViewById(R.id.spiExhibi);
-		guardar = (Button) findViewById(R.id.btnGuaEx);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -77,7 +72,7 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
         cantidadExhi = (EditText) findViewById(R.id.cantidadExhibicion);
 
 		marca.setOnItemSelectedListener(this);
-		guardar.setOnClickListener(this);
+
 
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
@@ -155,31 +150,31 @@ public class Exhibiciones extends AppCompatActivity implements OnClickListener,O
                 this.finish();
                 return true;
 
+			case R.id.save_exhibiciones:
+
+				guardarLosDatos();
+				return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
 	@Override
-	public void onClick(View v) {
-		
-		switch(v.getId()) {
-		
-		case R.id.btnGuaEx:
-			guardarLosDatos();
-			break;
+	public boolean onCreateOptionsMenu(Menu menu) {
 
-		}
-		
-		
+		getMenuInflater().inflate(R.menu.menu_exhibiciones, menu);
+
+		return true;
 	}
+
 
 	private void guardarLosDatos() {
 		try {
 			
 			float cantidad = 0;
 			Calendar c = Calendar.getInstance();
-			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",locale);
+			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 			
 			String fecha = dFecha.format(c.getTime());
 			if(cantidadExhi.getText().toString().length() > 0){

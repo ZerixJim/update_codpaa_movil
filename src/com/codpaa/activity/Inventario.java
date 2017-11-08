@@ -22,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -49,7 +48,7 @@ import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
 
-public class Inventario extends AppCompatActivity implements OnClickListener,OnItemSelectedListener, SeekBar.OnSeekBarChangeListener{
+public class Inventario extends AppCompatActivity implements OnItemSelectedListener, SeekBar.OnSeekBarChangeListener{
 	
 	
 	int idTienda, idPromotor;
@@ -59,7 +58,6 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 	TextView txtResultado;
 	Toolbar toolbar;
 	Spinner marca,producto;
-	Button guardar;
     static Button btnFecha;
 
 	EditText editFisico, editSistema, editLote;
@@ -72,7 +70,7 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.inventariobodega);
+		setContentView(R.layout.inventario_bodega_layout);
 		locale = new Locale("es_MX");
 		Intent i = getIntent();
 
@@ -84,8 +82,7 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 		marca = (Spinner) findViewById(R.id.spiInMar);
 		producto = (Spinner) findViewById(R.id.spiInvPro);
 
-	
-		guardar = (Button) findViewById(R.id.bInvGuar);
+
 		btnFecha = (Button) findViewById(R.id.button_fecha);
 
 		editFisico = (EditText) findViewById(R.id.editInv);
@@ -114,7 +111,6 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 		piezas.setChecked(true);
 		
 		marca.setOnItemSelectedListener(this);
-		guardar.setOnClickListener(this);
 
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -177,7 +173,7 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_inventario, menu);
 
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
@@ -221,19 +217,6 @@ public class Inventario extends AppCompatActivity implements OnClickListener,OnI
 
 	}
 
-	@Override
-	public void onClick(View v) {
-		
-		switch(v.getId()) {
-
-            case R.id.bInvGuar:
-                guardarLosDatos();
-                break;
-
-        }
-		
-		
-	}
 
 	private void guardarLosDatos() {
 		try {

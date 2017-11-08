@@ -2,14 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/save_frentes"
+
+    <item android:id="@+id/save_exhibiciones"
         android:title="@string/guar"
         app:showAsAction="ifRoom|withText"/>
 
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
 
 </menu>

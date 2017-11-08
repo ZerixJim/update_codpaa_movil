@@ -39,7 +39,7 @@ import com.codpaa.db.BDopenHelper;
 public class Frentes extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
 
 	private int idPromotor, idTienda;
-	Button btnGuar, btn1,btn2,btn3,btn4,btn5,btn6;
+	Button  btn1,btn2,btn3,btn4,btn5,btn6;
 	private EditText unifila, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14;
 	private EditText Echa1,Echa2,Echa3,Echa4,Echa5,Echa6;
 	private InputMethodManager im;
@@ -120,12 +120,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		f14 = (EditText) findViewById(R.id.caja14);
 
 
-		btnGuar = (Button) findViewById(R.id.btonChFr);
 
-
-		if (btnGuar != null) {
-			btnGuar.setOnClickListener(this);
-		}
 		spiMarca.setOnItemSelectedListener(this);
 		btn1.setOnClickListener(this);
 		btn2.setOnClickListener(this);
@@ -228,7 +223,6 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 			case R.id.btnfoto: reQuesFocus(Echa4);break;
 			case R.id.btnf5: reQuesFocus(Echa5);break;
 			case R.id.btnf6: reQuesFocus(Echa6);break;
-			case R.id.btonChFr: guardarDatos(); break;
 			case R.id.buttonExhib: finish(); break;
 		}
 
@@ -376,7 +370,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 
 		}catch(Exception e) {
-			Toast.makeText(this, "Excep guar"+Echa1.getVisibility(), Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Excep guar"+Echa1.getVisibility(),
+					Toast.LENGTH_SHORT).show();
 		}
 
 
