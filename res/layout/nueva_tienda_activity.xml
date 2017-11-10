@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,11 +13,16 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/nombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_place_deep_orange_a200_24dp"
             android:drawableStart="@drawable/ic_place_deep_orange_a200_24dp"
+            android:textColor="@color/grey_500"
             android:drawableTint="@color/grey_500"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:maxLength="100"
             android:hint="Nombre tienda"/>
 
 
@@ -38,12 +43,34 @@
         android:text="Captura"/>
 
 
-    <ImageView
-        android:id="@+id/image"
+    <FrameLayout
         android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="25dp"/>
+        android:layout_marginTop="25dp">
+
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <com.github.lzyzsd.circleprogress.DonutProgress
+            android:id="@+id/progress_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            custom:donut_unfinished_color="#93ffffff"
+            custom:donut_finished_color="#baffb9"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
+
+
+    </FrameLayout>
+
+
+
 
 
 

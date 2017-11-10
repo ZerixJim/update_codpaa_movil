@@ -1,6 +1,6 @@
 package com.codpaa.activity;
 
-import java.io.ByteArrayOutputStream;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -53,7 +53,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.MediaStore.Images;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -69,7 +68,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Button;
+
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -398,15 +397,15 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     }
 
     //get image from Uri
-	public Uri getImageUri(Context inContext, Bitmap inImage) {
+	/*public Uri getImageUri(Context inContext, Bitmap inImage) {
 	    ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 
 	    inImage.compress(Bitmap.CompressFormat.JPEG, 0, bytes);
 	    String path = Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
 	    return Uri.parse(path);
-	}
+	}*/
     //get real path from Uri
-	public String getRealPathFromURI(Uri uri) {
+	/*public String getRealPathFromURI(Uri uri) {
 	    Cursor cursor = getContentResolver().query(uri, null, null, null, null);
 
         String path = "";
@@ -420,7 +419,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         }
 
 	    return path;
-	}
+	}*/
 
 
     public Bitmap getBitmap(String path) {
@@ -522,7 +521,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     if(verificarConexion()){
 
                         AsyncHttpClient clienteFoto = new AsyncHttpClient();
-                        clienteFoto.setTimeout(10000);
+                        //clienteFoto.setTimeout(10000);
                         BDopenHelper registraImagen = new BDopenHelper(this);
 
 
@@ -923,9 +922,12 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     //metod: conexion verify
 	public boolean verificarConexion() {
 	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        NetworkInfo netInfo = null;
+        if (cm != null) {
+            netInfo = cm.getActiveNetworkInfo();
+        }
 
-	    return netInfo != null && netInfo.isConnected();
+        return netInfo != null && netInfo.isConnected();
 	}
 
     //metod: spinner load
