@@ -1,12 +1,9 @@
 package com.codpaa.activity;
 
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.io.InputStream;
@@ -51,11 +48,9 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -87,12 +82,10 @@ import android.os.Handler;
 import com.codpaa.db.BDopenHelper;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.squareup.picasso.Transformation;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.mime.content.ContentBody;
-import cz.msebera.android.httpclient.entity.mime.content.InputStreamBody;
+
 import id.zelory.compressor.Compressor;
 
 
@@ -339,14 +332,10 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 mCurrentPhotoPath = selectedImage.getPath();
 
 
-
-
                 if (mCurrentPhotoPath != null){
 
 
                     cardView.setVisibility(View.VISIBLE);
-
-
 
 
 
