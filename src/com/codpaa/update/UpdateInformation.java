@@ -2,6 +2,8 @@ package com.codpaa.update;
 
 
 import android.content.Context;
+import android.os.Looper;
+import android.util.Log;
 
 import com.codpaa.listener.ResponseEncuesta;
 import com.codpaa.response.HttpResponseInfo;
@@ -37,6 +39,11 @@ public class UpdateInformation{
 
 
         client.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, responseInfo);
+
+
+        if(Looper.getMainLooper() != Looper.myLooper()){
+            Log.d("looper", "diferentes");
+        }
 
 
 

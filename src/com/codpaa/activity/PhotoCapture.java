@@ -1,8 +1,12 @@
 package com.codpaa.activity;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.io.InputStream;
@@ -47,9 +51,11 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -81,8 +87,13 @@ import android.os.Handler;
 import com.codpaa.db.BDopenHelper;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+import com.squareup.picasso.Transformation;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.mime.content.ContentBody;
+import cz.msebera.android.httpclient.entity.mime.content.InputStreamBody;
+import id.zelory.compressor.Compressor;
 
 
 public class PhotoCapture extends AppCompatActivity implements OnClickListener, OnItemSelectedListener, MultiSpinnerSelect.MultiSpinnerListener{
@@ -322,30 +333,54 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
                 Uri selectedImage = imageToUploadUri;
                 getContentResolver().notifyChange(selectedImage, null);
-                Bitmap reduceImageSize = getBitmap(selectedImage.getPath());
-
+                //Bitmap reduceImageSize = getBitmap(selectedImage.getPath());
 
 
                 mCurrentPhotoPath = selectedImage.getPath();
 
 
-                if (reduceImageSize != null){
-
-                    //showImg.setImageBitmap(reduceImageSize);
 
 
-                    final File photo = new File(mCurrentPhotoPath);
+                if (mCurrentPhotoPath != null){
+
 
                     cardView.setVisibility(View.VISIBLE);
 
 
-                    Picasso picasso = Picasso.with(this);
-                    //picasso.setIndicatorsEnabled(true);
-                    
 
-                    picasso.load(photo)
-                            .placeholder(R.drawable.placeholder)
-                            .into(showImg);
+
+
+                    final File photo = new File(mCurrentPhotoPath);
+
+                    File file = decodeFile(photo);
+
+                    if (file != null){
+
+                        if (photo.exists()){
+
+                            if (photo.delete()){
+
+
+                                mCurrentPhotoPath = file.getAbsolutePath();
+
+                            }
+
+                        }
+
+
+                        Picasso.with(getApplicationContext()).load(file)
+                                .placeholder(R.drawable.placeholder)
+                                .into(showImg);
+
+                    }else {
+                        Picasso.with(getApplicationContext()).load(photo)
+                                .placeholder(R.drawable.placeholder)
+                                .into(showImg);
+
+
+                    }
+
+
 
 
                     showImg.setOnClickListener(new OnClickListener() {
@@ -369,18 +404,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
 
-                    /*try {
-                        Bitmap imageCompress = BitmapFactory.decodeFile(mCurrentPhotoPath);
 
-                        File image = new File(mCurrentPhotoPath);
-                        FileOutputStream fileOut = new FileOutputStream(image);
-
-                        imageCompress.compress(Bitmap.CompressFormat.JPEG, 100, fileOut);
-
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }*/
                 }
 
 
@@ -388,6 +412,22 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
         }else{
+
+
+            File file = new File(imageToUploadUri.getPath());
+
+            if (file.exists()){
+                if (file.delete()){
+                    Log.d("delete", "true");
+                }else {
+                    Log.d("delete", "false");
+                }
+            }
+
+            imageToUploadUri = null;
+            imagenEspera = false;
+            mCurrentPhotoPath = null;
+
             cardView.setVisibility(View.GONE);
         }
 
@@ -425,9 +465,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     public Bitmap getBitmap(String path) {
 
         Uri uri = Uri.fromFile(new File(path));
-        InputStream in = null;
+        InputStream in;
         try {
-            final int IMAGE_MAX_SIZE = 1000000; // 1.0MP
+            final int IMAGE_MAX_SIZE = 800000; // 0.8MP
             in = getContentResolver().openInputStream(uri);
 
             // Decode image size
@@ -487,6 +527,31 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
             Log.e("", e.getMessage(), e);
             return null;
         }
+    }
+
+
+
+    private File decodeFile(File file) {
+
+        Compressor comp = new Compressor(this);
+        try {
+
+            String[] fileName = file.getName().split("\\.");
+
+
+            String path = Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/codpaa/";
+
+
+
+            return comp.setDestinationDirectoryPath(path)
+
+                    .compressToFile(file, fileName[0] + "-comp." + fileName[1]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 
@@ -1028,6 +1093,45 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
             }, CAMERA_PERMISSION);
         }
+    }
+
+    public class BitmapTransform implements Transformation {
+
+        private final int maxWidth;
+        private final int maxHeight;
+
+        public BitmapTransform(int maxWidth, int maxHeight) {
+            this.maxWidth = maxWidth;
+            this.maxHeight = maxHeight;
+        }
+
+        @Override
+        public Bitmap transform(Bitmap source) {
+            int targetWidth, targetHeight;
+            double aspectRatio;
+
+            if (source.getWidth() > source.getHeight()) {
+                targetWidth = maxWidth;
+                aspectRatio = (double) source.getHeight() / (double) source.getWidth();
+                targetHeight = (int) (targetWidth * aspectRatio);
+            } else {
+                targetHeight = maxHeight;
+                aspectRatio = (double) source.getWidth() / (double) source.getHeight();
+                targetWidth = (int) (targetHeight * aspectRatio);
+            }
+
+            Bitmap result = Bitmap.createScaledBitmap(source, targetWidth, targetHeight, false);
+            if (result != source) {
+                source.recycle();
+            }
+            return result;
+        }
+
+        @Override
+        public String key() {
+            return maxWidth + "x" + maxHeight;
+        }
+
     }
 
 

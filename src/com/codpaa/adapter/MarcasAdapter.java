@@ -4,13 +4,13 @@ package com.codpaa.adapter;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.codpaa.R;
@@ -78,6 +78,7 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         MarcaModel spm = arrayMarcas.get(position);
         viewHolder.nombre.setText(spm.getNombre());
 
+
         viewHolder.descrip.setText("");
 
 
@@ -106,10 +107,6 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return getCustomView(position, convertView, parent);
-    }
-
-    private View getCustomView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
 
         if (convertView == null){
@@ -129,9 +126,12 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
 
         MarcaModel spm = arrayMarcas.get(position);
         viewHolder.nombre.setText(spm.getNombre());
-        viewHolder.nombre.setPadding(0,15,0,0);
-        viewHolder.descrip.setText("");
 
+
+        viewHolder.nombre.setPadding(0,15,0,0);
+
+
+        viewHolder.descrip.setText("");
 
 
 
@@ -140,6 +140,7 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
 
 
         return convertView;
-
     }
+
+
 }

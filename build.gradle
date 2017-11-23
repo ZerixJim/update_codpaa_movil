@@ -16,6 +16,7 @@ repositories {
 allprojects {
     repositories{
         jcenter()
+        mavenCentral()
 
         maven { url "https://jitpack.io" }
     }
@@ -79,6 +80,9 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:9.0.2'
     compile 'com.android.support:percent:23.4.0'
     compile 'com.google.code.gson:gson:2.8.0'
+
+
+    compile 'id.zelory:compressor:2.1.0'
 
 
     compile 'com.github.gcacace:signature-pad:1.2.1'
