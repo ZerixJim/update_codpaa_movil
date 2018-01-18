@@ -22,9 +22,13 @@ public class InstallApps extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
 
-        AndroidApps app = new AndroidApps(context, getUser(context));
+        if (getUser(context) > 0){
 
-        app.sentSingleApp(intent.getData().getEncodedSchemeSpecificPart());
+            AndroidApps app = new AndroidApps(context, getUser(context));
+
+            app.sentSingleApp(intent.getData().getEncodedSchemeSpecificPart());
+        }
+
 
 
     }
