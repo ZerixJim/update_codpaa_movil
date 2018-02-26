@@ -27,6 +27,8 @@ import com.codpaa.R;
 import com.codpaa.activity.MenuTienda;
 import com.codpaa.fragment.UbicacionDialogFragment;
 import com.codpaa.model.RutaDia;
+import com.codpaa.util.Utilities;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
@@ -91,6 +93,9 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             }else if(diaModel.getModo() == 2){
                 dia.modo.setText("impulsor");
             }
+
+            Picasso.with(context).load(Utilities.FORMATOS_PATH + diaModel.getFormato() + ".png").into(dia.image);
+
 
             if (!diaModel.getLongitud().isEmpty() && !diaModel.getLatitud().isEmpty()){
 
@@ -176,7 +181,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         TextView hora;
         TextView number;
         TextView modo;
-        ImageView ubicacion;
+        ImageView ubicacion, image;
 
         public DiaViewHolder(View itemView) {
             super(itemView);
@@ -189,6 +194,8 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             number = (TextView) itemView.findViewById(R.id.number);
             modo = (TextView) itemView.findViewById(R.id.modo);
             ubicacion = (ImageView) itemView.findViewById(R.id.ubicacion);
+
+            image = (ImageView) itemView.findViewById(R.id.image);
 
 
             itemView.setOnClickListener(this);

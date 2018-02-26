@@ -11,6 +11,15 @@ public class RutaDia {
     private String hora;
     private int modo;
     private String latitud, longitud;
+    private int formato;
+
+    public int getFormato() {
+        return formato;
+    }
+
+    public void setFormato(int formato) {
+        this.formato = formato;
+    }
 
     public String getLatitud() {
         return latitud;

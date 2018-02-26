@@ -51,7 +51,7 @@ public class FragmentViernes extends Fragment {
 
         base = new BDopenHelper(getContext()).getReadableDatabase();
         String viernes="select c.grupo, c.sucursal, v.rol, c.idTienda, v.idModo, c.latitud, " +
-                " c.longitud  " +
+                " c.longitud, c.idFormato   " +
                 " from clientes as c " +
                 " left join visitaTienda as v " +
                 " on c.idTienda = v.idTienda " +
@@ -70,6 +70,7 @@ public class FragmentViernes extends Fragment {
 
             ruta.setLatitud(cursor.getString(cursor.getColumnIndex("latitud")));
             ruta.setLongitud(cursor.getString(cursor.getColumnIndex("longitud")));
+            ruta.setFormato(cursor.getInt(cursor.getColumnIndex("idFormato")));
 
             arrayRutaDia.add(ruta);
 
