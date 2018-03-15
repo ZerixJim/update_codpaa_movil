@@ -21,7 +21,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
+
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -42,7 +42,7 @@ import com.codpaa.R;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
-public class SurtidoMueble extends AppCompatActivity implements OnClickListener, OnItemSelectedListener,OnCheckedChangeListener{
+public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedListener,OnCheckedChangeListener{
 	
 	Spinner spiMar, spiPro;
 	EditText cantidad;
@@ -66,8 +66,8 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		setContentView(R.layout.surtidomueble);
 		
 		Intent i = getIntent();
-		idTienda = (Integer) i.getExtras().get("idTienda");
-		idPromotor = (Integer) i.getExtras().get("idPromotor");
+		idTienda = i.getIntExtra("idTienda", 0);
+		idPromotor = i.getIntExtra("idPromotor", 0);
 		
 		spiMar = (Spinner) findViewById(R.id.spiSurM);
 		spiPro = (Spinner) findViewById(R.id.spiSurP);
@@ -182,7 +182,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_venta_promedio, menu);
 
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
@@ -199,14 +199,6 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 		
 		
 	}
-
-	
-	@Override
-	public void onClick(View v) {
-
-		
-	}
-
 
 
 	@Override
@@ -239,8 +231,6 @@ public class SurtidoMueble extends AppCompatActivity implements OnClickListener,
 			
 			int cajas = 0;
             int uni=0, v1=0, v2=0, v3=0, v4=0, v5=0, v6=0, v7=0, v8=0, v9=0, v10=0, v11=0, v12=0,v13=0,v14=0;
-
-
 
 
 

@@ -114,16 +114,16 @@
             android:name=".activity.Frentes"
             android:label="@string/frentes"
             android:screenOrientation="portrait"
-            android:theme="@style/noActionBarNoTitle" />
+            android:theme="@style/noActionBar" />
         <activity
             android:name=".activity.SurtidoMueble"
             android:label="@string/surtido"
-            android:theme="@style/noActionBarNoTitle"
+            android:theme="@style/noActionBar"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.Exhibiciones"
             android:label="@string/exhi"
-            android:theme="@style/noActionBarNoTitle"
+            android:theme="@style/noActionBar"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.Inventario"

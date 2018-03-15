@@ -96,7 +96,7 @@
 
         <item name="actionMenuTextColor">@color/Blanco</item>
 
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+
 
     </style>
 
