@@ -24,9 +24,9 @@ import com.squareup.picasso.Picasso;
 
 
 public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
-	Activity _context;
+	private Activity _context;
 	private ArrayList<SpinnerProductoModel> _datos;
-    BitmapDrawable bitmapDrawable;
+
 
 
 
@@ -47,16 +47,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		this._context= con;
 		this._datos = objects;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
 
-            bitmapDrawable = (BitmapDrawable) _context.getResources()
-                    .getDrawable(R.drawable.ic_launcher, _context.getTheme());
-        }else {
-            bitmapDrawable = (BitmapDrawable) _context.getResources()
-                    .getDrawable(R.drawable.ic_launcher);
-        }
-		
-		
 	}
 
 	@Override

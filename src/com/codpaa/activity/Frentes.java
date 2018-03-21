@@ -165,7 +165,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		}
 
 
-		/**
+		/*
 		 * keyboard soft hide
 		 */
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -370,8 +370,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 
 		}catch(Exception e) {
-			Toast.makeText(this, "Excep guar"+Echa1.getVisibility(),
-					Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
 		}
 
 

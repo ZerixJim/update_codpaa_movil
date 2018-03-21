@@ -301,7 +301,9 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
 
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mRecyclerView.getWindowToken(), 0);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(mRecyclerView.getWindowToken(), 0);
+        }
 
 
         EnviarDatos enviarDatos = new EnviarDatos(this);
