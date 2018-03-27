@@ -143,6 +143,15 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
 
 
+    private void syncRemoteFolio(){
+
+
+
+
+    }
+
+
+
     private List<AvanceGestionModel> getList(){
 
         List<AvanceGestionModel> array = new ArrayList<>();
@@ -382,7 +391,8 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
             Toast.makeText(this, "Generando Folio..", Toast.LENGTH_SHORT).show();
 
-            client.post(this, Utilities.WEB_SERVICE_CODPAA + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
+            //TODO: change to production
+            client.post(this, Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
 
 
         }else{

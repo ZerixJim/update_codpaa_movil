@@ -1164,7 +1164,8 @@ public class EnviarDatos {
 			Log.d("json", gson.toJson(json));
 
 
-			client.post(Utilities.WEB_SERVICE_CODPAA + "send_impulsor.php", rp , new ProductoCatalogoResponse(context));
+			//todo change to production
+			client.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_impulsor.php", rp , new ProductoCatalogoResponse(context));
 
 
 			//mRecyclerView.getAdapter().notifyDataSetChanged();
