@@ -234,8 +234,7 @@ public class ProcesoAceptacion extends AppCompatActivity implements ProcesoAcept
 
             Log.d("json", gson.toJson(json));
 
-            //todo change to production
-            client.post(this, Utilities.WEB_SERVICE_CODPAA_TEST + "update_producto_proceso.php", rp, new JsonResponseUpdateProceso(this));
+            client.post(this, Utilities.WEB_SERVICE_CODPAA + "update_producto_proceso.php", rp, new JsonResponseUpdateProceso(this));
 
 
         }

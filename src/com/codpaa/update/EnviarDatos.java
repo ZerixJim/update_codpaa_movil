@@ -1161,11 +1161,9 @@ public class EnviarDatos {
 			rp.put("solicitud", "sendCatalogo");
 			rp.put("json", gson.toJson(json));
 
-			Log.d("json", gson.toJson(json));
+			//Log.d("json", gson.toJson(json));
 
-
-			//todo change to production
-			client.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_impulsor.php", rp , new ProductoCatalogoResponse(context));
+			client.post(Utilities.WEB_SERVICE_CODPAA + "send_impulsor.php", rp , new ProductoCatalogoResponse(context));
 
 
 			//mRecyclerView.getAdapter().notifyDataSetChanged();

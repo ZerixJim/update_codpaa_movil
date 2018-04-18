@@ -7,12 +7,16 @@ import com.codpaa.model.JsonProductoImpulsor;
 import com.codpaa.model.JsonUpdateFirma;
 import com.codpaa.model.generic.Producto;
 import com.codpaa.provider.DbEstructure;
-import com.codpaa.response.ProductoCatalogoResponse;
+
 import com.codpaa.response.ProductoEstatusResponse;
 import com.codpaa.response.ResponseUpdateFirmaProducto;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.util.Configuracion;
 import com.codpaa.util.Utilities;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 import com.loopj.android.http.*;
 
@@ -31,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import android.Manifest;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -40,8 +45,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Binder;
@@ -49,10 +53,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-
+import android.widget.Toast;
 
 
 import com.codpaa.db.BDopenHelper;
@@ -60,11 +67,11 @@ import com.codpaa.db.BDopenHelper;
 import cz.msebera.android.httpclient.Header;
 
 
-public class GeoLocalizar extends Service implements LocationListener{
-	
-	LocationManager lm;
-	Location loGps, loNet, loGeneral;
-	Timer tiempoEspera = null, tiempoRastreo = null;
+public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+
+
+	Location serviceLocation;
+	Timer tiempoEspera = null;
 	SQLiteDatabase base = null;
 	BDopenHelper DBhelper;
 	AsyncHttpClient cliente;
@@ -73,200 +80,206 @@ public class GeoLocalizar extends Service implements LocationListener{
 	RequestParams rp;
 	int idCel;
 
+	private GoogleApiClient mGoogleApiClient;
+	private LocationRequest locationRequest;
+
 
 	Intent resultIntent;
 	PendingIntent pendingIntent;
 	Context con;
-	
 
-	
-	AsyncHttpResponseHandler respuesta = new AsyncHttpResponseHandler(){
-		
-		@Override
-		public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {}
+
+	AsyncHttpResponseHandler respuesta = new AsyncHttpResponseHandler() {
 
 		@Override
-		public void onFailure(int arg0, Header[] arg1, byte[] arg2,Throwable arg3) {}
-	
+		public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+		}
+
+		@Override
+		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+		}
+
 	};
 
 
-    JsonHttpResponseHandler respuestaFrentes = new JsonHttpResponseHandler(){
+	JsonHttpResponseHandler respuestaFrentes = new JsonHttpResponseHandler() {
 
-        SQLiteDatabase bdF=null;
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+		SQLiteDatabase bdF = null;
 
-            if(response != null) {
-                try {
-                    Log.d("ResponseFrentes",response.toString());
-                    if (response.getBoolean("insert")) {
-                        bdF = new BDopenHelper(con).getWritableDatabase();
-                        bdF.execSQL("Update frentesCharola set status=2 where idTienda=" +
+		@Override
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+			if (response != null) {
+				try {
+					Log.d("ResponseFrentes", response.toString());
+					if (response.getBoolean("insert")) {
+						bdF = new BDopenHelper(con).getWritableDatabase();
+						bdF.execSQL("Update frentesCharola set status=2 where idTienda=" +
 								response.getInt("idTienda") + " and fecha='" +
 								response.getString("fecha") + "' and idMarca=" +
 								response.getInt("idMarca") + " and idProducto=" +
 								response.getInt("idProducto"));
-                        Log.d("ResponseFrentes", "insertado :)");
+						Log.d("ResponseFrentes", "insertado :)");
 
-                        bdF.close();
+						bdF.close();
 
-                    } else {
-                        Log.d("ResponseFrentes", "fallo :(");
-                    }
+					} else {
+						Log.d("ResponseFrentes", "fallo :(");
+					}
 
-                } catch (JSONException e) {
-                    Log.d("ResponseFrentes", "Error");
-                    e.printStackTrace();
-                }
-            }
+				} catch (JSONException e) {
+					Log.d("ResponseFrentes", "Error");
+					e.printStackTrace();
+				}
+			}
 
-        }
+		}
 
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-            super.onFailure(statusCode, headers, throwable, errorResponse);
-            Log.d("ResponseFrentes","Se perdio la coneccion :(");
+		@Override
+		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+			super.onFailure(statusCode, headers, throwable, errorResponse);
+			Log.d("ResponseFrentes", "Se perdio la coneccion :(");
 
-        }
-    };
-	
-    JsonHttpResponseHandler respuestaInteligencia = new JsonHttpResponseHandler(){
-        SQLiteDatabase bdInt;
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+		}
+	};
 
-            if(response != null) {
-                try {
-                    Log.d("ResponseInteligencia",response.toString());
-                    if (response.getBoolean("insert")) {
-                        bdInt = new BDopenHelper(con).getWritableDatabase();
-                        bdInt.execSQL("Update inteligencia set status=2 where idTienda="+
-								response.getInt("idTienda")+"  and fecha='"+
-								response.getString("fecha")+"' and idProducto="+
+	JsonHttpResponseHandler respuestaInteligencia = new JsonHttpResponseHandler() {
+		SQLiteDatabase bdInt;
+
+		@Override
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+			if (response != null) {
+				try {
+					Log.d("ResponseInteligencia", response.toString());
+					if (response.getBoolean("insert")) {
+						bdInt = new BDopenHelper(con).getWritableDatabase();
+						bdInt.execSQL("Update inteligencia set status=2 where idTienda=" +
+								response.getInt("idTienda") + "  and fecha='" +
+								response.getString("fecha") + "' and idProducto=" +
 								response.getInt("idProducto"));
 
 
-                        bdInt.close();
-                    } else {
-                        Log.d("ResponseInteligencia", "fallo :(");
-                    }
+						bdInt.close();
+					} else {
+						Log.d("ResponseInteligencia", "fallo :(");
+					}
 
-                } catch (JSONException e) {
-                    Log.d("ResponseInteligencia", "Error");
-                    e.printStackTrace();
-                }
-            }
-
-
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-            super.onFailure(statusCode, headers, throwable, errorResponse);
-
-            Log.d("ResponseInteligencia", "Se perdio la conexion :(");
-        }
-    };
-
-    JsonHttpResponseHandler responseInventario = new JsonHttpResponseHandler(){
-        SQLiteDatabase bdIn;
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-            if(response != null) {
-                try {
-                    Log.d("ResponseInventario",response.toString());
-                    if (response.getBoolean("insert")) {
-                        bdIn = new BDopenHelper(con).getWritableDatabase();
-                        bdIn.execSQL("UPDATE invProducto SET status=2 where idTienda="+
-								response.getInt("idTienda")+" and fecha='"+
-								response.getString("fecha")+"' and idProducto="+
-								response.getInt("idProducto")+";");
+				} catch (JSONException e) {
+					Log.d("ResponseInteligencia", "Error");
+					e.printStackTrace();
+				}
+			}
 
 
-                        bdIn.close();
-                    } else {
-                        Log.d("ResponseInventario", "fallo :(");
-                    }
+		}
 
-                } catch (JSONException e) {
-                    Log.d("ResponseInventario", "Error");
-                    e.printStackTrace();
-                }
-            }
-        }
+		@Override
+		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+			super.onFailure(statusCode, headers, throwable, errorResponse);
 
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-            super.onFailure(statusCode, headers, throwable, errorResponse);
-            Log.d("ResponseInventario", "se perdio la conexion");
-        }
-    };
+			Log.d("ResponseInteligencia", "Se perdio la conexion :(");
+		}
+	};
+
+	JsonHttpResponseHandler responseInventario = new JsonHttpResponseHandler() {
+		SQLiteDatabase bdIn;
+
+		@Override
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+			if (response != null) {
+				try {
+					Log.d("ResponseInventario", response.toString());
+					if (response.getBoolean("insert")) {
+						bdIn = new BDopenHelper(con).getWritableDatabase();
+						bdIn.execSQL("UPDATE invProducto SET status=2 where idTienda=" +
+								response.getInt("idTienda") + " and fecha='" +
+								response.getString("fecha") + "' and idProducto=" +
+								response.getInt("idProducto") + ";");
 
 
-    JsonHttpResponseHandler respuestaExhibiciones = new JsonHttpResponseHandler(){
-        SQLiteDatabase bdInt;
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+						bdIn.close();
+					} else {
+						Log.d("ResponseInventario", "fallo :(");
+					}
 
-            if(response != null) {
-                try {
-                    Log.d("ResponseInteligencia",response.toString());
-                    if (response.getBoolean("insert")) {
-                        bdInt = new BDopenHelper(con).getWritableDatabase();
-                        bdInt.execSQL("Update exhibiciones set status=2 where idTienda="+
-								response.getInt("idTienda")+" and idExhibicion="+
-								response.getInt("idExhi")+" and fecha='"+
-								response.getString("fecha")+"' and idProducto="+
+				} catch (JSONException e) {
+					Log.d("ResponseInventario", "Error");
+					e.printStackTrace();
+				}
+			}
+		}
+
+		@Override
+		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+			super.onFailure(statusCode, headers, throwable, errorResponse);
+			Log.d("ResponseInventario", "se perdio la conexion");
+		}
+	};
+
+
+	JsonHttpResponseHandler respuestaExhibiciones = new JsonHttpResponseHandler() {
+		SQLiteDatabase bdInt;
+
+		@Override
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+			if (response != null) {
+				try {
+					Log.d("ResponseInteligencia", response.toString());
+					if (response.getBoolean("insert")) {
+						bdInt = new BDopenHelper(con).getWritableDatabase();
+						bdInt.execSQL("Update exhibiciones set status=2 where idTienda=" +
+								response.getInt("idTienda") + " and idExhibicion=" +
+								response.getInt("idExhi") + " and fecha='" +
+								response.getString("fecha") + "' and idProducto=" +
 								response.getInt("idProducto"));
 
-                        bdInt.close();
-                    } else {
-                        Log.d("ResponseInteligencia", "fallo :(");
-                    }
+						bdInt.close();
+					} else {
+						Log.d("ResponseInteligencia", "fallo :(");
+					}
 
-                } catch (JSONException e) {
-                    Log.d("ResponseInteligencia", "Error");
-                    e.printStackTrace();
-                }
-            }
-
-
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-            super.onFailure(statusCode, headers, throwable, errorResponse);
-
-            Log.d("ResponseInteligencia", "Se perdio la conexion :(");
-        }
-    };
+				} catch (JSONException e) {
+					Log.d("ResponseInteligencia", "Error");
+					e.printStackTrace();
+				}
+			}
 
 
+		}
 
-	
+		@Override
+		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+			super.onFailure(statusCode, headers, throwable, errorResponse);
+
+			Log.d("ResponseInteligencia", "Se perdio la conexion :(");
+		}
+	};
+
+
 	private final Handler handler = new Handler();
 
-	Runnable start = new Runnable( ) {
-	    public void run() {
+	Runnable start = new Runnable() {
+		public void run() {
 			Log.i("Geo", "start");
-	        startGPS();
+			startGPS();
 
 
 			//tiempo location activo (60 * 1000) = 1min * 2 = 2min activo
-	        handler.postDelayed(stop, (60 * 1000));
-	    }
+			handler.postDelayed(stop, (60 * 1000));
+		}
 	};
 
-	Runnable stop = new Runnable( ) {
-	    public void run( ) {
+	Runnable stop = new Runnable() {
+		public void run() {
 			Log.i("Geo", "stop");
-	        stopGPS();
-	    }
+			stopGPS();
+		}
 	};
 
-	Runnable onePeriod = new Runnable( ) {
-	    public void run( ) {
+	Runnable onePeriod = new Runnable() {
+		public void run() {
 			Log.i("Geo", "onePeriod");
 
 			//iniciamos rastreo
@@ -275,51 +288,79 @@ public class GeoLocalizar extends Service implements LocationListener{
 			//periodo de espera para iniciar 5min
 			handler.postDelayed(onePeriod, (60 * 1000) * 5);
 
-	    }
+		}
 	};
 
-	public GeoLocalizar(){}
+	public GeoLocalizar() {
+	}
 
-	public void startGPS(){
-		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	public void startGPS() {
+		/*lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 		try {
 
 			// requestLocationUpdates(string=provider, long=minTime, float=minDistance, LocationListener = listener )
 			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, this);
 			lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, this);
-		}catch (SecurityException e){
+		} catch (SecurityException e) {
 			e.printStackTrace();
+		}*/
+
+
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+		}else {
+
+
+			if (mGoogleApiClient.isConnected()){
+
+				LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
+			}
+
+
 		}
 
-	}
-	
 
-	public void startContiniuosListening( ) {
-	    handler.post(onePeriod);
-	}
 
-	public void stopContiniousListening( ) {
-	    handler.removeCallbacks(stop);
-	    handler.removeCallbacks(onePeriod);
-	    stopGPS();
+
+
+
+
+
 	}
 
-    
-    public void stopGPS(){
-        try {
-            lm.removeUpdates(this);
-        }catch (SecurityException e){
-            e.printStackTrace();
-        }
-    }
-    
+
+	public void startContiniuosListening() {
+		handler.post(onePeriod);
+	}
+
+	public void stopContiniousListening() {
+		handler.removeCallbacks(stop);
+		handler.removeCallbacks(onePeriod);
+		stopGPS();
+	}
+
+
+	public void stopGPS() {
+		/*try {
+			lm.removeUpdates(this);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}*/
+
+		if (mGoogleApiClient.isConnected()){
+
+			LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+		}
+
+
+	}
 
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		
+
 		DBhelper = new BDopenHelper(this);
 		cliente = new AsyncHttpClient();
 		rp = new RequestParams();
@@ -329,62 +370,89 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 		/*iniciamos el timer para encendido de gps*/
 		startContiniuosListening();
-		
+
 
 		tiempoEspera = new Timer();
-		tiempoRastreo = new Timer();
-		
-		
+
+
+
 		tiempoEspera.scheduleAtFixedRate(new TimerTask() {
-			
+
 			@Override
 			public void run() {
-				
+
 				Log.d("Timer", "Entro");
 				iniciarTarea();
-				
-				
+
+
 			}
-		}, 0, (1000 * 60)* 20);
-		
-		tiempoRastreo.scheduleAtFixedRate(new TimerTask() {
-
-            @Override
-            public void run() {
-                Log.d("TimerRastreo", "inicio");
-                rastreo();
-
-            }
-        }, 0, (1000 * 60) * 10);
+		}, 0, (1000 * 60) * 20);
 
 
 
 		resultIntent = new Intent(this, GeoLocalizar.class);
-		pendingIntent = PendingIntent.getActivity(this,0, resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+		pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+		//conexion para la api de location
+		mGoogleApiClient = new GoogleApiClient.Builder(this)
+				.addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this)
+				.addApi(LocationServices.API)
+				.build();
+
+
+		mGoogleApiClient.connect();
+
+		locationRequest = LocationRequest.create();
+		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+				.setInterval(5000);
+
+
+	}
+
+	/**
+	 * callbacks para la coneccion de la api de ubicacion
+	 * @param bundle
+	 */
+
+	@Override
+	public void onConnected(@Nullable Bundle bundle) {
+
+
+		Toast.makeText(getApplicationContext(), "Api location connected", Toast.LENGTH_SHORT).show();
+
+	}
+
+	@Override
+	public void onConnectionSuspended(int i) {
+
+		Toast.makeText(getApplicationContext(), "Api location connected", Toast.LENGTH_SHORT).show();
+
+	}
+
+	@Override
+	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+		Toast.makeText(getApplicationContext(), "Api location connected", Toast.LENGTH_SHORT).show();
 
 	}
 
 
-	
-	
-	
-	private class MyBinder extends Binder{
+	private class MyBinder extends Binder {
 
 
+		public GeoLocalizar getService() {
+			return GeoLocalizar.this;
+		}
 
-		public GeoLocalizar getService(){
-	    	return GeoLocalizar.this;
-	    }
-	    
-	  
+
 	}
 
 	@Override
 	public IBinder onBind(Intent arg0) {
 		return new MyBinder();
 	}
-	
-	
 
 
 	@Override
@@ -399,12 +467,13 @@ public class GeoLocalizar extends Service implements LocationListener{
 	 */
 
 
-	public void iniciarTarea(){
-		
-		Thread hiloP = new Thread(){
-			
+
+	public void iniciarTarea() {
+
+		Thread hiloP = new Thread() {
+
 			@Override
-			public void run(){
+			public void run() {
 				Looper.prepare();
 				try {
 
@@ -429,8 +498,6 @@ public class GeoLocalizar extends Service implements LocationListener{
 					enviarRastreo();
 
 
-
-
 					enviarFotos();
 
 
@@ -438,144 +505,139 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 					enviarEstatus();
 
-					
-					
+
 					Looper.loop();
-				}catch(Exception e){
-					
-					
+				} catch (Exception e) {
+
+
 					Log.e("Excepption", "Tipo", e);
 				}
-				
+
 			}
 
 
-
-
 		};
-		
+
 		hiloP.start();
-		
-	
+
+
 	}
 
 	private void enviarEstatus() {
 
 
-
-        if (getProductListSendToServer().size() > 0){
-
-
-            AsyncHttpClient client = new AsyncHttpClient();
-
-            RequestParams rp = new RequestParams();
+		if (getProductListSendToServer().size() > 0) {
 
 
-            Gson gson = new Gson();
+			AsyncHttpClient client = new AsyncHttpClient();
+
+			RequestParams rp = new RequestParams();
 
 
-            JsonProductoImpulsor json = new JsonProductoImpulsor(getProductListSendToServer(), getUser());
-
-            rp.put("solicitud", "sendCatalogo");
-            rp.put("json", gson.toJson(json));
+			Gson gson = new Gson();
 
 
+			JsonProductoImpulsor json = new JsonProductoImpulsor(getProductListSendToServer(), getUser());
 
-            client.post(Utilities.WEB_SERVICE_CODPAA + "send_impulsor.php", rp , new ProductoEstatusResponse(con));
+			rp.put("solicitud", "sendCatalogo");
+			rp.put("json", gson.toJson(json));
 
-        }
+
+			client.post(Utilities.WEB_SERVICE_CODPAA + "send_impulsor.php", rp, new ProductoEstatusResponse(con));
+
+		}
 
 
 	}
 
 
-    private List<Producto> getProductListSendToServer(){
-        List<Producto> list = new ArrayList<>();
+	private List<Producto> getProductListSendToServer() {
+		List<Producto> list = new ArrayList<>();
 
-        SQLiteDatabase db = new BDopenHelper(con).getReadableDatabase();
+		SQLiteDatabase db = new BDopenHelper(con).getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("select * from producto_catalogado_tienda where estatus_registro = 1", null);
-
-
-        if(cursor.getCount() > 0){
-            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+		Cursor cursor = db.rawQuery("select * from producto_catalogado_tienda where estatus_registro = 1", null);
 
 
-                final Producto producto = new Producto();
-                producto.setIdProducto(cursor.getInt(cursor.getColumnIndex("idProducto")));
-                producto.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
-                producto.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
-                producto.setEstatus(cursor.getInt(cursor.getColumnIndex("estatus_producto")));
-                producto.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad")));
-
-                if(cursor.getInt(cursor.getColumnIndex("estatus_producto")) == Producto.EstatusTypes.PROCESO_CATALOGACION){
+		if (cursor.getCount() > 0) {
+			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
 
-                    String sql = "select * from "
-                            + DbEstructure.ProcesoCatalogacionObjeciones.TABLE_NAME +" " +
-                            " where idProducto="+ cursor.getInt(cursor.getColumnIndex("idProducto")) + " and idTienda=" +
-                            cursor.getInt(cursor.getColumnIndex("idTienda")) + " and fecha_captura='" +
-                            cursor.getString(cursor.getColumnIndex("fecha_captura")) + "'";
+				final Producto producto = new Producto();
+				producto.setIdProducto(cursor.getInt(cursor.getColumnIndex("idProducto")));
+				producto.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
+				producto.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
+				producto.setEstatus(cursor.getInt(cursor.getColumnIndex("estatus_producto")));
+				producto.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad")));
 
-                    Cursor cursorObjeciones = db.rawQuery( sql, null);
-
-                    Log.d("sql", sql );
-
-                    if (cursorObjeciones.getCount() > 0){
-
-                        List<String> lista = new ArrayList<>();
-                        for (cursorObjeciones.moveToFirst() ; !cursorObjeciones.isAfterLast() ; cursorObjeciones.moveToNext()){
-
-                            lista.add(cursorObjeciones.getString(cursorObjeciones.getColumnIndex("descripcion")));
-
-                        }
-
-                        producto.setObjeciones(lista);
-
-                    }
-
-                    cursorObjeciones.close();
-
-                }
+				if (cursor.getInt(cursor.getColumnIndex("estatus_producto")) == Producto.EstatusTypes.PROCESO_CATALOGACION) {
 
 
-                list.add(producto);
-            }
-        }
+					String sql = "select * from "
+							+ DbEstructure.ProcesoCatalogacionObjeciones.TABLE_NAME + " " +
+							" where idProducto=" + cursor.getInt(cursor.getColumnIndex("idProducto")) + " and idTienda=" +
+							cursor.getInt(cursor.getColumnIndex("idTienda")) + " and fecha_captura='" +
+							cursor.getString(cursor.getColumnIndex("fecha_captura")) + "'";
+
+					Cursor cursorObjeciones = db.rawQuery(sql, null);
+
+					Log.d("sql", sql);
+
+					if (cursorObjeciones.getCount() > 0) {
+
+						List<String> lista = new ArrayList<>();
+						for (cursorObjeciones.moveToFirst(); !cursorObjeciones.isAfterLast(); cursorObjeciones.moveToNext()) {
+
+							lista.add(cursorObjeciones.getString(cursorObjeciones.getColumnIndex("descripcion")));
+
+						}
+
+						producto.setObjeciones(lista);
+
+					}
+
+					cursorObjeciones.close();
+
+				}
 
 
-        cursor.close();
-        db.close();
-        return list;
-    }
+				list.add(producto);
+			}
+		}
 
-	private int getUser(){
+
+		cursor.close();
+		db.close();
+		return list;
+	}
+
+	private int getUser() {
 
 		SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
-        int id = 0;
-        Cursor c = db.rawQuery("select idCelular from usuarios ", null);
+		int id = 0;
+		Cursor c = db.rawQuery("select idCelular from usuarios ", null);
 
-        if (c.getCount() > 0){
+		if (c.getCount() > 0) {
 
-            c.moveToFirst();
+			c.moveToFirst();
 
-            id = c.getInt(c.getColumnIndex("idCelular"));
+			id = c.getInt(c.getColumnIndex("idCelular"));
 
-            c.close();
+			c.close();
 
 
-            return id;
-        }
+			return id;
+		}
 
-        c.close();
+		c.close();
 
 		return id;
 
 	}
 
 
-	public void createFolioAtServer(){
+	public void createFolioAtServer() {
 		SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
 
 
@@ -583,11 +645,11 @@ public class GeoLocalizar extends Service implements LocationListener{
 				" is not null and estatus_registro <= 2 and estatus_producto = 4 " +
 				" and folio is null", null);
 
-		if (cursor.getCount() > 0){
+		if (cursor.getCount() > 0) {
 
 			List<AvanceGestionModel> lista = new ArrayList<>();
 
-			for (cursor.moveToFirst(); !cursor.isAfterLast() ; cursor.moveToNext()){
+			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 				final AvanceGestionModel model = new AvanceGestionModel();
 
 
@@ -596,7 +658,6 @@ public class GeoLocalizar extends Service implements LocationListener{
 				model.setFecha(cursor.getString(cursor.getColumnIndex("fecha_captura")));
 				model.setFirma(cursor.getString(cursor.getColumnIndex("firma")));
 				model.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad")));
-
 
 
 				lista.add(model);
@@ -622,11 +683,10 @@ public class GeoLocalizar extends Service implements LocationListener{
 			//Log.d("Json", gson.toJson(json));
 
 
-
 			client.post(Utilities.WEB_SERVICE_CODPAA + "update_producto_firma.php", rp, new ResponseUpdateFirmaProducto(this));
 
 
-		}else{
+		} else {
 			Log.d("service", "no hay folios pendientes");
 		}
 
@@ -635,117 +695,100 @@ public class GeoLocalizar extends Service implements LocationListener{
 	}
 
 
-    private String fechaActual(){
-        Calendar c = Calendar.getInstance();
-        Locale locale = new Locale("es_MX");
-        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
-        return dFecha.format(c.getTime());
-    }
+	private String fechaActual() {
+		Calendar c = Calendar.getInstance();
+		Locale locale = new Locale("es_MX");
+		SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
+		return dFecha.format(c.getTime());
+	}
 
-    /*
+	/*
         this method verify if the codpaa´s version was send
      */
-    private void verifyVersionSent(){
-        Configuracion config = new Configuracion(con);
-        if (config.getVersion() != null){
+	private void verifyVersionSent() {
+		Configuracion config = new Configuracion(con);
+		if (config.getVersion() != null) {
 
-            if (!config.getVersion().equals(fechaActual())){
-                enviarVersion();
-            }else {
-                Log.d("Geo_service", "version enviada");
-            }
+			if (!config.getVersion().equals(fechaActual())) {
+				enviarVersion();
+			} else {
+				Log.d("Geo_service", "version enviada");
+			}
 
-        }else {
-            enviarVersion();
-        }
-    }
+		} else {
+			enviarVersion();
+		}
+	}
 
-
-
-	
 
 	protected void enviarVersion() {
 		try {
 			AsyncHttpClient clienteVersio = new AsyncHttpClient();
 			RequestParams rpV = new RequestParams();
-			
+
 			//Calendar c = Calendar.getInstance();
 			//SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",local).format(new Date());
-				
-			String fecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault()).format(new Date());
-			
+
+			String fecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+
 			final Context context = getApplicationContext();
 			PackageManager packageManager = context.getPackageManager();
 			String packageName = context.getPackageName();
-			
+
 			try {
-			    myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
-			    try{
+				myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
+				try {
 					idCel = DBhelper.idUser();
-					
-					if(idCel > 0){
-						
+
+					if (idCel > 0) {
+
 						rpV.put("id", Integer.toString(idCel));
 						rpV.put("ve", myVersionName);
 						rpV.put("fecha", fecha);
-						
+
 						clienteVersio.post(Utilities.WEB_SERVICE_CODPAA + "sendVersion.php", rpV, new AsyncHttpResponseHandler(Looper.getMainLooper()) {
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+							@Override
+							public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-                                Log.d("ResponseVesion", "Success");
+								Log.d("ResponseVesion", "Success");
 
-                                if (statusCode == 200){
+								if (statusCode == 200) {
 
-                                    Configuracion config = new Configuracion(con);
-                                    config.setVersionDate(fechaActual());
+									Configuracion config = new Configuracion(con);
+									config.setVersionDate(fechaActual());
 
-                                    Log.d("ResponseVersion", "200");
-                                }
-                            }
+									Log.d("ResponseVersion", "200");
+								}
+							}
 
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+							@Override
+							public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-                            }
-                        });
+							}
+						});
 
-					}else{
-						Log.d("Env Version","id NO Asignado");
+					} else {
+						Log.d("Env Version", "id NO Asignado");
 					}
-					
-				}catch(Exception e){
+
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
-			    
+
+
 			} catch (PackageManager.NameNotFoundException e) {
-			    e.printStackTrace();
+				e.printStackTrace();
 			}
-			
-	
-			
+
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	public void rastreo(){
-		Thread hiloRastreo = new Thread() {
-			
-			@Override
-			public void run() {
 
-				insertarRastreo();
 
-			}
-		};
-		
-		hiloRastreo.start();
-	}
-	
-	
 	public void enviarVisitas() {
 
 
@@ -754,24 +797,22 @@ public class GeoLocalizar extends Service implements LocationListener{
 		enviarDatos.enviarVisitasPendientes();
 
 	}
-	
 
 
 	public void enviarFrentes() {
 		try {
-			
-			
-			
+
+
 			Cursor curFrentes = DBhelper.datosFrentes();
 			base = new BDopenHelper(this).getWritableDatabase();
-			if(curFrentes.getCount() != 0 && verificarConexion()) {
-				
-				for(curFrentes.moveToFirst(); !curFrentes.isAfterLast(); curFrentes.moveToNext()) {
+			if (curFrentes.getCount() != 0 && verificarConexion()) {
+
+				for (curFrentes.moveToFirst(); !curFrentes.isAfterLast(); curFrentes.moveToNext()) {
 					rp.put("idTien", Integer.toString(curFrentes.getInt(0)));
 					rp.put("idCel", Integer.toString(curFrentes.getInt(1)));
 					rp.put("fecha", curFrentes.getString(2));
 					rp.put("idMarc", Integer.toString(curFrentes.getInt(3)));
-					rp.put("idProdu",Integer.toString(curFrentes.getInt(4)));
+					rp.put("idProdu", Integer.toString(curFrentes.getInt(4)));
 					rp.put("cha1", Integer.toString(curFrentes.getInt(5)));
 					rp.put("cha2", Integer.toString(curFrentes.getInt(6)));
 					rp.put("cha3", Integer.toString(curFrentes.getInt(7)));
@@ -795,226 +836,169 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rp.put("f14", Integer.toString(curFrentes.getInt(25)));
 
 
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendfrentesnew.php", rp, respuestaFrentes);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendfrentesnew.php", rp, respuestaFrentes);
 
 				}
-				
-				
+
+
 			}
 			curFrentes.close();
 
 			base.close();
 			DBhelper.close();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	/*public void enviarSurtido() {
-		try {
-			Cursor curSurtido = DBhelper.Surtido();
-			base = new BDopenHelper(this).getWritableDatabase();
-			if(curSurtido.getCount() != 0 && verificarConexion()) {
-				
-				for(curSurtido.moveToFirst(); !curSurtido.isAfterLast(); curSurtido.moveToNext()) {
-					rp.put("idTien", Integer.toString(curSurtido.getInt(0)));
-					rp.put("idCel", Integer.toString(curSurtido.getInt(1)));
-					rp.put("surtido", curSurtido.getString(2));
-					rp.put("fecha", curSurtido.getString(3));
-					rp.put("idProducto", Integer.toString(curSurtido.getInt(4)));
-					rp.put("cajas",Integer.toString(curSurtido.getInt(5)));
-
-					rp.put("unifila", Integer.toString(curSurtido.getInt(6)));
-					rp.put("c1", Integer.toString(curSurtido.getInt(7)));
-					rp.put("c2",Integer.toString(curSurtido.getInt(8)));
-					rp.put("c3",Integer.toString(curSurtido.getInt(9)));
-
-					rp.put("c4",Integer.toString(curSurtido.getInt(10)));
-					rp.put("c5",Integer.toString(curSurtido.getInt(11)));
-					rp.put("c6",Integer.toString(curSurtido.getInt(12)));
-					rp.put("c7",Integer.toString(curSurtido.getInt(13)));
-
-					rp.put("c8",Integer.toString(curSurtido.getInt(14)));
-					rp.put("c9",Integer.toString(curSurtido.getInt(15)));
-					rp.put("c10",Integer.toString(curSurtido.getInt(16)));
-					rp.put("c11", Integer.toString(curSurtido.getInt(17)));
-
-					rp.put("c12", Integer.toString(curSurtido.getInt(18)));
-					rp.put("c13", Integer.toString(curSurtido.getInt(19)));
-					rp.put("c14", Integer.toString(curSurtido.getInt(20)));
 
 
-					//ResponseHttpSurtido response = new ResponseHttpSurtido()
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"surti.php", rp, respuesta);
-
-					
-					
-					
-				}
-				
-				
-			}
-			curSurtido.close();
-			base.close();
-			DBhelper.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}*/
-	
 	public void enviarInventario() {
 		try {
-			
+
 			Cursor curInven = DBhelper.Inventario();
 			base = new BDopenHelper(this).getWritableDatabase();
-			if(curInven.getCount() > 0 && verificarConexion()) {
-				
-				for(curInven.moveToFirst(); !curInven.isAfterLast(); curInven.moveToNext()) {
-                    rp.put("idTien", Integer.toString(curInven.getInt(0)));
-                    rp.put("idPromo",Integer.toString(curInven.getInt(1)));
-                    rp.put("fecha", curInven.getString(2));
-                    rp.put("idProducto", Integer.toString(curInven.getInt(3)));
-                    rp.put("cantidadFisico",Integer.toString(curInven.getInt(4)));
-                    rp.put("cantidadSistema",Integer.toString(curInven.getInt(5)));
-                    rp.put("cantidad",Integer.toString(curInven.getInt(6)));
-                    rp.put("tipo",curInven.getString(7));
-					rp.put("fecha_cad",curInven.getString(8));
-					rp.put("lote",curInven.getString(9));
-					
-					
-					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinventario.php", rp,responseInventario);
+			if (curInven.getCount() > 0 && verificarConexion()) {
 
-					
+				for (curInven.moveToFirst(); !curInven.isAfterLast(); curInven.moveToNext()) {
+					rp.put("idTien", Integer.toString(curInven.getInt(0)));
+					rp.put("idPromo", Integer.toString(curInven.getInt(1)));
+					rp.put("fecha", curInven.getString(2));
+					rp.put("idProducto", Integer.toString(curInven.getInt(3)));
+					rp.put("cantidadFisico", Integer.toString(curInven.getInt(4)));
+					rp.put("cantidadSistema", Integer.toString(curInven.getInt(5)));
+					rp.put("cantidad", Integer.toString(curInven.getInt(6)));
+					rp.put("tipo", curInven.getString(7));
+					rp.put("fecha_cad", curInven.getString(8));
+					rp.put("lote", curInven.getString(9));
+
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendinventario.php", rp, responseInventario);
+
+
 				}
-				
-				
+
+
 			}
 			curInven.close();
 			base.close();
 			DBhelper.close();
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	public void enviarExibiciones() {
 		try {
-			
+
 			Cursor curExhi = DBhelper.Exhibiciones();
 			base = new BDopenHelper(this).getWritableDatabase();
-			if(curExhi.getCount() > 0 && verificarConexion()) {
-				
-				for(curExhi.moveToFirst(); !curExhi.isAfterLast(); curExhi.moveToNext()) {
+			if (curExhi.getCount() > 0 && verificarConexion()) {
+
+				for (curExhi.moveToFirst(); !curExhi.isAfterLast(); curExhi.moveToNext()) {
 					rp.put("idTien", Integer.toString(curExhi.getInt(0)));
 					rp.put("idCel", Integer.toString(curExhi.getInt(1)));
 					rp.put("idExhibicion", Integer.toString(curExhi.getInt(2)));
 					rp.put("fecha", curExhi.getString(3));
 					rp.put("idProducto", Integer.toString(curExhi.getInt(4)));
-					rp.put("cantidad",String.valueOf(curExhi.getFloat(5)));
-					
-					
-					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendexhi.php", rp, respuestaExhibiciones);
+					rp.put("cantidad", String.valueOf(curExhi.getFloat(5)));
+
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendexhi.php", rp, respuestaExhibiciones);
 					//base.execSQL("Update exhibiciones set status=2 where idTienda="+curExhi.getInt(0)+" and idExhibicion="+curExhi.getInt(2)+" and fecha='"+curExhi.getString(3)+"' and idProducto="+curExhi.getInt(4));
-					
-					
-					
+
+
 				}
 
-				
-				
+
 			}
 			curExhi.close();
 			base.close();
 			DBhelper.close();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void enviarEncargado(){
-		
-		try{
+
+	public void enviarEncargado() {
+
+		try {
 			Cursor curEncargado = DBhelper.encargadoTienda();
 			base = new BDopenHelper(this).getWritableDatabase();
-			
-			if(curEncargado.getCount() > 0 && verificarConexion()) {
-				for(curEncargado.moveToFirst(); !curEncargado.isAfterLast(); curEncargado.moveToNext()) {
+
+			if (curEncargado.getCount() > 0 && verificarConexion()) {
+				for (curEncargado.moveToFirst(); !curEncargado.isAfterLast(); curEncargado.moveToNext()) {
 					rp.put("idTien", Integer.toString(curEncargado.getInt(0)));
 					rp.put("idCel", Integer.toString(curEncargado.getInt(1)));
-					rp.put("nombre",curEncargado.getString(2));
-					rp.put("puesto",curEncargado.getString(3));
+					rp.put("nombre", curEncargado.getString(2));
+					rp.put("puesto", curEncargado.getString(3));
 					rp.put("fecha", curEncargado.getString(4));
-					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendEncargado.php", rp, respuesta);
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendEncargado.php", rp, respuesta);
 					base.delete("encargadotienda", "idTienda=" +
 							curEncargado.getInt(0) + " and fecha='" +
 							curEncargado.getString(4) + "'", null);
 				}
-				
+
 			}
 			curEncargado.close();
 			base.close();
 			DBhelper.close();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
+
 	}
-	
-	
-	public void enviarComentario(){
-		
-		try{
+
+
+	public void enviarComentario() {
+
+		try {
 			Cursor curComentario = DBhelper.ComentariosTienda();
 			base = new BDopenHelper(this).getWritableDatabase();
-			
-			if(curComentario.getCount() > 0 && verificarConexion()){
-				for(curComentario.moveToFirst(); !curComentario.isAfterLast(); curComentario.moveToNext()){
+
+			if (curComentario.getCount() > 0 && verificarConexion()) {
+				for (curComentario.moveToFirst(); !curComentario.isAfterLast(); curComentario.moveToNext()) {
 					rp.put("idTien", Integer.toString(curComentario.getInt(0)));
 					rp.put("idCel", Integer.toString(curComentario.getInt(1)));
 					rp.put("fecha", curComentario.getString(2));
 					rp.put("comentario", curComentario.getString(3));
-					
-					
+
+
 					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendComentario.php", rp, respuesta);
 					base.delete("comentarioTienda", "idTienda=" +
 							curComentario.getInt(0) + " and fecha='" +
 							curComentario.getString(2) + "'", null);
 				}
-				
+
 			}
 			curComentario.close();
 			base.close();
 			DBhelper.close();
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
-	
-	public void enviarRastreo(){
-		try{
-			
-			
+
+
+	public void enviarRastreo() {
+		try {
+
+
 			Cursor curRastreo = DBhelper.datosRastreo();
 			SQLiteDatabase bases = new BDopenHelper(this).getWritableDatabase();
 			RequestParams rpRastreo = new RequestParams();
-			
-			
-			
-			if(curRastreo.getCount() > 0 && verificarConexion()){
-				
-				
+
+
+			if (curRastreo.getCount() > 0 && verificarConexion()) {
+
 
 				Log.d("Registros rastreo", Integer.toString(curRastreo.getCount()));
-				for(curRastreo.moveToFirst(); !curRastreo.isAfterLast(); curRastreo.moveToNext()){
+				for (curRastreo.moveToFirst(); !curRastreo.isAfterLast(); curRastreo.moveToNext()) {
 					rpRastreo.put("idCel", Integer.toString(curRastreo.getInt(0)));
 					rpRastreo.put("fecha", curRastreo.getString(1));
 					rpRastreo.put("hora", curRastreo.getString(2));
@@ -1022,99 +1006,102 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rpRastreo.put("longitud", Double.toString(curRastreo.getDouble(4)));
 					rpRastreo.put("altitud", Double.toString(curRastreo.getDouble(5)));
 					rpRastreo.put("numero_tel", curRastreo.getString(6));
-							
-							
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendRastreo.php", rpRastreo, respuesta);
-							
-							
-					bases.delete("rastreo", "idCelular="+curRastreo.getInt(0)+" and fecha='"+
-							curRastreo.getString(1)+"'", null);
+
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendRastreo.php", rpRastreo, respuesta);
+
+
+					bases.delete("rastreo", "idCelular=" + curRastreo.getInt(0) + " and fecha='" +
+							curRastreo.getString(1) + "'", null);
 				}
-						
-			}else{
+
+			} else {
 				Log.d("EnviarRastreo", Integer.toString(curRastreo.getCount()));
-				if(verificarConexion()){
+				if (verificarConexion()) {
 					Log.d("EnviarRastreo", "con conexion");
 				}
 			}
-			
+
 			bases.close();
 			DBhelper.close();
 
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
 
-		
+
 	}
-	
-	public void insertarRastreo(){
-		
-		try{
-			
+
+	public void insertarRastreo() {
+
+		try {
+
 
 			Calendar c = Calendar.getInstance();
-			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
-			SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss a", Locale.getDefault());
+			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+			SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 			fecha = dFecha.format(c.getTime());
 			hora = dHora.format(c.getTime());
-			
-			
-			try{
+
+
+			try {
 				idCel = DBhelper.idUser();
-				
-			}catch(Exception e){
+
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-			
-			
-			if(idCel != 0){
 
-				
-				if(loGps != null){
-					
+
+			if (idCel != 0) {
+
+
+				/*if (loGps != null) {
+
 					DBhelper.insertarRastreo(idCel, fecha, hora, loGps.getLatitude(),
-							loGps.getLongitude(), loGps.getAltitude(),getPhoneNumber());
-				}else if(loNet != null){
+							loGps.getLongitude(), loGps.getAltitude(), getPhoneNumber());
+				} else if (loNet != null) {
 					DBhelper.insertarRastreo(idCel, fecha, hora, loNet.getLatitude(),
-							loNet.getLongitude(), loNet.getAltitude(),getPhoneNumber());
-				}else if(loGeneral != null){
-					
+							loNet.getLongitude(), loNet.getAltitude(), getPhoneNumber());
+				} else if (loGeneral != null) {
+
 					DBhelper.insertarRastreo(idCel, fecha, hora, loGeneral.getLatitude(),
 							loGeneral.getLongitude(), loGeneral.getAltitude(), getPhoneNumber());
 
-				}else{
+				} else {
 					Log.d("Rastreo", "nullos");
-				}
-				
+				}*/
 
-				
+				if (serviceLocation != null){
+					DBhelper.insertarRastreo(idCel, fecha, hora, serviceLocation.getLatitude(),
+							serviceLocation.getLongitude(), serviceLocation.getAltitude(), getPhoneNumber());
+
+
+				}
+
+
 			}
-			
-			
-			
-			
-		}catch(Exception e){
+
+
+		} catch (Exception e) {
 			Log.d("Insertar Rastreo", "no se inserto", e);
-			
-			
+
+
 		}
-		
-		
+
+
 	}
-	
-	public void enviarInteli(){
+
+	public void enviarInteli() {
 		try {
 			Cursor curInteli = DBhelper.datosInteligenciaMercado();
 			base = new BDopenHelper(this).getWritableDatabase();
 			RequestParams rpIn = new RequestParams();
-			if(curInteli.getCount() > 0 ){
-				
-				
-				for(curInteli.moveToFirst(); !curInteli.isAfterLast(); curInteli.moveToNext()){
-					
+			if (curInteli.getCount() > 0) {
+
+
+				for (curInteli.moveToFirst(); !curInteli.isAfterLast(); curInteli.moveToNext()) {
+
 					rpIn.put("idCel", Integer.toString(curInteli.getInt(0)));
 					rpIn.put("idTien", Integer.toString(curInteli.getInt(1)));
 					rpIn.put("idProducto", Integer.toString(curInteli.getInt(2)));
@@ -1125,39 +1112,38 @@ public class GeoLocalizar extends Service implements LocationListener{
 					rpIn.put("productoExtra", curInteli.getString(7));
 					rpIn.put("productoEmpla", curInteli.getString(8));
 					rpIn.put("cambioIm", curInteli.getString(9));
-					rpIn.put("iniofer",curInteli.getString(10));
-					rpIn.put("finofer",curInteli.getString(11));
-					rpIn.put("preciocaja",curInteli.getString(12));
+					rpIn.put("iniofer", curInteli.getString(10));
+					rpIn.put("finofer", curInteli.getString(11));
+					rpIn.put("preciocaja", curInteli.getString(12));
 					rpIn.put("cambioprecio", curInteli.getString(13));
 
-                    cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendinteligencia.php", rpIn, respuestaInteligencia);
-					
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendinteligencia.php", rpIn, respuestaInteligencia);
 
-					
+
 				}
 			}
-			
+
 			base.close();
 			DBhelper.close();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-    public void enviarFotos(){
+	public void enviarFotos() {
 
-        BDopenHelper base = new BDopenHelper(this);
+		BDopenHelper base = new BDopenHelper(this);
 
 
-        Cursor curFoto = base.fotos();
+		Cursor curFoto = base.fotos();
 		AsyncHttpClient cliente = new SyncHttpClient();
 
-        //Log.e("Geolocalizar","paso 1");
+		//Log.e("Geolocalizar","paso 1");
 
-        if(curFoto.getCount() >= 1) {
+		if (curFoto.getCount() >= 1) {
 
-            for(curFoto.moveToFirst(); !curFoto.isAfterLast(); curFoto.moveToNext()){
+			for (curFoto.moveToFirst(); !curFoto.isAfterLast(); curFoto.moveToNext()) {
 
 
 				Gson gson = new Gson();
@@ -1178,7 +1164,7 @@ public class GeoLocalizar extends Service implements LocationListener{
 				upload.setEvento(curFoto.getInt(curFoto.getColumnIndex("evento")));
 
 
-				if (curFoto.getString(curFoto.getColumnIndex("productos")) != null){
+				if (curFoto.getString(curFoto.getColumnIndex("productos")) != null) {
 					Log.d("foto", "productos disponibles");
 					String[] productos = curFoto.getString(curFoto.getColumnIndex("productos")).split(",");
 					upload.convert(productos);
@@ -1188,169 +1174,168 @@ public class GeoLocalizar extends Service implements LocationListener{
 				rpFoto.put("json", gson.toJson(upload));
 
 
-                File file = new File(curFoto.getString(curFoto.getColumnIndex("imagen")));
-                try {
-                    rpFoto.put("file", file);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+				File file = new File(curFoto.getString(curFoto.getColumnIndex("imagen")));
+				try {
+					rpFoto.put("file", file);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
 
-                cliente.setTimeout(5000);
+				cliente.setTimeout(5000);
 
-				if (verificarConexion()){
+				if (verificarConexion()) {
 
-					cliente.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php",rpFoto, jr);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php", rpFoto, jr);
 
 				}
 
 
-            }
+			}
 
 
-        }
-        base.close();
+		}
+		base.close();
 
 
-    }
+	}
 
-    JsonHttpResponseHandler jr = new JsonHttpResponseHandler(){
-
-
+	JsonHttpResponseHandler jr = new JsonHttpResponseHandler() {
 
 
-        int id = 100;
+		int id = 100;
 
-        NotificationManager notification;
-        NotificationCompat.Builder notificationBuilder;
-        SQLiteDatabase db = null;
+		NotificationManager notification;
+		NotificationCompat.Builder notificationBuilder;
+		SQLiteDatabase db = null;
 
 
+		@Override
+		public void onStart() {
+			super.onStart();
 
-        @Override
-        public void onStart() {
-            super.onStart();
+			Log.w("JR", "onStart");
 
-            Log.w("JR","onStart");
+			notification = (NotificationManager) con.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationBuilder = new NotificationCompat.Builder(con);
 
-            notification = (NotificationManager) con.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationBuilder = new NotificationCompat.Builder(con);
-
-            notificationBuilder.setContentTitle("CODPAA Enviando imagen")
-                    .setContentText("subiendo la foto")
+			notificationBuilder.setContentTitle("CODPAA Enviando imagen")
+					.setContentText("subiendo la foto")
 					.setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.subirimagen);
+					.setSmallIcon(R.drawable.subirimagen);
 
-            notification.notify(id,notificationBuilder.build());
-            Log.e("ResponseImage","paso 2");
+			notification.notify(id, notificationBuilder.build());
 
-        }
 
-        @Override
-        public void onProgress(long bytesWritten, long totalSize) {
-            super.onProgress(bytesWritten, totalSize);
-            notificationBuilder.setProgress((int)totalSize,(int)bytesWritten,false).setContentIntent(pendingIntent);
-            notification.notify(id,notificationBuilder.build());
-        }
 
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-            super.onSuccess(statusCode, headers, response);
 
-            if(response != null){
-                try {
+			Log.e("ResponseImage", "paso 2");
 
-                    //Log.d("Respuestas Ima", response.getString("message"));
-                    //BDopenHelper bs = new BDopenHelper(con);
-                    if(response.getBoolean("insert")){
+		}
+
+
+
+
+		@Override
+		public void onProgress(long bytesWritten, long totalSize) {
+			super.onProgress(bytesWritten, totalSize);
+			notificationBuilder.setProgress((int) totalSize, (int) bytesWritten, false).setContentIntent(pendingIntent);
+			notification.notify(id, notificationBuilder.build());
+		}
+
+		@Override
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+			super.onSuccess(statusCode, headers, response);
+
+			if (response != null) {
+				try {
+
+					//Log.d("Respuestas Ima", response.getString("message"));
+					//BDopenHelper bs = new BDopenHelper(con);
+					if (response.getBoolean("insert")) {
 						Log.d("Geolocalizar", "insertado satisfactoriamente");
 
-                        notificationBuilder.setContentText("se envio correctamente")
+						notificationBuilder.setContentText("se envio correctamente")
 								.setContentIntent(pendingIntent)
-                                .setProgress(0, 0, false);
-                        notification.notify(id,notificationBuilder.build());
-                        db = new BDopenHelper(con).getWritableDatabase();
+								.setProgress(0, 0, false);
+						notification.notify(id, notificationBuilder.build());
+						db = new BDopenHelper(con).getWritableDatabase();
 
 
-                        db.execSQL("update photo set status=2 where idTienda="+
-                                response.getInt("idTienda")+" and " +
-                                "idMarca="+response.getInt("idMarca")+" and fecha='"+
-                                response.getString("fecha")+"';");
+						db.execSQL("update photo set status=2 where idTienda=" +
+								response.getInt("idTienda") + " and " +
+								"idMarca=" + response.getInt("idMarca") + " and fecha='" +
+								response.getString("fecha") + "';");
 
 						//borrar la imagen
-                        //deleteArchivo(bs.fotoPath(response.getInt("idFotoCel")));
+						//deleteArchivo(bs.fotoPath(response.getInt("idFotoCel")));
 
-                    }else{
-                        if(response.getInt("code") == 3){
-                            //deleteArchivo(bs.fotoPath(response.getInt("idFotoCel")));
+					} else {
+						if (response.getInt("code") == 3) {
+							//deleteArchivo(bs.fotoPath(response.getInt("idFotoCel")));
 
-                            db.execSQL("update photo set status=2 where idTienda="+
-                                    response.getInt("idTienda")+" and " +
-                                    "idMarca="+response.getInt("idMarca")+" and fecha='"+
-                                    response.getString("fecha")+"';");
-                        }
+							db.execSQL("update photo set status=2 where idTienda=" +
+									response.getInt("idTienda") + " and " +
+									"idMarca=" + response.getInt("idMarca") + " and fecha='" +
+									response.getString("fecha") + "';");
+						}
 						Log.d("Respuestas Ima", response.getString("message"));
 
 
-                    }
-                } catch (JSONException e) {
+					}
+				} catch (JSONException e) {
 
-                    e.printStackTrace();
-                } finally {
+					e.printStackTrace();
+				} finally {
 
 					if (db != null)
-                    	db.close();
-                }
+						db.close();
+				}
 
-            }else{
-                Log.d("Response image", "Sin respuesta");
-            }
-        }
+			} else {
+				Log.d("Response image", "Sin respuesta");
+			}
+		}
 
 
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
-            super.onFailure(statusCode, headers, e, errorResponse);
-            notificationBuilder.setContentText("fallo, el envio")
+		@Override
+		public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject errorResponse) {
+			super.onFailure(statusCode, headers, e, errorResponse);
+			notificationBuilder.setContentText("fallo, el envio")
 					.setContentIntent(pendingIntent)
-                    .setProgress(0, 0, false);
-            notification.notify(id,notificationBuilder.build());
-        }
+					.setProgress(0, 0, false);
+			notification.notify(id, notificationBuilder.build());
+		}
 
-        @Override
-        public void onFinish() {
-            super.onFinish();
-        }
+		@Override
+		public void onFinish() {
+			super.onFinish();
+		}
 
 
-    };
+	};
 
 
 	public boolean verificarConexion() {
 
-	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
-	    return netInfo != null && netInfo.isConnected();
+		return netInfo != null && netInfo.isConnected();
 	}
-	
-	
+
+
+
 
 	@Override
 	public void onLocationChanged(Location location) {
 
-		Log.d("onLocationChangeService", " Provider "+location.getProvider() +" La "+ location.getLatitude() + " Lo " + location.getLongitude());
-        loGeneral = location;
+		Log.d("onLocationChangeService", " Provider " + location.getProvider() + " La " + location.getLatitude() + " Lo " + location.getLongitude());
+		serviceLocation = location;
 
-		if (location.getProvider().equals("gps")){
-			loGps = location;
-		}
+		insertarRastreo();
 
-		
+
 	}
-
-	
-	
 
 
 	@Override
@@ -1359,36 +1344,33 @@ public class GeoLocalizar extends Service implements LocationListener{
 
 		stopContiniousListening();
 
-        try {
-            lm.removeUpdates(this);
-        }catch (SecurityException e){
-            e.printStackTrace();
-        }
+
+        /*
+		try {
+			lm.removeUpdates(this);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}*/
+
+		mGoogleApiClient.disconnect();
+
 	}
 
 
 
 
-	@Override
-	public void onProviderDisabled(String provider) {}
-
-
-
-
-	@Override
-	public void onProviderEnabled(String provider) {}
-
-
-
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {}
-	
-	private String getPhoneNumber(){
+	private String getPhoneNumber() {
 		TelephonyManager mTelephonyManager;
 		mTelephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
-		return mTelephonyManager.getLine1Number();
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED &&
+				ActivityCompat.checkSelfPermission(this, "android.permission.READ_PHONE_NUMBERS") != PackageManager.PERMISSION_GRANTED &&
+				ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+			return "sin permiso";
+		}else {
+
+			return mTelephonyManager.getLine1Number();
+		}
 	}
 	
 	
