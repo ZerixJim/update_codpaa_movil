@@ -8,6 +8,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.codpaa.db.BDopenHelper;
@@ -34,6 +36,8 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
     private Context context;
     private ProgressDialog progressDialog;
 
+
+
     public HttpResponseInfo(Context context){
 
         this.context = context;
@@ -54,7 +58,6 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
         progressDialog.show();
 
-        //Log.d("Thread" ,  );
 
 
     }
@@ -119,7 +122,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
 
 
-                Toast.makeText(context, "informacion cargada ", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "informacion cargada ", Toast.LENGTH_SHORT).show();
 
                 //Toast.makeText(context, "Informacion Cargada con Exito!!", Toast.LENGTH_SHORT).show();
             }catch (JSONException e){

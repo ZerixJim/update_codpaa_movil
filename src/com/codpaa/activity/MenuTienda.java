@@ -664,6 +664,11 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     private void salidaTienda() {
 
         if (Entrada) {
+
+
+
+
+
             Thread hiloSalida = new Thread() {
                 public void run() {
 

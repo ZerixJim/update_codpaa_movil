@@ -406,7 +406,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 
 		locationRequest = LocationRequest.create();
 		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-				.setInterval(5000);
+				.setInterval(10000);
 
 
 	}

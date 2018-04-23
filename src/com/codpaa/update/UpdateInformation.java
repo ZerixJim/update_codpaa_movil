@@ -2,6 +2,7 @@ package com.codpaa.update;
 
 
 import android.content.Context;
+import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
@@ -29,6 +30,7 @@ public class UpdateInformation{
 
     public void updateInfo(int idPromotor){
 
+
         AsyncHttpClient client = new AsyncHttpClient();
 
         HttpResponseInfo responseInfo = new HttpResponseInfo(_context);
@@ -41,8 +43,8 @@ public class UpdateInformation{
         client.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, responseInfo);
 
 
-        if(Looper.getMainLooper() != Looper.myLooper()){
-            Log.d("looper", "diferentes");
+        if(Looper.getMainLooper() == Looper.myLooper()){
+            Log.d("looper 1", "mismo thread");
         }
 
 
