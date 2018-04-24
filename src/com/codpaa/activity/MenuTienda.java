@@ -99,7 +99,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     EnviarDatos enviar;
     Spinner spinnerEnc;
     EditText editNombre;
-    AsyncHttpClient cliente;
     RequestParams rp;
     String grupo;
     RecyclerView menuRecycler;
@@ -139,7 +138,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         setUpMenu();
 
-        cliente = new AsyncHttpClient();
+
         rp = new RequestParams();
         Intent recibeIdTi = getIntent();
         enviar = new EnviarDatos(this);

@@ -2,6 +2,7 @@ package com.codpaa.update;
 
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
