@@ -13,8 +13,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -134,12 +137,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             }
         });
 		
-		checkPermisos();
+
 		
 		
 	}
 
-	private void checkPermisos() {
+	private void checkPermisosAndGpsEnable() {
 
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
 
@@ -147,6 +150,62 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 
 		}
+
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED  ){
+
+
+		    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+
+
+        }
+
+
+
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ){
+
+            try {
+                int locationMode = Settings.Secure.getInt(this.getContentResolver(), Settings.Secure.LOCATION_MODE);
+                //Log.i("location Mode", " " + locationMode);
+
+
+                if (locationMode != Settings.Secure.LOCATION_MODE_HIGH_ACCURACY || !manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+
+
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+                    builder.setTitle("Aviso")
+                            .setMessage("por politicas de vanguardia, y para el buen funcionamiento de la plataforma, es necesario " +
+                                    " que el GPS este Activado y en modo de PRECISION ALTA, gracias por su comprension ")
+                            .setPositiveButton("Activar", new DialogInterface.OnClickListener(){
+
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+
+
+                                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+
+                                }
+                            }).setCancelable(false).create().show();
+
+                }
+
+
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }else {
+
+
+		    String locationMode = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+
+		    //Log.i("LocationMode", " " + locationMode);
+
+
+        }
+
 
 
 	}
@@ -343,6 +402,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		}else{
 			txtUserName.requestFocus();
 		}
+
+
+        checkPermisosAndGpsEnable();
+
 		super.onResume();
 	}
 

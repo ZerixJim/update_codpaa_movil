@@ -59,7 +59,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.widget.Toast;
+
 
 
 import com.codpaa.db.BDopenHelper;
@@ -295,35 +295,17 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 	}
 
 	public void startGPS() {
-		/*lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-		try {
-
-			// requestLocationUpdates(string=provider, long=minTime, float=minDistance, LocationListener = listener )
-			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, this);
-			lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, this);
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		}*/
 
 
-		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-		}else {
-
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+				ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
 			if (mGoogleApiClient.isConnected()){
 
 				LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
 			}
 
-
 		}
-
-
-
-
-
 
 
 
@@ -411,30 +393,25 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 
 	}
 
-	/**
-	 * callbacks para la coneccion de la api de ubicacion
-	 * @param bundle
-	 */
-
 	@Override
 	public void onConnected(@Nullable Bundle bundle) {
 
 
-		Toast.makeText(getApplicationContext(), "Api location connected", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "Api location connected", Toast.LENGTH_SHORT).show();
 
 	}
 
 	@Override
 	public void onConnectionSuspended(int i) {
 
-		Toast.makeText(getApplicationContext(), "Api location connected", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "Api location connected", Toast.LENGTH_SHORT).show();
 
 	}
 
 	@Override
 	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-		Toast.makeText(getApplicationContext(), "Api location connected", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "Api location connected", Toast.LENGTH_SHORT).show();
 
 	}
 
@@ -1355,7 +1332,6 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 		mGoogleApiClient.disconnect();
 
 	}
-
 
 
 

@@ -24,8 +24,12 @@ import com.codpaa.util.Configuracion;
 import com.codpaa.widget.DividerItemDecoration;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
 import com.loopj.android.http.*;
 
 import android.Manifest;
@@ -218,6 +222,15 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                 .setInterval(1000);
+
+
+        //builder object to verify a gps mode is in high accuracy
+
+        /*LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(locationRequest);
+
+        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());*/
+
 
 
     }
@@ -1533,6 +1546,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     @Override
     public void onLocationChanged(Location location) {
+
+	    //Log.i("Location", "change");
 
 	    this.location = location;
 
