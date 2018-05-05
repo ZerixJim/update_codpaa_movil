@@ -51,12 +51,15 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.v4.BuildConfig;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -236,7 +239,21 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     		try {
 				photoFile = createImageFile();
 
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                Uri photoUri;
+
+				if (Build.VERSION.SDK_INT >= 24){
+				    photoUri = FileProvider.getUriForFile(this,
+                            com.codpaa.BuildConfig.APPLICATION_ID + ".provider",
+                            photoFile);
+                }else {
+
+				    photoUri = Uri.fromFile(photoFile);
+
+                }
+
+
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+
                 imageToUploadUri = Uri.fromFile(photoFile);
 
                 startActivityForResult(takePictureIntent, CAMERA_PHOTO);
@@ -270,6 +287,57 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
     	}
     }
+
+
+    private File createImageFile2() throws IOException {
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+
+        File codpaaDir = new File(storageDir.getPath() + "/codpaa/");
+        if(!storageDir.exists()){
+            //Log.v("PictireCir", "Directorio No Existe");
+
+            if(storageDir.mkdir()){
+                Log.v("PictireCir", "Directorio Creado");
+
+                if (!codpaaDir.exists()){
+                    if (codpaaDir.mkdir())
+                        Log.v("PictireCir", "Directorio Creado");
+                }
+
+            }else{
+                Log.v("PictireCir", "Directorio No Creado");
+            }
+        }else{
+
+            if (!codpaaDir.exists()){
+                if (codpaaDir.mkdir())
+                    Log.v("PictireCir", "Directorio Creado");
+            }
+
+            Log.v("PictireCir", "Directorio Ya Existe");
+        }
+
+
+
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        //mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
+
+
+
+
 
     //metod create image to file
     private File createImageFile() throws IOException {
@@ -532,11 +600,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/codpaa/";
 
 
-
             return comp.setDestinationDirectoryPath(path)
-
                     .compressToFile(file, fileName[0] + "-comp." + fileName[1]);
-        } catch (IOException e) {
+        }  catch (Exception e){
             e.printStackTrace();
         }
 
