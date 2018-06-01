@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,8 +44,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -56,7 +54,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
-import android.support.v4.BuildConfig;
+
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
@@ -85,14 +83,15 @@ import android.os.Handler;
 import com.codpaa.db.BDopenHelper;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
+
 
 import cz.msebera.android.httpclient.Header;
 
 import id.zelory.compressor.Compressor;
 
 
-public class PhotoCapture extends AppCompatActivity implements OnClickListener, OnItemSelectedListener, MultiSpinnerSelect.MultiSpinnerListener{
+public class PhotoCapture extends AppCompatActivity implements OnClickListener, OnItemSelectedListener,
+        MultiSpinnerSelect.MultiSpinnerListener{
 
 
 	//private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -289,54 +288,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     }
 
 
-    private File createImageFile2() throws IOException {
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-
-
-        File codpaaDir = new File(storageDir.getPath() + "/codpaa/");
-        if(!storageDir.exists()){
-            //Log.v("PictireCir", "Directorio No Existe");
-
-            if(storageDir.mkdir()){
-                Log.v("PictireCir", "Directorio Creado");
-
-                if (!codpaaDir.exists()){
-                    if (codpaaDir.mkdir())
-                        Log.v("PictireCir", "Directorio Creado");
-                }
-
-            }else{
-                Log.v("PictireCir", "Directorio No Creado");
-            }
-        }else{
-
-            if (!codpaaDir.exists()){
-                if (codpaaDir.mkdir())
-                    Log.v("PictireCir", "Directorio Creado");
-            }
-
-            Log.v("PictireCir", "Directorio Ya Existe");
-        }
-
-
-
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        //mCurrentPhotoPath = "file:" + image.getAbsolutePath();
-        return image;
-    }
-
-
-
 
 
     //metod create image to file
@@ -519,72 +470,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	}*/
 
 
-    public Bitmap getBitmap(String path) {
-
-        Uri uri = Uri.fromFile(new File(path));
-        InputStream in;
-        try {
-            final int IMAGE_MAX_SIZE = 800000; // 0.8MP
-            in = getContentResolver().openInputStream(uri);
-
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(in, null, o);
-            if (in != null) {
-                in.close();
-            }
-
-
-            int scale = 1;
-            while ((o.outWidth * o.outHeight) * (1 / Math.pow(scale, 2)) >
-                    IMAGE_MAX_SIZE) {
-                scale++;
-            }
-            Log.d("", "scale = " + scale + ", orig-width: " +
-                    o.outWidth + ", orig-height: " + o.outHeight);
-
-            Bitmap b;
-            in = getContentResolver().openInputStream(uri);
-            if (scale > 1) {
-                scale--;
-                // scale to max possible inSampleSize that still yields an image
-                // larger than target
-                o = new BitmapFactory.Options();
-                o.inSampleSize = scale;
-                b = BitmapFactory.decodeStream(in, null, o);
-
-                // resize to desired dimensions
-                int height = b.getHeight();
-                int width = b.getWidth();
-                Log.d("", "1th scale operation dimenions - width: " +
-                        width + ", height: " + height);
-
-                double y = Math.sqrt(IMAGE_MAX_SIZE
-                        / (((double) width) / height));
-                double x = (y / height) * width;
-
-                Bitmap scaledBitmap = Bitmap.createScaledBitmap(b, (int) x,
-                        (int) y, true);
-                b.recycle();
-                b = scaledBitmap;
-
-                System.gc();
-            } else {
-                b = BitmapFactory.decodeStream(in);
-            }
-            if (in != null) {
-                in.close();
-            }
-
-            Log.d("", "bitmap size - width: " + b.getWidth() + ", height: " +
-                    b.getHeight());
-            return b;
-        } catch (IOException e) {
-            Log.e("", e.getMessage(), e);
-            return null;
-        }
-    }
 
 
 
@@ -1150,44 +1035,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         }
     }
 
-    public class BitmapTransform implements Transformation {
 
-        private final int maxWidth;
-        private final int maxHeight;
-
-        public BitmapTransform(int maxWidth, int maxHeight) {
-            this.maxWidth = maxWidth;
-            this.maxHeight = maxHeight;
-        }
-
-        @Override
-        public Bitmap transform(Bitmap source) {
-            int targetWidth, targetHeight;
-            double aspectRatio;
-
-            if (source.getWidth() > source.getHeight()) {
-                targetWidth = maxWidth;
-                aspectRatio = (double) source.getHeight() / (double) source.getWidth();
-                targetHeight = (int) (targetWidth * aspectRatio);
-            } else {
-                targetHeight = maxHeight;
-                aspectRatio = (double) source.getWidth() / (double) source.getHeight();
-                targetWidth = (int) (targetHeight * aspectRatio);
-            }
-
-            Bitmap result = Bitmap.createScaledBitmap(source, targetWidth, targetHeight, false);
-            if (result != source) {
-                source.recycle();
-            }
-            return result;
-        }
-
-        @Override
-        public String key() {
-            return maxWidth + "x" + maxHeight;
-        }
-
-    }
 
 
 }
