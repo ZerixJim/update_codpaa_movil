@@ -8,11 +8,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.Configuracion;
+import com.google.gson.JsonArray;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -69,74 +72,111 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
     }
 
 
-
-
     @Override
-    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-        super.onSuccess(statusCode, headers, response);
+    public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
+
 
         //Log.d("OnSuccess Info", "1");
-        Handler handler = new Handler();
-
-
+        final Handler handler = new Handler();
 
 
         if (response != null){
-            try {
-                JSONArray marcas = response.getJSONArray("marcas");
-                JSONArray productos = response.getJSONArray("productos");
-                JSONArray exhibiciones = response.getJSONArray("exhibiciones");
-                JSONArray tiendas = response.getJSONArray("tiendas");
-                JSONArray ruta = response.getJSONArray("ruta");
-                JSONArray productoFormato = response.getJSONArray("productoFormato");
-                JSONArray productoTienda = response.getJSONArray("productoTienda");
-                JSONArray materiales = response.getJSONArray("materiales");
-
-                parseJSONMarca(marcas);
-                parseJSONProductos(productos);
-                parseJSONExhi(exhibiciones);
-                parseJsonTiendas(tiendas);
-                parseJSONRuta(ruta);
-                parseJSONProductoByFormato(productoFormato);
-                parseJSONProductoByTienda(productoTienda);
-                parseJSONMateriales(materiales);
-
-                //progressDialog.setContentView(R.layout.dialog_done);
 
 
-                progressDialog.setMessage("Informacion Cargada Satisfactoriamente");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+
+                    try {
+                        JSONArray marcas = response.getJSONArray("marcas");
+                        JSONArray productos = response.getJSONArray("productos");
+                        JSONArray exhibiciones = response.getJSONArray("exhibiciones");
+                        JSONArray tiendas = response.getJSONArray("tiendas");
+                        JSONArray ruta = response.getJSONArray("ruta");
+                        JSONArray productoFormato = response.getJSONArray("productoFormato");
+                        JSONArray productoTienda = response.getJSONArray("productoTienda");
+                        JSONArray materiales = response.getJSONArray("materiales");
+
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.setMessage("Descargando Productos ...");
+
+                            }
+                        });
+
+                        parseJSONMarca(marcas);
+                        parseJSONProductos(productos);
+                        parseJSONExhi(exhibiciones);
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.setMessage("Descargando Ruta...");
+
+                            }
+                        });
+                        parseJsonTiendas(tiendas);
+                        parseJSONRuta(ruta);
+                        parseJSONProductoByFormato(productoFormato);
+                        parseJSONProductoByTienda(productoTienda);
+                        parseJSONMateriales(materiales);
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                progressDialog.setMessage("Informacion Cargada Satisfactoriamente");
+
+                            }
+                        });
 
 
 
 
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
 
-                        progressDialog.dismiss();
+                                progressDialog.dismiss();
 
+                            }
+                        }, 2500);
+
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.setMessage("Ocurrio un problema al guardar la informacion, intentelo mas tarde");
+                                progressDialog.dismiss();
+                            }
+                        }, 4000);
+                    } catch (Exception e){
+                        e.printStackTrace();
+
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.setMessage("Ocurrio un problema al guardar la informacion, intentelo mas tarde");
+                                progressDialog.dismiss();
+                            }
+                        }, 4000);
                     }
-                }, 2500);
+
+
+                }
+            }).start();
 
 
 
-            }catch (JSONException e){
-                e.printStackTrace();
-
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog.setMessage("Ocurrio un problema al guardar la informacion, intentelo mas tarde");
-                        progressDialog.dismiss();
-                    }
-                }, 4000);
-
-
-            }
         }
-
-
-
 
 
 
@@ -151,7 +191,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
     }
 
 
-    private void parseJSONMateriales(JSONArray materiales) throws JSONException{
+    private synchronized void parseJSONMateriales(JSONArray materiales) throws JSONException{
 
         BDopenHelper b = new BDopenHelper(context.getApplicationContext());
         b.vaciarTabla(DbEstructure.Materiales.TABLE_NAME);
@@ -179,7 +219,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
 
 
-    private void parseJSONMarca(JSONArray marcaArray) throws JSONException {
+    private synchronized void parseJSONMarca(JSONArray marcaArray) throws JSONException {
         BDopenHelper b = new BDopenHelper(context.getApplicationContext());
         b.vaciarTabla("marca");
 
@@ -200,7 +240,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
     }
 
 
-    private void parseJSONProductos(JSONArray productosArray) throws JSONException {
+    private synchronized void parseJSONProductos(JSONArray productosArray) throws JSONException {
         BDopenHelper b = new BDopenHelper(context.getApplicationContext());
         Configuracion configuracion = new Configuracion(context);
 
@@ -232,7 +272,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
         configuracion.setProducto(fecha);
     }
 
-    private void parseJSONExhi(JSONArray exhiArray) throws JSONException {
+    private synchronized void parseJSONExhi(JSONArray exhiArray) throws JSONException {
         BDopenHelper b = new BDopenHelper(context.getApplicationContext());
         b.vaciarTabla("exhibiciones");
 
@@ -251,7 +291,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
     }
 
 
-    private void parseJsonTiendas(JSONArray tiendasArray) throws JSONException {
+    private synchronized void parseJsonTiendas(JSONArray tiendasArray) throws JSONException {
         BDopenHelper b = new BDopenHelper(context.getApplicationContext());
         b.vaciarTabla("clientes");
         Configuracion configuracion = new Configuracion(context);
@@ -274,7 +314,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
     }
 
-    private void parseJSONRuta(JSONArray rutasArray) throws JSONException {
+    private synchronized void parseJSONRuta(JSONArray rutasArray) throws JSONException {
         BDopenHelper b = new BDopenHelper(context.getApplicationContext());
         b.vaciarTabla("visitaTienda");
 
@@ -305,7 +345,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
     }
 
-    private void parseJSONProductoByFormato(JSONArray array) throws JSONException{
+    private synchronized void parseJSONProductoByFormato(JSONArray array) throws JSONException{
         SQLiteDatabase db = new BDopenHelper(context).getWritableDatabase();
         new BDopenHelper(context.getApplicationContext()).vaciarTabla(ProductByFormato.TABLE_NAME);
 
@@ -336,7 +376,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
     }
 
 
-    private void parseJSONProductoByTienda(JSONArray array) throws JSONException {
+    private synchronized void parseJSONProductoByTienda(JSONArray array) throws JSONException {
         SQLiteDatabase db = new BDopenHelper(context).getWritableDatabase();
         new BDopenHelper(context.getApplicationContext()).vaciarTabla(ProductoByTienda.TABLE_NAME);
 

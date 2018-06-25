@@ -44,9 +44,7 @@ public class UpdateInformation{
         client.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, responseInfo);
 
 
-        if(Looper.getMainLooper() == Looper.myLooper()){
-            Log.d("looper 1", "mismo thread");
-        }
+
 
 
 
