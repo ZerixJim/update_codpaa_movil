@@ -50,7 +50,26 @@
                 android:layout_marginTop="10dp"
                 android:layout_margin="2dp" />
 
-            <TextView
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp">
+
+                <EditText
+
+                    android:id="@+id/cantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="@string/cantidad_frentes"/>
+
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <!--<TextView
                 android:id="@+id/textSalida"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -204,10 +223,10 @@
                 </LinearLayout>
 
 
-            </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>-->
 
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/txt_frente_linea_caja"
                 android:layout_width="wrap_content"
                 android:text="@string/frentes_linea_caja"
@@ -215,7 +234,7 @@
                 android:layout_marginTop="15dp"
                 android:padding="10dp"/>
 
-            <include layout="@layout/content_linea_caja" />
+            <include layout="@layout/content_linea_caja" />-->
 
 
 

@@ -47,7 +47,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
     // v1.2.9 rc1 = 32
     // v1.3.1 = 33
     // v1.3.3 = 34
-    private static final int version = 34;
+    // v1.3.7 = 35
+
+    private static final int version = 35;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -127,7 +129,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "idProducto int, cha1 int,cha2 int, cha3 int, cha4 int,cha5 int, cha6 int,status int," +
                 "unifila int(2), fila1 int(2), fila2 int(2), fila3 int(2)," +
                 "fila4 int(2), fila5 int(2), fila6 int(2), fila7 int(2), fila8 int(2), fila9 int(2), fila10 int(2)," +
-                "fila11 int(2), fila12 int(2), fila13 int(2), fila14 int(2))";
+                "fila11 int(2), fila12 int(2), fila13 int(2), fila14 int(2), cantidad int)";
         exhibiciones = "create table if not exists " +
                 "exhibiciones(idTienda int, idPromotor int, idExhibicion int, fecha char(15), " +
                 "idProducto int, cantidad decimal (10,2), status int)";
@@ -369,75 +371,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        if(newVersion == 34){
-
-            String tempTable = "create table if not exists " + ProductoCatalogadoTienda.TABLE_NAME + "_temp  (" +
-                    ProductoCatalogadoTienda.ID_PRODUCTO + " int, " +
-                    ProductoCatalogadoTienda.ID_PROMOTOR + " int, " +
-                    ProductoCatalogadoTienda.ID_TIENDA + " int, " +
-                    ProductoCatalogadoTienda.FECHA_CAPTURA + " varchar(25), " +
-                    ProductoCatalogadoTienda.ESTATUS_PRODUCTO + " int, " +
-                    ProductoCatalogadoTienda.CANTIDAD + " int," +
-                    ProductoCatalogadoTienda.FIRMA +" text," +
-                    ProductoCatalogadoTienda.ESTATUS_PROCESO + " varchar(50)," +
-                    ProductoCatalogadoTienda.CANTIDAD_ENTREGA + " int," +
-                    ProductoCatalogadoTienda.FOLIO + " int," +
-                    ProductoCatalogadoTienda.ESTATUS_REGISTRO + " integer default 1," +
-                    ProductoCatalogadoTienda.FECHA_UPDATE +" varchar(25)," +
-                    "primary key("+ ProductoCatalogadoTienda.ID_PRODUCTO +
-                    ","+ProductoCatalogadoTienda.ID_PROMOTOR+
-                    ","+ProductoCatalogadoTienda.ID_TIENDA+
-                    ","+ProductoCatalogadoTienda.FECHA_CAPTURA+"))";
-
-            db.execSQL(tempTable);
-
-            Cursor cursor = db.rawQuery("Select * from " +
-                    ProductoCatalogadoTienda.TABLE_NAME + "  order by idProducto, estatus_producto, " +
-                    "idTienda asc ", null);
-
-            if (cursor.getCount() > 0 ){
-
-                for (cursor.moveToFirst(); !cursor.isAfterLast() ; cursor.moveToNext()){
-
-                    ContentValues cV = new ContentValues();
-
-                    cV.put(ProductoCatalogadoTienda.ID_PRODUCTO, cursor.getInt(cursor.getColumnIndex(ProductoCatalogadoTienda.ID_PRODUCTO)));
-                    cV.put(ProductoCatalogadoTienda.ID_PROMOTOR, cursor.getInt(cursor.getColumnIndex(ProductoCatalogadoTienda.ID_PROMOTOR)));
-                    cV.put(ProductoCatalogadoTienda.ID_TIENDA, cursor.getInt(cursor.getColumnIndex(ProductoCatalogadoTienda.ID_TIENDA)));
-                    cV.put(ProductoCatalogadoTienda.FECHA_CAPTURA, cursor.getString(cursor.getColumnIndex(ProductoCatalogadoTienda.FECHA_CAPTURA)));
-                    cV.put(ProductoCatalogadoTienda.ESTATUS_PRODUCTO, cursor.getInt(cursor.getColumnIndex(ProductoCatalogadoTienda.ESTATUS_PRODUCTO)));
-                    cV.put(ProductoCatalogadoTienda.CANTIDAD, cursor.getInt(cursor.getColumnIndex(ProductoCatalogadoTienda.CANTIDAD)));
-                    cV.put(ProductoCatalogadoTienda.FIRMA, cursor.getString(cursor.getColumnIndex(ProductoCatalogadoTienda.FIRMA)));
-                    cV.put(ProductoCatalogadoTienda.ESTATUS_PROCESO, cursor.getInt(cursor.getColumnIndex(ProductoCatalogadoTienda.ESTATUS_PROCESO)));
-                    cV.put(ProductoCatalogadoTienda.CANTIDAD_ENTREGA, cursor.getInt(cursor.getColumnIndex(ProductoCatalogadoTienda.CANTIDAD_ENTREGA)));
-                    cV.put(ProductoCatalogadoTienda.FOLIO, cursor.getInt(cursor.getColumnIndex(ProductoCatalogadoTienda.FOLIO)));
-                    cV.put(ProductoCatalogadoTienda.ESTATUS_REGISTRO, cursor.getInt(cursor.getColumnIndex(ProductoCatalogadoTienda.ESTATUS_REGISTRO)));
+        if(oldVersion == 34 && newVersion == 35){
 
 
-                    db.replace(ProductoCatalogadoTienda.TABLE_NAME+"_temp", null, cV);
-
-
-
-                }
-
-            }
-            cursor.close();
-
-            db.execSQL("drop table if exists " + ProductoCatalogadoTienda.TABLE_NAME);
-
-            db.execSQL("alter table " + ProductoCatalogadoTienda.TABLE_NAME +"_temp " +
-                    " rename to " + ProductoCatalogadoTienda.TABLE_NAME);
-
-
-            db.execSQL("drop table if exists producto");
-            db.execSQL(productos);
-
-            db.execSQL("drop table if exists visitaTienda");
-            db.execSQL(ruta);
-
-
-            db.execSQL("drop table if exists " + ProductoByTienda.TABLE_NAME);
-            db.execSQL(productoByTienda);
+            db.execSQL(" alter table frentesCharola add column cantidad int");
 
 
         }
@@ -696,6 +633,29 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
+
+
+    public void insertFrentesCantidad(int idTienda, int idPromotor, String fecha, int idMarca, int idProducto, int cantidad){
+        baseDatosLocal = getWritableDatabase();
+
+
+        if (baseDatosLocal != null){
+
+            String sql = "insert or replace into frentesCharola(idTienda,idPromotor,fecha,"+
+                    "idMarca,idProducto,cantidad,status) values("+idTienda+", "+ idPromotor +", '"+ fecha +"', "+idMarca+", "+idProducto+", "+cantidad+", 1)";
+
+            baseDatosLocal.execSQL(sql);
+
+
+            baseDatosLocal.close();
+        }
+
+
+
+
+
+    }
+
     public void insertarRastreo(int idCel,String fecha, String hora, double latitud, double longitud, double altitud,String numeroTelefono) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
@@ -850,9 +810,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor datosFrentes() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,idMarca,idProducto,cha1,cha2," +
-                "cha3,cha4,cha5,cha6,unifila,fila1,fila2,fila3,fila4,fila5,fila6,fila7,fila8,fila9," +
-                "fila10,fila11,fila12,fila13,fila14 from frentesCharola where status=1", null);
+        return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,idMarca,idProducto,cantidad " +
+                " from frentesCharola where status=1", null);
 
     }
 
@@ -976,11 +935,11 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 " id_mensaje, id_servidor, enviado from mensaje order by "+ Mensaje.ESTATUS +" asc, "+ Mensaje.FECHA+ " desc", null);
     }
 
-    public Cursor getMensajes(int idMensaje) throws SQLiteException{
+    /*public Cursor getMensajes(int idMensaje) throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
 
         return baseDatosLocal.rawQuery("select ", null);
-    }
+    }*/
 
     public int contarExhibiciones(int idTienda, String fecha) throws  SQLiteException{
         baseDatosLocal = getReadableDatabase();

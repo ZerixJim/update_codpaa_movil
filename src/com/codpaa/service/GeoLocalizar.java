@@ -790,7 +790,8 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rp.put("fecha", curFrentes.getString(2));
 					rp.put("idMarc", Integer.toString(curFrentes.getInt(3)));
 					rp.put("idProdu", Integer.toString(curFrentes.getInt(4)));
-					rp.put("cha1", Integer.toString(curFrentes.getInt(5)));
+					rp.put("cantidad", Integer.toString(curFrentes.getInt(curFrentes.getColumnIndex("cantidad"))));
+					/*rp.put("cha1", Integer.toString(curFrentes.getInt(5)));
 					rp.put("cha2", Integer.toString(curFrentes.getInt(6)));
 					rp.put("cha3", Integer.toString(curFrentes.getInt(7)));
 					rp.put("cha4", Integer.toString(curFrentes.getInt(8)));
@@ -810,10 +811,10 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rp.put("f11", Integer.toString(curFrentes.getInt(22)));
 					rp.put("f12", Integer.toString(curFrentes.getInt(23)));
 					rp.put("f13", Integer.toString(curFrentes.getInt(24)));
-					rp.put("f14", Integer.toString(curFrentes.getInt(25)));
+					rp.put("f14", Integer.toString(curFrentes.getInt(25)));*/
 
 
-					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendfrentesnew.php", rp, respuestaFrentes);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST + "sendfront.php", rp, respuestaFrentes);
 
 				}
 

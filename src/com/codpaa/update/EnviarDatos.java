@@ -495,15 +495,30 @@ public class EnviarDatos {
 			
 			Cursor curFrentes = DB.datosFrentes();
 
+
+
 			if(curFrentes.getCount() != 0 && verificarConexion()) {
 				
 				for(curFrentes.moveToFirst(); !curFrentes.isAfterLast(); curFrentes.moveToNext()) {
+
+
+
+
+					RequestParams rp = new RequestParams();
+
+					Log.d("Datos count", curFrentes.getCount() + "");
+
+
 					rp.put("idTien", Integer.toString(curFrentes.getInt(0)));
 					rp.put("idCel", Integer.toString(curFrentes.getInt(1)));
 					rp.put("fecha", curFrentes.getString(2));
 					rp.put("idMarc", Integer.toString(curFrentes.getInt(3)));
 					rp.put("idProdu",Integer.toString(curFrentes.getInt(4)));
-					rp.put("cha1", Integer.toString(curFrentes.getInt(5)));
+					rp.put("cantidad", Integer.toString(curFrentes.getInt(curFrentes.getColumnIndex("cantidad"))));
+
+					Log.d("Datos", rp.toString());
+
+					/*rp.put("cha1", Integer.toString(curFrentes.getInt(5)));
 					rp.put("cha2", Integer.toString(curFrentes.getInt(6)));
 					rp.put("cha3", Integer.toString(curFrentes.getInt(7)));
 					rp.put("cha4", Integer.toString(curFrentes.getInt(8)));
@@ -523,18 +538,27 @@ public class EnviarDatos {
                     rp.put("f11", Integer.toString(curFrentes.getInt(22)));
                     rp.put("f12", Integer.toString(curFrentes.getInt(23)));
                     rp.put("f13", Integer.toString(curFrentes.getInt(24)));
-                    rp.put("f14", Integer.toString(curFrentes.getInt(25)));
+                    rp.put("f14", Integer.toString(curFrentes.getInt(25)));*/
+
+
+					AsyncHttpClient cliente = new AsyncHttpClient();
+
 
 
 					
-					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendfront.php", rp,
+					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST+"sendfront.php", rp,
 							new HttpResponseFrentes(context, curFrentes.getInt(0),curFrentes.getString(2), curFrentes.getInt(3)));
 					
 
 				}
 				
 				
+			}else{
+
+
+				Toast.makeText(context, "Error al enviar", Toast.LENGTH_SHORT).show();
+
+
 			}
 			
 
