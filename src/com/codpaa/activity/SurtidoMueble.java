@@ -46,11 +46,12 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 	
 	Spinner spiMar, spiPro;
 	EditText cantidad;
-    EditText unifila, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14;
+    EditText unifila, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, editComentario;
 	TextInputLayout cantidadLayout;
 	TextView txtCantidad;
     Toolbar toolbar;
 	InputMethodManager im;
+	private CardView cardComent;
 	SQLiteDatabase base;
 	RadioGroup radio;
 	RadioButton si,no,selec;
@@ -93,6 +94,12 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
         c12 = (EditText) findViewById(R.id.caja12);
         c13 = (EditText) findViewById(R.id.caja13);
         c14 = (EditText) findViewById(R.id.caja14);
+
+        cardComent = (CardView) findViewById(R.id.card_coment);
+
+        editComentario = (EditText) findViewById(R.id.comenterio);
+
+
 
 
 
@@ -213,6 +220,10 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
                 im.showSoftInput(cantidad, 0);
                 cardView.setVisibility(View.VISIBLE);
 				txtCantidad.setVisibility(View.VISIBLE);
+
+				cardComent.setVisibility(View.INVISIBLE);
+
+
                 break;
             case R.id.radio1:
                 //cantidad.setVisibility(View.INVISIBLE);
@@ -221,6 +232,9 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 
                 cardView.setVisibility(View.INVISIBLE);
 				txtCantidad.setVisibility(View.INVISIBLE);
+
+				cardComent.setVisibility(View.VISIBLE);
+
                 break;
 		}
 		
@@ -231,6 +245,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 			
 			int cajas = 0;
             int uni=0, v1=0, v2=0, v3=0, v4=0, v5=0, v6=0, v7=0, v8=0, v9=0, v10=0, v11=0, v12=0,v13=0,v14=0;
+            String comentario = "";
 
 
 
@@ -254,6 +269,14 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 						
 					}
 
+
+					if (cardComent.isShown()){
+
+						comentario = editComentario.getText().length() > 0 ? editComentario.getText().toString() : "";
+
+					}
+
+
                     if (unifila.isShown()){
                         uni = unifila.getText().length() > 0 ? Integer.parseInt(unifila.getText().toString()) : 0;
                         v1 = c1.getText().length() > 0 ? Integer.parseInt(c1.getText().toString()) : 0;
@@ -275,7 +298,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 					try {
 						Toast.makeText(this, "Surtido guardado de:\n "+spP.getNombre(), Toast.LENGTH_SHORT).show();
 						new BDopenHelper(this).insertarSurtido(idTienda, idPromotor, selec.getText().toString(),
-                                fecha, idProdu, cajas,uni,v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13,v14);
+                                fecha, idProdu, cajas,uni,v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13,v14, comentario);
 						im.hideSoftInputFromWindow(cantidad.getWindowToken(), 0);
 
                         resetCamps();
@@ -318,6 +341,9 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
         c12.setText("");
         c13.setText("");
         c14.setText("");
+
+        editComentario.setText("");
+
 
         spiPro.setSelection(0);
 

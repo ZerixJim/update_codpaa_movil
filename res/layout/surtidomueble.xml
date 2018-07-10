@@ -1,155 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
+
         android:layout_width="match_parent"
-        android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:subtitleTextAppearance="@style/ToolbarSubtitleAppearance"
-        app:titleTextAppearance="@style/ToolbarTitleAppearance"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:layout_height="wrap_content"
-        android:elevation="4dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-    </android.support.v7.widget.Toolbar>
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:subtitleTextAppearance="@style/ToolbarSubtitleAppearance"
+            app:titleTextAppearance="@style/ToolbarTitleAppearance"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:layout_height="wrap_content"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:orientation="vertical" >
+            android:elevation="4dp">
+
+        </android.support.v7.widget.Toolbar>
 
 
-            <Spinner
-                android:id="@+id/spiSurM"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:theme="@style/MiTema"
-                android:layout_marginTop="10dp"/>
-
-            <Spinner
-                android:id="@+id/spiSurP"
-                android:theme="@style/MiTema"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:baselineAligned="false"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_marginBottom="24dp">
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:orientation="vertical" >
+
+
+                <Spinner
+                    android:id="@+id/spiSurM"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:theme="@style/MiTema"
+                    android:layout_marginTop="10dp"/>
+
+                <Spinner
+                    android:id="@+id/spiSurP"
+                    android:theme="@style/MiTema"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="5dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical" >
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:baselineAligned="false"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginBottom="24dp">
 
-                    <TextView
-                        android:id="@+id/textSalida"
-                        style="@style/TextShadow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/necesario"
-                        android:textColor="@color/negroFondo"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:typeface="serif" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical" >
 
-                    <RadioGroup
-                        android:id="@+id/radioGroup1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:theme="@style/MiTema"
-                        android:orientation="horizontal" >
-
-                        <RadioButton
-                            android:id="@+id/radio0"
+                        <TextView
+                            android:id="@+id/textSalida"
+                            style="@style/TextShadow"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:text="@string/yes" />
-
-                        <RadioButton
-                            android:id="@+id/radio1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/no" />
-                    </RadioGroup>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical" >
-
-
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/txt_input_cantidad"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp">
-
-                        <EditText
-                            android:id="@+id/editSur"
-                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:ems="10"
-                            android:hint="@string/StringCantidadFre"
-                            android:inputType="number"
-                            android:maxLength="2"
-                            android:textColor="@color/negroFondo"/>
+                            android:layout_marginTop="10dp"
+                            android:text="@string/necesario"
+                            android:textColor="@color/negroFondo"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:typeface="serif" />
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:theme="@style/MiTema"
+                            android:orientation="horizontal" >
+
+                            <RadioButton
+                                android:id="@+id/radio0"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="@string/yes" />
+
+                            <RadioButton
+                                android:id="@+id/radio1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/no" />
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical" >
 
 
-                    </android.support.design.widget.TextInputLayout>
 
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/txt_input_cantidad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp">
+
+                            <EditText
+                                android:id="@+id/editSur"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:ems="10"
+                                android:hint="@string/StringCantidadFre"
+                                android:inputType="number"
+                                android:maxLength="2"
+                                android:textColor="@color/negroFondo"/>
+
+
+                        </android.support.design.widget.TextInputLayout>
+
+
+                    </LinearLayout>
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_surtido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/resurtido_linea_caja"
+                    android:textColor="@color/primary_text_color"
+                    android:padding="10dp"/>
+
+                <include layout="@layout/content_linea_caja"/>
+
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/txt_surtido"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/resurtido_linea_caja"
-                android:textColor="@color/primary_text_color"
-                android:padding="10dp"/>
-
-            <include layout="@layout/content_linea_caja"/>
-
-
-        </LinearLayout>
-
-    </ScrollView>
+        </ScrollView>
 
 
 
 
-</LinearLayout>
+    </LinearLayout>
+
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_coment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:contentPadding="10dp">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/comenterio"
+                android:hint="@string/comentario"
+                android:layout_width="match_parent"
+                android:maxLength="250"
+                android:layout_height="wrap_content" />
+
+
+        </android.support.design.widget.TextInputLayout>
+
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+</RelativeLayout>
+
+
+

@@ -713,11 +713,15 @@ public class EnviarDatos {
                     rp.put("c13", Integer.toString(curSurtido.getInt(19)));
                     rp.put("c14", Integer.toString(curSurtido.getInt(20)));
 
+                    rp.put("comentario", curSurtido.getString(curSurtido.getColumnIndex("comentario")));
 
+
+
+                    //todo change to production
 					
 					
 					HttpResponseSurtido http = new HttpResponseSurtido(context, curSurtido.getInt(0),curSurtido.getString(3),curSurtido.getInt(4));
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"surti.php", rp, http);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST+"surti.php", rp, http);
 					//base.execSQL();
 					
 					
@@ -754,11 +758,15 @@ public class EnviarDatos {
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
             if (response != null){
+
+
+
                 try {
                     if (response.getBoolean("insert")){
+						Toast.makeText(context, "Surtido recibido", Toast.LENGTH_SHORT).show();
                         db = new BDopenHelper(context).getWritableDatabase();
                         db.execSQL("delete from surtido where idTienda="+idTienda+" and fecha='"+fecha+"' and idProducto="+idProducto+";");
-                        Log.d("ResponseSurtido", "eliminado");
+                        //Log.d("ResponseSurtido", "eliminado");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
