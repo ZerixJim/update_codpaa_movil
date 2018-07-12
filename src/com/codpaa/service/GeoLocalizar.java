@@ -944,9 +944,10 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rp.put("idCel", Integer.toString(curComentario.getInt(1)));
 					rp.put("fecha", curComentario.getString(2));
 					rp.put("comentario", curComentario.getString(3));
+					rp.put("idMarca", curComentario.getInt(curComentario.getColumnIndex("idMarca")));
 
-
-					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendComentario.php", rp, respuesta);
+					// todo change to production
+					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_comentario.php", rp, respuesta);
 					base.delete("comentarioTienda", "idTienda=" +
 							curComentario.getInt(0) + " and fecha='" +
 							curComentario.getString(2) + "'", null);

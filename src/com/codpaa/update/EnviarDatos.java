@@ -973,9 +973,10 @@ public class EnviarDatos {
 					rp.put("idCel", Integer.toString(curComentario.getInt(1)));
 					rp.put("fecha", curComentario.getString(2));
 					rp.put("comentario", curComentario.getString(3));
-					
-					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendComentario.php", rp, respuesta);
+					rp.put("idMarca", curComentario.getInt(curComentario.getColumnIndex("idMarca")));
+
+					//todo change to production
+					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST+"send_comentario.php", rp, respuesta);
 					base.delete("comentarioTienda", "idTienda="+curComentario.getInt(0)+" and fecha='"+curComentario.getString(2)+"'", null);
 				}
 				

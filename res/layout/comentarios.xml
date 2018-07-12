@@ -3,8 +3,7 @@
             android:id="@+id/ScrollView1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
+            android:padding="@dimen/activity_horizontal_margin">
 
 
     <LinearLayout
@@ -14,11 +13,20 @@
         android:layout_marginRight="5dp"
         android:orientation="vertical" >
 
+
+
+        <Spinner
+            android:id="@+id/spinner_marca"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"/>
+
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="65dp">
             <EditText
                 android:id="@+id/editComen"
                 android:layout_width="match_parent"

@@ -22,6 +22,9 @@ public class Utilities {
     public static final String FORMATOS_PATH = "http://codpaa.plataformavanguardia.net/images/formatos/";
     public static final String WEB_SERVICE_CODPAA_TEST = "http://plataformavanguardia.net/test/webservice/";
 
+    public static final int HOST_MODE_PRODCTION = 1;
+    public static final int HOST_MODE_TEST = 2;
+
 
     public static final String TABLE_MENSAJE = "mensaje";
 
@@ -37,6 +40,23 @@ public class Utilities {
 
         return netInfo != null && netInfo.isConnected();
     }
+
+
+    public static String getHostService(int mode){
+
+
+        if (mode == HOST_MODE_TEST ){
+
+            return WEB_SERVICE_CODPAA_TEST;
+
+        }else {
+
+            return WEB_SERVICE_CODPAA;
+
+        }
+
+    }
+
 
     public static String getTimeAgo(String formato, String myTime){
         String response = "";

@@ -170,7 +170,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "ingreso varchar(8), salida varchar(8))";
         comentarioTienda = "create table if not exists " +
                 "comentarioTienda(idComentario integer primary key autoincrement,idTienda int," +
-                "idCelular int, fecha varchar(25),comentario text,status int)";
+                "idCelular int, fecha varchar(25),comentario text,status int, idMarca int)";
         rastreo = "create table if not exists " +
                 "rastreo(idCelular int, fecha varchar(10), hora varchar(10), latitud double, " +
                 "longitud double, altitud double, numero_telefono varchar(14))";
@@ -377,6 +377,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
             db.execSQL(" alter table frentesCharola add column cantidad int");
             db.execSQL(" alter table surtido add column comentario varchar(250)");
+            db.execSQL(" alter table comentarioTienda add column idMarca int");
 
 
         }
@@ -736,10 +737,11 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
 
-    public void insertarComentarios(int idTienda, int idCel, String fecha,String comentario) throws SQLiteException{
+    public void insertarComentarios(int idTienda, int idCel, String fecha,String comentario, int idMarca) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert into comentarioTienda(idTienda,idCelular, fecha,comentario) values("+idTienda+","+idCel+",'"+fecha+"','"+comentario+"')");
+            baseDatosLocal.execSQL("insert into comentarioTienda(idTienda,idCelular, fecha,comentario, idMarca) values("
+                    +idTienda+","+idCel+",'"+fecha+"','"+comentario+"', "+idMarca+")");
         if(baseDatosLocal != null) baseDatosLocal.close();
 
     }
@@ -995,7 +997,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor ComentariosTienda() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select idTienda,idCelular,fecha,comentario from comentarioTienda", null);
+        return baseDatosLocal.rawQuery("select idTienda,idCelular,fecha,comentario, idMarca from comentarioTienda", null);
 
     }
 
