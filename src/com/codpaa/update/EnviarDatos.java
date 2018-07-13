@@ -803,7 +803,11 @@ public class EnviarDatos {
 
 					//Log.d("Estatus"," "+ curInven.getInt(curInven.getColumnIndex("estatus")));
 
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinventario.php", rp,
+
+					Log.d("datos", rp.toString());
+
+					//todo change to production
+					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST +"sendinventario.php", rp,
 							new HttpResponseInventario(context, curInven.getInt(0),curInven.getString(2), curInven.getInt(3)));
 
 				}

@@ -20,12 +20,13 @@
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="20dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
@@ -41,6 +42,7 @@
                 android:id="@+id/spiInvPro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
                 android:theme="@style/MiTema"
                 android:layout_margin="3dp" />
 
@@ -54,10 +56,11 @@
 
                 <LinearLayout
                     android:orientation="vertical"
-                    android:layout_width="0dp"
+
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_gravity="center_horizontal">
+                    android:layout_gravity="center"
+                    android:layout_width="0dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -86,7 +89,7 @@
                     </RadioGroup>
                 </LinearLayout>
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -116,6 +119,59 @@
                             android:text="No re-surtible"/>
 
                     </RadioGroup>
+                </LinearLayout>-->
+
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp">
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/editInv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="cantidad en fisico"
+                            android:theme="@style/MiTema"
+                            android:inputType="number"
+                            android:maxLength="7"
+                            android:textColor="@color/negroFondo" />
+
+
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:ems="10"
+                            android:id="@+id/editSistema"
+                            android:hint="cantidad sistema"
+                            android:theme="@style/MiTema"
+                            android:maxLength="7"
+                            android:textColor="@color/negroFondo" />
+
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+
+
                 </LinearLayout>
 
 
@@ -124,72 +180,10 @@
 
 
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="2"
-                android:padding="5dp"
-                android:layout_marginTop="20dp">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/fisico"
-                        android:minEms="6"
-                        android:id="@+id/textViewRowProducto"
-                        />
-
-                    <EditText
-                        android:id="@+id/editInv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/cant"
-                        android:theme="@style/MiTema"
-                        android:inputType="number"
-                        android:maxLength="7"
-                        android:textColor="@color/negroFondo" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/systema"
-                        android:minEms="6"
-                        android:id="@+id/textViewRowMarca"
-                        />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:ems="10"
-                        android:id="@+id/editSistema"
-                        android:hint="@string/cant"
-                        android:theme="@style/MiTema"
-                        android:maxLength="7"
-                        android:textColor="@color/negroFondo" />
-                </LinearLayout>
-
-            </LinearLayout>
 
 
-            <LinearLayout
+
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -217,11 +211,11 @@
 
                     />
 
-            </LinearLayout>
+            </LinearLayout>-->
 
 
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
@@ -252,13 +246,13 @@
 
 
 
-            </LinearLayout>
+            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="15dp"
+                android:orientation="vertical"
                 android:layout_marginBottom="15dp">
 
                 <TextView

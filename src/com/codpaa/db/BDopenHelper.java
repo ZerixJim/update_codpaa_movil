@@ -737,6 +737,24 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
 
+
+    public void insertInventarioLite(int idTien, int idPromo ,String fecha, int Producto, int CantidadFisico,
+                                     int CantidadSistema,int statusRegistro,String tipo, String fechaCaducidad) throws SQLiteException{
+        baseDatosLocal = getWritableDatabase();
+        if(baseDatosLocal != null)
+            baseDatosLocal.execSQL("insert or replace into invProducto (idTienda, idPromotor" +
+                    " ,fecha, idProducto, cantidadFisico,cantidadSistema,status," +
+                    "tipo, fecha_caducidad) values" +
+                    " ("+idTien+","+idPromo+
+                    ",'"+fecha+"',"+Producto+","+CantidadFisico+","+CantidadSistema+","+statusRegistro+",'"+tipo+"','"+fechaCaducidad+
+                    "')");
+        if(baseDatosLocal != null) baseDatosLocal.close();
+
+
+
+    }
+
+
     public void insertarComentarios(int idTienda, int idCel, String fecha,String comentario, int idMarca) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)

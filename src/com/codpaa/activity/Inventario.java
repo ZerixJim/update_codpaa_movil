@@ -54,13 +54,13 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 	int idTienda, idPromotor;
 	SQLiteDatabase base;
     RadioButton piezas, cajas, selec;
-    RadioGroup radio, radioEstatus;
+    RadioGroup radio;
 	TextView txtResultado;
 	Toolbar toolbar;
 	Spinner marca,producto;
     static Button btnFecha;
 
-	EditText editFisico, editSistema, editLote;
+	EditText editFisico, editSistema;
 	InputMethodManager im;
 	ArrayList<MarcaModel> array = new ArrayList<>();
 	Locale locale;
@@ -87,7 +87,7 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 
 		editFisico = (EditText) findViewById(R.id.editInv);
         editSistema = (EditText) findViewById(R.id.editSistema);
-		editLote = (EditText) findViewById(R.id.editLote);
+		//editLote = (EditText) findViewById(R.id.editLote);
 
         radio = (RadioGroup) findViewById(R.id.radioInventario);
 		if (radio != null) {
@@ -97,12 +97,12 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 			cajas = (RadioButton) radio.findViewById(R.id.radioTipo2);
 		}
 
-		txtResultado = (TextView) findViewById(R.id.resultado);
+		//txtResultado = (TextView) findViewById(R.id.resultado);
 
-        radioEstatus = (RadioGroup) findViewById(R.id.radio_estatus);
+        //radioEstatus = (RadioGroup) findViewById(R.id.radio_estatus);
 
 
-		estado = (SeekBar) findViewById(R.id.estado);
+		//estado = (SeekBar) findViewById(R.id.estado);
 
 		if (estado != null) {
 			estado.setOnSeekBarChangeListener(this);
@@ -235,48 +235,51 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 			if(idMarca != 0){
 				if(idProdu != 0){
 
-					if (estado.getProgress() > 0){
-						if(editFisico.getText().length() >0 || editSistema.getText().length() >0) {
+                    if(editFisico.getText().length() >0 || editSistema.getText().length() >0) {
 
-							if(editFisico.getText().length()>0)
-								cantidadFisico = Integer.parseInt(editFisico.getText().toString());
-							if(editSistema.getText().length()>0)
-								cantidadSistema = Integer.parseInt(editSistema.getText().toString());
+                        if(editFisico.getText().length()>0)
+                            cantidadFisico = Integer.parseInt(editFisico.getText().toString());
+                        if(editSistema.getText().length()>0)
+                            cantidadSistema = Integer.parseInt(editSistema.getText().toString());
 
-							try {
+                        try {
 
-								selec = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
-								//estatusSelected = (RadioButton) findViewById(radioEstatus.getCheckedRadioButtonId());
+                            selec = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
+                            //estatusSelected = (RadioButton) findViewById(radioEstatus.getCheckedRadioButtonId());
 
-								try {
-									new BDopenHelper(this).insertarInventario(idTienda,idPromotor ,fecha, idProdu, cantidadFisico,cantidadSistema,1
-											,selec.getText().toString(),getFechaCaducidad(),
-											editLote.getText().toString(), getSelectedStatus(radioEstatus), estado.getProgress());
+                            try {
+                                new BDopenHelper(this).insertInventarioLite(idTienda,idPromotor ,fecha, idProdu,
+                                        cantidadFisico,cantidadSistema,1
+                                        ,selec.getText().toString(),getFechaCaducidad());
 
-									//Log.d("RadioChecked", " " + String.valueOf(radioEstatus.getCheckedRadioButtonId()));
-									Toast.makeText(this,"Datos Guardados", Toast.LENGTH_SHORT).show();
-									editFisico.setText("");
-									editSistema.setText("");
-									editLote.setText("");
-									btnFecha.setText("fecha");
-									producto.setSelection(0);
-									estado.setProgress(0);
-									im.hideSoftInputFromWindow(editFisico.getWindowToken(), 0);
-									new EnviarDatos(this).enviarInventario();
-								}catch(Exception e) {
-									e.printStackTrace();
-								}
-							}catch(Exception e) {
-								e.printStackTrace();
+                                //Log.d("RadioChecked", " " + String.valueOf(radioEstatus.getCheckedRadioButtonId()));
+                                Toast.makeText(this,"Datos Guardados", Toast.LENGTH_SHORT).show();
+                                editFisico.setText("");
+                                editSistema.setText("");
+                                //editLote.setText("");
+                                btnFecha.setText("fecha");
+                                producto.setSelection(0);
+                                //estado.setProgress(0);
+                                im.hideSoftInputFromWindow(editFisico.getWindowToken(), 0);
+                                new EnviarDatos(this).enviarInventario();
+                            }catch(Exception e) {
+                                e.printStackTrace();
+                            }
+                        }catch(Exception e) {
+                            e.printStackTrace();
 
-							}
+                        }
 
-						} else {
-							Toast.makeText(this,"No se definio la cantidad", Toast.LENGTH_SHORT).show();
-						}
+                    } else {
+                        Toast.makeText(this,"No se definio la cantidad", Toast.LENGTH_SHORT).show();
+                    }
+
+
+					/*if (estado.getProgress() > 0){
+
 					} else {
 						Toast.makeText(this, "Selecciona el estado de producto", Toast.LENGTH_SHORT).show();
-					}
+					}*/
 
 
 				}else{

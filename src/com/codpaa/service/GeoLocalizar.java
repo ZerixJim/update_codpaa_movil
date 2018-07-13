@@ -850,8 +850,8 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rp.put("fecha_cad", curInven.getString(8));
 					rp.put("lote", curInven.getString(9));
 
-
-					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendinventario.php", rp, responseInventario);
+					//todo change to production
+					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST + "sendinventario.php", rp, responseInventario);
 
 
 				}
