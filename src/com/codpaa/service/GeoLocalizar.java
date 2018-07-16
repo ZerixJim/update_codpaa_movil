@@ -1096,7 +1096,9 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rpIn.put("preciocaja", curInteli.getString(12));
 					rpIn.put("cambioprecio", curInteli.getString(13));
 
-					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendinteligencia.php", rpIn, respuestaInteligencia);
+
+					//todo change to production
+					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_precio.php", rpIn, respuestaInteligencia);
 
 
 				}

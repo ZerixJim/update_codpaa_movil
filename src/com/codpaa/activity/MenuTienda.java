@@ -24,12 +24,8 @@ import com.codpaa.util.Configuracion;
 import com.codpaa.widget.DividerItemDecoration;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
 import com.loopj.android.http.*;
 
 import android.Manifest;
@@ -289,15 +285,15 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             item4.setImage("ic_assignment_grey600_24dp");
             array.add(item4);
 
-            final MenuTiendaModel item5 = new MenuTiendaModel();
+            /*final MenuTiendaModel item5 = new MenuTiendaModel();
             item5.setIdMenu(5);
             item5.setNombreMenu("Exhibiciones especiales");
             item5.setImage("ic_border_bottom_grey600_24dp");
-            array.add(item5);
+            array.add(item5);*/
 
             final MenuTiendaModel item6 = new MenuTiendaModel();
             item6.setIdMenu(6);
-            item6.setNombreMenu("Inteligencia de mercado");
+            item6.setNombreMenu("Precio");
             item6.setImage("ic_assessment_grey_600_24dp");
             array.add(item6);
 
@@ -1270,7 +1266,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 	
 	private void inteligenciaMercado(){
 		if(Entrada){
-			Intent i = new Intent(this, InteligenciaMercado.class);
+			Intent i = new Intent(this, Precio.class);
 			i.putExtra("idTienda", idTienda);
 			i.putExtra("idPromotor", idPromotor);
 			startActivity(i);

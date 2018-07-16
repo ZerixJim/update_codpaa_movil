@@ -5,16 +5,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -28,8 +27,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
+
+
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -42,19 +41,20 @@ import com.codpaa.R;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
-public class InteligenciaMercado extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
+public class Precio extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
 	
 	Button guardar;
 	Spinner spMarca, spProducto;
-    private static Button btnFechaInicio;
-	private static Button btnFechaFin;
+
+    /*private static Button btnFechaInicio;
+	private static Button btnFechaFin;*/
 
 	private TextInputLayout tilPrecioNormal;
 	private TextInputLayout tilPrecioCaja;
-	private TextInputLayout tilPrecioOferta;
+	/*private TextInputLayout tilPrecioOferta;*/
 	SQLiteDatabase base;
 	EditText editProNormal, editProOfer, editPrecioCaja;
-	CheckBox chOferCr, chProExtra, chProEmp, chCambioI, chCambioP;
+	//CheckBox chOferCr, chProExtra, chProEmp, chCambioI, chCambioP;
 	InputMethodManager im;
 	ArrayList<MarcaModel> array = new ArrayList<>();
 
@@ -83,20 +83,20 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 		editProOfer = (EditText) findViewById(R.id.editPreOfer);
 		editPrecioCaja = (EditText) findViewById(R.id.editTextPreCaj);
 		
-		chOferCr = (CheckBox) findViewById(R.id.checkOferC);
+		/*chOferCr = (CheckBox) findViewById(R.id.checkOferC);
 		chProExtra = (CheckBox) findViewById(R.id.checkProdEx);
 		chProEmp = (CheckBox) findViewById(R.id.checkProEmp);
 		chCambioI = (CheckBox) findViewById(R.id.checkCambio);
-		chCambioP = (CheckBox) findViewById(R.id.checkCampre);
+		chCambioP = (CheckBox) findViewById(R.id.checkCampre);*/
 
         //buttons
-        btnFechaInicio = (Button) findViewById(R.id.btnFechaInicio);
-        btnFechaFin = (Button) findViewById(R.id.btnFechaFin);
+     /*   btnFechaInicio = (Button) findViewById(R.id.btnFechaInicio);
+        btnFechaFin = (Button) findViewById(R.id.btnFechaFin);*/
 
 
 		tilPrecioNormal = (TextInputLayout) findViewById(R.id.til_precio_normal);
 		tilPrecioCaja = (TextInputLayout) findViewById(R.id.til_precio_caja);
-		tilPrecioOferta = (TextInputLayout) findViewById(R.id.til_precio_oferta);
+		//tilPrecioOferta = (TextInputLayout) findViewById(R.id.til_precio_oferta);
 
 		guardar.setOnClickListener(this);
 		spMarca.setOnItemSelectedListener(this);
@@ -131,7 +131,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 		}
 
 
-		/**
+		/*
 		 * keyboard soft hide
 		 */
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -212,11 +212,11 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 	
 	private void resetCampos(){
 		
-		chOferCr.setChecked(false);
+		/*chOferCr.setChecked(false);
 		chProExtra.setChecked(false);
 		chProEmp.setChecked(false);
 		chCambioI.setChecked(false);
-		chCambioP.setChecked(false);
+		chCambioP.setChecked(false);*/
 		
 		if(editProNormal.getText().length() > 0)
 			editProNormal.setText("");
@@ -253,11 +253,11 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 				tilPrecioOferta.setError("Campo Requerido");
 			}*/
 			
-			String oferCru, produExtr, proEmpl, cambioImagen, cambioPr;
+			/*String oferCru, produExtr, proEmpl, cambioImagen, cambioPr;*/
 			BDopenHelper baseH = new BDopenHelper(this);
 			EnviarDatos enviar = new EnviarDatos(this);
 			
-			if(chOferCr.isChecked()){
+			/*if(chOferCr.isChecked()){
 				
 				oferCru = "SI";
 			}else{
@@ -287,7 +287,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 				cambioPr = "SI";
 			}else{
 				cambioPr = "NO";
-			}
+			}*/
 
 			try {
 				MarcaModel spM = (MarcaModel) spMarca.getSelectedItem();
@@ -303,16 +303,16 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 
 						if (isNotEmptyOferta(normal) && isNotEmptyCaja(caja)) {
 
-							baseH.insertarInteligencia(idPromotor, idTienda, idProdu, normal, oferta, fecha, oferCru, produExtr, proEmpl, cambioImagen, 1, getFechaInicio(), getFechaFin(), caja, cambioPr);
-							Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + normal + " precOfer " + oferta + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
+							baseH.insertarPrecio(idPromotor, idTienda, idProdu, normal, caja ,oferta, fecha, 1);
+							//Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + normal + " precOfer " + oferta + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
 							enviar.enviarInteli();
 							Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
 
 							resetCampos();
 							spProducto.setSelection(0);
 
-							btnFechaInicio.setText(R.string.fecha);
-							btnFechaFin.setText(R.string.fecha);
+							/*btnFechaInicio.setText(R.string.fecha);
+							btnFechaFin.setText(R.string.fecha);*/
 						} else {
 							Toast.makeText(this, "Campos de Precio son Requeridos", Toast.LENGTH_SHORT).show();
 						}
@@ -448,7 +448,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 		
 	}
 
-    public String getFechaInicio(){
+    /*public String getFechaInicio(){
         String salidaFecha;
         if (!btnFechaInicio.getText().equals("fecha")){
             salidaFecha = btnFechaInicio.getText().toString();
@@ -466,9 +466,9 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
             salidaFecha = "";
         }
         return salidaFecha;
-    }
+    }*/
 
-    public void showDatePickerDialogInicio(View v){
+    /*public void showDatePickerDialogInicio(View v){
         DialogFragment dialogInicio = new DatePickerInicio();
 
         dialogInicio.show(getSupportFragmentManager(), "datePickerInicio");
@@ -480,7 +480,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 
         dialogFin.show(getSupportFragmentManager(), "datePickerFin");
 
-    }
+    }*/
 
 
 	private boolean isNotEmptyNormal(String normal){
@@ -497,7 +497,7 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 
 
 
-    public static class DatePickerInicio extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+    /*public static class DatePickerInicio extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
 
         @NonNull
@@ -569,6 +569,6 @@ public class InteligenciaMercado extends AppCompatActivity implements OnClickLis
 
 
         }
-    }
+    }*/
 
 }

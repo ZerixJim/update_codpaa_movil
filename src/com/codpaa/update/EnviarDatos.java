@@ -1016,8 +1016,9 @@ public class EnviarDatos {
 					rpIn.put("preciocaja",curInteli.getString(12));
 					rpIn.put("cambioprecio",curInteli.getString(13));
 					
-					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendinteligencia2.php", rpIn, new HttpResponseInteligen(context, curInteli.getInt(1), curInteli.getString(5),curInteli.getInt(2)));
+					//todo change to production
+					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST+"send_precio.php", rpIn,
+							new HttpResponseInteligen(context, curInteli.getInt(1), curInteli.getString(5),curInteli.getInt(2)));
 					
 				}
 			}
@@ -1069,8 +1070,13 @@ public class EnviarDatos {
 				}
 			}
 		}
-		
-		
+
+		@Override
+		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+			super.onFailure(statusCode, headers, throwable, errorResponse);
+
+			//Toast.makeText(act, "Registro Recibido", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 

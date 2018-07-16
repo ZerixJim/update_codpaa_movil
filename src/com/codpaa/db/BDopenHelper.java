@@ -773,6 +773,16 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
 
+    public void insertarPrecio(int idCel,int idTien,int idProd, String precioNormal, String precioCaja, String precioOfer, String fecha, int sta) throws SQLiteException{
+        baseDatosLocal = getWritableDatabase();
+        if(baseDatosLocal != null)
+            baseDatosLocal.execSQL("insert into inteligencia(idCelular,idTienda,idProducto,precioNormal," +
+                    "precioOferta,fecha,status,preciocaja) values("+idCel+","+idTien+","+idProd+",'"+precioNormal+"','"+precioOfer+"','"+fecha+"',"+sta+", '"+ precioCaja +"')");
+        if(baseDatosLocal != null) baseDatosLocal.close();
+    }
+
+
+
 
     public Cursor fotos() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();

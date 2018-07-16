@@ -38,7 +38,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.codpaa.activity.InteligenciaMercado"/>
+        className = "com.codpaa.activity.Precio"/>
       <point      
         x = "4678"      
         y = "2565"/>

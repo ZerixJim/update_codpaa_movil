@@ -152,7 +152,7 @@
             android:label="@string/comentienda"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.InteligenciaMercado"
+            android:name=".activity.Precio"
             android:label="@string/inteligencia"
             android:screenOrientation="portrait" />
 
