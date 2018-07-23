@@ -297,23 +297,23 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             item6.setImage("ic_assessment_grey_600_24dp");
             array.add(item6);
 
-            final MenuTiendaModel item7 = new MenuTiendaModel();
+            /*final MenuTiendaModel item7 = new MenuTiendaModel();
             item7.setIdMenu(7);
             item7.setNombreMenu("Materiales");
             item7.setImage("ic_apps_grey_600_24dp");
-            array.add(item7);
+            array.add(item7);*/
 
-            final MenuTiendaModel item8 = new MenuTiendaModel();
+            /*final MenuTiendaModel item8 = new MenuTiendaModel();
             item8.setIdMenu(8);
             item8.setNombreMenu("Venta promedio");
             item8.setImage("ic_timeline_grey_600_24dp");
-            array.add(item8);
+            array.add(item8);*/
 
-            final MenuTiendaModel item9 = new MenuTiendaModel();
+            /*final MenuTiendaModel item9 = new MenuTiendaModel();
             item9.setIdMenu(9);
             item9.setNombreMenu("Encargado de tienda");
             item9.setImage("ic_timer_auto_grey600_24dp");
-            array.add(item9);
+            array.add(item9);*/
 
             final MenuTiendaModel item10 = new MenuTiendaModel();
             item10.setIdMenu(10);
