@@ -426,7 +426,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
@@ -434,8 +434,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         inflater.inflate(R.menu.menu_tienda, menu);
 
 
+
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
