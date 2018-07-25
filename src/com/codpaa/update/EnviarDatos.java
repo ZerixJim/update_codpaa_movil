@@ -546,7 +546,7 @@ public class EnviarDatos {
 
 
 					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST+"sendfront.php", rp,
+					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST+"send_front.php", rp,
 							new HttpResponseFrentes(context, curFrentes.getInt(0),curFrentes.getString(2), curFrentes.getInt(3)));
 					
 
@@ -721,7 +721,7 @@ public class EnviarDatos {
 					
 					
 					HttpResponseSurtido http = new HttpResponseSurtido(context, curSurtido.getInt(0),curSurtido.getString(3),curSurtido.getInt(4));
-					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST+"surti.php", rp, http);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST+"send_surti.php", rp, http);
 					//base.execSQL();
 					
 					

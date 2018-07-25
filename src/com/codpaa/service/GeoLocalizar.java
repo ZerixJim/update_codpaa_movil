@@ -814,7 +814,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rp.put("f14", Integer.toString(curFrentes.getInt(25)));*/
 
 					// todo-chris change to production server
-					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST + "sendfront.php", rp, respuestaFrentes);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_front.php", rp, respuestaFrentes);
 
 				}
 
