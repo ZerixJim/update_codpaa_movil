@@ -813,8 +813,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rp.put("f13", Integer.toString(curFrentes.getInt(24)));
 					rp.put("f14", Integer.toString(curFrentes.getInt(25)));*/
 
-					// todo-chris change to production server
-					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_front.php", rp, respuestaFrentes);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "send_front.php", rp, respuestaFrentes);
 
 				}
 
@@ -850,8 +849,8 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rp.put("fecha_cad", curInven.getString(8));
 					rp.put("lote", curInven.getString(9));
 
-					//todo change to production
-					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST + "sendinventario.php", rp, responseInventario);
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+ "sendinventario.php", rp, responseInventario);
 
 
 				}
@@ -946,8 +945,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rp.put("comentario", curComentario.getString(3));
 					rp.put("idMarca", curComentario.getInt(curComentario.getColumnIndex("idMarca")));
 
-					// todo change to production
-					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_comentario.php", rp, respuesta);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "send_comentario.php", rp, respuesta);
 					base.delete("comentarioTienda", "idTienda=" +
 							curComentario.getInt(0) + " and fecha='" +
 							curComentario.getString(2) + "'", null);
@@ -1097,8 +1095,8 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rpIn.put("cambioprecio", curInteli.getString(13));
 
 
-					//todo change to production
-					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST + "send_precio.php", rpIn, respuestaInteligencia);
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "send_precio.php", rpIn, respuestaInteligencia);
 
 
 				}

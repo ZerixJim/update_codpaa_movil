@@ -717,11 +717,11 @@ public class EnviarDatos {
 
 
 
-                    //todo change to production
+
 					
 					
 					HttpResponseSurtido http = new HttpResponseSurtido(context, curSurtido.getInt(0),curSurtido.getString(3),curSurtido.getInt(4));
-					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST+"send_surti.php", rp, http);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"send_surti.php", rp, http);
 					//base.execSQL();
 					
 					
@@ -806,8 +806,8 @@ public class EnviarDatos {
 
 					Log.d("datos", rp.toString());
 
-					//todo change to production
-					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST +"sendinventario.php", rp,
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA +"sendinventario.php", rp,
 							new HttpResponseInventario(context, curInven.getInt(0),curInven.getString(2), curInven.getInt(3)));
 
 				}
@@ -979,8 +979,8 @@ public class EnviarDatos {
 					rp.put("comentario", curComentario.getString(3));
 					rp.put("idMarca", curComentario.getInt(curComentario.getColumnIndex("idMarca")));
 
-					//todo change to production
-					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST+"send_comentario.php", rp, respuesta);
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"send_comentario.php", rp, respuesta);
 					base.delete("comentarioTienda", "idTienda="+curComentario.getInt(0)+" and fecha='"+curComentario.getString(2)+"'", null);
 				}
 				
@@ -1016,8 +1016,8 @@ public class EnviarDatos {
 					rpIn.put("preciocaja",curInteli.getString(12));
 					rpIn.put("cambioprecio",curInteli.getString(13));
 					
-					//todo change to production
-					cliente.post(Utilities.WEB_SERVICE_CODPAA_TEST+"send_precio.php", rpIn,
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"send_precio.php", rpIn,
 							new HttpResponseInteligen(context, curInteli.getInt(1), curInteli.getString(5),curInteli.getInt(2)));
 					
 				}
