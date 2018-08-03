@@ -127,7 +127,7 @@
                                 android:ems="10"
                                 android:hint="@string/StringCantidadFre"
                                 android:inputType="number"
-                                android:maxLength="2"
+                                android:maxLength="5"
                                 android:textColor="@color/negroFondo"/>
 
 
