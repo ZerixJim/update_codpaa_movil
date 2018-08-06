@@ -293,7 +293,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 				String fecha = dFecha.format(c.getTime());
 
 
-				Log.d("FECHA",fecha);
+				//Log.d("FECHA",fecha);
 
 
 				/*uni = unifila.getText().length() > 0 ? Integer.parseInt(unifila.getText().toString()) : 0;
