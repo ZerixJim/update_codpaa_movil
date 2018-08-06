@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.codpaa"
-    android:versionCode="79"
-    android:versionName="1.3.7 rc2">
+    package="com.codpaa">
 
     <uses-sdk android:minSdkVersion="14" />
 
