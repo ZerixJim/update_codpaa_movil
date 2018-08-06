@@ -82,7 +82,7 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         viewHolder.descrip.setText("");
 
 
-        Picasso picasso = Picasso.with(_context);
+        Picasso picasso = Picasso.get();
 
         //picasso.setIndicatorsEnabled(true);
 

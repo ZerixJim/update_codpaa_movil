@@ -225,7 +225,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 
                 Log.d("temp", temp.get_img());
 
-                Picasso.with(_context)
+                Picasso.get()
                         .load(new File(temp.get_img()))
                         .placeholder(R.drawable.placeholder)
                         .into(holder.img);
@@ -322,7 +322,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		Bitmap bitmap = BitmapFactory.decodeFile(img,options);
 		imagen.setImageBitmap(bitmap);*/
 
-		Picasso.with(this)
+		Picasso.get()
 				.load(new File(img))
 				.placeholder(R.drawable.placeholder)
 				.into(imagen);

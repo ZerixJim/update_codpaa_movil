@@ -58,7 +58,7 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.ViewHolderFo
 
         holder.tipo.setText(fo.getTipo());
 
-        Picasso.with(context)
+        Picasso.get()
                 .load(new File(fo.getImg()))
                 .resize(dp2px(220), 0)
                 .into(holder.img);

@@ -94,7 +94,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
                 dia.modo.setText("impulsor");
             }
 
-            Picasso.with(context).load(Utilities.FORMATOS_PATH + diaModel.getFormato() + ".png").into(dia.image);
+            Picasso.get().load(Utilities.FORMATOS_PATH + diaModel.getFormato() + ".png").into(dia.image);
 
 
             if (!diaModel.getLongitud().isEmpty() && !diaModel.getLatitud().isEmpty()){

@@ -207,24 +207,8 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
         }
 
 
-        Picasso picasso = Picasso.with(context);
 
-
-        picasso.load(Utilities.PRODUCT_PATH+producto.getIdMarca()+"/"+producto.getIdProducto()+".gif")
-
-                .into(holder.imageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        //viewHolder.progressBar.setVisibility(View.GONE);
-
-                    }
-
-                    @Override
-                    public void onError() {
-                        //viewHolder.progressBar.setVisibility(View.GONE);
-
-                    }
-                });
+        Picasso.get().load(Utilities.PRODUCT_PATH+producto.getIdMarca()+"/"+producto.getIdProducto()+".gif").into(holder.imageView);
 
 
 

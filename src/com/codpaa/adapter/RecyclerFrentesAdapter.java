@@ -160,7 +160,7 @@ public class RecyclerFrentesAdapter extends RecyclerView.Adapter<RecyclerFrentes
         holder.spinner.setAdapter(arrayAdapter);
 
 
-        Picasso picasso = Picasso.with(context);
+        Picasso picasso = Picasso.get();
         picasso.load(Utilities.PRODUCT_PATH+frentes.getIdMarca()+"/"+frentes.getIdProducto()+".gif")
                 //.resize(bitmapDrawable.getBitmap().getWidth(), 0)
                 //.fit()

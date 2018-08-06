@@ -68,13 +68,13 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 			LayoutInflater inflater = _context.getLayoutInflater();
 			row = inflater.inflate(R.layout.row_spinner_product, parent, false);
 			viewHolder = new ViewHolder();
-			viewHolder.txtNombre = (TextView) row.findViewById(R.id.text_nombre_producto);
-			viewHolder.txtPresentacion = (TextView) row.findViewById(R.id.text_presentacion_producto);
-			viewHolder.txtCodigoBarras = (TextView) row.findViewById(R.id.text_codigo_barras);
-			viewHolder.imagenProducto = (ImageView) row.findViewById(R.id.image_producto);
-			viewHolder.divider = (TextView) row.findViewById(R.id.divider);
-			viewHolder.progressBar = (ProgressBar) row.findViewById(R.id.progress);
-			viewHolder.frameLayout = (FrameLayout) row.findViewById(R.id.frame);
+			viewHolder.txtNombre =  row.findViewById(R.id.text_nombre_producto);
+			viewHolder.txtPresentacion =  row.findViewById(R.id.text_presentacion_producto);
+			viewHolder.txtCodigoBarras =  row.findViewById(R.id.text_codigo_barras);
+			viewHolder.imagenProducto =  row.findViewById(R.id.image_producto);
+			viewHolder.divider =  row.findViewById(R.id.divider);
+			viewHolder.progressBar = row.findViewById(R.id.progress);
+			viewHolder.frameLayout =  row.findViewById(R.id.frame);
 
 			row.setTag(viewHolder);
 
@@ -138,12 +138,12 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 			LayoutInflater inflater = _context.getLayoutInflater();
 			row = inflater.inflate(R.layout.row_spinner_product, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.txtNombre = (TextView) row.findViewById(R.id.text_nombre_producto);
-            viewHolder.txtPresentacion = (TextView) row.findViewById(R.id.text_presentacion_producto);
-			viewHolder.txtCodigoBarras = (TextView) row.findViewById(R.id.text_codigo_barras);
-			viewHolder.imagenProducto = (ImageView) row.findViewById(R.id.image_producto);
-            viewHolder.divider = (TextView) row.findViewById(R.id.divider);
-            viewHolder.progressBar = (ProgressBar) row.findViewById(R.id.progress);
+            viewHolder.txtNombre = row.findViewById(R.id.text_nombre_producto);
+            viewHolder.txtPresentacion =  row.findViewById(R.id.text_presentacion_producto);
+			viewHolder.txtCodigoBarras =  row.findViewById(R.id.text_codigo_barras);
+			viewHolder.imagenProducto =  row.findViewById(R.id.image_producto);
+            viewHolder.divider =  row.findViewById(R.id.divider);
+            viewHolder.progressBar =  row.findViewById(R.id.progress);
 
             row.setTag(viewHolder);
 			
@@ -172,7 +172,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
             if (viewHolder.imagenProducto.getVisibility() == View.GONE)
                 viewHolder.imagenProducto.setVisibility(View.VISIBLE);
 
-			Picasso picasso = Picasso.with(_context);
+			Picasso picasso = Picasso.get();
 
             //picasso.setIndicatorsEnabled(true);
 
@@ -192,7 +192,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             viewHolder.progressBar.setVisibility(View.GONE);
                         }
                     });

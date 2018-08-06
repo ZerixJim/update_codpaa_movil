@@ -111,7 +111,7 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
 
         if (position > 0){
 
-            Picasso picasso = Picasso.with(context);
+            Picasso picasso = Picasso.get();
 
 
             //Log.d("url", Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif");
@@ -124,16 +124,15 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
                     //.centerInside()
                     //.noFade()
                     .into(viewHolder.imageView, new Callback() {
+
                         @Override
                         public void onSuccess() {
                             viewHolder.progressBar.setVisibility(View.GONE);
-
                         }
 
                         @Override
-                        public void onError() {
+                        public void onError(Exception e) {
                             viewHolder.progressBar.setVisibility(View.GONE);
-
                         }
                     });
 

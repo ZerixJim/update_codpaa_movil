@@ -52,9 +52,9 @@ public class UbicacionDialogFragment extends DialogFragment {
         final String lon = getArguments().getString("lon");
 
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.image);
-        final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progress);
-        Button button = (Button) view.findViewById(R.id.btn_ubicacion);
+        ImageView imageView =  view.findViewById(R.id.image);
+        final ProgressBar progressBar = view.findViewById(R.id.progress);
+        Button button =  view.findViewById(R.id.btn_ubicacion);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +74,7 @@ public class UbicacionDialogFragment extends DialogFragment {
         });
 
 
-        Picasso.with(getActivity()).load(url).into(imageView, new Callback() {
+        Picasso.get().load(url).into(imageView, new Callback() {
             @Override
             public void onSuccess() {
 
@@ -83,7 +83,7 @@ public class UbicacionDialogFragment extends DialogFragment {
             }
 
             @Override
-            public void onError() {
+            public void onError(Exception e) {
                 progressBar.setVisibility(View.GONE);
             }
         });

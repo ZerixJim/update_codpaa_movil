@@ -107,7 +107,7 @@ public class RecyclerProductosMultiSelect extends RecyclerView.Adapter<RecyclerP
         });
 
 
-        Picasso picasso = Picasso.with(context);
+        Picasso picasso = Picasso.get();
 
         //picasso.setIndicatorsEnabled(true);
 
@@ -125,7 +125,7 @@ public class RecyclerProductosMultiSelect extends RecyclerView.Adapter<RecyclerP
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         holder.progressBar.setVisibility(View.GONE);
                     }
                 });

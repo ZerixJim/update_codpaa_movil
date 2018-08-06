@@ -376,12 +376,12 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                         }
 
 
-                        Picasso.with(getApplicationContext()).load(file)
+                        Picasso.get().load(file)
                                 .placeholder(R.drawable.placeholder)
                                 .into(showImg);
 
                     }else {
-                        Picasso.with(getApplicationContext()).load(photo)
+                        Picasso.get().load(photo)
                                 .placeholder(R.drawable.placeholder)
                                 .into(showImg);
 

@@ -107,7 +107,7 @@ public class TiendaNueva extends AppCompatActivity implements View.OnClickListen
 
                 if (bitmap != null){
 
-                    Picasso.with(this).load(imageToUpload).into(imageView);
+                    Picasso.get().load(imageToUpload).into(imageView);
                 }
 
 
