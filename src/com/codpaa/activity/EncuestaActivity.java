@@ -56,7 +56,7 @@ public class EncuestaActivity extends AppCompatActivity  {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_preguntas);
+        recyclerView =  findViewById(R.id.recycler_preguntas);
         if (recyclerView != null) {
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(linearLayoutManager);
@@ -74,7 +74,7 @@ public class EncuestaActivity extends AppCompatActivity  {
 
             Log.d("TipoEncuesta" , "" + tipoEncuesta);
 
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.menu_item_2);
+            FloatingActionButton fab = findViewById(R.id.menu_item_2);
 
             if (fab != null) {
 

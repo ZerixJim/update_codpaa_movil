@@ -70,48 +70,48 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 		idTienda = i.getIntExtra("idTienda", 0);
 		idPromotor = i.getIntExtra("idPromotor", 0);
 		
-		spiMar = (Spinner) findViewById(R.id.spiSurM);
-		spiPro = (Spinner) findViewById(R.id.spiSurP);
-		cantidad = (EditText) findViewById(R.id.editSur);
+		spiMar = findViewById(R.id.spiSurM);
+		spiPro =  findViewById(R.id.spiSurP);
+		cantidad =  findViewById(R.id.editSur);
 
-		txtCantidad = (TextView) findViewById(R.id.txt_surtido);
+		txtCantidad = findViewById(R.id.txt_surtido);
 
-        cardView = (CardView) findViewById(R.id.card_view);
+        cardView =  findViewById(R.id.card_view);
 
         //Linea de Cajas
-        unifila = (EditText) findViewById(R.id.unifila);
-        c1 = (EditText) findViewById(R.id.caja1);
-        c2 = (EditText) findViewById(R.id.caja2);
-        c3 = (EditText) findViewById(R.id.caja3);
-        c4 = (EditText) findViewById(R.id.caja4);
-        c5 = (EditText) findViewById(R.id.caja5);
-        c6 = (EditText) findViewById(R.id.caja6);
-        c7 = (EditText) findViewById(R.id.caja7);
-        c8 = (EditText) findViewById(R.id.caja8);
-        c9 = (EditText) findViewById(R.id.caja9);
-        c10 = (EditText) findViewById(R.id.caja10);
-        c11 = (EditText) findViewById(R.id.caja11);
-        c12 = (EditText) findViewById(R.id.caja12);
-        c13 = (EditText) findViewById(R.id.caja13);
-        c14 = (EditText) findViewById(R.id.caja14);
+        unifila =  findViewById(R.id.unifila);
+        c1 =  findViewById(R.id.caja1);
+        c2 =  findViewById(R.id.caja2);
+        c3 =  findViewById(R.id.caja3);
+        c4 =  findViewById(R.id.caja4);
+        c5 =  findViewById(R.id.caja5);
+        c6 =  findViewById(R.id.caja6);
+        c7 =  findViewById(R.id.caja7);
+        c8 =  findViewById(R.id.caja8);
+        c9 =  findViewById(R.id.caja9);
+        c10 =  findViewById(R.id.caja10);
+        c11 =  findViewById(R.id.caja11);
+        c12 =  findViewById(R.id.caja12);
+        c13 =  findViewById(R.id.caja13);
+        c14 =  findViewById(R.id.caja14);
 
-        cardComent = (CardView) findViewById(R.id.card_coment);
+        cardComent = findViewById(R.id.card_coment);
 
-        editComentario = (EditText) findViewById(R.id.comenterio);
-
-
+        editComentario =  findViewById(R.id.comenterio);
 
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
+        toolbar = findViewById(R.id.toolbar);
 
 		
 
-		radio = (RadioGroup) findViewById(R.id.radioGroup1);
-		si = (RadioButton) radio.findViewById(R.id.radio0);
-		no = (RadioButton) radio.findViewById(R.id.radio1);
+		radio =  findViewById(R.id.radioGroup1);
+		si = radio.findViewById(R.id.radio0);
+		no =  radio.findViewById(R.id.radio1);
 
-		cantidadLayout = (TextInputLayout) findViewById(R.id.txt_input_cantidad);
+		cantidadLayout = findViewById(R.id.txt_input_cantidad);
 		
 
 

@@ -74,14 +74,14 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			
 
-		guardar = (Button) findViewById(R.id.btnInteligua);
+		guardar = findViewById(R.id.btnInteligua);
 		
-		spMarca = (Spinner) findViewById(R.id.spInMar);
-		spProducto = (Spinner) findViewById(R.id.spInProd);
+		spMarca =  findViewById(R.id.spInMar);
+		spProducto =  findViewById(R.id.spInProd);
 		
-		editProNormal = (EditText) findViewById(R.id.editPreN);
-		editProOfer = (EditText) findViewById(R.id.editPreOfer);
-		editPrecioCaja = (EditText) findViewById(R.id.editTextPreCaj);
+		editProNormal =  findViewById(R.id.editPreN);
+		editProOfer =  findViewById(R.id.editPreOfer);
+		editPrecioCaja = findViewById(R.id.editTextPreCaj);
 		
 		/*chOferCr = (CheckBox) findViewById(R.id.checkOferC);
 		chProExtra = (CheckBox) findViewById(R.id.checkProdEx);
@@ -94,8 +94,8 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
         btnFechaFin = (Button) findViewById(R.id.btnFechaFin);*/
 
 
-		tilPrecioNormal = (TextInputLayout) findViewById(R.id.til_precio_normal);
-		tilPrecioCaja = (TextInputLayout) findViewById(R.id.til_precio_caja);
+		tilPrecioNormal = findViewById(R.id.til_precio_normal);
+		tilPrecioCaja =  findViewById(R.id.til_precio_caja);
 		//tilPrecioOferta = (TextInputLayout) findViewById(R.id.til_precio_oferta);
 
 		guardar.setOnClickListener(this);

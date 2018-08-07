@@ -6,13 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import java.util.List;
 import java.util.Locale;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteAbortException;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -51,8 +50,8 @@ public class ComentariosActivity extends AppCompatActivity {
 		idTienda = recibeIdTi.getExtras().getInt("idTienda", 0);
 		idPromotor = recibeIdTi.getExtras().getInt("idPromotor", 0);
 
-		editComentario = (EditText) findViewById(R.id.editComen);
-		spinnerMarca = (Spinner) findViewById(R.id.spinner_marca);
+		editComentario = findViewById(R.id.editComen);
+		spinnerMarca =  findViewById(R.id.spinner_marca);
 
 		
 		EnviaDatos = new EnviarDatos(this);

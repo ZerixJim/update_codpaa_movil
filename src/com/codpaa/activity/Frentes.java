@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,7 +56,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.frentes);
 
-		toolbar = (Toolbar) findViewById(R.id.toolbar_frentes);
+		toolbar = findViewById(R.id.toolbar_frentes);
 
 		if(toolbar != null){
 			setSupportActionBar(toolbar);
@@ -77,8 +76,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
 
-		spiMarca = (Spinner) findViewById(R.id.spinnerMarFre);
-		spiPro = (Spinner) findViewById(R.id.spinnerFrePro);
+		spiMarca =  findViewById(R.id.spinnerMarFre);
+		spiPro =  findViewById(R.id.spinnerFrePro);
 
 		//asiganacion de botones
 		/*btn1 = (Button) findViewById(R.id.btnf1);
@@ -96,7 +95,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		Echa5 = (EditText) findViewById(R.id.editCha5);
 		Echa6 = (EditText) findViewById(R.id.editCha6);*/
 
-		editCantidad = (EditText) findViewById(R.id.cantidad);
+		editCantidad = findViewById(R.id.cantidad);
 
 
 		//asignacion de escuchadores

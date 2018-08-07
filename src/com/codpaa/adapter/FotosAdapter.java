@@ -71,7 +71,7 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.ViewHolderFo
         return fotos.size();
     }
 
-    public int dp2px(int dp) {
+    private int dp2px(int dp) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -91,11 +91,11 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.ViewHolderFo
             super(itemView);
 
 
-            img = (ImageView) itemView.findViewById(R.id.image);
-            marca = (TextView) itemView.findViewById(R.id.txt_marca);
-            fecha = (TextView) itemView.findViewById(R.id.txt_fecha);
-            status = (TextView) itemView.findViewById(R.id.txt_status);
-            tipo = (TextView) itemView.findViewById(R.id.txt_tipo);
+            img =  itemView.findViewById(R.id.image);
+            marca =  itemView.findViewById(R.id.txt_marca);
+            fecha =  itemView.findViewById(R.id.txt_fecha);
+            status =  itemView.findViewById(R.id.txt_status);
+            tipo =  itemView.findViewById(R.id.txt_tipo);
 
 
         }

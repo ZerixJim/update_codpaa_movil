@@ -137,8 +137,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             createMenu();
 
             //Navigation view
-            drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            drawerLayout = findViewById(R.id.drawer_layout);
+            NavigationView navigationView = findViewById(R.id.nav_view);
 
             if (navigationView != null) {
                 setupDrawerContent(navigationView);
@@ -149,10 +149,10 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 }
 
                 View view = navigationView.getHeaderView(0);
-                TextView nomPromo = (TextView) view.findViewById(R.id.user_name);
-                email = (TextView) view.findViewById(R.id.user_mail);
-                TextView ver = (TextView) view.findViewById(R.id.version);
-                TextView id = (TextView) view.findViewById(R.id.id);
+                TextView nomPromo = view.findViewById(R.id.user_name);
+                email = view.findViewById(R.id.user_mail);
+                TextView ver = view.findViewById(R.id.version);
+                TextView id = view.findViewById(R.id.id);
                 //CircleImageView imageView = (CircleImageView) view.findViewById(R.id.circle_image);
 
 
@@ -264,7 +264,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     private void createMenu() {
 
-        recycler = (RecyclerView) findViewById(R.id.recyclerview);
+        recycler = findViewById(R.id.recyclerview);
 
         adapter = new MenuAdapter(getMenus(), this);
 
@@ -345,7 +345,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     //metodo para implementar el toolbar
     private void setToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();

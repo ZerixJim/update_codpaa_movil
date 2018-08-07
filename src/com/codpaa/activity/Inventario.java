@@ -79,22 +79,22 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 		
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-		marca = (Spinner) findViewById(R.id.spiInMar);
-		producto = (Spinner) findViewById(R.id.spiInvPro);
+		marca =  findViewById(R.id.spiInMar);
+		producto =  findViewById(R.id.spiInvPro);
 
 
-		btnFecha = (Button) findViewById(R.id.button_fecha);
+		btnFecha =  findViewById(R.id.button_fecha);
 
-		editFisico = (EditText) findViewById(R.id.editInv);
-        editSistema = (EditText) findViewById(R.id.editSistema);
-		//editLote = (EditText) findViewById(R.id.editLote);
+		editFisico = findViewById(R.id.editInv);
+        editSistema =  findViewById(R.id.editSistema);
+		//editLote =  findViewById(R.id.editLote);
 
-        radio = (RadioGroup) findViewById(R.id.radioInventario);
+        radio =  findViewById(R.id.radioInventario);
 		if (radio != null) {
-			piezas = (RadioButton) radio.findViewById(R.id.radioTipo1);
+			piezas =  radio.findViewById(R.id.radioTipo1);
 		}
 		if (radio != null) {
-			cajas = (RadioButton) radio.findViewById(R.id.radioTipo2);
+			cajas =  radio.findViewById(R.id.radioTipo2);
 		}
 
 		//txtResultado = (TextView) findViewById(R.id.resultado);
@@ -118,7 +118,7 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 
 
         try {
-            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar =  findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
 
 
@@ -244,7 +244,7 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 
                         try {
 
-                            selec = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
+                            selec = findViewById(radio.getCheckedRadioButtonId());
                             //estatusSelected = (RadioButton) findViewById(radioEstatus.getCheckedRadioButtonId());
 
                             try {

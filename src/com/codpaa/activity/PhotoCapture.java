@@ -135,32 +135,32 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
         //instancia de views
-        showImg = (ImageView) findViewById(R.id.showImg);
-        //imgAdd = (ImageView) findViewById(R.id.add_photo);
+        showImg = findViewById(R.id.showImg);
+        //imgAdd = findViewById(R.id.add_photo);
 
 
 
 
-        spiMarca = (Spinner) findViewById(R.id.spiMarPhoto);
-        spiExh = (Spinner) findViewById(R.id.spiExhPho);
+        spiMarca = findViewById(R.id.spiMarPhoto);
+        spiExh =  findViewById(R.id.spiExhPho);
 
-        progressFoto = (ProgressBar) findViewById(R.id.progressEnviarFoto);
-        donutProgress = (DonutProgress) findViewById(R.id.progress_photo);
-        textoEnvio = (TextView) findViewById(R.id.textEvioFoto);
+        progressFoto =  findViewById(R.id.progressEnviarFoto);
+        donutProgress =  findViewById(R.id.progress_photo);
+        textoEnvio = findViewById(R.id.textEvioFoto);
 
-        multiSpinnerSelect = (MultiSpinnerSelect) findViewById(R.id.multi_spinner);
+        multiSpinnerSelect =  findViewById(R.id.multi_spinner);
 
-        cardView = (CardView) findViewById(R.id.card);
+        cardView =  findViewById(R.id.card);
 
         //imgAdd.setOnClickListener(this);
 
 
-        radioChoice = (RadioGroup) findViewById(R.id.radioChoice);
+        radioChoice =  findViewById(R.id.radioChoice);
         if (radioChoice != null) {
-            radioNormal = (RadioButton) radioChoice.findViewById(R.id.radioNormal);
+            radioNormal =  radioChoice.findViewById(R.id.radioNormal);
         }
         if (radioChoice != null) {
-            radioEvento = (RadioButton) radioChoice.findViewById(R.id.radioEvento);
+            radioEvento =  radioChoice.findViewById(R.id.radioEvento);
         }
 
 

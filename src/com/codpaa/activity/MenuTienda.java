@@ -56,8 +56,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -122,7 +120,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         setContentView(R.layout.menutienda);
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_menu_principal);
+        toolbar = findViewById(R.id.toolbar_menu_principal);
 
 
         if (toolbar != null) {
@@ -233,7 +231,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     private void setUpMenu() {
 
-        menuRecycler = (RecyclerView) findViewById(R.id.recycler_menu_tienda);
+        menuRecycler = findViewById(R.id.recycler_menu_tienda);
         if (menuRecycler != null) {
             menuRecycler.setHasFixedSize(true);
             LinearLayoutManager linear = new LinearLayoutManager(this);
@@ -253,7 +251,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         Configuracion c = new Configuracion(this);
 
-        HorizontalScrollView horizontal = (HorizontalScrollView) findViewById(R.id.horizontal_view);
+        HorizontalScrollView horizontal = findViewById(R.id.horizontal_view);
 
         if (c.getPromotorMode() == 1) {
 
@@ -374,30 +372,30 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     private void viewsRegister() {
 
-        inventario = (TextView) findViewById(R.id.inventario);
-        txtEncargado = (TextView) findViewById(R.id.Encargado);
-        frentes = (TextView) findViewById(R.id.frentes);
-        surtido = (TextView) findViewById(R.id.surtido);
-        exhi = (TextView) findViewById(R.id.textExhibicio);
-        fotos = (TextView) findViewById(R.id.text_fotos);
+        inventario = findViewById(R.id.inventario);
+        txtEncargado = findViewById(R.id.Encargado);
+        frentes =  findViewById(R.id.frentes);
+        surtido =  findViewById(R.id.surtido);
+        exhi = findViewById(R.id.textExhibicio);
+        fotos =  findViewById(R.id.text_fotos);
 
-        btnFrente = (Button) findViewById(R.id.buttonMensaje);
-        btnSalidaTi = (Button) findViewById(R.id.salidaTienda);
-        btnEntrada = (Button) findViewById(R.id.btnEnTienda);
-        btnEncar = (Button) findViewById(R.id.btnEncarg);
-        btnExhib = (Button) findViewById(R.id.buttonExhib);
-        btnUpdaPro = (Button) findViewById(R.id.btnUpdaPro);
-        btnInven = (Button) findViewById(R.id.btnInvenBode);
-        btnSurtido = (Button) findViewById(R.id.buttonEnviar);
-        btnTiendaError = (Button) findViewById(R.id.btnTiendaError);
-        btnComentario = (Button) findViewById(R.id.btnComentario);
-        btnInteligencia = (Button) findViewById(R.id.btnMenInt);
-        btnFoto = (Button) findViewById(R.id.btnfoto);
-        btnVentaPromedio = (Button) findViewById(R.id.btn_venta_promedio);
+        btnFrente =  findViewById(R.id.buttonMensaje);
+        btnSalidaTi =  findViewById(R.id.salidaTienda);
+        btnEntrada =  findViewById(R.id.btnEnTienda);
+        btnEncar =  findViewById(R.id.btnEncarg);
+        btnExhib = findViewById(R.id.buttonExhib);
+        btnUpdaPro =  findViewById(R.id.btnUpdaPro);
+        btnInven = findViewById(R.id.btnInvenBode);
+        btnSurtido = findViewById(R.id.buttonEnviar);
+        btnTiendaError = findViewById(R.id.btnTiendaError);
+        btnComentario = findViewById(R.id.btnComentario);
+        btnInteligencia = findViewById(R.id.btnMenInt);
+        btnFoto = findViewById(R.id.btnfoto);
+        btnVentaPromedio = findViewById(R.id.btn_venta_promedio);
 
-        btnCapturaGeneral = (Button) findViewById(R.id.captura_general);
+        btnCapturaGeneral = findViewById(R.id.captura_general);
 
-        btnMateriales = (Button) findViewById(R.id.btnMateriales);
+        btnMateriales =  findViewById(R.id.btnMateriales);
 
 
         btnFrente.setOnClickListener(this);
@@ -1341,8 +1339,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 		final ViewGroup nullParent = null;
 		View vistaEncargado = LayoutInflater.from(this).inflate(R.layout.encargadotienda, nullParent);
 		String[] tipoEncargado = new String[] {"ENCARGADO","AUXILIAR"};
-		spinnerEnc = (Spinner) vistaEncargado.findViewById(R.id.spinnerMarca);
-		editNombre = (EditText) vistaEncargado.findViewById(R.id.nombreEnca);
+		spinnerEnc =  vistaEncargado.findViewById(R.id.spinnerMarca);
+		editNombre = vistaEncargado.findViewById(R.id.nombreEnca);
 		
 		ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, tipoEncargado);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -1604,7 +1602,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         View frentes = layoutInflater.inflate(R.layout.lista_frentes_capturados, nullParent);
         Listener flistener = new Listener();
-        ListView listView = (ListView) frentes.findViewById(R.id.listFrentesCap);
+        ListView listView = frentes.findViewById(R.id.listFrentesCap);
         FrentesCustomAdapter adapter = new FrentesCustomAdapter(this,R.layout.lista_frentes_capturados,getFrentesCapturados());
         listView.setAdapter(adapter);
 
@@ -1621,7 +1619,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 		final ViewGroup nullParent = null;
         View frentes = layoutInflater.inflate(R.layout.lista_capturados, nullParent);
         Listener flistener = new Listener();
-        ListView listView = (ListView) frentes.findViewById(R.id.listCapturados);
+        ListView listView = frentes.findViewById(R.id.listCapturados);
 
         InventariosCustomAdapter adapter = new InventariosCustomAdapter(this,R.layout.lista_capturados,getInventariosCapturados());
 
@@ -1640,7 +1638,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 		final ViewGroup nullParent = null;
         View exhiList = layoutInflater.inflate(R.layout.list_view_exhi, nullParent);
         Listener flistener = new Listener();
-        ListView listView = (ListView) exhiList.findViewById(R.id.list_exhi);
+        ListView listView = exhiList.findViewById(R.id.list_exhi);
 
     	ExhibicionesAdapter adapter = new ExhibicionesAdapter(this, R.layout.row_exhi, getExhibicionesByIdTienda(idTienda));
 

@@ -60,16 +60,16 @@ public class Exhibiciones extends AppCompatActivity implements OnItemSelectedLis
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		
 
-		marca = (Spinner) findViewById(R.id.spiExhMarca);
-		producto = (Spinner) findViewById(R.id.spiExhProd);
-		exhibicion = (Spinner) findViewById(R.id.spiExhibi);
+		marca =  findViewById(R.id.spiExhMarca);
+		producto =  findViewById(R.id.spiExhProd);
+		exhibicion =  findViewById(R.id.spiExhibi);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar =  findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
 
-        cantidadExhi = (EditText) findViewById(R.id.cantidadExhibicion);
+        cantidadExhi =  findViewById(R.id.cantidadExhibicion);
 
 		marca.setOnItemSelectedListener(this);
 
