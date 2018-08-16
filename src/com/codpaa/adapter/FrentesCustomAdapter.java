@@ -28,7 +28,7 @@ public class FrentesCustomAdapter extends ArrayAdapter<FrentesModel> {
         TextView txtCantidad;
         TextView txtStatus;
         TextView txtFecha;
-        TextView txtFilas;
+        //TextView txtFilas;
         FrentesModel freModel;
     }
 
@@ -51,12 +51,12 @@ public class FrentesCustomAdapter extends ArrayAdapter<FrentesModel> {
             row = inflater.inflate(R.layout.custom_view_frentes,parent,false);
             viewHolder = new ViewHolder();
 
-            viewHolder.txtMarca = (TextView) row.findViewById(R.id.textViewRowMarca);
-            viewHolder.txtProducto = (TextView) row.findViewById(R.id.textViewRowProducto);
-            viewHolder.txtCantidad = (TextView) row.findViewById(R.id.textViewRowCantidad);
-            viewHolder.txtStatus = (TextView) row.findViewById(R.id.textViewRowStatus);
-            viewHolder.txtFecha = (TextView) row.findViewById(R.id.textCusRowFecha);
-            viewHolder.txtFilas = (TextView) row.findViewById(R.id.cantidad_filas);
+            viewHolder.txtMarca =  row.findViewById(R.id.textViewRowMarca);
+            viewHolder.txtProducto = row.findViewById(R.id.textViewRowProducto);
+            viewHolder.txtCantidad =  row.findViewById(R.id.textViewRowCantidad);
+            viewHolder.txtStatus =  row.findViewById(R.id.textViewRowStatus);
+            viewHolder.txtFecha =  row.findViewById(R.id.textCusRowFecha);
+            //viewHolder.txtFilas =  row.findViewById(R.id.cantidad_filas);
             viewHolder.freModel = frentesModel;
 
             row.setTag(viewHolder);
@@ -76,7 +76,10 @@ public class FrentesCustomAdapter extends ArrayAdapter<FrentesModel> {
         viewHolder.txtMarca.setText(frentesModel.getMarca());
         viewHolder.txtProducto.setText(frentesModel.getProducto());
         viewHolder.txtCantidad.setText("Cantidad: "+String.valueOf(frentesModel.getCantidad()));
-        viewHolder.txtFilas.setText("Frentes Linea de Cajas: " + String.valueOf(frentesModel.getFilas()));
+
+
+
+        //viewHolder.txtFilas.setText("Frentes Linea de Cajas: " + String.valueOf(frentesModel.getFilas()));
         viewHolder.txtFecha.setText(frentesModel.getFecha());
         if(frentesModel.getStatus() == 2){
             viewHolder.txtStatus.setText("Enviado");

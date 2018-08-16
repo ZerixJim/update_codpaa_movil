@@ -54,8 +54,8 @@ android {
     defaultConfig {
         targetSdkVersion 26
         applicationId "com.codpaa"
-        versionCode 80
-        versionName "1.3.7 rc2"
+        versionCode 81
+        versionName "1.3.7 rc3"
     }
 
     buildTypes {

@@ -1654,7 +1654,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     private ArrayList<FrentesModel> getFrentesCapturados(){
         base = new BDopenHelper(this).getReadableDatabase();
-        String sql = "select m.nombre, p.nombre || ' ' || p.presentacion, (f.cha1+f.cha2+f.cha3+f.cha4+f.cha5+f.cha6) as total, f.status, f.fecha," +
+        String sql = "select m.nombre, p.nombre || ' ' || p.presentacion, f.cantidad as total, f.status, f.fecha," +
 				" (f.unifila+f.fila1+f.fila2+f.fila3+f.fila4+f.fila5+f.fila6+f.fila7+f.fila8+f.fila9+f.fila10+f.fila11+f.fila12+f.fila13+f.fila14) as filas " +
                 "from frentesCharola as f inner join marca as m on f.idMarca=m.idMarca " +
                 "inner join producto as p on f.idProducto=p.idProducto where f.idTienda="+idTienda;
