@@ -15,10 +15,12 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 
 
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,10 +37,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAdapter.DiaViewHolder>{
+public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAdapter.DiaViewHolder>
+            implements Filterable{
 
 
     private List<RutaDia> rutaDias;
+    private List<RutaDia> rutasFilter;
     private Boolean isHomeList = false;
 
     private static List<String> homeActivitiesList = new ArrayList<>();
@@ -64,6 +68,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
 
         this.context = context;
         this.rutaDias = rutaDias;
+        this.rutasFilter = rutaDias;
         this.idPromotor = idPromotor;
 
     }
@@ -81,7 +86,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             dia.title.setText(homeActivitiesList.get(i));
             dia.subTitle.setText(homeActivitiesSubList.get(i));
         } else {
-            final RutaDia diaModel = rutaDias.get(i);
+            final RutaDia diaModel = rutasFilter.get(i);
             dia.title.setText(diaModel.getNombreTienda());
             dia.subTitle.setText(diaModel.getSucursal());
             dia.rol.setText(diaModel.getRol());
@@ -166,10 +171,75 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
 
     @Override
     public int getItemCount() {
-        if (isHomeList)
-            return homeActivitiesList == null ? 0 : homeActivitiesList.size();
-        else
-            return rutaDias == null ? 0 : rutaDias.size();
+        return rutasFilter.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+
+
+                String charString = charSequence.toString();
+
+                if (charString.isEmpty()){
+
+                    rutasFilter = rutaDias;
+
+                }else {
+
+
+                    List<RutaDia> filterList = new ArrayList<>();
+
+
+                    for (RutaDia row: rutaDias){
+
+
+                        //Log.i("filter","'"+ row.getNombreTienda().toLowerCase() + "' '" + charString.toLowerCase() +"'");
+
+
+
+                        if (row.getNombreTienda().toLowerCase().contains(charString.toLowerCase()) ||
+                                row.getSucursal().toLowerCase().contains(charString.toLowerCase())){
+
+
+
+                            filterList.add(row);
+
+                        }
+
+
+                    }
+
+
+                    rutasFilter = filterList;
+
+                }
+
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = rutasFilter;
+
+                return filterResults;
+
+
+
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+                rutasFilter = (ArrayList<RutaDia>) filterResults.values;
+
+
+                notifyDataSetChanged();
+
+            }
+        };
+
+
     }
 
 
@@ -186,16 +256,16 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         public DiaViewHolder(View itemView) {
             super(itemView);
 
-            cardItemLayout = (CardView) itemView.findViewById(R.id.cardlist_item);
-            title = (TextView) itemView.findViewById(R.id.rutadia_tienda);
-            subTitle = (TextView) itemView.findViewById(R.id.rutadia_sucursal);
-            rol = (TextView) itemView.findViewById(R.id.rutadia_rol);
-            hora = (TextView) itemView.findViewById(R.id.hora);
-            number = (TextView) itemView.findViewById(R.id.number);
-            modo = (TextView) itemView.findViewById(R.id.modo);
-            ubicacion = (ImageView) itemView.findViewById(R.id.ubicacion);
+            cardItemLayout =  itemView.findViewById(R.id.cardlist_item);
+            title =  itemView.findViewById(R.id.rutadia_tienda);
+            subTitle =  itemView.findViewById(R.id.rutadia_sucursal);
+            rol =  itemView.findViewById(R.id.rutadia_rol);
+            hora =  itemView.findViewById(R.id.hora);
+            number =  itemView.findViewById(R.id.number);
+            modo =  itemView.findViewById(R.id.modo);
+            ubicacion = itemView.findViewById(R.id.ubicacion);
 
-            image = (ImageView) itemView.findViewById(R.id.image);
+            image = itemView.findViewById(R.id.image);
 
 
             itemView.setOnClickListener(this);

@@ -180,6 +180,7 @@
     <string name="cantidad_cajas">Inventario cajas</string>
     <string name="estudio_de_marcado">Estudio de marcado</string>
     <string name="cantidad_frentes">cantidad frentes</string>
+    <string name="search_hint">filtro</string>
 
 
 </resources>

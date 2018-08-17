@@ -35,7 +35,7 @@ public class FragmentJueves extends Fragment {
         View view = inflater.inflate(R.layout.fragment_test, container, false);
 
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_calendario);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_calendario);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -45,6 +45,9 @@ public class FragmentJueves extends Fragment {
         return view;
     }
 
+    public SimpleRecyclerAdapter getAdapter() {
+        return adapter;
+    }
 
     public ArrayList<RutaDia> rutaDia(){
         Configuracion c = new Configuracion(getContext());

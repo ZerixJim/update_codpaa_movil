@@ -3,12 +3,16 @@ package com.codpaa.activity;
  * Created by Gustavo on 20/10/2015.
  */
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +22,7 @@ import android.view.MenuItem;
 
 import com.codpaa.R;
 import com.codpaa.activity.impulsor.TiendaNueva;
+import com.codpaa.adapter.SimpleRecyclerAdapter;
 import com.codpaa.adapter.ViewPagerAdapter;
 import com.codpaa.fragment.FragmentDomingo;
 import com.codpaa.fragment.FragmentJueves;
@@ -31,12 +36,17 @@ import com.codpaa.util.Configuracion;
 
 import java.util.Calendar;
 
-public class CalendarioRuta extends AppCompatActivity{
+public class CalendarioRuta extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
     private int idPromotor;
+    private SearchView searchView;
+    private ViewPagerAdapter adapter;
+
+    private Fragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +57,7 @@ public class CalendarioRuta extends AppCompatActivity{
 
         //Log.d("idPromo Calen", " "+ idPromotor);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_calendario);
+        toolbar = findViewById(R.id.toolbar_calendario);
 
         //toolbar.setLogo(R.drawable.ic_launcher);
         if (toolbar != null){
@@ -78,14 +88,17 @@ public class CalendarioRuta extends AppCompatActivity{
 
         }
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager_calendario);
+        viewPager =  findViewById(R.id.viewpager_calendario);
+
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs_calendario);
+        tabLayout =  findViewById(R.id.tabs_calendario);
         if (tabLayout != null) {
             tabLayout.setupWithViewPager(viewPager);
         }
 
+
+        Log.i("Position", viewPager.getCurrentItem() + "");
 
     }
 
@@ -95,8 +108,111 @@ public class CalendarioRuta extends AppCompatActivity{
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
-        return super.onCreateOptionsMenu(menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                //Log.i("search", newText);
+
+                Fragment page = adapter.getItem(viewPager.getCurrentItem());
+
+                //Log.i("fragmentype", page.getTargetFragment().getId() + " ");
+
+
+
+                if (page instanceof FragmentLunes){
+
+
+                    SimpleRecyclerAdapter simpleRecyclerAdapter = ((FragmentLunes) page).getAdapter();
+
+                    simpleRecyclerAdapter.getFilter().filter(newText);
+
+
+
+                }else if(page instanceof  FragmentMartes){
+
+                    SimpleRecyclerAdapter sim = ((FragmentMartes) page).getAdapter();
+                    sim.getFilter().filter(newText);
+
+
+                }else if(page instanceof  FragmentMiercoles){
+
+                    SimpleRecyclerAdapter sim = ((FragmentMiercoles) page).getAdapter();
+                    sim.getFilter().filter(newText);
+
+                }else if (page instanceof FragmentJueves){
+
+                    SimpleRecyclerAdapter sim = ((FragmentJueves) page).getAdapter();
+                    sim.getFilter().filter(newText);
+
+
+                }else if (page instanceof FragmentViernes){
+                    SimpleRecyclerAdapter sim = ((FragmentViernes) page).getAdapter();
+                    sim.getFilter().filter(newText);
+
+                }else if (page instanceof FragmentSabado){
+
+                    SimpleRecyclerAdapter sim = ((FragmentSabado) page).getAdapter();
+                    sim.getFilter().filter(newText);
+
+                }else if(page instanceof FragmentDomingo){
+                    SimpleRecyclerAdapter sim = ((FragmentDomingo) page).getAdapter();
+                    sim.getFilter().filter(newText);
+
+                }else if (page instanceof FragmentNoAsignado){
+
+                    SimpleRecyclerAdapter sim = ((FragmentNoAsignado) page).getAdapter();
+                    sim.getFilter().filter(newText);
+
+                }
+
+
+                //Log.i("Cantidad", newText.length() + " ");
+
+
+
+                return false;
+            }
+        });
+
+
+
+
+
+        return true;
     }
+
+    @Override
+    public void onBackPressed() {
+        // close search view on back button pressed
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -123,7 +239,11 @@ public class CalendarioRuta extends AppCompatActivity{
     }
 
     private void setupViewPager(ViewPager viewPager){
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+
+        viewPager.addOnPageChangeListener(this);
+
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
         Bundle b = new Bundle();
         b.putInt("idPromotor", idPromotor);
 
@@ -171,4 +291,38 @@ public class CalendarioRuta extends AppCompatActivity{
 
     }
 
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+
+        if (searchView != null){
+
+            if (!searchView.isIconified()) {
+                searchView.setIconified(true);
+
+
+
+
+            }
+
+        }
+
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+        viewPager.getAdapter().notifyDataSetChanged();
+
+
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+
+    }
 }

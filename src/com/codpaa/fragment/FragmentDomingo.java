@@ -45,6 +45,9 @@ public class FragmentDomingo extends Fragment {
         return view;
     }
 
+    public SimpleRecyclerAdapter getAdapter() {
+        return adapter;
+    }
 
     public ArrayList<RutaDia> rutaDia(){
         Configuracion c = new Configuracion(getContext());

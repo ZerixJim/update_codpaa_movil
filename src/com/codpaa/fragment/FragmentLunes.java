@@ -36,7 +36,7 @@ public class FragmentLunes extends Fragment{
         View view = inflater.inflate(R.layout.fragment_test, container, false);
 
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_calendario);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_calendario);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -46,6 +46,9 @@ public class FragmentLunes extends Fragment{
         return view;
     }
 
+    public SimpleRecyclerAdapter getAdapter() {
+        return adapter;
+    }
 
     public ArrayList<RutaDia> rutaDia(){
 
