@@ -45,7 +45,6 @@ public class CalendarioRuta extends AppCompatActivity implements ViewPager.OnPag
     private SearchView searchView;
     private ViewPagerAdapter adapter;
 
-    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
