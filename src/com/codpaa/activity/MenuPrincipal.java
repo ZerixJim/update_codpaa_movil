@@ -107,7 +107,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         PackageManager packageManager = context.getPackageManager();
         String packageName = context.getPackageName();
 
-        avatar = (CircleImageView) findViewById(R.id.avatar);
+        avatar = findViewById(R.id.avatar);
         if (avatar != null) {
             avatar.setOnClickListener(this);
         }
@@ -352,7 +352,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         if (actionBar != null) {
             //actionBar.setHomeAsUpIndicator(R.drawable.ic_account_circle_white_24dp);
             actionBar.setDisplayShowTitleEnabled(false);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            //actionBar.setDisplayHomeAsUpEnabled(true);
 
 
         }
