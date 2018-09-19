@@ -15,9 +15,9 @@ public class DBAdapter {
 	private static final String DATABASE_TABLE = "usuarios";
 
  
-	SQLiteDatabase mDb;
-	Context mCtx;
-	BDopenHelper mDbHelper = null;
+	private SQLiteDatabase mDb;
+	private Context mCtx;
+	private BDopenHelper mDbHelper = null;
  
 	public DBAdapter(Context context){
 		this.mCtx = context;

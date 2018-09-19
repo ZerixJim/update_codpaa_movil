@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+   <!-- <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never"/>
 
 
     <item android:id="@+id/nueva_tienda" android:title="@string/estudio_de_marcado"
         android:orderInCategory="99"
-        />
+        />-->
 
 
     <item

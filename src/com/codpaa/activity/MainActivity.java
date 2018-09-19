@@ -69,11 +69,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		
 		setContentView(R.layout.activity_main);
  
-		txtUserName = (EditText) findViewById(R.id.nombreEnca);
-		txtPassword = (EditText) findViewById(R.id.editCha2);
-		btnLogin = (Button) findViewById(R.id.buttonlogin);
-		valido = (TextView) findViewById(R.id.valido);
-		progressBar = (ProgressBar) findViewById(R.id.progressUser);
+		txtUserName = findViewById(R.id.nombreEnca);
+		txtPassword = findViewById(R.id.editCha2);
+		btnLogin =  findViewById(R.id.buttonlogin);
+		valido = findViewById(R.id.valido);
+		progressBar = findViewById(R.id.progressUser);
 
 		if (progressBar != null)
         	progressBar.setVisibility(View.GONE);
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 }
 
 
-            } catch (Settings.SettingNotFoundException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -351,11 +351,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 	private void login(){
 		
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(txtUserName.getWindowToken(), 0);
-		imm.hideSoftInputFromWindow(txtPassword.getWindowToken(), 0);
+		if (imm != null) {
+			imm.hideSoftInputFromWindow(txtUserName.getWindowToken(), 0);
+			imm.hideSoftInputFromWindow(txtPassword.getWindowToken(), 0);
+		}
 		username = txtUserName.getText().toString().trim();
 		password = txtPassword.getText().toString().trim();
 		valido.setText("");
+
+		btnLogin.setClickable(false);
 
 		if (username.length() > 0 && password.length() > 0) {
 			try {
@@ -382,6 +386,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		} else {
 			Toast.makeText(MainActivity.this,"Escriba Usuario y Contraseña", Toast.LENGTH_SHORT).show();
 		}
+
+		btnLogin.setClickable(true);
+
+
+
 	}
 	
 	private void iniciarActivity(String value){

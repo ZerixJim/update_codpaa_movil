@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+
+    <item
+        android:id="@+id/configuracion"
+        android:icon="@drawable/ic_settings_grey_500_18dp"
+        android:title="@string/configuracion"/>
+
+    <item
+        android:id="@+id/shutdown"
+        android:icon="@drawable/ic_power_settings_new_black_18dp"
+        android:title="@string/cerrar_aplicacion"/>
+
+    <!--<group android:checkableBehavior="single">
 
 
-        <item
+        &lt;!&ndash;<item
             android:id="@+id/principal"
-            android:title="@string/principal"/>
+            android:title="@string/principal"/>&ndash;&gt;
 
 
 
@@ -17,15 +28,7 @@
             <menu >
 
 
-                <item android:checkable="true"
-                    android:id="@+id/configuracion"
-                    android:icon="@drawable/ic_settings_grey_500_18dp"
-                    android:title="@string/configuracion"/>
 
-                <item android:checkable="true"
-                    android:id="@+id/shutdown"
-                    android:icon="@drawable/ic_power_settings_new_black_18dp"
-                    android:title="@string/cerrar_aplicacion"/>
 
             </menu>
 
@@ -37,6 +40,6 @@
 
 
 
-    </group>
+    </group>-->
 
 </menu>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="enviar"
+        android:id="@+id/enviar"
+        android:icon="@drawable/ic_send_green_a400_36dp"/>
+
+    <item
+        android:id="@+id/mensaje"
+        android:title="mensaje"
+        android:icon="@drawable/ic_message_lime_100_36dp"/>
+
+
+</menu>

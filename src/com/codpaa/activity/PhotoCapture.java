@@ -118,7 +118,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private Uri imageToUploadUri;
 
     private RadioGroup radioChoice;
-    private RadioButton radioNormal, radioEvento;
+    private RadioButton radioNormal;
 
 
     @Override
@@ -160,7 +160,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
             radioNormal =  radioChoice.findViewById(R.id.radioNormal);
         }
         if (radioChoice != null) {
-            radioEvento =  radioChoice.findViewById(R.id.radioEvento);
+            RadioButton radioEvento = radioChoice.findViewById(R.id.radioEvento);
         }
 
 

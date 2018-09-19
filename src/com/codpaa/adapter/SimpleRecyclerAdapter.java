@@ -93,11 +93,11 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             dia.hora.setText(diaModel.getHora());
             dia.number.setText(String.format(Locale.getDefault(),"%d", i + 1));
 
-            if (diaModel.getModo() == 1){
+            /*if (diaModel.getModo() == 1){
                 dia.modo.setText("promotoria");
             }else if(diaModel.getModo() == 2){
                 dia.modo.setText("impulsor");
-            }
+            }*/
 
             Picasso.get().load(Utilities.FORMATOS_PATH + diaModel.getFormato() + ".png").into(dia.image);
 

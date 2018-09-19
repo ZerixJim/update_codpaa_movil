@@ -20,10 +20,10 @@
         android:paddingTop="4dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:paddingBottom="5dp"
+        android:paddingBottom="4dp"
         android:orientation="horizontal">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -36,6 +36,7 @@
             android:padding="5dp"
             android:textColor="@color/divider_primary"
             android:textStyle="bold"
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -50,7 +51,7 @@
             android:textSize="12sp"
             android:gravity="end"
             android:textColor="#7d9ba7"
-            android:text="protomotor"/>
+            android:text=""/>
 
 
         <LinearLayout
@@ -73,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tienda_ruta"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/rutadia_sucursal"
@@ -81,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#8e8e8e"
                 android:text="Sucursal"
-                android:textSize="@dimen/abc_text_size_caption_material"/>
+                android:textSize="10dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -92,7 +93,7 @@
                     android:id="@+id/rutadia_rol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:textSize="10sp"
                     android:textColor="@color/secondary_text_color"
                     android:text="rol"/>
 
@@ -122,6 +123,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:layout_centerVertical="true"
+            android:tint="@color/grey_500"
             android:foreground="?android:attr/selectableItemBackground"
             android:layout_below="@+id/layout_tienda"
             android:layout_marginBottom="5dp"/>

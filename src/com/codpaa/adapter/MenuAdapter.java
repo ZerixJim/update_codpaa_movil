@@ -89,10 +89,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
         public MenuViewHolder(View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.image);
-            title = (TextView) itemView.findViewById(R.id.menu_title);
-            card = (CardView) itemView.findViewById(R.id.card);
-            count = (TextView) itemView.findViewById(R.id.count);
+            imageView =  itemView.findViewById(R.id.image);
+            title =  itemView.findViewById(R.id.menu_title);
+            card =  itemView.findViewById(R.id.card);
+            count =  itemView.findViewById(R.id.count);
 
             itemView.setOnClickListener(this);
 

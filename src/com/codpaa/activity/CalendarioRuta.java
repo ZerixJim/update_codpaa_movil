@@ -82,6 +82,7 @@ public class CalendarioRuta extends AppCompatActivity implements ViewPager.OnPag
 
                 actionBar.setSubtitle(modo);
 
+
             }
 
 
@@ -220,7 +221,7 @@ public class CalendarioRuta extends AppCompatActivity implements ViewPager.OnPag
                 this.finish();
                 return true;
 
-            case R.id.nueva_tienda:
+           /* case R.id.nueva_tienda:
 
                 Intent i = new Intent(this, TiendaNueva.class);
 
@@ -229,7 +230,7 @@ public class CalendarioRuta extends AppCompatActivity implements ViewPager.OnPag
                 startActivity(i);
 
 
-                return true;
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
 
