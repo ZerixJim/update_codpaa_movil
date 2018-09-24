@@ -100,14 +100,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingRight="15dp"
+        >
         <Button
             android:id="@+id/btnEnTienda"
             android:layout_width="0dp"
-            android:layout_height="70dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="1dp"
-            android:layout_marginRight="1dp"
+            android:layout_height="50dp"
+            android:layout_weight=".5"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
+            android:drawableTint="@color/Blanco"
             android:drawableLeft="@drawable/ic_keyboard_arrow_right_grey_600_24dp"
             android:drawableStart="@drawable/ic_keyboard_arrow_right_grey_600_24dp"
             android:padding="10dp"
@@ -116,8 +122,11 @@
         <Button
             android:id="@+id/salidaTienda"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_weight=".5"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:drawableTint="@color/Blanco"
             android:drawableLeft="@drawable/ic_keyboard_arrow_left_grey_600_24dp"
             android:drawableStart="@drawable/ic_keyboard_arrow_left_grey_600_24dp"
             android:text="@string/Sal"/>

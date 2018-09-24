@@ -26,7 +26,7 @@
     <string name="exhi">Exhibiciones Especiales</string>
     <string name="enca">Encargado de tienda</string>
     <string name="prec">Precio</string>
-    <string name="Sal">salida de tienda</string>
+    <string name="Sal">salida</string>
     <string name="numFreString">Frentes en el Mueble</string>
     <string name="stringMarca">Marca</string>
     <string name="stringCharo">Numero de Charola</string>
@@ -56,7 +56,7 @@
     <string name="exhibicion">Exhibicion</string>
     <string name="imaMa">Imagen de la marca</string>
     <string name="porc">Tamaño</string>
-    <string name="entrada">Entrada Tienda</string>
+    <string name="entrada">Entrada</string>
     <string name="inventario">Inv. Gral</string>
     <string name="Entradacheck">Entrada</string>
     <string name="Salidacheck">Salida</string>
