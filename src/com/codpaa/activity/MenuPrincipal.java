@@ -284,7 +284,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         final MenuModel ruta = new MenuModel();
         ruta.setId(1);
-        ruta.setImage("ic_directions_yellow_700_36dp");
+        ruta.setImage("ic_directions_blue_grey_700_36dp");
         ruta.setMenu("Ruta");
         ruta.setIdPromotor(idUsuario);
         array.add(ruta);
@@ -292,14 +292,14 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         final MenuModel mensajes = new MenuModel();
         mensajes.setId(2);
-        mensajes.setImage("ic_message_lime_100_36dp");
+        mensajes.setImage("ic_message_blue_grey_700_36dp");
         mensajes.setMenu("Mensajes");
         array.add(mensajes);
 
 
         final MenuModel enviar = new MenuModel();
         enviar.setId(3);
-        enviar.setImage("ic_send_green_a400_36dp");
+        enviar.setImage("ic_send_blue_grey_700_36dp");
         enviar.setMenu("Enviar");
         array.add(enviar);
 
