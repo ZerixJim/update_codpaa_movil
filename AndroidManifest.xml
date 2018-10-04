@@ -60,7 +60,8 @@
         <activity
             android:name=".launcher.Lanzador"
             android:label="@string/nombreAplicacion"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MiMateria">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
