@@ -24,6 +24,7 @@ import com.codpaa.model.MarcaModel;
 import com.codpaa.model.ProductosModel;
 import com.codpaa.model.SpinnerMarcaModel;
 import com.codpaa.provider.DbEstructure;
+import com.codpaa.provider.PhotoProviderVan;
 import com.codpaa.util.Utilities;
 import com.codpaa.widget.MultiSpinnerSelect;
 import com.github.lzyzsd.circleprogress.DonutProgress;
@@ -52,12 +53,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
 
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -236,24 +238,27 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     	if(takePictureIntent.resolveActivity(getPackageManager()) != null){
     		File photoFile;
     		try {
-				photoFile = createImageFile();
+                photoFile = createImageFile();
 
                 Uri photoUri;
 
-				if (Build.VERSION.SDK_INT >= 24){
-				    photoUri = FileProvider.getUriForFile(this,
-                            com.codpaa.BuildConfig.APPLICATION_ID + ".provider",
-                            photoFile);
+                if (Build.VERSION.SDK_INT >= 24){
+                    photoUri = PhotoProviderVan.getPhotoUri(photoFile);
                 }else {
 
-				    photoUri = Uri.fromFile(photoFile);
+                    photoUri = Uri.fromFile(photoFile);
 
                 }
 
 
+                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                StrictMode.setVmPolicy(builder.build());
+
+
+
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 
-                imageToUploadUri = Uri.fromFile(photoFile);
+                imageToUploadUri = PhotoProviderVan.getPhotoUri(photoFile);
 
                 startActivityForResult(takePictureIntent, CAMERA_PHOTO);
 
