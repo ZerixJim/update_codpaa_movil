@@ -276,7 +276,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         @Override
         public void onClick(View v) {
 
-            RutaDia rutaDia = rutaDias.get(getAdapterPosition());
+            RutaDia rutaDia = rutasFilter.get(getAdapterPosition());
             //Log.d("Onclick", "Element: " + rutaDia.getIdTienda());
 
             dialodStartComfirm(rutaDia.getIdTienda(), rutaDia);
