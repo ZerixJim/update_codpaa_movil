@@ -28,7 +28,7 @@ allprojects {
 
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
 
     sourceSets {
         main {
@@ -56,8 +56,8 @@ android {
     defaultConfig {
         targetSdkVersion 26
         applicationId "com.codpaa"
-        versionCode 81
-        versionName "1.3.7 rc3"
+        versionCode 82
+        versionName "1.3.7 rc4"
         minSdkVersion 14
     }
 
@@ -75,23 +75,25 @@ dependencies {
 
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'cz.msebera.android:httpclient:4.4.1.1'
-    implementation 'com.android.support:support-v4:26.1.0'
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:animated-vector-drawable:27.1.1'
+    implementation 'com.android.support:exifinterface:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.android.support:cardview-v7:26.1.0'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.makeramen:roundedimageview:2.2.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.lzyzsd:circleprogress:1.1.0@aar'
-    implementation 'com.google.firebase:firebase-messaging:17.1.0'
-    implementation 'com.android.support:percent:26.1.0'
-    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.android.support:percent:27.1.1'
+    implementation 'com.google.code.gson:gson:2.8.2'
 
 
     implementation 'id.zelory:compressor:2.1.0'
 
-    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
 
 
     implementation 'com.github.gcacace:signature-pad:1.2.1'
