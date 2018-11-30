@@ -12,7 +12,7 @@ import java.io.File;
 public class PhotoProviderVan extends ContentProvider {
 
 
-    public static final String CONTENT_PROVIDER_AUTHORITY = "com.example.magnificentapp.PhotoProviderVan";
+    public static final String CONTENT_PROVIDER_AUTHORITY = "com.codpaa.provider.PhotoProviderVan";
 
     @Override
     public boolean onCreate() {
