@@ -15,7 +15,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -243,7 +242,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
     }
 
 
-    class DiaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class DiaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cardItemLayout;
         TextView title;
         TextView subTitle;
