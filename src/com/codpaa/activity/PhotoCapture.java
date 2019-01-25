@@ -668,7 +668,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
     public void loadMultiSpinner(int idMarca){
 
-        multiSpinnerSelect.setItems(getArrayListProByTiensda(idMarca, idPromotor),
+        multiSpinnerSelect.setItems(getArrayListProByTiensda(idMarca, idTienda),
                 "Seleccione Producto", this);
 
     }
