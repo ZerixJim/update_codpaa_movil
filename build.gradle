@@ -56,8 +56,8 @@ android {
     defaultConfig {
         targetSdkVersion 27
         applicationId "com.codpaa"
-        versionCode 81
-        versionName "1.3.7 rc3"
+        versionCode 82
+        versionName "1.3.7 rc4-1"
         minSdkVersion 14
     }
 
@@ -76,6 +76,8 @@ dependencies {
     implementation 'com.loopj.android:android-async-http:1.4.9'
     implementation 'cz.msebera.android:httpclient:4.4.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:animated-vector-drawable:27.1.1'
+    implementation 'com.android.support:exifinterface:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -99,7 +101,6 @@ dependencies {
 
     //implementation 'com.github.deano2390:MaterialShowcaseView:1.1.0'
     implementation 'com.github.clans:fab:1.6.4'
-
 
 
 
