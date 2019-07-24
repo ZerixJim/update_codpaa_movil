@@ -406,6 +406,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 	@Override
 	protected void onResume() {
+		super.onResume();
 		if(txtUserName.getText().length() > 0){
 			txtPassword.requestFocus();
 		}else{
@@ -415,7 +416,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         checkPermisosAndGpsEnable();
 
-		super.onResume();
+
 	}
 
     @Override
