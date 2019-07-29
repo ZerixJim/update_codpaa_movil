@@ -190,7 +190,7 @@ public class RegistrationIntentService extends IntentService {
             messaging.subscribeToTopic(marca.replace(" ", ""));
         }*/
 
-        messaging.subscribeToTopic("van-promotor");
+        //messaging.subscribeToTopic("van-promotor");
 
         if (idPromotor == 1000){
 
@@ -199,9 +199,9 @@ public class RegistrationIntentService extends IntentService {
 
         if (idPromotor != 0) {
             messaging.subscribeToTopic("promotor-" + idPromotor);
-            messaging.subscribeToTopic("ruta-" + idPromotor);
-            messaging.subscribeToTopic("user-" + idPromotor);
-            messaging.subscribeToTopic("producto-" + idPromotor);
+            //messaging.subscribeToTopic("ruta-" + idPromotor);
+            //messaging.subscribeToTopic("user-" + idPromotor);
+            //messaging.subscribeToTopic("producto-" + idPromotor);
         }
     }
 
