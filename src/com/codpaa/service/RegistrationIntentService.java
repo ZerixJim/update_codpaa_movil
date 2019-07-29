@@ -29,7 +29,9 @@ import com.codpaa.db.BDopenHelper;
 import com.codpaa.util.QuickstartPreferences;
 import com.codpaa.util.Utilities;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -61,14 +63,24 @@ public class RegistrationIntentService extends IntentService {
 
         try {
 
-            String token = FirebaseInstanceId.getInstance().getToken();
-            Log.i(TAG, "GCM Registration Token: " + token);
+            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                @Override
+                public void onSuccess(InstanceIdResult instanceIdResult) {
+                    String deviceToken = instanceIdResult.getToken();
 
+                    sendRegistrationToServer(deviceToken);
 
-            sendRegistrationToServer(token);
+                    Log.i(TAG, "GCM Registration Token: " + deviceToken);
 
-            // Subscribe to topic channels
-            subscribeTopics();
+                    try {
+                        subscribeTopics();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
 
 
         } catch (Exception e) {
