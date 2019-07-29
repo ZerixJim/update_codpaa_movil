@@ -2,7 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
+
+
+    <item android:id="@+id/btn_marcas"
+        android:title="marcas"
+        app:showAsAction="ifRoom"
+        />
+
+
+   <!-- <item
         android:id="@+id/direccion"
         android:title="@string/address"
         android:orderInCategory="100"
@@ -19,7 +27,7 @@
         android:id="@+id/actualizar_encuesta"
         android:title="Actualizar Encuestas"
         android:orderInCategory="101"
-        app:showAsAction="never"/>
+        app:showAsAction="never"/>-->
 
 
 

@@ -13,10 +13,10 @@ import com.codpaa.response.ResponseUpdateFirmaProducto;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.util.Configuracion;
 import com.codpaa.util.Utilities;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationResult;
 import com.google.gson.Gson;
 import com.loopj.android.http.*;
 
@@ -49,12 +49,11 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Binder;
-import android.os.Bundle;
+
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
@@ -67,22 +66,21 @@ import com.codpaa.db.BDopenHelper;
 import cz.msebera.android.httpclient.Header;
 
 
-public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class GeoLocalizar extends Service {
 
 
-	Location serviceLocation;
-	Timer tiempoEspera = null;
-	SQLiteDatabase base = null;
-	BDopenHelper DBhelper;
-	AsyncHttpClient cliente;
-	String myVersionName = "not available";
-	String fecha, hora;
-	RequestParams rp;
+	private Location serviceLocation;
+	private Timer tiempoEspera = null;
+	private SQLiteDatabase base = null;
+	private BDopenHelper DBhelper;
+
 	int idCel;
 
-	private GoogleApiClient mGoogleApiClient;
-	private LocationRequest locationRequest;
 
+	private LocationRequest locationRequest;
+	private LocationCallback locationCallback;
+
+	private FusedLocationProviderClient fusedLocationClient;
 
 	Intent resultIntent;
 	PendingIntent pendingIntent;
@@ -300,10 +298,12 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
 				ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-			if (mGoogleApiClient.isConnected()){
+			/*if (mGoogleApiClient.isConnected()){
 
 				LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
-			}
+			}*/
+
+			fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
 
 		}
 
@@ -330,10 +330,12 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 			e.printStackTrace();
 		}*/
 
-		if (mGoogleApiClient.isConnected()){
+		fusedLocationClient.removeLocationUpdates(locationCallback);
 
-			LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-		}
+		/*if (mGoogleApiClient.isConnected()){
+
+
+		}*/
 
 
 	}
@@ -344,8 +346,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 		super.onCreate();
 
 		DBhelper = new BDopenHelper(this);
-		cliente = new AsyncHttpClient();
-		rp = new RequestParams();
+
 
 
 		con = this;
@@ -377,14 +378,39 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 
 
 		//conexion para la api de location
-		mGoogleApiClient = new GoogleApiClient.Builder(this)
+		/*mGoogleApiClient = new GoogleApiClient.Builder(this)
 				.addConnectionCallbacks(this)
 				.addOnConnectionFailedListener(this)
 				.addApi(LocationServices.API)
 				.build();
 
 
-		mGoogleApiClient.connect();
+		mGoogleApiClient.connect();*/
+
+		fusedLocationClient = new FusedLocationProviderClient(this);
+
+		locationCallback = new LocationCallback(){
+
+			@Override
+			public void onLocationResult(LocationResult locationResult) {
+
+				if (locationResult == null){
+
+					return;
+				}
+
+				for (Location locat : locationResult.getLocations()){
+
+					serviceLocation = locat;
+
+					insertarRastreo();
+
+				}
+
+
+			}
+		};
+
 
 		locationRequest = LocationRequest.create();
 		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -393,27 +419,6 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 
 	}
 
-	@Override
-	public void onConnected(@Nullable Bundle bundle) {
-
-
-		//Toast.makeText(getApplicationContext(), "Api location connected", Toast.LENGTH_SHORT).show();
-
-	}
-
-	@Override
-	public void onConnectionSuspended(int i) {
-
-		//Toast.makeText(getApplicationContext(), "Api location connected", Toast.LENGTH_SHORT).show();
-
-	}
-
-	@Override
-	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-		//Toast.makeText(getApplicationContext(), "Api location connected", Toast.LENGTH_SHORT).show();
-
-	}
 
 
 	private class MyBinder extends Binder {
@@ -713,7 +718,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 			String packageName = context.getPackageName();
 
 			try {
-				myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
+				String myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
 				try {
 					idCel = DBhelper.idUser();
 
@@ -785,6 +790,8 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 			if (curFrentes.getCount() != 0 && verificarConexion()) {
 
 				for (curFrentes.moveToFirst(); !curFrentes.isAfterLast(); curFrentes.moveToNext()) {
+					RequestParams rp = new RequestParams();
+
 					rp.put("idTien", Integer.toString(curFrentes.getInt(0)));
 					rp.put("idCel", Integer.toString(curFrentes.getInt(1)));
 					rp.put("fecha", curFrentes.getString(2));
@@ -813,6 +820,8 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rp.put("f13", Integer.toString(curFrentes.getInt(24)));
 					rp.put("f14", Integer.toString(curFrentes.getInt(25)));*/
 
+					AsyncHttpClient cliente = new AsyncHttpClient();
+
 					cliente.post(Utilities.WEB_SERVICE_CODPAA + "send_front.php", rp, respuestaFrentes);
 
 				}
@@ -838,6 +847,9 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 			if (curInven.getCount() > 0 && verificarConexion()) {
 
 				for (curInven.moveToFirst(); !curInven.isAfterLast(); curInven.moveToNext()) {
+
+					RequestParams rp = new RequestParams();
+
 					rp.put("idTien", Integer.toString(curInven.getInt(0)));
 					rp.put("idPromo", Integer.toString(curInven.getInt(1)));
 					rp.put("fecha", curInven.getString(2));
@@ -849,6 +861,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rp.put("fecha_cad", curInven.getString(8));
 					rp.put("lote", curInven.getString(9));
 
+					AsyncHttpClient cliente = new AsyncHttpClient();
 
 					cliente.post(Utilities.WEB_SERVICE_CODPAA+ "sendinventario.php", rp, responseInventario);
 
@@ -875,6 +888,9 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 			if (curExhi.getCount() > 0 && verificarConexion()) {
 
 				for (curExhi.moveToFirst(); !curExhi.isAfterLast(); curExhi.moveToNext()) {
+
+					RequestParams rp = new RequestParams();
+
 					rp.put("idTien", Integer.toString(curExhi.getInt(0)));
 					rp.put("idCel", Integer.toString(curExhi.getInt(1)));
 					rp.put("idExhibicion", Integer.toString(curExhi.getInt(2)));
@@ -882,6 +898,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rp.put("idProducto", Integer.toString(curExhi.getInt(4)));
 					rp.put("cantidad", String.valueOf(curExhi.getFloat(5)));
 
+					AsyncHttpClient cliente = new AsyncHttpClient();
 
 					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendexhi.php", rp, respuestaExhibiciones);
 					//base.execSQL("Update exhibiciones set status=2 where idTienda="+curExhi.getInt(0)+" and idExhibicion="+curExhi.getInt(2)+" and fecha='"+curExhi.getString(3)+"' and idProducto="+curExhi.getInt(4));
@@ -907,11 +924,14 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 
 			if (curEncargado.getCount() > 0 && verificarConexion()) {
 				for (curEncargado.moveToFirst(); !curEncargado.isAfterLast(); curEncargado.moveToNext()) {
+					RequestParams rp = new RequestParams();
 					rp.put("idTien", Integer.toString(curEncargado.getInt(0)));
 					rp.put("idCel", Integer.toString(curEncargado.getInt(1)));
 					rp.put("nombre", curEncargado.getString(2));
 					rp.put("puesto", curEncargado.getString(3));
 					rp.put("fecha", curEncargado.getString(4));
+
+					AsyncHttpClient cliente = new AsyncHttpClient();
 
 					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendEncargado.php", rp, respuesta);
 					base.delete("encargadotienda", "idTienda=" +
@@ -939,12 +959,14 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 
 			if (curComentario.getCount() > 0 && verificarConexion()) {
 				for (curComentario.moveToFirst(); !curComentario.isAfterLast(); curComentario.moveToNext()) {
+					RequestParams rp = new RequestParams();
 					rp.put("idTien", Integer.toString(curComentario.getInt(0)));
 					rp.put("idCel", Integer.toString(curComentario.getInt(1)));
 					rp.put("fecha", curComentario.getString(2));
 					rp.put("comentario", curComentario.getString(3));
 					rp.put("idMarca", curComentario.getInt(curComentario.getColumnIndex("idMarca")));
 
+					AsyncHttpClient cliente = new AsyncHttpClient();
 					cliente.post(Utilities.WEB_SERVICE_CODPAA + "send_comentario.php", rp, respuesta);
 					base.delete("comentarioTienda", "idTienda=" +
 							curComentario.getInt(0) + " and fecha='" +
@@ -974,7 +996,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 			if (curRastreo.getCount() > 0 && verificarConexion()) {
 
 
-				Log.d("Registros rastreo", Integer.toString(curRastreo.getCount()));
+				//Log.d("Registros rastreo", Integer.toString(curRastreo.getCount()));
 				for (curRastreo.moveToFirst(); !curRastreo.isAfterLast(); curRastreo.moveToNext()) {
 					rpRastreo.put("idCel", Integer.toString(curRastreo.getInt(0)));
 					rpRastreo.put("fecha", curRastreo.getString(1));
@@ -984,6 +1006,8 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rpRastreo.put("altitud", Double.toString(curRastreo.getDouble(5)));
 					rpRastreo.put("numero_tel", curRastreo.getString(6));
 
+
+					AsyncHttpClient cliente = new AsyncHttpClient();
 
 					cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendRastreo.php", rpRastreo, respuesta);
 
@@ -1018,8 +1042,8 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 			Calendar c = Calendar.getInstance();
 			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 			SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-			fecha = dFecha.format(c.getTime());
-			hora = dHora.format(c.getTime());
+			String fecha = dFecha.format(c.getTime());
+			String hora = dHora.format(c.getTime());
 
 
 			try {
@@ -1033,21 +1057,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 			if (idCel != 0) {
 
 
-				/*if (loGps != null) {
 
-					DBhelper.insertarRastreo(idCel, fecha, hora, loGps.getLatitude(),
-							loGps.getLongitude(), loGps.getAltitude(), getPhoneNumber());
-				} else if (loNet != null) {
-					DBhelper.insertarRastreo(idCel, fecha, hora, loNet.getLatitude(),
-							loNet.getLongitude(), loNet.getAltitude(), getPhoneNumber());
-				} else if (loGeneral != null) {
-
-					DBhelper.insertarRastreo(idCel, fecha, hora, loGeneral.getLatitude(),
-							loGeneral.getLongitude(), loGeneral.getAltitude(), getPhoneNumber());
-
-				} else {
-					Log.d("Rastreo", "nullos");
-				}*/
 
 				if (serviceLocation != null){
 					DBhelper.insertarRastreo(idCel, fecha, hora, serviceLocation.getLatitude(),
@@ -1095,7 +1105,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 					rpIn.put("cambioprecio", curInteli.getString(13));
 
 
-
+					AsyncHttpClient cliente = new AsyncHttpClient();
 					cliente.post(Utilities.WEB_SERVICE_CODPAA + "send_precio.php", rpIn, respuestaInteligencia);
 
 
@@ -1207,7 +1217,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 
 
 
-			Log.e("ResponseImage", "paso 2");
+			//Log.e("ResponseImage", "paso 2");
 
 		}
 
@@ -1306,18 +1316,6 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 
 
 	@Override
-	public void onLocationChanged(Location location) {
-
-		Log.d("onLocationChangeService", " Provider " + location.getProvider() + " La " + location.getLatitude() + " Lo " + location.getLongitude());
-		serviceLocation = location;
-
-		insertarRastreo();
-
-
-	}
-
-
-	@Override
 	public void onDestroy() {
 		super.onDestroy();
 
@@ -1331,7 +1329,7 @@ public class GeoLocalizar extends Service implements GoogleApiClient.ConnectionC
 			e.printStackTrace();
 		}*/
 
-		mGoogleApiClient.disconnect();
+		//mGoogleApiClient.disconnect();
 
 	}
 

@@ -22,10 +22,13 @@ import com.codpaa.R;
 import com.codpaa.update.UpdateInformation;
 import com.codpaa.util.Configuracion;
 import com.codpaa.widget.DividerItemDecoration;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.loopj.android.http.*;
 
 import android.Manifest;
@@ -44,7 +47,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -56,6 +59,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -76,37 +81,39 @@ import com.codpaa.model.FrentesModel;
 import com.codpaa.model.InventarioModel;
 import com.codpaa.adapter.MenuTiendaAdapter.MenuTiendaListener;
 
-public class MenuTienda extends AppCompatActivity implements OnClickListener, MenuTiendaListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
+public class MenuTienda extends AppCompatActivity implements OnClickListener, MenuTiendaListener{
 
 
-    Button btnSalidaTi, btnEntrada, btnEncar, btnExhib, btnInven, btnFrente, btnSurtido, btnTiendaError;
-    Button btnVentaPromedio, btnCapturaGeneral;
-    Button btnComentario, btnInteligencia, btnUpdaPro, btnFoto, btnMateriales;
-    SQLiteDatabase base = null;
-    Location location;
+    private Button btnSalidaTi, btnEntrada, btnEncar, btnExhib, btnInven, btnFrente, btnSurtido, btnTiendaError;
+    private Button btnVentaPromedio, btnCapturaGeneral;
+    private Button btnComentario, btnInteligencia, btnUpdaPro, btnFoto, btnMateriales;
+    private SQLiteDatabase base = null;
+    private Location location;
 
 
-    private GoogleApiClient mGoogleApiClient;
-
-    TextView txtEncargado, frentes, surtido, exhi, inventario, fotos;
+    private TextView txtEncargado, frentes, surtido, exhi, inventario, fotos;
     final int REQUEST_CODE_ASK_PERMISSIONS = 123;
     int idPromotor, idTienda;
-    BDopenHelper DB = null;
-    String myVersionName = "not available";
-    EnviarDatos enviar;
-    Spinner spinnerEnc;
-    EditText editNombre;
-    RequestParams rp;
-    String grupo;
-    RecyclerView menuRecycler;
-    Toolbar toolbar;
+    private BDopenHelper DB = null;
+    private String myVersionName = "not available";
+    private EnviarDatos enviar;
+    private Spinner spinnerEnc;
+    private EditText editNombre;
+    private RequestParams rp;
+    private String grupo;
+    private RecyclerView menuRecycler;
+    private Toolbar toolbar;
     public static final String TAG = "MenuTienda";
     private boolean Salida = false;
     private boolean Entrada = false;
     private ProgressDialog progress;
 
+
+    private FusedLocationProviderClient fusedLocationClient;
+
     private LocationRequest locationRequest;
+
+    private LocationCallback locationCallback;
 
     private int intento = 0;
 
@@ -204,26 +211,34 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         handler = new Handler();
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .enableAutoManage(this, this)
-                .build();
+        locationCallback = new LocationCallback(){
+
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null){
+
+                    return;
+                }
+                for (Location lot : locationResult.getLocations()){
+                    location = lot;
+
+                    Log.d("GPS", "locationResutl" + lot.getLatitude() + "," + lot.getLongitude());
+
+
+                }
+
+            }
+        };
+
 
 
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(1000);
+                .setFastestInterval(1000)
+                .setInterval(10000);
 
-
-        //builder object to verify a gps mode is in high accuracy
-
-        /*LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
-        builder.addLocationRequest(locationRequest);
-
-        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());*/
 
 
 
@@ -424,7 +439,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     }
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
@@ -434,7 +449,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
         return true;
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -449,7 +464,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
                 return true;
 
-            case R.id.direccion:
+            /*case R.id.direccion:
 
                 saveAddress();
 
@@ -466,7 +481,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
                 descargarEncuesta();
 
-                return true;
+                return true;*/
 
 
             default:
@@ -559,7 +574,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
                         //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, MenuTienda.this);
 
-                        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, MenuTienda.this);
+                        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
 
 
                     }
@@ -607,7 +622,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     }
 
-
     public void entradaTienda() {
 
         //permiso();
@@ -617,44 +631,60 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         SimpleDateFormat dSema = new SimpleDateFormat("w", Locale.getDefault());
 
-        String fecha = dFecha.format(c.getTime());
-        String hora = dHora.format(c.getTime());
+        final String fecha = dFecha.format(c.getTime());
+        final String hora = dHora.format(c.getTime());
         String sem = dSema.format(c.getTime());
-        int semana = Integer.parseInt(sem);
+        final int semana = Integer.parseInt(sem);
 
 
         if (!Entrada) {
 
-            try {
-
-                location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-            } catch (SecurityException e) {
-                e.printStackTrace();
-
-
-            }
-
-            BDopenHelper base = new BDopenHelper(getApplicationContext());
-
 
             if (location != null) {
 
-                Entrada = true;
-                base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "E", 1, semana);
-
-                Toast.makeText(this, "Entrada Guardada", Toast.LENGTH_SHORT).show();
-                btnEntrada.post(new Runnable() {
-
-                    public void run() {
+                try {
 
 
-                        btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-                        btnEntrada.setTextColor(Color.WHITE);
-                        enviar.enviarVisitas();
-                    }
 
-                });
+                    fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location loca) {
+                            location = loca;
+
+
+                            BDopenHelper base = new BDopenHelper(getApplicationContext());
+
+                            Entrada = true;
+                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "E", 1, semana);
+
+                            Toast.makeText(MenuTienda.this, "Entrada Guardada", Toast.LENGTH_SHORT).show();
+                            btnEntrada.post(new Runnable() {
+
+                                public void run() {
+
+
+                                    btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                    btnEntrada.setTextColor(Color.WHITE);
+                                    enviar.enviarVisitas();
+                                }
+
+                            });
+
+
+                        }
+
+                    });
+
+
+                    //fusedLocationClient.getLastLocation().addOnFailureListener();
+
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+
+
+                }
+
+
 
             } else {
 
@@ -672,9 +702,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     private void salidaTienda() {
 
         if (Entrada) {
-
-
-
 
 
             Thread hiloSalida = new Thread() {
@@ -704,43 +731,54 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                             SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
                             SimpleDateFormat dSema = new SimpleDateFormat("w", Locale.getDefault());
 
-                            String fecha = dFecha.format(c.getTime());
-                            String hora = dHora.format(c.getTime());
+                            final String fecha = dFecha.format(c.getTime());
+                            final String hora = dHora.format(c.getTime());
                             String sem = dSema.format(c.getTime());
-                            int semana = Integer.parseInt(sem);
+                            final int semana = Integer.parseInt(sem);
 
-
-                            try {
-
-                                location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-                            } catch (SecurityException e) {
-                                e.printStackTrace();
-                            }
-
-
-                            BDopenHelper base = new BDopenHelper(getApplicationContext());
 
 
                             if (location != null) {
 
-                                base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "S", 1, semana);
 
-                                Salida = true;
-
-                                btnSalidaTi.post(new Runnable() {
-                                    public void run() {
+                                try {
 
 
-                                        btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-                                        btnSalidaTi.setTextColor(Color.WHITE);
-                                        Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
 
-                                        enviar.enviarVisitas();
+                                    fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                                        @Override
+                                        public void onSuccess(Location locat) {
+                                            location = locat;
 
-                                    }
+                                            BDopenHelper base = new BDopenHelper(getApplicationContext());
+                                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "S", 1, semana);
 
-                                });
+                                            Salida = true;
+
+                                            btnSalidaTi.post(new Runnable() {
+                                                public void run() {
+
+
+                                                    btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                                    btnSalidaTi.setTextColor(Color.WHITE);
+                                                    Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
+
+                                                    enviar.enviarVisitas();
+
+                                                }
+
+                                            });
+
+                                        }
+                                    });
+
+                                    //location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+                                } catch (SecurityException e) {
+                                    e.printStackTrace();
+                                }
+
+
 
                                 try {
                                     sleep(2000);
@@ -1153,7 +1191,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         super.onStart();
 
 
-        mGoogleApiClient.connect();
+        //mGoogleApiClient.connect();
 
 
         verificarEncuesta();
@@ -1163,41 +1201,45 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     private void startGpsAtMoment() {
 
-        if (mGoogleApiClient.isConnected()) {
-
-            final Handler handler = new Handler();
-
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
 
 
-                    if (ActivityCompat.checkSelfPermission(MenuTienda.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MenuTienda.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        final Handler handler = new Handler();
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
 
 
-                        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, MenuTienda.this);
+                if (ActivityCompat.checkSelfPermission(MenuTienda.this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MenuTienda.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
 
 
-                    }
+                    //LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, MenuTienda.this);
 
-
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            if (mGoogleApiClient.isConnected())
-                                LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, MenuTienda.this);
-                        }
-                    }, 10000);
+                    fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
 
 
                 }
-            });
 
 
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        fusedLocationClient.removeLocationUpdates(locationCallback);
+
+                        //if (mGoogleApiClient.isConnected())
 
 
-        }
+                        //LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, MenuTienda.this);
+                    }
+                }, 10000);
+
+
+            }
+        });
+
 
 
     }
@@ -1317,7 +1359,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         super.onStop();
 
 
-        mGoogleApiClient.disconnect();
+        //mGoogleApiClient.disconnect();
 
 
 
@@ -1521,33 +1563,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 	}
 
 
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-
-	    startGpsAtMoment();
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-	    //Log.i("Location", "change");
-
-	    this.location = location;
-
-    }
 
     private class EscucharDialogoEncargado implements DialogInterface.OnClickListener{
 
