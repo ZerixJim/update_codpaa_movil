@@ -95,14 +95,10 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     final int REQUEST_CODE_ASK_PERMISSIONS = 123;
     int idPromotor, idTienda;
     private BDopenHelper DB = null;
-    private String myVersionName = "not available";
     private EnviarDatos enviar;
     private Spinner spinnerEnc;
     private EditText editNombre;
-    private RequestParams rp;
     private String grupo;
-    private RecyclerView menuRecycler;
-    private Toolbar toolbar;
     public static final String TAG = "MenuTienda";
     private boolean Salida = false;
     private boolean Entrada = false;
@@ -127,7 +123,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         setContentView(R.layout.menutienda);
 
 
-        toolbar = findViewById(R.id.toolbar_menu_principal);
+        Toolbar toolbar = findViewById(R.id.toolbar_menu_principal);
 
 
         if (toolbar != null) {
@@ -144,7 +140,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         setUpMenu();
 
 
-        rp = new RequestParams();
+        RequestParams rp = new RequestParams();
         Intent recibeIdTi = getIntent();
         enviar = new EnviarDatos(this);
 
@@ -169,7 +165,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
         try {
-            myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
+            String myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -246,7 +242,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     private void setUpMenu() {
 
-        menuRecycler = findViewById(R.id.recycler_menu_tienda);
+        RecyclerView menuRecycler = findViewById(R.id.recycler_menu_tienda);
         if (menuRecycler != null) {
             menuRecycler.setHasFixedSize(true);
             LinearLayoutManager linear = new LinearLayoutManager(this);
@@ -574,7 +570,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
                         //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0, MenuTienda.this);
 
-                        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
+                        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
 
 
                     }
