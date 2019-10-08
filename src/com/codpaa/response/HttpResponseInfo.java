@@ -8,14 +8,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
+
 import android.widget.Toast;
 
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.Configuracion;
-import com.google.gson.JsonArray;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
