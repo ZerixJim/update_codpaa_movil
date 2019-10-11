@@ -1052,6 +1052,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
                 Entrada = true;
                 btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                btnEntrada.setTextColor(Color.WHITE);
 
 
             } else {
@@ -1079,11 +1080,18 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
                     btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                    btnSalidaTi.setTextColor(Color.WHITE);
                     Salida = true;
                     DB.close();
 
-                    if (Entrada && Salida)
+                    if (Entrada && Salida){
+
+
                         btnTiendaError.setVisibility(View.GONE);
+                        btnEntrada.setVisibility(View.GONE);
+                        btnSalidaTi.setVisibility(View.GONE);
+
+                    }
                 } else {
 
                     btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_orange);

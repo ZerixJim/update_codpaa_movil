@@ -84,6 +84,11 @@
         <item name="android:colorControlNormal">@android:color/white</item>
     </style>
 
+    <style name="DialogStyle" parent="Base.Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">97%</item>
+        <item name="android:windowMinWidthMinor">97%</item>
+    </style>
+
 
     <style name="noActionBarNoTitle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/blue_primary</item>
