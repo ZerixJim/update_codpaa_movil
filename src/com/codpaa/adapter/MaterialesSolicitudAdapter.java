@@ -4,7 +4,7 @@ package com.codpaa.adapter;
  * Created by grim on 27/01/17.
  */
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

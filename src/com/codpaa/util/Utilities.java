@@ -22,6 +22,9 @@ public class Utilities {
     public static final String FORMATOS_PATH = "http://codpaa.plataformavanguardia.net/images/formatos/";
     public static final String WEB_SERVICE_CODPAA_TEST = "http://plataformavanguardia.net/test/webservice/";
 
+
+    public static final String API_TEST = "https://apitest.vanguardiagps.com/v2/";
+
     public static final int HOST_MODE_PRODCTION = 1;
     public static final int HOST_MODE_TEST = 2;
 

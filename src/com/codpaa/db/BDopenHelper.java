@@ -49,7 +49,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     // v1.3.3 = 34
     // v1.3.7 = 35
 
-    private static final int version = 35;
+    private static final int version = 36;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -89,6 +89,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String opciones;
     private static String productoCatalogadoTienda;
     private static String procesoCatalogacionObjeciones;
+    private static String tiendaMarca;
 
 
     public BDopenHelper(Context miContext) {
@@ -323,6 +324,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 ProcesoCatalogacionObjeciones.DESCRIPCION + " varchar(50)," +
                 ProcesoCatalogacionObjeciones.FECHA + " varchar(25))";
 
+        tiendaMarca = "create table if not exists " + DbEstructure.TiendaMarca.TABLE_NAME + "(" +
+                DbEstructure.TiendaMarca.ID_TIENDA + " integer," +
+                DbEstructure.TiendaMarca.ID_MARCA +  " integer," +
+                "primary key  ("+DbEstructure.TiendaMarca.ID_TIENDA +","+ DbEstructure.TiendaMarca.ID_MARCA +")" +
+                ")";
+
 
 
     }
@@ -367,6 +374,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(materialesSolicitud);
         db.execSQL(productoCatalogadoTienda);
         db.execSQL(procesoCatalogacionObjeciones);
+        db.execSQL(tiendaMarca);
     }
 
     @Override
@@ -383,7 +391,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
         }
 
 
+        if (newVersion == 36 && oldVersion == 35){
 
+
+            db.execSQL(tiendaMarca);
+
+        }
 
     }
 

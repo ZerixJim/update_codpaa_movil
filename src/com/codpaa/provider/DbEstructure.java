@@ -303,4 +303,15 @@ public class DbEstructure {
 
     }
 
+
+
+    public static class TiendaMarca implements BaseColumns{
+        private TiendaMarca(){}
+
+        public static final String TABLE_NAME = "tienda_marca";
+        public static final String ID_TIENDA = Tienda.ID_TIENDA;
+        public static final String ID_MARCA = "idMarca";
+
+    }
+
 }

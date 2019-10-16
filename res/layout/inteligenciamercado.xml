@@ -35,7 +35,7 @@
             android:baselineAligned="false"
             android:weightSum="2">
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_precio_normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,9 +55,9 @@
 
 
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_precio_caja"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                     android:textColor="#ff212121"/>
 
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
         </LinearLayout>
@@ -93,7 +93,7 @@
 
 
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_precio_oferta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -109,7 +109,7 @@
                     android:inputType="numberDecimal"
                     android:textColor="#ff212121"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
 

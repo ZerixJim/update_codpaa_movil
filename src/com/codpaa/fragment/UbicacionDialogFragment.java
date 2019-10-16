@@ -45,7 +45,7 @@ public class UbicacionDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setStyle(android.support.v4.app.DialogFragment.STYLE_NO_TITLE, R.style.DialogStyle);
+        setStyle(androidx.fragment.app.DialogFragment.STYLE_NO_TITLE, R.style.DialogStyle);
 
 
     }

@@ -1,7 +1,7 @@
 package com.codpaa.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,10 +17,8 @@ import android.widget.TextView;
 
 
 import com.codpaa.R;
-import com.codpaa.model.FrentesModel;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.util.Utilities;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

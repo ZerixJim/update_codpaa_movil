@@ -40,10 +40,16 @@ public class UpdateInformation{
         rp.put("solicitud" , "info");
         rp.put("id", idPromotor);
 
+        rp.put("idPromotor", idPromotor);
 
-        client.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, responseInfo);
+        client.addHeader("Authorization", "324S35574324S13D45463_-r2333434+4");
 
 
+
+        //client.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, responseInfo);
+
+
+        client.get(Utilities.API_TEST + "promotores/promo-data",rp, responseInfo);
 
 
 

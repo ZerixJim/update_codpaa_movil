@@ -20,7 +20,7 @@ import com.codpaa.model.ProductosModel;
 
 import java.util.ArrayList;
 
-public class MultiSpinnerSelect extends android.support.v7.widget.AppCompatSpinner implements
+public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinner implements
         OnMultiChoiceClickListener, OnCancelListener {
 
     private boolean[] selected;

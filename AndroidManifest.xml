@@ -38,7 +38,8 @@
         android:fullBackupContent="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MiTema">
+        android:theme="@style/MiTema"
+        >
 
 
         <provider

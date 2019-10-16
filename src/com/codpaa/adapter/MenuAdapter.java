@@ -4,11 +4,10 @@ package com.codpaa.adapter;/*
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.codpaa.activity.CalendarioRuta;
 import com.codpaa.activity.EnviarInformacion;
 import com.codpaa.activity.ListaMensajesActivity;
 import com.codpaa.model.MenuModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

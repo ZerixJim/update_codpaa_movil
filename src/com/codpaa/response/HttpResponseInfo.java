@@ -96,6 +96,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                         JSONArray productoFormato = response.getJSONArray("productoFormato");
                         JSONArray productoTienda = response.getJSONArray("productoTienda");
                         JSONArray materiales = response.getJSONArray("materiales");
+                        JSONArray tiendaMarca = response.getJSONArray("tienda_marca");
 
 
                         handler.post(new Runnable() {
@@ -122,6 +123,16 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                         parseJSONProductoByFormato(productoFormato);
                         parseJSONProductoByTienda(productoTienda);
                         parseJSONMateriales(materiales);
+
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressDialog.setMessage("Descargando rol");
+                            }
+                        });
+
+
+                        insertTiendaMarca(tiendaMarca);
 
                         handler.post(new Runnable() {
                             @Override
@@ -215,6 +226,47 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
         config.setMaterialesUpdate(fecha);
 
     }
+
+
+    private synchronized void insertTiendaMarca(JSONArray tiendaMarca){
+
+
+        BDopenHelper helper = new BDopenHelper(context.getApplicationContext());
+
+        helper.vaciarTabla(DbEstructure.TiendaMarca.TABLE_NAME);
+
+        SQLiteDatabase manager = helper.getWritableDatabase();
+
+        int length = tiendaMarca.length();
+
+        if (length> 0){
+
+
+            for (int i = 0; i < length ; i++){
+
+                ContentValues cv = new ContentValues();
+
+                try {
+                    cv.put(DbEstructure.TiendaMarca.ID_TIENDA, tiendaMarca.getJSONObject(i).getInt("id_tienda"));
+                    cv.put(DbEstructure.TiendaMarca.ID_MARCA, tiendaMarca.getJSONObject(i).getInt("id_marca"));
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                manager.insert(DbEstructure.TiendaMarca.TABLE_NAME,null, cv);
+
+            }
+
+
+        }
+
+        manager.close();
+
+    }
+
+
 
 
 

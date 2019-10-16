@@ -25,7 +25,7 @@
             android:contentDescription="@string/logo"
             android:src="@drawable/codpaa_logo"/>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -42,9 +42,9 @@
                 android:maxLength="10"
                 />
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -62,7 +62,7 @@
                 android:singleLine="true"
                 android:maxLength="15"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/valido"
@@ -79,7 +79,7 @@
             android:id="@+id/progressUser"
             android:layout_gravity="center_horizontal"/>
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonlogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

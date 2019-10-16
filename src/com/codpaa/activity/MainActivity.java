@@ -18,9 +18,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 if (locationMode != Settings.Secure.LOCATION_MODE_HIGH_ACCURACY || !manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
 
 
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+                    androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
                     builder.setTitle("Aviso")
                             .setMessage("por politicas de vanguardia, y para el buen funcionamiento de la plataforma, es necesario " +
                                     " que el GPS este Activado y en modo de PRECISION ALTA, gracias por su comprension ")

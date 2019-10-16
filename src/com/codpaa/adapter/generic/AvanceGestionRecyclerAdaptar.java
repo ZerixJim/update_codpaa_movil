@@ -1,8 +1,8 @@
 package com.codpaa.adapter.generic;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +12,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.codpaa.R;
-import com.codpaa.activity.impulsor.AvanceGestion;
 import com.codpaa.model.AvanceGestionModel;
 
 import java.util.ArrayList;
