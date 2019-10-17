@@ -20,13 +20,14 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
 import com.codpaa.util.Utilities;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.squareup.picasso.Picasso;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -107,7 +108,10 @@ public class TiendaNueva extends AppCompatActivity implements View.OnClickListen
 
                 if (bitmap != null){
 
-                    Picasso.get().load(imageToUpload).into(imageView);
+
+                    Glide.with(this).load(imageToUpload).into(imageView);
+
+
                 }
 
 

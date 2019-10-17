@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
 import com.codpaa.activity.CalendarioRuta;
 import com.codpaa.activity.EnviarInformacion;
@@ -65,7 +66,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
         //Picasso.with(context).load(uri).into(holder.imageView);
 
-        holder.imageView.setImageURI(uri);
+        //holder.imageView.setImageURI(uri);
+
+        Glide.with(context).load(uri).into(holder.imageView);
 
     }
 

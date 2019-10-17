@@ -23,11 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
 import com.codpaa.fragment.DetalleProductoDialogFragment;
 import com.codpaa.model.generic.Producto;
 import com.codpaa.util.Utilities;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,8 +199,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
         }
 
 
-
-        Picasso.get().load(Utilities.PRODUCT_PATH+producto.getIdMarca()+"/"+producto.getIdProducto()+".gif").into(holder.imageView);
+        Glide.with(context).load(Utilities.PRODUCT_PATH+producto.getIdMarca()+"/"+producto.getIdProducto()+".gif").into(holder.imageView);
 
 
 

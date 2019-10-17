@@ -24,12 +24,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
 import com.codpaa.activity.MenuTienda;
 import com.codpaa.fragment.UbicacionDialogFragment;
 import com.codpaa.model.RutaDia;
 import com.codpaa.util.Utilities;
-import com.squareup.picasso.Picasso;
+
 
 
 import java.util.ArrayList;
@@ -98,7 +99,10 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
                 dia.modo.setText("impulsor");
             }*/
 
-            Picasso.get().load(Utilities.FORMATOS_PATH + diaModel.getFormato() + ".png").into(dia.image);
+            //Picasso.get().load(Utilities.FORMATOS_PATH + diaModel.getFormato() + ".png").into(dia.image);
+
+            Glide.with(context).load(Utilities.FORMATOS_PATH + diaModel.getFormato() + ".png").into(dia.image);
+
 
 
             if (!diaModel.getLongitud().isEmpty() && !diaModel.getLatitud().isEmpty()){

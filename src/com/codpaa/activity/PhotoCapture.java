@@ -16,6 +16,7 @@ import java.util.Locale;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.bumptech.glide.Glide;
 import com.codpaa.adapter.CustomAdapter;
 import com.codpaa.R;
 import com.codpaa.adapter.MarcasAdapter;
@@ -73,6 +74,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -84,7 +86,7 @@ import android.os.Handler;
 
 import com.codpaa.db.BDopenHelper;
 
-import com.squareup.picasso.Picasso;
+
 
 
 import cz.msebera.android.httpclient.Header;
@@ -106,6 +108,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	private int idPromotor, idTienda;
     private DonutProgress donutProgress;
     private CardView cardView;
+
+    private ImageView imageDone;
     private ImageView showImg = null;
     private PhotoCapture CameraActivity = null;
     private String mCurrentPhotoPath;
@@ -114,6 +118,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private ArrayList<MarcaModel> array = new ArrayList<>();
  	private SQLiteDatabase base;
     private MultiSpinnerSelect multiSpinnerSelect;
+
+    private Button btnSendImage;
 
     private int startCamera;
 
@@ -140,6 +146,11 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         showImg = findViewById(R.id.showImg);
         //imgAdd = findViewById(R.id.add_photo);
 
+
+        imageDone = findViewById(R.id.ic_done);
+
+        btnSendImage = findViewById(R.id.btn_send_image);
+        btnSendImage.setOnClickListener(this);
 
 
 
@@ -208,7 +219,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 return true;
             case R.id.save_photo:
 
-                EnviarImagen();
+                //EnviarImagen();
                 return true;
 
             default:
@@ -338,15 +349,15 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
     //result of takeImage
 	@Override
-    protected void onActivityResult( int requestCode, int resultCode, Intent data){
+    protected void onActivityResult( int requestCode, int resultCode, Intent data) {
 
 
-
-        if (requestCode == CAMERA_PHOTO && resultCode == RESULT_OK){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAMERA_PHOTO && resultCode == RESULT_OK) {
 
 
             imagenEspera = true;
-            if (imageToUploadUri != null){
+            if (imageToUploadUri != null) {
 
                 Uri selectedImage = imageToUploadUri;
                 getContentResolver().notifyChange(selectedImage, null);
@@ -356,22 +367,21 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 mCurrentPhotoPath = selectedImage.getPath();
 
 
-                if (mCurrentPhotoPath != null){
+                if (mCurrentPhotoPath != null) {
 
 
                     cardView.setVisibility(View.VISIBLE);
-
 
 
                     final File photo = new File(mCurrentPhotoPath);
 
                     File file = decodeFile(photo);
 
-                    if (file != null){
+                    if (file != null) {
 
-                        if (photo.exists()){
+                        if (photo.exists()) {
 
-                            if (photo.delete()){
+                            if (photo.delete()) {
 
 
                                 mCurrentPhotoPath = file.getAbsolutePath();
@@ -381,19 +391,23 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                         }
 
 
-                        Picasso.get().load(file)
-                                .placeholder(R.drawable.placeholder)
-                                .into(showImg);
+                        Glide.with(this).load(file).into(showImg);
 
-                    }else {
-                        Picasso.get().load(photo)
+
+                        /*Picasso.get().load(file)
                                 .placeholder(R.drawable.placeholder)
-                                .into(showImg);
+                                .into(showImg);*/
+
+                    } else {
+                        /*Picasso.get().load(photo)
+                                .placeholder(R.drawable.placeholder)
+                                .into(showImg);*/
+
+                        Glide.with(this).load(photo).into(showImg);
+
 
 
                     }
-
-
 
 
                     showImg.setOnClickListener(new OnClickListener() {
@@ -407,15 +421,12 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                 intent.setDataAndType(Uri.fromFile(photo), "image");
                                 startActivity(intent);
 
-                            }catch (ActivityNotFoundException e){
+                            } catch (ActivityNotFoundException e) {
                                 e.printStackTrace();
                             }
 
                         }
                     });
-
-
-
 
 
                 }
@@ -424,15 +435,15 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
             }
 
 
-        }else{
+        } else {
 
 
             File file = new File(imageToUploadUri.getPath());
 
-            if (file.exists()){
-                if (file.delete()){
+            if (file.exists()) {
+                if (file.delete()) {
                     Log.d("delete", "true");
-                }else {
+                } else {
                     Log.d("delete", "false");
                 }
             }
@@ -443,8 +454,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
             cardView.setVisibility(View.GONE);
         }
-
-
 
 
     }
@@ -880,7 +889,11 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 					//Log.d("Respuestas Ima", response.getString("insert"));
 					if(response.getBoolean("insert")){
 						Toast.makeText(getApplicationContext(), "Imagen Recibida", Toast.LENGTH_SHORT).show();
-						showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.imagesend));
+						//showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.mipmap.ic_done));
+
+						imageDone.setVisibility(View.VISIBLE);
+
+
 						imagenEspera = false;
 						spiExh.setSelection(0);
 						spiMarca.setSelection(0);
@@ -892,14 +905,16 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                             @Override
                             public void run() {
                                 showImg.setImageDrawable(null);
+                                imageDone.setVisibility(View.INVISIBLE);
                                 cardView.setVisibility(View.GONE);
                             }
-                        },3000);
+                        },2500);
 
 
 					}else{
 						if(response.getInt("code") == 3){
-							showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.imagesend));
+							//showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.mipmap.ic_done));
+                            imageDone.setVisibility(View.VISIBLE);
 							imagenEspera = false;
 						}
                         //deleteArchivo(_imgPath);
@@ -925,6 +940,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 	@Override
 	public void onClick(View v) {
+
+
+        if (v.getId() == R.id.btn_send_image) EnviarImagen();
 
 
 	}

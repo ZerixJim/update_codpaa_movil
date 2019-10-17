@@ -14,9 +14,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
 import com.codpaa.model.FotosModel;
-import com.squareup.picasso.Picasso;
+
 
 import java.io.File;
 import java.util.ArrayList;
@@ -58,10 +59,9 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.ViewHolderFo
 
         holder.tipo.setText(fo.getTipo());
 
-        Picasso.get()
-                .load(new File(fo.getImg()))
-                .resize(dp2px(220), 0)
-                .into(holder.img);
+        Glide.with(context).load(new File(fo.getImg())).into(holder.img);
+
+
 
 
     }

@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
+
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+
 
 /*
  * Created by grim on 05/10/2017.
@@ -61,7 +61,7 @@ public class UbicacionDialogFragment extends DialogFragment {
 
 
         ImageView imageView =  view.findViewById(R.id.image);
-        final ProgressBar progressBar = view.findViewById(R.id.progress);
+
         Button button =  view.findViewById(R.id.btn_ubicacion);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -82,19 +82,9 @@ public class UbicacionDialogFragment extends DialogFragment {
         });
 
 
-        Picasso.get().load(url).into(imageView, new Callback() {
-            @Override
-            public void onSuccess() {
+        Glide.with(this).load(url).into(imageView);
 
-                progressBar.setVisibility(View.GONE);
 
-            }
-
-            @Override
-            public void onError(Exception e) {
-                progressBar.setVisibility(View.GONE);
-            }
-        });
 
 
         return view;

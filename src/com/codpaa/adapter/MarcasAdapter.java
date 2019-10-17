@@ -9,14 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.util.Utilities;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 
@@ -82,7 +82,7 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
         viewHolder.descrip.setText("");
 
 
-        Picasso picasso = Picasso.get();
+        //Picasso picasso = Picasso.get();
 
         //picasso.setIndicatorsEnabled(true);
 
@@ -92,11 +92,17 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
             viewHolder.img.setVisibility(View.VISIBLE);
 
 
-            picasso.load(Utilities.MARCA_PATH + "/" + spm.getId() + ".gif")
-                    .resize(bitmapDrawable.getBitmap().getWidth(),0)
+            Glide.with(_context).load(Utilities.MARCA_PATH + "/" + spm.getId() + ".gif")
                     .placeholder(R.drawable.ic_crop_original_grey600_36dp)
                     .error(R.drawable.ic_error_grey600_36dp)
                     .into(viewHolder.img);
+
+
+           /* picasso.load(Utilities.MARCA_PATH + "/" + spm.getId() + ".gif")
+                    .resize(bitmapDrawable.getBitmap().getWidth(),0)
+                    .placeholder(R.drawable.ic_crop_original_grey600_36dp)
+                    .error(R.drawable.ic_error_grey600_36dp)
+                    .into(viewHolder.img);*/
         }else {
             viewHolder.img.setVisibility(View.GONE);
         }

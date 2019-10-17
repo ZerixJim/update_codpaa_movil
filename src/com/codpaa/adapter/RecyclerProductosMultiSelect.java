@@ -13,14 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
 import com.codpaa.model.ProductosModel;
 import com.codpaa.util.Utilities;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,28 +107,14 @@ public class RecyclerProductosMultiSelect extends RecyclerView.Adapter<RecyclerP
         });
 
 
-        Picasso picasso = Picasso.get();
+
 
         //picasso.setIndicatorsEnabled(true);
 
-        picasso.load(Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif")
-                //.resize(bitmapDrawable.getBitmap().getWidth(), 0)
-                //.fit()
-                //.placeholder(R.drawable.progress_animated)
-                //.centerCrop()
-                //.centerInside()
-                //.noFade()
-                .into(holder.imageView, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        holder.progressBar.setVisibility(View.GONE);
-                    }
+        Glide.with(context)
+                .load(Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif")
+                .into(holder.imageView);
 
-                    @Override
-                    public void onError(Exception e) {
-                        holder.progressBar.setVisibility(View.GONE);
-                    }
-                });
 
 
 
@@ -149,7 +135,6 @@ public class RecyclerProductosMultiSelect extends RecyclerView.Adapter<RecyclerP
         TextView nombre, presentacion;
         ImageView imageView;
         CheckBox checkBox;
-        ProgressBar progressBar;
 
         public ProductoViewHolder(View itemView) {
             super(itemView);
@@ -159,7 +144,7 @@ public class RecyclerProductosMultiSelect extends RecyclerView.Adapter<RecyclerP
 
             imageView = (ImageView) itemView.findViewById(R.id.image);
             checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
+
 
         }
 

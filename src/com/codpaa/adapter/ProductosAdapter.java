@@ -8,16 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
 
 import java.util.ArrayList;
 import com.codpaa.model.ProductosModel;
 import com.codpaa.util.Utilities;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+
 
 public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
 
@@ -33,7 +33,6 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
         ImageView imageView;
         CheckBox checkBox;
         ProductosModel productosModel;
-        ProgressBar progressBar;
     }
 
 
@@ -64,11 +63,11 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
             row = inflater.inflate(R.layout.custom_view_productos, parent, false);
             viewHolder = new ViewHolder();
 
-            viewHolder.nombreProducto = (TextView) row.findViewById(R.id.textProNombre);
-            viewHolder.presentacion = (TextView) row.findViewById(R.id.textProducPresentacion);
-            viewHolder.checkBox = (CheckBox) row.findViewById(R.id.checkProduct);
-            viewHolder.imageView = (ImageView) row.findViewById(R.id.image);
-            viewHolder.progressBar = (ProgressBar) row.findViewById(R.id.progress);
+            viewHolder.nombreProducto =  row.findViewById(R.id.textProNombre);
+            viewHolder.presentacion = row.findViewById(R.id.textProducPresentacion);
+            viewHolder.checkBox = row.findViewById(R.id.checkProduct);
+            viewHolder.imageView =  row.findViewById(R.id.image);
+
 
             row.setTag(viewHolder);
 
@@ -82,6 +81,15 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
         //Log.d("idMarca adapter", "" + productosModel.getIdMarca());
 
 
+        if (position == 0){
+
+            viewHolder.presentacion.setVisibility(View.GONE);
+
+        }else {
+
+            viewHolder.presentacion.setVisibility(View.VISIBLE);
+        }
+
         viewHolder.nombreProducto.setText(productosModel.getNombre());
         viewHolder.presentacion.setText(productosModel.getPresentacion());
 
@@ -90,12 +98,12 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
         if (position == 0 ) {
             viewHolder.checkBox.setVisibility(View.INVISIBLE);
             viewHolder.imageView.setVisibility(View.GONE);
-            viewHolder.progressBar.setVisibility(View.GONE);
+
         }
         else {
             viewHolder.checkBox.setVisibility(View.VISIBLE);
             viewHolder.imageView.setVisibility(View.VISIBLE);
-            viewHolder.progressBar.setVisibility(View.VISIBLE);
+
 
         }
 
@@ -111,30 +119,11 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
 
         if (position > 0){
 
-            Picasso picasso = Picasso.get();
 
+            Glide.with(context)
+                    .load(Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif")
+                    .into(viewHolder.imageView);
 
-            //Log.d("url", Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif");
-
-            picasso.load(Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif")
-                    //.resize(bitmapDrawable.getBitmap().getWidth(), 0)
-                    //.fit()
-                    //.placeholder(R.drawable.progress_animated)
-                    //.centerCrop()
-                    //.centerInside()
-                    //.noFade()
-                    .into(viewHolder.imageView, new Callback() {
-
-                        @Override
-                        public void onSuccess() {
-                            viewHolder.progressBar.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            viewHolder.progressBar.setVisibility(View.GONE);
-                        }
-                    });
 
 
         }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
 import com.codpaa.model.JsonPhotoUpload;
 import com.codpaa.util.Utilities;
@@ -43,7 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codpaa.db.BDopenHelper;
-import com.squareup.picasso.Picasso;
+
 
 import cz.msebera.android.httpclient.Header;
 
@@ -222,12 +223,11 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
                 Bitmap thumbImage = ThumbnailUtils.extractThumbnail(bitmap,64,64);
                 holder.img.setImageBitmap(thumbImage);*/
 
-                Log.d("temp", temp.get_img());
+                //Log.d("temp", temp.get_img());
 
-                Picasso.get()
-                        .load(new File(temp.get_img()))
-                        .placeholder(R.drawable.placeholder)
-                        .into(holder.img);
+				Glide.with(_context).load(new File(temp.get_img())).into(holder.img);
+
+
             }catch (Exception ex){
                 ex.printStackTrace();
             }
@@ -321,8 +321,8 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		Bitmap bitmap = BitmapFactory.decodeFile(img,options);
 		imagen.setImageBitmap(bitmap);*/
 
-		Picasso.get()
-				.load(new File(img))
+
+		Glide.with(this).load(new File(img))
 				.placeholder(R.drawable.placeholder)
 				.into(imagen);
 

@@ -16,10 +16,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.util.Utilities;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.List;
 
@@ -158,15 +159,9 @@ public class RecyclerFrentesAdapter extends RecyclerView.Adapter<RecyclerFrentes
         holder.spinner.setAdapter(arrayAdapter);
 
 
-        Picasso picasso = Picasso.get();
-        picasso.load(Utilities.PRODUCT_PATH+frentes.getIdMarca()+"/"+frentes.getIdProducto()+".gif")
-                //.resize(bitmapDrawable.getBitmap().getWidth(), 0)
-                //.fit()
-                //.placeholder(R.drawable.progress_animated)
-                //.centerCrop()
-                //.centerInside()
-                //.noFade()
+        Glide.with(context).load(Utilities.PRODUCT_PATH+frentes.getIdMarca()+"/"+frentes.getIdProducto()+".gif")
                 .into(holder.image);
+
 
         holder.c1.addTextChangedListener(new TextWatcher() {
             @Override

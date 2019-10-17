@@ -15,11 +15,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.codpaa.R;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.util.Utilities;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 
 
@@ -36,7 +35,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		TextView txtCodigoBarras;
 		ImageView imagenProducto;
 		TextView divider;
-		ProgressBar progressBar;
+
 		FrameLayout frameLayout;
  	}
 	
@@ -73,7 +72,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 			viewHolder.txtCodigoBarras =  row.findViewById(R.id.text_codigo_barras);
 			viewHolder.imagenProducto =  row.findViewById(R.id.image_producto);
 			viewHolder.divider =  row.findViewById(R.id.divider);
-			viewHolder.progressBar = row.findViewById(R.id.progress);
+
 			viewHolder.frameLayout =  row.findViewById(R.id.frame);
 
 			row.setTag(viewHolder);
@@ -95,7 +94,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		}
 		//viewHolder.txtPresentacion.setText(temp.getPresentacion());
 		viewHolder.txtPresentacion.setVisibility(View.GONE);
-		viewHolder.progressBar.setVisibility(View.GONE);
+
 		viewHolder.frameLayout.setVisibility(View.GONE);
 		viewHolder.divider.setVisibility(View.GONE);
 
@@ -143,7 +142,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 			viewHolder.txtCodigoBarras =  row.findViewById(R.id.text_codigo_barras);
 			viewHolder.imagenProducto =  row.findViewById(R.id.image_producto);
             viewHolder.divider =  row.findViewById(R.id.divider);
-            viewHolder.progressBar =  row.findViewById(R.id.progress);
+
 
             row.setTag(viewHolder);
 			
@@ -162,7 +161,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		if (position == 0){
 			viewHolder.imagenProducto.setVisibility(View.GONE);
             viewHolder.divider.setVisibility(View.INVISIBLE);
-            viewHolder.progressBar.setVisibility(View.GONE);
+
 			viewHolder.txtPresentacion.setVisibility(View.GONE);
 			viewHolder.txtCodigoBarras.setVisibility(View.GONE);
 		}else {
@@ -172,30 +171,11 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
             if (viewHolder.imagenProducto.getVisibility() == View.GONE)
                 viewHolder.imagenProducto.setVisibility(View.VISIBLE);
 
-			Picasso picasso = Picasso.get();
 
-            //picasso.setIndicatorsEnabled(true);
+			Glide.with(_context).load(Utilities.PRODUCT_PATH+temp.getIdMarca()+"/"+temp.getIdProducto()+".gif")
+					.into(viewHolder.imagenProducto);
 
-			picasso.load(Utilities.PRODUCT_PATH+temp.getIdMarca()+"/"+temp.getIdProducto()+".gif")
-					//.resize(bitmapDrawable.getBitmap().getWidth(), 0)
-					//.fit()
-					//.placeholder(R.drawable.progress_animated)
-					//.centerCrop()
-					.resize(600,200)
-					.centerInside()
-                    //.centerInside()
-					//.noFade()
-					.into(viewHolder.imagenProducto, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            viewHolder.progressBar.setVisibility(View.GONE);
-                        }
 
-                        @Override
-                        public void onError(Exception e) {
-                            viewHolder.progressBar.setVisibility(View.GONE);
-                        }
-                    });
 
 
             if (getCount() == position + 1){

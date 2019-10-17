@@ -8,6 +8,7 @@
 
     <item android:id="@+id/save_photo"
         android:title="@string/enviar"
+        android:visible="false"
         app:showAsAction="always|withText"/>
 
 

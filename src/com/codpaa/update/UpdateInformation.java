@@ -2,10 +2,7 @@ package com.codpaa.update;
 
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
+
 
 import com.codpaa.listener.ResponseEncuesta;
 import com.codpaa.response.HttpResponseInfo;
@@ -32,7 +29,7 @@ public class UpdateInformation{
     public void updateInfo(int idPromotor){
 
 
-        AsyncHttpClient client = new AsyncHttpClient();
+        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
 
         HttpResponseInfo responseInfo = new HttpResponseInfo(_context);
 
