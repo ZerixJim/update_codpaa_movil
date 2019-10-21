@@ -26,6 +26,7 @@ import android.util.Log;
 
 
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.util.Configuracion;
 import com.codpaa.util.QuickstartPreferences;
 import com.codpaa.util.Utilities;
 
@@ -68,9 +69,29 @@ public class RegistrationIntentService extends IntentService {
                 public void onSuccess(InstanceIdResult instanceIdResult) {
                     String deviceToken = instanceIdResult.getToken();
 
-                    sendRegistrationToServer(deviceToken);
 
-                    Log.i(TAG, "GCM Registration Token: " + deviceToken);
+                    Configuracion conf = new Configuracion(RegistrationIntentService.this);
+
+                    if (conf.getTokenFirebase() != null){
+
+                        if (!conf.getTokenFirebase().equals(deviceToken)){
+
+                            Log.i(TAG, "GCM Registration Token: " + deviceToken);
+
+                            sendRegistrationToServer(deviceToken);
+
+                        }
+
+                    }else {
+
+                        sendRegistrationToServer(deviceToken);
+
+                    }
+
+
+
+
+
 
                     try {
                         subscribeTopics();
@@ -105,57 +126,57 @@ public class RegistrationIntentService extends IntentService {
      *
      * @param token The new token.
      */
-    private void sendRegistrationToServer(String token) {
+    private void sendRegistrationToServer(final String token) {
         // Add custom implementation, as needed.
         if (idPromotor > 0){
 
-            final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            boolean enviado = sharedPreferences.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+            final Configuracion conf = new Configuracion(this);
 
-            Log.d(TAG, QuickstartPreferences.SENT_TOKEN_TO_SERVER + " " + enviado);
+            //Log.d(TAG, QuickstartPreferences.SENT_TOKEN_TO_SERVER + " " + enviado);
 
-            if (!enviado){
 
-                AsyncHttpClient client = new AsyncHttpClient();
+            AsyncHttpClient client = new AsyncHttpClient();
 
-                RequestParams rp = new RequestParams();
-                rp.put("id", idPromotor);
-                rp.put("solicitud", "update_token");
-                rp.put("token_gcm", token);
+            RequestParams rp = new RequestParams();
+            rp.put("id", idPromotor);
+            rp.put("solicitud", "update_token");
+            rp.put("token_gcm", token);
 
-                client.get(Utilities.WEB_SERVICE_CODPAA + "serv.php", rp, new JsonHttpResponseHandler() {
+            client.get(Utilities.WEB_SERVICE_CODPAA + "serv.php", rp, new JsonHttpResponseHandler() {
 
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        Log.d(TAG, "token send to server");
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.d(TAG, "token send to server");
 
-                        if (response != null) {
-                            try {
-                                if (response.getInt("success") == 1) {
-                                    sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true).apply();
-                                    Log.d(TAG, "success");
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                    if (response != null) {
+                        try {
+                            if (response.getInt("success") == 1) {
+
+                                conf.setToken(token);
+
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-
                     }
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        super.onFailure(statusCode, headers, throwable, errorResponse);
-                        sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false).apply();
+                }
 
-                        Log.d(TAG, "onFailure");
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    //sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false).apply();
+
+                    Log.d(TAG, "onFailure");
 
 
-                    }
+                }
 
 
-                });
-            }
+            });
+
+
 
 
 

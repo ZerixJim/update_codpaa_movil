@@ -65,8 +65,8 @@ public class MenuTiendaAdapter extends RecyclerView.Adapter<MenuTiendaAdapter.Vi
 
             mMenuItemListener = listener;
 
-            image = (ImageView) itemView.findViewById(R.id.image);
-            nombre = (TextView) itemView.findViewById(R.id.description);
+            image = itemView.findViewById(R.id.image);
+            nombre =  itemView.findViewById(R.id.description);
 
             itemView.setOnClickListener(this);
 

@@ -643,7 +643,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                     timeStamp, Integer.parseInt(dia),Integer.parseInt(mes) ,
                                     Integer.parseInt(ano), mCurrentPhotoPath, 1,getSelectedRadioGroup(),date);
                             imagenEspera = false;
-                            showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
+                            //showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
 
                             new Handler().postDelayed(new Runnable() {
                                 @Override

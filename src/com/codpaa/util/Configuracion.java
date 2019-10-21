@@ -20,6 +20,7 @@ public class Configuracion {
     private final String KEY_INSTALL_APPS = "install_apps";
     private final String KEY_INSTALL_APPS_WEEK = "install_apps_week";
     private final String KEY_PROMOTOR_MODE = "promotorModo";
+    public static final String TOKEN_FIREBASE = "gmc_token";
     //private final String KEY_ENCUESTA = "encuestaDisponible";
 
 
@@ -44,6 +45,14 @@ public class Configuracion {
 		//editor.commit();
         editor.apply();
 	}
+
+
+	public void setToken(String token){
+	    SharedPreferences.Editor editor = getSettings().edit();
+	    editor.putString(TOKEN_FIREBASE, token);
+
+	    editor.apply();
+    }
 
 	public void setFecha(String fecha){
 		SharedPreferences.Editor editor = getSettings().edit();
@@ -172,6 +181,8 @@ public class Configuracion {
     public String getVersion(){
         return getSettings().getString(KEY_VERSION, null);
     }
+
+    public String getTokenFirebase(){ return getSettings().getString(TOKEN_FIREBASE, null); }
 
 
     public int getPromotorMode(){
