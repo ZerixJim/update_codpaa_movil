@@ -131,7 +131,7 @@ public class AndroidApps {
 
         Log.w("Apps Json", json.toString() );
 
-        client.post(context,Utilities.WEB_SERVICE_CODPAA_TEST + "sent_install_apps.php", rp, new JsonHttpResponseHandler(){
+        client.post(context,Utilities.WEB_SERVICE_CODPAA + "sent_install_apps.php", rp, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
