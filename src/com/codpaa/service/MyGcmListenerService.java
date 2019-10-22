@@ -16,7 +16,7 @@
 
 package com.codpaa.service;
 
-import android.app.Activity;
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
@@ -164,6 +164,11 @@ public class MyGcmListenerService extends FirebaseMessagingService{
     private void setBajaPromotor(Map<String, String> data) {
 
 
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
+
+
+
+
         Log.d("Promotor" , "Baja");
 
         int idPromotor = Integer.parseInt(data.get("idPromotor"));
@@ -171,6 +176,9 @@ public class MyGcmListenerService extends FirebaseMessagingService{
 
         db.execSQL("update " + DbEstructure.Usuario.TABLE_NAME + " set " + DbEstructure.Usuario.STATUS + "='b' " +
                 "where " + DbEstructure.Usuario.ID_USER + "=" + idPromotor);
+
+
+        localBroadcastManager.sendBroadcast(new Intent("com.codpaa.action.close"));
 
 
         db.close();

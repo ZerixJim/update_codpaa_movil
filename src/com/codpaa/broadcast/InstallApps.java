@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 
 import com.codpaa.db.BDopenHelper;
@@ -22,11 +23,30 @@ public class InstallApps extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
 
+        Log.w("receive ", intent.getAction());
+
+
         if (getUser(context) > 0){
+
+            Log.w("Action App", intent.getAction());
 
             AndroidApps app = new AndroidApps(context, getUser(context));
 
-            app.sentSingleApp(intent.getData().getEncodedSchemeSpecificPart());
+            String action = intent.getAction();
+            String actionString = "";
+
+            if (action.equals(Intent.ACTION_PACKAGE_FULLY_REMOVED) || action.equals(Intent.ACTION_PACKAGE_REMOVED)){
+
+                actionString = "uninstall";
+
+            }else if(action.equals(Intent.ACTION_INSTALL_PACKAGE)){
+
+                actionString = "install";
+
+            }
+
+
+            app.sentSingleApp(intent.getData().getEncodedSchemeSpecificPart(), actionString);
         }
 
 

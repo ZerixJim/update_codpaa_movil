@@ -91,7 +91,7 @@ public class AndroidApps {
 
 
 
-    public void sentSingleApp(String appName){
+    public void sentSingleApp(String appName, String action){
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dFecha = new SimpleDateFormat("w", Locale.getDefault());
@@ -123,16 +123,19 @@ public class AndroidApps {
         json.setIdPromotor(idUsuario);
         json.setFecha(fecha);
         json.setImei(getIMEI());
+        json.setAction(action);
         json.setGoogleApplication(list);
         RequestParams rp = new RequestParams();
 
         rp.put("json", gson.toJson(json));
 
-        client.post(context,Utilities.WEB_SERVICE_CODPAA + "sent_install_apps.php", rp, new JsonHttpResponseHandler(){
+        Log.w("Apps Json", json.toString() );
+
+        client.post(context,Utilities.WEB_SERVICE_CODPAA_TEST + "sent_install_apps.php", rp, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-                //Log.d("Apps", response.toString());
+                Log.d("Apps", response.toString());
 
 
                 try {

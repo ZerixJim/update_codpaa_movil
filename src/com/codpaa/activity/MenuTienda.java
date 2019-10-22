@@ -35,9 +35,11 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -53,6 +55,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -103,6 +106,28 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     private boolean Salida = false;
     private boolean Entrada = false;
     private ProgressDialog progress;
+    private LocalBroadcastManager broadcastManager;
+
+    private BroadcastReceiver mBroadcastReceiber = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (intent.getAction().equals("com.codpaa.action.close")){
+
+                Intent i = new Intent(MenuTienda.this, MainActivity.class);
+
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                startActivity(i);
+
+                finish();
+
+            }
+
+        }
+    };
 
 
     private FusedLocationProviderClient fusedLocationClient;
@@ -236,6 +261,12 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 .setInterval(10000);
 
 
+
+        broadcastManager = LocalBroadcastManager.getInstance(this);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.codpaa.action.close");
+        broadcastManager.registerReceiver(mBroadcastReceiber, filter);
 
 
     }
@@ -1375,6 +1406,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         if (DB != null){
             DB.close();
         }
+
+
+        broadcastManager.unregisterReceiver(mBroadcastReceiber);
 
     }
 

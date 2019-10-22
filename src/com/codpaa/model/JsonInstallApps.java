@@ -13,8 +13,17 @@ public class JsonInstallApps {
     private int idPromotor;
     private String fecha;
     private String imei;
+    private String action;
     private List<Application> gApps;
 
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
 
     public List<Application> getGoogleApplication() {
         return gApps;
