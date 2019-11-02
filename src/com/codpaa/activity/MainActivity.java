@@ -6,6 +6,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.Manifest;
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -53,15 +55,15 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener, OnKeyListener {
 
-	DBAdapter dbAdapter;
-	EditText txtUserName;
-	EditText txtPassword;
-	Button btnLogin;
-	TextView valido;
-	Configuracion conf;
-	String username, password;
-	ProgressBar progressBar;
-    Activity act;
+	private DBAdapter dbAdapter;
+	private EditText txtUserName;
+	private EditText txtPassword;
+	private Button btnLogin;
+	private TextView valido;
+	private Configuracion conf;
+	private String username, password;
+	private ProgressBar progressBar;
+    private Activity act;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,34 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 			txtUserName.setText(conf.getUserName());
 			
 		}
+
+
+
+
+
+
+
+
+		try {
+
+			AccountManager accountManager = (AccountManager) act.getSystemService(Context.ACCOUNT_SERVICE);
+
+			Account account = new Account(getResources().getString(R.string.app_name), "com.codpaa");
+
+			if (accountManager.getPassword(account) != null){
+
+
+				String user = accountManager.getUserData(account, "user");
+
+				iniciarActivity(user);
+
+			}
+
+		}catch (SecurityException e){
+
+			e.printStackTrace();
+		}
+
 
 
 
@@ -231,16 +261,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 	@Override
 	public void onClick(View arg0) {
-		switch(arg0.getId()){
-		
-		
-		case R.id.buttonlogin:
-			
+		if (arg0.getId() == R.id.buttonlogin) {
 			login();
-			
-			break;
-			
-		
 		}
 		
 		
@@ -272,6 +294,24 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
                             BDopenHelper b = new BDopenHelper(act);
                             b.vaciarTabla("usuarios");
+
+
+							AccountManager accountManager  = (AccountManager) getApplicationContext().getSystemService(Context.ACCOUNT_SERVICE);
+
+
+							Account account = new Account( getResources().getString(R.string.app_name) , "com.codpaa");
+
+							if (accountManager.getPassword(account) == null){
+
+
+								final Bundle bundle = new Bundle();
+								bundle.putString("user", username);
+
+
+								accountManager.addAccountExplicitly(account,password, bundle);
+
+
+							}
 
 
 

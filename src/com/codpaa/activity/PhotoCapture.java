@@ -80,7 +80,6 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Handler;
 
@@ -104,7 +103,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
     private ProgressBar progressFoto;
-    private TextView textoEnvio;
 	private int idPromotor, idTienda;
     private DonutProgress donutProgress;
     private CardView cardView;
@@ -159,7 +157,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
         progressFoto =  findViewById(R.id.progressEnviarFoto);
         donutProgress =  findViewById(R.id.progress_photo);
-        textoEnvio = findViewById(R.id.textEvioFoto);
 
         multiSpinnerSelect =  findViewById(R.id.multi_spinner);
 
@@ -788,10 +785,12 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 public void run() {
                     //progressFoto.setVisibility(View.VISIBLE);
                     donutProgress.setVisibility(View.VISIBLE);
-                    textoEnvio.setVisibility(View.VISIBLE);
-                    textoEnvio.setText(getString(R.string.sending));
+
+                    btnSendImage.setVisibility(View.GONE);
                 }
             });
+
+
 
         }
 
@@ -826,7 +825,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 public void run() {
                     //progressFoto.setVisibility(View.GONE);
                     donutProgress.setVisibility(View.GONE);
-                    textoEnvio.setVisibility(View.GONE);
+
+                    btnSendImage.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -841,21 +841,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         @Override
 		public void onFailure(int statusCode, Header[] header,Throwable e,JSONObject errorResponse) {
 
-            Log.d("EnviarFoto", "Estatus " + statusCode);
-            Log.d("EnviarFoto","ErrorRespo" + errorResponse);
-            Log.d("EnviarFoto","Thro:" + e );
+
 			Toast.makeText(getApplicationContext(), "No fue posible conectarse con el servidor", Toast.LENGTH_SHORT).show();
 			Toast.makeText(getApplicationContext(), "Imagen no envida \n (Menu Enviar)", Toast.LENGTH_SHORT).show();
-
-            textoEnvio.post(new Runnable() {
-                @Override
-                public void run() {
-
-                    textoEnvio.setText(R.string.errorEnvioImagen);
-                    textoEnvio.setTextColor(Color.RED);
-                }
-            });
-
 
 
 			try {
@@ -873,14 +861,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
             Log.d("EnviarFoto","Estatus "+statusCode);
             //Log.d("EnviarFoto","Response" + response);
-            textoEnvio.post(new Runnable() {
-                @Override
-                public void run() {
-                    textoEnvio.setText(R.string.enviada);
-                    textoEnvio.setTextColor(Color.GREEN);
-                }
-            });
-
 
 
 			if(response != null){
