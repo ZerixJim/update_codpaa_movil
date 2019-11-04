@@ -101,7 +101,10 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
 
             //Picasso.get().load(Utilities.FORMATOS_PATH + diaModel.getFormato() + ".png").into(dia.image);
 
-            Glide.with(context).load(Utilities.FORMATOS_PATH + diaModel.getFormato() + ".png").into(dia.image);
+            Glide.with(context)
+                    .load(Utilities.FORMATOS_PATH + diaModel.getFormato() + ".png")
+                    .error(R.drawable.ic_broken_image_grey_700_24dp)
+                    .into(dia.image);
 
 
 
