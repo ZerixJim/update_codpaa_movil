@@ -1,74 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/RelativeLayout1"
-    android:padding="3dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/txtProdPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtNombretienda"
-        android:layout_alignStart="@+id/txtNombretienda"
-        android:layout_below="@+id/txtNombretienda"
-        android:text="Marca"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/txtfechaPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtProdPhoto"
-        android:layout_alignStart="@+id/txtProdPhoto"
-        android:layout_below="@+id/txtProdPhoto"
-        android:text="fecha"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/txtNombretienda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/imgPhotoCola"
-        android:layout_toEndOf="@+id/imgPhotoCola"
-        android:text="Sucursal"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    android:padding="5dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/imgPhotoCola"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:contentDescription="@string/imagePhotopendiente" />
-
-    <ProgressBar
-        style="?android:attr/progressBarStyleSmall"
-        android:layout_width="wrap_content"
+        android:id="@+id/image"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:id="@+id/progressbar"
-        android:layout_marginRight="23dp"
-        android:layout_marginEnd="23dp"
-        android:visibility="gone"
-        android:layout_below="@+id/imgPhotoCola"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true" />
 
+         />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text=""
-        android:id="@+id/statusSheduler"
-        android:layout_below="@+id/txtfechaPhoto"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp" />
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        >
 
-</RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_marca"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondary_white"
+            android:text="Marca"
+            />
+
+        <TextView
+            android:id="@+id/txt_fecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondary_white"
+            android:text="fecha"
+            />
+
+        <TextView
+            android:id="@+id/txt_sucursal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondary_white"
+            android:text="Sucursal"
+            />
+
+
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressbar"
+            android:layout_marginRight="23dp"
+            android:layout_marginEnd="23dp"
+            android:visibility="gone"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/statusSheduler"
+
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp" />
+
+
+    </LinearLayout>
+
+
+
+
+
+</FrameLayout>

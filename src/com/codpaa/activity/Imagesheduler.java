@@ -3,6 +3,7 @@ package com.codpaa.activity;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,8 +28,14 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -50,23 +57,27 @@ import cz.msebera.android.httpclient.Header;
 
 public class Imagesheduler extends AppCompatActivity implements OnItemClickListener{
 	
-	ListView listV;
-	CustomListAdapter adp;
-	TextView text ;
-    ProgressBar progressBar;
+
+	private RecyclerView recyclerView;
+	private ListImageRecyclerAdapter adapter;
+	private ImageView placeholder;
+
+
     private boolean imagenCola = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.imagesheduler);
-		
 
-		
-		listV = (ListView) findViewById(R.id.listImageCola);
-        progressBar = (ProgressBar) findViewById(R.id.proBarImaShe);
+		recyclerView = findViewById(R.id.recycler_list);
 
-		listV.setOnItemClickListener(this);
+		placeholder = findViewById(R.id.placeholder_image);
+
+
+
+
+
 		loadList();
 
 
@@ -101,9 +112,24 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 	private void loadList(){
 		try {
 
-			Log.d("listValue","cantidad: "+getList().size());
-			adp = new CustomListAdapter(this, android.R.layout.simple_list_item_1, getList());
-			listV.setAdapter(adp);
+
+
+			recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+
+
+			List<PhotoListModel> list = getList();
+
+
+			if (list.size() > 0)
+				placeholder.setVisibility(View.GONE);
+
+
+			adapter = new ListImageRecyclerAdapter(this, getList());
+
+			recyclerView.setAdapter(adapter);
+
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -112,190 +138,154 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		
 	}
 	
-	private ArrayList<PhotoListModel> getList(){
-		ArrayList<PhotoListModel> array = new ArrayList<>();
+	private List<PhotoListModel> getList(){
+		List<PhotoListModel> array = new ArrayList<>();
 		BDopenHelper basel = new BDopenHelper(this);
 		Cursor cur = basel.datosPhoto();
 		
 		if(cur.getCount() > 0){
             for(cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()){
                 final PhotoListModel mP = new PhotoListModel();
-                mP.set_idPhoto(cur.getInt(0));
-                mP.set_tienda(cur.getString(1));
+                mP.setIdPhoto(cur.getInt(0));
+                mP.setTienda(cur.getString(1));
                 mP.setMarca(cur.getString(2));
-                mP.set_fecha(cur.getString(3));
-                mP.set_img(cur.getString(4));
-				mP.set_status(cur.getInt(5));
+                mP.setFecha(cur.getString(3));
+                mP.setImg(cur.getString(4));
+				mP.setStatus(cur.getInt(5));
 
                 array.add(mP);
 
             }
 
-		}else{
-            text.setText(R.string.no_imagenes);
-			listV.setVisibility(View.GONE);
-
 		}
-		
 		
 		basel.close();
 		return array;
 	}
 	
-	
-	public class CustomListAdapter extends ArrayAdapter<PhotoListModel>{
-		
-		Activity _context;
-		//TextView txtName, txtProducto, txtFecha;
-		private ArrayList<PhotoListModel> _datos;
 
-        private class ViewHolder{
-            TextView txtName;
-            TextView txtProducto;
-            TextView txtFecha;
-			TextView txtStatus;
-            ImageView img;
-            ProgressBar progressBar;
-            PhotoListModel temp;
-            //Button botonEnviar;
-        }
+	private class ListImageRecyclerAdapter  extends RecyclerView.Adapter<ListImageRecyclerAdapter.ViewHolder>{
 
-		public CustomListAdapter(Activity con, int textViewResourceId,ArrayList<PhotoListModel> objects) {
-			super(con, textViewResourceId, objects);
-			
-			this._context= con;
-			this._datos = objects;
-			
+
+		private List<PhotoListModel> list;
+		private Context context;
+
+		public ListImageRecyclerAdapter(Context context,List<PhotoListModel> list) {
+			this.list = list;
+			this.context = context;
 		}
 
-		
-		
+		@NonNull
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-            View row = convertView;
-            PhotoListModel temp = _datos.get(position);
-            ViewHolder holder;
+		public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-            if(null == row){
-                LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                row = inflater.inflate(R.layout.custom_photo_list, parent,false);
+			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_photo_list, parent, false);
 
-                holder = new ViewHolder();
-                holder.txtName = (TextView) row.findViewById(R.id.txtNombretienda);
-                holder.txtProducto = (TextView) row.findViewById(R.id.txtProdPhoto);
-                holder.txtFecha = (TextView) row.findViewById(R.id.txtfechaPhoto);
-				holder.txtStatus = (TextView) row.findViewById(R.id.statusSheduler);
-                holder.img = (ImageView) row.findViewById(R.id.imgPhotoCola);
-                holder.progressBar = (ProgressBar) row.findViewById(R.id.progressbar);
-               // holder.botonEnviar = (Button) row.findViewById(R.id.buttonEnviarFoto);
-                holder.temp = temp;
 
-                row.setTag(holder);
-            }else{
-                holder = (ViewHolder) row.getTag();
-                holder.temp = temp;
-            }
-            /*
-            if(position % 2 == 0){
-                row.setBackgroundColor(Color.WHITE);
-            }else{
-                row.setBackgroundColor(Color.LTGRAY);
-            }*/
-			
-			/*BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inSampleSize = 4;*/
+			return new ViewHolder(view);
+		}
 
-			
-			holder.txtName.setText(temp.get_tienda());
-            holder.txtProducto.setText(temp.getMarca());
-            holder.txtFecha.setText(temp.get_fecha());
-			if (temp.get_status() == 1){
+		@Override
+		public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-				holder.txtStatus.setText(R.string.process);
-				holder.txtStatus.setTextColor(Color.BLUE);
-			}else if (temp.get_status() == 2){
-				holder.txtStatus.setText(R.string.sent);
+
+			PhotoListModel model = list.get(position);
+
+			holder.sucursal.setText(model.getTienda());
+			holder.marca.setText(model.getMarca());
+			holder.fecha.setText(model.getFecha());
+
+
+			Glide.with(context).load(model.getImg()).into(holder.imageView);
+
+
+
+		}
+
+		@Override
+		public int getItemCount() {
+			return list.size();
+		}
+
+
+		public PhotoListModel getItemAtPosition(int position){
+
+			return list.get(position);
+
+		}
+
+		public class ViewHolder extends RecyclerView.ViewHolder{
+
+			TextView sucursal, marca, fecha;
+			ImageView imageView;
+
+
+			public ViewHolder(@NonNull View itemView) {
+				super(itemView);
+
+				marca = itemView.findViewById(R.id.txt_marca);
+				sucursal = itemView.findViewById(R.id.txt_sucursal);
+				fecha = itemView.findViewById(R.id.txt_fecha);
+
+				imageView = itemView.findViewById(R.id.image);
 
 
 			}
-            try {
-                /*Bitmap bitmap = BitmapFactory.decodeFile(temp.get_img(),options);
-                Bitmap thumbImage = ThumbnailUtils.extractThumbnail(bitmap,64,64);
-                holder.img.setImageBitmap(thumbImage);*/
-
-                //Log.d("temp", temp.get_img());
-
-				Glide.with(_context).load(new File(temp.get_img())).into(holder.img);
-
-
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
-
-
-            //final ProgressBar progress = holder.progressBar;
-            /*
-            holder.botonEnviar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //progress.setVisibility(View.VISIBLE);
-                }
-            });*/
-			
-			
-			return row;
-			
 		}
 
-		
+
+
 	}
+
+
+
 	
 	private class PhotoListModel{
 		
-		private String _tienda;
-		private String _img;
-		private String _fecha;
-		private String _marca;
-		private int _status;
-		private int _idPhoto;
+		private String tienda;
+		private String img;
+		private String fecha;
+		private String marca;
+		private int status;
+		private int idPhoto;
 
-		public int get_status() {
-			return _status;
-		}
-
-		public void set_status(int _status) {
-			this._status = _status;
+		public int getStatus() {
+			return this.status;
 		}
 
-		public String get_tienda() {
-			return _tienda;
+		public void setStatus(int status) {
+			this.status = status;
 		}
-		public void set_tienda(String _tienda) {
-			this._tienda = _tienda;
+
+		public String getTienda() {
+			return this.tienda;
 		}
-		public String get_img() {
-			return _img;
+		public void setTienda(String tienda) {
+			this.tienda = tienda;
 		}
-		public void set_img(String _img) {
-			this._img = _img;
+		public String getImg() {
+			return this.img;
 		}
-		public String get_fecha() {
-			return _fecha;
+		public void setImg(String img) {
+			this.img = img;
 		}
-		public void set_fecha(String _fecha) {
-			this._fecha = _fecha;
+		public String getFecha() {
+			return this.fecha;
+		}
+		public void setFecha(String fecha) {
+			this.fecha = fecha;
 		}
 		public String getMarca() {
-			return _marca;
+			return this.marca;
 		}
 		public void setMarca(String marca) {
-			this._marca = marca;
+			this.marca = marca;
 		}
-		public int get_idPhoto() {
-			return _idPhoto;
+		public int getIdPhoto() {
+			return this.idPhoto;
 		}
-		public void set_idPhoto(int _idPhoto) {
-			this._idPhoto = _idPhoto;
+		public void setIdPhoto(int idPhoto) {
+			this.idPhoto = idPhoto;
 		}
 		
 	}
@@ -305,7 +295,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		PhotoListModel pl = (PhotoListModel) arg0.getItemAtPosition(arg2);
 
 		//ProgressBar progressBar = (ProgressBar) arg1.findViewById(R.id.progressBar2);
-		dialogoFoto(pl.get_img(), pl.get_idPhoto(), arg2, pl.get_status());
+		dialogoFoto(pl.getImg(), pl.getIdPhoto(), arg2, pl.getStatus());
 
 		
 	}
@@ -486,12 +476,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
             super.onStart();
             imagenCola = true;
 
-            progressBar.post(new Runnable() {
-                @Override
-                public void run() {
-                    progressBar.setVisibility(View.VISIBLE);
-                }
-            });
+
 
         }
 
@@ -499,12 +484,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
         public void onFinish() {
             super.onFinish();
             imagenCola = false;
-            progressBar.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    progressBar.setVisibility(View.GONE);
-                }
-            },3000);
+
         }
 
 
@@ -512,13 +492,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		public void onProgress(final long bytesWritten, final long totalSize) {
 			super.onProgress(bytesWritten, totalSize);
 			//Log.v("Progress"," "+(bytesWritten*100)/totalSize);
-			progressBar.post(new Runnable() {
-				@Override
-				public void run() {
-					progressBar.setProgress((int)bytesWritten);
-					progressBar.setMax((int)totalSize);
-				}
-			});
+
 		}
 
 
@@ -541,9 +515,12 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 						//adp.remove(adp.getItem(_position));
                         //notificamos el cambio al adaptador
 
-						adp.getItem(position).set_status(2);
 
-						adp.notifyDataSetChanged();
+						//adp.getItem(position).set_status(2);
+						adapter.getItemAtPosition(position).setStatus(2);
+						adapter.notifyDataSetChanged();
+
+						//adp.notifyDataSetChanged();
                         //notificamos al usuario la respuesta del servidor
 						Toast.makeText(getApplicationContext(), "foto enviada", Toast.LENGTH_SHORT).show();
                         //deleteArchivo(_imgPath);
@@ -553,10 +530,8 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 						if(response.getInt("code") == 3){
 
 
-							adp.getItem(position).set_status(2);
-
-							//adp.remove(adp.getItem(_position));
-							adp.notifyDataSetChanged();
+							adapter.getItemAtPosition(position).setStatus(2);
+							adapter.notifyDataSetChanged();
                             //deleteArchivo(_imgPath);
                             Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
                             db.execSQL("Update photo set status=2 where idPhoto="+this._idFoto);
