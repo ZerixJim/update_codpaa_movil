@@ -368,6 +368,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
                     cardView.setVisibility(View.VISIBLE);
+                    btnSendImage.setVisibility(View.VISIBLE);
 
 
                     final File photo = new File(mCurrentPhotoPath);
@@ -537,7 +538,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     if(verificarConexion()){
 
                         AsyncHttpClient clienteFoto = new AsyncHttpClient();
-                        //clienteFoto.setTimeout(10000);
+                        clienteFoto.setTimeout(1000);
+
+                        Log.w("Timeout server", " cT=" +  clienteFoto.getConnectTimeout() + " rT=" + clienteFoto.getResponseTimeout() );
                         BDopenHelper registraImagen = new BDopenHelper(this);
 
 
@@ -605,11 +608,14 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                     Log.d("Json", gson.toJson(view));
                                     try {
                                         requ.put("file", file );
+
+                                        Log.w("fileSizeCel" , file.length() + " ");
+
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                     }
 
-                                    clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php", requ,
+                                    clienteFoto.post(Utilities.WEB_SERVICE_CODPAA_TEST + "uploadimage2.php", requ,
                                             new HttpResponseImage(CameraActivity, (int)(long)id));
                                     //Log.d("http foto", requ.toString());
                                     datosFoto.close();
@@ -826,7 +832,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     //progressFoto.setVisibility(View.GONE);
                     donutProgress.setVisibility(View.GONE);
 
-                    btnSendImage.setVisibility(View.VISIBLE);
+                    //btnSendImage.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -850,6 +856,13 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 				//db.insertarImagen(_idTienda, _idPromo, _idMarca, _idExhib, _timeStamp, _dia, _mes, _ano, mCurrentPhotoPath, 1);
 				imagenEspera = false;
+
+				cardView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        cardView.setVisibility(View.GONE);
+                    }
+                });
 				//showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.noimage));
 			} catch (SQLiteException e1) {
 				e1.printStackTrace();
@@ -872,6 +885,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 						//showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.mipmap.ic_done));
 
 						imageDone.setVisibility(View.VISIBLE);
+
+
+						Log.w("fileSizeServer",response.getString("fileSize"));
 
 
 						imagenEspera = false;
