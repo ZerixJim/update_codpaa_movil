@@ -47,7 +47,6 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -367,8 +366,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 if (mCurrentPhotoPath != null) {
 
 
+
                     cardView.setVisibility(View.VISIBLE);
-                    btnSendImage.setVisibility(View.VISIBLE);
+
 
 
                     final File photo = new File(mCurrentPhotoPath);
