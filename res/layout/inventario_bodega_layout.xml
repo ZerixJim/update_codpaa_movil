@@ -36,7 +36,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/MiTema"
-                android:layout_margin="3dp" />
+                android:layout_marginBottom="5dp"
+                 />
 
             <Spinner
                 android:id="@+id/spiInvPro"
@@ -44,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:theme="@style/MiTema"
-                android:layout_margin="3dp" />
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"

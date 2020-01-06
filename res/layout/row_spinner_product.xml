@@ -17,7 +17,7 @@
         android:layout_toLeftOf="@+id/frame"
         android:layout_toStartOf="@+id/frame"
         app:layout_widthPercent="60%"
-        android:padding="15dp"
+        android:padding="10dp"
         android:orientation="vertical">
 
 
@@ -25,21 +25,24 @@
             android:id="@+id/text_nombre_producto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Medium Text" />
 
         <TextView
             android:id="@+id/text_presentacion_producto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
             android:text="Small Text"
-            android:paddingTop="3dp" />
+            android:paddingTop="2dp" />
 
         <TextView
             android:id="@+id/text_codigo_barras"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
             android:text="Small Text"
-            android:paddingTop="3dp" />
+            android:paddingTop="2dp" />
 
     </LinearLayout>
 

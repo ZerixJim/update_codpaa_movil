@@ -56,8 +56,8 @@ public class CustomAdapter extends ArrayAdapter<SpinnerMarcaModel>{
 
 			viewHolder = new ViewHolder();
 
-			viewHolder.txtNombre = (TextView) row.findViewById(R.id.txtCusSpi1);
-			viewHolder.txtDescrip = (TextView) row.findViewById(R.id.txtCusSpi2);
+			viewHolder.txtNombre =  row.findViewById(R.id.txtCusSpi1);
+			viewHolder.txtDescrip =  row.findViewById(R.id.txtCusSpi2);
 
 			row.setTag(viewHolder);
 
@@ -84,8 +84,8 @@ public class CustomAdapter extends ArrayAdapter<SpinnerMarcaModel>{
 
             viewHolder = new ViewHolder();
 
-            viewHolder.txtNombre = (TextView) row.findViewById(R.id.txtCusSpi1);
-            viewHolder.txtDescrip = (TextView) row.findViewById(R.id.txtCusSpi2);
+            viewHolder.txtNombre = row.findViewById(R.id.txtCusSpi1);
+            viewHolder.txtDescrip =  row.findViewById(R.id.txtCusSpi2);
 
             row.setTag(viewHolder);
 			

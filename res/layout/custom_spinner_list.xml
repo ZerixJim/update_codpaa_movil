@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="5dp"
+    android:padding="10dp"
     >
 
 
@@ -12,7 +12,7 @@
         android:id="@+id/txtCusSpi1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     <TextView
         android:id="@+id/txtCusSpi2"

@@ -64,9 +64,9 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
             convertView = layoutInflater.inflate(R.layout.row_list_marca, parent, false);
             viewHolder = new ViewHolder();
 
-            viewHolder.nombre = (TextView) convertView.findViewById(R.id.NombreTxtMarca);
-            viewHolder.descrip = (TextView) convertView.findViewById(R.id.DescriTxtMarca);
-            viewHolder.img = (ImageView) convertView.findViewById(R.id.logotipoMarca);
+            viewHolder.nombre = convertView.findViewById(R.id.NombreTxtMarca);
+            viewHolder.descrip = convertView.findViewById(R.id.DescriTxtMarca);
+            viewHolder.img =  convertView.findViewById(R.id.logotipoMarca);
 
             convertView.setTag(viewHolder);
 
@@ -119,9 +119,9 @@ public class MarcasAdapter extends ArrayAdapter<MarcaModel>{
             convertView = layoutInflater.inflate(R.layout.row_list_marca, parent, false);
             viewHolder = new ViewHolder();
 
-            viewHolder.nombre = (TextView) convertView.findViewById(R.id.NombreTxtMarca);
-            viewHolder.descrip = (TextView) convertView.findViewById(R.id.DescriTxtMarca);
-            viewHolder.img = (ImageView) convertView.findViewById(R.id.logotipoMarca);
+            viewHolder.nombre =  convertView.findViewById(R.id.NombreTxtMarca);
+            viewHolder.descrip =  convertView.findViewById(R.id.DescriTxtMarca);
+            viewHolder.img = convertView.findViewById(R.id.logotipoMarca);
 
             convertView.setTag(viewHolder);
 
