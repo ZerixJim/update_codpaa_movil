@@ -2,7 +2,6 @@ package com.codpaa.activity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +24,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -35,25 +31,19 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.exifinterface.media.ExifInterface;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -117,8 +107,10 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 		try {
 
 
+			StaggeredGridLayoutManager gridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
-			recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+			recyclerView.setLayoutManager(gridLayoutManager);
 
 
 
@@ -203,10 +195,6 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 			Glide.with(context).load(model.getImg()).into(holder.imageView);
 
 
-            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            Bitmap bitmap = BitmapFactory.decodeFile(model.getImg(),bmOptions);
-
-
             if (model.getStatus() == 2){
 
 				holder.imageStatus.setImageResource(R.mipmap.ic_done);
@@ -216,22 +204,6 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 
             	holder.imageStatus.setImageResource(R.drawable.ic_cloud_off_black_24dp);
 			}
-
-
-            if (bitmap.getWidth() > bitmap.getHeight()){
-
-
-                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-            	params.gravity = Gravity.TOP;
-
-				holder.linearLayout.setLayoutParams(params);
-
-
-            }else {
-				holder.linearLayout.setGravity(Gravity.BOTTOM);
-
-			}
-
 
 
 
