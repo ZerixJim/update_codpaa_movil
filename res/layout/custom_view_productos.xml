@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/ListProductos"
-    android:padding="5dp">
+    android:padding="10dp">
 
 
     <LinearLayout
@@ -16,6 +16,7 @@
         android:layout_toLeftOf="@+id/frame"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:id="@+id/description">
 
         <TextView
@@ -28,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="9sp"
+            android:textSize="12sp"
             android:text="Presentacion"
             android:id="@+id/textProducPresentacion"
             />

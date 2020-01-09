@@ -67,7 +67,7 @@ public class EnviarInformacion extends AppCompatActivity implements OnClickListe
 
 			
 		case R.id.btnFotosNo:
-			Intent i = new Intent(this,Imagesheduler.class);
+			Intent i = new Intent(this,ImageSheduler.class);
 			startActivity(i);
 			break;
 

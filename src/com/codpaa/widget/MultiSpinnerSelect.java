@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
+import com.codpaa.R;
 import com.codpaa.adapter.ProductosAdapter;
 import com.codpaa.model.ProductosModel;
 
@@ -79,7 +80,7 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
                 spinnerText = defaultText;
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                    android.R.layout.simple_spinner_item, new String[]{ spinnerText });
+                    R.layout.my_textview, new String[]{ spinnerText });
             setAdapter(adapter);
             listener.onItemsSelected(selected);
 

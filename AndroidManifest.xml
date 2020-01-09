@@ -164,7 +164,7 @@
             android:label="@string/capIma"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.Imagesheduler"
+            android:name=".activity.ImageSheduler"
             android:label="@string/nombreAplicacion"
             android:screenOrientation="portrait" />
         <activity

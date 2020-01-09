@@ -2,6 +2,7 @@ package com.codpaa.activity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -32,11 +35,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.exifinterface.media.ExifInterface;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,7 +49,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -55,7 +62,7 @@ import com.codpaa.db.BDopenHelper;
 
 import cz.msebera.android.httpclient.Header;
 
-public class Imagesheduler extends AppCompatActivity implements OnItemClickListener{
+public class ImageSheduler extends AppCompatActivity implements OnItemClickListener{
 	
 
 	private RecyclerView recyclerView;
@@ -73,9 +80,6 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		recyclerView = findViewById(R.id.recycler_list);
 
 		placeholder = findViewById(R.id.placeholder_image);
-
-
-
 
 
 		loadList();
@@ -199,6 +203,37 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 			Glide.with(context).load(model.getImg()).into(holder.imageView);
 
 
+            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+            Bitmap bitmap = BitmapFactory.decodeFile(model.getImg(),bmOptions);
+
+
+            if (model.getStatus() == 2){
+
+				holder.imageStatus.setImageResource(R.mipmap.ic_done);
+
+			}else {
+
+
+            	holder.imageStatus.setImageResource(R.drawable.ic_cloud_off_black_24dp);
+			}
+
+
+            if (bitmap.getWidth() > bitmap.getHeight()){
+
+
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            	params.gravity = Gravity.TOP;
+
+				holder.linearLayout.setLayoutParams(params);
+
+
+            }else {
+				holder.linearLayout.setGravity(Gravity.BOTTOM);
+
+			}
+
+
+
 
 		}
 
@@ -214,10 +249,13 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 
 		}
 
-		public class ViewHolder extends RecyclerView.ViewHolder{
+		public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 			TextView sucursal, marca, fecha;
 			ImageView imageView;
+			LinearLayout linearLayout;
+			ImageView imageStatus;
+			FrameLayout frameLayout;
 
 
 			public ViewHolder(@NonNull View itemView) {
@@ -228,6 +266,21 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 				fecha = itemView.findViewById(R.id.txt_fecha);
 
 				imageView = itemView.findViewById(R.id.image);
+				linearLayout = itemView.findViewById(R.id.linear_layou_text);
+				imageStatus = itemView.findViewById(R.id.image_status);
+				frameLayout = itemView.findViewById(R.id.RelativeLayout1);
+
+
+				itemView.setOnClickListener(this);
+
+
+			}
+
+			@Override
+			public void onClick(View view) {
+				PhotoListModel model = getItemAtPosition(getAdapterPosition());
+
+				dialogoFoto(model.getImg(), model.getIdPhoto(), getAdapterPosition(), model.getStatus());
 
 
 			}
@@ -304,7 +357,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 		
 		Builder builder  = new AlertDialog.Builder(this);
 		View vistaFotoEnviar = LayoutInflater.from(this).inflate(R.layout.dialogimg, null);
-		ImageView imagen = (ImageView) vistaFotoEnviar.findViewById(R.id.imgDialog);
+		ImageView imagen = vistaFotoEnviar.findViewById(R.id.imgDialog);
 		/*BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inSampleSize = 0;
 		
@@ -327,7 +380,7 @@ public class Imagesheduler extends AppCompatActivity implements OnItemClickListe
 	
 	private class EnviarFotoListener implements DialogInterface.OnClickListener{
 		
-		private int _idFoto= 0;
+		private int _idFoto;
 		private int _position;
 		private int _status;
 		private String _img;

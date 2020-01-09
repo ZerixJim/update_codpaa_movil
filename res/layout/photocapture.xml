@@ -85,8 +85,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_marginLeft="2dp"
                         android:layout_marginBottom="15dp"/>
 
                     <com.codpaa.widget.MultiSpinnerSelect
@@ -100,6 +98,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:padding="10dp"
                         android:layout_marginBottom="15dp">
 
                         <TextView

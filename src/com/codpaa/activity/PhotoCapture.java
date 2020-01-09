@@ -861,6 +861,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     @Override
                     public void run() {
                         cardView.setVisibility(View.GONE);
+                        btnSendImage.setVisibility(View.VISIBLE);
                     }
                 });
 				//showImg.setImageDrawable(ContextCompat.getDrawable(PhotoCapture.this,R.drawable.noimage));
@@ -903,6 +904,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                 showImg.setImageDrawable(null);
                                 imageDone.setVisibility(View.INVISIBLE);
                                 cardView.setVisibility(View.GONE);
+                                btnSendImage.setVisibility(View.VISIBLE);
                             }
                         },2500);
 

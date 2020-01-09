@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/RelativeLayout1"
-    android:padding="5dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -13,36 +12,43 @@
          />
 
     <LinearLayout
+        android:id="@+id/linear_layou_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_horizontal_margin"
         android:layout_gravity="bottom"
+        android:padding="5dp"
         android:orientation="vertical"
         >
 
 
         <TextView
-            android:id="@+id/txt_marca"
+            android:id="@+id/txt_sucursal"
+            style="@style/TextShadow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondary_white"
-            android:text="Marca"
-            />
+            android:text="Sucursal"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/secondary_white" />
 
         <TextView
             android:id="@+id/txt_fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/secondary_white"
+            android:textSize="12sp"
+            style="@style/TextShadow"
             android:text="fecha"
             />
 
         <TextView
-            android:id="@+id/txt_sucursal"
+            android:id="@+id/txt_marca"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/secondary_white"
-            android:text="Sucursal"
+            android:textSize="12sp"
+            style="@style/TextShadow"
+            android:text="Marca"
             />
 
 
@@ -70,6 +76,15 @@
 
 
     </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/image_status"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_margin="15dp"
+        android:layout_gravity="end"
+        />
 
 
 
