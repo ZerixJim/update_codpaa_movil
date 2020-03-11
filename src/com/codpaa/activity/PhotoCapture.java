@@ -575,7 +575,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
                                 Log.d("EnviarImage", "Enviando la imagen");
-                                Cursor datosFoto = registraImagen.datosFoto((int)(long)id);
+                                Cursor datosFoto = registraImagen.datosFoto((int) id);
 
                                 if (datosFoto.getCount() > 0){
                                     datosFoto.moveToFirst();
@@ -616,7 +616,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                     }
 
                                     clienteFoto.post(Utilities.WEB_SERVICE_CODPAA_TEST + "uploadimage2.php", requ,
-                                            new HttpResponseImage(CameraActivity, (int)(long)id));
+                                            new HttpResponseImage(CameraActivity, (int) id));
                                     //Log.d("http foto", requ.toString());
                                     datosFoto.close();
                                     radioNormal.setChecked(true);
