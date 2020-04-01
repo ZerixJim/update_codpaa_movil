@@ -113,15 +113,17 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 			recyclerView.setLayoutManager(gridLayoutManager);
 
 
+			adapter = new ListImageRecyclerAdapter();
 
-			List<PhotoListModel> list = getList();
+			List<PhotoListModel> list = adapter.getList();
 
 
-			if (list.size() > 0)
+			if (list.size() > 0) {
 				placeholder.setVisibility(View.GONE);
+			}
 
 
-			adapter = new ListImageRecyclerAdapter(this, getList());
+			adapter.loadData();
 
 			recyclerView.setAdapter(adapter);
 
@@ -134,46 +136,19 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 		
 	}
 	
-	private List<PhotoListModel> getList(){
-		List<PhotoListModel> array = new ArrayList<>();
-		BDopenHelper basel = new BDopenHelper(this);
-		Cursor cur = basel.datosPhoto();
-		
-		if(cur.getCount() > 0){
-            for(cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()){
-                final PhotoListModel mP = new PhotoListModel();
-                mP.setIdPhoto(cur.getInt(0));
-                mP.setTienda(cur.getString(1));
-                mP.setMarca(cur.getString(2));
-                mP.setFecha(cur.getString(3));
-                mP.setImg(cur.getString(4));
-				mP.setStatus(cur.getInt(5));
 
-                array.add(mP);
-
-            }
-
-		}
-		
-		basel.close();
-		return array;
-	}
 	
 
 	private class ListImageRecyclerAdapter  extends RecyclerView.Adapter<ListImageRecyclerAdapter.ViewHolder>{
 
 
-		private List<PhotoListModel> list;
-		private Context context;
+		private List<PhotoListModel> list = new ArrayList<>();
 
-		public ListImageRecyclerAdapter(Context context,List<PhotoListModel> list) {
-			this.list = list;
-			this.context = context;
-		}
 
 		@NonNull
 		@Override
 		public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
 
 			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_photo_list, parent, false);
 
@@ -192,7 +167,7 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 			holder.fecha.setText(model.getFecha());
 
 
-			Glide.with(context).load(model.getImg()).into(holder.imageView);
+			Glide.with(getApplicationContext()).load(model.getImg()).into(holder.imageView);
 
 
             if (model.getStatus() == 2){
@@ -218,6 +193,16 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 		public PhotoListModel getItemAtPosition(int position){
 
 			return list.get(position);
+
+		}
+
+		public void loadData(){
+
+
+			this.list = getList();
+
+			Log.d("list size", list.size() + "");
+			notifyDataSetChanged();
 
 		}
 
@@ -256,6 +241,33 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 
 
 			}
+		}
+
+
+
+		private List<PhotoListModel> getList(){
+			List<PhotoListModel> array = new ArrayList<>();
+			BDopenHelper basel = new BDopenHelper(getApplicationContext());
+			Cursor cur = basel.datosPhoto();
+
+			if(cur.getCount() > 0){
+				for(cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()){
+					final PhotoListModel mP = new PhotoListModel();
+					mP.setIdPhoto(cur.getInt(0));
+					mP.setTienda(cur.getString(1));
+					mP.setMarca(cur.getString(2));
+					mP.setFecha(cur.getString(3));
+					mP.setImg(cur.getString(4));
+					mP.setStatus(cur.getInt(5));
+
+					array.add(mP);
+
+				}
+
+			}
+
+			basel.close();
+			return array;
 		}
 
 
@@ -466,9 +478,7 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 	}
 	
 	
-	
-	
-	
+
 	
 	public boolean verificarConexion() {
 	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -482,17 +492,17 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 		
 		private int _idFoto;
 
-		Activity act;
-		SQLiteDatabase db;
+
+		private SQLiteDatabase db;
 		private int position;
 
 		
-		public HttpResponseFoto(Activity contex,int idFoto, int position){
+		public HttpResponseFoto(Context contex,int idFoto, int position){
 			this._idFoto = idFoto;
-			this.act = contex;
+
 			this.position = position;
 
-			db = new BDopenHelper(act).getWritableDatabase();
+			db = new BDopenHelper(contex).getWritableDatabase();
 
 		}
 
@@ -531,24 +541,11 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 
 					if(response.getBoolean("insert")){
 
-                        //
-
-                        //set status=2 (status 2 = send image)
 						db.execSQL("Update photo set status=2 where idPhoto="+ this._idFoto);
 
-                        //removemos el elmento de la lista
-						//adp.remove(adp.getItem(_position));
-                        //notificamos el cambio al adaptador
-
-
-						//adp.getItem(position).set_status(2);
 						adapter.getItemAtPosition(position).setStatus(2);
-						adapter.notifyDataSetChanged();
-
-						//adp.notifyDataSetChanged();
-                        //notificamos al usuario la respuesta del servidor
-						Toast.makeText(getApplicationContext(), "foto enviada", Toast.LENGTH_SHORT).show();
-                        //deleteArchivo(_imgPath);
+						adapter.notifyItemChanged(position);
+						//Toast.makeText(getApplicationContext(), "foto enviada", Toast.LENGTH_SHORT).show();
 
 
                     }else{
@@ -556,7 +553,7 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 
 
 							adapter.getItemAtPosition(position).setStatus(2);
-							adapter.notifyDataSetChanged();
+							adapter.notifyItemChanged(position);
                             //deleteArchivo(_imgPath);
                             Toast.makeText(getApplicationContext(), response.getString("message"), Toast.LENGTH_SHORT).show();
                             db.execSQL("Update photo set status=2 where idPhoto="+this._idFoto);

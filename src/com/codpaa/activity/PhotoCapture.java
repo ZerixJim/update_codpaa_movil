@@ -157,9 +157,9 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         progressFoto =  findViewById(R.id.progressEnviarFoto);
         donutProgress =  findViewById(R.id.progress_photo);
 
-        multiSpinnerSelect =  findViewById(R.id.multi_spinner);
+        multiSpinnerSelect = findViewById(R.id.multi_spinner);
 
-        cardView =  findViewById(R.id.card);
+        cardView = findViewById(R.id.card);
 
         //imgAdd.setOnClickListener(this);
 
@@ -168,9 +168,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         if (radioChoice != null) {
             radioNormal =  radioChoice.findViewById(R.id.radioNormal);
         }
-        if (radioChoice != null) {
-            RadioButton radioEvento = radioChoice.findViewById(R.id.radioEvento);
-        }
+
 
 
 
@@ -547,8 +545,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
                         if(!mCurrentPhotoPath.equals("")){
 
-                            long id = registraImagen.insertarImagenId(idTienda,idPromotor,idMarca,idExhibicion,timeStamp,Integer.valueOf(dia),
-                                    Integer.valueOf(mes),Integer.valueOf(ano),mCurrentPhotoPath,1,getSelectedRadioGroup(), date);
+                            long id = registraImagen.insertarImagenId(idTienda,idPromotor,idMarca,idExhibicion,timeStamp, Integer.parseInt(dia),
+                                    Integer.parseInt(mes),Integer.parseInt(ano),mCurrentPhotoPath,1,getSelectedRadioGroup(), date);
 
                             ArrayList<ProductosModel> proSelected = multiSpinnerSelect.getSelectedItems();
                             SQLiteDatabase db = registraImagen.getWritableDatabase();
