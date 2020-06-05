@@ -117,7 +117,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
                 }
 
                 holder.estatus.setText("Catalogado " +
-                        Utilities.getTimeAgo(Utilities.DATE_FORMAT_USA, producto.getFecha()));
+                        Utilities.getTimeAgo(Utilities.DATETIME_FORMAT_USA, producto.getFecha()));
 
                 holder.cardView.setBackgroundColor(Color.parseColor("#adffc9"));
 
@@ -168,7 +168,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
             }else if(producto.getEstatus() == Producto.EstatusTypes.PROCESO_CATALOGACION){
                 holder.estatus.setText("Proceso Catalogar " +
-                        Utilities.getTimeAgo(Utilities.DATE_FORMAT_USA,
+                        Utilities.getTimeAgo(Utilities.DATETIME_FORMAT_USA,
                         producto.getFecha()));
 
 
@@ -182,7 +182,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
 
 
                 holder.estatus.setText("Acepto Catalogar " +
-                        Utilities.getTimeAgo(Utilities.DATE_FORMAT_USA, producto.getFecha()));
+                        Utilities.getTimeAgo(Utilities.DATETIME_FORMAT_USA, producto.getFecha()));
 
                 holder.cardView.setBackgroundColor(Color.parseColor("#efffad"));
 

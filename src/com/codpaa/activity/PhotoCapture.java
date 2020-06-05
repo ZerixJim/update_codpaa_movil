@@ -613,6 +613,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                         e.printStackTrace();
                                     }
 
+                                    //todo change to production
+
                                     clienteFoto.post(Utilities.WEB_SERVICE_CODPAA_TEST + "uploadimage2.php", requ,
                                             new HttpResponseImage(CameraActivity, (int) id));
                                     //Log.d("http foto", requ.toString());

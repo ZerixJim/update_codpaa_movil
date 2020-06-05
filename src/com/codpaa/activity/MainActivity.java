@@ -10,10 +10,13 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -38,6 +41,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.Configuracion;
 import com.codpaa.R;
 import com.codpaa.util.Utilities;
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 	private String username, password;
 	private ProgressBar progressBar;
     private Activity act;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -102,10 +107,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 
 
-
-
-
-
 		try {
 
 			AccountManager accountManager = (AccountManager) act.getSystemService(Context.ACCOUNT_SERVICE);
@@ -114,10 +115,21 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 			if (accountManager.getPassword(account) != null){
 
+				Log.d("Account", "" + accountManager.getAccounts().toString());
+
 
 				String user = accountManager.getUserData(account, "user");
 
 				iniciarActivity(user);
+
+			}else{
+
+				SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
+
+				db.delete(DbEstructure.Usuario.TABLE_NAME, null, null);
+
+				db.close();
+
 
 			}
 
@@ -125,8 +137,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 			e.printStackTrace();
 		}
-
-
 
 
 		AsyncHttpClient clienteVersion = new AsyncHttpClient();
@@ -166,10 +176,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 super.onFailure(statusCode, headers, throwable, errorResponse);
             }
         });
-		
 
-		
-		
+
 	}
 
 	private void checkPermisosAndGpsEnable() {
@@ -248,14 +256,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         }
     };
 
-	
-	
-	@Override
-	protected void onStart() {
-		super.onStart();
-		
-		
-	}
 
 
 
@@ -292,6 +292,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                     try {
                         if (response.getBoolean("response")) {
 
+
                             BDopenHelper b = new BDopenHelper(act);
                             b.vaciarTabla("usuarios");
 
@@ -301,12 +302,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 							Account account = new Account( getResources().getString(R.string.app_name) , "com.codpaa");
 
-							if (accountManager.getPassword(account) == null){
+							if (accountManager.getPassword(account) == null && response.getString("status").equals("a")){
 
 
 								final Bundle bundle = new Bundle();
 								bundle.putString("user", username);
-
 
 								accountManager.addAccountExplicitly(account,password, bundle);
 
@@ -493,7 +493,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		final ViewGroup nullParent = null;
 		View prompt = li.inflate(R.layout.promptversion, nullParent);
 
-        TextView textVersion = (TextView) prompt.findViewById(R.id.textVersionPrompt);
+        TextView textVersion = prompt.findViewById(R.id.textVersionPrompt);
         textVersion.setText(version);
 		
 		AlertDialog.Builder alertDialogB = new AlertDialog.Builder(this);

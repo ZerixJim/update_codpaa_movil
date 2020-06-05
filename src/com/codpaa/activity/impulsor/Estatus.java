@@ -208,7 +208,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
             Calendar calendar = Calendar.getInstance();
 
-            SimpleDateFormat fFecha = new SimpleDateFormat(Utilities.DATE_FORMAT_USA, Locale.getDefault());
+            SimpleDateFormat fFecha = new SimpleDateFormat(Utilities.DATETIME_FORMAT_USA, Locale.getDefault());
 
             String fecha = fFecha.format(calendar.getTime());
 

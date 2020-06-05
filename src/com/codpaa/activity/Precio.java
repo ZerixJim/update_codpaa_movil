@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,8 +16,11 @@ import android.os.Bundle;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +34,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 
 
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -41,13 +47,12 @@ import com.codpaa.R;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
 
-public class Precio extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
-	
-	Button guardar;
+public class Precio extends AppCompatActivity implements OnItemSelectedListener{
+
 	Spinner spMarca, spProducto;
 
-    /*private static Button btnFechaInicio;
-	private static Button btnFechaFin;*/
+    private static Button btnFechaInicio;
+	private static Button btnFechaFin;
 
 	private TextInputLayout tilPrecioNormal;
 	private TextInputLayout tilPrecioCaja;
@@ -74,7 +79,6 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			
 
-		guardar = findViewById(R.id.btnInteligua);
 		
 		spMarca =  findViewById(R.id.spInMar);
 		spProducto =  findViewById(R.id.spInProd);
@@ -90,19 +94,16 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
 		chCambioP = (CheckBox) findViewById(R.id.checkCampre);*/
 
         //buttons
-     /*   btnFechaInicio = (Button) findViewById(R.id.btnFechaInicio);
-        btnFechaFin = (Button) findViewById(R.id.btnFechaFin);*/
+        btnFechaInicio = findViewById(R.id.btnFechaInicio);
+        btnFechaFin = findViewById(R.id.btnFechaFin);
 
 
 		tilPrecioNormal = findViewById(R.id.til_precio_normal);
 		tilPrecioCaja =  findViewById(R.id.til_precio_caja);
 		//tilPrecioOferta = (TextInputLayout) findViewById(R.id.til_precio_oferta);
-
-		guardar.setOnClickListener(this);
 		spMarca.setOnItemSelectedListener(this);
 		
-		
-	
+
 		try {
 
 			loadSpinner();
@@ -153,6 +154,13 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
             case android.R.id.home:
                 this.finish();
                 return true;
+
+			case R.id.save_inteligencia:
+
+				guardar();
+
+				return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -180,19 +188,6 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
 		super.onStart();
 	}
 
-	@Override
-	public void onClick(View v) {
-		
-		switch(v.getId()){
-		case R.id.btnInteligua:
-			guardar();
-			break;
-
-		
-		}
-
-		
-	}
 
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int id,long arg3) {
@@ -303,7 +298,7 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
 
 						if (isNotEmptyOferta(normal) && isNotEmptyCaja(caja)) {
 
-							baseH.insertarPrecio(idPromotor, idTienda, idProdu, normal, caja ,oferta, fecha, 1);
+							baseH.insertarPrecio(idPromotor, idTienda, idProdu, normal, caja ,oferta, fecha, 1, getFechaInicio(), getFechaFin());
 							//Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + normal + " precOfer " + oferta + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
 							enviar.enviarInteli();
 							Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
@@ -311,8 +306,8 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
 							resetCampos();
 							spProducto.setSelection(0);
 
-							/*btnFechaInicio.setText(R.string.fecha);
-							btnFechaFin.setText(R.string.fecha);*/
+							btnFechaInicio.setText(R.string.fecha);
+							btnFechaFin.setText(R.string.fecha);
 						} else {
 							Toast.makeText(this, "Campos de Precio son Requeridos", Toast.LENGTH_SHORT).show();
 						}
@@ -448,7 +443,7 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
 		
 	}
 
-    /*public String getFechaInicio(){
+    public String getFechaInicio(){
         String salidaFecha;
         if (!btnFechaInicio.getText().equals("fecha")){
             salidaFecha = btnFechaInicio.getText().toString();
@@ -466,9 +461,9 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
             salidaFecha = "";
         }
         return salidaFecha;
-    }*/
+    }
 
-    /*public void showDatePickerDialogInicio(View v){
+    public void showDatePickerDialogInicio(View v){
         DialogFragment dialogInicio = new DatePickerInicio();
 
         dialogInicio.show(getSupportFragmentManager(), "datePickerInicio");
@@ -480,7 +475,7 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
 
         dialogFin.show(getSupportFragmentManager(), "datePickerFin");
 
-    }*/
+    }
 
 
 	private boolean isNotEmptyNormal(String normal){
@@ -497,7 +492,7 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
 
 
 
-    /*public static class DatePickerInicio extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+    public static class DatePickerInicio extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
 
         @NonNull
@@ -569,6 +564,6 @@ public class Precio extends AppCompatActivity implements OnClickListener, OnItem
 
 
         }
-    }*/
+    }
 
 }

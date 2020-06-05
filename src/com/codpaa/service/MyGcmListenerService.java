@@ -17,6 +17,8 @@
 package com.codpaa.service;
 
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentValues;
@@ -25,6 +27,8 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.RingtoneManager;
 import android.net.Uri;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
@@ -176,6 +180,18 @@ public class MyGcmListenerService extends FirebaseMessagingService{
 
         db.execSQL("update " + DbEstructure.Usuario.TABLE_NAME + " set " + DbEstructure.Usuario.STATUS + "='b' " +
                 "where " + DbEstructure.Usuario.ID_USER + "=" + idPromotor);
+
+
+        AccountManager accountManager  = (AccountManager) getApplicationContext().getSystemService(Context.ACCOUNT_SERVICE);
+
+
+        Account account = new Account( getResources().getString(R.string.app_name) , "com.codpaa");
+
+
+        if (accountManager.getPassword(account) != null ){
+            accountManager.removeAccountExplicitly(account);
+        }
+
 
 
         localBroadcastManager.sendBroadcast(new Intent("com.codpaa.action.close"));

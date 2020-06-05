@@ -78,7 +78,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     TextView email;
     CircleImageView avatar;
 
-    SQLiteDatabase base;
     LocationManager lM = null;
     String myVersionName = "not available";
 
@@ -87,7 +86,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     MenuAdapter adapter;
 
     private BroadcastReceiver mRegistrationBroadcastReceiver, mNewMessageBroadcastReceiver;
-    private boolean isReceiverRegistered, isReceiverMessageRegistered;
+    private BroadcastReceiver mRegisterClose;
+    private boolean isReceiverRegistered, isReceiverMessageRegistered, isCloseReceiverRegistered;
     private int idUsuario;
 
 
@@ -239,6 +239,17 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         };
 
 
+        mRegisterClose = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                if(intent.getAction().equals("com.codpaa.action.close")){
+                    finish();
+                }
+            }
+        };
+
+
         //Registro de Brodcast para verificar si el token fue enviado al servidor
         registerReceiver();
         //estadisticas();
@@ -341,6 +352,18 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
             isReceiverMessageRegistered = true;
         }
+
+
+        if(! isCloseReceiverRegistered){
+
+
+            LocalBroadcastManager.getInstance(this).registerReceiver(mRegisterClose,
+                    new IntentFilter("com.codpaa.action.close"));
+
+            isCloseReceiverRegistered = true;
+
+        }
+
     }
 
     //metodo para implementar el toolbar
@@ -552,6 +575,10 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mNewMessageBroadcastReceiver);
         isReceiverMessageRegistered = false;
+
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegisterClose);
+        isCloseReceiverRegistered = false;
 
         super.onPause();
 

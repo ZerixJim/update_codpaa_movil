@@ -64,18 +64,18 @@ public class VentaPromedio extends AppCompatActivity implements AdapterView.OnIt
         idTienda = i.getIntExtra("idTienda", 0);
 
 
-        btnFechaI = (Button) findViewById(R.id.btnI);
-        btnFechaF = (Button) findViewById(R.id.btnF);
+        btnFechaI =  findViewById(R.id.btnI);
+        btnFechaF =  findViewById(R.id.btnF);
 
-        radioTipo = (RadioGroup) findViewById(R.id.radio);
+        radioTipo = findViewById(R.id.radio);
 
-        editCantidad = (EditText) findViewById(R.id.edit_cantidad);
+        editCantidad =  findViewById(R.id.edit_cantidad);
 
-        spinnerMarca = (Spinner) findViewById(R.id.spinner);
+        spinnerMarca =  findViewById(R.id.spinner);
         if (spinnerMarca != null) {
             spinnerMarca.setOnItemSelectedListener(this);
         }
-        spinnerProducto = (Spinner) findViewById(R.id.producto);
+        spinnerProducto = findViewById(R.id.producto);
 
 
         loadSpinner();
@@ -158,7 +158,7 @@ public class VentaPromedio extends AppCompatActivity implements AdapterView.OnIt
                                     ContentValues cv = new ContentValues();
 
                                     int idRadioSelect = radioTipo.getCheckedRadioButtonId();
-                                    RadioButton radioSelected = (RadioButton) findViewById(idRadioSelect);
+                                    RadioButton radioSelected = findViewById(idRadioSelect);
 
                                     cv.put("idMarca", marcaModel.getId());
                                     if (radioSelected != null) {
