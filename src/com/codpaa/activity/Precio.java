@@ -230,13 +230,13 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 			String caja = editPrecioCaja.getText().toString();
 			String oferta = editProOfer.getText().toString();
 
-			if (isNotEmptyNormal(normal)){
+			if (isNotEmptyField(normal)){
 				tilPrecioNormal.setError(null);
 			}else {
 				tilPrecioNormal.setError("Campo Requerido");
 			}
 
-			if (isNotEmptyCaja(caja)){
+			if (isNotEmptyField(caja)){
 				tilPrecioCaja.setError(null);
 			}else {
 				tilPrecioCaja.setError("Campo Requerido");
@@ -296,18 +296,31 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 				if(idMarca != 0){
 					if(idProdu != 0){
 
-						if (isNotEmptyOferta(normal) && isNotEmptyCaja(caja)) {
+						if (isNotEmptyField(normal) && isNotEmptyField(caja)) {
 
-							baseH.insertarPrecio(idPromotor, idTienda, idProdu, normal, caja ,oferta, fecha, 1, getFechaInicio(), getFechaFin());
-							//Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + normal + " precOfer " + oferta + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
-							enviar.enviarInteli();
-							Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
 
-							resetCampos();
-							spProducto.setSelection(0);
+							if (isNotEmptyField(oferta)  &&  (getFechaInicio().isEmpty() || getFechaFin().isEmpty()) ){
 
-							btnFechaInicio.setText(R.string.fecha);
-							btnFechaFin.setText(R.string.fecha);
+								Toast.makeText(this,"fecha de la oferta faltante ", Toast.LENGTH_SHORT).show();
+
+
+							}else{
+
+								baseH.insertarPrecio(idPromotor, idTienda, idProdu, normal, caja ,oferta, fecha, 1, getFechaInicio(), getFechaFin());
+								//Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + normal + " precOfer " + oferta + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
+								enviar.enviarInteli();
+								Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
+
+								resetCampos();
+								spProducto.setSelection(0);
+
+								btnFechaInicio.setText(R.string.fecha);
+								btnFechaFin.setText(R.string.fecha);
+							}
+
+
+
+
 						} else {
 							Toast.makeText(this, "Campos de Precio son Requeridos", Toast.LENGTH_SHORT).show();
 						}
@@ -478,18 +491,9 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
     }
 
 
-	private boolean isNotEmptyNormal(String normal){
-		return normal.trim().length() > 0;
+	private boolean isNotEmptyField(String field){
+		return field.trim().length() > 0;
 	}
-
-	private boolean isNotEmptyCaja(String caja){
-		return caja.trim().length() > 0;
-	}
-
-	private boolean isNotEmptyOferta(String oferta){
-		return oferta.trim().length() > 0;
-	}
-
 
 
     public static class DatePickerInicio extends DialogFragment implements DatePickerDialog.OnDateSetListener{

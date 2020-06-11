@@ -15,6 +15,7 @@ import com.codpaa.adapter.ExhibicionesAdapter;
 import com.codpaa.adapter.MenuTiendaAdapter;
 import com.codpaa.fragment.DialogEncuestas;
 import com.codpaa.fragment.DialogFragmentFotos;
+import com.codpaa.fragment.DialogFragmentMarcas;
 import com.codpaa.model.ExhibicionesModel;
 import com.codpaa.model.MenuTiendaModel;
 import com.codpaa.update.EnviarDatos;
@@ -488,6 +489,12 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 } else {
                     dialogoConfirmacionSalida();
                 }
+
+                return true;
+
+            case R.id.btn_marcas:
+
+                dialogMarcasFaltantes();
 
                 return true;
 
@@ -1953,6 +1960,24 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         cursor.close();
         db.close();
         return count > 0;
+
+    }
+
+
+    private void dialogMarcasFaltantes(){
+
+        DialogFragmentMarcas dm = new DialogFragmentMarcas();
+        FragmentManager fm = getSupportFragmentManager();
+
+        Bundle b = new Bundle();
+        b.putInt("idTienda", idTienda);
+
+        dm.setArguments(b);
+
+
+        dm.show(fm, "dialog marcas");
+
+
 
     }
 

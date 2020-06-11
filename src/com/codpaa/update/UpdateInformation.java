@@ -46,7 +46,7 @@ public class UpdateInformation{
         //client.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, responseInfo);
 
 
-        client.get(Utilities.API_TEST + "promotores/promo-data",rp, responseInfo);
+        client.get(Utilities.API_PRODUCTION + "promotores/promo-data",rp, responseInfo);
 
 
 

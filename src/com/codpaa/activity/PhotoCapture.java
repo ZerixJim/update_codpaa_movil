@@ -58,6 +58,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.DialogCompat;
 import androidx.core.content.ContextCompat;
 
 import androidx.appcompat.app.ActionBar;
@@ -309,7 +310,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
 
-        File codpaaDir = new File(storageDir.getPath() + "/codpaa/");
+        File codpaaDir = new File(storageDir.getPath() + "/.codpaa/");
 		if(!storageDir.exists()){
 			//Log.v("PictireCir", "Directorio No Existe");
 
@@ -492,7 +493,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
             String path = Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/codpaa/";
+                    Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/.codpaa/";
 
 
             return comp.setDestinationDirectoryPath(path)
@@ -613,9 +614,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                         e.printStackTrace();
                                     }
 
-                                    //todo change to production
 
-                                    clienteFoto.post(Utilities.WEB_SERVICE_CODPAA_TEST + "uploadimage2.php", requ,
+                                    clienteFoto.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php", requ,
                                             new HttpResponseImage(CameraActivity, (int) id));
                                     //Log.d("http foto", requ.toString());
                                     datosFoto.close();

@@ -4,6 +4,7 @@ package com.codpaa.fragment;
  */
 
 
+import android.app.Dialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -34,7 +35,7 @@ public class DialogFragmentFotos extends DialogFragment{
         Bundle bundle = getArguments();
 
         View v = inflater.inflate(R.layout.dialog_fragment_fotos, container, false);
-        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recycler_fotos);
+        RecyclerView recyclerView =  v.findViewById(R.id.recycler_fotos);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         getDialog().setTitle("Fotos");
 
@@ -73,5 +74,21 @@ public class DialogFragmentFotos extends DialogFragment{
 
         cF.close();
         return arrayList;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Dialog dialog = getDialog();
+        if (dialog != null){
+
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+
+        }
+
+
     }
 }

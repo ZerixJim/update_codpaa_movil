@@ -24,6 +24,7 @@ public class Utilities {
 
 
     public static final String API_TEST = "https://apitest.vanguardiagps.com/v2/";
+    public static final String API_PRODUCTION = "https://api.plataformavanguardia.net/v2/";
 
     public static final int HOST_MODE_PRODCTION = 1;
     public static final int HOST_MODE_TEST = 2;

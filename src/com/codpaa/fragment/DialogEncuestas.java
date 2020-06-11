@@ -48,7 +48,7 @@ public class DialogEncuestas extends DialogFragment implements AdapterView.OnIte
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.layout_encuestas, container, false);
-        ListView listView = (ListView) v.findViewById(R.id.listView);
+        ListView listView = v.findViewById(R.id.listView);
 
         EncuestasAdapter encuestasAdapter = new EncuestasAdapter(getActivity(),R.layout.layout_encuestas, getEncuestas());
 
