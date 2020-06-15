@@ -44,6 +44,17 @@ public class RecyclerMarcasFaltantes extends RecyclerView.Adapter<RecyclerMarcas
         holder.nombreMarca.setText(mm.getNombre());
 
 
+        if (mm.getNumbrePhotos() > 0){
+
+            holder.check.setVisibility(View.VISIBLE);
+
+        }else{
+
+            holder.check.setVisibility(View.INVISIBLE);
+
+        }
+
+
 
     }
 

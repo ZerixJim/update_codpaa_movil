@@ -56,17 +56,25 @@ public class DialogFragmentMarcas extends DialogFragment {
 
         List<MarcaModel> list = new ArrayList<>();
 
-        String sql = "select  m.nombre, p.total_fotos  from tienda_marca tm " +
+        String sql = "select  m.nombre, p.total_fotos, f.total_frentes  from tienda_marca tm " +
                
                 " left join marca m on (m.idMarca = tm.idMarca)" +
 
                 " left join (" +
 
-                "  select count(*)total_fotos,p.idTienda, p.idMarca, p.fecha_captura from photo p " +
+                "  select count(*) total_fotos,p.idTienda, p.idMarca, p.fecha_captura from photo p " +
 
-                "  group by p.idTienda, p.idMarca, p.fecha_captura  " +
+                "  group by p.idTienda, p.idMarca, date(p.fecha_captura)  " +
 
-                " ) p on (tm.idTienda = p.idTienda and p.idMarca = tm.idMarca and p.fecha_captura = date('now'))" +
+                " ) p on (tm.idTienda = p.idTienda and p.idMarca = tm.idMarca and date(p.fecha_captura) = date('now'))" +
+
+                "left join (" +
+
+                  "   select count(*) total_frentes, f.idTienda, f.idMarca, f.fecha from frentescharola f" +
+
+                  "   group by f.idTienda, f.idMarca, f.fecha" +
+
+                " ) f on (tm.idTienda=f.idTienda and f.idMarca=tm.idMarca and strftime('%d-%m-%Y', 'now') = f.fecha)" +
 
                 " where tm.idTienda = " + idTienda;
 
@@ -83,8 +91,10 @@ public class DialogFragmentMarcas extends DialogFragment {
 
                 mm.setNombre(cursor.getString(cursor.getColumnIndex("nombre")));
                 mm.setNumbrePhotos(cursor.getInt(cursor.getColumnIndex("total_fotos")));
+                mm.setNumberFrentes(cursor.getInt(cursor.getColumnIndex("total_frentes")));
 
-                Log.d("Dialogo marcas 2", mm.getNombre());
+
+                //Log.d("Dialog", "total frentes " + mm.getNumberFrentes());
 
                 list.add(mm);
 

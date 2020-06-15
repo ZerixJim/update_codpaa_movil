@@ -17,8 +17,8 @@ public class Utilities {
     public static final String WEB_SERVICE_PATH = "http://plataformavanguardia.net/codpaa/webservice";
     public static final String WEB_SERVICE_CODPAA = "http://service.plataformavanguardia.net/";
     public static final String SERV_PHP = "serv.php";
-    public static final String PRODUCT_PATH = "http://codpaa.plataformavanguardia.net/images/productos/";
-    public static final String MARCA_PATH = "http://codpaa.plataformavanguardia.net/images/marcas/";
+    public static final String PRODUCT_PATH = "https://codpaa.plataformavanguardia.net/images/productos/";
+    public static final String MARCA_PATH = "https://codpaa.plataformavanguardia.net/images/marcas/";
     public static final String FORMATOS_PATH = "https://codpaa.plataformavanguardia.net/images/formatos/";
     public static final String WEB_SERVICE_CODPAA_TEST = "http://plataformavanguardia.net/test/webservice/";
 

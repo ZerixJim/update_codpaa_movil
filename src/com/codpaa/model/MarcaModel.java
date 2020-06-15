@@ -5,8 +5,16 @@ public class MarcaModel {
     private int _id;
     private String _nombre;
     private String url;
-    private int numbrePhotos;
+    private int numbrePhotos, numberFrentes;
 
+
+    public int getNumberFrentes() {
+        return numberFrentes;
+    }
+
+    public void setNumberFrentes(int numberFrentes) {
+        this.numberFrentes = numberFrentes;
+    }
 
     public int getNumbrePhotos() {
         return numbrePhotos;

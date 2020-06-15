@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
+        android:src="@drawable/ic_check_done"
         app:layout_constraintBottom_toBottomOf="@+id/nombre_marca"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nombre_marca" />
