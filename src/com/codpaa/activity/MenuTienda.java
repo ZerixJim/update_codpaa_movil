@@ -475,6 +475,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         inflater.inflate(R.menu.menu_tienda, menu);
 
 
+        MenuItem marcas = menu.findItem(R.id.btn_marcas);
+
+        if (getTotalBrands(idTienda) > 0){
+            marcas.setVisible(true);
+        }else {
+            marcas.setVisible(false);
+        }
 
         return true;
     }
@@ -1980,6 +1987,22 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
     }
+
+
+    private int getTotalBrands(int idTienda){
+
+	    SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+
+	    Cursor cursor = db.rawQuery("select * from tienda_marca tm where tm.idTienda=" + idTienda , null);
+
+	    int count = cursor.getCount();
+
+	    db.close();
+	    cursor.close();
+
+	    return count;
+    }
+
 
 
 	
