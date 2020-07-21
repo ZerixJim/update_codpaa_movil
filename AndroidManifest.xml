@@ -231,6 +231,11 @@
             android:label="Estudio de mercado"
             />
 
+        <activity android:name=".activity.CapturaEspecial"
+            android:label="Censo Tinte"
+            android:screenOrientation="portrait"
+            />
+
 
         <service android:name=".service.GeoLocalizar"
             android:exported="false"/>

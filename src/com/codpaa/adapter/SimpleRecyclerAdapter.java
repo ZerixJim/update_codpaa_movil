@@ -285,20 +285,21 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             RutaDia rutaDia = rutasFilter.get(getAdapterPosition());
             //Log.d("Onclick", "Element: " + rutaDia.getIdTienda());
 
-            dialodStartComfirm(rutaDia.getIdTienda(), rutaDia);
+            dialodStartComfirm(rutaDia.getIdTienda(), rutaDia, rutaDia.getIdTipoTienda());
 
         }
 
 
-        private void startActivityRute(int idTienda){
+        private void startActivityRute(int idTienda, int idTipo){
 
             Intent i = new Intent(context, MenuTienda.class);
             i.putExtra("idTienda", idTienda);
             i.putExtra("idPromotor", idPromotor);
+            i.putExtra("idTipo", idTipo);
             context.startActivity(i);
         }
 
-        private void dialodStartComfirm(final int idTienda, final RutaDia rute){
+        private void dialodStartComfirm(final int idTienda, final RutaDia rute, final int idTipo){
 
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("¿Estas Seguro(a) que quieres Entrar a "+ rute.getNombreTienda() +
@@ -309,7 +310,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
                 public void onClick(DialogInterface dialog, int which) {
 
 
-                    startActivityRute(idTienda);
+                    startActivityRute(idTienda, idTipo);
 
                     try{
 

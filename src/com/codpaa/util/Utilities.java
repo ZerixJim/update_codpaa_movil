@@ -35,6 +35,8 @@ public class Utilities {
     public static final String DATETIME_FORMAT_USA = "yyyy-MM-dd HH:mm:ss";
     public static final String DATETIME_FORMAT_MX = "dd-MM-yyyy HH:mm:ss";
 
+    public static final String DATE_FORMAT_USA = "yyyy-MM-dd";
+
 
 
     public static boolean verificarConexion(Context context) {

@@ -303,6 +303,11 @@ public class DbEstructure {
 
     }
 
+    /**
+     * Table tienda_marca
+     *
+     *  brands asigned by stors
+     */
 
 
     public static class TiendaMarca implements BaseColumns{
@@ -313,5 +318,47 @@ public class DbEstructure {
         public static final String ID_MARCA = "idMarca";
 
     }
+
+    /**
+     * Table categoria/frentes/tonos
+     */
+
+    public static class TonoPallet {
+
+        private TonoPallet(){}
+
+        public static final String TABLE_NAME = "tono_tienda";
+        public static final String CATEGORIA = "categoria";
+        public static final String FRENTES = "cantidad_frentes";
+        public static final String TONOS = "cantidad_tonos";
+        public static final String FECHA = "fecha_captura";
+        public static final String STATUS = "status";
+        public static final String PROMOTOR = "id_promotor";
+        public static final String ID_TIENDA = Tienda.ID_TIENDA;
+
+    }
+
+
+    /**
+     * Table frentes tinte
+     */
+
+    public static class PrecioMarca {
+
+        private PrecioMarca(){}
+
+        public static final String TABLE_NAME = "precio_marca_tienda";
+        public static final String ID_TIENDA = Tienda.ID_TIENDA;
+        public static final String ID_MARCA = "id_marca";
+        public static final String PRICE = "price";
+        public static final String FECHA = "fecha_captura";
+        public static final String STATUS = "status";
+
+
+    }
+
+
+
+
 
 }

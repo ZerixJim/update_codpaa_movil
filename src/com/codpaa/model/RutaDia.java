@@ -12,6 +12,7 @@ public class RutaDia {
     private int modo;
     private String latitud, longitud;
     private int formato;
+    private int idTipoTienda;
 
     public int getFormato() {
         return formato;
@@ -83,5 +84,13 @@ public class RutaDia {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public int getIdTipoTienda() {
+        return idTipoTienda;
+    }
+
+    public void setIdTipoTienda(int idTipoTienda) {
+        this.idTipoTienda = idTipoTienda;
     }
 }

@@ -50,6 +50,8 @@
                     android:hint="@string/precioNormal"
                     android:focusableInTouchMode="true"
                     android:inputType="numberDecimal"
+                    android:drawableStart="@drawable/ic_money"
+                    android:drawableLeft="@drawable/ic_money"
                     android:layout_weight="1"
                     android:textColor="#ff212121"/>
 
@@ -70,6 +72,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/precioCaja"
+                    android:drawableStart="@drawable/ic_money"
+                    android:drawableLeft="@drawable/ic_money"
                     android:ems="10"
                     android:inputType="numberDecimal"
                     android:textColor="#ff212121"/>
@@ -89,7 +93,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp">
+            android:layout_marginRight="5dp"
+            >
 
 
 
@@ -102,10 +107,12 @@
                     android:id="@+id/editPreOfer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+
                     android:ems="10"
                     android:hint="@string/precioOferta"
                     android:focusableInTouchMode="true"
+                    android:drawableStart="@drawable/ic_money"
+                    android:drawableLeft="@drawable/ic_money"
                     android:inputType="numberDecimal"
                     android:textColor="#ff212121"/>
 

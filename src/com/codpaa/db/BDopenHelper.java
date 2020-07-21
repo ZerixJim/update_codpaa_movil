@@ -48,6 +48,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     // v1.3.1 = 33
     // v1.3.3 = 34
     // v1.3.7 = 35
+    // v1.3.8 = 36
 
     private static final int version = 36;
     private static SQLiteDatabase baseDatosLocal = null;
@@ -90,6 +91,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String productoCatalogadoTienda;
     private static String procesoCatalogacionObjeciones;
     private static String tiendaMarca;
+    private static String tonoPalett, precioPalett;
 
 
     public BDopenHelper(Context miContext) {
@@ -332,6 +334,34 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
 
+        tonoPalett = "create table if not exists " +
+                DbEstructure.TonoPallet.TABLE_NAME + "(" +
+                DbEstructure.TonoPallet.ID_TIENDA +" int," +
+                DbEstructure.TonoPallet.CATEGORIA + " varchar(2)," +
+                DbEstructure.TonoPallet.FRENTES + " int," +
+                DbEstructure.TonoPallet.TONOS + " int," +
+                DbEstructure.TonoPallet.PROMOTOR + " int," +
+                DbEstructure.TonoPallet.FECHA + " varchar(11)," +
+                DbEstructure.TonoPallet.STATUS + " int(1)," +
+                "primary key (" +
+                DbEstructure.TonoPallet.ID_TIENDA +"," + DbEstructure.TonoPallet.FECHA +
+                ")" +
+                ")";
+
+        precioPalett = "create table if not exists " +
+                DbEstructure.PrecioMarca.TABLE_NAME+"(" +
+                DbEstructure.PrecioMarca.ID_TIENDA +" int," +
+                DbEstructure.PrecioMarca.ID_MARCA + " int," +
+                DbEstructure.PrecioMarca.PRICE + " decimal(7,2)," +
+                DbEstructure.PrecioMarca.FECHA + " varchar(11)," +
+                DbEstructure.PrecioMarca.STATUS + " int(1) default 1," +
+                "primary key (" +
+                              DbEstructure.PrecioMarca.ID_TIENDA +","+ DbEstructure.PrecioMarca.ID_MARCA + "," + DbEstructure.PrecioMarca.FECHA
+                            +")" +
+                ")";
+
+
+
     }
 
     @Override
@@ -375,6 +405,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(productoCatalogadoTienda);
         db.execSQL(procesoCatalogacionObjeciones);
         db.execSQL(tiendaMarca);
+
+        db.execSQL(tonoPalett);
+        db.execSQL(precioPalett);
     }
 
     @Override
@@ -395,6 +428,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
             db.execSQL(tiendaMarca);
+
+            db.execSQL(tonoPalett);
+            db.execSQL(precioPalett);
 
         }
 

@@ -97,7 +97,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     private TextView txtEncargado, frentes, surtido, exhi, inventario, fotos;
     final int REQUEST_CODE_ASK_PERMISSIONS = 123;
-    int idPromotor, idTienda;
+    int idPromotor, idTienda, idTipo;
     private BDopenHelper DB = null;
     private EnviarDatos enviar;
     private Spinner spinnerEnc;
@@ -148,6 +148,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menutienda);
 
+        RequestParams rp = new RequestParams();
+        Intent recibeIdTi = getIntent();
+
+        idTienda = recibeIdTi.getIntExtra("idTienda", 0);
+        idPromotor = recibeIdTi.getIntExtra("idPromotor", 0);
+        idTipo = recibeIdTi.getIntExtra("idTipo", 0);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar_menu_principal);
 
@@ -166,13 +173,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         setUpMenu();
 
 
-        RequestParams rp = new RequestParams();
-        Intent recibeIdTi = getIntent();
+
         enviar = new EnviarDatos(this);
 
-        idTienda = recibeIdTi.getIntExtra("idTienda", 0);
-        idPromotor = recibeIdTi.getIntExtra("idPromotor", 0);
-        //idTipoTienda = recibeIdTi.getIntExtra("idTipo", 0);
 
 
         //registrar views
@@ -408,6 +411,19 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
         }
+
+        if (idTipo == 2 ){
+
+            final MenuTiendaModel item15 = new MenuTiendaModel();
+            item15.setIdMenu(15);
+            item15.setNombreMenu("Censo Palette");
+            item15.setImage("ic_autorenew_grey_600_24dp");
+            array.add(item15);
+
+        }
+
+
+
 
         return array;
     }
@@ -1577,13 +1593,27 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 				avanceGestion();
 
 				break;
+            case 15:
+                pallet();
+
+                break;
 
 		}
 
 
     }
 
-	private void avanceGestion() {
+    private void pallet() {
+
+	    Intent intent = new Intent(this, CapturaEspecial.class);
+	    intent.putExtra("idTienda", idTienda);
+	    intent.putExtra("idPromotor", idPromotor);
+
+	    startActivity(intent);
+
+    }
+
+    private void avanceGestion() {
 
 		Intent intent = new Intent(this, AvanceGestion.class);
 
