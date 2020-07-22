@@ -159,6 +159,7 @@
 
 
                     <EditText
+                        android:id="@+id/edit_precio"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"

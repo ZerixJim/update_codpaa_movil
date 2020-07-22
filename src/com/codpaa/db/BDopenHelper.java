@@ -342,7 +342,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 DbEstructure.TonoPallet.TONOS + " int," +
                 DbEstructure.TonoPallet.PROMOTOR + " int," +
                 DbEstructure.TonoPallet.FECHA + " varchar(11)," +
-                DbEstructure.TonoPallet.STATUS + " int(1)," +
+                DbEstructure.TonoPallet.STATUS + " int(1) default 1," +
                 "primary key (" +
                 DbEstructure.TonoPallet.ID_TIENDA +"," + DbEstructure.TonoPallet.FECHA +
                 ")" +

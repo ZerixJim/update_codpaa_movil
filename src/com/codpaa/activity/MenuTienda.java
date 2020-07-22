@@ -366,6 +366,20 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             item10.setImage("ic_camera_grey600_24dp");
             array.add(item10);
 
+
+
+            if (idTipo == 2 ){
+
+                final MenuTiendaModel item15 = new MenuTiendaModel();
+                item15.setIdMenu(15);
+                item15.setNombreMenu("Censo Palette");
+                item15.setImage("ic_autorenew_grey_600_24dp");
+                array.add(item15);
+
+            }
+
+
+
             final MenuTiendaModel item11 = new MenuTiendaModel();
             item11.setIdMenu(11);
             item11.setNombreMenu("Actualizar producto");
@@ -412,15 +426,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         }
 
-        if (idTipo == 2 ){
 
-            final MenuTiendaModel item15 = new MenuTiendaModel();
-            item15.setIdMenu(15);
-            item15.setNombreMenu("Censo Palette");
-            item15.setImage("ic_autorenew_grey_600_24dp");
-            array.add(item15);
-
-        }
 
 
 

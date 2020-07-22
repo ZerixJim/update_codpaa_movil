@@ -1217,6 +1217,40 @@ public class EnviarDatos {
 	}
 
 
+	public void sendTonos(){
+
+
+		SQLiteDatabase db = new BDopenHelper(context).getReadableDatabase();
+
+		Cursor cursor = db.rawQuery("select * from "+ DbEstructure.TonoPallet.TABLE_NAME + " " +
+				"" +
+				" where " + DbEstructure.TonoPallet.STATUS +"= 1", null);
+
+
+		if (cursor.getCount() > 0){
+
+			for (cursor.moveToFirst();!cursor.isAfterLast(); cursor.moveToNext()){
+
+
+
+
+
+
+
+
+			}
+
+
+
+		}
+
+
+
+	}
+
+
+
+
 	private List<Producto> getProductListSendToServer(){
 		List<Producto> list = new ArrayList<>();
 
@@ -1247,7 +1281,7 @@ public class EnviarDatos {
 
 					Cursor cursorObjeciones = db.rawQuery( sql, null);
 
-					Log.d("sql", sql );
+					//Log.d("sql", sql );
 
 					if (cursorObjeciones.getCount() > 0){
 

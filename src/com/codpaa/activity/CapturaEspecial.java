@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,13 +26,12 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 public class CapturaEspecial extends AppCompatActivity implements View.OnClickListener {
 
     private RadioGroup radioTono;
-    private EditText editFrentes, editTonos;
+    private EditText editFrentes, editTonos, editPrecio;
     private TextInputLayout inputTono, inputFrente;
     private Spinner spinnerMarca;
     private int idTienda, idPromotor;
@@ -56,6 +54,7 @@ public class CapturaEspecial extends AppCompatActivity implements View.OnClickLi
 
         editFrentes = findViewById(R.id.edit_fretes_tono);
         editTonos = findViewById(R.id.edit_tonos_cantidad);
+        editPrecio = findViewById(R.id.edit_precio);
 
         idTienda = getIntent().getIntExtra("idTienda", 0);
         idPromotor = getIntent().getIntExtra("idPromotor", 0);
@@ -178,7 +177,9 @@ public class CapturaEspecial extends AppCompatActivity implements View.OnClickLi
                     cv.put(DbEstructure.TonoPallet.FRENTES, editFrentes.getText().toString());
                     cv.put(DbEstructure.TonoPallet.TONOS, editTonos.getText().toString());
 
-                    if(db.insert(DbEstructure.TonoPallet.TABLE_NAME, null, cv) > 0){
+
+
+                    if(db.insertWithOnConflict(DbEstructure.TonoPallet.TABLE_NAME, null, cv, SQLiteDatabase.CONFLICT_REPLACE) > 0){
 
                         Toast.makeText(this, "Guardado", Toast.LENGTH_SHORT).show();
 
@@ -197,9 +198,6 @@ public class CapturaEspecial extends AppCompatActivity implements View.OnClickLi
                 }
 
 
-                //todo sending info
-
-
 
             }else {
 
@@ -210,7 +208,7 @@ public class CapturaEspecial extends AppCompatActivity implements View.OnClickLi
                 cv.put(DbEstructure.TonoPallet.CATEGORIA, radio.getText().toString());
                 cv.put(DbEstructure.TonoPallet.FECHA, date);
 
-                if(db.insert(DbEstructure.TonoPallet.TABLE_NAME, null, cv) > 0){
+                if(db.insertWithOnConflict(DbEstructure.TonoPallet.TABLE_NAME, null, cv, SQLiteDatabase.CONFLICT_REPLACE) > 0){
 
                     Toast.makeText(this, "Guardado", Toast.LENGTH_SHORT).show();
                     clearTonos();
@@ -233,19 +231,77 @@ public class CapturaEspecial extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void guardarPrecios(){
+    private void clearTonos() {
 
+
+
+        editTonos.setText("");
+        editFrentes.setText("");
 
     }
 
+    private void guardarPrecios(){
+
+        MarcaModel m = (MarcaModel) spinnerMarca.getSelectedItem();
+
+        if (m.getId() > 0 ) {
 
 
-    private void clearTonos(){
+            if (editPrecio.getText().toString().length() > 0 ){
 
 
-        editFrentes.setText("");
-        editTonos.setText("");
-        radioTono.clearCheck();
+                Calendar calendar = Calendar.getInstance();
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Utilities.DATE_FORMAT_USA, Locale.getDefault());
+
+
+                String date = simpleDateFormat.format(calendar.getTime());
+
+
+                SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
+
+
+                ContentValues cv = new ContentValues();
+                cv.put(DbEstructure.PrecioMarca.ID_TIENDA, idTienda);
+                cv.put(DbEstructure.PrecioMarca.ID_MARCA, m.getId());
+                cv.put(DbEstructure.PrecioMarca.PRICE, editPrecio.getText().toString());
+                cv.put(DbEstructure.PrecioMarca.FECHA, date);
+
+                if(db.insertWithOnConflict(DbEstructure.PrecioMarca.TABLE_NAME, null, cv, SQLiteDatabase.CONFLICT_REPLACE) > 0){
+
+
+                    Toast.makeText(this, "Guardado", Toast.LENGTH_SHORT).show();
+
+                    spinnerMarca.setSelection(0);
+                    editPrecio.setText("");
+
+
+
+                }else {
+
+                    Toast.makeText(this, "error al guardar", Toast.LENGTH_SHORT).show();
+
+                }
+
+
+
+
+            }else {
+
+                Toast.makeText(this, "precio faltante", Toast.LENGTH_SHORT).show();
+            }
+
+
+
+        }else{
+
+            Toast.makeText(this, "Selecciona Marca", Toast.LENGTH_SHORT).show();
+
+
+        }
+
+
+
 
     }
 
