@@ -20,6 +20,7 @@ import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.provider.DbEstructure;
+import com.codpaa.update.EnviarDatos;
 import com.codpaa.util.Utilities;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -221,6 +222,9 @@ public class CapturaEspecial extends AppCompatActivity implements View.OnClickLi
 
             db.close();
 
+            EnviarDatos env = new EnviarDatos(this);
+            env.sendTonos();
+
         }else{
 
             Toast.makeText(this, "Selecciona si existen tonos de tinte", Toast.LENGTH_SHORT).show();
@@ -276,6 +280,10 @@ public class CapturaEspecial extends AppCompatActivity implements View.OnClickLi
                     editPrecio.setText("");
 
 
+                    EnviarDatos env = new EnviarDatos(this);
+                    env.sendPrecioMarca();
+
+
 
                 }else {
 
@@ -284,7 +292,7 @@ public class CapturaEspecial extends AppCompatActivity implements View.OnClickLi
                 }
 
 
-
+                db.close();
 
             }else {
 

@@ -488,6 +488,9 @@ public class GeoLocalizar extends Service {
 					enviarEstatus();
 
 
+					sendHenkel();
+
+
 					Looper.loop();
 				} catch (Exception e) {
 
@@ -528,6 +531,16 @@ public class GeoLocalizar extends Service {
 			client.post(Utilities.WEB_SERVICE_CODPAA + "send_impulsor.php", rp, new ProductoEstatusResponse(con));
 
 		}
+
+
+	}
+
+
+	private void sendHenkel(){
+
+		EnviarDatos env = new EnviarDatos(con);
+		env.sendTonos();
+		env.sendPrecioMarca();
 
 
 	}

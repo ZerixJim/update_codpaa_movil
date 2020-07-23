@@ -48,6 +48,7 @@ import com.loopj.android.http.*;
 import com.codpaa.db.BDopenHelper;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 
 public class EnviarDatos {
@@ -1232,10 +1233,67 @@ public class EnviarDatos {
 			for (cursor.moveToFirst();!cursor.isAfterLast(); cursor.moveToNext()){
 
 
+				JSONObject jsonObject = new JSONObject();
+
+				try {
+					jsonObject.put(DbEstructure.TonoPallet.ID_TIENDA, cursor.getInt(cursor.getColumnIndex(DbEstructure.TonoPallet.ID_TIENDA)));
+					jsonObject.put(DbEstructure.TonoPallet.CATEGORIA, cursor.getString(cursor.getColumnIndex(DbEstructure.TonoPallet.CATEGORIA)));
+					jsonObject.put(DbEstructure.TonoPallet.FRENTES, cursor.getInt(cursor.getColumnIndex(DbEstructure.TonoPallet.FRENTES)));
+					jsonObject.put(DbEstructure.TonoPallet.TONOS, cursor.getInt(cursor.getColumnIndex(DbEstructure.TonoPallet.TONOS)));
+					jsonObject.put(DbEstructure.TonoPallet.PROMOTOR, cursor.getInt(cursor.getColumnIndex(DbEstructure.TonoPallet.PROMOTOR)));
+					jsonObject.put(DbEstructure.TonoPallet.FECHA, cursor.getString(cursor.getColumnIndex(DbEstructure.TonoPallet.FECHA)));
+
+
+					AsyncHttpClient client = new AsyncHttpClient();
+					client.addHeader("Authorization", "908203409802309480938209-4395&64");
+
+					StringEntity entity = new StringEntity(jsonObject.toString());
+
+					client.post(context,Utilities.API_PRODUCTION + "tiendas/tono", entity, "application/json", new JsonHttpResponseHandler(){
+
+						@Override
+						public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+							super.onSuccess(statusCode, headers, response);
+
+
+							try {
+								if (response.getBoolean("q")){
+
+									SQLiteDatabase db  = new BDopenHelper(context).getWritableDatabase();
+
+									ContentValues cv = new ContentValues();
+									cv.put(DbEstructure.TonoPallet.STATUS, 2);
+
+									JSONObject object = response.getJSONObject("datos");
+
+									db.update(DbEstructure.TonoPallet.TABLE_NAME,cv,DbEstructure.TonoPallet.ID_TIENDA+ "=" + object.getInt(DbEstructure.TonoPallet.ID_TIENDA) + "" +
+											" and " + DbEstructure.TonoPallet.FECHA + "='" + object.getString(DbEstructure.TonoPallet.FECHA) + "'" , null);
+
+
+
+								}
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
 
 
 
 
+
+
+						}
+
+						@Override
+						public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+							super.onFailure(statusCode, headers, throwable, errorResponse);
+						}
+					});
+
+
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
 
 			}
@@ -1244,6 +1302,96 @@ public class EnviarDatos {
 
 		}
 
+		cursor.close();
+		db.close();
+
+
+
+	}
+
+
+
+	public void sendPrecioMarca(){
+
+		SQLiteDatabase db = new BDopenHelper(context).getReadableDatabase();
+
+		Cursor cursor = db.rawQuery("select * from "+ DbEstructure.PrecioMarca.TABLE_NAME + " " +
+				"" +
+				" where " + DbEstructure.PrecioMarca.STATUS +"= 1", null);
+
+
+
+
+		if (cursor.getCount() > 0) {
+
+			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+
+
+				JSONObject jsonObject = new JSONObject();
+
+				try {
+					jsonObject.put(DbEstructure.PrecioMarca.ID_TIENDA, cursor.getInt(cursor.getColumnIndex(DbEstructure.PrecioMarca.ID_TIENDA)));
+					jsonObject.put(DbEstructure.PrecioMarca.ID_MARCA, cursor.getInt(cursor.getColumnIndex(DbEstructure.PrecioMarca.ID_MARCA)));
+					jsonObject.put(DbEstructure.PrecioMarca.PRICE, cursor.getFloat(cursor.getColumnIndex(DbEstructure.PrecioMarca.PRICE)));
+					jsonObject.put(DbEstructure.PrecioMarca.FECHA, cursor.getString(cursor.getColumnIndex(DbEstructure.PrecioMarca.FECHA)));
+
+
+					AsyncHttpClient client = new AsyncHttpClient();
+					client.addHeader("Authorization", "908203409802309480938209-4395&64");
+
+					StringEntity entity = new StringEntity(jsonObject.toString());
+
+					client.post(context, Utilities.API_PRODUCTION + "tiendas/precio-marca", entity, "application/json", new JsonHttpResponseHandler() {
+
+						@Override
+						public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+							super.onSuccess(statusCode, headers, response);
+
+
+							Log.d("successprecio", response.toString());
+
+							try {
+								if (response.getBoolean("q")) {
+
+									SQLiteDatabase db2 = new BDopenHelper(context).getWritableDatabase();
+
+									ContentValues cv = new ContentValues();
+									cv.put(DbEstructure.PrecioMarca.STATUS, 2);
+
+									JSONObject object = response.getJSONObject("datos");
+
+									db2.update(DbEstructure.PrecioMarca.TABLE_NAME, cv, DbEstructure.PrecioMarca.ID_TIENDA + "=" + object.getInt(DbEstructure.PrecioMarca.ID_TIENDA) + "" +
+											" and " + DbEstructure.PrecioMarca.FECHA + "='" + object.getString(DbEstructure.PrecioMarca.FECHA) + "' and " + DbEstructure.PrecioMarca.ID_MARCA + "="
+											+ object.getInt(DbEstructure.PrecioMarca.ID_MARCA), null);
+
+									db2.close();
+
+
+								}
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+
+
+						}
+
+						@Override
+						public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+							super.onFailure(statusCode, headers, throwable, errorResponse);
+						}
+					});
+
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+
+			}
+
+		}
+
+		cursor.close();
 
 
 	}

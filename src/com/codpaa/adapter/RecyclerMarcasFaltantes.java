@@ -45,13 +45,16 @@ public class RecyclerMarcasFaltantes extends RecyclerView.Adapter<RecyclerMarcas
 
 
         if (mm.getNumbrePhotos() > 0){
-
-            holder.check.setVisibility(View.VISIBLE);
-
+            holder.photo.setVisibility(View.VISIBLE);
         }else{
+            holder.photo.setVisibility(View.INVISIBLE);
+        }
 
-            holder.check.setVisibility(View.INVISIBLE);
 
+        if (mm.getNumberFrentes() > 0){
+            holder.frentes.setVisibility(View.VISIBLE);
+        }else {
+            holder.frentes.setVisibility(View.INVISIBLE);
         }
 
 
@@ -67,13 +70,15 @@ public class RecyclerMarcasFaltantes extends RecyclerView.Adapter<RecyclerMarcas
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView nombreMarca;
-        private ImageView check;
+        private ImageView check, photo, frentes;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             nombreMarca = itemView.findViewById(R.id.nombre_marca);
             check = itemView.findViewById(R.id.check);
+            photo = itemView.findViewById(R.id.photo);
+            frentes = itemView.findViewById(R.id.frentes);
 
         }
     }

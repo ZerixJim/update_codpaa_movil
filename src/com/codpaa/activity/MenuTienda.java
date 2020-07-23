@@ -368,12 +368,12 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
 
-            if (idTipo == 2 ){
+            if (idTipo == 2 && marcaChecker()){
 
                 final MenuTiendaModel item15 = new MenuTiendaModel();
                 item15.setIdMenu(15);
                 item15.setNombreMenu("Censo Palette");
-                item15.setImage("ic_autorenew_grey_600_24dp");
+                item15.setImage("ic_warning");
                 array.add(item15);
 
             }
@@ -487,6 +487,21 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         exhi.setOnClickListener(this);
         fotos.setOnClickListener(this);
 
+    }
+
+
+    private boolean marcaChecker(){
+
+        SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select * from marca m where m.idMarca in (81, 158, 315)", null);
+
+        boolean bol = cursor.getCount() > 0;
+
+        cursor.close();
+        db.close();
+
+        return bol;
     }
 
     @Override
