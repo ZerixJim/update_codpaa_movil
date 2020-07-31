@@ -432,9 +432,11 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     protected void onResume() {
         super.onResume();
 
-        updateMessage();
+
 
         registerReceiver();
+
+        updateMessage();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Calendar c = Calendar.getInstance();
@@ -449,6 +451,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
     private void updateMessage() {
+
         int count = new BDopenHelper(this).countMessege();
 
         if (count > 0) {

@@ -43,6 +43,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteCantOpenDatabaseException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Location;
@@ -749,6 +750,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                             });
 
 
+
+
                         }
 
                     });
@@ -769,7 +772,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 activateGps("entrada");
 
 
-                base.close();
+
             }
         }
 
@@ -1196,7 +1199,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     }
 
 
-    private boolean encuestaDisponible() {
+    private boolean encuestaDisponible() throws SQLiteCantOpenDatabaseException {
 
 
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
