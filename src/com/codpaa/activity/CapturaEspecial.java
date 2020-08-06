@@ -222,8 +222,7 @@ public class CapturaEspecial extends AppCompatActivity implements View.OnClickLi
 
             db.close();
 
-            EnviarDatos env = new EnviarDatos(this);
-            env.sendTonos();
+
 
         }else{
 
@@ -231,14 +230,13 @@ public class CapturaEspecial extends AppCompatActivity implements View.OnClickLi
 
         }
 
+        EnviarDatos env = new EnviarDatos(this);
+        env.sendTonos();
 
 
     }
 
     private void clearTonos() {
-
-
-
         editTonos.setText("");
         editFrentes.setText("");
 

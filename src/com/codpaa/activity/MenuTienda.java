@@ -1109,7 +1109,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 		}*/
 
 
-        if (encuestaDisponible()) {
+        /*if (encuestaDisponible()) {
 
 
             Handler handler = new Handler();
@@ -1124,7 +1124,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         } else {
             verificarEncuesta();
-        }
+        }*/
 
 
     }
@@ -1199,7 +1199,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     }
 
 
-    private boolean encuestaDisponible() throws SQLiteCantOpenDatabaseException {
+    private boolean encuestaDisponible(){
 
 
         SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();

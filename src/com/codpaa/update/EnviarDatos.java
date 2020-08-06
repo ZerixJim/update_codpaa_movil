@@ -1224,8 +1224,8 @@ public class EnviarDatos {
 		SQLiteDatabase db = new BDopenHelper(context).getReadableDatabase();
 
 		Cursor cursor = db.rawQuery("select * from "+ DbEstructure.TonoPallet.TABLE_NAME + " " +
-				"" +
-				" where " + DbEstructure.TonoPallet.STATUS +"= 1", null);
+
+				" where " + DbEstructure.TonoPallet.STATUS +"= 1 ", null);
 
 
 		if (cursor.getCount() > 0){
@@ -1270,15 +1270,10 @@ public class EnviarDatos {
 											" and " + DbEstructure.TonoPallet.FECHA + "='" + object.getString(DbEstructure.TonoPallet.FECHA) + "'" , null);
 
 
-
 								}
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
-
-
-
-
 
 
 						}

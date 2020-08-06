@@ -13,8 +13,17 @@ public class MyRecive extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Intent myIntent = new Intent(context, GeoLocalizar.class);
-        context.startService(myIntent);
+        try{
+            Intent myIntent = new Intent(context, GeoLocalizar.class);
+            context.startService(myIntent);
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+
+        }
+
+
 
     }
 }
