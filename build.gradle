@@ -56,8 +56,8 @@ android {
     defaultConfig {
         targetSdkVersion 28
         applicationId "com.codpaa"
-        versionCode 87
-        versionName "1.3.8-1 hotfix"
+        versionCode 88
+        versionName "1.3.8-2 hotfix"
         minSdkVersion 14
     }
 
@@ -78,8 +78,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.vectordrawable:vectordrawable-animated:1.1.0'
     implementation 'androidx.exifinterface:exifinterface:1.2.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.0'
 
 
     implementation 'androidx.cardview:cardview:1.0.0'

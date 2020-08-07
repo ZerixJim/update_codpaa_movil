@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 
 
-		try {
+		/*try {
 
 			AccountManager accountManager = (AccountManager) act.getSystemService(Context.ACCOUNT_SERVICE);
 
@@ -119,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 
 				String user = accountManager.getUserData(account, "user");
+
+
 
 				iniciarActivity(user);
 
@@ -136,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		}catch (SecurityException e){
 
 			e.printStackTrace();
-		}
+		}*/
 
 
 		AsyncHttpClient clienteVersion = new AsyncHttpClient();
