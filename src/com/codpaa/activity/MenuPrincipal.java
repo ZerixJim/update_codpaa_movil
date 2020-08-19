@@ -85,9 +85,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     RecyclerView recycler;
     MenuAdapter adapter;
 
-    private BroadcastReceiver mRegistrationBroadcastReceiver, mNewMessageBroadcastReceiver;
+    private BroadcastReceiver mNewMessageBroadcastReceiver;
     private BroadcastReceiver mRegisterClose;
-    private boolean isReceiverRegistered, isReceiverMessageRegistered, isCloseReceiverRegistered;
+    private boolean isReceiverMessageRegistered, isCloseReceiverRegistered;
     private int idUsuario;
 
 
@@ -204,25 +204,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
 
-        /* implementacion de BroadCast para el registro de Gcm */
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                SharedPreferences sharedPreferences =
-                        PreferenceManager.getDefaultSharedPreferences(MenuPrincipal.this);
-                boolean sentToken =
-                        sharedPreferences.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
-
-                if (sentToken) {
-                    Log.d("Register", "Registrado");
-                } else {
-
-                    Log.d("Register", " no se pudo registrar");
-                }
-            }
-        };
-
-
         mNewMessageBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -335,13 +316,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     //metodo para registrar broadcast
     private void registerReceiver() {
         //Log.d("MenuPrincipal", "RegisterReciver");
-        if (!isReceiverRegistered) {
-            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                    new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
-            isReceiverRegistered = true;
 
-            //Log.d("MenuPrincipal", "RegisterRecive2");
-        }
 
 
         if (!isReceiverMessageRegistered) {
@@ -573,8 +548,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             e.printStackTrace();
         }
 
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
-        isReceiverRegistered = false;
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mNewMessageBroadcastReceiver);
         isReceiverMessageRegistered = false;

@@ -368,7 +368,13 @@ public class AndroidApps {
 
             TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 
-            imei = telephonyManager.getDeviceId();
+            try{
+                imei = telephonyManager.getDeviceId();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+
         }
 
         return imei;

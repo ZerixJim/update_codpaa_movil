@@ -56,6 +56,9 @@ public class MyGcmListenerService extends FirebaseMessagingService{
         super.onNewToken(s);
 
 
+        Log.d("NEW TOKEN", s);
+
+
 
     }
 
@@ -80,9 +83,12 @@ public class MyGcmListenerService extends FirebaseMessagingService{
             } /*else if (tipo.equals("cambio_estatus_producto")){
 
 
-
-
             }*/
+
+
+            Log.d("MEssage", data.get("tipo"));
+
+
 
 
         }catch (Exception e){

@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-
-    android:id="@+id/ScrollView1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#E4E4E4"
-    android:padding="@dimen/activity_horizontal_margin"
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView7"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteX="16dp"
+    tools:layout_editor_absoluteY="16dp"
+    android:fillViewport="true"
+    >
 
 
-    <ImageView
-        android:id="@+id/image_placeholder"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/ic_image_black_24dp"
-        android:layout_centerInParent="true"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
 
-    <ScrollView
+        android:id="@+id/ScrollView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#E4E4E4"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
+
+
+        <ImageView
+            android:id="@+id/image_placeholder"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_image_black_24dp"
+            custom:layout_constraintBottom_toBottomOf="parent"
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toTopOf="parent" />
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
-            android:visibility="invisible">
+            android:visibility="invisible"
+            custom:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,9 +53,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:background="#646464">
-
-
-
 
 
                     <ImageView
@@ -56,10 +67,10 @@
                         android:id="@+id/progress_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        custom:donut_unfinished_color="#ffffff"
-                        custom:donut_finished_color="#76df74"
                         android:layout_gravity="center"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        custom:donut_finished_color="#76df74"
+                        custom:donut_unfinished_color="#ffffff" />
 
                     <ImageView
                         android:id="@+id/ic_done"
@@ -67,11 +78,10 @@
                         android:layout_height="48dp"
                         android:layout_gravity="center"
                         android:src="@mipmap/ic_done"
-                        android:visibility="invisible"/>
+                        android:visibility="invisible" />
 
 
                 </FrameLayout>
-
 
 
                 <LinearLayout
@@ -85,49 +95,51 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="15dp"/>
+                        android:layout_marginBottom="15dp" />
 
                     <com.codpaa.widget.MultiSpinnerSelect
                         android:id="@+id/multi_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:layout_marginBottom="15dp"/>
+                        android:layout_marginBottom="15dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_marginBottom="15dp">
+                        android:padding="10dp">
 
                         <TextView
+                            android:id="@+id/textView3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:text="@string/tipo_carga"
                             android:layout_marginTop="10dp"
-                            android:id="@+id/textView3"/>
+                            android:text="@string/tipo_carga"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <RadioGroup
                             android:id="@+id/radioChoice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
                             android:layout_gravity="end"
                             android:gravity="end"
+                            android:orientation="horizontal"
                             android:padding="5dp">
+
                             <RadioButton
                                 android:id="@+id/radioNormal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:checked="true"
-                                android:text="normal"/>
+                                android:text="normal" />
+
                             <RadioButton
                                 android:id="@+id/radioEvento"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="por Evento"/>
+                                android:text="por Evento" />
                         </RadioGroup>
 
                     </LinearLayout>
@@ -137,41 +149,38 @@
                         android:id="@+id/spiExhPho"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:layout_marginLeft="2dp"
+                        android:layout_marginTop="5dp"
                         android:layout_marginRight="2dp"
-                        android:layout_marginBottom="15dp"/>
+                        android:layout_marginBottom="15dp" />
 
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:weightSum="2"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical"
+                        android:weightSum="2">
 
 
                         <ProgressBar
+                            android:id="@+id/progressEnviarFoto"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/progressEnviarFoto"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:visibility="gone" />
                     </LinearLayout>
 
 
-
-
                     <Button
                         android:id="@+id/btn_send_image"
                         android:layout_width="wrap_content"
-                        android:background="?android:attr/selectableItemBackground"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/accent"
                         android:layout_gravity="end"
+                        android:background="?android:attr/selectableItemBackground"
                         android:text="@string/send"
-                        />
+                        android:textColor="@color/accent" />
 
 
                 </LinearLayout>
@@ -182,14 +191,11 @@
         </androidx.cardview.widget.CardView>
 
 
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+</ScrollView>
 
-
-
-
-</RelativeLayout>
 
 
 

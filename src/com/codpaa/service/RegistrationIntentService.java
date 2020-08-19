@@ -147,7 +147,7 @@ public class RegistrationIntentService extends IntentService {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
-                    Log.d(TAG, "token send to server");
+                    Log.d(TAG, "token send to server "+ token);
 
                     if (response != null) {
                         try {

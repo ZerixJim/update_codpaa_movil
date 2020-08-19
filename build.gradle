@@ -4,7 +4,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath 'com.android.tools.build:gradle:4.0.1'
         classpath 'com.google.gms:google-services:4.3.3'
     }
 }
@@ -28,7 +28,7 @@ allprojects {
 
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     sourceSets {
         main {
@@ -54,11 +54,11 @@ android {
         release.setRoot('build-types/release')
     }
     defaultConfig {
-        targetSdkVersion 28
+        targetSdkVersion 29
         applicationId "com.codpaa"
-        versionCode 88
-        versionName "1.3.8-2 hotfix"
-        minSdkVersion 14
+        versionCode 89
+        versionName "1.3.9"
+        minSdkVersion 16
     }
 
     buildTypes {
@@ -87,7 +87,7 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.2.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.lzyzsd:circleprogress:1.1.0@aar'
-    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.6'
 
