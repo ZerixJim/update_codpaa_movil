@@ -37,20 +37,15 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static final String name= "codpaa";
     private static SQLiteDatabase.CursorFactory cursorfactory = null;
 
-    // v1.2.7 rc2 = 27
-    // v1.2.8 = 28
-    // v1.2.8 rc1 = 29
-    // v1.2.8 rc2 = 29
-    // v1.2.8 rc3 = 30
-
     // v1.2.8 rc4 = 31
     // v1.2.9 rc1 = 32
     // v1.3.1 = 33
     // v1.3.3 = 34
     // v1.3.7 = 35
     // v1.3.8 = 36
+    // v1.3.9 = 36
 
-    private static final int version = 36;
+    private static final int version = 37;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -124,7 +119,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 VisitaTienda.PRECISION + " int, " +
                 VisitaTienda.TIPO + " char(1), " +
                 VisitaTienda.ESTATUS + " int, " +
-                VisitaTienda.SEMANA + " int(3))";
+                VisitaTienda.SEMANA + " int(3)," +
+                VisitaTienda.FECHA_CAPTURA + " char(20)" +
+                ")";
         encargadoTienda = "create table if not exists " +
                 "encargadotienda(idTienda int, idPromotor int, nombre char (50), " +
                 "puesto char(20), fecha char(15))";
@@ -424,13 +421,17 @@ public class BDopenHelper extends SQLiteOpenHelper {
         }
 
 
-        if (newVersion == 36 && oldVersion == 35){
-
+        if (newVersion == 37){
 
             db.execSQL(tiendaMarca);
 
             db.execSQL(tonoPalett);
             db.execSQL(precioPalett);
+
+
+            db.execSQL("alter table " + VisitaTienda.TABLE + " add column " + VisitaTienda.FECHA_CAPTURA + " char(20) ");
+
+            db.execSQL("update "+ VisitaTienda.TABLE +"  set " + VisitaTienda.FECHA_CAPTURA + " = (substr(fecha, 7)||'-'||substr(fecha,4,2)||'-'||substr(fecha,1,2))");
 
         }
 
@@ -732,11 +733,11 @@ public class BDopenHelper extends SQLiteOpenHelper {
             baseDatosLocal.close();
     }
 
-    public void insertarLocalizacion(int idTien,int idPro, String fech,String hora, double lat, double lon, int prec, String tip, int status,int semana) throws SQLiteException{
+    public void insertarLocalizacion(int idTien,int idPro, String fech,String hora, double lat, double lon, int prec, String tip, int status,int semana, String fechaCaptura) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
 
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert into coordenadas(idTienda,idPromotor,fecha,hora,latitud,longitud,precision,tipo,status,semana) values("+idTien+","+idPro+",'"+fech+"','"+hora+"',"+lat+","+lon+","+prec+",'"+tip+"',"+status+","+semana+")");
+            baseDatosLocal.execSQL("insert into coordenadas(idTienda,idPromotor,fecha,hora,latitud,longitud,precision,tipo,status,semana, fecha_captura) values("+idTien+","+idPro+",'"+fech+"','"+hora+"',"+lat+","+lon+","+prec+",'"+tip+"',"+status+","+semana+", '"+ fechaCaptura+"')");
 
         if(baseDatosLocal != null)baseDatosLocal.close();
     }

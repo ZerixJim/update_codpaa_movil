@@ -22,6 +22,7 @@ import com.codpaa.update.EnviarDatos;
 import com.codpaa.R;
 import com.codpaa.update.UpdateInformation;
 import com.codpaa.util.Configuracion;
+import com.codpaa.util.Utilities;
 import com.codpaa.widget.DividerItemDecoration;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -716,6 +717,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         final int semana = Integer.parseInt(sem);
 
 
+
         if (!Entrada) {
 
 
@@ -734,7 +736,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                             BDopenHelper base = new BDopenHelper(getApplicationContext());
 
                             Entrada = true;
-                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "E", 1, semana);
+                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "E", 1, semana, Utilities.getCurrentDate());
 
                             Toast.makeText(MenuTienda.this, "Entrada Guardada", Toast.LENGTH_SHORT).show();
                             btnEntrada.post(new Runnable() {
@@ -832,7 +834,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                                             location = locat;
 
                                             BDopenHelper base = new BDopenHelper(getApplicationContext());
-                                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "S", 1, semana);
+                                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "S", 1, semana, Utilities.getCurrentDate());
 
                                             Salida = true;
 

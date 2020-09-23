@@ -11,7 +11,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -77,6 +80,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         dia.rol.setText(diaModel.getRol());
         dia.hora.setText(diaModel.getHora());
         dia.number.setText(String.format(Locale.getDefault(),"%d", i + 1));
+        dia.visitas.setText(diaModel.getNumVisitas() + " visitas");
 
             /*if (diaModel.getModo() == 1){
                 dia.modo.setText("promotoria");
@@ -238,7 +242,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
         TextView rol;
         TextView hora;
         TextView number;
-        TextView modo;
+        TextView modo, visitas;
         ImageView ubicacion, image;
 
         public DiaViewHolder(View itemView) {
@@ -252,6 +256,7 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             number =  itemView.findViewById(R.id.number);
             modo =  itemView.findViewById(R.id.modo);
             ubicacion = itemView.findViewById(R.id.ubicacion);
+            visitas = itemView.findViewById(R.id.visitas);
 
             image = itemView.findViewById(R.id.image);
 
@@ -307,6 +312,22 @@ public class SimpleRecyclerAdapter extends RecyclerView.Adapter<SimpleRecyclerAd
             builder.create().show();
         }
 
+    }
+
+
+
+    class RutaDiffUtil extends DiffUtil.ItemCallback<RutaDia>{
+
+
+        @Override
+        public boolean areItemsTheSame(@NonNull RutaDia oldItem, @NonNull RutaDia newItem) {
+            return oldItem.getIdTienda() == newItem.getIdTienda();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull RutaDia oldItem, @NonNull RutaDia newItem) {
+            return oldItem.getNumVisitas() == newItem.getNumVisitas();
+        }
     }
 
 

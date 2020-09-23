@@ -13,6 +13,7 @@ public class RutaDia {
     private String latitud, longitud;
     private int formato;
     private int idTipoTienda;
+    private String numVisitas;
 
     public int getFormato() {
         return formato;
@@ -92,5 +93,13 @@ public class RutaDia {
 
     public void setIdTipoTienda(int idTipoTienda) {
         this.idTipoTienda = idTipoTienda;
+    }
+
+    public String getNumVisitas() {
+        return numVisitas;
+    }
+
+    public void setNumVisitas(String numVisitas) {
+        this.numVisitas = numVisitas;
     }
 }

@@ -63,6 +63,7 @@ public class DbEstructure {
         public static final String ID_TIENDA = "idTienda";
         public static final String ID_PROMOTOR = "idPromotor";
         public static final String FECHA = "fecha";
+        public static final String FECHA_CAPTURA = "fecha_captura";
         public static final String HORA = "hora";
         public static final String LATITUD = "latitud";
         public static final String LONGITUD = "longitud";

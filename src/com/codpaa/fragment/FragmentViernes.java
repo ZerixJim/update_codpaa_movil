@@ -53,12 +53,18 @@ public class FragmentViernes extends Fragment {
         ArrayList<RutaDia> arrayRutaDia = new ArrayList<>();
 
         base = new BDopenHelper(getContext()).getReadableDatabase();
-        String viernes="select c.grupo, c.sucursal, v.rol, c.idTienda, v.idModo, c.latitud, " +
-                " c.longitud, c.idFormato, c.idTipo   " +
+        String viernes="select c.grupo, c.sucursal, v.rol, c.idTienda, v.idModo, c.latitud," +
+                " c.longitud, c.idFormato, c.idTipo , " +
+                " count(v2.idTienda) ||'/'|| (v.lunes+v.martes+v.miercoles+v.jueves + v.viernes+v.sabado+v.domingo) visitas  " +
                 " from clientes as c " +
                 " left join visitaTienda as v " +
                 " on c.idTienda = v.idTienda " +
-                " where v.viernes>=1 and idModo=" + c.getPromotorMode() +
+                " left join (select c.idTienda from coordenadas c " +
+                "  where c.semana = strftime('%W', 'now') + 1 and strftime('%Y',c.fecha_captura) = strftime('%Y' ,'now') " +
+                "   group by c.idTienda, c.fecha_captura " +
+                " ) as v2 on (v2.idTienda = v.idTienda) " +
+                " where v.viernes>=1 and idModo=" +c.getPromotorMode() +
+                " group by v.idTienda " +
                 " order by v.viernes asc";
         Cursor cursor = base.rawQuery(viernes, null);
 
@@ -75,6 +81,7 @@ public class FragmentViernes extends Fragment {
             ruta.setLongitud(cursor.getString(cursor.getColumnIndex("longitud")));
             ruta.setFormato(cursor.getInt(cursor.getColumnIndex("idFormato")));
             ruta.setIdTipoTienda(cursor.getInt(cursor.getColumnIndex("idTipo")));
+            ruta.setNumVisitas(cursor.getString(cursor.getColumnIndex("visitas")));
 
 
             arrayRutaDia.add(ruta);

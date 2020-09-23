@@ -11,7 +11,8 @@
     android:orientation="vertical"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardCornerRadius="2dp"
-    card_view:cardElevation="2dp">
+    card_view:cardElevation="2dp"
+    xmlns:app="http://schemas.android.com/tools">
 
 
     <RelativeLayout
@@ -123,10 +124,25 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:layout_centerVertical="true"
-            android:tint="@color/grey_500"
+            app:tint="@color/grey_500"
             android:foreground="?android:attr/selectableItemBackground"
             android:layout_below="@+id/layout_tienda"
             android:layout_marginBottom="5dp"/>
+
+
+
+        <TextView
+            android:id="@+id/visitas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="#8e8e8e"
+            android:textSize="10sp"
+            android:text="0/0"
+
+            />
 
     </RelativeLayout>
 

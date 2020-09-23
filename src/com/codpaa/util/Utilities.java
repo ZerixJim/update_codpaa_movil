@@ -87,4 +87,15 @@ public class Utilities {
     }
 
 
+    public static String getCurrentDate(){
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_USA, Locale.getDefault());
+
+        return dateFormat.format(new Date());
+
+    }
+
+
+
+
 }
