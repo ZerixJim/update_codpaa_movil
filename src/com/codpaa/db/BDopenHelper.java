@@ -578,7 +578,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public void borrarVisitas(String fecha, int sta){
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("delete from coordenadas where fecha!='"+fecha+"' and status="+sta);
+            baseDatosLocal.execSQL(" delete from coordenadas where semana != strftime('%W', 'now') + 1 " +
+                    " and status="+sta);
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
