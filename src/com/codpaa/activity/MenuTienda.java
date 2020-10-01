@@ -369,8 +369,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             array.add(item10);
 
 
-
-            if (idTipo == 2 && marcaChecker()){
+            //palette disabled
+           /* if (idTipo == 2 && marcaChecker()){
 
                 final MenuTiendaModel item15 = new MenuTiendaModel();
                 item15.setIdMenu(15);
@@ -378,7 +378,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 item15.setImage("ic_warning");
                 array.add(item15);
 
-            }
+            }*/
 
 
 

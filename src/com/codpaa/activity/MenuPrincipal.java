@@ -13,6 +13,7 @@ import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -30,6 +31,9 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
+
+import com.codpaa.provider.DbEstructure;
+import com.codpaa.util.Utilities;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -64,7 +68,15 @@ import com.codpaa.util.QuickstartPreferences;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -506,8 +518,14 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         super.onStart();
 
 
-    }
+        if (checkTableTiendaEmpy()){
 
+            getTiendaRows();
+
+        }
+
+
+    }
 
 
 
@@ -770,6 +788,99 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         cursor.close();
 
+
+
+    }
+
+
+    private void getTiendaRows(){
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("Authorization", "84902384909032809480932-498-3444");
+
+        RequestParams rp = new RequestParams();
+        rp.put("idPromo", idUsuario);
+
+
+        if (Utilities.verificarConexion(this)){
+            client.get(Utilities.API_PRODUCTION + "tiendas/visits-by-week",rp, new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                    super.onSuccess(statusCode, headers, response);
+
+                    if (response.length() > 0){
+
+                        int size  =  response.length();
+
+
+                        SQLiteDatabase db = new BDopenHelper(MenuPrincipal.this).getWritableDatabase();
+
+                        for (int i = 0 ; i < size ; i++){
+
+
+
+                            try {
+
+                                ContentValues cv = new ContentValues();
+                                cv.put("idTienda", response.getJSONObject(i).getInt("idTienda"));
+                                cv.put("idPromotor", response.getJSONObject(i).getInt("idCelular"));
+                                cv.put("fecha", response.getJSONObject(i).getString("fecha"));
+                                cv.put("fecha_captura", response.getJSONObject(i).getString("fecha_captura"));
+                                cv.put("hora", response.getJSONObject(i).getString("hora"));
+                                cv.put("latitud", response.getJSONObject(i).getDouble("latitud"));
+                                cv.put("longitud", response.getJSONObject(i).getDouble("longitud"));
+                                cv.put("tipo", response.getJSONObject(i).getString("tipo"));
+                                cv.put("semana", response.getJSONObject(i).getInt("semana"));
+                                cv.put("status", 2);
+                                cv.put("precision", 12);
+
+                                db.insert("coordenadas", null, cv);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+
+                        }
+
+                        db.close();
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+
+
+
+
+                }
+            });
+        }
+
+
+    }
+
+
+
+    private boolean checkTableTiendaEmpy(){
+
+        boolean empty;
+
+        SQLiteDatabase sql = new BDopenHelper(this).getReadableDatabase();
+
+        Cursor cursor = sql.rawQuery("select * from coordenadas", null);
+
+        empty = cursor.getCount() == 0;
+
+        cursor.close();
+        sql.close();
+
+        return empty;
 
 
     }
