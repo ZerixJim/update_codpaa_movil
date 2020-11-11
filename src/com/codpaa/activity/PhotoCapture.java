@@ -307,7 +307,10 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 		String timeStamp = new SimpleDateFormat("ddMMyyyykm", Locale.getDefault()).format(new Date());
 		String imageFileName = idTienda+timeStamp;
-		File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+		File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+                //Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
 
 
         File codpaaDir = new File(storageDir.getPath() + "/.codpaa/");
@@ -335,8 +338,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 			Log.v("PictireCir", "Directorio Ya Existe");
 		}
 
-
-        //mCurrentPhotoPath = image.getAbsolutePath();
 
 		return File.createTempFile(imageFileName, ".jpg", codpaaDir);
 	}
