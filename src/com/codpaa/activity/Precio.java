@@ -26,7 +26,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -149,22 +148,17 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
+		int itemId = item.getItemId();
+		if (itemId == android.R.id.home) {
+			this.finish();
+			return true;
+		} else if (itemId == R.id.save_inteligencia) {
+			guardar();
 
-            case android.R.id.home:
-                this.finish();
-                return true;
-
-			case R.id.save_inteligencia:
-
-				guardar();
-
-				return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
     @Override
 	protected void onDestroy() {

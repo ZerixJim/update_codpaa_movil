@@ -68,16 +68,11 @@ public class MostrarCalendario extends AppCompatActivity implements OnClickListe
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
-		switch (item.getItemId()) {
-
-
-			case android.R.id.home:
-				this.finish();
-				return true;
-
-			default:
-				return super.onOptionsItemSelected(item);
+		if (item.getItemId() == android.R.id.home) {
+			this.finish();
+			return true;
 		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

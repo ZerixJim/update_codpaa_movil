@@ -170,19 +170,16 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-
-
-            case android.R.id.home:
-                this.finish();
-                return true;
-            case R.id.save_venta:
-                guardar();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+		int itemId = item.getItemId();
+		if (itemId == android.R.id.home) {
+			this.finish();
+			return true;
+		} else if (itemId == R.id.save_venta) {
+			guardar();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -210,32 +207,24 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		
-		switch(group.getCheckedRadioButtonId()) {
-		
-            case R.id.radio0:
-                //cantidad.setVisibility(View.VISIBLE);
-                cantidadLayout.setVisibility(View.VISIBLE);
-                cantidad.requestFocus();
-                im.showSoftInput(cantidad, 0);
-                cardView.setVisibility(View.VISIBLE);
-				txtCantidad.setVisibility(View.VISIBLE);
 
-				cardComent.setVisibility(View.INVISIBLE);
+		int checkedRadioButtonId = group.getCheckedRadioButtonId();
+		if (checkedRadioButtonId == R.id.radio0) {//cantidad.setVisibility(View.VISIBLE);
+			cantidadLayout.setVisibility(View.VISIBLE);
+			cantidad.requestFocus();
+			im.showSoftInput(cantidad, 0);
+			cardView.setVisibility(View.VISIBLE);
+			txtCantidad.setVisibility(View.VISIBLE);
 
+			cardComent.setVisibility(View.INVISIBLE);
+		} else if (checkedRadioButtonId == R.id.radio1) {//cantidad.setVisibility(View.INVISIBLE);
+			cantidadLayout.setVisibility(View.INVISIBLE);
+			im.hideSoftInputFromWindow(cantidad.getWindowToken(), 0);
 
-                break;
-            case R.id.radio1:
-                //cantidad.setVisibility(View.INVISIBLE);
-                cantidadLayout.setVisibility(View.INVISIBLE);
-                im.hideSoftInputFromWindow(cantidad.getWindowToken(), 0);
+			cardView.setVisibility(View.INVISIBLE);
+			txtCantidad.setVisibility(View.INVISIBLE);
 
-                cardView.setVisibility(View.INVISIBLE);
-				txtCantidad.setVisibility(View.INVISIBLE);
-
-				cardComent.setVisibility(View.VISIBLE);
-
-                break;
+			cardComent.setVisibility(View.VISIBLE);
 		}
 		
 	}

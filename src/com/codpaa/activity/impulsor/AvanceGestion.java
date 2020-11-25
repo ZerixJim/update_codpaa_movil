@@ -143,14 +143,6 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
 
 
 
-    private void syncRemoteFolio(){
-
-
-
-
-    }
-
-
 
     private List<AvanceGestionModel> getList(){
 
@@ -247,23 +239,17 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
     public boolean onOptionsItemSelected(MenuItem item) {
 
 
-        switch (item.getItemId()){
-
-            case android.R.id.home:
-                finish();
-                return true;
-
-            case R.id.enviar:
-
-                sendFirmasToServer();
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            finish();
+            return true;
+        } else if (itemId == R.id.enviar) {
+            sendFirmasToServer();
 
 
-                return true;
-
-
-            default:
-                return super.onOptionsItemSelected(item);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
 
     }
 
@@ -286,17 +272,8 @@ public class AvanceGestion extends AppCompatActivity implements AvanceGestionRec
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
-
-
-            case R.id.float_button:
-
-                showDialogContrato();
-
-
-                break;
-
-
+        if (v.getId() == R.id.float_button) {
+            showDialogContrato();
         }
 
 

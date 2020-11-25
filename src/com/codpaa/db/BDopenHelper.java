@@ -35,7 +35,7 @@ import java.util.Locale;
 public class BDopenHelper extends SQLiteOpenHelper {
 
     private static final String name= "codpaa";
-    private static SQLiteDatabase.CursorFactory cursorfactory = null;
+    private static final SQLiteDatabase.CursorFactory cursorfactory = null;
 
     // v1.2.8 rc4 = 31
     // v1.2.9 rc1 = 32

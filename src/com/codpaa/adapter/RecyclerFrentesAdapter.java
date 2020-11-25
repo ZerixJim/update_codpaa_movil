@@ -98,31 +98,24 @@ public class RecyclerFrentesAdapter extends RecyclerView.Adapter<RecyclerFrentes
 
             String selected = parent.getItemAtPosition(position).toString();
 
-            switch (selected){
+            switch (selected) {
                 case "Frentes en Mueble":
-
-
-                    if (listCharola.getVisibility() == View.GONE){
+                    if (listCharola.getVisibility() == View.GONE) {
                         listCharola.setVisibility(View.VISIBLE);
                     }
 
                     listFilas.setVisibility(View.GONE);
-
                     break;
-
                 case "Frentes linea de Cajas":
-
                     if (listFilas.getVisibility() == View.GONE)
                         listFilas.setVisibility(View.VISIBLE);
 
                     if (listCharola.getVisibility() == View.VISIBLE)
                         listCharola.setVisibility(View.GONE);
                     break;
-
                 case "Inventario":
                     listFilas.setVisibility(View.GONE);
                     listCharola.setVisibility(View.GONE);
-
                     break;
             }
 

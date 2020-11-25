@@ -2,7 +2,6 @@ package com.codpaa.activity;
 
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +19,6 @@ public class EnviarInformacion extends AppCompatActivity implements OnClickListe
 
 	EnviarDatos enviar;
 	Button btnVisitas, btnFotos;
-	SQLiteDatabase base;
 	
 	
 	@Override
@@ -58,19 +56,13 @@ public class EnviarInformacion extends AppCompatActivity implements OnClickListe
 
 	@Override
 	public void onClick(View v) {
-		
-		switch(v.getId()) {
-		case R.id.btnVisitasP:
+
+		int id = v.getId();
+		if (id == R.id.btnVisitasP) {
 			visitas();
-			
-			break;
-
-			
-		case R.id.btnFotosNo:
-			Intent i = new Intent(this,ImageSheduler.class);
+		} else if (id == R.id.btnFotosNo) {
+			Intent i = new Intent(this, ImageSheduler.class);
 			startActivity(i);
-			break;
-
 		}
 
 	}
@@ -78,16 +70,11 @@ public class EnviarInformacion extends AppCompatActivity implements OnClickListe
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
-		switch (item.getItemId()) {
-
-
-			case android.R.id.home:
-				this.finish();
-				return true;
-
-			default:
-				return super.onOptionsItemSelected(item);
+		if (item.getItemId() == android.R.id.home) {
+			this.finish();
+			return true;
 		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 	

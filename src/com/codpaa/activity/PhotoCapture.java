@@ -39,7 +39,6 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -55,14 +54,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.DialogCompat;
 import androidx.core.content.ContextCompat;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import android.util.Log;
@@ -113,13 +109,12 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private String mCurrentPhotoPath;
     private boolean imagenEspera = false;
     private Spinner spiMarca, spiExh;
-    private ArrayList<MarcaModel> array = new ArrayList<>();
+    private final ArrayList<MarcaModel> array = new ArrayList<>();
  	private SQLiteDatabase base;
     private MultiSpinnerSelect multiSpinnerSelect;
 
     private Button btnSendImage;
 
-    private int startCamera;
 
     private Uri imageToUploadUri;
 
@@ -203,23 +198,17 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-
-
-            case android.R.id.home:
-                this.finish();
-                return true;
-            case R.id.iniciar_camara:
-                dispatchTakePictureIntent();
-                return true;
-            case R.id.save_photo:
-
-                //EnviarImagen();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            this.finish();
+            return true;
+        } else if (itemId == R.id.iniciar_camara) {
+            dispatchTakePictureIntent();
+            return true;
+        } else if (itemId == R.id.save_photo) {//EnviarImagen();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -238,64 +227,49 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private void dispatchTakePictureIntent(){
         //intention start camera
 
-        camaraPermission();
-    	Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //if exists respost to camera
-    	if(takePictureIntent.resolveActivity(getPackageManager()) != null){
-    		File photoFile;
-    		try {
-                photoFile = createImageFile();
+        if (cameraPermissionEneabled()){
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            //if exists respost to camera
+            if(takePictureIntent.resolveActivity(getPackageManager()) != null){
+                File photoFile;
+                try {
+                    photoFile = createImageFile();
 
-                Uri photoUri;
+                    Uri photoUri;
 
-                if (Build.VERSION.SDK_INT >= 24){
-                    photoUri = PhotoProviderVan.getPhotoUri(photoFile);
-                }else {
+                    if (Build.VERSION.SDK_INT >= 24){
+                        photoUri = PhotoProviderVan.getPhotoUri(photoFile);
+                    }else {
 
-                    photoUri = Uri.fromFile(photoFile);
+                        photoUri = Uri.fromFile(photoFile);
 
+                    }
+
+
+                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                    StrictMode.setVmPolicy(builder.build());
+
+
+
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+
+                    imageToUploadUri = PhotoProviderVan.getPhotoUri(photoFile);
+
+                    startActivityForResult(takePictureIntent, CAMERA_PHOTO);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
 
-                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                StrictMode.setVmPolicy(builder.build());
+            }
 
 
-
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-
-                imageToUploadUri = PhotoProviderVan.getPhotoUri(photoFile);
-
-                startActivityForResult(takePictureIntent, CAMERA_PHOTO);
-
-            } catch (IOException e) {
-				startCamera++;
-
-                if (startCamera >= 3){
+        }else{
+            camaraPermission();
+        }
 
 
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                    alertDialog.setTitle("Permisos").setMessage("Existen permisos no activados, es necesario" +
-                            " que esten activados para el buen funcionamiento de la aplicacion," +
-                            " ¿Abrir ventana de configuraciones de permisos?").setPositiveButton("Abrir",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                            Uri.fromParts("package", getPackageName(), null));
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
-                                }
-                            }).setNegativeButton("Cancelar", null)
-                            .setCancelable(true).create().show();
-
-
-                }
-				e.printStackTrace();
-			}
-
-
-    	}
     }
 
 
@@ -1054,6 +1028,11 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
             }, CAMERA_PERMISSION);
         }
+    }
+
+
+    private boolean cameraPermissionEneabled(){
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
 

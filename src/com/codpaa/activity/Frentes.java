@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
@@ -43,7 +41,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 	private EditText Echa1,Echa2,Echa3,Echa4,Echa5,Echa6;*/
 
 	private EditText editCantidad;
-	private InputMethodManager im;
+	//private InputMethodManager im;
 	BDopenHelper baseH;
 	Toolbar toolbar;
 
@@ -73,7 +71,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		idTienda = i.getIntExtra("idTienda", 0);
 		idPromotor = i.getIntExtra("idPromotor", 0);
 
-		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		//im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
 
 		spiMarca =  findViewById(R.id.spinnerMarFre);
@@ -191,20 +189,15 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
-		switch (item.getItemId()) {
-
-
-			case android.R.id.home:
-				this.finish();
-				return true;
-
-			case R.id.save_frentes:
-				guardarDatos();
-				return true;
-
-			default:
-				return super.onOptionsItemSelected(item);
+		int itemId = item.getItemId();
+		if (itemId == android.R.id.home) {
+			this.finish();
+			return true;
+		} else if (itemId == R.id.save_frentes) {
+			guardarDatos();
+			return true;
 		}
+		return super.onOptionsItemSelected(item);
 	}
 
 
@@ -220,14 +213,14 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 	@Override
 	public void onClick(View v) {
 
-		switch(v.getId()) {
-			/*case R.id.btnf1: reQuesFocus(Echa1);break;
+		/*case R.id.btnf1: reQuesFocus(Echa1);break;
 			case R.id.btn_charola_2: reQuesFocus(Echa2);break;
 			case R.id.btnf3: reQuesFocus(Echa3);break;
 			case R.id.btnfoto: reQuesFocus(Echa4);break;
 			case R.id.btnf5: reQuesFocus(Echa5);break;
 			case R.id.btnf6: reQuesFocus(Echa6);break;*/
-			case R.id.buttonExhib: finish(); break;
+		if (v.getId() == R.id.buttonExhib) {
+			finish();
 		}
 
 
@@ -235,20 +228,20 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 
 
-	private void reQuesFocus(View v){
+	/*private void reQuesFocus(View v){
 		v.setVisibility(View.VISIBLE);
 		v.requestFocus();
 
 		im.showSoftInput(v, 0);
 
 
-	}
+	}*/
 
 
 
 	public void guardarDatos() {
 		//int cha1 = 0,cha2 = 0, cha3 = 0, cha4 = 0, cha5 = 0, cha6 = 0;
-		int cantidad = 0;
+		int cantidad;
 		//int uni, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12,v13,v14;
 
 		try {

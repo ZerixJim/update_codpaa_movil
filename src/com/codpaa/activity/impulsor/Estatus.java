@@ -46,6 +46,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import static androidx.core.view.MenuItemCompat.getActionView;
+
 
 /*
  * Created by grim on 18/05/2017.
@@ -145,7 +147,7 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
 
         MenuItem item = menu.findItem(R.id.spinner_marca_estatus);
 
-        spinner = (Spinner) MenuItemCompat.getActionView(item);
+        spinner = (Spinner) getActionView(item);
 
         if(spinner != null){
             MarcasAdapter adapter = new MarcasAdapter(this,
@@ -170,26 +172,17 @@ public class Estatus extends AppCompatActivity implements AdapterView.OnItemSele
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            finish();
 
+            return true;
+        } else if (itemId == R.id.send_status) {
+            sendEstatus();
 
-            case android.R.id.home:
-
-                finish();
-
-                return true;
-
-
-            case R.id.send_status:
-
-                sendEstatus();
-
-                return true;
-
-
-            default:
-                return super.onOptionsItemSelected(item);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
 
 
     }

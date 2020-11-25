@@ -215,10 +215,9 @@ public class CalendarioRuta extends AppCompatActivity implements ViewPager.OnPag
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                this.finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
 
            /* case R.id.nueva_tienda:
 
@@ -230,10 +229,8 @@ public class CalendarioRuta extends AppCompatActivity implements ViewPager.OnPag
 
 
                 return true;*/
-            default:
-                return super.onOptionsItemSelected(item);
-
         }
+        return super.onOptionsItemSelected(item);
 
     }
 

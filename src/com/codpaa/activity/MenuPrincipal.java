@@ -17,7 +17,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
@@ -29,10 +28,8 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
 
-import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.Utilities;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.app.ActivityCompat;
@@ -221,10 +218,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             public void onReceive(Context context, Intent intent) {
 
 
-                switch (intent.getAction()) {
-                    case QuickstartPreferences.NEW_MESSAGE:
-                        updateMessage();
-                        break;
+                if (QuickstartPreferences.NEW_MESSAGE.equals(intent.getAction())) {
+                    updateMessage();
                 }
 
 
@@ -315,13 +310,12 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSION_GET_ACCOUNDS:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (getUserName() != null) {
-                        email.setText(getUserName());
-                    }
+        if (requestCode == MY_PERMISSION_GET_ACCOUNDS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (getUserName() != null) {
+                    email.setText(getUserName());
                 }
+            }
         }
     }
 
@@ -383,36 +377,30 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.refresh_info:
-                if (verificarConexion()) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.refresh_info) {
+            if (verificarConexion()) {
 
-                    UpdateInformation upinfo = new UpdateInformation(this);
-                    //Toast.makeText(this,"Actualizando Informacion",Toast.LENGTH_SHORT).show();
+                UpdateInformation upinfo = new UpdateInformation(this);
+                //Toast.makeText(this,"Actualizando Informacion",Toast.LENGTH_SHORT).show();
 
 
-                    upinfo.updateInfo(idUsuario);
+                upinfo.updateInfo(idUsuario);
 
-                } else {
+            } else {
 
-                    Toast.makeText(this, "Se perdio la conexion a Internet", Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            case android.R.id.home:
+                Toast.makeText(this, "Se perdio la conexion a Internet", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        } else if (itemId == android.R.id.home) {//drawerLayout.openDrawer(GravityCompat.START);
+            this.finish();
+            return true;
+        } else if (itemId == R.id.avatar) {
+            drawerLayout.openDrawer(GravityCompat.START);
 
-                //drawerLayout.openDrawer(GravityCompat.START);
-                this.finish();
-                return true;
-
-            case R.id.avatar:
-
-                drawerLayout.openDrawer(GravityCompat.START);
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -441,10 +429,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         int count = new BDopenHelper(this).countMessege();
 
+        List<MenuModel> menu = adapter.getAllItems();
         if (count > 0) {
 
-
-            List<MenuModel> menu = adapter.getAllItems();
 
             for (MenuModel item : menu) {
                 if (item.getId() == 2) {
@@ -453,10 +440,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 }
             }
 
-            adapter.notifyDataSetChanged();
         } else {
-
-            List<MenuModel> menu = adapter.getAllItems();
 
             for (MenuModel item : menu) {
                 if (item.getId() == 2) {
@@ -465,8 +449,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 }
             }
 
-            adapter.notifyDataSetChanged();
         }
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -546,12 +530,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
-
-            case R.id.avatar:
-                drawerLayout.openDrawer(GravityCompat.START);
-                break;
-
+        if (v.getId() == R.id.avatar) {
+            drawerLayout.openDrawer(GravityCompat.START);
         }
     }
 
@@ -681,21 +661,19 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 //Log.d("Item press",item.getTitle().toString());
 
-                switch (item.getItemId()) {
-                    case R.id.shutdown:
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        finish();
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.shutdown) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    finish();
+                    return true;
+                } else if (itemId == R.id.configuracion) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
 
-                    case R.id.configuracion:
-                        drawerLayout.closeDrawer(GravityCompat.START);
-
-                        startConfigActivity();
-                        return true;
-
+                    startConfigActivity();
+                    return true;
                 }
 
                 return true;

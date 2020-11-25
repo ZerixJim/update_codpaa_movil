@@ -18,7 +18,7 @@ import com.codpaa.model.FrentesModel;
 
 public class FrentesCustomAdapter extends ArrayAdapter<FrentesModel> {
 
-    private ArrayList<FrentesModel> datos;
+    private final ArrayList<FrentesModel> datos;
     Context context;
     LayoutInflater inflater;
 
@@ -75,7 +75,7 @@ public class FrentesCustomAdapter extends ArrayAdapter<FrentesModel> {
 
         viewHolder.txtMarca.setText(frentesModel.getMarca());
         viewHolder.txtProducto.setText(frentesModel.getProducto());
-        viewHolder.txtCantidad.setText("Cantidad: "+String.valueOf(frentesModel.getCantidad()));
+        viewHolder.txtCantidad.setText("Cantidad: "+ frentesModel.getCantidad());
 
 
 

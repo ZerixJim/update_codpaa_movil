@@ -3,9 +3,10 @@ package com.codpaa.activity;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.widget.CompoundButton;
-import android.widget.Switch;
+
 
 import com.codpaa.R;
 import com.codpaa.util.Configuracion;
@@ -17,7 +18,7 @@ import com.codpaa.util.Configuracion;
 
 public class SettingsApplication extends AppCompatActivity {
 
-    private Switch switchImpulsor;
+    private SwitchCompat switchImpulsor;
 
 
     @Override
@@ -27,7 +28,7 @@ public class SettingsApplication extends AppCompatActivity {
         setContentView(R.layout.activity_settings_application);
 
 
-        switchImpulsor = (Switch) findViewById(R.id.switch_impulsador);
+        switchImpulsor = findViewById(R.id.switch_impulsador);
 
         switchImpulsor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -66,11 +67,7 @@ public class SettingsApplication extends AppCompatActivity {
     private void checkMode(){
         Configuracion configuracion = new Configuracion(this);
 
-        if (configuracion.getPromotorMode()  == 2){
-            switchImpulsor.setChecked(true);
-        } else {
-            switchImpulsor.setChecked(false);
-        }
+        switchImpulsor.setChecked(configuracion.getPromotorMode() == 2);
 
 
     }

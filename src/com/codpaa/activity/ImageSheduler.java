@@ -16,8 +16,6 @@ import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -91,16 +89,11 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
-		switch (item.getItemId()) {
-
-
-			case android.R.id.home:
-				this.finish();
-				return true;
-
-			default:
-				return super.onOptionsItemSelected(item);
+		if (item.getItemId() == android.R.id.home) {
+			this.finish();
+			return true;
 		}
+		return super.onOptionsItemSelected(item);
 	}
 	
 	private void loadList(){
@@ -277,7 +270,7 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 
 
 	
-	private class PhotoListModel{
+	private static class PhotoListModel{
 		
 		private String tienda;
 		private String img;

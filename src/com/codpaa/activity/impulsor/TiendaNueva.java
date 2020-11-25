@@ -144,15 +144,8 @@ public class TiendaNueva extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-
-            case R.id.btn_captura:
-                startCam();
-
-
-                break;
-
-
+        if (v.getId() == R.id.btn_captura) {
+            startCam();
         }
     }
 
@@ -170,27 +163,17 @@ public class TiendaNueva extends AppCompatActivity implements View.OnClickListen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        int itemId = item.getItemId();
+        if (itemId == R.id.send_image) {
+            sendImage();
 
-            case R.id.send_image:
+            return true;
+        } else if (itemId == android.R.id.home) {
+            finish();
 
-                sendImage();
-
-                return true;
-
-            case android.R.id.home:
-
-                finish();
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-
-
+            return true;
         }
-
-
+        return super.onOptionsItemSelected(item);
 
 
     }

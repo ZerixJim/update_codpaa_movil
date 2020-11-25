@@ -3,6 +3,7 @@ package com.codpaa.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.database.Cursor;
@@ -33,8 +34,8 @@ public class ListarLocation extends Activity{
 		setContentView(R.layout.listarlocalizacion);
 		
 		Calendar c = Calendar.getInstance();
-		dia = new SimpleDateFormat("E-dd-MM-yyyy");
-		fechaFormat = new SimpleDateFormat("dd-MM-yyyy");
+		dia = new SimpleDateFormat("E-dd-MM-yyyy", Locale.getDefault());
+		fechaFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 	
 		
 		String fechaDia = dia.format(c.getTime());
@@ -82,6 +83,7 @@ public class ListarLocation extends Activity{
 				
 				
 			}
+			cursor.close();
 			
 			base.close();
 			

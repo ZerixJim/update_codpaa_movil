@@ -110,31 +110,22 @@ public class EncuestaActivity extends AppCompatActivity  {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
+        if (item.getItemId() == R.id.save_encuesta) {//Log.d("Save Encuesta", "Menu " + adapter.getItemCount());
+
+            if (adapter.faltanPreguntas()) {
+                Toast.makeText(this, "Contesta todas las preguntas", Toast.LENGTH_SHORT).show();
+            } else {
+                guardarRespuestas();
+
+                EnviarDatos datos = new EnviarDatos(this);
+
+                datos.sendEncuesta();
+            }
 
 
-            case R.id.save_encuesta:
-
-
-                //Log.d("Save Encuesta", "Menu " + adapter.getItemCount());
-
-                if (adapter.faltanPreguntas()){
-                    Toast.makeText(this, "Contesta todas las preguntas", Toast.LENGTH_SHORT).show();
-                } else {
-                    guardarRespuestas();
-
-                    EnviarDatos datos = new EnviarDatos(this);
-
-                    datos.sendEncuesta();
-                }
-
-
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void guardarRespuestas() {

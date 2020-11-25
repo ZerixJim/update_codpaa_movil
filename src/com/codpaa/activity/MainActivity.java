@@ -10,13 +10,13 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
+
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
+
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -41,7 +41,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codpaa.provider.DbEstructure;
 import com.codpaa.util.Configuracion;
 import com.codpaa.R;
 import com.codpaa.util.Utilities;
@@ -241,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 		    String locationMode = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
 
-		    //Log.i("LocationMode", " " + locationMode);
+		    Log.i("LocationMode", " " + locationMode);
 
 
         }

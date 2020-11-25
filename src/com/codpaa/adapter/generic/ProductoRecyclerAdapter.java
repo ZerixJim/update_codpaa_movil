@@ -210,98 +210,80 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
                 producto.setChanges(true);
 
                 hideViews(holder);
-                switch (checkedId){
-                    case R.id.catalogado:
+                if (checkedId == R.id.catalogado) {
+                    if (holder.inventarioLayout.getVisibility() == View.GONE) {
+                        holder.inventarioLayout.setVisibility(View.VISIBLE);
 
 
-                        if(holder.inventarioLayout.getVisibility() == View.GONE){
-                            holder.inventarioLayout.setVisibility(View.VISIBLE);
+                        holder.inventario.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
 
-                            holder.inventario.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                if (holder.inventario.getText().length() > 0) {
+                                    producto.setCantidad(Integer.parseInt(holder.inventario.getText().toString()));
+                                    producto.setInventario(Integer.parseInt(holder.inventario.getText().toString()));
+                                }
+
+
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
+
+                            }
+                        });
+
+                    }
+
+                    producto.setEstatus(Producto.EstatusTypes.CATALOGADO);
+                } else if (checkedId == R.id.acepta) {
+                    if (holder.cantidad.getVisibility() == View.GONE) {
+                        holder.cantidad.setVisibility(View.VISIBLE);
+
+
+                        holder.cantidad.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                            }
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                                if (holder.cantidad.getText().length() > 0) {
+                                    producto.setCantidad(Integer.parseInt(holder.cantidad.getText().toString()));
 
                                 }
 
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
+
+                            }
+                        });
+
+                    }
+
+                    producto.setEstatus(Producto.EstatusTypes.ACEPTO_CATALOGACION);
+                } else if (checkedId == R.id.no_acepta) {
+                    producto.setEstatus(Producto.EstatusTypes.PROCESO_CATALOGACION);
+
+                    if (holder.viewCheck.getVisibility() == View.GONE)
+                        holder.viewCheck.setVisibility(View.VISIBLE);
+
+                    holder.viewCheck.scrollBy(0, holder.viewCheck.getScrollY());
 
 
-                                    if (holder.inventario.getText().length() > 0){
-                                        producto.setCantidad(Integer.parseInt(holder.inventario.getText().toString()));
-                                        producto.setInventario(Integer.parseInt(holder.inventario.getText().toString()));
-                                    }
-
-
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-
-                                }
-                            });
-
-                        }
-
-                        producto.setEstatus(Producto.EstatusTypes.CATALOGADO);
-
-                        break;
-
-
-                    case R.id.acepta:
-
-
-
-                        if(holder.cantidad.getVisibility() == View.GONE){
-                            holder.cantidad.setVisibility(View.VISIBLE);
-
-
-                            holder.cantidad.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-                                    if (holder.cantidad.getText().length() > 0){
-                                        producto.setCantidad(Integer.parseInt(holder.cantidad.getText().toString()));
-
-                                    }
-
-
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-
-                                }
-                            });
-
-                        }
-
-                        producto.setEstatus(Producto.EstatusTypes.ACEPTO_CATALOGACION);
-
-                        break;
-
-
-                    case R.id.no_acepta:
-
-                        producto.setEstatus(Producto.EstatusTypes.PROCESO_CATALOGACION);
-
-                        if (holder.viewCheck.getVisibility() == View.GONE)
-                            holder.viewCheck.setVisibility(View.VISIBLE);
-
-                        holder.viewCheck.scrollBy(0,holder.viewCheck.getScrollY());
-
-
-                        producto.setCantidad(0);
-
-
-                        break;
+                    producto.setCantidad(0);
                 }
 
             }
@@ -504,7 +486,7 @@ public class ProductoRecyclerAdapter extends RecyclerView.Adapter<ProductoRecycl
     }
 
     public interface ProductoListener{
-        public void onInventarioSave(int idProducto, int cantidad, int position);
+        void onInventarioSave(int idProducto, int cantidad, int position);
     }
 
 

@@ -164,18 +164,15 @@ public class AddressActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.save_address:
-                validarDatos();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            finish();
+            return true;
+        } else if (itemId == R.id.save_address) {
+            validarDatos();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
 
     }
 

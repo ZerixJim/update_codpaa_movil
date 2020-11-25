@@ -118,8 +118,8 @@ public class CapturaGeneral extends AppCompatActivity implements View.OnClickLis
         }
 
 
-        /**
-         * keyboard soft hide
+        /*
+          keyboard soft hide
          */
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -140,20 +140,14 @@ public class CapturaGeneral extends AppCompatActivity implements View.OnClickLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-
-
-            case android.R.id.home:
-                this.finish();
-                return true;
-
-            case R.id.save_frentes:
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            this.finish();
+            return true;
+        } else if (itemId == R.id.save_frentes) {
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 

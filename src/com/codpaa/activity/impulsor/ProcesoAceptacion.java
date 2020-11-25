@@ -35,7 +35,6 @@ import java.util.List;
 
 public class ProcesoAceptacion extends AppCompatActivity implements ProcesoAceptacionRecyclerAdapter.ItemCheckListener, View.OnClickListener {
 
-    private RecyclerView recyclerView;
     private int idTienda, idPromotor;
     private ProcesoAceptacionRecyclerAdapter adapter;
     private FloatingActionButton floatingActionButton;
@@ -50,7 +49,7 @@ public class ProcesoAceptacion extends AppCompatActivity implements ProcesoAcept
         idTienda = getIntent().getIntExtra("idTienda", 0);
 
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.float_button);
 
         if(recyclerView !=  null){
@@ -96,16 +95,11 @@ public class ProcesoAceptacion extends AppCompatActivity implements ProcesoAcept
     public boolean onOptionsItemSelected(MenuItem item) {
 
 
-        switch (item.getItemId()){
-
-            case android.R.id.home:
-                finish();
-                return true;
-
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
 
     }
 

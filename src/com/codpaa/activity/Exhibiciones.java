@@ -143,22 +143,16 @@ public class Exhibiciones extends AppCompatActivity implements OnItemSelectedLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-
-
-            case android.R.id.home:
-                this.finish();
-                return true;
-
-			case R.id.save_exhibiciones:
-
-				guardarLosDatos();
-				return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+		int itemId = item.getItemId();
+		if (itemId == android.R.id.home) {
+			this.finish();
+			return true;
+		} else if (itemId == R.id.save_exhibiciones) {
+			guardarLosDatos();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -178,7 +172,7 @@ public class Exhibiciones extends AppCompatActivity implements OnItemSelectedLis
 			
 			String fecha = dFecha.format(c.getTime());
 			if(cantidadExhi.getText().toString().length() > 0){
-                cantidad = Float.valueOf(cantidadExhi.getText().toString());
+                cantidad = Float.parseFloat(cantidadExhi.getText().toString());
             }
 
 			try {

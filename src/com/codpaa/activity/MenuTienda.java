@@ -31,7 +31,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.loopj.android.http.*;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -44,7 +43,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCantOpenDatabaseException;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Location;
@@ -90,9 +89,9 @@ import com.codpaa.adapter.MenuTiendaAdapter.MenuTiendaListener;
 public class MenuTienda extends AppCompatActivity implements OnClickListener, MenuTiendaListener{
 
 
-    private Button btnSalidaTi, btnEntrada, btnEncar, btnExhib, btnInven, btnFrente, btnSurtido, btnTiendaError;
-    private Button btnVentaPromedio, btnCapturaGeneral;
-    private Button btnComentario, btnInteligencia, btnUpdaPro, btnFoto, btnMateriales;
+    private Button btnSalidaTi;
+    private Button btnEntrada;
+    private Button btnTiendaError;
     private SQLiteDatabase base = null;
     private Location location;
 
@@ -111,7 +110,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     private ProgressDialog progress;
     private LocalBroadcastManager broadcastManager;
 
-    private BroadcastReceiver mBroadcastReceiber = new BroadcastReceiver() {
+    private final BroadcastReceiver mBroadcastReceiber = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
@@ -150,7 +149,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menutienda);
 
-        RequestParams rp = new RequestParams();
+
         Intent recibeIdTi = getIntent();
 
         idTienda = recibeIdTi.getIntExtra("idTienda", 0);
@@ -190,17 +189,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         //fotos.setText("fotos(0)");
 
 
-        Context context = getApplicationContext();
-        PackageManager packageManager = context.getPackageManager();
-        String packageName = context.getPackageName();
 
-
-        try {
-            String myVersionName = packageManager.getPackageInfo(packageName, 0).versionName;
-
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
 
 
         try {
@@ -446,23 +435,23 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         exhi = findViewById(R.id.textExhibicio);
         fotos =  findViewById(R.id.text_fotos);
 
-        btnFrente =  findViewById(R.id.buttonMensaje);
+        Button btnFrente = findViewById(R.id.buttonMensaje);
         btnSalidaTi =  findViewById(R.id.salidaTienda);
         btnEntrada =  findViewById(R.id.btnEnTienda);
-        btnEncar =  findViewById(R.id.btnEncarg);
-        btnExhib = findViewById(R.id.buttonExhib);
-        btnUpdaPro =  findViewById(R.id.btnUpdaPro);
-        btnInven = findViewById(R.id.btnInvenBode);
-        btnSurtido = findViewById(R.id.buttonEnviar);
+        Button btnEncar = findViewById(R.id.btnEncarg);
+        Button btnExhib = findViewById(R.id.buttonExhib);
+        Button btnUpdaPro = findViewById(R.id.btnUpdaPro);
+        Button btnInven = findViewById(R.id.btnInvenBode);
+        Button btnSurtido = findViewById(R.id.buttonEnviar);
         btnTiendaError = findViewById(R.id.btnTiendaError);
-        btnComentario = findViewById(R.id.btnComentario);
-        btnInteligencia = findViewById(R.id.btnMenInt);
-        btnFoto = findViewById(R.id.btnfoto);
-        btnVentaPromedio = findViewById(R.id.btn_venta_promedio);
+        Button btnComentario = findViewById(R.id.btnComentario);
+        Button btnInteligencia = findViewById(R.id.btnMenInt);
+        Button btnFoto = findViewById(R.id.btnfoto);
+        Button btnVentaPromedio = findViewById(R.id.btn_venta_promedio);
 
-        btnCapturaGeneral = findViewById(R.id.captura_general);
+        Button btnCapturaGeneral = findViewById(R.id.captura_general);
 
-        btnMateriales =  findViewById(R.id.btnMateriales);
+        Button btnMateriales = findViewById(R.id.btnMateriales);
 
 
         btnFrente.setOnClickListener(this);
@@ -492,19 +481,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     }
 
 
-    private boolean marcaChecker(){
-
-        SQLiteDatabase db = new BDopenHelper(this).getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("select * from marca m where m.idMarca in (81, 158, 315)", null);
-
-        boolean bol = cursor.getCount() > 0;
-
-        cursor.close();
-        db.close();
-
-        return bol;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -516,33 +492,26 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         MenuItem marcas = menu.findItem(R.id.btn_marcas);
 
-        if (getTotalBrands(idTienda) > 0){
-            marcas.setVisible(true);
-        }else {
-            marcas.setVisible(false);
-        }
+        marcas.setVisible(getTotalBrands(idTienda) > 0);
 
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            if (!Entrada && !Salida) {
+                this.finish();
+            } else {
+                dialogoConfirmacionSalida();
+            }
 
-                if (!Entrada && !Salida) {
-                    this.finish();
-                } else {
-                    dialogoConfirmacionSalida();
-                }
+            return true;
+        } else if (itemId == R.id.btn_marcas) {
+            dialogMarcasFaltantes();
 
-                return true;
-
-            case R.id.btn_marcas:
-
-                dialogMarcasFaltantes();
-
-                return true;
+            return true;
 
             /*case R.id.direccion:
 
@@ -562,16 +531,12 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 descargarEncuesta();
 
                 return true;*/
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-
         }
+        return super.onOptionsItemSelected(item);
 
     }
 
-    private void saveDatosTienda() {
+    /*private void saveDatosTienda() {
 
         Intent i = new Intent(this, TiendaDatos.class);
         i.putExtra("idTienda", idTienda);
@@ -589,7 +554,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         startActivity(i);
 
-    }
+    }*/
 
 
     private void activateGps(String tipo) {
@@ -896,89 +861,51 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
     public void onClick(View v) {
-        switch (v.getId()) {
+        int id = v.getId();
+        if (id == R.id.buttonMensaje) {
+            menuFrentes();
+        } else if (id == R.id.btnEnTienda) {//entradaTienda();
 
-            case R.id.buttonMensaje:
-                menuFrentes();
-
-                break;
-
-            case R.id.btnEnTienda:
-                //entradaTienda();
-
-                if (!Entrada) {
-                    dialogoConfirmarEntrada();
-                } else {
-                    Toast.makeText(this, "Ya existe una Entrada", Toast.LENGTH_SHORT).show();
-                }
-
-                break;
-
-            case R.id.salidaTienda:
-
-                dialogoConfirmacionSalida();
-
-                break;
-
-            case R.id.btnEncarg:
-                dialogoEncargado();
-
-                break;
-
-            case R.id.buttonEnviar:
-                menuSurtido();
-                break;
-            case R.id.btnInvenBode:
-                menuInventario();
-                break;
-
-            case R.id.buttonExhib:
-                menuExhibicion();
-                break;
-
-            case R.id.btnTiendaError:
-                tiendaErronea();
-                break;
-            case R.id.btnComentario:
-                menuComentario();
-                break;
-
-            case R.id.btnMenInt:
-                inteligenciaMercado();
-                break;
-            case R.id.btnfoto:
-                capturaFoto();
-                break;
-            case R.id.btnUpdaPro:
-                actualizarPro();
-                break;
-            case R.id.frentes:
-                Log.v("TextFrentes", "Onclick");
-                dialogoFrentesCapturados();
-                break;
-            case R.id.inventario:
-                dialogoInventariosCapturados();
-                break;
-            case R.id.textExhibicio:
-                dialogoExhibiciones();
-                break;
-            case R.id.text_fotos:
-                dialogoFotos();
-                break;
-
-            case R.id.btn_venta_promedio:
-                subMenuVenta();
-                break;
-
-            case R.id.captura_general:
-                capturaGeneral();
-                break;
-
-            case R.id.btnMateriales:
-                openMateriales();
-                break;
-
-
+            if (!Entrada) {
+                dialogoConfirmarEntrada();
+            } else {
+                Toast.makeText(this, "Ya existe una Entrada", Toast.LENGTH_SHORT).show();
+            }
+        } else if (id == R.id.salidaTienda) {
+            dialogoConfirmacionSalida();
+        } else if (id == R.id.btnEncarg) {
+            dialogoEncargado();
+        } else if (id == R.id.buttonEnviar) {
+            menuSurtido();
+        } else if (id == R.id.btnInvenBode) {
+            menuInventario();
+        } else if (id == R.id.buttonExhib) {
+            menuExhibicion();
+        } else if (id == R.id.btnTiendaError) {
+            tiendaErronea();
+        } else if (id == R.id.btnComentario) {
+            menuComentario();
+        } else if (id == R.id.btnMenInt) {
+            inteligenciaMercado();
+        } else if (id == R.id.btnfoto) {
+            capturaFoto();
+        } else if (id == R.id.btnUpdaPro) {
+            actualizarPro();
+        } else if (id == R.id.frentes) {
+            Log.v("TextFrentes", "Onclick");
+            dialogoFrentesCapturados();
+        } else if (id == R.id.inventario) {
+            dialogoInventariosCapturados();
+        } else if (id == R.id.textExhibicio) {
+            dialogoExhibiciones();
+        } else if (id == R.id.text_fotos) {
+            dialogoFotos();
+        } else if (id == R.id.btn_venta_promedio) {
+            subMenuVenta();
+        } else if (id == R.id.captura_general) {
+            capturaGeneral();
+        } else if (id == R.id.btnMateriales) {
+            openMateriales();
         }
 
     }
@@ -1263,13 +1190,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     }
 
 
-    private void descargarEncuesta() {
+    /*private void descargarEncuesta() {
 
         UpdateInformation uI = new UpdateInformation(this);
 
         uI.actualizarEncuesta(idPromotor, idTienda);
 
-    }
+    }*/
 
     private String fechaActual() {
         Calendar c = Calendar.getInstance();
@@ -1877,7 +1804,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 	}
 
 
-    private class Listener implements DialogInterface.OnClickListener{
+    private static class Listener implements DialogInterface.OnClickListener{
 
         @Override
         public void onClick(DialogInterface dialog, int which) {

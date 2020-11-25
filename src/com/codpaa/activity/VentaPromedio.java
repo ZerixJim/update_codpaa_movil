@@ -271,22 +271,16 @@ public class VentaPromedio extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            finish();
+            return true;
+        } else if (itemId == R.id.save_venta) {
+            sendVenta();
 
-
-            case android.R.id.home:
-                finish();
-                return true;
-
-            case R.id.save_venta:
-
-                sendVenta();
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void showDateInicio(View v){

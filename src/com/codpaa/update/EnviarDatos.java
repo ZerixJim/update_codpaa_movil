@@ -58,9 +58,9 @@ public class EnviarDatos {
 	private RequestParams rp = new RequestParams();
 	private ProgressDialog progressDialog;
 	private SQLiteDatabase base;
-	private BDopenHelper DB;
+	private final BDopenHelper DB;
 	
-	private Context context;
+	private final Context context;
 
 	private AsyncHttpResponseHandler respuesta = new AsyncHttpResponseHandler(){
 

@@ -86,8 +86,8 @@ public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItem
         loadSpinner();
 
 
-        /**
-         * keyboard soft hide
+        /*
+          keyboard soft hide
          */
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -107,22 +107,17 @@ public class TiendaDatos extends AppCompatActivity implements AdapterView.OnItem
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-            case android.R.id.home:
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            finish();
 
-                finish();
+            return true;
+        } else if (itemId == R.id.save_productos) {
+            save();
 
-                return true;
-
-            case R.id.save_productos:
-
-                save();
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
 
     }
 

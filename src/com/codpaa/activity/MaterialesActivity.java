@@ -144,26 +144,21 @@ public class MaterialesActivity extends AppCompatActivity implements View.OnClic
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-            case android.R.id.home:
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            if (materialList.size() > 0) {
+                dialogoConfirmacion();
+            } else {
 
-                if (materialList.size() > 0){
-                    dialogoConfirmacion();
-                }else {
+                finish();
+            }
+            return true;
+        } else if (itemId == R.id.enviar) {
+            enviarDatos();
 
-                    finish();
-                }
-                return true;
-
-            case R.id.enviar:
-
-                enviarDatos();
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
 
     }
 
@@ -214,13 +209,8 @@ public class MaterialesActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
 
-        switch (view.getId()){
-            case R.id.float_add:
-
-
-                showDialog();
-
-                break;
+        if (view.getId() == R.id.float_add) {
+            showDialog();
         }
     }
 

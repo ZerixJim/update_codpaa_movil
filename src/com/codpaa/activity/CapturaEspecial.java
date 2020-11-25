@@ -37,9 +37,6 @@ public class CapturaEspecial extends AppCompatActivity implements View.OnClickLi
     private Spinner spinnerMarca;
     private int idTienda, idPromotor;
 
-    private Button btnSaveTonos, btnSavePrecio;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,8 +47,8 @@ public class CapturaEspecial extends AppCompatActivity implements View.OnClickLi
         inputTono = findViewById(R.id.layout_input_tonos);
         inputFrente = findViewById(R.id.layout_input_frente);
 
-        btnSaveTonos = findViewById(R.id.btn_save_tonos);
-        btnSavePrecio = findViewById(R.id.btn_save_precio_marca);
+        Button btnSaveTonos = findViewById(R.id.btn_save_tonos);
+        Button btnSavePrecio = findViewById(R.id.btn_save_precio_marca);
 
         editFrentes = findViewById(R.id.edit_fretes_tono);
         editTonos = findViewById(R.id.edit_tonos_cantidad);

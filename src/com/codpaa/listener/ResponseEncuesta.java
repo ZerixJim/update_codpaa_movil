@@ -25,8 +25,8 @@ import cz.msebera.android.httpclient.Header;
 public class ResponseEncuesta extends JsonHttpResponseHandler {
 
 
-    private Context _context;
-    private int idTienda;
+    private final Context _context;
+    private final int idTienda;
 
 
     public ResponseEncuesta(Context context, int idTienda){

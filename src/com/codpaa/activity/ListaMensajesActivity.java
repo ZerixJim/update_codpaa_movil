@@ -129,17 +129,12 @@ public class ListaMensajesActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
-            case android.R.id.home:
+        if (item.getItemId() == android.R.id.home) {
+            finish();
 
-                finish();
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+            return true;
         }
-
+        return super.onOptionsItemSelected(item);
 
 
     }
