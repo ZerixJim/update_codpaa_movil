@@ -493,8 +493,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
             String[] fileName = file.getName().split("\\.");
 
 
-            String path = Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/.codpaa/";
+            String path = getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/.codpaa/";
 
 
             return comp.setDestinationDirectoryPath(path)

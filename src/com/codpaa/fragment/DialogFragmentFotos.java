@@ -57,7 +57,8 @@ public class DialogFragmentFotos extends DialogFragment{
                 "from photo as p " +
                 "left join tipoexhibicion as te on te.idExhibicion=p.idExhibicion " +
                 "left join clientes as c on p.idTienda=c.idTienda " +
-                "left join marca as m on p.idMarca=m.idMarca where p.idTienda="+idTienda;
+                "left join marca as m on p.idMarca=m.idMarca where p.idTienda="+idTienda+"" +
+                " and strftime('%Y-%m-%d', p.fecha_captura) = date('now') ";
 
         Cursor cF = db.rawQuery(sql, null);
 
