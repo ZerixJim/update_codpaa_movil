@@ -45,7 +45,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     // v1.3.8 = 36
     // v1.3.9 = 36
 
-    private static final int version = 38;
+    private static final int version = 39;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -428,7 +428,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         }
 
 
-        if (newVersion == 38){
+        if (newVersion == 39){
 
             db.execSQL("delete from coordenadas where status = 2 ");
 
