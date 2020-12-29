@@ -614,7 +614,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             base.borrarFrentes(fechaActual, 2);
             base.borrarCajasMa(fechaActual, 2);
             base.borrarFotos(fechaActual);
-            //base.borrarVisitas(fechaActual, 2);
+            base.borrarVisitas(fechaActual, 2);
 
 
         } catch (Exception e) {

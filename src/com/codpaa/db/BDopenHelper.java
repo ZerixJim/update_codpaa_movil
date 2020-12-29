@@ -45,7 +45,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
     // v1.3.8 = 36
     // v1.3.9 = 36
 
-    private static final int version = 39;
+    // v1.3.9 hotfix rc6 = 40
+
+    private static final int version = 40;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -428,7 +430,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         }
 
 
-        if (newVersion == 39){
+        if (newVersion == 40){
 
             db.execSQL("delete from coordenadas where status = 2 ");
 
@@ -575,11 +577,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     }
 
-    //todo error
     public void borrarVisitas(String fecha, int sta){
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL(" delete from coordenadas where semana != strftime('%W', 'now') + 1 " +
+            baseDatosLocal.execSQL(" delete from coordenadas where semana != ( (strftime('%j', date('now', '-3 days', 'weekday 4')) - 1) / 7 + 1) " +
                     " and status="+sta);
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
@@ -735,42 +736,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
             baseDatosLocal.close();
     }
 
-    public void insertarLocalizacion(int idTien,int idPro, String fech,String hora, double lat, double lon, int prec, String tip, int status,int semana, String fechaCaptura) throws SQLiteException{
+    public void insertarLocalizacion(int idTien,int idPro, String fech,String hora, double lat, double lon, int prec, String tip, int status, String fechaCaptura) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
 
         if(baseDatosLocal != null)
             baseDatosLocal.execSQL("insert into coordenadas(idTienda,idPromotor,fecha,hora,latitud,longitud,precision,tipo,status,semana, fecha_captura) " +
-                    " values("+idTien+","+idPro+",'"+fech+"','"+hora+"',"+lat+","+lon+","+prec+",'"+tip+"',"+status+","+semana+", '"+ fechaCaptura+"')");
-
-        Log.d("SQL", "se inserto");
+                    " values("+idTien+","+idPro+",'"+fech+"','"+hora+"',"+lat+","+lon+","+prec+",'"+tip+"',"+status+", ( (strftime('%j', date('"+ fechaCaptura +"', '-3 days', 'weekday 4')) - 1) / 7 + 1)  , '"+ fechaCaptura+"')");
 
         if(baseDatosLocal != null)baseDatosLocal.close();
-    }
-
-
-    public void insertCheck(int idTien,int idPro, String fech,String hora, double lat, double lon, int prec, String tip, int status,int semana, String fechaCaptura){
-
-        baseDatosLocal = getWritableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("idTienda", idTien);
-        contentValues.put("idPromotor", idPro);
-        contentValues.put("fecha", fech);
-        contentValues.put("hora", hora);
-        contentValues.put("latitud", lat);
-        contentValues.put("longitud", lon);
-        contentValues.put("precision", prec);
-        contentValues.put("tipo", tip);
-        contentValues.put("status", status);
-        contentValues.put("semana", semana);
-        contentValues.put("fecha_captura", fechaCaptura);
-
-
-        baseDatosLocal.insert("coordenadas", null, contentValues);
-
-
-        baseDatosLocal.close();
-
     }
 
 

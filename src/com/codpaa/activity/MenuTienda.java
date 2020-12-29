@@ -674,12 +674,11 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        SimpleDateFormat dSema = new SimpleDateFormat("w", Locale.getDefault());
+
 
         final String fecha = dFecha.format(c.getTime());
         final String hora = dHora.format(c.getTime());
-        String sem = dSema.format(c.getTime());
-        final int semana = Integer.parseInt(sem);
+
 
 
 
@@ -701,7 +700,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                             BDopenHelper base = new BDopenHelper(getApplicationContext());
 
                             Entrada = true;
-                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "E", 1, semana, Utilities.getCurrentDate());
+                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "E", 1, Utilities.getCurrentDate());
 
                             Toast.makeText(MenuTienda.this, "Entrada Guardada", Toast.LENGTH_SHORT).show();
                             btnEntrada.post(new Runnable() {
@@ -777,20 +776,15 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                             Calendar c = Calendar.getInstance();
                             SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                             SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-                            SimpleDateFormat dSema = new SimpleDateFormat("w", Locale.getDefault());
+
 
                             final String fecha = dFecha.format(c.getTime());
                             final String hora = dHora.format(c.getTime());
-                            String sem = dSema.format(c.getTime());
-                            final int semana = Integer.parseInt(sem);
-
 
 
                             if (location != null) {
 
-
                                 try {
-
 
 
                                     fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -799,7 +793,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                                             location = locat;
 
                                             BDopenHelper base = new BDopenHelper(getApplicationContext());
-                                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "S", 1, semana, Utilities.getCurrentDate());
+                                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "S", 1, Utilities.getCurrentDate());
 
                                             Salida = true;
 
