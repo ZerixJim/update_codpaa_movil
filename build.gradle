@@ -57,7 +57,7 @@ android {
         targetSdkVersion 29
         applicationId "com.codpaa"
         versionCode 95
-        versionName "1.3.9 rc5 hotfix"
+        versionName "1.3.9 rc6 hotfix"
         minSdkVersion 16
     }
 
