@@ -45,7 +45,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     // v1.3.8 = 36
     // v1.3.9 = 36
 
-    private static final int version = 37;
+    private static final int version = 38;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -410,15 +410,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        if(newVersion == 35){
 
-
-            db.execSQL(" alter table frentesCharola add column cantidad int");
-            db.execSQL(" alter table surtido add column comentario varchar(250)");
-            db.execSQL(" alter table comentarioTienda add column idMarca int");
-
-
-        }
 
 
         if (newVersion == 37){
@@ -432,6 +424,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
             db.execSQL("alter table " + VisitaTienda.TABLE + " add column " + VisitaTienda.FECHA_CAPTURA + " char(20) ");
 
             db.execSQL("update "+ VisitaTienda.TABLE +"  set " + VisitaTienda.FECHA_CAPTURA + " = (substr(fecha, 7)||'-'||substr(fecha,4,2)||'-'||substr(fecha,1,2))");
+
+        }
+
+
+        if (newVersion == 38){
+
+            db.execSQL("delete from coordenadas where status = 2 ");
+
 
         }
 
@@ -575,6 +575,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     }
 
+    //todo error
     public void borrarVisitas(String fecha, int sta){
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
@@ -738,10 +739,41 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getWritableDatabase();
 
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert into coordenadas(idTienda,idPromotor,fecha,hora,latitud,longitud,precision,tipo,status,semana, fecha_captura) values("+idTien+","+idPro+",'"+fech+"','"+hora+"',"+lat+","+lon+","+prec+",'"+tip+"',"+status+","+semana+", '"+ fechaCaptura+"')");
+            baseDatosLocal.execSQL("insert into coordenadas(idTienda,idPromotor,fecha,hora,latitud,longitud,precision,tipo,status,semana, fecha_captura) " +
+                    " values("+idTien+","+idPro+",'"+fech+"','"+hora+"',"+lat+","+lon+","+prec+",'"+tip+"',"+status+","+semana+", '"+ fechaCaptura+"')");
+
+        Log.d("SQL", "se inserto");
 
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
+
+
+    public void insertCheck(int idTien,int idPro, String fech,String hora, double lat, double lon, int prec, String tip, int status,int semana, String fechaCaptura){
+
+        baseDatosLocal = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("idTienda", idTien);
+        contentValues.put("idPromotor", idPro);
+        contentValues.put("fecha", fech);
+        contentValues.put("hora", hora);
+        contentValues.put("latitud", lat);
+        contentValues.put("longitud", lon);
+        contentValues.put("precision", prec);
+        contentValues.put("tipo", tip);
+        contentValues.put("status", status);
+        contentValues.put("semana", semana);
+        contentValues.put("fecha_captura", fechaCaptura);
+
+
+        baseDatosLocal.insert("coordenadas", null, contentValues);
+
+
+        baseDatosLocal.close();
+
+    }
+
+
 
     public void insertarExhibiciones(int idTien,int idPromo,int idExh, String fecha, int idProd, float cantidad, int sta) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();

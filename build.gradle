@@ -56,8 +56,8 @@ android {
     defaultConfig {
         targetSdkVersion 29
         applicationId "com.codpaa"
-        versionCode 93
-        versionName "1.3.9 rc4 hotfix"
+        versionCode 94
+        versionName "1.3.9 rc5 hotfix"
         minSdkVersion 16
     }
 
