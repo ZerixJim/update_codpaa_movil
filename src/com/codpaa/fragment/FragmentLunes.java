@@ -65,7 +65,7 @@ public class FragmentLunes extends Fragment{
                 " left join visitaTienda as v " +
                 " on c.idTienda = v.idTienda " +
                 " left join (select c.idTienda from coordenadas c " +
-                "  where c.semana = strftime('%W', 'now') + 1 and strftime('%Y',c.fecha_captura) = strftime('%Y' ,'now') " +
+                "  where c.semana = ( (strftime('%j', date('now', '-3 days', 'weekday 4')) - 1) / 7 + 1) and strftime('%Y',c.fecha_captura) = strftime('%Y' ,'now') " +
                 "   group by c.idTienda, c.fecha_captura " +
                 " ) as v2 on (v2.idTienda = v.idTienda) " +
                 " where v.lunes>=1 and idModo=" + c.getPromotorMode() +
