@@ -28,6 +28,9 @@ public class JsonPhotoUpload {
     @SerializedName("fecha_captura")
     private String fechaCaptura;
 
+    @SerializedName("comentario")
+    private String comentario;
+
     @SerializedName("productos")
     private int productos[] = null;
 
@@ -112,6 +115,13 @@ public class JsonPhotoUpload {
         this.idPromotor = idPromotor;
     }
 
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
 
     public void convert(String[] array){
 

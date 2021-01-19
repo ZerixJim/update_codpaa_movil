@@ -1164,6 +1164,7 @@ public class GeoLocalizar extends Service {
 				upload.setMes(curFoto.getInt(curFoto.getColumnIndex("mes")));
 				upload.setAnio(curFoto.getInt(curFoto.getColumnIndex("anio")));
 				upload.setEvento(curFoto.getInt(curFoto.getColumnIndex("evento")));
+				upload.setComentario(curFoto.getString(curFoto.getColumnIndex("comentario")));
 
 
 				if (curFoto.getString(curFoto.getColumnIndex("productos")) != null) {

@@ -154,6 +154,19 @@
                         android:layout_marginRight="2dp"
                         android:layout_marginBottom="15dp" />
 
+
+
+                    <EditText
+                        android:id="@+id/photo_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Comentario"
+                        android:textColor="@color/negroFondo"
+                        android:maxLength="255"
+                        android:maxLines="3"
+                        android:layout_marginBottom="15dp"
+                        />
+
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"

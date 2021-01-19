@@ -71,6 +71,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -109,6 +110,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private String mCurrentPhotoPath;
     private boolean imagenEspera = false;
     private Spinner spiMarca, spiExh;
+    private EditText editComentario;
     private final ArrayList<MarcaModel> array = new ArrayList<>();
  	private SQLiteDatabase base;
     private MultiSpinnerSelect multiSpinnerSelect;
@@ -149,6 +151,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
         spiMarca = findViewById(R.id.spiMarPhoto);
         spiExh =  findViewById(R.id.spiExhPho);
+
+        editComentario = findViewById(R.id.photo_comment);
 
         progressFoto =  findViewById(R.id.progressEnviarFoto);
         donutProgress =  findViewById(R.id.progress_photo);
@@ -488,6 +492,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 		int idMarca = spm.getId();
 		int idExhibicion = spe.getId();
+		String comentario = editComentario.getText().toString();
+
 		if(imagenEspera){
 			if(idMarca != 0 && idExhibicion != 0){
 
@@ -513,15 +519,13 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                         AsyncHttpClient clienteFoto = new AsyncHttpClient();
                         clienteFoto.setTimeout(1000);
 
-                        Log.w("Timeout server", " cT=" +  clienteFoto.getConnectTimeout() + " rT=" + clienteFoto.getResponseTimeout() );
+                        //Log.w("Timeout server", " cT=" +  clienteFoto.getConnectTimeout() + " rT=" + clienteFoto.getResponseTimeout() );
                         BDopenHelper registraImagen = new BDopenHelper(this);
-
-
 
                         if(!mCurrentPhotoPath.equals("")){
 
                             long id = registraImagen.insertarImagenId(idTienda,idPromotor,idMarca,idExhibicion,timeStamp, Integer.parseInt(dia),
-                                    Integer.parseInt(mes),Integer.parseInt(ano),mCurrentPhotoPath,1,getSelectedRadioGroup(), date);
+                                    Integer.parseInt(mes),Integer.parseInt(ano),mCurrentPhotoPath,1,getSelectedRadioGroup(), date, comentario);
 
                             ArrayList<ProductosModel> proSelected = multiSpinnerSelect.getSelectedItems();
                             SQLiteDatabase db = registraImagen.getWritableDatabase();
@@ -542,6 +546,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                     e.printStackTrace();
                                 }
                             }
+
+
 
 
                             if(id > 0){
@@ -570,6 +576,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                     view.setAnio(datosFoto.getInt(datosFoto.getColumnIndex("anio")));
                                     view.setEvento(datosFoto.getInt(datosFoto.getColumnIndex("evento")));
                                     view.setFechaCaptura(datosFoto.getString(datosFoto.getColumnIndex("fecha_captura")));
+                                    view.setComentario(datosFoto.getString(datosFoto.getColumnIndex("comentario")));
 
 
                                     final String[] productos = datosFoto.getString(datosFoto.getColumnIndex("productos")).split(",");
@@ -597,7 +604,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                 }
 
 
-
+                                editComentario.setText("");
 
                             }
 
@@ -611,6 +618,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
                         spiExh.setSelection(0);
                         spiMarca.setSelection(0);
+                        editComentario.setText("");
 
                         BDopenHelper baseinsert = new BDopenHelper(this);
 
@@ -618,7 +626,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                         try {
                             baseinsert.insertarImagen(idTienda, idPromotor, idMarca, idExhibicion,
                                     timeStamp, Integer.parseInt(dia),Integer.parseInt(mes) ,
-                                    Integer.parseInt(ano), mCurrentPhotoPath, 1,getSelectedRadioGroup(),date);
+                                    Integer.parseInt(ano), mCurrentPhotoPath, 1,getSelectedRadioGroup(),date, comentario);
                             imagenEspera = false;
                             //showImg.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.noimage));
 

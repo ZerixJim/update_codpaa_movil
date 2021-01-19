@@ -47,7 +47,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     // v1.3.9 hotfix rc6 = 40
 
-    private static final int version = 40;
+    private static final int version = 41;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -189,7 +189,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "photo(idPhoto integer primary key autoincrement NOT NULL, idTienda int NOT NULL, " +
                 "idCelular int NOT NULL, idMarca int NOT NULL, idExhibicion int NOT NULL, " +
                 "fecha varchar(10) NOT NULL, dia int NOT NULL, mes int NOT NULL, anio int NOT NULL, " +
-                "imagen varchar(250) NOT NULL, status int(2) NOT NULL, evento int(2), fecha_captura char(20) NOT NULL)";
+                "imagen varchar(250) NOT NULL, status int(2) NOT NULL, evento int(2), fecha_captura char(20) NOT NULL, comentario varchar(255))";
 
         photoProducto = "create table if not exists " +
                 PhotoProducto.TABLE_NAME + "(" + PhotoProducto.ID_PHOTO + " int ," +
@@ -413,28 +413,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 
-
-
-        if (newVersion == 37){
-
-            db.execSQL(tiendaMarca);
-
-            db.execSQL(tonoPalett);
-            db.execSQL(precioPalett);
-
-
-            db.execSQL("alter table " + VisitaTienda.TABLE + " add column " + VisitaTienda.FECHA_CAPTURA + " char(20) ");
-
-            db.execSQL("update "+ VisitaTienda.TABLE +"  set " + VisitaTienda.FECHA_CAPTURA + " = (substr(fecha, 7)||'-'||substr(fecha,4,2)||'-'||substr(fecha,1,2))");
-
-        }
-
-
-        if (newVersion == 40){
-
-            db.execSQL("delete from coordenadas where status = 2 ");
-
-
+        if (newVersion == 41){
+            db.execSQL("alter table photo add column comentario varchar(255)");
         }
 
     }
@@ -460,7 +440,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
 
-    public void insertarImagen(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia, int mes, int anio, String imagen, int status, int evento, String fechaCaptura){
+    public void insertarImagen(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia, int mes, int anio, String imagen, int status, int evento, String fechaCaptura, String comentario){
         baseDatosLocal = getWritableDatabase();
         ContentValues valores = new ContentValues();
         valores.put("idTienda", idTien);
@@ -475,6 +455,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         valores.put("status", status);
         valores.put("evento", evento);
         valores.put("fecha_captura", fechaCaptura);
+        valores.put("comentario", comentario);
         if(baseDatosLocal != null) {
             baseDatosLocal.insert("photo", null, valores);
             baseDatosLocal.close();
@@ -497,7 +478,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
     public long insertarImagenId(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia,
-                                 int mes, int anio, String imagen, int status, int evento, String fechaCaptura){
+                                 int mes, int anio, String imagen, int status, int evento, String fechaCaptura, String comenterio){
         baseDatosLocal = getWritableDatabase();
         ContentValues valores = new ContentValues();
         long id = 0;
@@ -513,6 +494,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         valores.put("status", status);
         valores.put("evento", evento);
         valores.put("fecha_captura", fechaCaptura);
+        valores.put("comentario", comenterio);
 
         if(baseDatosLocal != null) {
             id = baseDatosLocal.insert("photo", null, valores);
@@ -843,7 +825,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor fotos() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
         return baseDatosLocal.rawQuery("select p.idPhoto, p.idTienda, p.idCelular, p.idMarca, p.idExhibicion," +
-                " p.fecha, p.dia, p.mes, p.anio, p.imagen, p.evento, p.fecha_captura, group_concat(pp.idProducto) as productos " +
+                " p.fecha, p.dia, p.mes, p.anio, p.imagen, p.evento, p.fecha_captura, group_concat(pp.idProducto) as productos, p.comentario " +
                 " from photo as p " +
                 " left join photo_producto as pp on p.idPhoto=pp.idFoto where p.status=1 group by p.idPhoto;",null);
 
@@ -853,7 +835,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
 
         return baseDatosLocal.rawQuery("select p.idTienda, p.idCelular, p.idMarca, p.idExhibicion," +
-                "p.fecha, p.dia, p.mes, p.anio, p.evento, p.fecha_captura, group_concat(pp.idProducto) as productos, p.imagen " +
+                "p.fecha, p.dia, p.mes, p.anio, p.evento, p.fecha_captura, group_concat(pp.idProducto) as productos, p.imagen, p.comentario " +
                 "from photo as p left join photo_producto as pp on p.idPhoto=pp.idFoto where idPhoto="+idFoto+" group by p.idPhoto;", null);
 
 
