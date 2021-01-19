@@ -5,7 +5,6 @@ package com.codpaa.activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -15,24 +14,27 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.content.IntentSender;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import android.graphics.Color;
-import android.location.LocationManager;
+
 import android.net.Uri;
-import android.os.Build;
+
 import android.os.Bundle;
-import android.provider.Settings;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.pm.PackageInfoCompat;
+
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -45,6 +47,14 @@ import com.codpaa.util.Configuracion;
 import com.codpaa.R;
 import com.codpaa.util.Utilities;
 
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -150,13 +160,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
                     try {
                         Context context = getApplicationContext();
-                        PackageManager packageManager = context.getPackageManager();
-                        String packageName = context.getPackageName();
 
-                        int versionName = packageManager.getPackageInfo(packageName, 0).versionCode;
+                        PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+                        long versionCode = PackageInfoCompat.getLongVersionCode(packageInfo);
 
+                        int versionCodeRemote = response.getInt("versionCode");
 
-                        if(versionName < response.getInt("versionCode")){
+                        if(versionCode < versionCodeRemote){
                             crearPrompt(response.getString("version"));
                         }
 
@@ -183,28 +193,55 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 	private void checkPermisosAndGpsEnable() {
 
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
-
-			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 130);
 
 
-		}
+		LocationRequest locationRequest = LocationRequest.create();
 
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED  ){
-
-
-		    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 
-        }
+		LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+		builder.addLocationRequest(locationRequest);
+
+		SettingsClient client = LocationServices.getSettingsClient(this);
+
+		Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
+
+
+		task.addOnFailureListener(this, new OnFailureListener() {
+			@Override
+			public void onFailure(@NonNull Exception e) {
+
+				if (e instanceof ResolvableApiException) {
+					// Location settings are not satisfied, but this can be fixed
+					// by showing the user a dialog.
+					try {
+						// Show the dialog by calling startResolutionForResult(),
+						// and check the result in onActivityResult().
+						ResolvableApiException resolvable = (ResolvableApiException) e;
+						resolvable.startResolutionForResult(MainActivity.this,
+								150);
+					} catch (IntentSender.SendIntentException sendEx) {
+						// Ignore the error.
+					}
+				}
+
+			}
+		});
 
 
 
-        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+       /* final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ){
 
             try {
+
+
+
+				Log.d("LocationServices", client.checkLocationSettings())
+
+
                 int locationMode = Settings.Secure.getInt(this.getContentResolver(), Settings.Secure.LOCATION_MODE);
                 //Log.i("location Mode", " " + locationMode);
 
@@ -243,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		    Log.i("LocationMode", " " + locationMode);
 
 
-        }
+        }*/
 
 
 
@@ -491,8 +528,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 	
 	public void crearPrompt(String version){
 		LayoutInflater li = LayoutInflater.from(this);
-		final ViewGroup nullParent = null;
-		View prompt = li.inflate(R.layout.promptversion, nullParent);
+		View prompt = li.inflate(R.layout.promptversion, null);
 
         TextView textVersion = prompt.findViewById(R.id.textVersionPrompt);
         textVersion.setText(version);

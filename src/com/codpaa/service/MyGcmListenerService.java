@@ -28,7 +28,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.media.RingtoneManager;
 import android.net.Uri;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
@@ -52,7 +52,7 @@ public class MyGcmListenerService extends FirebaseMessagingService{
 
 
     @Override
-    public void onNewToken(String s) {
+    public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
 
 
@@ -63,7 +63,7 @@ public class MyGcmListenerService extends FirebaseMessagingService{
     }
 
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
 
         try{
             Map<String, String> data = remoteMessage.getData();
@@ -128,7 +128,7 @@ public class MyGcmListenerService extends FirebaseMessagingService{
 
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "my_chanel_id_01")
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(asunto)
                 .setContentText(message)
@@ -151,7 +151,7 @@ public class MyGcmListenerService extends FirebaseMessagingService{
         String message = data.get("message");
         String content = data.get("content");
         String fecha = data.get("fecha");
-        int idServer = Integer.valueOf(data.get("id_mensaje"));
+        int idServer = Integer.parseInt(data.get("id_mensaje"));
 
 
         SQLiteDatabase db = new BDopenHelper(this).getWritableDatabase();
@@ -161,6 +161,7 @@ public class MyGcmListenerService extends FirebaseMessagingService{
         values.put("asunto", asunto);
         values.put("content", content);
         values.put("fecha", fecha);
+        values.put("from", from);
         values.put(DbEstructure.Mensaje.ID_PROMOTOR, idPromotor);
         values.put(DbEstructure.Mensaje.ID_SERVIDOR, idServer);
 
