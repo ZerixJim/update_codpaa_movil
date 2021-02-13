@@ -7,21 +7,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.codpaa.R;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.codpaa.model.ProductosModel;
 import com.codpaa.util.Utilities;
 
 
-public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
+public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Filterable {
 
     private ArrayList<ProductosModel> _datos;
+    private ArrayList<ProductosModel> filterList;
     private LayoutInflater inflater;
     private ProductosModel productosModel = null;
     private Context context;
@@ -39,12 +47,12 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
     public ProductosAdapter(Context context, int textViewResourceId,
                             ArrayList<ProductosModel> objects) {
 
-
         super(context,textViewResourceId,objects);
 
         this.context = context;
 
         this._datos = objects;
+        this.filterList = objects;
 
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -52,7 +60,16 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
     }
 
 
+    @Override
+    public int getCount() {
+        return filterList.size();
+    }
 
+    @Nullable
+    @Override
+    public ProductosModel getItem(int position) {
+        return filterList.get(position);
+    }
 
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
@@ -76,36 +93,33 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
             viewHolder.productosModel = productosModel;
         }
 
-        productosModel = _datos.get(position);
+        productosModel = filterList.get(position);
 
         //Log.d("idMarca adapter", "" + productosModel.getIdMarca());
 
 
-        if (position == 0){
+        if (productosModel.getIdProducto() == 0){
 
             viewHolder.presentacion.setVisibility(View.GONE);
+
+            viewHolder.checkBox.setVisibility(View.INVISIBLE);
+            viewHolder.imageView.setVisibility(View.GONE);
 
         }else {
 
             viewHolder.presentacion.setVisibility(View.VISIBLE);
+
+
+            viewHolder.checkBox.setVisibility(View.VISIBLE);
+            viewHolder.imageView.setVisibility(View.VISIBLE);
+            Glide.with(context)
+                    .load(Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif")
+                    .into(viewHolder.imageView);
         }
 
         viewHolder.nombreProducto.setText(productosModel.getNombre());
         viewHolder.presentacion.setText(productosModel.getPresentacion());
 
-
-
-        if (position == 0 ) {
-            viewHolder.checkBox.setVisibility(View.INVISIBLE);
-            viewHolder.imageView.setVisibility(View.GONE);
-
-        }
-        else {
-            viewHolder.checkBox.setVisibility(View.VISIBLE);
-            viewHolder.imageView.setVisibility(View.VISIBLE);
-
-
-        }
 
 
         if (productosModel.isChecked()){
@@ -117,46 +131,66 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> {
         }
 
 
-        if (position > 0){
-
-
-            Glide.with(context)
-                    .load(Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif")
-                    .into(viewHolder.imageView);
-
-
-
-        }
-
-
 
 
         return row;
     }
 
 
+    @NonNull
+    @Override
+    public Filter getFilter() {
 
-    public void addElements(ArrayList<ProductosModel> datos){
-        this._datos = datos;
-        notifyDataSetChanged();
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                String charString = constraint.toString();
+                FilterResults results = new FilterResults();
+                if (charString.isEmpty()){
+
+                    filterList = _datos;
+
+                }else {
+
+                    ArrayList<ProductosModel> filterArrayList = new ArrayList<>();
+
+                    for (ProductosModel pm : _datos){
+
+                        if (pm.getNombre().toLowerCase().contains(charString.toLowerCase())){
+
+                            filterArrayList.add(pm);
+
+
+                        }
+
+                    }
+
+                    filterList = filterArrayList;
+
+                    results.values = filterList;
+                    results.count = filterArrayList.size();
+
+                }
+
+
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                filterList = (ArrayList<ProductosModel>) results.values;
+
+                notifyDataSetChanged();
+
+            }
+        };
+
     }
-
-    private ProductosModel getProductosModel(){
-
-        final ProductosModel pm = new ProductosModel();
-        pm.setIdProducto(0);
-        pm.setPresentacion("Selecciona Producto");
-        pm.setNombre("");
-
-        return pm;
-    }
-
-
 
     public ArrayList<ProductosModel> getProductos(){
-
-
-        return _datos;
+        return filterList;
     }
 
 

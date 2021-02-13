@@ -6,20 +6,28 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import android.widget.EditText;
 import android.widget.ListView;
 
+
+import androidx.core.content.ContextCompat;
 
 import com.codpaa.R;
 import com.codpaa.adapter.ProductosAdapter;
 import com.codpaa.model.ProductosModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinner implements
         OnMultiChoiceClickListener, OnCancelListener {
@@ -96,11 +104,35 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
     @Override
     public boolean performClick() {
 
+
+        final EditText editText = new EditText(getContext());
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //Log.d("Text ", s.toString());
+
+                arrayAdapter.getFilter().filter(s);
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setAdapter(arrayAdapter, null);
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
                 dialog.cancel();
             }
         });
@@ -109,6 +141,13 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
         AlertDialog alertDialog = builder.create();
 
         ListView listView = alertDialog.getListView();
+        listView.setPadding(16,16,16,0);
+
+
+        editText.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), R.drawable.ic_baseline_search_24), null, null, null);
+        listView.addHeaderView(editText);
+
+
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
@@ -118,16 +157,15 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
 
                 //Log.d("Click", "" + view.getId());
 
-                if (producto.isChecked())
-                    producto.setChecked(false);
-                else
-                    producto.setChecked(true);
+                producto.setChecked(!producto.isChecked());
 
 
                 arrayAdapter.notifyDataSetChanged();
 
             }
         });
+
+
 
         /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
@@ -150,10 +188,6 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
 
         //alertDialog
 
-
-
-
-
         alertDialog.show();
         return true;
     }
@@ -165,8 +199,7 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
 
         //all selected by default
         selected = new boolean[items.size()];
-        for (int i = 0; i < selected.length; i++)
-            selected[i] = false;
+        Arrays.fill(selected, false);
 
         /*ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item, new String[]{allText});
