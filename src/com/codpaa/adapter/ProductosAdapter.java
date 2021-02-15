@@ -2,6 +2,7 @@ package com.codpaa.adapter;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,6 @@ import com.bumptech.glide.Glide;
 import com.codpaa.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.codpaa.model.ProductosModel;
 import com.codpaa.util.Utilities;
@@ -28,8 +28,8 @@ import com.codpaa.util.Utilities;
 
 public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Filterable {
 
-    private ArrayList<ProductosModel> _datos;
-    private ArrayList<ProductosModel> filterList;
+    private ArrayList<ProductosModel> mOriginalData;
+    private ArrayList<ProductosModel> arrayList;
     private LayoutInflater inflater;
     private ProductosModel productosModel = null;
     private Context context;
@@ -51,9 +51,7 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
 
         this.context = context;
 
-        this._datos = objects;
-        this.filterList = objects;
-
+        this.arrayList = objects;
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -62,13 +60,13 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
 
     @Override
     public int getCount() {
-        return filterList.size();
+        return arrayList.size();
     }
 
     @Nullable
     @Override
     public ProductosModel getItem(int position) {
-        return filterList.get(position);
+        return arrayList.get(position);
     }
 
     @Override
@@ -93,7 +91,7 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
             viewHolder.productosModel = productosModel;
         }
 
-        productosModel = filterList.get(position);
+        productosModel = arrayList.get(position);
 
         //Log.d("idMarca adapter", "" + productosModel.getIdMarca());
 
@@ -121,14 +119,8 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
         viewHolder.presentacion.setText(productosModel.getPresentacion());
 
 
-
-        if (productosModel.isChecked()){
-            //viewHolder.checkBox.setVisibility(View.VISIBLE);
-            viewHolder.checkBox.setChecked(true);
-        }else {
-            viewHolder.checkBox.setChecked(false);
-
-        }
+        //viewHolder.checkBox.setVisibility(View.VISIBLE);
+        viewHolder.checkBox.setChecked(productosModel.isChecked());
 
 
 
@@ -145,34 +137,39 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
 
-                String charString = constraint.toString();
                 FilterResults results = new FilterResults();
-                if (charString.isEmpty()){
+                ArrayList<ProductosModel> filterArrayList = new ArrayList<>();
 
-                    filterList = _datos;
+                if (mOriginalData == null){
+
+                    mOriginalData = arrayList;
+
+                }
+
+                if (constraint == null  || constraint.length() == 0) {
+
+                    results.count = mOriginalData.size();
+                    results.values = mOriginalData;
 
                 }else {
 
-                    ArrayList<ProductosModel> filterArrayList = new ArrayList<>();
+                    constraint = constraint.toString().toLowerCase();
 
-                    for (ProductosModel pm : _datos){
 
-                        if (pm.getNombre().toLowerCase().contains(charString.toLowerCase())){
+                    for (ProductosModel pm : mOriginalData){
+
+                        if (pm.getNombre().toLowerCase().contains(constraint)){
 
                             filterArrayList.add(pm);
-
 
                         }
 
                     }
 
-                    filterList = filterArrayList;
-
-                    results.values = filterList;
+                    results.values = filterArrayList;
                     results.count = filterArrayList.size();
 
                 }
-
 
                 return results;
             }
@@ -180,9 +177,31 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
 
-                filterList = (ArrayList<ProductosModel>) results.values;
 
-                notifyDataSetChanged();
+                try{
+
+                    arrayList = (ArrayList<ProductosModel>) results.values;
+                    Log.d("value result", "" + results.values);
+
+
+
+                    if(arrayList.size() == 0){
+
+                        final ProductosModel model = new ProductosModel();
+                        model.setNombre("Selecciona produco");
+                        arrayList.add(model);
+
+                    }
+
+                    notifyDataSetChanged();
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+
+
+
 
             }
         };
@@ -190,7 +209,7 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
     }
 
     public ArrayList<ProductosModel> getProductos(){
-        return filterList;
+        return arrayList;
     }
 
 

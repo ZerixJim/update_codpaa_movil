@@ -132,6 +132,7 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                editText.setText("");
 
                 dialog.cancel();
             }
