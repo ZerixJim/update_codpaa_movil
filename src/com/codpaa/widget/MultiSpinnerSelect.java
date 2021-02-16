@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -17,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 
@@ -110,13 +112,21 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+                editText.requestFocus();
+
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(final CharSequence s, int start, int before, int count) {
                 //Log.d("Text ", s.toString());
 
-                arrayAdapter.getFilter().filter(s);
+               new Handler().postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+
+                       arrayAdapter.getFilter().filter(s);
+                   }
+               }, 1000);
 
 
             }
@@ -146,6 +156,7 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
 
 
         editText.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), R.drawable.ic_baseline_search_24), null, null, null);
+
         listView.addHeaderView(editText);
 
 
@@ -190,6 +201,9 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
         //alertDialog
 
         alertDialog.show();
+
+        alertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         return true;
     }
 
