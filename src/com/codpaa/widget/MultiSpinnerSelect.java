@@ -112,7 +112,7 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                editText.requestFocus();
+                //editText.requestFocus();
 
             }
 
@@ -157,8 +157,8 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
 
         editText.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), R.drawable.ic_baseline_search_24), null, null, null);
 
-        listView.addHeaderView(editText);
 
+        alertDialog.setCustomTitle(editText);
 
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -179,24 +179,6 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
 
 
 
-        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ProductosModel producto = (ProductosModel) parent.getItemAtPosition(position);
-
-                Log.d("Click", "" + view.getId());
-
-                if (producto.isChecked())
-                    producto.setChecked(false);
-                else
-                    producto.setChecked(true);
-
-
-                arrayAdapter.notifyDataSetChanged();
-
-            }
-        });*/
 
         //alertDialog
 
