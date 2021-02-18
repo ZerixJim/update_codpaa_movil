@@ -90,8 +90,7 @@ import cz.msebera.android.httpclient.Header;
 import id.zelory.compressor.Compressor;
 
 
-public class PhotoCapture extends AppCompatActivity implements OnClickListener, OnItemSelectedListener,
-        MultiSpinnerSelect.MultiSpinnerListener{
+public class PhotoCapture extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
 
 
 	//private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -663,7 +662,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     public void loadMultiSpinner(int idMarca){
 
         multiSpinnerSelect.setItems(getArrayListProByTiensda(idMarca, idTienda),
-                "Seleccione Producto", this);
+                "Seleccione Producto");
 
     }
 
@@ -742,10 +741,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {}
 
-    @Override
-    public void onItemsSelected(boolean[] selected) {
 
-    }
 
 
     //metod: listener response of image loaded

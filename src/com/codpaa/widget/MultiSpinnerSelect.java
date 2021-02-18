@@ -34,9 +34,7 @@ import java.util.Arrays;
 public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinner implements
         OnMultiChoiceClickListener, OnCancelListener {
 
-    private boolean[] selected;
     private String defaultText;
-    private MultiSpinnerListener listener;
     ProductosAdapter arrayAdapter;
 
 
@@ -55,48 +53,14 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
 
     @Override
     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-        Log.d("Multi", "OnClick");
 
-        selected[which] = isChecked;
+
 
     }
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        //Log.d("Multi", "onCancel");
-        StringBuilder spinnerBuffer = new StringBuilder();
-        ArrayList<ProductosModel> productos = arrayAdapter.getProductos();
 
-
-        String spinnerText;
-        boolean someUnSelected = false;
-        for (ProductosModel producto : productos){
-            if (producto.isChecked()){
-                spinnerBuffer.append(producto.getNombre());
-                spinnerBuffer.append(", ");
-                //Log.d("producto selected", producto.getNombre());
-                someUnSelected = true;
-            }
-
-        }
-
-
-
-        if (someUnSelected){
-            spinnerText = spinnerBuffer.toString();
-            if (spinnerText.length() > 2)
-                spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
-            else
-                spinnerText = defaultText;
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                    R.layout.my_textview, new String[]{ spinnerText });
-            setAdapter(adapter);
-            listener.onItemsSelected(selected);
-
-        } else {
-            setAdapter(arrayAdapter);
-        }
 
 
 
@@ -126,7 +90,7 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
 
                        arrayAdapter.getFilter().filter(s);
                    }
-               }, 1000);
+               }, 900);
 
 
             }
@@ -142,12 +106,62 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                editText.setText("");
+
+
 
                 dialog.cancel();
             }
         });
-        builder.setOnCancelListener(this);
+
+
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+
+                editText.setText("");
+
+            }
+        });
+
+        builder.setOnCancelListener(new OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+
+                ArrayList<ProductosModel> productos = getSelectedItems();
+
+                String spinnerText = "";
+
+                int count =  productos.size();
+
+                if (count == 1){
+                    spinnerText =  count+ " producto seleccionado";
+
+                }else if(count > 1){
+
+                    spinnerText = count + " productos seleccionados";
+
+
+                }
+
+
+
+                if (count > 0){
+                   /* spinnerText = spinnerBuffer.toString();
+                    if (spinnerText.length() > 2)
+                        spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
+                    else
+                        spinnerText = defaultText;*/
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                            R.layout.my_textview, new String[]{ spinnerText });
+                    setAdapter(adapter);
+
+                } else {
+                    setAdapter(arrayAdapter);
+                }
+
+            }
+        });
 
         AlertDialog alertDialog = builder.create();
 
@@ -189,15 +203,11 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
         return true;
     }
 
-    public void setItems(ArrayList<ProductosModel> items, String allText, MultiSpinnerListener listener){
+    public void setItems(ArrayList<ProductosModel> items, String allText){
 
         this.defaultText = allText;
-        this.listener = listener;
 
         //all selected by default
-        selected = new boolean[items.size()];
-        Arrays.fill(selected, false);
-
         /*ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_spinner_item, new String[]{allText});
         setAdapter(adapter);*/
@@ -207,12 +217,7 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
 
 
     }
-    
 
-
-    public interface MultiSpinnerListener {
-        void onItemsSelected(boolean[] selected);
-    }
 
     public ArrayList<ProductosModel> getSelectedItems(){
         ArrayList<ProductosModel> productos = arrayAdapter.getProductos();
@@ -224,5 +229,6 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
         }
         return produtoSelected;
     }
+
 
 }
