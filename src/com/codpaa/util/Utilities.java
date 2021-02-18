@@ -3,6 +3,8 @@ package com.codpaa.util;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.provider.Settings;
 import android.text.format.DateUtils;
 
 import java.text.ParseException;
@@ -91,6 +93,20 @@ public class Utilities {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_USA, Locale.getDefault());
 
         return dateFormat.format(new Date());
+
+    }
+
+
+    public static boolean isAutoTime(Context c){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+            return Settings.Global.getInt(c.getContentResolver(), Settings.Global.AUTO_TIME, 0) == 1;
+
+        }else {
+
+
+            return android.provider.Settings.System.getInt(c.getContentResolver(), Settings.System.AUTO_TIME, 0) == 1;
+        }
 
     }
 

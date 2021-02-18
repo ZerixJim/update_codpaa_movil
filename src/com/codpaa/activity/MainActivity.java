@@ -114,7 +114,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 		}
 
 
+		String autoTime = Utilities.isAutoTime(this) ? "Activo" : "Desactivado";
 
+		Log.d("AutoTime", autoTime);
 
 		/*try {
 

@@ -886,7 +886,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         } else if (id == R.id.btnUpdaPro) {
             actualizarPro();
         } else if (id == R.id.frentes) {
-            Log.v("TextFrentes", "Onclick");
+            //Log.v("TextFrentes", "Onclick");
             dialogoFrentesCapturados();
         } else if (id == R.id.inventario) {
             dialogoInventariosCapturados();

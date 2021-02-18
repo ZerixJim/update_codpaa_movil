@@ -1027,7 +1027,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     public int contarFotos(int idTienda){
         baseDatosLocal = getReadableDatabase();
-        Cursor cursor = baseDatosLocal.rawQuery("select idPhoto from photo where idTienda="+idTienda,null);
+        Cursor cursor = baseDatosLocal.rawQuery("select idPhoto from photo where strftime('%Y-%m-%d', photo.fecha_captura) = date('now') and idTienda="+idTienda,null);
         int cantidad = cursor.getCount();
 
         cursor.close();
