@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
+import android.graphics.Color;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,8 +22,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 
 import com.codpaa.R;
@@ -34,7 +38,7 @@ import java.util.Arrays;
 public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinner implements
         OnMultiChoiceClickListener, OnCancelListener {
 
-    private String defaultText;
+
     ProductosAdapter arrayAdapter;
 
 
@@ -71,8 +75,49 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
     public boolean performClick() {
 
 
-        final EditText editText = new EditText(getContext());
-        editText.addTextChangedListener(new TextWatcher() {
+        //final EditText editText = new EditText(getContext());
+
+        final SearchView searchView = new SearchView(getContext());
+        searchView.setQueryHint("Nombre producto o cb");
+
+        final EditText editText = searchView.findViewById(R.id.search_src_text);
+        editText.setHintTextColor(getResources().getColor(R.color.gris));
+        editText.setTextColor(getResources().getColor(R.color.negroFondo));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+
+                arrayAdapter.getFilter().filter(null);
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+
+                if(TextUtils.isEmpty(newText)){
+
+                    arrayAdapter.getFilter().filter(null);
+
+                }else {
+
+                    arrayAdapter.getFilter().filter(newText);
+                }
+
+
+                return false;
+            }
+        });
+
+
+
+        /*editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -88,7 +133,16 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
                    @Override
                    public void run() {
 
-                       arrayAdapter.getFilter().filter(s);
+
+                       if(TextUtils.isEmpty(s)){
+
+                           arrayAdapter.getFilter().filter(null);
+
+                       }else {
+
+                           arrayAdapter.getFilter().filter(s);
+                       }
+
                    }
                }, 900);
 
@@ -99,7 +153,7 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        });*/
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setAdapter(arrayAdapter, null);
@@ -107,9 +161,8 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                searchView.setQuery("", false);
 
-
-                dialog.cancel();
             }
         });
 
@@ -118,7 +171,11 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
             @Override
             public void onDismiss(DialogInterface dialog) {
 
-                editText.setText("");
+
+
+
+                dialog.cancel();
+
 
             }
         });
@@ -127,9 +184,13 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
             @Override
             public void onCancel(DialogInterface dialog) {
 
+
+
                 ArrayList<ProductosModel> productos = getSelectedItems();
 
-                String spinnerText = "";
+
+
+                String spinnerText;
 
                 int count =  productos.size();
 
@@ -141,7 +202,11 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
                     spinnerText = count + " productos seleccionados";
 
 
+                }else {
+                    spinnerText = "Selecciona producto";
                 }
+
+
 
 
 
@@ -156,6 +221,7 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
                             R.layout.my_textview, new String[]{ spinnerText });
                     setAdapter(adapter);
 
+
                 } else {
                     setAdapter(arrayAdapter);
                 }
@@ -165,14 +231,16 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
 
         AlertDialog alertDialog = builder.create();
 
+        alertDialog.setCancelable(false);
+
         ListView listView = alertDialog.getListView();
         listView.setPadding(16,16,16,0);
 
 
-        editText.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), R.drawable.ic_baseline_search_24), null, null, null);
+        //editText.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(getContext(), R.drawable.ic_baseline_search_24), null, null, null);
 
 
-        alertDialog.setCustomTitle(editText);
+        alertDialog.setCustomTitle(searchView);
 
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -184,7 +252,6 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
                 //Log.d("Click", "" + view.getId());
 
                 producto.setChecked(!producto.isChecked());
-
 
                 arrayAdapter.notifyDataSetChanged();
 
@@ -205,7 +272,6 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
 
     public void setItems(ArrayList<ProductosModel> items, String allText){
 
-        this.defaultText = allText;
 
         //all selected by default
         /*ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),

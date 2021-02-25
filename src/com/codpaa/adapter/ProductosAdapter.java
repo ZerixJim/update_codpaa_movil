@@ -53,6 +53,8 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
 
         this.arrayList = objects;
 
+        mOriginalData = new ArrayList<>(objects);
+
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
@@ -140,11 +142,6 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
                 FilterResults results = new FilterResults();
                 ArrayList<ProductosModel> filterArrayList = new ArrayList<>();
 
-                if (mOriginalData == null){
-
-                    mOriginalData = arrayList;
-
-                }
 
                 if (constraint == null  || constraint.length() == 0) {
 
@@ -178,27 +175,21 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
             protected void publishResults(CharSequence constraint, FilterResults results) {
 
 
-                try{
-
-                    arrayList = (ArrayList<ProductosModel>) results.values;
-                    Log.d("value result", "" + results.values);
+                ArrayList<ProductosModel> tempList  = (ArrayList<ProductosModel>) results.values;
 
 
-
-                    if(arrayList.size() == 0){
+                   /* if(arrayList.size() == 0){
 
                         final ProductosModel model = new ProductosModel();
                         model.setNombre("Selecciona produco");
                         arrayList.add(model);
 
-                    }
+                    }*/
 
-                    notifyDataSetChanged();
+                // notifyDataSetChanged();
 
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
+                clear();
+                addAll(tempList);
 
 
 
