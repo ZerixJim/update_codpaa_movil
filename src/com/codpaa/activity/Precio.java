@@ -1,9 +1,12 @@
 package com.codpaa.activity;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 import android.app.DatePickerDialog;
@@ -14,6 +17,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import com.codpaa.util.NumberTextWatcher;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
@@ -21,6 +25,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -85,6 +93,20 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 		editProNormal =  findViewById(R.id.editPreN);
 		editProOfer =  findViewById(R.id.editPreOfer);
 		editPrecioCaja = findViewById(R.id.editTextPreCaj);
+
+
+		//editProNormal.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(4,2)});
+		//editProOfer.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(4,2)});
+		//editPrecioCaja.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(4,2)});
+
+
+
+		editProNormal.addTextChangedListener(new NumberTextWatcher(editProNormal));
+		editProOfer.addTextChangedListener(new NumberTextWatcher(editProOfer));
+		editPrecioCaja.addTextChangedListener(new NumberTextWatcher(editPrecioCaja));
+
+
+
 		
 		/*chOferCr = (CheckBox) findViewById(R.id.checkOferC);
 		chProExtra = (CheckBox) findViewById(R.id.checkProdEx);
@@ -208,11 +230,11 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 		chCambioP.setChecked(false);*/
 		
 		if(editProNormal.getText().length() > 0)
-			editProNormal.setText("");
+			editProNormal.setText("0.00");
 		if(editProOfer.getText().length() > 0)
-			editProOfer.setText("");
+			editProOfer.setText("0.00");
 		if(editPrecioCaja.getText().length() > 0)
-			editPrecioCaja.setText("");
+			editPrecioCaja.setText("0.00");
 	}
 	
 	
@@ -341,6 +363,27 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 		}
 		
 	}
+
+
+
+	/*public static class DecimalDigitsInputFilter implements InputFilter{
+
+		Pattern mPattern;
+		public DecimalDigitsInputFilter(int digitBeforeZero, int digitAfterZero) {
+			mPattern = Pattern.compile("[0-9]{0," + (digitBeforeZero-1) + "}+((\\.[0-9]{0," + (digitAfterZero-1) + "})?)||(\\.)?");
+
+		}
+
+		@Override
+		public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+			Matcher matcher = mPattern.matcher(dest);
+			if (!matcher.matches())
+				return "";
+			return null;
+		}
+	}*/
+
 	
 
 	private void loadSpinner(){

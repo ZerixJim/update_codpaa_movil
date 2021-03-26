@@ -60,15 +60,7 @@
                 android:layout_gravity="center"
                 style="@style/txtBackgroundBlue" />
 
-            <TextView
-                android:id="@+id/Encargado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp"
-                android:clickable="true"
-                style="@style/txtBackgroundBlue" />
+
 
             <TextView
                 android:id="@+id/inventario"
@@ -78,13 +70,7 @@
                 android:layout_height="wrap_content"
                 style="@style/txtBackgroundBlue" />
 
-            <TextView
-                android:id="@+id/textExhibicio"
-                android:layout_marginRight="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/txtBackgroundBlue" />
+
 
             <TextView
                 android:id="@+id/text_fotos"

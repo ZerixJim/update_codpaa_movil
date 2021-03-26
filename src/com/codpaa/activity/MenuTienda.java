@@ -70,7 +70,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
@@ -96,7 +95,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     private Location location;
 
 
-    private TextView txtEncargado, frentes, surtido, exhi, inventario, fotos;
+    //private TextView txtEncargado;
+    private TextView frentes, surtido, exhi, inventario, fotos;
     final int REQUEST_CODE_ASK_PERMISSIONS = 123;
     int idPromotor, idTienda, idTipo;
     private BDopenHelper DB = null;
@@ -429,10 +429,10 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     private void viewsRegister() {
 
         inventario = findViewById(R.id.inventario);
-        txtEncargado = findViewById(R.id.Encargado);
+        //txtEncargado = findViewById(R.id.Encargado);
         frentes =  findViewById(R.id.frentes);
         surtido =  findViewById(R.id.surtido);
-        exhi = findViewById(R.id.textExhibicio);
+        //exhi = findViewById(R.id.textExhibicio);
         fotos =  findViewById(R.id.text_fotos);
 
         Button btnFrente = findViewById(R.id.buttonMensaje);
@@ -461,7 +461,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         btnSalidaTi.setOnClickListener(this);
         btnTiendaError.setOnClickListener(this);
         btnEncar.setOnClickListener(this);
-        btnExhib.setOnClickListener(this);
+        //btnExhib.setOnClickListener(this);
         btnComentario.setOnClickListener(this);
         btnInteligencia.setOnClickListener(this);
         btnUpdaPro.setOnClickListener(this);
@@ -475,7 +475,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         // textView with listener
         frentes.setOnClickListener(this);
         inventario.setOnClickListener(this);
-        exhi.setOnClickListener(this);
+        //exhi.setOnClickListener(this);
         fotos.setOnClickListener(this);
 
     }
@@ -868,7 +868,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         } else if (id == R.id.salidaTienda) {
             dialogoConfirmacionSalida();
         } else if (id == R.id.btnEncarg) {
-            dialogoEncargado();
+            //dialogoEncargado();
         } else if (id == R.id.buttonEnviar) {
             menuSurtido();
         } else if (id == R.id.btnInvenBode) {
@@ -968,57 +968,36 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         try {
 
 
-            Cursor cuEncargados = DB.contadorEncargados(idTienda, fecha);
+            /*
+             * encargago
+             */
+            //Cursor cuEncargados = DB.contadorEncargados(idTienda, fecha);
             //txtEncargado.setText("Encargado ("+cuEncargados.getCount()+")");
-            txtEncargado.setText(String.format(Locale.getDefault(), "Encargado %d", cuEncargados.getCount()));
+            //txtEncargado.setText(String.format(Locale.getDefault(), "Encargado %d", cuEncargados.getCount()));
+            //DB.close();
+
+            Cursor cuFrentes = DB.contadorFrentes(idTienda, fecha);
+            //frentes.setText("Frentes: ("+cuFrentes.getCount()+")");
+            frentes.setText(String.format(Locale.getDefault(), "Frentes %d", cuFrentes.getCount()));
             DB.close();
 
 
-            try {
-                Cursor cuFrentes = DB.contadorFrentes(idTienda, fecha);
-                //frentes.setText("Frentes: ("+cuFrentes.getCount()+")");
-                frentes.setText(String.format(Locale.getDefault(), "Frentes %d", cuFrentes.getCount()));
-                DB.close();
+            Cursor cuSurt = DB.SurtidoCantidad(idTienda, fecha);
+            //surtido.setText("Surtido: ("+cuSurt.getCount()+")");
+            surtido.setText(String.format(Locale.getDefault(), "Surtido %d", cuSurt.getCount()));
+            DB.close();
+
+            Cursor cuInventario = DB.contarInventario(idTienda, fecha);
+            //inventario.setText("Inventario ("+cuInventario.getCount()+")");
+            inventario.setText(String.format(Locale.getDefault(), "Inventario %d", cuInventario.getCount()));
+            DB.close();
+
+            //exhibiciones
+            //exhi.setText(String.format(Locale.getDefault(), "Exhibiciones %d", DB.contarExhibiciones(idTienda, fecha)));
+
+            fotos.setText(String.format(Locale.getDefault(), "Fotos %d", DB.contarFotos(idTienda)));
 
 
-                try {
-                    Cursor cuSurt = DB.SurtidoCantidad(idTienda, fecha);
-                    //surtido.setText("Surtido: ("+cuSurt.getCount()+")");
-                    surtido.setText(String.format(Locale.getDefault(), "Surtido %d", cuSurt.getCount()));
-                    DB.close();
-
-                    try {
-                        Cursor cuInventario = DB.contarInventario(idTienda, fecha);
-                        //inventario.setText("Inventario ("+cuInventario.getCount()+")");
-                        inventario.setText(String.format(Locale.getDefault(), "Inventario %d", cuInventario.getCount()));
-                        DB.close();
-
-
-                        try {
-
-                            exhi.setText(String.format(Locale.getDefault(), "Exhibiciones %d", DB.contarExhibiciones(idTienda, fecha)));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        try {
-                            fotos.setText(String.format(Locale.getDefault(), "Fotos %d", DB.contarFotos(idTienda)));
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -1389,7 +1368,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     }
 
-    private void dialogoEncargado() {
+    /*private void dialogoEncargado() {
 		
 		
 		Builder builder  = new AlertDialog.Builder(this);
@@ -1412,7 +1391,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 				.setView(vistaEncargado);
 		builder.create().show();
 		
-	}
+	}*/
 
 
 
@@ -1518,7 +1497,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 				subMenuVenta();
 				break;
 			case 9:
-				dialogoEncargado();
+				//dialogoEncargado();
 				break;
 			case 10:
 				capturaFoto();
@@ -1593,7 +1572,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
 
-    private class EscucharDialogoEncargado implements DialogInterface.OnClickListener{
+   /* private class EscucharDialogoEncargado implements DialogInterface.OnClickListener{
 
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
@@ -1626,7 +1605,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 		}
 
-	}
+	}*/
 
 	private void tiendaErronea(){
 		if(!Entrada && !Salida){

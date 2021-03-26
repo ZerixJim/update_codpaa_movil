@@ -31,17 +31,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="45dp"
             android:baselineAligned="false"
             android:weightSum="2">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_precio_normal"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                >
+
                 <EditText
                     android:id="@+id/editPreN"
                     android:layout_width="match_parent"
@@ -50,9 +54,11 @@
                     android:hint="@string/precioNormal"
                     android:focusableInTouchMode="true"
                     android:inputType="numberDecimal"
+                    android:textDirection="anyRtl"
                     android:drawableStart="@drawable/ic_money"
                     android:drawableLeft="@drawable/ic_money"
                     android:layout_weight="1"
+                    android:maxLength="7"
                     android:textColor="#ff212121"/>
 
 
@@ -61,7 +67,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_precio_caja"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
@@ -72,9 +78,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/precioCaja"
+                    android:textDirection="anyRtl"
                     android:drawableStart="@drawable/ic_money"
                     android:drawableLeft="@drawable/ic_money"
                     android:ems="10"
+                    android:maxLength="7"
                     android:inputType="numberDecimal"
                     android:textColor="#ff212121"/>
 
@@ -89,34 +97,40 @@
 
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:weightSum="2"
             >
 
 
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_precio_oferta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                >
 
                 <EditText
                     android:id="@+id/editPreOfer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:textDirection="anyRtl"
                     android:ems="10"
                     android:hint="@string/precioOferta"
                     android:focusableInTouchMode="true"
                     android:drawableStart="@drawable/ic_money"
                     android:drawableLeft="@drawable/ic_money"
                     android:inputType="numberDecimal"
+                    android:maxLength="7"
                     android:textColor="#ff212121"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
 
 
 
