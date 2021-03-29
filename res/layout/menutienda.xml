@@ -50,6 +50,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 style="@style/txtBackgroundBlue"
                 android:clickable="true"/>
 
@@ -60,6 +61,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 style="@style/txtBackgroundBlue" />
 
 
@@ -70,6 +72,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 style="@style/txtBackgroundBlue" />
 
 
@@ -78,6 +81,7 @@
                 android:id="@+id/text_fotos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 style="@style/txtBackgroundBlue"/>
 
 

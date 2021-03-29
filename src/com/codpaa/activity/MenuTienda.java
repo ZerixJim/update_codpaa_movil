@@ -978,24 +978,40 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
             Cursor cuFrentes = DB.contadorFrentes(idTienda, fecha);
             //frentes.setText("Frentes: ("+cuFrentes.getCount()+")");
-            frentes.setText(String.format(Locale.getDefault(), "Frentes %d", cuFrentes.getCount()));
-            DB.close();
+            if(cuFrentes.getCount() > 0){
+                frentes.setVisibility(View.VISIBLE);
+                frentes.setText(String.format(Locale.getDefault(), "Frentes %d", cuFrentes.getCount()));
+                DB.close();
+            }
+
 
 
             Cursor cuSurt = DB.SurtidoCantidad(idTienda, fecha);
-            //surtido.setText("Surtido: ("+cuSurt.getCount()+")");
-            surtido.setText(String.format(Locale.getDefault(), "Surtido %d", cuSurt.getCount()));
-            DB.close();
+            if (cuSurt.getCount() > 0){
+                surtido.setVisibility(View.VISIBLE);
+                surtido.setText(String.format(Locale.getDefault(), "Surtido %d", cuSurt.getCount()));
+                DB.close();
+
+            }
+
+
 
             Cursor cuInventario = DB.contarInventario(idTienda, fecha);
-            //inventario.setText("Inventario ("+cuInventario.getCount()+")");
-            inventario.setText(String.format(Locale.getDefault(), "Inventario %d", cuInventario.getCount()));
-            DB.close();
+            if (cuInventario.getCount() > 0){
+                inventario.setVisibility(View.VISIBLE);
+                inventario.setText(String.format(Locale.getDefault(), "Inventario %d", cuInventario.getCount()));
+                DB.close();
+            }
+
 
             //exhibiciones
             //exhi.setText(String.format(Locale.getDefault(), "Exhibiciones %d", DB.contarExhibiciones(idTienda, fecha)));
 
-            fotos.setText(String.format(Locale.getDefault(), "Fotos %d", DB.contarFotos(idTienda)));
+            if (DB.contarFotos(idTienda) > 0){
+                fotos.setVisibility(View.VISIBLE);
+                fotos.setText(String.format(Locale.getDefault(), "Fotos %d", DB.contarFotos(idTienda)));
+            }
+
 
 
 
