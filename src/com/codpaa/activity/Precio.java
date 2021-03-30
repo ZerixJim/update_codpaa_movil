@@ -1,12 +1,11 @@
 package com.codpaa.activity;
 
-import java.text.NumberFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 
 import android.app.DatePickerDialog;
@@ -25,10 +24,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.Spanned;
-import android.text.TextWatcher;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;

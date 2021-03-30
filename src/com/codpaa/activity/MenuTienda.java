@@ -71,10 +71,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+
 import android.widget.HorizontalScrollView;
 import android.widget.ListView;
-import android.widget.Spinner;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,15 +96,15 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
     //private TextView txtEncargado;
-    private TextView frentes, surtido, exhi, inventario, fotos;
+    private TextView frentes, surtido, inventario, fotos;
     final int REQUEST_CODE_ASK_PERMISSIONS = 123;
     int idPromotor, idTienda, idTipo;
     private BDopenHelper DB = null;
     private EnviarDatos enviar;
-    private Spinner spinnerEnc;
-    private EditText editNombre;
+    //private Spinner spinnerEnc;
+    //private EditText editNombre;
     private String grupo;
-    public static final String TAG = "MenuTienda";
+    public static final String TAG = MenuTienda.class.getSimpleName();
     private boolean Salida = false;
     private boolean Entrada = false;
     private ProgressDialog progress;
@@ -439,7 +439,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         btnSalidaTi =  findViewById(R.id.salidaTienda);
         btnEntrada =  findViewById(R.id.btnEnTienda);
         Button btnEncar = findViewById(R.id.btnEncarg);
-        Button btnExhib = findViewById(R.id.buttonExhib);
+        //Button btnExhib = findViewById(R.id.buttonExhib);
         Button btnUpdaPro = findViewById(R.id.btnUpdaPro);
         Button btnInven = findViewById(R.id.btnInvenBode);
         Button btnSurtido = findViewById(R.id.buttonEnviar);
@@ -867,9 +867,12 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             }
         } else if (id == R.id.salidaTienda) {
             dialogoConfirmacionSalida();
-        } else if (id == R.id.btnEncarg) {
+        }
+        //else if (id == R.id.btnEncarg) {
             //dialogoEncargado();
-        } else if (id == R.id.buttonEnviar) {
+        //}
+
+        else if (id == R.id.buttonEnviar) {
             menuSurtido();
         } else if (id == R.id.btnInvenBode) {
             menuInventario();
