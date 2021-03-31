@@ -945,8 +945,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     private void actualizarPro() {
         UpdateInformation updateInformation = new UpdateInformation(this);
-        updateInformation.updateInfo(idPromotor);
-
+        updateInformation.downloadProduct(idPromotor);
 
     }
 
@@ -1048,6 +1047,16 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         }*/
 
 
+        BDopenHelper bDopenHelper = new BDopenHelper(this);
+
+        if (bDopenHelper.isProductsEmpty() || bDopenHelper.isBrandEmpty()){
+            actualizarPro();
+
+        }
+
+
+
+
     }
 
     private void checkIns(String fecha) {
@@ -1058,13 +1067,13 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
                 Entrada = true;
                 btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-                btnEntrada.setTextColor(Color.WHITE);
+                btnEntrada.setTextColor(Color.parseColor("#0aa82c"));
 
 
             } else {
 
                 btnEntrada.setBackgroundResource(R.drawable.custom_btn_orange);
-                btnEntrada.setTextColor(Color.WHITE);
+                btnEntrada.setTextColor(Color.parseColor("#a8270a"));
                 Entrada = false;
 
             }
@@ -1086,7 +1095,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
                     btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-                    btnSalidaTi.setTextColor(Color.WHITE);
+                    btnSalidaTi.setTextColor(Color.parseColor("#0aa82c"));
                     Salida = true;
                     DB.close();
 
@@ -1101,7 +1110,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 } else {
 
                     btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_orange);
-                    btnSalidaTi.setTextColor(Color.WHITE);
+                    btnSalidaTi.setTextColor(Color.parseColor("#a8270a"));
                     Salida = false;
                 }
 

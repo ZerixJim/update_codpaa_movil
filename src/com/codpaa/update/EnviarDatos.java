@@ -427,7 +427,7 @@ public class EnviarDatos {
 
 				
 			}else {
-				Toast.makeText(context, "No hay Visitas sin enviar", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(context, "No hay Visitas sin enviar", Toast.LENGTH_SHORT).show();
 			}
 			curVisitas.close();
 			DB.close();

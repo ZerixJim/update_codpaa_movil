@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.codpaa.listener.ResponseEncuesta;
 import com.codpaa.response.HttpResponseInfo;
+import com.codpaa.response.HttpResponseProducts;
 import com.codpaa.util.Utilities;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -48,6 +49,32 @@ public class UpdateInformation{
 
         client.get(Utilities.API_PRODUCTION + "promotores/promo-data",rp, responseInfo);
 
+
+
+
+    }
+
+
+    public void downloadProduct(int idPromotor){
+
+        AsyncHttpClient client = new AsyncHttpClient(true, 80, 443);
+
+        HttpResponseProducts responseInfo = new HttpResponseProducts(_context);
+
+        RequestParams rp = new RequestParams();
+        rp.put("solicitud" , "info");
+        rp.put("id", idPromotor);
+
+        rp.put("idPromotor", idPromotor);
+
+        client.addHeader("Authorization", "324S35574324S13D45463_-r2333434+4");
+
+
+
+        //client.get(_context, Utilities.WEB_SERVICE_CODPAA + URL_INFO, rp, responseInfo);
+
+
+        client.get(Utilities.API_PRODUCTION + "promotores/promo-data-products",rp, responseInfo);
 
 
 

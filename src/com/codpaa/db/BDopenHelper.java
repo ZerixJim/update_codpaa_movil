@@ -870,9 +870,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor datosVisitas() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select idTienda,idPromotor," +
-                "fecha,hora,latitud,longitud,tipo from coordenadas where status=1" +
-                " order by time(substr(hora, 1,8)) asc", null);
+        return baseDatosLocal.rawQuery("select idTienda,idPromotor, " +
+                "  fecha,hora,latitud,longitud,tipo from coordenadas where status=1 " +
+                "  order by fecha_captura, idTienda ,hora asc", null);
 
 
     }
@@ -1086,6 +1086,47 @@ public class BDopenHelper extends SQLiteOpenHelper {
         cursor.close();
         return id;
     }
+
+    public boolean isProductsEmpty(){
+        baseDatosLocal = getReadableDatabase();
+
+        Cursor cursor = baseDatosLocal.rawQuery("select idProducto from producto", null);
+
+        if (cursor.getCount() == 0){
+
+            cursor.close();
+
+            return true;
+        }else {
+
+            cursor.close();
+
+            return false;
+
+        }
+
+    }
+
+    public boolean isBrandEmpty(){
+        baseDatosLocal = getReadableDatabase();
+
+        Cursor cursor = baseDatosLocal.rawQuery("select idMarca from marca", null);
+
+        if (cursor.getCount() == 0){
+
+            cursor.close();
+
+            return true;
+        }else {
+
+            cursor.close();
+            return false;
+
+        }
+
+    }
+
+
 
     public Cursor datosRastreo() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
