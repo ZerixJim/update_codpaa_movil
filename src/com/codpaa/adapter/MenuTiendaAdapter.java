@@ -37,7 +37,9 @@ public class MenuTiendaAdapter extends RecyclerView.Adapter<MenuTiendaAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         MenuTiendaModel model = getItem(position);
+
         holder.nombre.setText(model.getNombreMenu());
+        holder.subDescription.setText(model.getSubDescription());
 
         Uri uri = Uri.parse("android.resource://com.codpaa/drawable/"+ model.getImage());
         holder.image.setImageURI(uri);
@@ -56,7 +58,7 @@ public class MenuTiendaAdapter extends RecyclerView.Adapter<MenuTiendaAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private ImageView image;
-        private TextView nombre;
+        private TextView nombre, subDescription;
         private MenuTiendaListener mMenuItemListener;
 
         public ViewHolder(View itemView, MenuTiendaListener listener) {
@@ -67,6 +69,7 @@ public class MenuTiendaAdapter extends RecyclerView.Adapter<MenuTiendaAdapter.Vi
 
             image = itemView.findViewById(R.id.image);
             nombre =  itemView.findViewById(R.id.description);
+            subDescription = itemView.findViewById(R.id.sub_description);
 
             itemView.setOnClickListener(this);
 

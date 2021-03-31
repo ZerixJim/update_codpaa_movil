@@ -328,7 +328,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
             final MenuTiendaModel item6 = new MenuTiendaModel();
             item6.setIdMenu(6);
-            item6.setNombreMenu("Inteligencia de mercado \n(Precios propios y competencias)");
+            item6.setNombreMenu("Inteligencia de mercado");
+            item6.setSubDescription("(Precios propios y competencias)");
             item6.setImage("ic_assessment_grey_600_24dp");
             array.add(item6);
 

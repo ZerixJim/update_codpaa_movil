@@ -9,6 +9,16 @@ public class MenuTiendaModel {
     private int idMenu;
     private String nombreMenu;
     private String image;
+    private String subDescription;
+
+
+    public String getSubDescription() {
+        return subDescription;
+    }
+
+    public void setSubDescription(String subDescription) {
+        this.subDescription = subDescription;
+    }
 
     public String getImage() {
         return image;
