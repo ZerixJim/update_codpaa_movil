@@ -44,8 +44,17 @@
                     android:theme="@style/MiTema"
                     android:layout_marginTop="10dp"/>
 
-                <Spinner
+                <!--<Spinner
                     android:id="@+id/spiSurP"
+                    android:theme="@style/MiTema"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    />-->
+
+
+                <com.codpaa.widget.SingleSpinnerSelect
+                    android:id="@+id/spinner_surtido_product"
                     android:theme="@style/MiTema"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

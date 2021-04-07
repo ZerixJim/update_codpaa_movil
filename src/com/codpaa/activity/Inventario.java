@@ -40,12 +40,14 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.model.MarcaModel;
+import com.codpaa.model.ProductosModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.R;
 
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.widget.SingleSpinnerSelect;
 
 
 public class Inventario extends AppCompatActivity implements OnItemSelectedListener, SeekBar.OnSeekBarChangeListener{
@@ -57,7 +59,9 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
     RadioGroup radio;
 	TextView txtResultado;
 	Toolbar toolbar;
-	Spinner marca,producto;
+	private Spinner marca;
+	//private Spinner producto;
+	private SingleSpinnerSelect spinnerPro;
     static Button btnFecha;
 
 	EditText editFisico, editSistema;
@@ -80,7 +84,9 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 		im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
 		marca =  findViewById(R.id.spiInMar);
-		producto =  findViewById(R.id.spiInvPro);
+		//producto =  findViewById(R.id.spiInvPro);
+
+		spinnerPro = findViewById(R.id.spiInvPro);
 
 
 		btnFecha =  findViewById(R.id.button_fecha);
@@ -222,7 +228,9 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 			SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", locale);
 			
 			MarcaModel spM = (MarcaModel) marca.getSelectedItem();
-			SpinnerProductoModel spP = (SpinnerProductoModel) producto.getSelectedItem();
+			//SpinnerProductoModel spP = (SpinnerProductoModel) producto.getSelectedItem();
+			ProductosModel spP = (ProductosModel) spinnerPro.getSelected();
+
 			int idMarca = spM.getId();
 			int idProdu = spP.getIdProducto();
 			
@@ -254,7 +262,8 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
                                 editSistema.setText("");
                                 //editLote.setText("");
                                 btnFecha.setText("fecha");
-                                producto.setSelection(0);
+                                //producto.setSelection(0);
+								spinnerPro.setSelection(0);
                                 //estado.setProgress(0);
                                 im.hideSoftInputFromWindow(editFisico.getWindowToken(), 0);
                                 new EnviarDatos(this).enviarInventario();
@@ -330,19 +339,22 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 	private void loadSpinnerProd(int idM){
 		try {
 
-			ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListPro(idM));
-			producto.setAdapter(proAdap);
+			//ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListPro(idM));
+			//producto.setAdapter(proAdap);
+
+			spinnerPro.setItems(getArrayListPro(idM), "Selecciona Producto");
+
 			
 		} catch (Exception e) {
 			Toast.makeText(this, "Error Mayoreo 4", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
-	private ArrayList<SpinnerProductoModel> getArrayListPro(int idMarca){
+	private ArrayList<ProductosModel> getArrayListPro(int idMarca){
 
 
 		Cursor cursor = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
-		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
+		ArrayList<ProductosModel> arrayP = new ArrayList<>();
 
 		if (cursor.getCount() <= 0){
 			Cursor curPro = new BDopenHelper(this).productos(idMarca);
@@ -351,7 +363,7 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 			Log.d("Productos Inventario", "" + curPro.getCount() + " idTienda "+ idTienda);
 
 			for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-				final SpinnerProductoModel spP = new SpinnerProductoModel();
+				final ProductosModel spP = new ProductosModel();
 
 				Log.d("Nombre Producto", ""+ curPro.getString(1));
 				spP.setIdProducto(curPro.getInt(0));
@@ -366,7 +378,7 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 		}else {
 
 			for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-				final SpinnerProductoModel spP = new SpinnerProductoModel();
+				final ProductosModel spP = new ProductosModel();
 
 				Log.d("Nombre Producto", ""+ cursor.getString(1));
 				spP.setIdProducto(cursor.getInt(0));
@@ -380,7 +392,7 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 		}
 		
 
-		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
+		final ProductosModel spPinicio = new ProductosModel();
 		spPinicio.setIdProducto(0);
 		spPinicio.setNombre("Seleccione Producto");
 		spPinicio.setPresentacion("producto sin seleccionar");

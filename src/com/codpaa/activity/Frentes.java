@@ -13,6 +13,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,11 +29,13 @@ import android.widget.Toast;
 
 import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.model.MarcaModel;
+import com.codpaa.model.ProductosModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.R;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.db.BDopenHelper;
+import com.codpaa.widget.SingleSpinnerSelect;
 
 public class Frentes extends AppCompatActivity implements OnClickListener, OnItemSelectedListener{
 
@@ -47,7 +51,9 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 	private ArrayList<MarcaModel> array = new ArrayList<>();
 	private SQLiteDatabase base;
-	private Spinner spiMarca, spiPro;
+	private Spinner spiMarca;
+	//private Spinner spiPro;
+	private SingleSpinnerSelect spinnerProducto;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +81,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 
 		spiMarca =  findViewById(R.id.spinnerMarFre);
-		spiPro =  findViewById(R.id.spinnerFrePro);
+		//spiPro =  findViewById(R.id.spinnerFrePro);
+		spinnerProducto = findViewById(R.id.spinner_front_product);
 
 		//asiganacion de botones
 		/*btn1 = (Button) findViewById(R.id.btnf1);
@@ -279,7 +286,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 				Calendar c = Calendar.getInstance();
 				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 				MarcaModel spm = (MarcaModel) spiMarca.getSelectedItem();
-				SpinnerProductoModel spPm = (SpinnerProductoModel) spiPro.getSelectedItem();
+				//SpinnerProductoModel spPm = (SpinnerProductoModel) spiPro.getSelectedItem();
+				ProductosModel spPm = (ProductosModel) spinnerProducto.getSelected();
 
 
 				String fecha = dFecha.format(c.getTime());
@@ -312,6 +320,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 				int idMarca = spm.getId();
 				int idProdu = spPm.getIdProducto();
 				String nombreP = spPm.getNombre();
+
+
 				if(idMarca != 0){
 					if(idProdu != 0){
 						if(cantidad >= 0){
@@ -321,7 +331,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 							Toast.makeText(this,"("+cantidad+") Frentes Guardados de: \n  "+nombreP, Toast.LENGTH_SHORT).show();
 							//spiMarca.setSelection(0);
-							spiPro.setSelection(0);
+							//spiPro.setSelection(0);
+							spinnerProducto.setSelection(0);
 
 							new EnviarDatos(this).enviarFrentes();
 
@@ -442,12 +453,69 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 	private void loadSpinnerProd(int idM){
 		try {
-			ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListProByTiensda(idM, idTienda));
-			spiPro.setAdapter(proAdap);
+
+			// Old spinner
+			//ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListProByTiensda(idM, idTienda));
+			//spiPro.setAdapter(proAdap);
+
+
+			spinnerProducto.setItems(getArrayListProByTien2(idM, idTienda), "Selecciona producto");
 
 		} catch (Exception e) {
 			Toast.makeText(this, "Error Mayoreo 4", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+
+
+	private ArrayList<ProductosModel> getArrayListProByTien2(int idMarca, int idTienda){
+
+		Cursor curProByTienda = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
+		ArrayList<ProductosModel> arrayP = new ArrayList<>();
+		if (curProByTienda.getCount() <= 0){
+
+			Cursor curPro = new BDopenHelper(this).productos(idMarca);
+
+			for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
+				final ProductosModel spP = new ProductosModel();
+				spP.setIdProducto(curPro.getInt(0));
+				spP.setNombre(curPro.getString(1));
+				spP.setPresentacion(curPro.getString(2));
+				spP.setCodigoBarras(curPro.getString(3));
+				spP.setIdMarca(curPro.getInt(4));
+				arrayP.add(spP);
+			}
+
+
+			curPro.close();
+		} else {
+
+			for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
+				final ProductosModel spP = new ProductosModel();
+				spP.setIdProducto(curProByTienda.getInt(0));
+				spP.setNombre(curProByTienda.getString(1));
+				spP.setPresentacion(curProByTienda.getString(2));
+				spP.setCodigoBarras(curProByTienda.getString(3));
+				spP.setIdMarca(curProByTienda.getInt(4));
+				arrayP.add(spP);
+			}
+
+		}
+
+
+
+		final ProductosModel spPinicio = new ProductosModel();
+		spPinicio.setIdProducto(0);
+		spPinicio.setNombre("Seleccione Producto");
+		spPinicio.setPresentacion("producto sin seleccionar");
+		spPinicio.setCodigoBarras(" ");
+
+		arrayP.add(0,spPinicio);
+
+
+		base.close();
+		return arrayP;
+
 	}
 
 

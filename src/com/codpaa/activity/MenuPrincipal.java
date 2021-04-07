@@ -103,7 +103,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.menu_principal);
+        setContentView(R.layout.main_menu);
         setToolbar();
 
 

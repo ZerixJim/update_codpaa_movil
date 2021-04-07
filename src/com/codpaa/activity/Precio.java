@@ -16,7 +16,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import com.codpaa.model.ProductosModel;
 import com.codpaa.util.NumberTextWatcher;
+import com.codpaa.widget.SingleSpinnerSelect;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
@@ -52,7 +54,8 @@ import com.codpaa.db.BDopenHelper;
 
 public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 
-	Spinner spMarca, spProducto;
+	Spinner spMarca;
+	private SingleSpinnerSelect spProducto;
 
     private static Button btnFechaInicio;
 	private static Button btnFechaFin;
@@ -398,19 +401,22 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 	
 	private void loadSpinnerProd(int idM){
 		try {
-			ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListPro(idM));
-			spProducto.setAdapter(proAdap);
+			//ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListPro(idM));
+			//spProducto.setAdapter(proAdap);
+
+			spProducto.setItems(getArrayListPro(idM), "Selecciona Producto");
+
 			
 		} catch (Exception e) {
 			Toast.makeText(this, "Error Mayoreo 4", Toast.LENGTH_SHORT).show();
 		}
 	}
 
-	private ArrayList<SpinnerProductoModel> getArrayListPro(int idMarca){
+	private ArrayList<ProductosModel> getArrayListPro(int idMarca){
 
 
 		Cursor cursor = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
-		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
+		ArrayList<ProductosModel> arrayP = new ArrayList<>();
 
 		if (cursor.getCount() <= 0){
 			Cursor curPro = new BDopenHelper(this).productos(idMarca);
@@ -419,7 +425,7 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 			Log.d("Productos Inventario", "" + curPro.getCount() + " idTienda "+ idTienda);
 
 			for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-				final SpinnerProductoModel spP = new SpinnerProductoModel();
+				final ProductosModel spP = new ProductosModel();
 
 				Log.d("Nombre Producto", ""+ curPro.getString(1));
 				spP.setIdProducto(curPro.getInt(0));
@@ -434,7 +440,7 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 		}else {
 
 			for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-				final SpinnerProductoModel spP = new SpinnerProductoModel();
+				final ProductosModel spP = new ProductosModel();
 
 				Log.d("Nombre Producto", ""+ cursor.getString(1));
 				spP.setIdProducto(cursor.getInt(0));
@@ -448,7 +454,7 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 		}
 
 
-		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
+		final ProductosModel spPinicio = new ProductosModel();
 		spPinicio.setIdProducto(0);
 		spPinicio.setNombre("Seleccione Producto");
 		spPinicio.setPresentacion("producto sin seleccionar");

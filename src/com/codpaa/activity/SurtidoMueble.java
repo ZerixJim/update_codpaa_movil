@@ -12,6 +12,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import android.os.Bundle;
+
+import com.codpaa.model.ProductosModel;
+import com.codpaa.widget.SingleSpinnerSelect;
 import com.google.android.material.textfield.TextInputLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +47,9 @@ import com.codpaa.db.BDopenHelper;
 
 public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedListener,OnCheckedChangeListener{
 	
-	Spinner spiMar, spiPro;
+	private Spinner spiMar;
+	//private Spinner spiPro;
+	private SingleSpinnerSelect spinnerSelectProduct;
 	EditText cantidad;
     EditText unifila, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, editComentario;
 	TextInputLayout cantidadLayout;
@@ -71,7 +76,8 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 		idPromotor = i.getIntExtra("idPromotor", 0);
 		
 		spiMar = findViewById(R.id.spiSurM);
-		spiPro =  findViewById(R.id.spiSurP);
+		//spiPro =  findViewById(R.id.spiSurP);
+		spinnerSelectProduct = findViewById(R.id.spinner_surtido_product);
 		cantidad =  findViewById(R.id.editSur);
 
 		txtCantidad = findViewById(R.id.txt_surtido);
@@ -245,7 +251,9 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 			
 			selec = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
 			MarcaModel spM = (MarcaModel) spiMar.getSelectedItem();
-			SpinnerProductoModel spP = (SpinnerProductoModel) spiPro.getSelectedItem();
+			//SpinnerProductoModel spP = (SpinnerProductoModel) spiPro.getSelectedItem();
+			ProductosModel spP = (ProductosModel) spinnerSelectProduct.getSelected();
+
 			
 			//int idProdu = (int) spiPro.getItemIdAtPosition(spiPro.getSelectedItemPosition());
 			int idProdu =  spP.getIdProducto();
@@ -334,7 +342,8 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
         editComentario.setText("");
 
 
-        spiPro.setSelection(0);
+        //spiPro.setSelection(0);
+		spinnerSelectProduct.setSelection(0);
 
 
 
@@ -356,20 +365,22 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 	
 	private void loadSpinnerProd(int idM){
 		try {
-			ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListPro(idM));
-			spiPro.setAdapter(proAdap);
+			//ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListPro(idM));
+			//spiPro.setAdapter(proAdap);
+
+			spinnerSelectProduct.setItems(getArrayListPro(idM), "Selecciona Producto");
 			
 		} catch (Exception e) {
 			Toast.makeText(this, "Error Mayoreo 4", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
-	private ArrayList<SpinnerProductoModel> getArrayListPro(int idMarca){
+	private ArrayList<ProductosModel> getArrayListPro(int idMarca){
 		
 		Cursor curPro = new BDopenHelper(this).productos(idMarca);
-		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
+		ArrayList<ProductosModel> arrayP = new ArrayList<>();
 		for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-			final SpinnerProductoModel spP = new SpinnerProductoModel();
+			final ProductosModel spP = new ProductosModel();
 			spP.setIdProducto(curPro.getInt(0));
 			spP.setNombre(curPro.getString(1));
 			spP.setPresentacion(curPro.getString(2));
@@ -377,7 +388,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 			spP.setIdMarca(curPro.getInt(4));
 			arrayP.add(spP);
 		}
-		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
+		final ProductosModel spPinicio = new ProductosModel();
 		spPinicio.setIdProducto(0);
 		spPinicio.setNombre("Seleccione Producto");
 		spPinicio.setPresentacion("producto sin seleccionar");

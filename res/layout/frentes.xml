@@ -42,12 +42,19 @@
                 android:theme="@style/MiTema"
                 android:layout_marginTop="15dp"/>
 
-            <Spinner
+            <!--<Spinner
                 android:id="@+id/spinnerFrePro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/MiTema"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp" />-->
+
+            <com.codpaa.widget.SingleSpinnerSelect
+                android:id="@+id/spinner_front_product"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:theme="@style/MiTema"/>
 
 
             <com.google.android.material.textfield.TextInputLayout
