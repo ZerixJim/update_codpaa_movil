@@ -6,6 +6,15 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.format.DateUtils;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +22,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Utilities {
+
+    public final static String TAG = Utilities.class.getSimpleName();
 
     static final String BASE_URL = "http://plataformavanguardia.net";
     public static final String WEB_SERVICE_PATH = "http://plataformavanguardia.net/codpaa/webservice";
@@ -109,6 +120,28 @@ public class Utilities {
         }
 
     }
+
+    public static void getFirebaseToken(final Context context){
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()){
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        String token = task.getResult();
+                        Log.d(TAG, "token " + token);
+
+                    }
+                });
+
+    }
+
+
+
 
 
 

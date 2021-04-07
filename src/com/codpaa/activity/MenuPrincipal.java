@@ -244,15 +244,15 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
         //intent para registrar nuestro dispositivo en gcm
-        if (checkPlayServices()) {
+        /*if (checkPlayServices()) {
             Intent intent = new Intent(this, RegistrationIntentService.class);
 
             intent.putExtra("idPromo", idUsuario);
 
             startService(intent);
 
-            //Log.d("MenuPrincipal", "Servicio iniciado");
-        }
+            Log.d("MenuPrincipal", "Servicio iniciado");
+        }*/
 
 
 

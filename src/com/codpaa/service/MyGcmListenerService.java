@@ -37,26 +37,100 @@ import com.codpaa.R;
 import com.codpaa.activity.MessaginActivity;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.provider.DbEstructure;
+import com.codpaa.util.Configuracion;
 import com.codpaa.util.QuickstartPreferences;
 import com.codpaa.util.Utilities;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 
+import cz.msebera.android.httpclient.Header;
+
 public class MyGcmListenerService extends FirebaseMessagingService{
 
-    //private static final String TAG = "MyGcmListenerService";
+    private static final String TAG = MyGcmListenerService.class.getSimpleName();
 
 
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
 
-
         Log.d("NEW TOKEN", s);
+
+
+        sendRegistrationToServer(s);
+
+    }
+
+
+    private void sendRegistrationToServer(final String token) {
+
+        BDopenHelper db = new BDopenHelper(getApplicationContext());
+        int idPromotor = db.getIdPromotor();
+
+        Log.w(TAG, "idPromo" + idPromotor);
+
+        // Add custom implementation, as needed.
+        if (idPromotor > 0){
+
+            final Configuracion conf = new Configuracion(this);
+
+            AsyncHttpClient client = new AsyncHttpClient();
+
+            RequestParams rp = new RequestParams();
+            rp.put("id", idPromotor);
+            rp.put("solicitud", "update_token");
+            rp.put("token_gcm", token);
+
+            client.get(Utilities.WEB_SERVICE_CODPAA + "serv.php", rp, new JsonHttpResponseHandler() {
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    Log.d(TAG, "token send to server "+ token);
+
+                    if (response != null) {
+                        try {
+                            if (response.getInt("success") == 1) {
+
+                                conf.setToken(token);
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    //sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false).apply();
+
+                    Log.d(TAG, "onFailure");
+
+
+                }
+
+
+            });
+
+
+
+
+
+
+        }
 
 
 

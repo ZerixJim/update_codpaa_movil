@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "190924840987-06enfs2eppjr6d5uvpj2jt9441f0r0nn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codpaa",
+            "certificate_hash": "216a728ed9eed79c097977571ae39f90ff14f375"
+          }
+        },
+        {
           "client_id": "190924840987-gqguqmcof0h70knd6n8msqflip8ppofb.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -25,15 +33,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190924840987-gqguqmcof0h70knd6n8msqflip8ppofb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -1032,7 +1032,7 @@ public class EnviarDatos {
 		}
 	}
 	
-	private class HttpResponseInteligen extends JsonHttpResponseHandler{
+	public static class HttpResponseInteligen extends JsonHttpResponseHandler{
 		
 		private int idTienda;
 		private String fecha;

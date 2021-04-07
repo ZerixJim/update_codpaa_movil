@@ -403,7 +403,7 @@ public class GeoLocalizar extends Service {
 
 					serviceLocation = locat;
 
-					insertarRastreo();
+					insertRastreo();
 
 				}
 
@@ -460,30 +460,30 @@ public class GeoLocalizar extends Service {
 				try {
 
 
-					enviarVisitas();
+					sendVisitas();
 
 					verifyVersionSent();
 
-					enviarFrentes();
+					sendFrentes();
 					//enviarSurtido();
 
-					enviarInteli();
+					sendInteli();
 
-					enviarInventario();
+					sendInventario();
 
-					enviarExibiciones();
+					sendExibiciones();
 
-					enviarEncargado();
+					sendEncargado();
 
-					enviarComentario();
+					sendComentario();
 
-					enviarRastreo();
-
-
-					enviarFotos();
+					sendRastreo();
 
 
-					createFolioAtServer();
+					sendFotos();
+
+
+					//createFolioAtServer();
 
 					enviarEstatus();
 
@@ -705,18 +705,18 @@ public class GeoLocalizar extends Service {
 		if (config.getVersion() != null) {
 
 			if (!config.getVersion().equals(fechaActual())) {
-				enviarVersion();
+				sendVersion();
 			} else {
-				Log.d("Geo_service", "version enviada");
+				Log.d("Geo_service", "version sent");
 			}
 
 		} else {
-			enviarVersion();
+			sendVersion();
 		}
 	}
 
 
-	protected void enviarVersion() {
+	protected void sendVersion() {
 		try {
 			AsyncHttpClient clienteVersio = new AsyncHttpClient();
 			RequestParams rpV = new RequestParams();
@@ -784,7 +784,7 @@ public class GeoLocalizar extends Service {
 
 
 
-	public void enviarVisitas() {
+	public void sendVisitas() {
 
 
 		EnviarDatos enviarDatos = new EnviarDatos(this);
@@ -794,7 +794,7 @@ public class GeoLocalizar extends Service {
 	}
 
 
-	public void enviarFrentes() {
+	public void sendFrentes() {
 		try {
 
 
@@ -852,7 +852,7 @@ public class GeoLocalizar extends Service {
 	
 
 
-	public void enviarInventario() {
+	public void sendInventario() {
 		try {
 
 			Cursor curInven = DBhelper.Inventario();
@@ -893,7 +893,7 @@ public class GeoLocalizar extends Service {
 	}
 
 
-	public void enviarExibiciones() {
+	public void sendExibiciones() {
 		try {
 
 			Cursor curExhi = DBhelper.Exhibiciones();
@@ -929,7 +929,7 @@ public class GeoLocalizar extends Service {
 		}
 	}
 
-	public void enviarEncargado() {
+	public void sendEncargado() {
 
 		try {
 			Cursor curEncargado = DBhelper.encargadoTienda();
@@ -964,7 +964,7 @@ public class GeoLocalizar extends Service {
 	}
 
 
-	public void enviarComentario() {
+	public void sendComentario() {
 
 		try {
 			Cursor curComentario = DBhelper.ComentariosTienda();
@@ -997,7 +997,7 @@ public class GeoLocalizar extends Service {
 	}
 
 
-	public void enviarRastreo() {
+	public void sendRastreo() {
 		try {
 
 
@@ -1047,7 +1047,7 @@ public class GeoLocalizar extends Service {
 
 	}
 
-	public void insertarRastreo() {
+	public void insertRastreo() {
 
 		try {
 
@@ -1092,7 +1092,7 @@ public class GeoLocalizar extends Service {
 
 	}
 
-	public void enviarInteli() {
+	public void sendInteli() {
 		try {
 			Cursor curInteli = DBhelper.datosInteligenciaMercado();
 			base = new BDopenHelper(this).getWritableDatabase();
@@ -1133,7 +1133,7 @@ public class GeoLocalizar extends Service {
 		}
 	}
 
-	public void enviarFotos() {
+	public void sendFotos() {
 
 		BDopenHelper base = new BDopenHelper(this);
 
@@ -1205,7 +1205,7 @@ public class GeoLocalizar extends Service {
 	JsonHttpResponseHandler jr = new JsonHttpResponseHandler() {
 
 
-		int id = 100;
+		final int id = 100;
 
 		NotificationManager notification;
 		NotificationCompat.Builder notificationBuilder;
