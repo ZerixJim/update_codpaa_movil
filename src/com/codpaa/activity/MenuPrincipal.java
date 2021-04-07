@@ -55,7 +55,6 @@ import android.widget.Toast;
 import com.codpaa.R;
 import com.codpaa.adapter.MenuAdapter;
 import com.codpaa.model.MenuModel;
-import com.codpaa.service.RegistrationIntentService;
 import com.codpaa.update.UpdateInformation;
 
 import com.codpaa.db.BDopenHelper;
@@ -254,6 +253,19 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             Log.d("MenuPrincipal", "Servicio iniciado");
         }*/
 
+
+        try {
+
+            if(!configuracion.isTokenFirebaseSent()){
+
+                Utilities.getFirebaseToken(this);
+            }
+
+        }catch (Exception e){
+
+            e.printStackTrace();
+
+        }
 
 
 
