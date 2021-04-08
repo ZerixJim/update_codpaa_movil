@@ -1058,6 +1058,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
 
+
+
     }
 
     private void checkIns(String fecha) {
@@ -1669,16 +1671,16 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         Builder builder = new AlertDialog.Builder(this);
         LayoutInflater layoutInflater =  (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		final ViewGroup nullParent = null;
-        View frentes = layoutInflater.inflate(R.layout.lista_capturados, nullParent);
+        View inventarios = layoutInflater.inflate(R.layout.lista_capturados, nullParent);
         Listener flistener = new Listener();
-        ListView listView = frentes.findViewById(R.id.listCapturados);
+        ListView listView = inventarios.findViewById(R.id.listCapturados);
 
         InventariosCustomAdapter adapter = new InventariosCustomAdapter(this,R.layout.lista_capturados,getInventariosCapturados());
 
         listView.setAdapter(adapter);
 
 
-        builder.setPositiveButton("Cerrar",flistener).setView(frentes);
+        builder.setPositiveButton("Cerrar",flistener).setView(inventarios);
 
         builder.create().show();
     }

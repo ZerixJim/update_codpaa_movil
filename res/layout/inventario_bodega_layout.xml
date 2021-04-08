@@ -4,7 +4,9 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    >
 
 
     <androidx.appcompat.widget.Toolbar
@@ -20,6 +22,7 @@
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="16dp"
         >
 
         <LinearLayout
@@ -130,7 +133,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="20dp"
+                    android:padding="5dp">
 
 
                     <com.google.android.material.textfield.TextInputLayout

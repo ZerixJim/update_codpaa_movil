@@ -301,7 +301,7 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 
 			try {
 				MarcaModel spM = (MarcaModel) spMarca.getSelectedItem();
-				SpinnerProductoModel spP = (SpinnerProductoModel) spProducto.getSelectedItem();
+				ProductosModel spP = (ProductosModel) spProducto.getSelectedItem();
 				Calendar c = Calendar.getInstance();
 				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
 
