@@ -527,14 +527,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     }
 
-    public void borrarSurtido(String fecha, int sta){
+    /*public void borrarSurtido(String fecha, int sta){
 
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
             baseDatosLocal.execSQL("delete from surtido where fecha!='"+fecha+"' and status="+sta);
         if(baseDatosLocal != null)baseDatosLocal.close();
 
-    }
+    }*/
 
     public void borrarExhi(String fecha, int sta){
         baseDatosLocal = getWritableDatabase();

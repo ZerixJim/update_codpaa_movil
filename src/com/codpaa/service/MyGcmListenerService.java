@@ -61,6 +61,7 @@ public class MyGcmListenerService extends FirebaseMessagingService{
 
         Configuracion config = new Configuracion(this);
         config.setTokenFirebaseSent(false);
+        config.setToken(s);
 
 
     }
@@ -166,9 +167,11 @@ public class MyGcmListenerService extends FirebaseMessagingService{
         values.put("asunto", asunto);
         values.put("content", content);
         values.put("fecha", fecha);
-        values.put("from", from);
+        //values.put("from", from);
         values.put(DbEstructure.Mensaje.ID_PROMOTOR, idPromotor);
         values.put(DbEstructure.Mensaje.ID_SERVIDOR, idServer);
+
+        //Log.d("Content value", values.toString());
 
         int idMensaje = (int) db.insert(Utilities.TABLE_MENSAJE, null, values);
 

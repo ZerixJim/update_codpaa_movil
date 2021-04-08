@@ -765,8 +765,8 @@ public class EnviarDatos {
                 try {
                     if (response.getBoolean("insert")){
 						Toast.makeText(context, "Surtido recibido", Toast.LENGTH_SHORT).show();
-                        //db = new BDopenHelper(context).getWritableDatabase();
-                        //db.execSQL("delete from surtido where idTienda="+idTienda+" and fecha='"+fecha+"' and idProducto="+idProducto+";");
+                        db = new BDopenHelper(context).getWritableDatabase();
+                        db.execSQL("delete from surtido where idTienda="+idTienda+" and fecha='"+fecha+"' and idProducto="+idProducto+";");
                         //Log.d("ResponseSurtido", "eliminado");
                     }
                 } catch (JSONException e) {
