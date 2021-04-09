@@ -31,9 +31,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.codpaa.util.Utilities;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -148,8 +152,17 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             drawerLayout = findViewById(R.id.drawer_layout);
             NavigationView navigationView = findViewById(R.id.nav_view);
 
+
+            BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnavigation);
+
+
+
+
+
+
             if (navigationView != null) {
                 setupDrawerContent(navigationView);
+
 
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.GET_ACCOUNTS},

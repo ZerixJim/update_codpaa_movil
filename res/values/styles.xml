@@ -239,4 +239,12 @@
     </style>
 
 
+    <style name="BottomNavigation">
+        <item name="android:background">@color/blue_primary</item>
+        <!--<item name="itemBackground">@drawable/navigation_bar_item_bg</item>-->
+
+    </style>
+
+
+
 </resources>
