@@ -43,11 +43,11 @@ public class ListaMensajesActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_mensajes);
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_mensajes);
+        RecyclerView mRecyclerView = findViewById(R.id.recycler_mensajes);
 
         LayoutManager mLayoutManager = new LinearLayoutManager(this);
 
-        linearNoImage = (LinearLayout) findViewById(R.id.no_message);
+        linearNoImage =  findViewById(R.id.no_message);
 
 
 

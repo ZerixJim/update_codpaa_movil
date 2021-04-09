@@ -39,7 +39,7 @@ public class MessaginActivity extends AppCompatActivity {
         setContentView(R.layout.messagin_layout);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar =  findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Bundle bundle = getIntent().getExtras();
@@ -48,7 +48,7 @@ public class MessaginActivity extends AppCompatActivity {
         final int idMensaje = bundle.getInt("idMensaje");
         int idServer = bundle.getInt("idServidor", 0);
 
-        TextView message = (TextView) findViewById(R.id.message);
+        TextView message = findViewById(R.id.message);
 
         if (strMessage == null || strMessage.isEmpty()){
             //message.setText("no se pudo recibir el mensaje");
@@ -66,7 +66,7 @@ public class MessaginActivity extends AppCompatActivity {
 
         Log.d("BundleMessage", strMessage);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         if (fab != null) {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override

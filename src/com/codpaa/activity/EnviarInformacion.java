@@ -26,9 +26,9 @@ public class EnviarInformacion extends AppCompatActivity implements OnClickListe
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.enviar);
 		
-		btnVisitas = (Button) findViewById(R.id.btnVisitasP);
+		btnVisitas = findViewById(R.id.btnVisitasP);
 
-		btnFotos = (Button) findViewById(R.id.btnFotosNo);
+		btnFotos = findViewById(R.id.btnFotosNo);
 		
 		
 		btnVisitas.setOnClickListener(this);
