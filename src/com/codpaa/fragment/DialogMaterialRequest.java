@@ -22,6 +22,7 @@ import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.MaterialModel;
+import com.codpaa.model.ProductosModel;
 import com.codpaa.model.SpinnerProductoModel;
 
 import java.text.SimpleDateFormat;
@@ -143,13 +144,13 @@ public class DialogMaterialRequest extends DialogFragment implements AdapterView
 
     }
 
-    private ArrayList<SpinnerProductoModel> getProductTester(){
+    private ArrayList<ProductosModel> getProductTester(){
 
         Cursor curProByTienda = new BDopenHelper(getActivity()).getProductosTester();
-        ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
+        ArrayList<ProductosModel> arrayP = new ArrayList<>();
 
         for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
-            final SpinnerProductoModel spP = new SpinnerProductoModel();
+            final ProductosModel spP = new ProductosModel();
             spP.setIdProducto(curProByTienda.getInt(0));
             spP.setNombre(curProByTienda.getString(1));
             spP.setPresentacion(curProByTienda.getString(2));
@@ -158,7 +159,7 @@ public class DialogMaterialRequest extends DialogFragment implements AdapterView
             arrayP.add(spP);
         }
 
-        final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
+        final ProductosModel spPinicio = new ProductosModel();
         spPinicio.setIdProducto(0);
         spPinicio.setNombre("Seleccione Producto");
         spPinicio.setPresentacion("");
@@ -277,16 +278,16 @@ public class DialogMaterialRequest extends DialogFragment implements AdapterView
 
     }
 
-    private ArrayList<SpinnerProductoModel> getArrayListProByTienda(int idMarca, int idTienda){
+    private ArrayList<ProductosModel> getArrayListProByTienda(int idMarca, int idTienda){
 
         Cursor curProByTienda = new BDopenHelper(getActivity()).getProductosByTienda(idMarca, idTienda);
-        ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
+        ArrayList<ProductosModel> arrayP = new ArrayList<>();
         if (curProByTienda.getCount() <= 0){
 
             Cursor curPro = new BDopenHelper(getActivity()).productos(idMarca);
 
             for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-                final SpinnerProductoModel spP = new SpinnerProductoModel();
+                final ProductosModel spP = new ProductosModel();
                 spP.setIdProducto(curPro.getInt(0));
                 spP.setNombre(curPro.getString(1));
                 spP.setPresentacion(curPro.getString(2));
@@ -300,7 +301,7 @@ public class DialogMaterialRequest extends DialogFragment implements AdapterView
         } else {
 
             for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
-                final SpinnerProductoModel spP = new SpinnerProductoModel();
+                final ProductosModel spP = new ProductosModel();
                 spP.setIdProducto(curProByTienda.getInt(0));
                 spP.setNombre(curProByTienda.getString(1));
                 spP.setPresentacion(curProByTienda.getString(2));
@@ -313,7 +314,7 @@ public class DialogMaterialRequest extends DialogFragment implements AdapterView
 
 
 
-        final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
+        final ProductosModel spPinicio = new ProductosModel();
         spPinicio.setIdProducto(0);
         spPinicio.setNombre("Seleccione Producto");
 

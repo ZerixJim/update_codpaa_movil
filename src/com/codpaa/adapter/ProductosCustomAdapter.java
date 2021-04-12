@@ -3,6 +3,7 @@ package com.codpaa.adapter;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +15,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codpaa.R;
-import com.codpaa.model.SpinnerProductoModel;
+import com.codpaa.model.ProductosModel;
 import com.codpaa.util.Utilities;
 
 
 
-public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
-	private Activity _context;
-	private ArrayList<SpinnerProductoModel> _datos;
+public class ProductosCustomAdapter extends ArrayAdapter<ProductosModel>{
+	private Context _context;
+	private ArrayList<ProductosModel> _datos;
 
 
 
@@ -37,7 +38,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
  	}
 	
 
-	public ProductosCustomAdapter(Activity con, int textViewResourceId,ArrayList<SpinnerProductoModel> objects) {
+	public ProductosCustomAdapter(Context con, int textViewResourceId, ArrayList<ProductosModel> objects) {
 		super(con, textViewResourceId, objects);
 		
 		this._context= con;
@@ -61,7 +62,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 		final ViewHolder viewHolder;
 
 		if(row == null){
-			LayoutInflater inflater = _context.getLayoutInflater();
+			LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			row = inflater.inflate(R.layout.row_spinner_product, parent, false);
 			viewHolder = new ViewHolder();
 			viewHolder.txtNombre =  row.findViewById(R.id.text_nombre_producto);
@@ -79,7 +80,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
 			viewHolder = (ViewHolder) row.getTag();
 		}
 
-		SpinnerProductoModel temp = _datos.get(position);
+		ProductosModel temp = _datos.get(position);
 
 
 
@@ -131,7 +132,8 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
         final ViewHolder viewHolder;
 		
 		if(row == null){
-			LayoutInflater inflater = _context.getLayoutInflater();
+
+			LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			row = inflater.inflate(R.layout.row_spinner_product, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.txtNombre = row.findViewById(R.id.text_nombre_producto);
@@ -148,7 +150,7 @@ public class ProductosCustomAdapter extends ArrayAdapter<SpinnerProductoModel>{
             viewHolder = (ViewHolder) row.getTag();
         }
 		
-		SpinnerProductoModel temp = _datos.get(position);
+		ProductosModel temp = _datos.get(position);
 
 
 		viewHolder.txtNombre.setText(temp.getNombre());

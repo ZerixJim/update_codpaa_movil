@@ -171,10 +171,12 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         }
 
 
+        //setting a main menu
         setUpMenu();
 
 
 
+        // object to send data
         enviar = new EnviarDatos(this);
 
 
@@ -184,12 +186,6 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
         DB = new BDopenHelper(this);
-
-
-        //fotos.setText("fotos(0)");
-
-
-
 
 
         try {
@@ -1055,6 +1051,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
         }
 
+        // sending visits on app is visible
+        enviar.enviarVisitas();
 
 
 

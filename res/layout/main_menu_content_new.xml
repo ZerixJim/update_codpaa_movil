@@ -60,19 +60,7 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:scrollbars="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-
-    <FrameLayout
+    <fragment
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -82,6 +70,20 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
 
         />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomnavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:itemIconTint="@color/bottom_navegation_color"
+        app:itemTextColor="@color/bottom_navegation_color"
+        style="@style/BottomNavigation"
+        app:menu="@menu/bottom_bar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,6 +33,7 @@ import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.MarcaModel;
+import com.codpaa.model.ProductosModel;
 import com.codpaa.model.SpinnerProductoModel;
 import com.codpaa.update.EnviarDatos;
 
@@ -372,16 +373,16 @@ public class VentaPromedio extends AppCompatActivity implements AdapterView.OnIt
 
 
 
-    private ArrayList<SpinnerProductoModel> getArrayListProByTiensda(int idMarca, int idTienda){
+    private ArrayList<ProductosModel> getArrayListProByTiensda(int idMarca, int idTienda){
 
         Cursor curProByTienda = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
-        ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
+        ArrayList<ProductosModel> arrayP = new ArrayList<>();
         if (curProByTienda.getCount() <= 0){
 
             Cursor curPro = new BDopenHelper(this).productos(idMarca);
 
             for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-                final SpinnerProductoModel spP = new SpinnerProductoModel();
+                final ProductosModel spP = new ProductosModel();
                 spP.setIdProducto(curPro.getInt(0));
                 spP.setNombre(curPro.getString(1));
                 spP.setPresentacion(curPro.getString(2));
@@ -395,7 +396,7 @@ public class VentaPromedio extends AppCompatActivity implements AdapterView.OnIt
         } else {
 
             for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
-                final SpinnerProductoModel spP = new SpinnerProductoModel();
+                final ProductosModel spP = new ProductosModel();
                 spP.setIdProducto(curProByTienda.getInt(0));
                 spP.setNombre(curProByTienda.getString(1));
                 spP.setPresentacion(curProByTienda.getString(2));
@@ -408,7 +409,7 @@ public class VentaPromedio extends AppCompatActivity implements AdapterView.OnIt
 
 
 
-        final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
+        final ProductosModel spPinicio = new ProductosModel();
         spPinicio.setIdProducto(0);
         spPinicio.setNombre("Seleccione Producto");
         spPinicio.setPresentacion("producto sin seleccionar");

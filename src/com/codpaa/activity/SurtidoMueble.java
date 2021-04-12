@@ -249,10 +249,10 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 			String fecha = dFecha.format(c.getTime());
 			
 			
-			selec = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
+			selec =  findViewById(radio.getCheckedRadioButtonId());
 			MarcaModel spM = (MarcaModel) spiMar.getSelectedItem();
 			//SpinnerProductoModel spP = (SpinnerProductoModel) spiPro.getSelectedItem();
-			ProductosModel spP = (ProductosModel) spinnerSelectProduct.getSelected();
+			ProductosModel spP = spinnerSelectProduct.getSelected();
 
 			
 			//int idProdu = (int) spiPro.getItemIdAtPosition(spiPro.getSelectedItemPosition());
@@ -343,6 +343,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 
 
         //spiPro.setSelection(0);
+		spinnerSelectProduct.resetFilter();
 		spinnerSelectProduct.setSelection(0);
 
 

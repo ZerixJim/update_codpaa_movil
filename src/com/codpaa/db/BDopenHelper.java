@@ -37,17 +37,15 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static final String name= "codpaa";
     private static final SQLiteDatabase.CursorFactory cursorfactory = null;
 
-    // v1.2.8 rc4 = 31
-    // v1.2.9 rc1 = 32
-    // v1.3.1 = 33
-    // v1.3.3 = 34
-    // v1.3.7 = 35
+
     // v1.3.8 = 36
     // v1.3.9 = 36
 
     // v1.3.9 hotfix rc6 = 40
 
-    private static final int version = 41;
+    // v1.3.10 = 42
+
+    private static final int version = 42;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -122,7 +120,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 VisitaTienda.TIPO + " char(1), " +
                 VisitaTienda.ESTATUS + " int, " +
                 VisitaTienda.SEMANA + " int(3)," +
-                VisitaTienda.FECHA_CAPTURA + " char(20)" +
+                VisitaTienda.FECHA_CAPTURA + " char(20)," +
+                VisitaTienda.AUTO_TIME + " int(1) default 1 " +
                 ")";
         encargadoTienda = "create table if not exists " +
                 "encargadotienda(idTienda int, idPromotor int, nombre char (50), " +
@@ -189,7 +188,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "photo(idPhoto integer primary key autoincrement NOT NULL, idTienda int NOT NULL, " +
                 "idCelular int NOT NULL, idMarca int NOT NULL, idExhibicion int NOT NULL, " +
                 "fecha varchar(10) NOT NULL, dia int NOT NULL, mes int NOT NULL, anio int NOT NULL, " +
-                "imagen varchar(250) NOT NULL, status int(2) NOT NULL, evento int(2), fecha_captura char(20) NOT NULL, comentario varchar(255))";
+                "imagen varchar(250) NOT NULL, status int(2) NOT NULL, evento int(2), fecha_captura char(20) NOT NULL, " +
+                "comentario varchar(255))";
 
         photoProducto = "create table if not exists " +
                 PhotoProducto.TABLE_NAME + "(" + PhotoProducto.ID_PHOTO + " int ," +
@@ -415,6 +415,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         if (newVersion == 41){
             db.execSQL("alter table photo add column comentario varchar(255)");
+        }
+
+        if(newVersion == 42){
+
+            db.execSQL("alter table " + VisitaTienda.TABLE + " add column " + VisitaTienda.AUTO_TIME + " int(1) default 1");
+
         }
 
     }

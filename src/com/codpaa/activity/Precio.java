@@ -327,6 +327,7 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 								Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
 
 								resetCampos();
+								spProducto.resetFilter();
 								spProducto.setSelection(0);
 
 								btnFechaInicio.setText(R.string.fecha);

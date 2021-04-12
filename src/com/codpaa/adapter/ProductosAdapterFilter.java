@@ -2,6 +2,7 @@ package com.codpaa.adapter;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.codpaa.R;
@@ -27,22 +27,21 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
 
     private ArrayList<ProductosModel> mOriginalData;
     private ArrayList<ProductosModel> arrayList;
-    private LayoutInflater inflater;
     private ProductosModel productosModel = null;
     private Context context;
 
 
-    private static class ViewHolder {
+    private class ViewHolder {
         TextView nombreProducto;
         TextView presentacion;
         ImageView imageView;
+        TextView divider;
         CheckBox checkBox;
-        ProductosModel productosModel;
+
     }
 
 
-    public ProductosAdapterFilter(Context context, int textViewResourceId,
-                                  ArrayList<ProductosModel> objects) {
+    public ProductosAdapterFilter(Context context, int textViewResourceId, ArrayList<ProductosModel> objects) {
 
         super(context, textViewResourceId, objects);
 
@@ -52,42 +51,33 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
 
         mOriginalData = new ArrayList<>(objects);
 
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
-
-    @Override
-    public int getCount() {
-        return arrayList.size();
-    }
-
-    @Nullable
-    @Override
-    public ProductosModel getItem(int position) {
-        return arrayList.get(position);
-    }
 
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
-        View row = convertView;
-        final ViewHolder viewHolder;
 
-        if (row == null) {
-            row = inflater.inflate(R.layout.custom_view_productos, parent, false);
+        ViewHolder viewHolder;
+
+        if (convertView == null) {
+
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.custom_view_productos, parent, false);
             viewHolder = new ViewHolder();
 
-            viewHolder.nombreProducto = row.findViewById(R.id.textProNombre);
-            viewHolder.presentacion = row.findViewById(R.id.textProducPresentacion);
-            viewHolder.checkBox = row.findViewById(R.id.checkProduct);
-            viewHolder.imageView = row.findViewById(R.id.image);
+            viewHolder.nombreProducto = convertView.findViewById(R.id.textProNombre);
+            viewHolder.presentacion = convertView.findViewById(R.id.textProducPresentacion);
+            viewHolder.checkBox = convertView.findViewById(R.id.checkProduct);
+            viewHolder.imageView = convertView.findViewById(R.id.image);
+            viewHolder.divider = convertView.findViewById(R.id.divider);
 
 
-            row.setTag(viewHolder);
+            convertView.setTag(viewHolder);
 
         } else {
-            viewHolder = (ViewHolder) row.getTag();
-            viewHolder.productosModel = productosModel;
+            viewHolder = (ViewHolder) convertView.getTag();
+
         }
 
         productosModel = arrayList.get(position);
@@ -117,13 +107,22 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
         viewHolder.nombreProducto.setText(productosModel.getNombre());
         viewHolder.presentacion.setText(productosModel.getPresentacion());
 
+        if (position == 0){
+
+            viewHolder.divider.setVisibility(View.GONE);
+
+        }else {
+            viewHolder.divider.setVisibility(View.VISIBLE);
+        }
+
 
         viewHolder.checkBox.setVisibility(View.INVISIBLE);
         //viewHolder.checkBox.setChecked(productosModel.isChecked());
 
 
-        return row;
+        return convertView;
     }
+
 
 
     @NonNull

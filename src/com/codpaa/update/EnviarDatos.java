@@ -52,6 +52,8 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 
 
 public class EnviarDatos {
+
+	private final String TAG = EnviarDatos.class.getSimpleName();
 	
 	private AsyncHttpClient cliente = new AsyncHttpClient();
 
@@ -364,7 +366,7 @@ public class EnviarDatos {
 	}
 	
 
-	public void enviarVisitas() {
+	public synchronized void enviarVisitas() {
 		try {
 
 			Cursor curVisitas = DB.datosVisitas();
@@ -428,6 +430,7 @@ public class EnviarDatos {
 				
 			}else {
 				//Toast.makeText(context, "No hay Visitas sin enviar", Toast.LENGTH_SHORT).show();
+				Log.i(TAG, "no hay registros de visita");
 			}
 			curVisitas.close();
 			DB.close();

@@ -71,6 +71,7 @@ public class DbEstructure {
         public static final String TIPO = "tipo";
         public static final String ESTATUS = "status";
         public static final String SEMANA = "semana";
+        public static final String AUTO_TIME = "auto_time";
 
     }
 

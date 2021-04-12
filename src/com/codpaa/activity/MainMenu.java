@@ -1,14 +1,6 @@
 package com.codpaa.activity;
 
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-import java.util.regex.Pattern;
-
-
 import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -28,24 +20,6 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-
-import com.codpaa.util.Utilities;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.appcompat.widget.TooltipCompat;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.MenuItemCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
@@ -56,18 +30,33 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.codpaa.R;
 import com.codpaa.adapter.MenuAdapter;
+import com.codpaa.db.BDopenHelper;
+import com.codpaa.fragment.MessageFragment;
+import com.codpaa.fragment.RouteFragment;
+import com.codpaa.fragment.SendFragment;
 import com.codpaa.model.MenuModel;
 import com.codpaa.update.UpdateInformation;
-
-import com.codpaa.db.BDopenHelper;
 import com.codpaa.util.AndroidApps;
 import com.codpaa.util.Configuracion;
 import com.codpaa.util.QuickstartPreferences;
-
+import com.codpaa.util.Utilities;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -76,14 +65,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Pattern;
+
 import cz.msebera.android.httpclient.Header;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class MenuPrincipal extends AppCompatActivity implements OnClickListener, LocationListener {
+public class MainMenu extends AppCompatActivity implements OnClickListener, LocationListener, BottomNavigationView.OnNavigationItemSelectedListener {
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = MainMenu.class.getSimpleName();
     private final int MY_PERMISSION_GET_ACCOUNDS = 126;
 
     private DrawerLayout drawerLayout;
@@ -94,8 +89,9 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     String myVersionName = "not available";
 
     Configuracion configuracion;
-    RecyclerView recycler;
-    MenuAdapter adapter;
+
+    private Fragment currentFragment;
+    private FragmentTransaction ft;
 
     private BroadcastReceiver mNewMessageBroadcastReceiver;
     private BroadcastReceiver mRegisterClose;
@@ -107,8 +103,10 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.main_menu);
+        setContentView(R.layout.main_menu_container_new);
         setToolbar();
+
+
 
 
         Intent recibe = getIntent();
@@ -146,11 +144,20 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
             //Log.i("idPromo Menu", "" + idUsuario);
 
 
-            createMenu();
+            //createMenu();
 
             //Navigation view
             drawerLayout = findViewById(R.id.drawer_layout);
             NavigationView navigationView = findViewById(R.id.nav_view);
+
+
+            BottomNavigationView bottomNavigationView = findViewById(R.id.bottomnavigation);
+
+            bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+
+
+
 
 
 
@@ -225,7 +232,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
                 if (QuickstartPreferences.NEW_MESSAGE.equals(intent.getAction())) {
-                    updateMessage();
+                    //updateMessage();
                 }
 
 
@@ -276,56 +283,20 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
 
+        //implements fragment
+        ft = getSupportFragmentManager().beginTransaction();
+        currentFragment = RouteFragment.newInstance(idUsuario);
+        ft.replace(R.id.container, currentFragment);
+        ft.commit();
+
+
 
     }
 
 
-    private void createMenu() {
-
-        recycler = findViewById(R.id.recyclerview);
-
-        adapter = new MenuAdapter(getMenus(), this);
-
-        if (recycler != null) {
-
-            recycler.setHasFixedSize(true);
-            recycler.setLayoutManager(new GridLayoutManager(this, 2));
-            recycler.setAdapter(adapter);
-        }
 
 
-    }
 
-    private List<MenuModel> getMenus() {
-
-        List<MenuModel> array = new ArrayList<>();
-
-        final MenuModel ruta = new MenuModel();
-        ruta.setId(1);
-        ruta.setImage("ic_directions_yellow_700_36dp");
-        ruta.setMenu("Ruta");
-        ruta.setIdPromotor(idUsuario);
-        array.add(ruta);
-
-
-        final MenuModel mensajes = new MenuModel();
-        mensajes.setId(2);
-        mensajes.setImage("ic_message_lime_100_36dp");
-        mensajes.setMenu("Mensajes");
-        array.add(mensajes);
-
-
-        final MenuModel enviar = new MenuModel();
-        enviar.setId(3);
-        enviar.setImage("ic_send_green_a400_36dp");
-        enviar.setMenu("Enviar");
-        array.add(enviar);
-
-
-        return array;
-
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -430,7 +401,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
         registerReceiver();
 
-        updateMessage();
+        //updateMessage();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         Calendar c = Calendar.getInstance();
@@ -443,35 +414,6 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
     }
 
-
-    private void updateMessage() {
-
-        int count = new BDopenHelper(this).countMessege();
-
-        List<MenuModel> menu = adapter.getAllItems();
-        if (count > 0) {
-
-
-            for (MenuModel item : menu) {
-                if (item.getId() == 2) {
-                    item.setChange(1);
-                    item.setCount(count);
-                }
-            }
-
-        } else {
-
-            for (MenuModel item : menu) {
-                if (item.getId() == 2) {
-                    item.setChange(0);
-                    item.setCount(0);
-                }
-            }
-
-        }
-        adapter.notifyDataSetChanged();
-
-    }
 
     private void updateInfo() {
         configuracion = new Configuracion(this);
@@ -812,7 +754,7 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                         int size  =  response.length();
 
 
-                        SQLiteDatabase db = new BDopenHelper(MenuPrincipal.this).getWritableDatabase();
+                        SQLiteDatabase db = new BDopenHelper(MainMenu.this).getWritableDatabase();
 
                         for (int i = 0 ; i < size ; i++){
 
@@ -885,5 +827,40 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        int id = item.getItemId();
+
+        Log.i(TAG, "id" + id);
+
+        if (id == R.id.ruta){
+
+            currentFragment = RouteFragment.newInstance(idUsuario);
+            ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.container, currentFragment);
+            ft.commit();
+
+
+            return true;
+        }else if(id == R.id.enviar){
+
+            currentFragment = SendFragment.newInstance();
+            ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.container, currentFragment);
+            ft.commit();
+
+            return true;
+        }else if (id == R.id.mensajes){
+
+            currentFragment = new MessageFragment();
+            ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.container, currentFragment);
+            ft.commit();
+
+
+            return true;
+        }
+        return false;
+    }
 }

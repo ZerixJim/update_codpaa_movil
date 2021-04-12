@@ -115,6 +115,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/noActionBar" />
         <activity
+            android:name=".activity.MainMenu"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/menu_principal"
+            android:screenOrientation="portrait"
+            android:theme="@style/noActionBar" />
+
+        <activity
             android:name=".activity.MenuTienda"
             android:label="@string/nombreAplicacion"
             android:screenOrientation="portrait"

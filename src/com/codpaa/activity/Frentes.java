@@ -287,7 +287,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
 				MarcaModel spm = (MarcaModel) spiMarca.getSelectedItem();
 				//SpinnerProductoModel spPm = (SpinnerProductoModel) spiPro.getSelectedItem();
-				ProductosModel spPm = (ProductosModel) spinnerProducto.getSelected();
+				ProductosModel spPm = spinnerProducto.getSelected();
 
 
 				String fecha = dFecha.format(c.getTime());
@@ -332,6 +332,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 							Toast.makeText(this,"("+cantidad+") Frentes Guardados de: \n  "+nombreP, Toast.LENGTH_SHORT).show();
 							//spiMarca.setSelection(0);
 							//spiPro.setSelection(0);
+
+							spinnerProducto.resetFilter();
 							spinnerProducto.setSelection(0);
 
 							new EnviarDatos(this).enviarFrentes();
@@ -520,16 +522,16 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 
 
-	private ArrayList<SpinnerProductoModel> getArrayListProByTiensda(int idMarca, int idTienda){
+	private ArrayList<ProductosModel> getArrayListProByTiensda(int idMarca, int idTienda){
 
 		Cursor curProByTienda = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
-		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
+		ArrayList<ProductosModel> arrayP = new ArrayList<>();
 		if (curProByTienda.getCount() <= 0){
 
 			Cursor curPro = new BDopenHelper(this).productos(idMarca);
 
 			for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-				final SpinnerProductoModel spP = new SpinnerProductoModel();
+				final ProductosModel spP = new ProductosModel();
 				spP.setIdProducto(curPro.getInt(0));
 				spP.setNombre(curPro.getString(1));
 				spP.setPresentacion(curPro.getString(2));
@@ -543,7 +545,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		} else {
 
 			for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
-				final SpinnerProductoModel spP = new SpinnerProductoModel();
+				final ProductosModel spP = new ProductosModel();
 				spP.setIdProducto(curProByTienda.getInt(0));
 				spP.setNombre(curProByTienda.getString(1));
 				spP.setPresentacion(curProByTienda.getString(2));
@@ -556,7 +558,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 
 
-		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
+		final ProductosModel spPinicio = new ProductosModel();
 		spPinicio.setIdProducto(0);
 		spPinicio.setNombre("Seleccione Producto");
 		spPinicio.setPresentacion("producto sin seleccionar");

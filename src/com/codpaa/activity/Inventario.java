@@ -229,7 +229,7 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 			
 			MarcaModel spM = (MarcaModel) marca.getSelectedItem();
 			//SpinnerProductoModel spP = (SpinnerProductoModel) producto.getSelectedItem();
-			ProductosModel spP = (ProductosModel) spinnerPro.getSelected();
+			ProductosModel spP =  spinnerPro.getSelected();
 
 			int idMarca = spM.getId();
 			int idProdu = spP.getIdProducto();
@@ -263,6 +263,7 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
                                 //editLote.setText("");
                                 btnFecha.setText("fecha");
                                 //producto.setSelection(0);
+								spinnerPro.resetFilter();
 								spinnerPro.setSelection(0);
                                 //estado.setProgress(0);
                                 im.hideSoftInputFromWindow(editFisico.getWindowToken(), 0);

@@ -8,10 +8,10 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -113,6 +113,8 @@ public class SingleSpinnerSelect extends androidx.appcompat.widget.AppCompatSpin
 
 
 
+
+
         searchView.setQuery("", false);
         SingleSpinnerSelect.this.setSelection(0);
 
@@ -131,6 +133,7 @@ public class SingleSpinnerSelect extends androidx.appcompat.widget.AppCompatSpin
 
 
         alertDialog.setCustomTitle(searchView);
+
 
         //listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setOnItemClickListener(new OnItemClickListener(){
@@ -160,6 +163,14 @@ public class SingleSpinnerSelect extends androidx.appcompat.widget.AppCompatSpin
         alertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
         alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         return true;
+    }
+
+
+    public void resetFilter(){
+
+        arrayAdapter.getFilter().filter(null);
+
+
     }
 
     public void setItems(ArrayList<ProductosModel> items, String allText){

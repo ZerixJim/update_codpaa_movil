@@ -31,6 +31,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import com.codpaa.adapter.CustomAdapter;
 import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.model.MarcaModel;
+import com.codpaa.model.ProductosModel;
 import com.codpaa.model.SpinnerMarcaModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.adapter.ProductosCustomAdapter;
@@ -243,12 +244,12 @@ public class Exhibiciones extends AppCompatActivity implements OnItemSelectedLis
 		}
 	}
 	
-	private ArrayList<SpinnerProductoModel> getArrayListPro(int idMarca){
+	private ArrayList<ProductosModel> getArrayListPro(int idMarca){
 		
 		Cursor curPro = new BDopenHelper(this).productos(idMarca);
-		ArrayList<SpinnerProductoModel> arrayP = new ArrayList<>();
+		ArrayList<ProductosModel> arrayP = new ArrayList<>();
 		for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
-			final SpinnerProductoModel spP = new SpinnerProductoModel();
+			final ProductosModel spP = new ProductosModel();
 			spP.setIdProducto(curPro.getInt(0));
 			spP.setNombre(curPro.getString(1));
 			spP.setPresentacion(curPro.getString(2));
@@ -256,7 +257,7 @@ public class Exhibiciones extends AppCompatActivity implements OnItemSelectedLis
 			spP.setIdMarca(curPro.getInt(4));
 			arrayP.add(spP);
 		}
-		final SpinnerProductoModel spPinicio = new SpinnerProductoModel();
+		final ProductosModel spPinicio = new ProductosModel();
 		spPinicio.setIdProducto(0);
 		spPinicio.setNombre("Seleccione Producto");
 		spPinicio.setPresentacion("producto sin seleccionar");
