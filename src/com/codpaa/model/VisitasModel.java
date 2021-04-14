@@ -16,6 +16,16 @@ public class VisitasModel {
 
     private String numeroTelefono;
 
+    private int autoTime;
+
+    public int getAutoTime() {
+        return autoTime;
+    }
+
+    public void setAutoTime(int autoTime) {
+        this.autoTime = autoTime;
+    }
+
     public String getNumeroTelefono() {
         return numeroTelefono;
     }

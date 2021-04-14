@@ -281,7 +281,7 @@ public class HttpResponseProducts extends JsonHttpResponseHandler {
 
     private synchronized void parseJSONExhi(JSONArray exhiArray) throws JSONException {
         BDopenHelper b = new BDopenHelper(context.getApplicationContext());
-        b.vaciarTabla("exhibiciones");
+        b.vaciarTabla("tipoexhibicion");
 
         Configuracion configuracion = new Configuracion(context);
 

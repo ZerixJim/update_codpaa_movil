@@ -35,7 +35,6 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
         TextView nombreProducto;
         TextView presentacion;
         ImageView imageView;
-        TextView divider;
         CheckBox checkBox;
 
     }
@@ -70,7 +69,6 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
             viewHolder.presentacion = convertView.findViewById(R.id.textProducPresentacion);
             viewHolder.checkBox = convertView.findViewById(R.id.checkProduct);
             viewHolder.imageView = convertView.findViewById(R.id.image);
-            viewHolder.divider = convertView.findViewById(R.id.divider);
 
 
             convertView.setTag(viewHolder);
@@ -107,16 +105,9 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
         viewHolder.nombreProducto.setText(productosModel.getNombre());
         viewHolder.presentacion.setText(productosModel.getPresentacion());
 
-        if (position == 0){
-
-            viewHolder.divider.setVisibility(View.GONE);
-
-        }else {
-            viewHolder.divider.setVisibility(View.VISIBLE);
-        }
 
 
-        viewHolder.checkBox.setVisibility(View.INVISIBLE);
+        viewHolder.checkBox.setVisibility(View.GONE);
         //viewHolder.checkBox.setChecked(productosModel.isChecked());
 
 

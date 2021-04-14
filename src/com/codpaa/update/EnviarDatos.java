@@ -318,6 +318,7 @@ public class EnviarDatos {
 					model.setLongitud(curVisitas.getDouble(5));
 					model.setTipo(curVisitas.getString(6));
 					model.setNumeroTelefono(getPhoneNumber());
+					model.setAutoTime(curVisitas.getInt(curVisitas.getColumnIndex("auto_time")));
 
 
 					visitas.add(model);
@@ -392,6 +393,7 @@ public class EnviarDatos {
 					model.setLongitud(curVisitas.getDouble(5));
 					model.setTipo(curVisitas.getString(6));
 					model.setNumeroTelefono(getPhoneNumber());
+					model.setAutoTime(curVisitas.getInt(curVisitas.getColumnIndex("auto_time")));
 
 
 					visitas.add(model);

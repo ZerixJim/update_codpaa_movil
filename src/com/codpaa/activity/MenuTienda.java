@@ -697,7 +697,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                             BDopenHelper base = new BDopenHelper(getApplicationContext());
 
                             Entrada = true;
-                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "E", 1, Utilities.getCurrentDate());
+                            int autoTime = Utilities.isAutoTime(MenuTienda.this) ? 1: 0;
+                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "E", 1, Utilities.getCurrentDate(), autoTime);
 
                             Toast.makeText(MenuTienda.this, "Entrada Guardada", Toast.LENGTH_SHORT).show();
                             btnEntrada.post(new Runnable() {
@@ -789,8 +790,11 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                                         public void onSuccess(Location locat) {
                                             location = locat;
 
+
                                             BDopenHelper base = new BDopenHelper(getApplicationContext());
-                                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "S", 1, Utilities.getCurrentDate());
+
+                                            int autoTime = Utilities.isAutoTime(MenuTienda.this) ? 1: 0;
+                                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "S", 1, Utilities.getCurrentDate(), autoTime);
 
                                             Salida = true;
 

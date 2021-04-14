@@ -8,7 +8,6 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -16,9 +15,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 
 import com.codpaa.R;
-import com.codpaa.adapter.ProductosAdapter;
 import com.codpaa.adapter.ProductosAdapterFilter;
 import com.codpaa.model.ProductosModel;
 
@@ -67,7 +66,7 @@ public class SingleSpinnerSelect extends androidx.appcompat.widget.AppCompatSpin
         //final EditText editText = new EditText(getContext());
 
         final SearchView searchView = new SearchView(getContext());
-        searchView.setQueryHint("Nombre producto o cb");
+        searchView.setQueryHint("Nombre producto");
 
         final EditText editText = searchView.findViewById(R.id.search_src_text);
         editText.setHintTextColor(getResources().getColor(R.color.gris));
@@ -126,6 +125,8 @@ public class SingleSpinnerSelect extends androidx.appcompat.widget.AppCompatSpin
         //alertDialog.setCancelable(false);
 
         ListView listView = alertDialog.getListView();
+        listView.setDivider(ContextCompat.getDrawable(getContext(), R.drawable.divider));
+        listView.setDividerHeight(1);
         listView.setPadding(16,16,16,0);
 
 

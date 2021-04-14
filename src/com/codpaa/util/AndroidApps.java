@@ -362,20 +362,29 @@ public class AndroidApps {
     }
 
     public String getIMEI(){
+
         String imei = "sin Permiso";
 
-        if(ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) ==  PackageManager.PERMISSION_GRANTED){
+        try{
 
-            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if(ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) ==  PackageManager.PERMISSION_GRANTED){
 
-            try{
-                imei = telephonyManager.getDeviceId();
-            }catch (Exception e){
-                e.printStackTrace();
+                TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+
+                try{
+                    imei = telephonyManager.getDeviceId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
             }
 
+        }catch (SecurityException e){
+
+            e.printStackTrace();
 
         }
+
 
         return imei;
     }

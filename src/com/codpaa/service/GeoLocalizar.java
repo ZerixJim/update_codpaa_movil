@@ -488,7 +488,7 @@ public class GeoLocalizar extends Service {
 					enviarEstatus();
 
 
-					sendHenkel();
+					//sendHenkel();
 
 
 					Looper.loop();

@@ -733,12 +733,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
             baseDatosLocal.close();
     }
 
-    public void insertarLocalizacion(int idTien,int idPro, String fech,String hora, double lat, double lon, int prec, String tip, int status, String fechaCaptura) throws SQLiteException{
+    public void insertarLocalizacion(int idTien,int idPro, String fech,String hora, double lat, double lon, int prec, String tip, int status, String fechaCaptura, int autoTime) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
 
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert into coordenadas(idTienda,idPromotor,fecha,hora,latitud,longitud,precision,tipo,status,semana, fecha_captura) " +
-                    " values("+idTien+","+idPro+",'"+fech+"','"+hora+"',"+lat+","+lon+","+prec+",'"+tip+"',"+status+", ( (strftime('%j', date('"+ fechaCaptura +"', '-3 days', 'weekday 4')) - 1) / 7 + 1)  , '"+ fechaCaptura+"')");
+            baseDatosLocal.execSQL("insert into coordenadas(idTienda,idPromotor,fecha,hora,latitud,longitud,precision,tipo,status,semana, fecha_captura, auto_time) " +
+                    " values("+idTien+","+idPro+",'"+fech+"','"+hora+"',"+lat+","+lon+","+prec+",'"+tip+"',"+status+", ( (strftime('%j', date('"+ fechaCaptura +"', '-3 days', 'weekday 4')) - 1) / 7 + 1)  , '"+ fechaCaptura+"', '"+autoTime+"')");
 
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
@@ -886,7 +886,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
 
         return baseDatosLocal.rawQuery("select idTienda,idPromotor, " +
-                "  fecha,hora,latitud,longitud,tipo from coordenadas where status=1 " +
+                "  fecha,hora,latitud,longitud,tipo, auto_time from coordenadas where status=1 " +
                 "  order by fecha_captura, idTienda ,hora asc", null);
 
 

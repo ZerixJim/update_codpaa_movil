@@ -450,7 +450,8 @@ public class ImageSheduler extends AppCompatActivity implements OnItemClickListe
 
 						cliente.setTimeout(5000);
 
-						cliente.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php",rpFoto, new HttpResponseFoto(this, idFoto, position));
+						cliente.post(Utilities.WEB_SERVICE_CODPAA + "uploadimage2.php",rpFoto, new
+								HttpResponseFoto(this, idFoto, position));
 
 
                     }
