@@ -107,7 +107,7 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
 
 
 
-        viewHolder.checkBox.setVisibility(View.GONE);
+        viewHolder.checkBox.setVisibility(View.INVISIBLE);
         //viewHolder.checkBox.setChecked(productosModel.isChecked());
 
 
