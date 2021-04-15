@@ -4,6 +4,7 @@ package com.codpaa.util;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 
 import java.text.DecimalFormat;
@@ -18,13 +19,38 @@ public class NumberTextWatcher implements TextWatcher {
     private final String INIT = "0.00";
 
 
-    public NumberTextWatcher(EditText editText) {
+    public NumberTextWatcher(final EditText editText) {
 
         this.et = editText;
 
 
         et.setText(INIT);
         et.setSelection(INIT.length());
+
+        et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b){
+
+                    try {
+                        final EditText editText1 = (EditText)view;
+                        editText1.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.i("onfocus", "focus" + editText1.getSelectionStart());
+                                editText1.setSelection(editText1.getText().length());
+                            }
+                        });
+                    }catch (Exception e){
+
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+        });
+
 
     }
 

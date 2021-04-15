@@ -56,8 +56,8 @@ android {
     defaultConfig {
         targetSdkVersion 29
         applicationId "com.codpaa"
-        versionCode 99
-        versionName "1.3.10"
+        versionCode 100
+        versionName "1.3.10 rc1 hotfix"
         minSdkVersion 17
         multiDexEnabled true
     }
@@ -100,7 +100,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
 
-    implementation 'id.zelory:compressor:2.1.0'
+    implementation 'id.zelory:compressor:2.1.1'
 
     implementation 'com.google.android.gms:play-services-location:17.0.0'
 

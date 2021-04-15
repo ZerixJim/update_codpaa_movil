@@ -314,7 +314,7 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 						if (isNotEmptyField(normal) && isNotEmptyField(caja)) {
 
 
-							if (isNotEmptyField(oferta)  &&  (getFechaInicio().isEmpty() || getFechaFin().isEmpty()) ){
+							if (isNotEmptyField(oferta)  &&  ( getFechaInicio().isEmpty() || getFechaFin().isEmpty() ) ){
 
 								Toast.makeText(this,"fecha de la oferta faltante ", Toast.LENGTH_SHORT).show();
 
@@ -532,7 +532,7 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 
 
 	private boolean isNotEmptyField(String field){
-		return field.trim().length() > 0;
+		return field.trim().length() > 0 && !field.trim().equals("0.00");
 	}
 
 
