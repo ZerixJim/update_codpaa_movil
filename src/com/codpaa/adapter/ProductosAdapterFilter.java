@@ -35,6 +35,7 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
         TextView nombreProducto;
         TextView presentacion;
         ImageView imageView;
+        TextView txtBarcode;
         CheckBox checkBox;
 
     }
@@ -70,6 +71,7 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
             viewHolder.checkBox = convertView.findViewById(R.id.checkProduct);
             viewHolder.imageView = convertView.findViewById(R.id.image);
 
+            viewHolder.txtBarcode = convertView.findViewById(R.id.text_codigo_barras);
 
             convertView.setTag(viewHolder);
 
@@ -104,6 +106,7 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
 
         viewHolder.nombreProducto.setText(productosModel.getNombre());
         viewHolder.presentacion.setText(productosModel.getPresentacion());
+        viewHolder.txtBarcode.setText(productosModel.getCodigoBarras());
 
 
 
@@ -140,7 +143,7 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
 
                     for (ProductosModel pm : mOriginalData) {
 
-                        if (pm.getNombre().toLowerCase().contains(constraint)) {
+                        if (pm.getNombre().toLowerCase().contains(constraint) || pm.getCodigoBarras().trim().contains(constraint)) {
 
                             filterArrayList.add(pm);
 
