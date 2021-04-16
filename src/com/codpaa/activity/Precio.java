@@ -251,11 +251,12 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 				tilPrecioNormal.setError("Campo Requerido");
 			}
 
-			if (isNotEmptyField(caja)){
+			/** not required  **/
+			/*if (isNotEmptyField(caja)){
 				tilPrecioCaja.setError(null);
 			}else {
 				tilPrecioCaja.setError("Campo Requerido");
-			}
+			}*/
 
 			/*if (isNotEmptyOferta(oferta)){
 				tilPrecioOferta.setError(null);
@@ -311,7 +312,7 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 				if(idMarca != 0){
 					if(idProdu != 0){
 
-						if (isNotEmptyField(normal) && isNotEmptyField(caja)) {
+						if (isNotEmptyField(normal)) {
 
 
 							if (isNotEmptyField(oferta)  &&  ( getFechaInicio().isEmpty() || getFechaFin().isEmpty() ) ){
