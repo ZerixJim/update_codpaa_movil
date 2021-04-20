@@ -99,9 +99,15 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
 
             viewHolder.checkBox.setVisibility(View.VISIBLE);
             viewHolder.imageView.setVisibility(View.VISIBLE);
-            Glide.with(context)
-                    .load(Utilities.PRODUCT_PATH + productosModel.getIdMarca() + "/" + productosModel.getIdProducto() + ".gif")
-                    .into(viewHolder.imageView);
+
+            if (productosModel.getHasImage() == 1 ){
+
+                Glide.with(context)
+                        .load(Utilities.PRODUCT_PATH + productosModel.getIdMarca() + "/" + productosModel.getIdProducto() + ".gif")
+                        .into(viewHolder.imageView);
+            }
+
+
         }
 
         viewHolder.nombreProducto.setText(productosModel.getNombre());

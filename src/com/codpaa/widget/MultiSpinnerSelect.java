@@ -234,6 +234,8 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
         alertDialog.setCancelable(false);
 
         ListView listView = alertDialog.getListView();
+        listView.setDivider(ContextCompat.getDrawable(getContext(), R.drawable.divider));
+        listView.setDividerHeight(1);
         listView.setPadding(16,16,16,0);
 
 

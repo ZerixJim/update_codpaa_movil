@@ -45,7 +45,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     // v1.3.10 = 42
 
-    private static final int version = 42;
+    private static final int version = 43;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -145,7 +145,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         productos = "Create table if not exists " +
                 "producto(idProducto int primary key, nombre varchar(50), presentacion varchar(10)," +
                 "idMarca int, cb varchar(45), img varchar(250), tester int, precio_compra float, " +
-                "precio_sugerido float, fecha_precio varchar(15), descripcion text)";
+                "precio_sugerido float, fecha_precio varchar(15), descripcion text, has_image tinyint(1) default 0)";
         surtido = "create table if not exists " +
                 "surtido(idTienda int, idPromotor int,surtido char(2), fecha char(25), " +
                 "idProducto int, cajas int, unifila int, caja1 int, caja2 int, caja3 int," +
@@ -413,15 +413,20 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 
-        if (newVersion == 41){
-            db.execSQL("alter table photo add column comentario varchar(255)");
-        }
 
         if(newVersion == 42){
 
             db.execSQL("alter table " + VisitaTienda.TABLE + " add column " + VisitaTienda.AUTO_TIME + " int(1) default 1");
 
         }
+
+
+        if(newVersion == 43){
+
+            db.execSQL("alter table producto add column has_image tinyint(1) default 0");
+
+        }
+
 
     }
 
@@ -661,13 +666,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
     public void insertarProducto(int idProd, String nombre, String presentacion, int idMarc, String cb,
-                                 int tester, double precioComp, double precioSuge, String fechaPrecio, String descripcion) throws SQLiteException{
+                                 int tester, double precioComp, double precioSuge, String fechaPrecio, String descripcion, int hasImage) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
             baseDatosLocal.execSQL("insert or replace into producto(idProducto,nombre,presentacion,idMarca,cb,tester, " +
-                    "precio_compra,precio_sugerido, fecha_precio, descripcion) " +
+                    "precio_compra,precio_sugerido, fecha_precio, descripcion, has_image) " +
                     "values("+idProd+",'"+nombre+"','"+presentacion+"',"+idMarc+",'"+cb+"', "+tester+", " +
-                    precioComp + ", " + precioSuge + ", '" + fechaPrecio + "', '" +  descripcion +  "')");
+                    precioComp + ", " + precioSuge + ", '" + fechaPrecio + "', '" +  descripcion +  "', "+ hasImage +")");
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
@@ -944,7 +949,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     public Cursor productos(int idMar) throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
-        return baseDatosLocal.rawQuery("select idProducto as _id, nombre,presentacion, cb, idMarca from producto where idMarca="+idMar+" order by nombre asc;", null);
+        return baseDatosLocal.rawQuery("select idProducto as _id, nombre,presentacion, cb, idMarca, has_image from producto where idMarca="+idMar+" order by nombre asc", null);
 
     }
 
@@ -970,12 +975,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
 
         return baseDatosLocal.rawQuery("select distinct p.idProducto as _id, p.nombre, p.presentacion, p.cb, p.idMarca " +
-                " from (select p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca from productoformato as pf " +
+                " from (select p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca, p.has_image from productoformato as pf " +
                 " left join producto as p on p.idProducto=pf.idProducto " +
                 " left join clientes as c on c.idFormato=pf.idFormato " +
                 " where p.idMarca=" + idMarca + " and c.idTienda=" + idTienda +
                 " union all " +
-                " select p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca  from productotienda as pt " +
+                " select p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca, p.has_image  from productotienda as pt " +
                 " left  join producto as p on pt.idProducto=p.idProducto " +
                 " where p.idMarca="+ idMarca +" and pt.idTienda="+ idTienda +") as p order by p.nombre asc", null);
     }

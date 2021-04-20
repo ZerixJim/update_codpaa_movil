@@ -684,6 +684,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 spP.setPresentacion(curPro.getString(2));
                 spP.setCodigoBarras(curPro.getString(3));
                 spP.setIdMarca(curPro.getInt(4));
+                spP.setHasImage(curPro.getInt(curPro.getColumnIndex("has_image")));
 
 
 
@@ -701,6 +702,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                 spP.setPresentacion(curProByTienda.getString(2));
                 spP.setCodigoBarras(curProByTienda.getString(3));
                 spP.setIdMarca(curProByTienda.getInt(4));
+                spP.setHasImage(curProByTienda.getInt(curProByTienda.getColumnIndex("has_image")));
 
 
                 arrayP.add(spP);

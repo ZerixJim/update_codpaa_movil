@@ -17,6 +17,15 @@ public class ProductosModel {
     private String codigoBarras;
     private boolean seleted = false;
     private boolean checked = false;
+    private int hasImage = 0;
+
+    public int getHasImage() {
+        return hasImage;
+    }
+
+    public void setHasImage(int hasImage) {
+        this.hasImage = hasImage;
+    }
 
     public String getCodigoBarras() {
         return codigoBarras;

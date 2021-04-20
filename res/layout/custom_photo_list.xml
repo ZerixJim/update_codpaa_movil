@@ -5,6 +5,8 @@
     android:layout_height="wrap_content"
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true"
+    android:layout_marginEnd="3dp"
+    android:layout_marginBottom="3dp"
     >
 
     <ImageView
@@ -19,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:padding="5dp"
+        android:padding="16dp"
         android:orientation="vertical"
         >
 
@@ -30,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sucursal"
-            android:textSize="13sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:textColor="@color/secondary_white" />
 
@@ -39,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/secondary_white"
-            android:textSize="12sp"
+            android:textSize="10sp"
             style="@style/TextShadow"
             android:text="fecha"
             />
@@ -49,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/secondary_white"
-            android:textSize="12sp"
+            android:textSize="11sp"
             style="@style/TextShadow"
             android:text="Marca"
             />

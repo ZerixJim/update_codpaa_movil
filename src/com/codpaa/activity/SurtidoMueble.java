@@ -387,6 +387,7 @@ public class SurtidoMueble extends AppCompatActivity implements OnItemSelectedLi
 			spP.setPresentacion(curPro.getString(2));
             spP.setCodigoBarras(curPro.getString(3));
 			spP.setIdMarca(curPro.getInt(4));
+			spP.setHasImage(curPro.getInt(curPro.getColumnIndex("has_image")));
 			arrayP.add(spP);
 		}
 		final ProductosModel spPinicio = new ProductosModel();

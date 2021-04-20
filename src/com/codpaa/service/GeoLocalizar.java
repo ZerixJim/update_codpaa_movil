@@ -456,9 +456,11 @@ public class GeoLocalizar extends Service {
 
 			@Override
 			public void run() {
-				Looper.prepare();
+
 				try {
 
+
+					Looper.prepare();
 
 					sendVisitas();
 
@@ -1184,7 +1186,7 @@ public class GeoLocalizar extends Service {
 					e.printStackTrace();
 				}
 
-				cliente.setTimeout(5000);
+				//cliente.setTimeout(5000);
 
 				if (verificarConexion()) {
 

@@ -268,7 +268,9 @@ public class HttpResponseProducts extends JsonHttpResponseHandler {
                     productosArray.getJSONObject(i).getDouble("precio_compra"),
                     productosArray.getJSONObject(i).getDouble("precio_sugerido"),
                     productosArray.getJSONObject(i).getString("precio_update"),
-                    productosArray.getJSONObject(i).getString("descripcion"));
+                    productosArray.getJSONObject(i).getString("descripcion"),
+                    productosArray.getJSONObject(i).getInt("has_image")
+            );
 
 
 

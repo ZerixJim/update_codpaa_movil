@@ -464,7 +464,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 			spinnerProducto.setItems(getArrayListProByTien2(idM, idTienda), "Selecciona producto");
 
 		} catch (Exception e) {
-			Toast.makeText(this, "Error Mayoreo 4", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Error E25", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -485,6 +485,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 				spP.setPresentacion(curPro.getString(2));
 				spP.setCodigoBarras(curPro.getString(3));
 				spP.setIdMarca(curPro.getInt(4));
+				spP.setHasImage(curPro.getInt(curPro.getColumnIndex("has_image")));
+
 				arrayP.add(spP);
 			}
 
@@ -499,6 +501,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 				spP.setPresentacion(curProByTienda.getString(2));
 				spP.setCodigoBarras(curProByTienda.getString(3));
 				spP.setIdMarca(curProByTienda.getInt(4));
+				spP.setHasImage(curProByTienda.getInt(curProByTienda.getColumnIndex("has_image")));
 				arrayP.add(spP);
 			}
 

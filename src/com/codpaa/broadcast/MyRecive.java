@@ -22,7 +22,7 @@ public class MyRecive extends BroadcastReceiver {
             Intent myIntent = new Intent(context, GeoLocalizar.class);
 
 
-            //Log.d(TAG, "onRecive boot completed");
+            Log.d(TAG, "onRecive boot completed");
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1  ){
 

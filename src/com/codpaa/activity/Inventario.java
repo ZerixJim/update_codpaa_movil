@@ -372,6 +372,7 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 				spP.setPresentacion(curPro.getString(2));
 				spP.setCodigoBarras(curPro.getString(3));
 				spP.setIdMarca(curPro.getInt(4));
+				spP.setHasImage(curPro.getInt(curPro.getColumnIndex("has_image")));
 				arrayP.add(spP);
 			}
 
@@ -387,6 +388,7 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 				spP.setPresentacion(cursor.getString(2));
 				spP.setCodigoBarras(cursor.getString(3));
 				spP.setIdMarca(cursor.getInt(4));
+				spP.setHasImage(cursor.getInt(cursor.getColumnIndex("has_image")));
 				arrayP.add(spP);
 			}
 

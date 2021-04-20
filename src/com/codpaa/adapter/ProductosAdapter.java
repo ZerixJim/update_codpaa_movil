@@ -38,6 +38,7 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
     private static class ViewHolder {
         TextView nombreProducto;
         TextView presentacion;
+        TextView barcode;
         ImageView imageView;
         CheckBox checkBox;
         ProductosModel productosModel;
@@ -84,6 +85,7 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
             viewHolder.presentacion = row.findViewById(R.id.textProducPresentacion);
             viewHolder.checkBox = row.findViewById(R.id.checkProduct);
             viewHolder.imageView =  row.findViewById(R.id.image);
+            viewHolder.barcode = row.findViewById(R.id.text_codigo_barras);
 
 
             row.setTag(viewHolder);
@@ -101,6 +103,7 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
         if (productosModel.getIdProducto() == 0){
 
             viewHolder.presentacion.setVisibility(View.GONE);
+            viewHolder.barcode.setVisibility(View.GONE);
 
             viewHolder.checkBox.setVisibility(View.INVISIBLE);
             viewHolder.imageView.setVisibility(View.GONE);
@@ -108,17 +111,27 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
         }else {
 
             viewHolder.presentacion.setVisibility(View.VISIBLE);
+            viewHolder.barcode.setVisibility(View.VISIBLE);
 
 
             viewHolder.checkBox.setVisibility(View.VISIBLE);
             viewHolder.imageView.setVisibility(View.VISIBLE);
-            Glide.with(context)
-                    .load(Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif")
-                    .into(viewHolder.imageView);
+
+            if (productosModel.getHasImage() == 1){
+                Glide.with(context)
+                        .load(Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif")
+                        .into(viewHolder.imageView);
+
+            }
+
+
+            viewHolder.presentacion.setText(productosModel.getPresentacion());
+            viewHolder.barcode.setText(productosModel.getCodigoBarras());
         }
 
         viewHolder.nombreProducto.setText(productosModel.getNombre());
-        viewHolder.presentacion.setText(productosModel.getPresentacion());
+
+
 
 
         //viewHolder.checkBox.setVisibility(View.VISIBLE);
