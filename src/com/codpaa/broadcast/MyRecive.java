@@ -38,7 +38,8 @@ public class MyRecive extends BroadcastReceiver {
             Intent myIntent = new Intent(context, GeoLocalizar.class);
 
 
-            Log.d(TAG, "onRecive boot completed");
+            context.startService(myIntent);
+            /*Log.d(TAG, "onRecive boot completed");
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1  ){
 
@@ -47,7 +48,7 @@ public class MyRecive extends BroadcastReceiver {
 
                 context.startService(myIntent);
 
-            }
+            }*/
 
 
         }catch (Exception e){
