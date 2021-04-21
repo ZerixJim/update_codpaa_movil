@@ -440,6 +440,9 @@ public class GeoLocalizar extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		super.onStartCommand(intent, flags, startId);
+
+		Log.i("Geolocalizar service", "onStartCommand");
+
 		return START_STICKY;
 	}
 

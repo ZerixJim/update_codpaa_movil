@@ -18,7 +18,7 @@ public class MyRecive extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        try{
+        /*try{
             Intent myIntent = new Intent(context, GeoLocalizar.class);
 
 
@@ -38,7 +38,7 @@ public class MyRecive extends BroadcastReceiver {
 
             e.printStackTrace();
 
-        }
+        }*/
 
 
 
