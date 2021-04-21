@@ -38,7 +38,7 @@ public class Lanzador extends Activity{
 				//startForegroundService(myIntent);
 			}else {
 
-				startService(myIntent);
+				//startService(myIntent);
 
 			}
 

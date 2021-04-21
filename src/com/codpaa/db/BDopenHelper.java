@@ -414,7 +414,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
 
-        if(newVersion == 42){
+        if (oldVersion == 41 && newVersion == 43){
 
             db.execSQL("alter table " + VisitaTienda.TABLE + " add column " + VisitaTienda.AUTO_TIME + " int(1) default 1");
 
