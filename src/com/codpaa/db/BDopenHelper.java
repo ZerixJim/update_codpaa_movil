@@ -717,7 +717,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public void insertarRastreo(int idCel,String fecha, String hora, double latitud, double longitud, double altitud,String numeroTelefono) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert into rastreo(idCelular,fecha,hora,latitud,longitud,altitud,numero_telefono) values("+idCel+",'"+fecha+"','"+hora+"',"+latitud+","+longitud+","+altitud+","+numeroTelefono+")");
+            baseDatosLocal.execSQL("insert into rastreo(idCelular,fecha,hora,latitud,longitud,altitud,numero_telefono) values("+idCel+",'"+fecha+"','"+hora+"',"+latitud+","+longitud+","+altitud+",'"+numeroTelefono+"')");
         if(baseDatosLocal != null)baseDatosLocal.close();
 
     }
