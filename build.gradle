@@ -56,8 +56,8 @@ android {
     defaultConfig {
         targetSdkVersion 30
         applicationId "com.codpaa"
-        versionCode 104
-        versionName "1.3.10 rc4 hotfix"
+        versionCode 105
+        versionName "1.3.10 rc5"
         minSdkVersion 17
         multiDexEnabled true
     }
