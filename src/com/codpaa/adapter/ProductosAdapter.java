@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.codpaa.R;
 
 import java.util.ArrayList;
@@ -120,6 +121,13 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
             if (productosModel.getHasImage() == 1){
                 Glide.with(context)
                         .load(Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif")
+                        .placeholder(R.drawable.ic_no_image)
+                        .into(viewHolder.imageView);
+
+            }else {
+
+                Glide.with(context)
+                        .load(R.drawable.ic_no_image)
                         .into(viewHolder.imageView);
 
             }

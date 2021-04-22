@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.codpaa.R;
 import com.codpaa.model.ProductosModel;
 import com.codpaa.util.Utilities;
@@ -104,7 +105,14 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
 
                 Glide.with(context)
                         .load(Utilities.PRODUCT_PATH + productosModel.getIdMarca() + "/" + productosModel.getIdProducto() + ".gif")
+                        .placeholder(R.drawable.ic_no_image)
                         .into(viewHolder.imageView);
+            }else {
+
+                Glide.with(context)
+                        .load(R.drawable.ic_no_image)
+                        .into(viewHolder.imageView);
+
             }
 
 
