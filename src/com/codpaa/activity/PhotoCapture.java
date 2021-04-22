@@ -695,18 +695,22 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
             curPro.close();
         } else {
 
-            for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
+            Cursor curProByTienda2 = new BDopenHelper(this).getProductosByTienda(idMarca, idTienda);
+
+            for(curProByTienda2.moveToFirst(); !curProByTienda2.isAfterLast(); curProByTienda2.moveToNext()){
                 final ProductosModel spP = new ProductosModel();
-                spP.setIdProducto(curProByTienda.getInt(0));
-                spP.setNombre(curProByTienda.getString(1));
-                spP.setPresentacion(curProByTienda.getString(2));
-                spP.setCodigoBarras(curProByTienda.getString(3));
-                spP.setIdMarca(curProByTienda.getInt(4));
-                spP.setHasImage(curProByTienda.getInt(curProByTienda.getColumnIndex("has_image")));
+                spP.setIdProducto(curProByTienda2.getInt(0));
+                spP.setNombre(curProByTienda2.getString(1));
+                spP.setPresentacion(curProByTienda2.getString(2));
+                spP.setCodigoBarras(curProByTienda2.getString(3));
+                spP.setIdMarca(curProByTienda2.getInt(4));
+                spP.setHasImage(curProByTienda2.getInt(curProByTienda.getColumnIndex("has_image")));
 
 
                 arrayP.add(spP);
             }
+
+            curProByTienda2.close();
 
         }
 

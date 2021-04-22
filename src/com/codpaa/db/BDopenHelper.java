@@ -45,9 +45,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     // v1.3.10 = 42
 
-    // v1.3.10 rc5 = 44
+    // v1.3.10 rc5 hotfix = 47
 
-    private static final int version = 45;
+    private static final int version = 47;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -416,7 +416,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
 
-        if (newVersion == 45){
+        if (newVersion == 47){
 
             Log.i("DBHELPER", "Upgrade");
             Cursor cursor = db.rawQuery("SELECT * FROM " + VisitaTienda.TABLE, null);
@@ -427,16 +427,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 Log.i("DBHELPER", "column auto_time created");
             }
             cursor.close();
-
-
-            Cursor cursor2 = db.rawQuery("SELECT * FROM " + DbEstructure.Photo.TABLE_NAME, null);
-            int deleteStateColumnIndex2 = cursor2.getColumnIndex(VisitaTienda.AUTO_TIME);
-            if (deleteStateColumnIndex2 < 0) {
-                // missing_column not there - add it
-                db.execSQL("alter table " + DbEstructure.Photo.TABLE_NAME + " add column " + DbEstructure.Photo.COMMENT + "  varchar(255) ");
-                Log.i("DBHELPER", "column comment created ");
-            }
-            cursor2.close();
 
 
 
@@ -995,7 +985,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor getProductosByTienda(int idMarca, int idTienda){
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select distinct p.idProducto as _id, p.nombre, p.presentacion, p.cb, p.idMarca " +
+        return baseDatosLocal.rawQuery("select distinct p.idProducto as _id, p.nombre, p.presentacion, p.cb, p.idMarca, p.has_image  " +
                 " from (select p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca, p.has_image from productoformato as pf " +
                 " left join producto as p on p.idProducto=pf.idProducto " +
                 " left join clientes as c on c.idFormato=pf.idFormato " +
