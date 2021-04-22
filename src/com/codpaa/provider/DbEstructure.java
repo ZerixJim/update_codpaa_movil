@@ -36,6 +36,7 @@ public class DbEstructure {
         public static final String ID_MARCA = "idExhibicion";
         public static final String FECHA  = "fecha";
         public static final String FECHA_CAPTURA  = "fecha_captura";
+        public static final String COMMENT = "comentario";
     }
 
 

@@ -22,7 +22,7 @@ public class MyRecive extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-
+/*
         ComponentName serviceComponent = new ComponentName(context, JobService.class);
         JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
         builder.setPersisted(true)
@@ -31,15 +31,15 @@ public class MyRecive extends BroadcastReceiver {
 
 
         JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
-        jobScheduler.schedule(builder.build());
+        jobScheduler.schedule(builder.build());*/
 
 
-        try{
+       /* try{
             Intent myIntent = new Intent(context, GeoLocalizar.class);
 
 
             context.startService(myIntent);
-            /*Log.d(TAG, "onRecive boot completed");
+            *//*Log.d(TAG, "onRecive boot completed");
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1  ){
 
@@ -48,14 +48,14 @@ public class MyRecive extends BroadcastReceiver {
 
                 context.startService(myIntent);
 
-            }*/
+            }*//*
 
 
         }catch (Exception e){
 
             e.printStackTrace();
 
-        }
+        }*/
 
 
 

@@ -94,10 +94,25 @@ public class EnviarDatos {
 	private String getPhoneNumber(){
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions((Activity) context, new String[] {Manifest.permission.READ_PHONE_STATE}, 125);
-        }
-		TelephonyManager mTelephonyManager;
-		mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-		return mTelephonyManager.getLine1Number();
+
+            return "sin permiso";
+
+        }else{
+
+        	try {
+				TelephonyManager mTelephonyManager;
+				mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+				return mTelephonyManager.getLine1Number();
+			}catch (SecurityException e){
+
+        		e.printStackTrace();
+
+				return "sin permiso";
+
+			}
+
+		}
+
 	}
 
 

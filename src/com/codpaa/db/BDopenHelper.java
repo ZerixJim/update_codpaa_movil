@@ -45,7 +45,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     // v1.3.10 = 42
 
-    private static final int version = 43;
+    // v1.3.10 rc5 = 44
+
+    private static final int version = 45;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -414,18 +416,37 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
 
-        if (oldVersion == 41 && newVersion == 43){
+        if (newVersion == 45){
 
-            db.execSQL("alter table " + VisitaTienda.TABLE + " add column " + VisitaTienda.AUTO_TIME + " int(1) default 1");
+            Log.i("DBHELPER", "Upgrade");
+            Cursor cursor = db.rawQuery("SELECT * FROM " + VisitaTienda.TABLE, null);
+            int deleteStateColumnIndex = cursor.getColumnIndex(VisitaTienda.AUTO_TIME);
+            if (deleteStateColumnIndex < 0) {
+                // missing_column not there - add it
+                db.execSQL("alter table " + VisitaTienda.TABLE + " add column " + VisitaTienda.AUTO_TIME + " int(1) default 1");
+                Log.i("DBHELPER", "column auto_time created");
+            }
+            cursor.close();
+
+
+            Cursor cursor2 = db.rawQuery("SELECT * FROM " + DbEstructure.Photo.TABLE_NAME, null);
+            int deleteStateColumnIndex2 = cursor2.getColumnIndex(VisitaTienda.AUTO_TIME);
+            if (deleteStateColumnIndex2 < 0) {
+                // missing_column not there - add it
+                db.execSQL("alter table " + DbEstructure.Photo.TABLE_NAME + " add column " + DbEstructure.Photo.COMMENT + "  varchar(255) ");
+                Log.i("DBHELPER", "column comment created ");
+            }
+            cursor2.close();
+
+
+
+            db.execSQL("drop table producto ");
+            db.execSQL(productos);
 
         }
 
 
-        if(newVersion == 43){
 
-            db.execSQL("alter table producto add column has_image tinyint(1) default 0");
-
-        }
 
 
     }
