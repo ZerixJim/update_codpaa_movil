@@ -176,25 +176,30 @@ public class ProductosAdapterFilter extends ArrayAdapter<ProductosModel> impleme
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
 
+                try {
+                    ArrayList<ProductosModel> tempList = new ArrayList<>();
 
-                ArrayList<ProductosModel> tempList = (ArrayList<ProductosModel>) results.values;
+                    if (results.count == 0) {
 
 
-                if (results.count == 0) {
+                        final ProductosModel model = new ProductosModel();
+                        model.setNombre("No encontrado");
+                        model.setIdProducto(0);
+                        tempList.add(model);
 
-                    final ProductosModel model = new ProductosModel();
-                    model.setNombre("Selecciona produco");
-                    model.setIdProducto(0);
-                    tempList.add(model);
+                    }else {
 
+                        tempList = (ArrayList<ProductosModel>) results.values;
+
+                    }
+
+                    // notifyDataSetChanged();
+                    clear();
+                    addAll(tempList);
+
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
-
-                // notifyDataSetChanged();
-
-                clear();
-                addAll(tempList);
-
-
 
 
             }

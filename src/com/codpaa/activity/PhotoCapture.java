@@ -46,6 +46,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -474,6 +475,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 
             return comp.setDestinationDirectoryPath(path)
+                    .setCompressFormat(Bitmap.CompressFormat.WEBP)
                     .compressToFile(file, fileName[0] + "-comp." + fileName[1]);
         }  catch (Exception e){
             e.printStackTrace();

@@ -206,6 +206,24 @@ public class DbEstructure {
     }
 
 
+    /**
+     *  table Agotados
+     */
+
+    public static class SolicitudAgodatos {
+
+        private SolicitudAgodatos(){}
+
+        public static final String TABLE_NAME = "solicitud_agotados";
+        public static final String ID_TIENDA = "id_tienda";
+
+
+
+    }
+
+
+
+
     public static class EncuestaFoto implements BaseColumns {
         private EncuestaFoto(){}
 

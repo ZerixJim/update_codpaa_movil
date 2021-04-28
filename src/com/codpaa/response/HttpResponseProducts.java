@@ -147,7 +147,7 @@ public class HttpResponseProducts extends JsonHttpResponseHandler {
                                 progressDialog.setMessage("Ocurrio un problema al guardar la informacion, intentelo mas tarde");
                                 progressDialog.dismiss();
                             }
-                        }, 4000);
+                        }, 3000);
                     } catch (Exception e){
                         e.printStackTrace();
 
@@ -157,7 +157,7 @@ public class HttpResponseProducts extends JsonHttpResponseHandler {
                                 progressDialog.setMessage("Ocurrio un problema al guardar la informacion, intentelo mas tarde");
                                 progressDialog.dismiss();
                             }
-                        }, 4000);
+                        }, 3000);
                     }
 
 

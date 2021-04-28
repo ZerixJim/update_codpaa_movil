@@ -72,10 +72,10 @@ public class FragmentSabado extends Fragment {
 
         for (cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()){
             final RutaDia ruta = new RutaDia();
-            ruta.setNombreTienda(cursor.getString(0));
-            ruta.setSucursal(cursor.getString(1));
-            ruta.setRol(cursor.getString(2));
-            ruta.setIdTienda(cursor.getInt(3));
+            ruta.setNombreTienda(cursor.getString(cursor.getColumnIndex("grupo")));
+            ruta.setSucursal(cursor.getString(cursor.getColumnIndex("sucursal")));
+            ruta.setRol(cursor.getString(cursor.getColumnIndex("rol")));
+            ruta.setIdTienda(cursor.getInt(cursor.getColumnIndex("idTienda")));
             ruta.setModo(cursor.getInt(cursor.getColumnIndex("idModo")));
 
             ruta.setLatitud(cursor.getString(cursor.getColumnIndex("latitud")));

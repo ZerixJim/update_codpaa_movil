@@ -56,8 +56,8 @@ android {
     defaultConfig {
         targetSdkVersion 30
         applicationId "com.codpaa"
-        versionCode 107
-        versionName "1.3.10 rc6"
+        versionCode 108
+        versionName "1.3.10 rc7"
         minSdkVersion 17
         multiDexEnabled true
     }
@@ -91,18 +91,18 @@ dependencies {
 
 
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'com.makeramen:roundedimageview:2.2.1'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.lzyzsd:circleprogress:1.1.0@aar'
-    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'com.google.firebase:firebase-messaging:21.1.0'
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.6'
 
 
     implementation 'id.zelory:compressor:2.1.1'
 
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation  'com.google.android.gms:play-services-location:18.0.0'
 
 
     implementation 'com.github.gcacace:signature-pad:1.2.1'

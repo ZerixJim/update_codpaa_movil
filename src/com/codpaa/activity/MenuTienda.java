@@ -691,29 +691,32 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                     fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location loca) {
-                            location = loca;
+
+                            if (loca != null){
+                                location = loca;
 
 
-                            BDopenHelper base = new BDopenHelper(getApplicationContext());
+                                BDopenHelper base = new BDopenHelper(getApplicationContext());
 
-                            Entrada = true;
-                            int autoTime = Utilities.isAutoTime(MenuTienda.this) ? 1: 0;
-                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "E", 1, Utilities.getCurrentDate(), autoTime);
+                                Entrada = true;
+                                int autoTime = Utilities.isAutoTime(MenuTienda.this) ? 1: 0;
+                                base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "E", 1, Utilities.getCurrentDate(), autoTime);
 
-                            Toast.makeText(MenuTienda.this, "Entrada Guardada", Toast.LENGTH_SHORT).show();
-                            btnEntrada.post(new Runnable() {
+                                Toast.makeText(MenuTienda.this, "Entrada Guardada", Toast.LENGTH_SHORT).show();
+                                btnEntrada.post(new Runnable() {
 
-                                public void run() {
+                                    public void run() {
 
+                                        btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                        btnEntrada.setTextColor(Color.WHITE);
+                                        enviar.enviarVisitas();
+                                    }
 
-                                    btnEntrada.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-                                    btnEntrada.setTextColor(Color.WHITE);
-                                    enviar.enviarVisitas();
-                                }
+                                });
+                            }else{
 
-                            });
-
-
+                                Toast.makeText(MenuTienda.this, "problema para obtener la ubicacion ", Toast.LENGTH_SHORT).show();
+                            }
 
 
                         }
@@ -788,29 +791,35 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                                     fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                                         @Override
                                         public void onSuccess(Location locat) {
-                                            location = locat;
+
+                                            if (locat != null){
+                                                location = locat;
 
 
-                                            BDopenHelper base = new BDopenHelper(getApplicationContext());
+                                                BDopenHelper base = new BDopenHelper(getApplicationContext());
 
-                                            int autoTime = Utilities.isAutoTime(MenuTienda.this) ? 1: 0;
-                                            base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, location.getLatitude(), location.getLongitude(), 12, "S", 1, Utilities.getCurrentDate(), autoTime);
+                                                int autoTime = Utilities.isAutoTime(MenuTienda.this) ? 1: 0;
+                                                base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locat.getLatitude(), locat.getLongitude(), 12, "S", 1, Utilities.getCurrentDate(), autoTime);
 
-                                            Salida = true;
+                                                Salida = true;
 
-                                            btnSalidaTi.post(new Runnable() {
-                                                public void run() {
+                                                btnSalidaTi.post(new Runnable() {
+                                                    public void run() {
 
 
-                                                    btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-                                                    btnSalidaTi.setTextColor(Color.WHITE);
-                                                    Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
+                                                        btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                                        btnSalidaTi.setTextColor(Color.WHITE);
+                                                        Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
 
-                                                    enviar.enviarVisitas();
+                                                        enviar.enviarVisitas();
 
-                                                }
+                                                    }
 
-                                            });
+                                                });
+                                            }else {
+                                                Toast.makeText(MenuTienda.this, "problema para obtener la ubicacion ", Toast.LENGTH_SHORT).show();
+                                            }
+
 
                                         }
                                     });

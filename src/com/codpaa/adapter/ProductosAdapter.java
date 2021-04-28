@@ -49,7 +49,7 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
     public ProductosAdapter(Context context, int textViewResourceId,
                             ArrayList<ProductosModel> objects) {
 
-        super(context,textViewResourceId,objects);
+        super(context, textViewResourceId, objects);
 
         this.context = context;
 
@@ -78,20 +78,20 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
         View row = convertView;
         final ViewHolder viewHolder;
 
-        if(row == null){
+        if (row == null) {
             row = inflater.inflate(R.layout.custom_view_productos, parent, false);
             viewHolder = new ViewHolder();
 
-            viewHolder.nombreProducto =  row.findViewById(R.id.textProNombre);
+            viewHolder.nombreProducto = row.findViewById(R.id.textProNombre);
             viewHolder.presentacion = row.findViewById(R.id.textProducPresentacion);
             viewHolder.checkBox = row.findViewById(R.id.checkProduct);
-            viewHolder.imageView =  row.findViewById(R.id.image);
+            viewHolder.imageView = row.findViewById(R.id.image);
             viewHolder.barcode = row.findViewById(R.id.text_codigo_barras);
 
 
             row.setTag(viewHolder);
 
-        }else{
+        } else {
             viewHolder = (ViewHolder) row.getTag();
             viewHolder.productosModel = productosModel;
         }
@@ -101,7 +101,7 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
         //Log.d("idMarca adapter", "" + productosModel.getIdMarca());
 
 
-        if (productosModel.getIdProducto() == 0){
+        if (productosModel.getIdProducto() == 0) {
 
             viewHolder.presentacion.setVisibility(View.GONE);
             viewHolder.barcode.setVisibility(View.GONE);
@@ -109,7 +109,7 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
             viewHolder.checkBox.setVisibility(View.INVISIBLE);
             viewHolder.imageView.setVisibility(View.GONE);
 
-        }else {
+        } else {
 
             viewHolder.presentacion.setVisibility(View.VISIBLE);
             viewHolder.barcode.setVisibility(View.VISIBLE);
@@ -118,13 +118,13 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
             viewHolder.checkBox.setVisibility(View.VISIBLE);
             viewHolder.imageView.setVisibility(View.VISIBLE);
 
-            if (productosModel.getHasImage() == 1){
+            if (productosModel.getHasImage() == 1) {
                 Glide.with(context)
-                        .load(Utilities.PRODUCT_PATH+productosModel.getIdMarca()+"/"+productosModel.getIdProducto()+".gif")
+                        .load(Utilities.PRODUCT_PATH + productosModel.getIdMarca() + "/" + productosModel.getIdProducto() + ".gif")
                         .placeholder(R.drawable.ic_no_image)
                         .into(viewHolder.imageView);
 
-            }else {
+            } else {
 
                 Glide.with(context)
                         .load(R.drawable.ic_no_image)
@@ -140,12 +140,8 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
         viewHolder.nombreProducto.setText(productosModel.getNombre());
 
 
-
-
         //viewHolder.checkBox.setVisibility(View.VISIBLE);
         viewHolder.checkBox.setChecked(productosModel.isChecked());
-
-
 
 
         return row;
@@ -164,19 +160,19 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
                 ArrayList<ProductosModel> filterArrayList = new ArrayList<>();
 
 
-                if (constraint == null  || constraint.length() == 0) {
+                if (constraint == null || constraint.length() == 0) {
 
                     results.count = mOriginalData.size();
                     results.values = mOriginalData;
 
-                }else {
+                } else {
 
                     constraint = constraint.toString().toLowerCase();
 
 
-                    for (ProductosModel pm : mOriginalData){
+                    for (ProductosModel pm : mOriginalData) {
 
-                        if (pm.getNombre().toLowerCase().contains(constraint)){
+                        if (pm.getNombre().toLowerCase().contains(constraint) || pm.getCodigoBarras().trim().contains(constraint)) {
 
                             filterArrayList.add(pm);
 
@@ -196,23 +192,33 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
             protected void publishResults(CharSequence constraint, FilterResults results) {
 
 
-                ArrayList<ProductosModel> tempList  = (ArrayList<ProductosModel>) results.values;
+                try {
+                    ArrayList<ProductosModel> tempList = new ArrayList<>();
 
 
-                   /* if(arrayList.size() == 0){
+                    if (results.count == 0) {
 
                         final ProductosModel model = new ProductosModel();
-                        model.setNombre("Selecciona produco");
+                        model.setNombre("Selecciona producto");
+                        model.setIdProducto(0);
                         arrayList.add(model);
 
-                    }*/
-
-                // notifyDataSetChanged();
-
-                clear();
-                addAll(tempList);
+                    }else {
 
 
+                        tempList = (ArrayList<ProductosModel>) results.values;
+
+                    }
+
+                    // notifyDataSetChanged();
+
+                    clear();
+                    addAll(tempList);
+                }catch (Exception e){
+
+                    e.printStackTrace();
+
+                }
 
 
             }
@@ -220,10 +226,9 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
 
     }
 
-    public ArrayList<ProductosModel> getProductos(){
+    public ArrayList<ProductosModel> getProductos() {
         return arrayList;
     }
-
 
 
 }
