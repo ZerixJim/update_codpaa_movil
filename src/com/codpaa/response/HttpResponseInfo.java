@@ -313,7 +313,8 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                     productosArray.getJSONObject(i).getDouble("precio_sugerido"),
                     productosArray.getJSONObject(i).getString("precio_update"),
                     productosArray.getJSONObject(i).getString("descripcion"),
-                    productosArray.getJSONObject(i).getInt("has_image")
+                    productosArray.getJSONObject(i).getInt("has_image"),
+                    productosArray.getJSONObject(i).getInt("agotado")
                     );
 
 

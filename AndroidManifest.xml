@@ -125,7 +125,7 @@
             android:name=".activity.Agotados"
             android:label="Agotados"
             android:screenOrientation="portrait"
-            android:theme="@style/MiMateria" />
+            android:theme="@style/noActionBar" />
 
         <activity
             android:name=".activity.MainMenu"

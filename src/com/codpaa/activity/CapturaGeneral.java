@@ -4,7 +4,6 @@
 package com.codpaa.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -31,7 +30,6 @@ import com.codpaa.model.SpinnerProductoModel;
 
 import java.util.ArrayList;
 
-import java.util.Locale;
 
 
 public class CapturaGeneral extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -41,8 +39,8 @@ public class CapturaGeneral extends AppCompatActivity implements View.OnClickLis
     InputMethodManager im;
     BDopenHelper baseH;
     Toolbar toolbar;
-    Locale locale;
-    RecyclerView recyclerView;
+
+    private RecyclerView recyclerView;
 
 
     ArrayList<MarcaModel> array = new ArrayList<>();
@@ -65,20 +63,19 @@ public class CapturaGeneral extends AppCompatActivity implements View.OnClickLis
             }
         }
 
-        locale = new Locale("es_MX");
 
-        Intent i = getIntent();
-        idTienda = (Integer) i.getExtras().get("idTienda");
-        idPromotor = (Integer) i.getExtras().get("idPromotor");
+
+        idTienda = getIntent().getIntExtra("idTienda", 0);
+        idPromotor = getIntent().getIntExtra("idPromotor", 0);
 
         im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
 
-        spiMarca = (Spinner) findViewById(R.id.spinner);
+        spiMarca = findViewById(R.id.spinner);
 
 
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        recyclerView = findViewById(R.id.recycler);
 
 
         spiMarca.setOnItemSelectedListener(this);

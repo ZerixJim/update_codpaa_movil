@@ -367,12 +367,23 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             }*/
 
 
+            //agotados
+            final MenuTiendaModel item12 = new MenuTiendaModel();
+            item12.setIdMenu(16);
+            item12.setNombreMenu("Agotado");
+            item12.setImage("ic_assignment_grey600_24dp");
+            array.add(item12);
+
 
             final MenuTiendaModel item11 = new MenuTiendaModel();
             item11.setIdMenu(11);
             item11.setNombreMenu("Actualizar producto");
             item11.setImage("ic_autorenew_grey_600_24dp");
             array.add(item11);
+
+
+
+
 
         } else if (c.getPromotorMode() == 2) {
 
@@ -1370,6 +1381,20 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 	}
 
 
+    private void capturaAgotados(){
+
+        if(Entrada){
+            Intent i = new Intent(this, Agotados.class);
+            i.putExtra("idTienda", idTienda);
+            i.putExtra("idPromotor", idPromotor);
+            startActivity(i);
+
+        }else{
+            Toast.makeText(getApplicationContext(), "Entrada no Registrada...\n No es posible Capturar agotados", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
 	private void capturaGeneral(){
 		if(Entrada){
 			Intent i = new Intent(this, CapturaGeneral.class);
@@ -1565,6 +1590,10 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 pallet();
 
                 break;
+            case 16:
+                capturaAgotados();
+                break;
+
 
 		}
 

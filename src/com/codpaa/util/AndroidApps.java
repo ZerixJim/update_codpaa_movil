@@ -363,7 +363,7 @@ public class AndroidApps {
 
     public String getIMEI(){
 
-        String imei = "sin Permiso";
+        String imei = "";
 
         try{
 
@@ -379,9 +379,10 @@ public class AndroidApps {
 
             }
 
-        }catch (SecurityException e){
+        }catch (Exception e){
 
             e.printStackTrace();
+            return "sin permiso";
 
         }
 

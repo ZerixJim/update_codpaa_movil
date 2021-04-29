@@ -38,57 +38,30 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static final SQLiteDatabase.CursorFactory cursorfactory = null;
 
 
-    // v1.3.8 = 36
-    // v1.3.9 = 36
-
     // v1.3.9 hotfix rc6 = 40
 
     // v1.3.10 = 42
 
     // v1.3.10 rc5 hotfix = 47
 
-    private static final int version = 47;
+    // v1.3.10 rc8 = 48
+
+
+    private static final int version = 48;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
-    private static String usuarios;
-    private static String tiendasVisitadas;
-    private static String coordenadas;
-    private static String encargadoTienda;
-    private static String frentesCharola;
-    private static String exhibiciones;
-    private static String inventarioProducto;
-    private static String productoPrecio;
-    private static String productos;
-    private static String surtido;
-    private static String tipoExhibicion;
-    private static String ruta;
-    private static String tiendas;
-    private static String marca;
-    private static String coordenadasEnviar;
-    private static String comentarioTienda;
-    private static String rastreo;
-    private static String inteligenciaMercado;
-    private static String updateInfor;
-    private static String cajasMayoreo;
-    private static String photo;
-    private static String preguntas;
-    private static String respuesta;
-    private static String mensaje;
-    private static String ventaPromedio;
-    private static String direcciones;
-    private static String productoByFormato;
-    private static String productoByTienda;
-    private static String tiendaProductoCatalogo;
-    private static String photoProducto;
-    private static String materiales;
-    private static String materialesSolicitud;
-    private static String encuestaFoto;
-    private static String opciones;
-    private static String productoCatalogadoTienda;
-    private static String procesoCatalogacionObjeciones;
-    private static String tiendaMarca;
-    private static String tonoPalett, precioPalett;
+    private static String usuarios,tiendasVisitadas;
+    private static String coordenadas,encargadoTienda,frentesCharola,exhibiciones;
+    private static String inventarioProducto,productoPrecio,productos,surtido,tipoExhibicion;
+    private static String ruta,tiendas,marca,coordenadasEnviar;
+    private static String comentarioTienda,rastreo,inteligenciaMercado,updateInfor;
+    private static String cajasMayoreo,photo,preguntas;
+    private static String respuesta,mensaje,ventaPromedio,direcciones,productoByFormato;
+    private static String productoByTienda,tiendaProductoCatalogo;
+    private static String photoProducto,materiales,materialesSolicitud,encuestaFoto;
+    private static String opciones,productoCatalogadoTienda,procesoCatalogacionObjeciones;
+    private static String tiendaMarca,tonoPalett, precioPalett, productosAgotados;
 
 
     public BDopenHelper(Context miContext) {
@@ -147,7 +120,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         productos = "Create table if not exists " +
                 "producto(idProducto int primary key, nombre varchar(50), presentacion varchar(10)," +
                 "idMarca int, cb varchar(45), img varchar(250), tester int, precio_compra float, " +
-                "precio_sugerido float, fecha_precio varchar(15), descripcion text, has_image tinyint(1) default 0)";
+                "precio_sugerido float, fecha_precio varchar(15), descripcion text, has_image tinyint(1) default 0, agotado tinyint(1) )";
         surtido = "create table if not exists " +
                 "surtido(idTienda int, idPromotor int,surtido char(2), fecha char(25), " +
                 "idProducto int, cajas int, unifila int, caja1 int, caja2 int, caja3 int," +
@@ -362,6 +335,17 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 ")";
 
 
+        productosAgotados = "create table if not exists "+
+                DbEstructure.SolicitudAgodatos.TABLE_NAME +
+                "(" +
+                DbEstructure.SolicitudAgodatos.ID_TIENDA   +" int," +
+                DbEstructure.SolicitudAgodatos.ID_PROMOTOR +" int," +
+                DbEstructure.SolicitudAgodatos.STATUS_PRODUCTO +" int," +
+                DbEstructure.SolicitudAgodatos.STATUS_REGISTRO +" int," +
+                DbEstructure.SolicitudAgodatos.FECHA + " varchar(25)" +
+                ")";
+
+
 
     }
 
@@ -409,6 +393,8 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         db.execSQL(tonoPalett);
         db.execSQL(precioPalett);
+
+        db.execSQL(productosAgotados);
     }
 
     @Override
@@ -416,22 +402,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
 
-        if (newVersion == 47){
-
-            Log.i("DBHELPER", "Upgrade");
-            Cursor cursor = db.rawQuery("SELECT * FROM " + VisitaTienda.TABLE, null);
-            int deleteStateColumnIndex = cursor.getColumnIndex(VisitaTienda.AUTO_TIME);
-            if (deleteStateColumnIndex < 0) {
-                // missing_column not there - add it
-                db.execSQL("alter table " + VisitaTienda.TABLE + " add column " + VisitaTienda.AUTO_TIME + " int(1) default 1");
-                Log.i("DBHELPER", "column auto_time created");
-            }
-            cursor.close();
-
-
+        if (newVersion == 48){
 
             db.execSQL("drop table producto ");
             db.execSQL(productos);
+
+
+            db.execSQL(productosAgotados);
+
 
         }
 
@@ -677,13 +655,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
     public void insertarProducto(int idProd, String nombre, String presentacion, int idMarc, String cb,
-                                 int tester, double precioComp, double precioSuge, String fechaPrecio, String descripcion, int hasImage) throws SQLiteException{
+                                 int tester, double precioComp, double precioSuge, String fechaPrecio, String descripcion, int hasImage, int agotado) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
             baseDatosLocal.execSQL("insert or replace into producto(idProducto,nombre,presentacion,idMarca,cb,tester, " +
-                    "precio_compra,precio_sugerido, fecha_precio, descripcion, has_image) " +
+                    "precio_compra,precio_sugerido, fecha_precio, descripcion, has_image, agotado ) " +
                     "values("+idProd+",'"+nombre+"','"+presentacion+"',"+idMarc+",'"+cb+"', "+tester+", " +
-                    precioComp + ", " + precioSuge + ", '" + fechaPrecio + "', '" +  descripcion +  "', "+ hasImage +")");
+                    precioComp + ", " + precioSuge + ", '" + fechaPrecio + "', '" +  descripcion +  "', "+ hasImage +", "+ agotado +")");
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
