@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -213,6 +214,15 @@ public class Utilities {
 
         }
 
+
+
+    }
+
+    public static String getDateTime(){
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat(DATETIME_FORMAT_USA, Locale.getDefault());
+        return dFecha.format(c.getTime());
 
 
     }

@@ -3,12 +3,16 @@ package com.codpaa.activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,11 +26,12 @@ import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.ProductosModel;
-import com.codpaa.widget.SingleSpinnerSelect;
+import com.codpaa.util.Utilities;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Agotados extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -34,6 +39,8 @@ public class Agotados extends AppCompatActivity implements AdapterView.OnItemSel
     private int idPromotor, idTienda;
     private Spinner spinnerMarca;
     private RecyclerView recyclerView;
+    private TextView txtAvailable;
+    private AgotadosRecyclerAdapter adapter;
 
 
     @Override
@@ -61,6 +68,7 @@ public class Agotados extends AppCompatActivity implements AdapterView.OnItemSel
 
 
 
+        txtAvailable = findViewById(R.id.available);
 
 
 
@@ -82,6 +90,36 @@ public class Agotados extends AppCompatActivity implements AdapterView.OnItemSel
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_agotados, menu);
+
+
+        return true;
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == android.R.id.home){
+            finish();
+            return true;
+
+        }else if(id == R.id.save){
+
+            saveData();
+            return true;
+
+        } else
+
+            return super.onOptionsItemSelected(item);
+    }
+
     private void loadSpinner(){
 
 
@@ -97,13 +135,22 @@ public class Agotados extends AppCompatActivity implements AdapterView.OnItemSel
 
     private void loadProductsByMarca(int idMarca){
 
-        ArrayList<ProductosModel> list = getProducts(idMarca);
+        try {
+            ArrayList<ProductosModel> list = getProducts(idMarca);
 
-        AgotadosRecyclerAdapter adapter = new AgotadosRecyclerAdapter(list);
+            if (list.size() > 0 ){
+                txtAvailable.setVisibility(View.INVISIBLE);
+            }else{
+                txtAvailable.setVisibility(View.VISIBLE);
+            }
 
-        recyclerView.setItemViewCacheSize(list.size());
-        recyclerView.setAdapter(adapter);
+            adapter = new AgotadosRecyclerAdapter(this,list);
 
+            recyclerView.setItemViewCacheSize(list.size());
+            recyclerView.setAdapter(adapter);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -147,7 +194,7 @@ public class Agotados extends AppCompatActivity implements AdapterView.OnItemSel
         ArrayList<ProductosModel> array = new ArrayList<>();
 
         SQLiteDatabase bd = new BDopenHelper(this).getReadableDatabase();
-        String sql = "select p.idProducto, p.nombre, p.presentacion, p.idMarca, p.cb  from producto p " +
+        String sql = "select p.idProducto, p.nombre, p.presentacion, p.idMarca, p.cb, p.has_image   from producto p " +
                 " where p.idMarca = " + idMarca + " and p.agotado = 1 ";
         Cursor curProdu = bd.rawQuery(sql, null);
 
@@ -160,6 +207,7 @@ public class Agotados extends AppCompatActivity implements AdapterView.OnItemSel
             pro.setPresentacion(curProdu.getString(curProdu.getColumnIndex("presentacion")));
             pro.setIdMarca(curProdu.getInt(curProdu.getColumnIndex("idMarca")));
             pro.setCodigoBarras(curProdu.getString(curProdu.getColumnIndex("cb")));
+            pro.setHasImage(curProdu.getInt(curProdu.getColumnIndex("has_image")));
 
             array.add(pro);
         }
@@ -175,6 +223,28 @@ public class Agotados extends AppCompatActivity implements AdapterView.OnItemSel
 
 
         return array;
+    }
+
+
+
+    private void saveData(){
+
+
+        if (adapter != null){
+
+            String fecha = Utilities.getDateTime();
+
+            List<ProductosModel> li = adapter.getItemsModified();
+
+            BDopenHelper bd = new BDopenHelper(this);
+            for (ProductosModel p :li){
+
+               bd.insertAgotados(idTienda, idPromotor, p.getIdProducto(),p.getIdStatusProduct(), fecha);
+            }
+
+
+        }
+
     }
 
 
@@ -205,9 +275,14 @@ public class Agotados extends AppCompatActivity implements AdapterView.OnItemSel
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        MarcaModel marca = (MarcaModel) adapterView.getSelectedItem();
 
-        loadProductsByMarca(marca.getId());
+        try{
+            MarcaModel marca = (MarcaModel) adapterView.getSelectedItem();
+
+            loadProductsByMarca(marca.getId());
+
+        }catch (Exception e){ e.printStackTrace(); }
+
 
 
     }

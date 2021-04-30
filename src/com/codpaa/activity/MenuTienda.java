@@ -539,8 +539,14 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 descargarEncuesta();
 
                 return true;*/
-        }
-        return super.onOptionsItemSelected(item);
+        }else if (itemId == R.id.sync){
+
+            actualizarPro();
+
+            return true;
+        }else
+
+            return super.onOptionsItemSelected(item);
 
     }
 
@@ -1361,7 +1367,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 			Toast.makeText(this, "No has registrado Entrada", Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	private void capturaFoto(){
 
 		if(Entrada){

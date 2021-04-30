@@ -52,7 +52,7 @@ public class CapturaGeneral extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_captura_general);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
 
         if(toolbar != null){
             setSupportActionBar(toolbar);

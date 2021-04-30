@@ -18,6 +18,16 @@ public class ProductosModel {
     private boolean seleted = false;
     private boolean checked = false;
     private int hasImage = 0;
+    private int idStatusProduct = 0;
+
+
+    public int getIdStatusProduct() {
+        return idStatusProduct;
+    }
+
+    public void setIdStatusProduct(int idStatusProduct) {
+        this.idStatusProduct = idStatusProduct;
+    }
 
     public int getHasImage() {
         return hasImage;

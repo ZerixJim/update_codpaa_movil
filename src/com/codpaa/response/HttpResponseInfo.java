@@ -45,7 +45,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
 
         this.progressDialog = new ProgressDialog(context);
-        this.progressDialog.setMessage("Descargando...");
+        this.progressDialog.setMessage("Sincronizando Informacion ...");
         this.progressDialog.setCancelable(false);
 
 
@@ -99,37 +99,14 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                         JSONArray tiendaMarca = response.getJSONArray("tienda_marca");
 
 
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.setMessage("Descargando Productos ...");
-
-                            }
-                        });
-
                         parseJSONMarca(marcas);
                         parseJSONProductos(productos);
                         parseJSONExhi(exhibiciones);
-
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.setMessage("Descargando Ruta...");
-
-                            }
-                        });
                         parseJsonTiendas(tiendas);
                         parseJSONRuta(ruta);
                         parseJSONProductoByFormato(productoFormato);
                         parseJSONProductoByTienda(productoTienda);
                         parseJSONMateriales(materiales);
-
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.setMessage("Descargando rol");
-                            }
-                        });
 
 
                         insertTiendaMarca(tiendaMarca);
@@ -138,7 +115,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                             @Override
                             public void run() {
 
-                                progressDialog.setMessage("Informacion Cargada Satisfactoriamente");
+                                progressDialog.setMessage("Sincronización completa");
 
                             }
                         });
@@ -153,7 +130,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                                 progressDialog.dismiss();
 
                             }
-                        }, 2500);
+                        }, 1500);
 
 
 

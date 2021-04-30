@@ -40,6 +40,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
+
+        <TextView
+            android:id="@+id/available"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#8A8A8A"
+            android:text="no disponible"
+            app:layout_constraintBottom_toBottomOf="@+id/recycler_producto"
+            app:layout_constraintEnd_toEndOf="@+id/recycler_producto"
+            app:layout_constraintStart_toStartOf="@+id/recycler_producto"
+            app:layout_constraintTop_toTopOf="@+id/recycler_producto" />
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_producto"
             android:layout_width="match_parent"
@@ -47,7 +60,13 @@
             android:layout_marginTop="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/marca"
-            tools:layout_editor_absoluteX="16dp" />
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="-151dp" />
+
+
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

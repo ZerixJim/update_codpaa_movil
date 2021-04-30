@@ -217,9 +217,10 @@ public class DbEstructure {
         public static final String TABLE_NAME = "solicitud_agotados";
         public static final String ID_TIENDA = "id_tienda";
         public static final String ID_PROMOTOR = "id_promotor";
-        public static final String FECHA = "fecha";
+        public static final String ID_PRODUCTO = "id_producto";
         public static final String STATUS_PRODUCTO = "estatus_producto";
         public static final String STATUS_REGISTRO = "estatus";
+        public static final String FECHA = "fecha";
 
 
     }

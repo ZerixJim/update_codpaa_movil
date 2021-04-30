@@ -42,7 +42,7 @@ public class HttpResponseProducts extends JsonHttpResponseHandler {
 
 
         this.progressDialog = new ProgressDialog(context);
-        this.progressDialog.setMessage("Descargando...");
+        this.progressDialog.setMessage("Sincronizando Producto ");
         this.progressDialog.setCancelable(false);
 
 
@@ -95,13 +95,7 @@ public class HttpResponseProducts extends JsonHttpResponseHandler {
                         JSONArray tiendaMarca = response.getJSONArray("tienda_marca");
 
 
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                progressDialog.setMessage("Descargando Productos ...");
 
-                            }
-                        });
 
                         parseJSONMarca(marcas);
                         parseJSONProductos(productos);
@@ -119,7 +113,7 @@ public class HttpResponseProducts extends JsonHttpResponseHandler {
                             @Override
                             public void run() {
 
-                                progressDialog.setMessage("Descargado!!!");
+                                progressDialog.setMessage("Sincronizado!!!");
 
                             }
                         });

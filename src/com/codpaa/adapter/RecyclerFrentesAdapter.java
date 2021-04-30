@@ -50,41 +50,41 @@ public class RecyclerFrentesAdapter extends RecyclerView.Adapter<RecyclerFrentes
         public FrentesViewHolder(View itemView) {
             super(itemView);
 
-            nombreProducto = (TextView) itemView.findViewById(R.id.nombre_producto);
-            presentacion = (TextView) itemView.findViewById(R.id.presentacion);
-            codigoBarras = (TextView) itemView.findViewById(R.id.codigo_barras);
+            nombreProducto =  itemView.findViewById(R.id.nombre_producto);
+            presentacion =  itemView.findViewById(R.id.presentacion);
+            codigoBarras =  itemView.findViewById(R.id.codigo_barras);
 
-            c1 = (EditText) itemView.findViewById(R.id.c1);
-            c2 = (EditText) itemView.findViewById(R.id.c2);
-            c3 = (EditText) itemView.findViewById(R.id.c3);
-            c4 = (EditText) itemView.findViewById(R.id.c4);
-            c5 = (EditText) itemView.findViewById(R.id.c5);
-            c6 = (EditText) itemView.findViewById(R.id.c6);
-
-
-            f1 = (EditText) itemView.findViewById(R.id.unifila);
-            f2 = (EditText) itemView.findViewById(R.id.caja2);
-            f3 = (EditText) itemView.findViewById(R.id.caja3);
-            f4 = (EditText) itemView.findViewById(R.id.caja4);
-            f5 = (EditText) itemView.findViewById(R.id.caja5);
-            f6 = (EditText) itemView.findViewById(R.id.caja6);
-            f7 = (EditText) itemView.findViewById(R.id.caja7);
-            f8 = (EditText) itemView.findViewById(R.id.caja8);
-            f9 = (EditText) itemView.findViewById(R.id.caja9);
-            f10 = (EditText) itemView.findViewById(R.id.caja10);
-            f11 = (EditText) itemView.findViewById(R.id.caja11);
-            f12 = (EditText) itemView.findViewById(R.id.caja12);
-            f13 = (EditText) itemView.findViewById(R.id.caja13);
-            f14 = (EditText) itemView.findViewById(R.id.caja14);
+            c1 =  itemView.findViewById(R.id.c1);
+            c2 =  itemView.findViewById(R.id.c2);
+            c3 =  itemView.findViewById(R.id.c3);
+            c4 =  itemView.findViewById(R.id.c4);
+            c5 =  itemView.findViewById(R.id.c5);
+            c6 =  itemView.findViewById(R.id.c6);
 
 
-            image = (ImageView) itemView.findViewById(R.id.image);
+            f1 =  itemView.findViewById(R.id.unifila);
+            f2 =  itemView.findViewById(R.id.caja2);
+            f3 =  itemView.findViewById(R.id.caja3);
+            f4 =  itemView.findViewById(R.id.caja4);
+            f5 =  itemView.findViewById(R.id.caja5);
+            f6 =  itemView.findViewById(R.id.caja6);
+            f7 =  itemView.findViewById(R.id.caja7);
+            f8 =  itemView.findViewById(R.id.caja8);
+            f9 =  itemView.findViewById(R.id.caja9);
+            f10 =  itemView.findViewById(R.id.caja10);
+            f11 =  itemView.findViewById(R.id.caja11);
+            f12 =  itemView.findViewById(R.id.caja12);
+            f13 =  itemView.findViewById(R.id.caja13);
+            f14 =  itemView.findViewById(R.id.caja14);
 
-            spinner = (Spinner) itemView.findViewById(R.id.spinner);
+
+            image =  itemView.findViewById(R.id.image);
+
+            spinner =  itemView.findViewById(R.id.spinner);
 
 
-            listCharola = (LinearLayout) itemView.findViewById(R.id.list_charolas);
-            listFilas = (LinearLayout) itemView.findViewById(R.id.list_filas);
+            listCharola = itemView.findViewById(R.id.list_charolas);
+            listFilas =  itemView.findViewById(R.id.list_filas);
 
 
             spinner.setOnItemSelectedListener(this);

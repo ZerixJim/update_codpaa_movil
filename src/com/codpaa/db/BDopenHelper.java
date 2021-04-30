@@ -340,8 +340,9 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "(" +
                 DbEstructure.SolicitudAgodatos.ID_TIENDA   +" int," +
                 DbEstructure.SolicitudAgodatos.ID_PROMOTOR +" int," +
+                DbEstructure.SolicitudAgodatos.ID_PRODUCTO + " int," +
                 DbEstructure.SolicitudAgodatos.STATUS_PRODUCTO +" int," +
-                DbEstructure.SolicitudAgodatos.STATUS_REGISTRO +" int," +
+                DbEstructure.SolicitudAgodatos.STATUS_REGISTRO +" int default 1," +
                 DbEstructure.SolicitudAgodatos.FECHA + " varchar(25)" +
                 ")";
 
@@ -479,7 +480,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
     public long insertarImagenId(int idTien, int idCel, int idMarca, int idExhi, String fecha, int dia,
                                  int mes, int anio, String imagen, int status, int evento, String fechaCaptura, String comenterio){
-        baseDatosLocal = getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues valores = new ContentValues();
         long id = 0;
         valores.put("idTienda", idTien);
@@ -496,15 +497,33 @@ public class BDopenHelper extends SQLiteOpenHelper {
         valores.put("fecha_captura", fechaCaptura);
         valores.put("comentario", comenterio);
 
-        if(baseDatosLocal != null) {
-            id = baseDatosLocal.insert("photo", null, valores);
-            baseDatosLocal.close();
+        if(db != null) {
+            id = db.insert("photo", null, valores);
+            db.close();
         }
 
         return id;
     }
 
 
+
+    public void insertAgotados(int idTienda, int idPromo,int idProducto, int statusProducto, String fecha) {
+
+        SQLiteDatabase bd = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(DbEstructure.SolicitudAgodatos.ID_TIENDA, idTienda);
+        values.put(DbEstructure.SolicitudAgodatos.ID_PROMOTOR, idPromo);
+        values.put(DbEstructure.SolicitudAgodatos.ID_PRODUCTO, idProducto);
+        values.put(DbEstructure.SolicitudAgodatos.STATUS_PRODUCTO, statusProducto);
+        values.put(DbEstructure.SolicitudAgodatos.FECHA, fecha);
+
+        bd.insert(DbEstructure.SolicitudAgodatos.TABLE_NAME, null, values);
+
+        bd.close();
+
+    }
 
 
     public void insertarUsuarios(int idcelular, String nombre, String user, String pass, String status ) throws SQLiteException {
@@ -1173,4 +1192,6 @@ public class BDopenHelper extends SQLiteOpenHelper {
         c.close();
         return tipo;
     }
+
+
 }
