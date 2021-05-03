@@ -27,6 +27,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.codpaa.listener.ResponseVisitasJson;
+import com.codpaa.model.AgotadosModel;
 import com.codpaa.model.JsonEncuestaVeiw;
 import com.codpaa.model.JsonMaterialModel;
 import com.codpaa.model.JsonProductoImpulsor;
@@ -37,6 +38,7 @@ import com.codpaa.model.Respuesta;
 import com.codpaa.model.VisitasModel;
 import com.codpaa.model.generic.Producto;
 import com.codpaa.provider.DbEstructure;
+import com.codpaa.response.AgotadosHttpJsonResponse;
 import com.codpaa.response.EncuestaResponse;
 import com.codpaa.response.MaterialesJsonResponse;
 import com.codpaa.response.ProductoCatalogoResponse;
@@ -458,7 +460,7 @@ public class EnviarDatos {
 	}
 	
 
-	public void enviarMateriales(int idPromor){
+	public synchronized void enviarMateriales(int idPromor){
 
 		SQLiteDatabase base = new BDopenHelper(context).getReadableDatabase();
 
@@ -503,6 +505,46 @@ public class EnviarDatos {
 
 		}
 
+
+
+		cursor.close();
+
+	}
+
+
+	public synchronized void sendAgotados(){
+		SQLiteDatabase bd = new BDopenHelper(context).getReadableDatabase();
+		String sql = "select * from " + DbEstructure.SolicitudAgodatos.TABLE_NAME + " as ag " +
+				" where ag.estatus = " + 1;
+
+		Cursor cursor = bd.rawQuery(sql, null);
+
+		if (cursor.getCount() > 0 ){
+
+			for (cursor.moveToFirst(); !cursor.isAfterLast() ; cursor.moveToNext()){
+
+				AgotadosModel model = new AgotadosModel();
+				model.setIdTienda(cursor.getInt(cursor.getColumnIndex(DbEstructure.SolicitudAgodatos.ID_TIENDA)));
+				model.setIdPromotor(cursor.getInt(cursor.getColumnIndex(DbEstructure.SolicitudAgodatos.ID_PROMOTOR)));
+				model.setIdProducto(cursor.getInt(cursor.getColumnIndex(DbEstructure.SolicitudAgodatos.ID_PRODUCTO)));
+				model.setEstatusProducto(cursor.getInt(cursor.getColumnIndex(DbEstructure.SolicitudAgodatos.STATUS_PRODUCTO)));
+				model.setFecha(cursor.getString(cursor.getColumnIndex(DbEstructure.SolicitudAgodatos.FECHA)));
+
+				RequestParams rp = new RequestParams();
+
+				AsyncHttpClient client = new AsyncHttpClient();
+				client.addHeader("Authorization","54903895895304589438503489");
+
+				Gson gson = new Gson();
+
+
+				rp.put("json", gson.toJson(model));
+
+				client.post(Utilities.API_PRODUCTION + "producto/agotado", rp, new AgotadosHttpJsonResponse(context, model.getIdTienda(), model.getIdProducto(), model.getFecha()));
+
+			}
+
+		}
 
 
 		cursor.close();

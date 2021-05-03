@@ -495,6 +495,8 @@ public class GeoLocalizar extends Service {
 
 					//sendHenkel();
 
+					sendAgotados();
+
 
 					Looper.loop();
 				} catch (Exception e) {
@@ -549,6 +551,17 @@ public class GeoLocalizar extends Service {
 
 
 	}
+
+
+	private void sendAgotados(){
+
+		EnviarDatos en = new EnviarDatos(this);
+		en.sendAgotados();
+
+
+	}
+
+
 
 
 	private List<Producto> getProductListSendToServer() {

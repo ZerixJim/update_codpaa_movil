@@ -45,7 +45,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
 
         this.progressDialog = new ProgressDialog(context);
-        this.progressDialog.setMessage("Sincronizando Informacion ...");
+        this.progressDialog.setMessage("Sincronizando Información ...");
         this.progressDialog.setCancelable(false);
 
 

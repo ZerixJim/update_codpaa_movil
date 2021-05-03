@@ -11,11 +11,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.codpaa.R;
 import com.codpaa.model.ProductosModel;
+import com.codpaa.util.MyDiffUtil;
 import com.codpaa.util.Utilities;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class AgotadosRecyclerAdapter extends RecyclerView.Adapter<AgotadosRecycl
     private List<ProductosModel> list;
     private Context context;
 
-    public AgotadosRecyclerAdapter(Context context,List<ProductosModel> list) {
+    public AgotadosRecyclerAdapter(Context context, List<ProductosModel> list) {
         this.list = list;
 
         this.context = context;
@@ -47,32 +49,38 @@ public class AgotadosRecyclerAdapter extends RecyclerView.Adapter<AgotadosRecycl
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        final ProductosModel model =  list.get(position);
+        ProductosModel model = list.get(position);
         holder.nombre.setText(model.getNombre());
         holder.presentacion.setText(model.getPresentacion());
         holder.cb.setText(model.getCodigoBarras());
 
 
+        if (model.getCapturated() == 0) {
+            holder.rGroup.setVisibility(View.VISIBLE);
 
-        holder.rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                Log.d("onCheck", "" + i);
+        } else {
 
-                model.setIdStatusProduct(i);
+            holder.rGroup.setVisibility(View.INVISIBLE);
+        }
 
-            }
-        });
+        int status = model.getTextStatus();
+        if (status == 0){
+            holder.status.setText("");
+        }else if (status == 1 ){
+            holder.status.setText("Agotado");
+        }else if (status == 2 ){
+            holder.status.setText("Pre-agotado");
+        }else if (status == 3){
+            holder.status.setText("Disponible");
+        }
 
-
-
-        if (model.getHasImage() == 1 ){
+        if (model.getHasImage() == 1) {
 
             Glide.with(context)
                     .load(Utilities.PRODUCT_PATH + model.getIdMarca() + "/" + model.getIdProducto() + ".gif")
                     .placeholder(R.drawable.ic_no_image)
                     .into(holder.image);
-        }else {
+        } else {
 
             Glide.with(context)
                     .load(R.drawable.ic_no_image)
@@ -88,10 +96,10 @@ public class AgotadosRecyclerAdapter extends RecyclerView.Adapter<AgotadosRecycl
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        private TextView nombre, presentacion, cb;
+        private TextView nombre, presentacion, cb, status;
         private ImageView image;
         private RadioGroup rGroup;
 
@@ -102,6 +110,7 @@ public class AgotadosRecyclerAdapter extends RecyclerView.Adapter<AgotadosRecycl
             presentacion = itemView.findViewById(R.id.presentacion);
             cb = itemView.findViewById(R.id.codigo);
             image = itemView.findViewById(R.id.image);
+            status = itemView.findViewById(R.id.text_status);
 
             rGroup = itemView.findViewById(R.id.radio);
 
@@ -121,20 +130,31 @@ public class AgotadosRecyclerAdapter extends RecyclerView.Adapter<AgotadosRecycl
             rGroup.addView(radioButton3);
 
 
+            rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                    ProductosModel model = list.get(getAbsoluteAdapterPosition());
+                    model.setIdStatusProduct(i);
+
+                }
+            });
+
 
         }
     }
 
 
-    public List<ProductosModel> getItemsModified(){
+    public List<ProductosModel> getItemsModified() {
 
         List<ProductosModel> array = new ArrayList<>();
 
-        if (list != null){
+        if (this.list != null) {
 
-            for (ProductosModel p : list){
+            for (ProductosModel p : list) {
 
-                if (p.getIdStatusProduct() != 0 && p.getIdProducto() != 0){
+                Log.d("Producto ",  p.getNombre() + " capturated " + p.getCapturated() + " estatus " + p.getIdStatusProduct());
+
+                if (p.getIdProducto() != 0 && p.getIdStatusProduct() != 0) {
                     array.add(p);
                 }
             }
@@ -146,6 +166,17 @@ public class AgotadosRecyclerAdapter extends RecyclerView.Adapter<AgotadosRecycl
     }
 
 
+    public void setData(List<ProductosModel> newList) {
+
+        MyDiffUtil myDiffUtilCallback = new MyDiffUtil(this.list, newList);
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(myDiffUtilCallback);
+
+        this.list.clear();
+        this.list.addAll(newList);
+
+        result.dispatchUpdatesTo(this);
+
+    }
 
 
 }

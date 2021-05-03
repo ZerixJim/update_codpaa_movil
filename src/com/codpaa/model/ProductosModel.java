@@ -19,7 +19,25 @@ public class ProductosModel {
     private boolean checked = false;
     private int hasImage = 0;
     private int idStatusProduct = 0;
+    private int textStatus = 0;
 
+    private int capturated;
+
+    public int getCapturated() {
+        return capturated;
+    }
+
+    public void setCapturated(int capturated) {
+        this.capturated = capturated;
+    }
+
+    public int getTextStatus() {
+        return textStatus;
+    }
+
+    public void setTextStatus(int textStatus) {
+        this.textStatus = textStatus;
+    }
 
     public int getIdStatusProduct() {
         return idStatusProduct;
