@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -53,6 +53,16 @@
             android:exported="false"
             android:grantUriPermissions="true">
 
+        </provider>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.codpaa.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
         </provider>
 
         <meta-data
@@ -256,6 +266,11 @@
 
         <activity android:name=".activity.CapturaEspecial"
             android:label="Censo Tinte"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".activity.ProductosDisponibles"
+            android:label="Productos disponibles"
             android:screenOrientation="portrait"
             />
 

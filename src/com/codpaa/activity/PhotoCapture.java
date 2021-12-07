@@ -62,6 +62,8 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.FileProvider;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -242,7 +244,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     Uri photoUri;
 
                     if (Build.VERSION.SDK_INT >= 24){
-                        photoUri = PhotoProviderVan.getPhotoUri(photoFile);
+                        //photoUri = PhotoProviderVan.getPhotoUri(photoFile);
+                        photoUri = FileProvider.getUriForFile(CameraActivity, CameraActivity.getPackageName()+".fileprovider", photoFile);
                     }else {
 
                         photoUri = Uri.fromFile(photoFile);

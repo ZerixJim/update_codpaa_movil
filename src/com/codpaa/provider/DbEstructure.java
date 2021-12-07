@@ -384,6 +384,19 @@ public class DbEstructure {
 
 
 
+    /**
+     *Table productos disponibles
+     */
 
+    public static class productosDisponibles{
+        private productosDisponibles(){}
+
+        public static final String TABLE_NAME = "productosDisponibles";
+        public static final String ID_TIENDA = "idTienda";
+        public static final String ID_MARCA = "idMarca";
+        public static final String ID_PROMOTOR = "idPromotor";
+        public static final String ID_PRODUCTO = "idProducto";
+        public static final String FECHA = "fecha";
+    }
 
 }

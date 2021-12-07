@@ -384,7 +384,11 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             item11.setImage("ic_autorenew_grey_600_24dp");
             array.add(item11);
 
-
+            final MenuTiendaModel item17 = new MenuTiendaModel();
+            item17.setIdMenu(17);
+            item17.setNombreMenu("Productos disponibles por marca");
+            item17.setImage("ic_assignment_grey600_24dp");
+            array.add(item17);
 
 
 
@@ -933,8 +937,17 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             capturaGeneral();
         } else if (id == R.id.btnMateriales) {
             openMateriales();
+        } else if(id == R.id.btnProdDisp) {
+            productosDisponibles();
         }
 
+    }
+
+    private void productosDisponibles() {
+        Intent intent = new Intent(this, ProductosDisponibles.class);
+        intent.putExtra("idTienda", idTienda);
+        intent.putExtra("idPromotor", this.idPromotor);
+        startActivity(intent);
     }
 
     private void openMateriales() {
@@ -1601,6 +1614,10 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 break;
             case 16:
                 capturaAgotados();
+                break;
+
+            case 17:
+                productosDisponibles();
                 break;
 
 

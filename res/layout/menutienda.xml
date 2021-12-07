@@ -291,6 +291,13 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="@string/updateProducts"/>
+
+                    <Button
+                        android:id="@+id/btnProdDisp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Productos Disponibles por Marca"/>
                 </TableRow>
 
 

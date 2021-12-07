@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import com.codpaa.provider.DbEstructure;
@@ -61,7 +62,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String productoByTienda,tiendaProductoCatalogo;
     private static String photoProducto,materiales,materialesSolicitud,encuestaFoto;
     private static String opciones,productoCatalogadoTienda,procesoCatalogacionObjeciones;
-    private static String tiendaMarca,tonoPalett, precioPalett, productosAgotados;
+    private static String tiendaMarca,tonoPalett, precioPalett, productosAgotados, productosDisponibles;
 
 
     public BDopenHelper(Context miContext) {
@@ -107,6 +108,10 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "unifila int(2), fila1 int(2), fila2 int(2), fila3 int(2)," +
                 "fila4 int(2), fila5 int(2), fila6 int(2), fila7 int(2), fila8 int(2), fila9 int(2), fila10 int(2)," +
                 "fila11 int(2), fila12 int(2), fila13 int(2), fila14 int(2), cantidad int)";
+
+        productosDisponibles = "create table if not exists "+
+                "productosDisponibles(id int auto_increment, idTienda int, idMarca int, idPromotor int, idProducto int, fecha varchar(255))";
+
         exhibiciones = "create table if not exists " +
                 "exhibiciones(idTienda int, idPromotor int, idExhibicion int, fecha char(15), " +
                 "idProducto int, cantidad decimal (10,2), status int)";
@@ -347,6 +352,15 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 ")";
 
 
+        /*productosDisponibles = "create table if not exists "+
+                DbEstructure.productosDisponibles.TABLE_NAME+"("+
+                //DbEstructure.productosDisponibles.ID + "int not null auto_increment, "+
+                DbEstructure.productosDisponibles.ID_TIENDA + "int unsigned, " +
+                DbEstructure.productosDisponibles.ID_MARCA + "int, "+
+                DbEstructure.productosDisponibles.ID_PROMOTOR + "int, "+
+                DbEstructure.productosDisponibles.ID_PRODUCTO + "int, "+
+                DbEstructure.productosDisponibles.FECHA + "varchar(255)"+
+                ")";*/
 
     }
 
@@ -396,6 +410,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
         db.execSQL(precioPalett);
 
         db.execSQL(productosAgotados);
+        db.execSQL(productosDisponibles);
     }
 
     @Override
@@ -438,6 +453,27 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
 
+    }
+
+    public long insertarProdDispId(int idTienda, int idMarca, int idProducto, int idPromotor, String fecha, int dia, int mes, int anio){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues valores = new ContentValues();
+        long id = 0;
+
+        valores.put("tienda", idTienda);
+        valores.put("marca", idMarca);
+        valores.put("producto", idProducto);
+        valores.put("promotor", idPromotor);
+        valores.put("fecha", fecha);
+        valores.put("dia", dia);
+        valores.put("mes", mes);
+        valores.put("anio", anio);
+
+        if(db != null){
+            id = db.insert("productosDisponibles", null, valores);
+            db.close();
+        }
+        return id;
     }
 
 
@@ -711,14 +747,22 @@ public class BDopenHelper extends SQLiteOpenHelper {
                     "idMarca,idProducto,cantidad,status) values("+idTienda+", "+ idPromotor +", '"+ fecha +"', "+idMarca+", "+idProducto+", "+cantidad+", 1)";
 
             baseDatosLocal.execSQL(sql);
-
+            Log.v("frenteslog", "exec funciona");
 
             baseDatosLocal.close();
         }
+    }
 
+    public void insertarProdDisp(int idTienda, int idMarca, int idPromotor, int idProducto, String fecha){
+        baseDatosLocal = getWritableDatabase();
 
-
-
+        if(baseDatosLocal != null) {
+            String sql = "insert or replace into productosDisponibles(idTienda, idMarca, idPromotor, idProducto, fecha) values ("+idTienda+", "+idMarca+", "+idPromotor+", "+idProducto+", '"+fecha+"')";
+            Log.v("BDHELPER", "Insertar funciona");
+            baseDatosLocal.execSQL(sql);
+            Log.v("execxd", "exec funciona");
+            baseDatosLocal.close();
+        }
 
     }
 
@@ -903,6 +947,12 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "  order by fecha_captura, idTienda ,hora asc", null);
 
 
+    }
+
+    public Cursor datosProdDisp() throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select id, idTienda, idMarca, idPromotor, idProducto, fecha from productosDisponibles", null);
     }
 
     public Cursor datosFrentes() throws SQLiteException{
@@ -1192,6 +1242,5 @@ public class BDopenHelper extends SQLiteOpenHelper {
         c.close();
         return tipo;
     }
-
 
 }

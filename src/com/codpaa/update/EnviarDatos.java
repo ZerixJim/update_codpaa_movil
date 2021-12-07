@@ -551,6 +551,38 @@ public class EnviarDatos {
 
 	}
 
+	public void enviarProdDisp(){
+		try{
+			Cursor curProductos = DB.datosProdDisp();
+			String count = Integer.toString(curProductos.getCount());
+			Log.v("datosProddisp", count);
+
+			if(curProductos.getCount() != 0 && verificarConexion()){
+				for(curProductos.moveToFirst(); !curProductos.isAfterLast(); curProductos.moveToNext()){
+					RequestParams rp = new RequestParams();
+
+					rp.put("idTienda", Integer.toString(curProductos.getInt(1)));
+					rp.put("idMarca", Integer.toString(curProductos.getInt(2)));
+					rp.put("idPromotor", Integer.toString(curProductos.getInt(3)));
+					rp.put("idProducto", Integer.toString(curProductos.getInt(4)));
+					rp.put("fecha", curProductos.getString(5));
+
+					Log.v("enviarPD", rp.toString());
+
+
+					AsyncHttpClient cliente = new AsyncHttpClient();
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA+"sendProductosDisponibles.php", rp,
+							new HttpResponseProdDisp(context, curProductos.getInt(1),curProductos.getInt(2), curProductos.getInt(3), curProductos.getInt(4), curProductos.getString(5)));
+
+				}
+			} else{
+				Toast.makeText(context.getApplicationContext(), "Error al enviar", Toast.LENGTH_SHORT).show();
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 	
 	public void enviarFrentes() {
 		try {
@@ -630,7 +662,46 @@ public class EnviarDatos {
 			e.printStackTrace();
 		}
 	}
-	
+
+	private class HttpResponseProdDisp extends JsonHttpResponseHandler{
+		private int idTienda;
+		private int idMarca;
+		private int idPromotor;
+		private int idProducto;
+		private String fecha;
+
+		SQLiteDatabase base;
+		Context act;
+
+		public HttpResponseProdDisp(Context activity, int idTienda, int idMarca, int idPromotor, int idProducto, String fecha){
+			this.act = activity;
+			this.idTienda = idTienda;
+			this.idMarca = idMarca;
+			this.idPromotor = idPromotor;
+			this.idProducto = idProducto;
+		}
+
+		public void onSuccess(int statusCode,Header[] headers ,JSONObject response) {
+			if(response != null){
+				try {
+
+					base = new BDopenHelper(act).getWritableDatabase();
+					if(response.getBoolean("insert")){
+						base.execSQL("Update productosdisponibles set status=2 where idTienda="+idTienda+" and idMarca='"+idMarca+"' and idPromotor='"+idPromotor+"' and idProducto='"+idProducto+"' and fecha='"+fecha);
+						Toast.makeText(act, "Registro Recibido", Toast.LENGTH_SHORT).show();
+
+						base.close();
+
+					}else{
+
+						Toast.makeText(act, "No se Recibio", Toast.LENGTH_SHORT).show();
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	
 	private class HttpResponseFrentes extends JsonHttpResponseHandler{
 		
