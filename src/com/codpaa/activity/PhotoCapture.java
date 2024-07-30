@@ -17,12 +17,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.bumptech.glide.Glide;
+import com.codpaa.adapter.CategoriasProductoAdapter;
 import com.codpaa.adapter.CustomAdapter;
 import com.codpaa.R;
 import com.codpaa.adapter.MarcasAdapter;
 import com.codpaa.model.JsonPhotoUpload;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.ProductosModel;
+import com.codpaa.model.SpinnerCateProdModel;
 import com.codpaa.model.SpinnerMarcaModel;
 import com.codpaa.provider.DbEstructure;
 import com.codpaa.provider.PhotoProviderVan;
@@ -76,6 +78,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -111,7 +114,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     private PhotoCapture CameraActivity = null;
     private String mCurrentPhotoPath;
     private boolean imagenEspera = false;
-    private Spinner spiMarca, spiExh;
+    private Spinner spiMarca, spiExh, spiCate;
     private EditText editComentario;
     private final ArrayList<MarcaModel> array = new ArrayList<>();
  	private SQLiteDatabase base;
@@ -122,14 +125,18 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
     private Uri imageToUploadUri;
 
-    private RadioGroup radioChoice;
-    private RadioButton radioNormal;
+    private RadioGroup radioChoice, radioChoice2;
+    private RadioButton radioNormal, rentadas, noRentadas;
+
+    private LinearLayout layoutRentas;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photocapture);
+        //SQLiteDatabase db = this.openOrCreateDatabase("codpaa", Context.MODE_PRIVATE, null);
+        //Log.i("DBV", String.valueOf(db.getVersion()));
         //aplication context
         CameraActivity = this;
 
@@ -153,6 +160,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
         spiMarca = findViewById(R.id.spiMarPhoto);
         spiExh =  findViewById(R.id.spiExhPho);
+        spiCate = findViewById(R.id.spiCategoria);
 
         editComentario = findViewById(R.id.photo_comment);
 
@@ -164,11 +172,18 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         cardView = findViewById(R.id.card);
 
         //imgAdd.setOnClickListener(this);
+        layoutRentas = findViewById(R.id.llRentadas);
 
 
         radioChoice =  findViewById(R.id.radioChoice);
         if (radioChoice != null) {
             radioNormal =  radioChoice.findViewById(R.id.radioNormal);
+        }
+
+        radioChoice2 = findViewById(R.id.radioChoice2);
+        if(radioChoice2 != null){
+            rentadas = radioChoice2.findViewById(R.id.radioRentada);
+            noRentadas = radioChoice2.findViewById(R.id.radioNoRentada);
         }
 
 
@@ -235,43 +250,54 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
         if (cameraPermissionEneabled()){
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            //Toast.makeText(this, "AQUI2",Toast.LENGTH_SHORT).show();
+
             //if exists respost to camera
-            if(takePictureIntent.resolveActivity(getPackageManager()) != null){
-                File photoFile;
-                try {
-                    photoFile = createImageFile();
+            try {
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 
-                    Uri photoUri;
+                    File photoFile;
+                    try {
+                        photoFile = createImageFile();
+                        Log.d("PHOTOFILE",photoFile.getName());
 
-                    if (Build.VERSION.SDK_INT >= 24){
-                        //photoUri = PhotoProviderVan.getPhotoUri(photoFile);
-                        photoUri = FileProvider.getUriForFile(CameraActivity, CameraActivity.getPackageName()+".fileprovider", photoFile);
-                    }else {
+                        Uri photoUri;
 
-                        photoUri = Uri.fromFile(photoFile);
+                        if (Build.VERSION.SDK_INT >= 24) {
+                            //photoUri = PhotoProviderVan.getPhotoUri(photoFile);
+                            photoUri = FileProvider.getUriForFile(CameraActivity, CameraActivity.getPackageName() + ".fileprovider", photoFile);
+                            Log.d("URIFOTO", photoUri.toString());
+                        } else {
 
+                            photoUri = Uri.fromFile(photoFile);
+
+                        }
+
+
+                        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                        StrictMode.setVmPolicy(builder.build());
+
+
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+
+                        imageToUploadUri = PhotoProviderVan.getPhotoUri(photoFile);
+
+                        startActivityForResult(takePictureIntent, CAMERA_PHOTO);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-
-                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                    StrictMode.setVmPolicy(builder.build());
-
-
-
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-
-                    imageToUploadUri = PhotoProviderVan.getPhotoUri(photoFile);
-
-                    startActivityForResult(takePictureIntent, CAMERA_PHOTO);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                }else{
+                    try{
+                        Log.v("PACKAGE123", takePictureIntent.getAction());
+                    }catch (Exception e){
+                        Log.e("ERRORFOTO: ", e.getMessage());
+                    }
                 }
-
-
+            }catch (Exception e){
+                Toast.makeText(this, e.getMessage(),Toast.LENGTH_SHORT).show();
             }
-
-
         }else{
             camaraPermission();
         }
@@ -289,6 +315,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		String timeStamp = new SimpleDateFormat("ddMMyyyykm", Locale.getDefault()).format(new Date());
 		String imageFileName = idTienda+timeStamp;
 		File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+		Log.d("FILENAME", imageFileName);
 
                 //Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
@@ -327,8 +355,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     //result of takeImage
 	@Override
     protected void onActivityResult( int requestCode, int resultCode, Intent data) {
-
-
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_PHOTO && resultCode == RESULT_OK) {
 
@@ -417,14 +443,18 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         } else {
 
 
-            File file = new File(imageToUploadUri.getPath());
+            try {
+                File file = new File(imageToUploadUri.getPath());
 
-            if (file.exists()) {
-                if (file.delete()) {
-                    Log.d("delete", "true");
-                } else {
-                    Log.d("delete", "false");
+                if (file.exists()) {
+                    if (file.delete()) {
+                        Log.d("delete", "true");
+                    } else {
+                        Log.d("delete", "false");
+                    }
                 }
+            }catch (Exception e){
+                e.printStackTrace();
             }
 
             imageToUploadUri = null;
@@ -498,13 +528,39 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 		int idExhibicion = spe.getId();
 		String comentario = editComentario.getText().toString();
 
+        String timeStamp = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        String ano = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
+        String mes = new SimpleDateFormat("MM", Locale.getDefault()).format(new Date());
+        String dia = new SimpleDateFormat("dd", Locale.getDefault()).format(new Date());
+
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+        String date = df.format(c.getTime());
+
 		if(imagenEspera){
 			if(idMarca != 0 && idExhibicion != 0){
 
+			    //SI LA MARCA SELECCIONADA ES CLOROX (249) O
+                //ALGUNA MARCA COMPETENCIA DE CLOROX (356 A 360)
+                //ENTONCES VALIDAR QUE SE HAYA SELECCIONADO UNA CATEGORÍA
+                //DE LO CONTRARIO VERIFICAR QUE SE HAYA SELECCIONADO UN PRODUCTO
                 ArrayList<ProductosModel> selected = multiSpinnerSelect.getSelectedItems();
-                if (selected.size() > 0){
 
-                    String timeStamp = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                long idCateSelected = 0;
+
+                //VERIFICAMOS SI HAY UNA CATEGORÍA SELECCIONADA
+                try{
+                    idCateSelected = spiCate.getSelectedItemId();
+                    Log.i("ITEM SELECTED", String.valueOf(spiCate.getSelectedItemId()));
+                }catch (Exception e){
+                    Log.i("ITEM SELECTED ERROR", e.getMessage());
+                }
+
+                if (selected.size() > 0 || idCateSelected > 0){
+
+                    /*String timeStamp = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                     String ano = new SimpleDateFormat("yyyy", Locale.getDefault()).format(new Date());
                     String mes = new SimpleDateFormat("MM", Locale.getDefault()).format(new Date());
                     String dia = new SimpleDateFormat("dd", Locale.getDefault()).format(new Date());
@@ -513,10 +569,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                     Calendar c = Calendar.getInstance();
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
-                    String date = df.format(c.getTime());
-
-
-
+                    String date = df.format(c.getTime());*/
 
                     if(verificarConexion()){
 
@@ -528,30 +581,50 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
                         if(!mCurrentPhotoPath.equals("")){
 
+                            //SE GENERA EL ID DE LA FOTO
                             long id = registraImagen.insertarImagenId(idTienda,idPromotor,idMarca,idExhibicion,timeStamp, Integer.parseInt(dia),
                                     Integer.parseInt(mes),Integer.parseInt(ano),mCurrentPhotoPath,1,getSelectedRadioGroup(), date, comentario);
 
-                            ArrayList<ProductosModel> proSelected = multiSpinnerSelect.getSelectedItems();
-                            SQLiteDatabase db = registraImagen.getWritableDatabase();
+                            Log.d("FOTOID", String.valueOf(id));
 
-                            for (ProductosModel producto : proSelected){
+                            //SI ES CLOROX O LA COMPETENCIA NO NECESITAMOS LOS ID DE PRODUCTOS
+                            //SOLO LAS CATEGORÍAS
 
-                                ContentValues contentValues = new ContentValues();
-                                contentValues.put(DbEstructure.PhotoProducto.ID_PHOTO, id);
-                                contentValues.put(DbEstructure.PhotoProducto.ID_PRODUCTO, producto.getIdProducto());
+                            if(idMarca == 249 || (idMarca >= 356 && idMarca <= 360)){
+                                //PARA ESTE PUNTO YA NOS ASEGURAMOS DE QUE LA CATEGORÍA SELECCIONADA SEA MAYOR A CERO
+                                long cateSelected = spiCate.getSelectedItemId();
 
+                                //INSERTAMOS EL ID DE LA FOTO CON EL ID DE LA CATEGORÍA
 
-                                try {
-
-                                    db.insertOrThrow(DbEstructure.PhotoProducto.TABLE_NAME, null, contentValues);
-
-
-                                }catch (SQLiteConstraintException e){
+                                try{
+                                    BDopenHelper fotoCategoria = new BDopenHelper(this);
+                                    fotoCategoria.insertarFotoCategoria(id, cateSelected);
+                                    fotoCategoria.close();
+                                }catch (SQLiteConstraintException e) {
                                     e.printStackTrace();
                                 }
+
+                            }else{
+                                ArrayList<ProductosModel> proSelected = multiSpinnerSelect.getSelectedItems();
+                                SQLiteDatabase db = registraImagen.getWritableDatabase();
+
+                                for (ProductosModel producto : proSelected){
+
+                                    ContentValues contentValues = new ContentValues();
+                                    contentValues.put(DbEstructure.PhotoProducto.ID_PHOTO, id);
+                                    contentValues.put(DbEstructure.PhotoProducto.ID_PRODUCTO, producto.getIdProducto());
+
+
+                                    try {
+
+                                        db.insertOrThrow(DbEstructure.PhotoProducto.TABLE_NAME, null, contentValues);
+
+
+                                    }catch (SQLiteConstraintException e){
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
-
-
 
 
                             if(id > 0){
@@ -582,10 +655,18 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                                     view.setFechaCaptura(datosFoto.getString(datosFoto.getColumnIndex("fecha_captura")));
                                     view.setComentario(datosFoto.getString(datosFoto.getColumnIndex("comentario")));
 
+                                    if(idMarca == 249 || (idMarca >= 356 && idMarca <= 360)){
+                                        requ.put("idCate", idCateSelected);
+                                    }else {
+                                        String productosRaw = datosFoto.getString(datosFoto.getColumnIndex("productos"));
 
-                                    final String[] productos = datosFoto.getString(datosFoto.getColumnIndex("productos")).split(",");
-
-                                    view.convert(productos);
+                                        if (productosRaw != null) {
+                                            final String[] productos = productosRaw.split(",");
+                                            view.convert(productos);
+                                        } else {
+                                            Log.e("Error Split", "Error Split");
+                                        }
+                                    }
 
 
                                     requ.put("json", gson.toJson(view));
@@ -645,7 +726,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                         }
                     }
 
-                }else {
+                } else {
                     Toast.makeText(this, "Selecciona por lo menos un producto", Toast.LENGTH_SHORT).show();
                 }
 
@@ -666,9 +747,40 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
     public void loadMultiSpinner(int idMarca){
 
-        multiSpinnerSelect.setItems(getArrayListProByTiensda(idMarca, idTienda),
-                "Seleccione Producto");
+        //LAS CATEGORÍAS SOLO SE VAN A CARGAR CUANDO SE TRATE DE CLOROX Y SU COMPETENCIA
+        if(idMarca == 249 || (idMarca >= 356 && idMarca <=360)){
 
+            //OCULTAR SPINNER DE PRODUCTOS Y MOSTRAR SPINNER DE CATEGORÍA
+            spiCate.setVisibility(View.VISIBLE);
+            multiSpinnerSelect.setVisibility(View.GONE);
+
+            try {
+                CategoriasProductoAdapter adapterCate = new CategoriasProductoAdapter(this, android.R.layout.simple_spinner_item, getArrayCategoriasByMarca(idMarca));
+                spiCate.setAdapter(adapterCate);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //multiSpinnerSelect.setCategorias(getArrayCategoriasByMarca(idMarca));
+        }else{
+
+            //OCULTAR SPINNER DE CATEGORÍAS Y MOSTRAR SPINNER DE PRODUCTOS
+            spiCate.setVisibility(View.GONE);
+            multiSpinnerSelect.setVisibility(View.VISIBLE);
+
+            multiSpinnerSelect.setItems(getArrayListProByTiensda(idMarca, idTienda),
+                    "Seleccione Producto");
+        }
+
+
+    }
+
+    public void setRentadas(int idMarca){
+        if(idMarca == 249){
+            layoutRentas.setVisibility(View.VISIBLE);
+        }else{
+            layoutRentas.setVisibility(View.GONE);
+        }
     }
 
 
@@ -735,6 +847,85 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
     }
 
+    //SE LLENA UN ARRAY DE LAS CATEGORÍAS DEPENDIENDO LA MARCA
+    private ArrayList<SpinnerCateProdModel> getArrayCategoriasByMarca(int idMarca){
+        Cursor curCategoria = new BDopenHelper(this).getCategorias();
+
+        ArrayList<SpinnerCateProdModel> arrayCategorias = new ArrayList<>();
+
+        if(idMarca == 249 || idMarca == 360){
+            for(curCategoria.moveToFirst(); !curCategoria.isAfterLast(); curCategoria.moveToNext()) {
+                final SpinnerCateProdModel categoria = new SpinnerCateProdModel();
+                categoria.setId(curCategoria.getInt(0));
+                categoria.setCategoria(curCategoria.getString(1));
+
+                arrayCategorias.add(categoria); //AGREGAR TODAS LAS CATEGORÍAS PARA CLOROX Y OTRAS MARCAS
+                //Log.i("ARRAY_CATE", categoria.getCategoria());
+            }
+            curCategoria.close();
+
+        }else if(idMarca == 356){
+            for(curCategoria.moveToFirst(); !curCategoria.isAfterLast(); curCategoria.moveToNext()) {
+                final SpinnerCateProdModel categoria = new SpinnerCateProdModel();
+                categoria.setId(curCategoria.getInt(0));
+                categoria.setCategoria(curCategoria.getString(1));
+
+                if(categoria.getId() == 1 || categoria.getId() == 6){
+                    arrayCategorias.add(categoria); //AGREGAR SOLO BLEACH Y ANTISPLASH
+                }
+            }
+            curCategoria.close();
+        }else if(idMarca == 357){
+            for(curCategoria.moveToFirst(); !curCategoria.isAfterLast(); curCategoria.moveToNext()) {
+                final SpinnerCateProdModel categoria = new SpinnerCateProdModel();
+                categoria.setId(curCategoria.getInt(0));
+                categoria.setCategoria(curCategoria.getString(1));
+
+                if(categoria.getId() == 3){
+                    arrayCategorias.add(categoria); //AGREGAR SOLO LAUNDRY
+                }
+            }
+            curCategoria.close();
+        }else if(idMarca == 358){
+            for(curCategoria.moveToFirst(); !curCategoria.isAfterLast(); curCategoria.moveToNext()) {
+                final SpinnerCateProdModel categoria = new SpinnerCateProdModel();
+                categoria.setId(curCategoria.getInt(0));
+                categoria.setCategoria(curCategoria.getString(1));
+
+                if(categoria.getId() == 4 || categoria.getId() == 5){
+                    arrayCategorias.add(categoria); //AGREGAR SOLO MARVEL Y CDW
+                }
+            }
+            curCategoria.close();
+        }else if(idMarca == 359){
+            for(curCategoria.moveToFirst(); !curCategoria.isAfterLast(); curCategoria.moveToNext()) {
+                final SpinnerCateProdModel categoria = new SpinnerCateProdModel();
+                categoria.setId(curCategoria.getInt(0));
+                categoria.setCategoria(curCategoria.getString(1));
+
+                if(categoria.getId() == 2){
+                    arrayCategorias.add(categoria); //AGREGAR SOLO LIMPIADORES
+                }
+            }
+            curCategoria.close();
+        }
+
+        final SpinnerCateProdModel primeraOpcion = new SpinnerCateProdModel();
+
+        //SE AGREGA UNA OPCIÓN INICIAL
+        primeraOpcion.setId(0);
+        primeraOpcion.setCategoria("Selecciona una categoría");
+
+        arrayCategorias.add(0, primeraOpcion);
+
+        /*for(int j=0; j<7; j++){
+            Log.i("ARRAY-CATE " + j, arrayCategorias.get(j).getCategoria());
+        }*/
+
+        base.close();
+        return arrayCategorias;
+    }
+
 
     //escucha cuando se selecciona un elemento en el spinner marca
     @Override
@@ -745,6 +936,8 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         int idMarca = marca.getId();
 
         loadMultiSpinner(idMarca);
+
+        setRentadas(idMarca);
 
 
     }
@@ -836,6 +1029,12 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
         @Override
 		public void onFailure(int statusCode, Header[] header,Throwable e,JSONObject errorResponse) {
 
+            if(errorResponse != null) {
+                Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+            } else {
+                Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+            }
+
 
 			Toast.makeText(getApplicationContext(), "No fue posible conectarse con el servidor", Toast.LENGTH_SHORT).show();
 			Toast.makeText(getApplicationContext(), "Imagen no envida \n (Menu Enviar)", Toast.LENGTH_SHORT).show();
@@ -887,6 +1086,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
                         //deleteArchivo(_imgPath);
                         base.execSQL("Update photo set status=2 where idPhoto="+this._idPhotho);
                         base.close();
+                        //Log.v("DEBUG117", "AQUI");
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -918,7 +1118,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 				Log.d("Response image", "Sin respuesta");
 			}
 
-
 		}
 
 
@@ -927,11 +1126,7 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 
 	@Override
 	public void onClick(View v) {
-
-
         if (v.getId() == R.id.btn_send_image) EnviarImagen();
-
-
 	}
 
     //metod: conexion verify
@@ -948,8 +1143,6 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
     //metod: spinner load
 	private void loadSpinner(){
 		try {
-
-
 			MarcasAdapter adapter = new MarcasAdapter(this, android.R.layout.simple_spinner_item, getArrayList());
 			spiMarca.setAdapter(adapter);
 
@@ -962,7 +1155,12 @@ public class PhotoCapture extends AppCompatActivity implements OnClickListener, 
 	private ArrayList<MarcaModel> getArrayList(){
 
 		base = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select idMarca as _id, nombre, img from marca order by nombre asc;";
+        String sql = "select tm.idMarca as _id, m.nombre, m.img " +
+                "from tienda_marca tm " +
+                "left join marca m on tm.idMarca = m.idMarca " +
+                "where tm.idTienda = " + idTienda + " " +
+                "and tm.idMarca not in(356, 357, 358, 359, 360)" + ";";
+		//String sql1 = "select idMarca as _id, nombre, img from marca order by nombre asc;";
 		Cursor cursorMarca = base.rawQuery(sql, null);
 
 		for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){

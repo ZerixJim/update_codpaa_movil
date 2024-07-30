@@ -10,6 +10,7 @@ public class FrentesModel {
     private int status;
     private String fecha;
     private int filas;
+    private int idCategoria;
 
     public int getFilas() {
         return filas;
@@ -42,4 +43,8 @@ public class FrentesModel {
     public int getStatus() {return status;}
 
     public void setStatus(int status) {this.status = status;}
+
+    public int getCategoria() { return idCategoria; }
+
+    public void setCategoria(int cate) {this.idCategoria = cate;}
 }

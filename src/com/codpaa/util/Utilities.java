@@ -37,7 +37,7 @@ public class Utilities {
 
     static final String BASE_URL = "http://plataformavanguardia.net";
     public static final String WEB_SERVICE_PATH = "http://plataformavanguardia.net/codpaa/webservice";
-    public static final String WEB_SERVICE_CODPAA = "http://service.plataformavanguardia.net/";
+    public static final String WEB_SERVICE_CODPAA = "https://service.plataformavanguardia.net/";
     public static final String SERV_PHP = "serv.php";
     public static final String PRODUCT_PATH = "https://codpaa.plataformavanguardia.net/images/productos/";
     public static final String MARCA_PATH = "https://codpaa.plataformavanguardia.net/images/marcas/";
@@ -199,7 +199,11 @@ public class Utilities {
                     super.onFailure(statusCode, headers, throwable, errorResponse);
                     //sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false).apply();
 
-                    Log.d(TAG, "onFailure");
+                    if(errorResponse != null) {
+                        Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+                    } else {
+                        Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+                    }
 
 
                 }

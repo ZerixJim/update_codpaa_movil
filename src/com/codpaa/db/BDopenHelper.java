@@ -48,7 +48,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     // v1.3.10 rc8 = 48
 
 
-    private static final int version = 48;
+    private static final int version = 58;
     private static SQLiteDatabase baseDatosLocal = null;
 
     //fields of DB
@@ -63,6 +63,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
     private static String photoProducto,materiales,materialesSolicitud,encuestaFoto;
     private static String opciones,productoCatalogadoTienda,procesoCatalogacionObjeciones;
     private static String tiendaMarca,tonoPalett, precioPalett, productosAgotados, productosDisponibles;
+    private static String categoriasProducto, medicionMuebles, photo_categoria, encuestas, promotorEncuesta, respuestas_encuesta;
 
 
     public BDopenHelper(Context miContext) {
@@ -107,10 +108,19 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "idProducto int, cha1 int,cha2 int, cha3 int, cha4 int,cha5 int, cha6 int,status int," +
                 "unifila int(2), fila1 int(2), fila2 int(2), fila3 int(2)," +
                 "fila4 int(2), fila5 int(2), fila6 int(2), fila7 int(2), fila8 int(2), fila9 int(2), fila10 int(2)," +
-                "fila11 int(2), fila12 int(2), fila13 int(2), fila14 int(2), cantidad int)";
+                "fila11 int(2), fila12 int(2), fila13 int(2), fila14 int(2), cantidad int, idCategoria int)";
+
+        medicionMuebles = "create table if not exists " +
+                "medicionMuebles(idTienda int, idPromotor int, idMarca int, idCategoria int, cantidad int, fecha char(15), status int)";
 
         productosDisponibles = "create table if not exists "+
                 "productosDisponibles(id int auto_increment, idTienda int, idMarca int, idPromotor int, idProducto int, fecha varchar(255))";
+
+        categoriasProducto = "create table if not exists " +
+                "categoriasProducto(id int auto_increment, categoria varchar(255))";
+
+        photo_categoria = "create table if not exists " +
+                "photo_categoria(idPhoto int, idCategoria int)";
 
         exhibiciones = "create table if not exists " +
                 "exhibiciones(idTienda int, idPromotor int, idExhibicion int, fecha char(15), " +
@@ -159,7 +169,7 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 "inteligencia(idCelular int,idTienda int,idProducto int,precioNormal varchar(8)," +
                 "precioOferta varchar(8),fecha varchar(15),ofertaCruz varchar(5),productoExtra varchar(5)," +
                 "productoEmpla varchar(5), cambioImagen varchar(5), status int,iniofer varchar(10)," +
-                "finofer varchar(10),preciocaja varchar(8),cambioprecio varchar(5))";
+                "finofer varchar(10),preciocaja varchar(8),cambioprecio varchar(5), idCategoria int, precioOfertaCaja varchar(8))";
         updateInfor = "create table if not exists " +
                 "upInfo(nombre varchar(15) primary key, fecha varchar(10))";
         cajasMayoreo = "create table if not exists " +
@@ -351,7 +361,64 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 DbEstructure.SolicitudAgodatos.FECHA + " varchar(25)" +
                 ")";
 
+               encuestas = "CREATE TABLE IF NOT EXISTS " +
+                DbEstructure.encuestas.TABLE_NAME +
+                "(" +
+                DbEstructure.encuestas.ID_PREGUNTA   +" int," +
+                DbEstructure.encuestas.ID_MARCA   +" int," +
+                DbEstructure.encuestas.PREGUNTA   +" VARCHAR(75)," +
+                DbEstructure.encuestas.STATUS   +" int" +
+                ")";
 
+        promotorEncuesta = "CREATE TABLE IF NOT EXISTS " +
+                DbEstructure.promotor_encuesta.TABLE_NAME +
+                "(" +
+                DbEstructure.promotor_encuesta.ID_ENCUESTA + " int," +
+                DbEstructure.promotor_encuesta.SUCURSAL + " int," +
+                DbEstructure.promotor_encuesta.ID_ESTADO + " int," +
+                DbEstructure.promotor_encuesta.ID_PROMOTOR + " int," +
+                DbEstructure.promotor_encuesta.ID_MARCA + " int," +
+                DbEstructure.promotor_encuesta.FECHA_CAPTURA + " VARCHAR(30)," +
+                DbEstructure.promotor_encuesta.PREGUNTA1 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA2 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA3 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA4 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA5 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA6 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA7 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA8 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA9 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA10 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA11 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA12 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA13 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA14 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA15 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA16 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA17 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA18 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA19 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA20 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA21 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA22 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA23 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA24 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA25 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA26 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA27 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA28 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA29 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA30 + " VARCHAR(75)," +
+                DbEstructure.promotor_encuesta.PREGUNTA31 + " VARCHAR(75)" +
+                ")";
+        respuestas_encuesta = "CREATE TABLE IF NOT EXISTS " +
+                DbEstructure.respuestas_encuesta.TABLE_NAME +
+                "(" +
+                DbEstructure.respuestas_encuesta.ID_RESPUESTA   +" int," +
+                DbEstructure.respuestas_encuesta.ID_MARCA   +" int," +
+                DbEstructure.respuestas_encuesta.RESPUESTA   +" VARCHAR(75)," +
+                DbEstructure.respuestas_encuesta.STATUS   +" int" +
+                ")";
         /*productosDisponibles = "create table if not exists "+
                 DbEstructure.productosDisponibles.TABLE_NAME+"("+
                 //DbEstructure.productosDisponibles.ID + "int not null auto_increment, "+
@@ -411,27 +478,57 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
         db.execSQL(productosAgotados);
         db.execSQL(productosDisponibles);
+
+        db.execSQL(categoriasProducto);
+        db.execSQL(medicionMuebles);
+        db.execSQL(categoriasProducto);
+        db.execSQL(photo_categoria);
+        db.execSQL(encuestas);
+        db.execSQL(respuestas_encuesta);
+        db.execSQL(promotorEncuesta);
+        db.execSQL(encuestas);
+        db.execSQL(respuestas_encuesta);
+        db.execSQL(promotorEncuesta);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        //COMENTAR LOS ALTER TABLE CUANDO SE HAGA UN CAMBIO EN LA BD
+        //PARA QUE NO SE EJECUTEN CUANDO LA VERSIÓN SE ACTUALICE Y CRASHEE
+        Log.v("oVersion", String.valueOf(oldVersion));
+        Log.v("nVersion", String.valueOf(newVersion));
 
+        db.execSQL(photo_categoria);
 
-        if (newVersion == 48){
+        if (newVersion < 56){
 
             db.execSQL("drop table producto ");
             db.execSQL(productos);
 
 
             db.execSQL(productosAgotados);
+            db.execSQL(productosDisponibles);
+            db.execSQL(categoriasProducto);
+            db.execSQL(medicionMuebles);
+            db.execSQL(photo_categoria);
 
+            db.execSQL(frentesCharola);
+            //db.execSQL("ALTER TABLE frentesCharola ADD COLUMN idCategoria INTEGER DEFAULT 0");
+
+            db.execSQL(inteligenciaMercado);
+            //db.execSQL("ALTER TABLE inteligencia ADD COLUMN idCategoria INTEGER DEFAULT 0");
 
         }
 
+        if(newVersion < 58){
+            db.execSQL("ALTER TABLE inteligencia ADD COLUMN precioOfertaCaja VARCHAR(8)");
+        }
+        if (newVersion < 59){
+            db.execSQL("ALTER TABLE producto ADD COLUMN tipo INTEGER DEFAULT 0");
 
-
-
+        }
+        //db.execSQL(productosDisponibles);
 
     }
 
@@ -709,13 +806,13 @@ public class BDopenHelper extends SQLiteOpenHelper {
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
 
-    public void insertarProducto(int idProd, String nombre, String presentacion, int idMarc, String cb,
+    public void insertarProducto(int idProd, String nombre, String presentacion, int idMarc, String cb, int tipo,
                                  int tester, double precioComp, double precioSuge, String fechaPrecio, String descripcion, int hasImage, int agotado) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
-            baseDatosLocal.execSQL("insert or replace into producto(idProducto,nombre,presentacion,idMarca,cb,tester, " +
+            baseDatosLocal.execSQL("insert or replace into producto(idProducto,nombre,presentacion,idMarca,cb,tipo,tester, " +
                     "precio_compra,precio_sugerido, fecha_precio, descripcion, has_image, agotado ) " +
-                    "values("+idProd+",'"+nombre+"','"+presentacion+"',"+idMarc+",'"+cb+"', "+tester+", " +
+                    "values("+idProd+",'"+nombre+"','"+presentacion+"',"+idMarc+",'"+cb+"','"+tipo+"', "+tester+", " +
                     precioComp + ", " + precioSuge + ", '" + fechaPrecio + "', '" +  descripcion +  "', "+ hasImage +", "+ agotado +")");
         if(baseDatosLocal != null)baseDatosLocal.close();
     }
@@ -736,18 +833,35 @@ public class BDopenHelper extends SQLiteOpenHelper {
     }
 
 
-
-    public void insertFrentesCantidad(int idTienda, int idPromotor, String fecha, int idMarca, int idProducto, int cantidad){
+    //Se añadió el id_categoria
+    public void insertFrentesCantidad(int idTienda, int idPromotor, String fecha, int idMarca, int idProducto, int cantidad, int categoria){
+        SQLiteDatabase dbb = getWritableDatabase();
+        Log.v("versionDB", String.valueOf(dbb.getVersion()));
         baseDatosLocal = getWritableDatabase();
 
 
         if (baseDatosLocal != null){
 
             String sql = "insert or replace into frentesCharola(idTienda,idPromotor,fecha,"+
-                    "idMarca,idProducto,cantidad,status) values("+idTienda+", "+ idPromotor +", '"+ fecha +"', "+idMarca+", "+idProducto+", "+cantidad+", 1)";
+                    "idMarca,idProducto,cantidad,status,idCategoria) values("+idTienda+", "+ idPromotor +", '"+ fecha +"', "+idMarca+", "+idProducto+", "+cantidad+", 1, "+categoria+")";
 
             baseDatosLocal.execSQL(sql);
             Log.v("frenteslog", "exec funciona");
+
+            baseDatosLocal.close();
+        }
+    }
+
+    //FUNCIÓN PARA INSERTAR MEDICIÓN
+    public void insertarMedicionMuebles(int idTienda, int idPromotor, int idMarca, int idCategoria, int cantidad, String fecha){
+        baseDatosLocal = getWritableDatabase();
+
+        if(baseDatosLocal != null){
+            String sql = "insert or replace into medicionMuebles(idTienda, idPromotor, idMarca, idCategoria, cantidad, fecha, status) "+
+                          "values("+idTienda+", "+idPromotor+", "+idMarca+", "+idCategoria+", "+cantidad+", '"+fecha+"', 1)";
+
+            baseDatosLocal.execSQL(sql);
+            Log.d("SQL_MUEBLES", "FUNCIONA");
 
             baseDatosLocal.close();
         }
@@ -849,15 +963,14 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
     public void insertInventarioLite(int idTien, int idPromo ,String fecha, int Producto, int CantidadFisico,
-                                     int CantidadSistema,int statusRegistro,String tipo, String fechaCaducidad) throws SQLiteException{
+                                     int CantidadSistema,int statusRegistro,String tipo, String fechaCaducidad, String lote) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
             baseDatosLocal.execSQL("insert or replace into invProducto (idTienda, idPromotor" +
                     " ,fecha, idProducto, cantidadFisico,cantidadSistema,status," +
-                    "tipo, fecha_caducidad) values" +
+                    "tipo, fecha_caducidad, lote) values" +
                     " ("+idTien+","+idPromo+
-                    ",'"+fecha+"',"+Producto+","+CantidadFisico+","+CantidadSistema+","+statusRegistro+",'"+tipo+"','"+fechaCaducidad+
-                    "')");
+                    ",'"+fecha+"',"+Producto+","+CantidadFisico+","+CantidadSistema+","+statusRegistro+",'"+tipo+"','"+fechaCaducidad+"', '"+lote+"')");
         if(baseDatosLocal != null) baseDatosLocal.close();
 
 
@@ -883,16 +996,144 @@ public class BDopenHelper extends SQLiteOpenHelper {
 
 
 
-    public void insertarPrecio(int idCel,int idTien,int idProd, String precioNormal, String precioCaja, String precioOfer, String fecha, int sta, String iniofer, String finofer) throws SQLiteException{
+    public void insertarPrecio(int idCel,int idTien,int idProd, String precioNormal, String precioCaja, String precioOfer, String fecha, int sta, String iniofer, String finofer, int idCat, String preOferCaja) throws SQLiteException{
         baseDatosLocal = getWritableDatabase();
         if(baseDatosLocal != null)
             baseDatosLocal.execSQL("insert into inteligencia(idCelular,idTienda,idProducto,precioNormal," +
-                    "precioOferta,fecha,status,preciocaja, iniofer, finofer) values("+idCel+","+idTien+","+idProd+",'"+precioNormal+"','"+precioOfer+"','"+fecha+"',"+sta+", '"+ precioCaja +"', '"+iniofer+"','"+finofer+"')");
+                    "precioOferta,fecha,status,preciocaja, iniofer, finofer, idCategoria, precioOfertaCaja) values("+idCel+","+idTien+","+idProd+",'"+precioNormal+"','"+precioOfer+"','"+fecha+"',"+sta+", '"+ precioCaja +"', '"+iniofer+"','"+finofer+"', '"+idCat+"', '"+preOferCaja+"')");
         if(baseDatosLocal != null) baseDatosLocal.close();
     }
 
+    public void insertarCategoriasProd(int idCat, String categoria)throws SQLiteException {
+        baseDatosLocal = getWritableDatabase();
+        if(baseDatosLocal != null)
+            baseDatosLocal.execSQL("insert or replace into categoriasProducto(id,categoria) values ("+idCat+",'"+categoria+"')");
+        if(baseDatosLocal != null)baseDatosLocal.close();
+    }
+
+    public void insertarFotoCategoria(long idFoto, long idCategoria){
+        baseDatosLocal = getWritableDatabase();
+        if(baseDatosLocal != null){
+            baseDatosLocal.execSQL("insert or replace into photo_categoria(idPhoto, idCategoria) values ("+idFoto+", "+idCategoria+")");
+        }
+        if(baseDatosLocal != null){
+            baseDatosLocal.close();
+        }
+    }
 
 
+    public void editarMedicionMueble(int idPromotor, int idTienda, int idCategoria, int idMarca, int cantidad, int status, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        if(baseDatosLocal != null) {
+
+            String sql = "update medicionMuebles" +
+                    " set cantidad = " + cantidad + ", " +
+                    " status = 2" +
+                    " where idTienda = " + idTienda +
+                    " and idPromotor = " + idPromotor +
+                    " and idMarca = " + idMarca +
+                    " and idCategoria = " + idCategoria +
+                    " and fecha = '" + fecha + "'" +
+                    " and status = " + status;
+
+            baseDatosLocal.execSQL(sql);
+
+            baseDatosLocal.close();
+        }
+    }
+
+    public void marcarMedicionesEnviadas(int idPromotor, int idTienda, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        if(baseDatosLocal != null){
+
+            String sql = "update medicionMuebles" +
+                    " set status = 3" +
+                    " where fecha = '" + fecha + "'" +
+                    " and idPromotor = " + idPromotor +
+                    " and idTienda = " + idTienda +
+                    " and status in (1,2)";
+
+            baseDatosLocal.execSQL(sql);
+
+            baseDatosLocal.close();
+        }
+    }
+
+    public Cursor getMedicionesEnviadas(int idPromotor, int idTienda, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        String sql = "select * from medicionMuebles" +
+                    " where idPromotor = " + idPromotor +
+                    " and idTienda = " + idTienda +
+                    " and fecha = '" + fecha + "'" +
+                    " and status = 3";
+
+        Cursor cursor = baseDatosLocal.rawQuery(sql, null);
+
+        return cursor;
+    }
+
+    public int getMedicionParaEditar(int idPromotor, int idTienda, int idCategoria, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        String sql = "select * from medicionMuebles" +
+                " where idTienda = " + idTienda +
+                " and idPromotor = " + idPromotor +
+                " and idCategoria = " + idCategoria +
+                " and fecha = '" + fecha + "'" +
+                " and status = 1";
+
+        Cursor cursor =  baseDatosLocal.rawQuery(sql, null);
+
+        int contador = cursor.getCount();
+
+        return contador;
+
+    }
+
+    public Cursor getMedicionCategoria(int idPromotor, int idTienda, int idCategoria, String fecha){
+        baseDatosLocal = getReadableDatabase();
+
+        String sql = "select * from medicionMuebles where idPromotor = " + idPromotor+
+                " and idTienda = " + idTienda +
+                " and idCategoria = " + idCategoria +
+                " and fecha = '" + fecha + "';";
+
+        Cursor cursor =  baseDatosLocal.rawQuery(sql, null);
+
+        return cursor;
+    }
+
+    public int cuentaMediciones(int idPromotor, int idTienda, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        String sql = "select * from medicionMuebles where idPromotor = " + idPromotor+
+                     " and idTienda = " + idTienda +
+                     " and fecha = '" + fecha + "';";
+
+        Cursor cursor =  baseDatosLocal.rawQuery(sql, null);
+
+        int contador = cursor.getCount();
+
+        return contador;
+    }
+
+    public int existenciaMedicionCategoria(int idPromotor, int idTienda, int idCategoria, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        String sql = "select * from medicionMuebles where idPromotor = " + idPromotor+
+                     " and idTienda = " + idTienda +
+                     " and idCategoria = " + idCategoria +
+                     " and fecha = '" + fecha + "';";
+
+        Cursor cursor = baseDatosLocal.rawQuery(sql, null);
+
+        int contador = cursor.getCount();
+
+        return contador;
+    }
 
     public Cursor fotos() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
@@ -958,9 +1199,19 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor datosFrentes() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,idMarca,idProducto,cantidad " +
+        Log.v("frentesdatos", "exec funciona");
+
+        return baseDatosLocal.rawQuery("select idTienda,idPromotor,fecha,idMarca,idProducto,cantidad,idCategoria " +
                 " from frentesCharola where status=1", null);
 
+    }
+
+    //DATOS DE LA MEDICIÓN DE MUEBLES
+    public Cursor datosMuebles() throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select idTienda, idPromotor, idMarca, idCategoria, cantidad, fecha "+
+                                        "from medicionMuebles where status in (1,2)", null);
     }
 
     public Cursor datosCajasMay() throws SQLiteException{
@@ -1002,7 +1253,11 @@ public class BDopenHelper extends SQLiteOpenHelper {
         baseDatosLocal = getReadableDatabase();
         return baseDatosLocal.rawQuery("select idTienda from frentesCharola where idTienda="+idTien+" and fecha='"+fecha+"';", null);
 
+    }
 
+    public Cursor contadorMedicionMuebles(int idTienda, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+        return baseDatosLocal.rawQuery("select * from medicionMuebles where idTienda ="+idTienda+" and fecha='"+fecha+"';", null);
     }
 
     public Cursor productos(int idMar) throws SQLiteException{
@@ -1020,7 +1275,11 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 TiendaProductoCatalogo.ID_TIENDA, TiendaProductoCatalogo.FECHA,
                 TiendaProductoCatalogo.TABLE_NAME, TiendaProductoCatalogo.ESTATUS),null);
     }
+    public Cursor productosCloroxCat(int idCategoria, int idMarca) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+        return baseDatosLocal.rawQuery("select idProducto as _id, nombre,presentacion, cb, idMarca, has_image from producto where tipo="+idCategoria+" AND idMarca = "+idMarca+" order by nombre asc", null);
 
+    }
 
     public Cursor getRespuestas() throws SQLiteException {
         baseDatosLocal = getReadableDatabase();
@@ -1041,6 +1300,19 @@ public class BDopenHelper extends SQLiteOpenHelper {
                 " select p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca, p.has_image  from productotienda as pt " +
                 " left  join producto as p on pt.idProducto=p.idProducto " +
                 " where p.idMarca="+ idMarca +" and pt.idTienda="+ idTienda +") as p order by p.nombre asc", null);
+
+        /*return baseDatosLocal.rawQuery("select p.idProducto, p.nombre, p.presentacion, p.cb, p.idMarca, p.has_image " +
+                " from producto as p where p.idMarca = 42", null);*/
+    }
+    public Cursor getProductosByCat(int idCategoria, int idMarca){
+        baseDatosLocal = getReadableDatabase();
+        return baseDatosLocal.rawQuery("SELECT * FROM producto WHERE tipo = " + idCategoria+ " AND idMarca = " + idMarca , null);
+    }
+    //Obtener categorías
+    public Cursor getCategorias(){
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select * from categoriasProducto", null);
     }
 
     public Cursor getProductosTester(){
@@ -1148,8 +1420,126 @@ public class BDopenHelper extends SQLiteOpenHelper {
     public Cursor datosInteligenciaMercado() throws SQLiteException{
         baseDatosLocal = getReadableDatabase();
 
-        return baseDatosLocal.rawQuery("select idCelular,idTienda,idProducto,precioNormal,precioOferta,fecha,ofertaCruz,productoExtra,productoEmpla,cambioImagen,iniofer,finofer,preciocaja,cambioprecio from inteligencia where status=1", null);
+        return baseDatosLocal.rawQuery("select idCelular,idTienda,idProducto,precioNormal,precioOferta,fecha,ofertaCruz,productoExtra,productoEmpla,cambioImagen,iniofer,finofer,preciocaja,cambioprecio,idCategoria,precioOfertaCaja from inteligencia where status=1", null);
 
+    }
+
+    //FUNCIÓN PARA CONTAR LOS PRECIOS POR PROMOTOR, TIENDA, PRODUCTO Y FECHA
+    //LA IDEA ES QUE SOLO HAYA UN REGISTRO DIFERENTE ENTRE CADA PARÁMETRO
+
+    public int cuentaPreciosV1(int idPromotor, int idTienda, int idProducto, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        int contador = 0;
+
+        String query = "select idCelular, idTienda, idProducto from inteligencia " +
+                "where idCelular = " + idPromotor + " " +
+                "and idTienda = " + idTienda + " " +
+                "and idProducto = " + idProducto + " " +
+                "and fecha = '" + fecha + "'";
+
+        Cursor cursor = baseDatosLocal.rawQuery(query, null);
+
+        contador = cursor.getCount();
+
+        return contador;
+    }
+
+    public int cuentaPreciosV2(int idPromotor, int idTienda, int idProducto, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        int contador = 0;
+
+        String query = "select idCelular, idTienda, idProducto from inteligencia " +
+                       "where idCelular = " + idPromotor + " " +
+                       "and idTienda = " + idTienda + " " +
+                       "and idProducto = " + idProducto + " " +
+                       "and fecha = '" + fecha + "'" + " " +
+                       "and status = 1";
+
+        Cursor cursor = baseDatosLocal.rawQuery(query, null);
+
+        contador = cursor.getCount();
+
+        return contador;
+    }
+
+    public int cuentaInventariosV1(int idPromotor, int idTienda, int idProducto, String fecha) throws  SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        int contador = 0;
+
+        String query = "select idPromotor, idTienda, idProducto, fecha from invProducto " +
+                "where idPromotor = " + idPromotor + " " +
+                "and idTienda = " + idTienda + " " +
+                "and idProducto = " + idProducto + " " +
+                "and fecha = '" + fecha + "'";
+
+        Cursor cursor = baseDatosLocal.rawQuery(query, null);
+
+        contador = cursor.getCount();
+
+        return contador;
+    }
+
+    public int cuentaInventariosV2(int idPromotor, int idTienda, int idProducto, String fecha) throws  SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        int contador = 0;
+
+        String query = "select idPromotor, idTienda, idProducto, fecha from invProducto " +
+                "where idPromotor = " + idPromotor + " " +
+                "and idTienda = " + idTienda + " " +
+                "and idProducto = " + idProducto + " " +
+                "and fecha = '" + fecha + "'" + " " +
+                "and status = 1";
+
+        Cursor cursor = baseDatosLocal.rawQuery(query, null);
+
+        contador = cursor.getCount();
+
+        return contador;
+    }
+
+    public int cuentaFrentesV1(int idPromotor, int idTienda, int idMarca, int idProducto, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        int contador = 0;
+
+        String query = "select idPromotor, idTienda, idProducto, fecha from frentesCharola " +
+                "where idPromotor = " + idPromotor + " " +
+                "and idTienda = " + idTienda + " " +
+                "and idMarca = " + idMarca + " " +
+                "and idProducto = " + idProducto + " " +
+                "and fecha = '" + fecha + "'" + " " +
+                "group by idPromotor, idTienda, idMarca, idProducto, idCategoria, fecha;";
+
+        Cursor cursor = baseDatosLocal.rawQuery(query, null);
+
+        contador = cursor.getCount();
+
+        return contador;
+    }
+
+    public int cuentaFrentesV2(int idPromotor, int idTienda, int idMarca, int idProducto, int estatus, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        int contador = 0;
+
+        String query = "select idPromotor, idTienda, idProducto, fecha from frentesCharola " +
+                "where idPromotor = " + idPromotor + " " +
+                "and idTienda = " + idTienda + " " +
+                "and idMarca = " + idMarca + " " +
+                "and idProducto = " + idProducto + " " +
+                "and fecha = '" + fecha + "'" + " " +
+                "and status = " + estatus + " " +
+                "group by idPromotor, idTienda, idMarca, idProducto, idCategoria, fecha;";
+
+        Cursor cursor = baseDatosLocal.rawQuery(query, null);
+
+        contador = cursor.getCount();
+
+        return contador;
     }
 
 
@@ -1242,5 +1632,79 @@ public class BDopenHelper extends SQLiteOpenHelper {
         c.close();
         return tipo;
     }
+
+    /*public int fotosPorMarca(int idTienda, int idPromotor, int idMarca, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+        int rows = 0;
+        Cursor cursor = baseDatosLocal.rawQuery("select * from photo " +
+                                                "where idTienda = " + idTienda +
+                                                " and idCelular = " + idPromotor +
+                                                " and idMarca = " + idMarca +
+                                                " and fecha = " + fecha, null);
+        rows = cursor.getCount();
+        cursor.close();
+
+        return rows;
+    }*/
+
+    public Cursor fotosPorMarca(int idTienda, int idPromotor, int idMarca, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select * from photo" +
+                                            " where idTienda = " + idTienda +
+                                            " and idCelular = " + idPromotor +
+                                            " and idMarca = " + idMarca
+                                            , null);
+    }
+
+    public Cursor tiendaMarcas(int idTienda) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select * from tienda_marca where idTienda = " + idTienda, null);
+    }
+
+    public Cursor obtenerRuta(int idTienda, int idPromotor) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select * from visitaTienda where idTienda = " + idTienda + " and idCelular = " + idPromotor, null);
+    }
+
+    public Cursor getCurrentWeekOfYear() throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select strftime('%W',current_date)", null);
+    }
+
+    public Cursor contarVisitas(int idTienda, int idPromotor, int semana, int year){
+        baseDatosLocal = getReadableDatabase();
+
+        return baseDatosLocal.rawQuery("select * from coordenadas" +
+                                        " where idPromotor = " + idPromotor +
+                                        " and idTienda = " + idTienda +
+                                        " and semana = " + semana, null);
+        //return baseDatosLocal.rawQuery("select semana from coordenadas where idPromotor = " + idPromotor + " and idTienda = " + idTienda, null); and (strftime('%Y', fecha_captura)) = " + year
+    }
+
+    //ACTUALIZACIONES
+    public void actualizarFrentes(int idPromotor, int idTienda, int idMarca, int idProducto, String fecha) throws SQLiteException{
+        baseDatosLocal = getReadableDatabase();
+
+        if(baseDatosLocal != null) {
+
+            String sql = "update frentesCharola set status = 2 " +
+                         "where idTienda = " + idTienda + " " +
+                         "and idPromotor = " + idPromotor + " " +
+                         "and idMarca = " + idMarca + " " +
+                         "and idProducto = " + idProducto + " " +
+                         "and fecha = " + fecha + " " +
+                         "and status = 1;";
+
+            baseDatosLocal.execSQL(sql);
+
+            baseDatosLocal.close();
+        }
+
+    }
+
 
 }

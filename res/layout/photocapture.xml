@@ -104,6 +104,13 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="15dp" />
 
+                    <Spinner
+                        android:id="@+id/spiCategoria"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="15dp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -153,6 +160,43 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="2dp"
                         android:layout_marginBottom="15dp" />
+
+
+                    <LinearLayout
+                        android:id="@+id/llRentadas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        android:visibility="gone">
+
+                        <RadioGroup
+                            android:id="@+id/radioChoice2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:gravity="end"
+                            android:orientation="horizontal"
+                            android:padding="5dp"
+                            android:layout_marginStart="50dp">
+
+                            <RadioButton
+                                android:id="@+id/radioRentada"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="Rentada" />
+
+                            <RadioButton
+                                android:id="@+id/radioNoRentada"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="No Rentada" />
+                        </RadioGroup>
+
+                    </LinearLayout>
+
 
 
 

@@ -9,7 +9,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -40,11 +43,22 @@ public class EncuestaActivity extends AppCompatActivity  {
     private int idPromotor;
     private int idTienda;
     private int tipoEncuesta;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_preguntas);
+        toolbar = findViewById(R.id.toolbar_frentes);
+
+        if(toolbar != null){
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null){
+                actionBar.setDisplayHomeAsUpEnabled(true);
+
+            }
+        }
 
         Intent intent = getIntent();
         idEncuesta = intent.getIntExtra("idEncuesta", 0);

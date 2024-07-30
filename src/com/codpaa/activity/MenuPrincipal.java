@@ -62,7 +62,7 @@ import com.codpaa.model.MenuModel;
 import com.codpaa.update.UpdateInformation;
 
 import com.codpaa.db.BDopenHelper;
-import com.codpaa.util.AndroidApps;
+//import com.codpaa.util.AndroidApps;
 import com.codpaa.util.Configuracion;
 import com.codpaa.util.QuickstartPreferences;
 
@@ -213,8 +213,8 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
 
 
 
-        AndroidApps apps = new AndroidApps(this, idUsuario);
-        apps.sentInstallApps();
+        //AndroidApps apps = new AndroidApps(this, idUsuario);
+        //apps.sentInstallApps();
 
 
 
@@ -320,6 +320,12 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
         enviar.setImage("ic_send_green_a400_36dp");
         enviar.setMenu("Enviar");
         array.add(enviar);
+
+        final MenuModel politicas = new MenuModel();
+        politicas.setId(4);
+        politicas.setImage("ic_assignment_grey600_24dp");
+        politicas.setMenu("Políticas de privacidad");
+        array.add(politicas);
 
 
         return array;
@@ -854,16 +860,90 @@ public class MenuPrincipal extends AppCompatActivity implements OnClickListener,
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     super.onFailure(statusCode, headers, throwable, errorResponse);
 
-
-
-
+                    if(errorResponse != null) {
+                        Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+                    } else {
+                        Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+                    }
                 }
             });
         }
 
 
     }
+    private void getEncuestas(){
 
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("Authorization", "84902384909032809480932-498-3444");
+
+        RequestParams rp = new RequestParams();
+        rp.put("idPromo", idUsuario);
+
+
+        if (Utilities.verificarConexion(this)){
+            client.get(Utilities.API_PRODUCTION + "tiendas/encuestas",rp, new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                    super.onSuccess(statusCode, headers, response);
+
+                    if (response.length() > 0){
+
+                        int size  =  response.length();
+
+
+                        SQLiteDatabase db = new BDopenHelper(MenuPrincipal.this).getWritableDatabase();
+
+                        for (int i = 0 ; i < size ; i++){
+
+
+
+                            try {
+
+                                ContentValues cv = new ContentValues();
+                                cv.put("idTienda", response.getJSONObject(i).getInt("idTienda"));
+                                cv.put("idPromotor", response.getJSONObject(i).getInt("idCelular"));
+                                cv.put("fecha", response.getJSONObject(i).getString("fecha"));
+                                cv.put("fecha_captura", response.getJSONObject(i).getString("fecha_captura"));
+                                cv.put("hora", response.getJSONObject(i).getString("hora"));
+                                cv.put("latitud", response.getJSONObject(i).getDouble("latitud"));
+                                cv.put("longitud", response.getJSONObject(i).getDouble("longitud"));
+                                cv.put("tipo", response.getJSONObject(i).getString("tipo"));
+                                cv.put("semana", response.getJSONObject(i).getInt("semana"));
+                                cv.put("status", 2);
+                                cv.put("precision", 12);
+
+                                db.insert("coordenadas", null, cv);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+
+                        }
+
+                        db.close();
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+
+                    if(errorResponse != null) {
+                        Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+                    } else {
+                        Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+                    }
+                }
+            });
+        }
+
+
+    }
 
 
     private boolean checkTableTiendaEmpy(){

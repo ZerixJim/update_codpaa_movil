@@ -65,6 +65,7 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
     static Button btnFecha;
 
 	EditText editFisico, editSistema;
+	EditText editLote;
 	InputMethodManager im;
 	ArrayList<MarcaModel> array = new ArrayList<>();
 	Locale locale;
@@ -93,7 +94,7 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 
 		editFisico = findViewById(R.id.editInv);
         editSistema =  findViewById(R.id.editSistema);
-		//editLote =  findViewById(R.id.editLote);
+		editLote =  findViewById(R.id.editLote);
 
         radio =  findViewById(R.id.radioInventario);
 		if (radio != null) {
@@ -252,22 +253,34 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
                             //estatusSelected = (RadioButton) findViewById(radioEstatus.getCheckedRadioButtonId());
 
                             try {
-                                new BDopenHelper(this).insertInventarioLite(idTienda,idPromotor ,fecha, idProdu,
-                                        cantidadFisico,cantidadSistema,1
-                                        ,selec.getText().toString(),getFechaCaducidad());
 
-                                //Log.d("RadioChecked", " " + String.valueOf(radioEstatus.getCheckedRadioButtonId()));
-                                Toast.makeText(this,"Datos Guardados", Toast.LENGTH_SHORT).show();
-                                editFisico.setText("");
-                                editSistema.setText("");
-                                //editLote.setText("");
-                                btnFecha.setText("fecha");
-                                //producto.setSelection(0);
-								spinnerPro.resetFilter();
-								spinnerPro.setSelection(0);
-                                //estado.setProgress(0);
-                                im.hideSoftInputFromWindow(editFisico.getWindowToken(), 0);
-                                new EnviarDatos(this).enviarInventario();
+                            	int contador = 0;
+
+                            	contador = new BDopenHelper(this).cuentaInventariosV1(idPromotor, idTienda, idProdu, fecha);
+
+                            	if(contador == 0) {
+
+									new BDopenHelper(this).insertInventarioLite(idTienda, idPromotor, fecha, idProdu,
+											cantidadFisico, cantidadSistema, 1
+											, selec.getText().toString(), getFechaCaducidad(), editLote.getText().toString());
+
+									//Log.d("RadioChecked", " " + String.valueOf(radioEstatus.getCheckedRadioButtonId()));
+									Toast.makeText(this, "Datos Guardados", Toast.LENGTH_SHORT).show();
+									editFisico.setText("");
+									editSistema.setText("");
+									editLote.setText("");
+									btnFecha.setText("fecha");
+									//producto.setSelection(0);
+									spinnerPro.resetFilter();
+									spinnerPro.setSelection(0);
+									//estado.setProgress(0);
+									im.hideSoftInputFromWindow(editFisico.getWindowToken(), 0);
+									new EnviarDatos(this).enviarInventario();
+
+									Log.v("INVCAPT", "Inventario de producto capturado");
+								}else{
+                            		Log.v("INVCAPT", "La información del inventario ya existe");
+								}
                             }catch(Exception e) {
                                 e.printStackTrace();
                             }
@@ -410,7 +423,12 @@ public class Inventario extends AppCompatActivity implements OnItemSelectedListe
 	private ArrayList<MarcaModel> getArrayList(){
 		
 		base = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select idMarca as _id, nombre, img from marca order by nombre asc;";
+		//String sql = "select idMarca as _id, nombre, img from marca order by nombre asc;";
+		String sql = "select tm.idMarca as _id, m.nombre, m.img " +
+				"from tienda_marca tm " +
+				"left join marca m on tm.idMarca = m.idMarca " +
+				"where tm.idTienda = " + idTienda + " " +
+				"and tm.idMarca not in(356, 357, 358, 359, 360)" + ";";
 		Cursor cursorMarca = base.rawQuery(sql, null);
 		
 		for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){

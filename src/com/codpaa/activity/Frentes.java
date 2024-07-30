@@ -13,6 +13,11 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.solver.widgets.Helper;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import android.util.Log;
 import android.view.Menu;
@@ -28,8 +33,10 @@ import android.widget.Toast;
 
 
 import com.codpaa.adapter.MarcasAdapter;
+import com.codpaa.adapter.CategoriasProductoAdapter;
 import com.codpaa.model.MarcaModel;
 import com.codpaa.model.ProductosModel;
+import com.codpaa.model.SpinnerCateProdModel;
 import com.codpaa.update.EnviarDatos;
 import com.codpaa.adapter.ProductosCustomAdapter;
 import com.codpaa.R;
@@ -50,10 +57,14 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 	Toolbar toolbar;
 
 	private ArrayList<MarcaModel> array = new ArrayList<>();
+	private ArrayList<SpinnerCateProdModel> array2 = new ArrayList<>();
 	private SQLiteDatabase base;
-	private Spinner spiMarca;
+	private Spinner spiMarcA;
+	private Spinner spiCloroxCat;
 	//private Spinner spiPro;
 	private SingleSpinnerSelect spinnerProducto;
+
+	int cloroxFlag = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +91,10 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		//im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
 
-		spiMarca =  findViewById(R.id.spinnerMarFre);
+		spiMarcA =  findViewById(R.id.spinnerMarFre);
 		//spiPro =  findViewById(R.id.spinnerFrePro);
 		spinnerProducto = findViewById(R.id.spinner_front_product);
-
+		spiCloroxCat = findViewById(R.id.spinnerCatClorox);
 		//asiganacion de botones
 		/*btn1 = (Button) findViewById(R.id.btnf1);
 		btn2 = (Button) findViewById(R.id.btn_charola_2);
@@ -130,7 +141,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 
 
-		spiMarca.setOnItemSelectedListener(this);
+		spiMarcA.setOnItemSelectedListener(this);
+		spiCloroxCat.setOnItemSelectedListener(this);
 		/*btn1.setOnClickListener(this);
 		btn2.setOnClickListener(this);
 		btn3.setOnClickListener(this);
@@ -154,6 +166,15 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 				try {
 
 					loadSpinner();
+					loadSpinnerCloroxCat();
+					//SE LEEN LOS ID MARCA PARA VER SI EXISTE CLOROX
+					/*Cursor c = getMarcasList();
+					for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+						Log.v("MARCATEST", c.getString(0));
+						if(c.getInt(0) == 249){
+							cloroxFlag = 1;
+						}
+					}*/
 
 
 				}catch(Exception e) {
@@ -249,7 +270,9 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 	public void guardarDatos() {
 		//int cha1 = 0,cha2 = 0, cha3 = 0, cha4 = 0, cha5 = 0, cha6 = 0;
 		int cantidad;
+		int categoria = 0;
 		//int uni, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12,v13,v14;
+
 
 		try {
 
@@ -285,7 +308,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 				Calendar c = Calendar.getInstance();
 				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-				MarcaModel spm = (MarcaModel) spiMarca.getSelectedItem();
+				MarcaModel spm = (MarcaModel) spiMarcA.getSelectedItem();
 				//SpinnerProductoModel spPm = (SpinnerProductoModel) spiPro.getSelectedItem();
 				ProductosModel spPm = spinnerProducto.getSelected();
 
@@ -326,19 +349,37 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 					if(idProdu != 0){
 						if(cantidad >= 0){
 
-							new BDopenHelper(this).insertFrentesCantidad(idTienda, idPromotor,
-									fecha, idMarca, idProdu, cantidad);
+							int contador = 0;
 
-							Toast.makeText(this,"("+cantidad+") Frentes Guardados de: \n  "+nombreP, Toast.LENGTH_SHORT).show();
-							//spiMarca.setSelection(0);
-							//spiPro.setSelection(0);
+							contador = new BDopenHelper(this).cuentaFrentesV1(idPromotor, idTienda, idMarca, idProdu, fecha);
 
-							spinnerProducto.resetFilter();
-							spinnerProducto.setSelection(0);
+							Log.v("CUENTAFRENTES", String.valueOf(contador));
 
-							new EnviarDatos(this).enviarFrentes();
+							if(contador == 0) {
 
-							editCantidad.setText("");
+								try {
+
+									new BDopenHelper(this).insertFrentesCantidad(idTienda, idPromotor,
+											fecha, idMarca, idProdu, cantidad, categoria);
+								} catch (Exception e) {
+									Log.v("FRONTERROR", e.getMessage());
+								}
+
+								Toast.makeText(this, "(" + cantidad + ") Frentes Guardados de: \n  " + nombreP, Toast.LENGTH_SHORT).show();
+								//spiMarca.setSelection(0);
+								//spiPro.setSelection(0);
+
+								spinnerProducto.resetFilter();
+								spinnerProducto.setSelection(0);
+
+								new EnviarDatos(this).enviarFrentes();
+
+								editCantidad.setText("");
+
+								Log.e("FRENTESCAPT", "Frente capturado");
+							}else{
+								Log.e("FRENTESCAPT", "Ya existe un registro de frentes igual");
+							}
 
 							/*try {
 								//resetCamps();
@@ -419,15 +460,38 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 	}*/
 
 
+
 	@Override
-	public void onItemSelected(AdapterView<?> arg0, View arg1, int id,long arg3) {
+	public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+		int spinnerId = parent.getId();
 
-		MarcaModel spm = (MarcaModel)  spiMarca.getSelectedItem();
+		if (spinnerId == R.id.spinnerMarFre) {
+			MarcaModel marca = (MarcaModel) parent.getSelectedItem();
+			int idMarca = marca.getId();
+			// Lista de IDs de marcas que activan el spinner de categorías
+			Set<Integer> idsPermitidos = new HashSet<>(Arrays.asList(249, 356, 357, 358, 359, 360));
 
-
-		int idMarca = spm.getId();
-		loadSpinnerProd(idMarca);
-
+			if (idsPermitidos.contains(idMarca)) {
+				spiCloroxCat.setVisibility(View.VISIBLE);
+				// Reiniciar el spinner de categorías cuando se muestra
+				if (spiCloroxCat.getAdapter() != null) {
+					spiCloroxCat.setSelection(0);
+				}
+			} else {
+				spiCloroxCat.setVisibility(View.GONE);
+				loadSpinnerProd(idMarca);
+			}
+		} else if (spiCloroxCat.getVisibility() == View.VISIBLE) {
+			SpinnerCateProdModel categoria = (SpinnerCateProdModel) parent.getSelectedItem();
+			int idCategoria = categoria.getId();
+			if (idCategoria > 0) { // Asegúrate de que se selecciona una categoría válida antes de cargar productos
+				int idMarca = ((MarcaModel) spiMarcA.getSelectedItem()).getId();
+				loadSpinnerCatProd(idCategoria, idMarca);
+			}
+		} else if (spinnerId == R.id.spinner_front_product) {
+			ProductosModel producto = (ProductosModel) parent.getSelectedItem();
+			// Manejar la selección de productos aquí si es necesario
+		}
 	}
 
 
@@ -444,7 +508,7 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 
 			MarcasAdapter adapter = new MarcasAdapter(this,
 					android.R.layout.simple_spinner_item, getArrayList());
-			spiMarca.setAdapter(adapter);
+			spiMarcA.setAdapter(adapter);
 
 		}catch(Exception e) {
 			Toast.makeText(this, "Error Mayoreo 3", Toast.LENGTH_SHORT).show();
@@ -467,7 +531,88 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 			Toast.makeText(this, "Error E25", Toast.LENGTH_SHORT).show();
 		}
 	}
+	private void loadSpinnerCloroxCat() {
+		try {
 
+
+			CategoriasProductoAdapter adapter2 = new CategoriasProductoAdapter(this,
+					android.R.layout.simple_spinner_item, getArrayList2());
+			spiCloroxCat.setAdapter(adapter2);
+
+
+		}catch(Exception e) {
+			Toast.makeText(this, "Error Mayoreo 3", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private void loadSpinnerCatProd(int idCategoria, int idMarca){
+		try {
+
+			// Old spinner
+			//ProductosCustomAdapter proAdap = new ProductosCustomAdapter(this, android.R.layout.simple_spinner_item, getArrayListProByTiensda(idM, idTienda));
+			//spiPro.setAdapter(proAdap);
+
+
+			spinnerProducto.setItems(getArrayListProdCat(idCategoria, idMarca), "Selecciona producto");
+
+
+		} catch (Exception e) {
+			Toast.makeText(this, "Error E26", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	private ArrayList<ProductosModel> getArrayListProdCat(int idCategoria, int idMarca){
+
+		Cursor curProByTienda = new BDopenHelper(this).getProductosByCat(idCategoria, idMarca);
+		ArrayList<ProductosModel> arrayP = new ArrayList<>();
+		if (curProByTienda.getCount() <= 0){
+
+			Cursor curPro = new BDopenHelper(this).productosCloroxCat(idCategoria, idMarca);
+
+			for(curPro.moveToFirst(); !curPro.isAfterLast(); curPro.moveToNext()){
+				final ProductosModel spP = new ProductosModel();
+				spP.setIdProducto(curPro.getInt(0));
+				spP.setNombre(curPro.getString(1));
+				spP.setPresentacion(curPro.getString(2));
+				spP.setCodigoBarras(curPro.getString(3));
+				spP.setIdMarca(curPro.getInt(4));
+				spP.setHasImage(curPro.getInt(curPro.getColumnIndex("has_image")));
+
+				arrayP.add(spP);
+			}
+
+
+			curPro.close();
+		} else {
+
+			for(curProByTienda.moveToFirst(); !curProByTienda.isAfterLast(); curProByTienda.moveToNext()){
+				final ProductosModel spP = new ProductosModel();
+				spP.setIdProducto(curProByTienda.getInt(0));
+				spP.setNombre(curProByTienda.getString(1));
+				spP.setPresentacion(curProByTienda.getString(2));
+				spP.setCodigoBarras(curProByTienda.getString(3));
+				spP.setIdMarca(curProByTienda.getInt(4));
+				spP.setHasImage(curProByTienda.getInt(curProByTienda.getColumnIndex("has_image")));
+				arrayP.add(spP);
+			}
+
+		}
+
+
+
+		final ProductosModel spPinicio = new ProductosModel();
+		spPinicio.setIdProducto(0);
+		spPinicio.setNombre("Seleccione Producto");
+		spPinicio.setPresentacion("producto sin seleccionar");
+		spPinicio.setCodigoBarras(" ");
+
+		arrayP.add(0,spPinicio);
+
+
+		base.close();
+		return arrayP;
+
+	}
 
 
 	private ArrayList<ProductosModel> getArrayListProByTien2(int idMarca, int idTienda){
@@ -580,7 +725,8 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 	private ArrayList<MarcaModel> getArrayList(){
 
 		base = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select idMarca, nombre, img from marca order by nombre asc;";
+		//String sql = "select idMarca, nombre, img from marca order by nombre asc;";
+		String sql = "select tm.idMarca as _id, m.nombre, m.img from tienda_marca tm left join marca m on tm.idMarca = m.idMarca where tm.idTienda = " + idTienda + ";";
 		Cursor cursorMarca = base.rawQuery(sql, null);
 
 		for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){
@@ -603,6 +749,46 @@ public class Frentes extends AppCompatActivity implements OnClickListener, OnIte
 		base.close();
 		return array;
 
+	}
+
+	private ArrayList<SpinnerCateProdModel> getArrayList2() {
+		base = new BDopenHelper(this).getReadableDatabase();
+		String sql2 = "select * from categoriasproducto";
+		Cursor cursorCategoria = base.rawQuery(sql2, null);
+
+
+		try {
+			for(cursorCategoria.moveToFirst(); !cursorCategoria.isAfterLast(); cursorCategoria.moveToNext()) {
+				final SpinnerCateProdModel spiC = new SpinnerCateProdModel();
+				spiC.setCategoria(cursorCategoria.getString(1));
+				spiC.setId(cursorCategoria.getInt(0));
+				array2.add(spiC);
+				Log.d("Elemento Array2", "ID: " + spiC.getId() + ", Categoria: " + spiC.getCategoria());
+			}
+
+			final SpinnerCateProdModel spiCatFirst = new SpinnerCateProdModel();
+			spiCatFirst.setCategoria("Selecciona categoria");
+			spiCatFirst.setId(0);
+
+			array2.add(0,spiCatFirst);
+		} catch (Exception e) {
+			Log.e("Error", "Error al obtener datos de la base de datos: " + e.getMessage());
+		} finally {
+			cursorCategoria.close();
+			base.close();
+		}
+
+		Log.d("Array2", "Contenido del array2: " + array2.toString()); // Imprime el contenido completo del array2
+
+		return array2;
+	}
+	private Cursor getMarcasList(){
+		base = new BDopenHelper(this).getReadableDatabase();
+		//String sql = "select idMarca, nombre, img from marca order by nombre asc;";
+		String sql = "select tm.idMarca as _id, m.nombre, m.img from tienda_marca tm left join marca m on tm.idMarca = m.idMarca where tm.idTienda = " + idTienda + ";";
+		Cursor cursorMarca = base.rawQuery(sql, null);
+
+		return cursorMarca;
 	}
 
 

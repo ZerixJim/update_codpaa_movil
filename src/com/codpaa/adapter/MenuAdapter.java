@@ -124,6 +124,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                     Intent enviar = new Intent(context, EnviarInformacion.class);
                     context.startActivity(enviar);
                     break;
+
+                case 4:
+                    String url = "https://codpaa.plataformavanguardia.net/privacidad.html";
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    context.startActivity(i);
             }
         }
     }

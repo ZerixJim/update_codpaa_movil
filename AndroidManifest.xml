@@ -12,11 +12,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="31" /> <!--Era 29-->
     <uses-permission android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
@@ -28,6 +26,13 @@
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
+
+    <!-- QUERIES (NECESARIA PARA ANDROID 12) -->
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
 
     <supports-screens
         android:anyDensity="true"
@@ -50,7 +55,6 @@
         <provider
             android:name="com.codpaa.provider.PhotoProviderVan"
             android:authorities="com.codpaa.provider.PhotoProviderVan"
-            android:exported="false"
             android:grantUriPermissions="true">
 
         </provider>
@@ -74,7 +78,8 @@
         <activity
             android:name=".launcher.Lanzador"
             android:label="@string/nombreAplicacion"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -85,14 +90,15 @@
         <receiver
             android:name=".broadcast.MyRecive"
             android:enabled="true"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <receiver
             android:name=".broadcast.ConnectionStatus"
-            android:label="ConnectionStatus">
+            android:label="ConnectionStatus"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
@@ -100,7 +106,9 @@
         </receiver>
 
 
-        <receiver android:name=".broadcast.InstallApps">
+        <receiver
+            android:name=".broadcast.InstallApps"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_INSTALL"/>
@@ -273,6 +281,15 @@
             android:label="Productos disponibles"
             android:screenOrientation="portrait"
             />
+
+        <activity android:name=".activity.MedicionMuebles"
+            android:label="Medicion de muebles"
+            android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".activity.Disclosure"
+            android:label="Aviso"
+            android:screenOrientation = "portrait"/>
 
 
         <service android:name=".service.GeoLocalizar"

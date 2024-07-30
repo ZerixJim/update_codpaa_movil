@@ -97,6 +97,12 @@ public class EncuestaResponse extends JsonHttpResponseHandler {
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
 
+        if(errorResponse != null) {
+            //Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+        } else {
+            // Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+        }
+
         Toast.makeText(context, "ocurrio un error al enviar la encuesta", Toast.LENGTH_SHORT).show();
 
         Handler handler = new Handler();

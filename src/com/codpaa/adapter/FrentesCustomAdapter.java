@@ -74,8 +74,36 @@ public class FrentesCustomAdapter extends ArrayAdapter<FrentesModel> {
 
 
         viewHolder.txtMarca.setText(frentesModel.getMarca());
-        viewHolder.txtProducto.setText(frentesModel.getProducto());
-        viewHolder.txtCantidad.setText("Cantidad: "+ frentesModel.getCantidad());
+        if(frentesModel.getCategoria() == 0){
+            viewHolder.txtProducto.setText(frentesModel.getProducto());
+        }else{
+            int categoria;
+            categoria = frentesModel.getCategoria();
+            switch(categoria){
+                case 1:
+                    viewHolder.txtProducto.setText("BLANQUEADORES");
+                    break;
+                case 2:
+                    viewHolder.txtProducto.setText("LIMPIADORES MULTIUSOS");
+                    break;
+                case 3:
+                    viewHolder.txtProducto.setText("DESMANCHADORES");
+                    break;
+                case 4:
+                    viewHolder.txtProducto.setText("DESINFECCIÓN");
+                    break;
+                default:
+                    viewHolder.txtProducto.setText("NO DEFINIDO");
+                    break;
+            }
+        }
+
+        //viewHolder.txtProducto.setText(frentesModel.getProducto());
+        if(frentesModel.getCategoria() == 0) {
+            viewHolder.txtCantidad.setText("Cantidad: " + frentesModel.getCantidad());
+        }else{
+            viewHolder.txtCantidad.setText("Cantidad: " + frentesModel.getCantidad() + " cm");
+        }
 
 
 

@@ -50,6 +50,8 @@ import com.loopj.android.http.*;
 import com.codpaa.db.BDopenHelper;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpException;
+import cz.msebera.android.httpclient.client.HttpResponseException;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 
@@ -93,7 +95,7 @@ public class EnviarDatos {
 	
 	
 	
-	private String getPhoneNumber(){
+	/*private String getPhoneNumber(){
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions((Activity) context, new String[] {Manifest.permission.READ_PHONE_STATE}, 125);
 
@@ -115,7 +117,7 @@ public class EnviarDatos {
 
 		}
 
-	}
+	}*/
 
 
 
@@ -241,7 +243,11 @@ public class EnviarDatos {
 						public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 							super.onFailure(statusCode, headers, throwable, errorResponse);
 
-
+							if(errorResponse != null) {
+								Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+							} else {
+								Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+							}
 						}
 					});
 
@@ -334,7 +340,7 @@ public class EnviarDatos {
 					model.setLatitud(curVisitas.getDouble(4));
 					model.setLongitud(curVisitas.getDouble(5));
 					model.setTipo(curVisitas.getString(6));
-					model.setNumeroTelefono(getPhoneNumber());
+					//model.setNumeroTelefono(getPhoneNumber());
 					model.setAutoTime(curVisitas.getInt(curVisitas.getColumnIndex("auto_time")));
 
 
@@ -409,7 +415,7 @@ public class EnviarDatos {
 					model.setLatitud(curVisitas.getDouble(4));
 					model.setLongitud(curVisitas.getDouble(5));
 					model.setTipo(curVisitas.getString(6));
-					model.setNumeroTelefono(getPhoneNumber());
+					//model.setNumeroTelefono(getPhoneNumber());
 					model.setAutoTime(curVisitas.getInt(curVisitas.getColumnIndex("auto_time")));
 
 
@@ -586,23 +592,17 @@ public class EnviarDatos {
 	
 	public void enviarFrentes() {
 		try {
-			
-			
 			Cursor curFrentes = DB.datosFrentes();
 
-
+			int contador = 0;
 
 			if(curFrentes.getCount() != 0 && verificarConexion()) {
 				
 				for(curFrentes.moveToFirst(); !curFrentes.isAfterLast(); curFrentes.moveToNext()) {
 
-
-
-
 					RequestParams rp = new RequestParams();
 
 					Log.d("Datos count", curFrentes.getCount() + "");
-
 
 					rp.put("idTien", Integer.toString(curFrentes.getInt(0)));
 					rp.put("idCel", Integer.toString(curFrentes.getInt(1)));
@@ -610,6 +610,7 @@ public class EnviarDatos {
 					rp.put("idMarc", Integer.toString(curFrentes.getInt(3)));
 					rp.put("idProdu",Integer.toString(curFrentes.getInt(4)));
 					rp.put("cantidad", Integer.toString(curFrentes.getInt(curFrentes.getColumnIndex("cantidad"))));
+					rp.put("idCategoria", Integer.toString(curFrentes.getInt(curFrentes.getColumnIndex("idCategoria"))));
 
 					Log.d("Datos", rp.toString());
 
@@ -635,30 +636,59 @@ public class EnviarDatos {
                     rp.put("f13", Integer.toString(curFrentes.getInt(24)));
                     rp.put("f14", Integer.toString(curFrentes.getInt(25)));*/
 
-
 					AsyncHttpClient cliente = new AsyncHttpClient();
 
+					contador = DB.cuentaFrentesV2(curFrentes.getInt(1), curFrentes.getInt(0), curFrentes.getInt(3), curFrentes.getInt(4), 1, curFrentes.getString(2));
 
-
-					
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"send_front.php", rp,
-							new HttpResponseFrentes(context, curFrentes.getInt(0),curFrentes.getString(2), curFrentes.getInt(3)));
-					
-
+					if(contador == 1) {
+						cliente.post(Utilities.WEB_SERVICE_CODPAA + "send_front_copy.php", rp,
+								new HttpResponseFrentes(context, curFrentes.getInt(0), curFrentes.getInt(1), curFrentes.getInt(3), curFrentes.getInt(4), curFrentes.getString(2)));
+					}
 				}
 				
 				
 			}else{
 
-
 				Toast.makeText(context, "Error al enviar", Toast.LENGTH_SHORT).show();
-
 
 			}
 			
 
 			DB.close();
 		}catch(Exception e) {
+			Log.v("SENDFRONTERROR", e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	//ENVIAR MEDICION DE MUEBLES AL SERVIDOR
+	public void enviarMedicionMueble(){
+		try{
+			Cursor curMuebles = DB.datosMuebles();
+
+			if(curMuebles.getCount() != 0 && verificarConexion()) {
+				for(curMuebles.moveToFirst(); !curMuebles.isAfterLast(); curMuebles.moveToNext()) {
+					RequestParams rp = new RequestParams();
+
+					Log.d("Datos count", curMuebles.getCount() + "");
+
+					rp.put("idTienda", Integer.toString(curMuebles.getInt(0)));
+					rp.put("idProm", Integer.toString(curMuebles.getInt(1)));
+					rp.put("idMarca", Integer.toString(curMuebles.getInt(2)));
+					rp.put("idCategoria", Integer.toString(curMuebles.getInt(curMuebles.getColumnIndex("idCategoria"))));
+					rp.put("cantidad", Integer.toString(curMuebles.getInt(curMuebles.getColumnIndex("cantidad"))));
+					rp.put("fecha", curMuebles.getString(5));
+
+					AsyncHttpClient cliente = new AsyncHttpClient();
+
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "send_med_muebles.php", rp,
+							new HttpResponseMuebles(context, curMuebles.getInt(0), curMuebles.getInt(2), curMuebles.getInt(3), curMuebles.getString(5)));
+				}
+			}else{
+				Toast.makeText(context, "Error al enviar", Toast.LENGTH_SHORT).show();
+			}
+		}catch(Exception e){
+			Log.e("SENDMEDERROR", e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -708,25 +738,36 @@ public class EnviarDatos {
 		private int idTienda;
 		private String fecha;
 		private int idMarca;
+		private int idPromotor;
+		private int idProducto;
 		
 		SQLiteDatabase base;
+		//BDopenHelper bdoh;
 		Context act;
 		
-		public HttpResponseFrentes(Context activi,int idTi,String fecha, int idMar){
+		public HttpResponseFrentes(Context activi,int tiendaId, int promotorId, int marcaId, int productoId, String fecha){
 			this.act = activi;
-			this.idTienda = idTi;
+			this.idTienda = tiendaId;
 			this.fecha = fecha;
-			this.idMarca= idMar;
+			this.idMarca= marcaId;
+			this.idPromotor = promotorId;
+			this.idProducto = productoId;
 		}
 
 		@Override
 		public void onSuccess(int statusCode,Header[] headers ,JSONObject response) {
+			Log.v("RESPONSEBOOL2", String.valueOf(statusCode));
 			if(response != null){
 				try {
-					
 					base = new BDopenHelper(act).getWritableDatabase();
+					Log.v("RESPONSEBOOL", Boolean.toString(response.getBoolean("insert")));
 					if(response.getBoolean("insert")){
-						base.execSQL("Update frentesCharola set status=2 where idTienda="+idTienda+" and fecha='"+fecha+"' and idMarca="+idMarca);
+						Log.v("FLAGXD", "AQUI");
+						//base.execSQL("Update frentesCharola set status=2 where idTienda="+idTienda+" and fecha='"+fecha+"' and idMarca="+idMarca);
+						//bdoh.actualizarFrentes(idPromotor, idTienda, idMarca, idProducto, fecha);
+						base.execSQL("update frentesCharola set status = 2 where idTienda = " + idTienda +
+									 " and idPromotor = " + idPromotor + " and idMarca = " + idMarca +
+									 " and idProducto = " + idProducto + " and fecha = '" + fecha + "'");
 						Toast.makeText(act, "Registro Recibido", Toast.LENGTH_SHORT).show();
 						
 						base.close();
@@ -736,12 +777,68 @@ public class EnviarDatos {
 						Toast.makeText(act, "No se Recibio", Toast.LENGTH_SHORT).show();
 					}
 				} catch (JSONException e) {
+					Toast.makeText(act, e.getMessage(), Toast.LENGTH_SHORT).show();
 					e.printStackTrace();
 				}
 			}
 		}
+
+		@Override
+		public void onFailure(int statusCode, Header[] headers,Throwable throwable, JSONObject errorResponse) {
+			if(errorResponse != null) {
+				Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+			} else {
+				Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+			}
+		}
 		
 		
+	}
+
+	private class HttpResponseMuebles extends JsonHttpResponseHandler{
+		private int idTienda;
+		private int idMarca;
+		private int idCategoria;
+		private String fecha;
+
+		SQLiteDatabase base;
+		Context act;
+
+		public HttpResponseMuebles(Context activity, int idTienda, int idMarca, int idCategoria, String fecha){
+			this.act = activity;
+			this.idTienda = idTienda;
+			this.idMarca = idMarca;
+			this.idCategoria = idCategoria;
+			this.fecha = fecha;
+		}
+
+		@Override
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+			if(response != null){
+				try {
+					base = new BDopenHelper(act).getWritableDatabase();
+					if(response.getBoolean("insert")){
+						//base.execSQL("update medicionMuebles set status=3 where idTienda="+idTienda+" and idMarca="+idMarca+" and fecha='"+fecha+"'"); //QUITAR LA CATEGORIA Y CHECAR QUE NO SE REPITAN REGISTROS
+						Toast.makeText(act, "Captura recibida", Toast.LENGTH_SHORT).show();
+						base.close();
+					}else{
+						Toast.makeText(act, "No se registró la medición", Toast.LENGTH_SHORT).show();
+					}
+				}catch (JSONException e){
+					Toast.makeText(act, e.getMessage(), Toast.LENGTH_SHORT).show();
+					e.printStackTrace();
+				}
+			}
+		}
+
+		@Override
+		public void onFailure(int statusCode, Header[] headers,Throwable throwable, JSONObject errorResponse) {
+			if(errorResponse != null) {
+				Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+			} else {
+				Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+			}
+		}
 	}
 
 
@@ -810,6 +907,12 @@ public class EnviarDatos {
         @Override
         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
             super.onFailure(statusCode, headers, throwable, errorResponse);
+
+			if(errorResponse != null) {
+				Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+			} else {
+				Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+			}
         }
     }
 
@@ -911,13 +1014,20 @@ public class EnviarDatos {
         @Override
         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
             super.onFailure(statusCode, headers, throwable, errorResponse);
+
+			if(errorResponse != null) {
+				Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+			} else {
+				Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+			}
         }
     }
-	
+
 	public void enviarInventario() {
 		try {
 			
 			Cursor curInven = DB.Inventario();
+			int contador = 0;
 
 			if(curInven.getCount() > 0 && verificarConexion()) {
 				
@@ -940,9 +1050,13 @@ public class EnviarDatos {
 
 					Log.d("datos", rp.toString());
 
+					contador = DB.cuentaInventariosV2(curInven.getInt(1), curInven.getInt(0), curInven.getInt(3), curInven.getString(2));
 
-					cliente.post(Utilities.WEB_SERVICE_CODPAA +"sendinventario.php", rp,
-							new HttpResponseInventario(context, curInven.getInt(0),curInven.getString(2), curInven.getInt(3)));
+					if(contador == 1) {
+
+						cliente.post(Utilities.WEB_SERVICE_CODPAA + "sendinventario.php", rp,
+								new HttpResponseInventario(context, curInven.getInt(0), curInven.getString(2), curInven.getInt(3), curInven.getInt(1)));
+					}
 
 				}
 				
@@ -958,16 +1072,18 @@ public class EnviarDatos {
 		
 		private int idTienda;
 		private String fecha;
-		private int idPro;
+		private int idProd;
+		private int idProm;
 		
 		SQLiteDatabase base;
 		Context act;
 		
-		public HttpResponseInventario(Context activi,int idTi,String fecha, int idProd){
+		public HttpResponseInventario(Context activi,int idTi,String fecha, int idProd, int idPromotor){
 			this.act = activi;
 			this.idTienda = idTi;
 			this.fecha = fecha;
-			this.idPro= idProd;
+			this.idProd= idProd;
+			this.idProm = idPromotor;
 		}
 
 		@Override
@@ -977,7 +1093,10 @@ public class EnviarDatos {
 					
 					base = new BDopenHelper(act).getWritableDatabase();
 					if(response.getBoolean("insert")){
-						base.execSQL("Update invProducto set status=2 where idTienda="+idTienda+" and fecha='"+fecha+"' and idProducto="+idPro);
+						//base.execSQL("update invProducto set status=2 where idTienda="+idTienda+" and fecha='"+fecha+"' and idProducto="+idPro);
+						base.execSQL("update invProducto set status = 2 where idTienda = " + idTienda +
+									 " and idPromotor = " + idProm + " and idProducto = " + idProd +
+									 " and fecha = '" + fecha + "'");
 						Toast.makeText(act, "Registro Recibido", Toast.LENGTH_SHORT).show();
 						
 						base.close();
@@ -1130,6 +1249,7 @@ public class EnviarDatos {
 	public void enviarInteli(){
 		try {
 			Cursor curInteli = DB.datosInteligenciaMercado();
+			int contador = 0;
 
 			RequestParams rpIn = new RequestParams();
 			if(curInteli.getCount() > 0 && verificarConexion()){
@@ -1149,11 +1269,21 @@ public class EnviarDatos {
 					rpIn.put("finofer",curInteli.getString(11));
 					rpIn.put("preciocaja",curInteli.getString(12));
 					rpIn.put("cambioprecio",curInteli.getString(13));
-					
+					rpIn.put("idCategoria", curInteli.getInt(curInteli.getColumnIndex("idCategoria")));
+					rpIn.put("precioCajaOferta", curInteli.getString(curInteli.getColumnIndex("precioOfertaCaja")));
 
-					cliente.post(Utilities.WEB_SERVICE_CODPAA+"send_precio.php", rpIn,
-							new HttpResponseInteligen(context, curInteli.getInt(1), curInteli.getString(5),curInteli.getInt(2)));
+					Log.d("pcajaof", curInteli.getString(curInteli.getColumnIndex("precioOfertaCaja")));
 					
+					contador = DB.cuentaPreciosV2(curInteli.getInt(0), curInteli.getInt(1), curInteli.getInt(2), curInteli.getString(5));
+
+					if(contador == 1){
+						cliente.post(Utilities.WEB_SERVICE_CODPAA+"send_precio_copy.php", rpIn,
+								new HttpResponseInteligen(context, curInteli.getInt(1), curInteli.getString(5),curInteli.getInt(2)));
+
+						Log.e("PRECIOSSEND", String.valueOf(contador));
+					}else{
+						Log.e("PRECIOSSEND", "Hubo un error: " + contador);
+					}
 				}
 			}
 			
@@ -1185,12 +1315,13 @@ public class EnviarDatos {
 
 		@Override
 		public void onSuccess(int statusCode,Header[] headers ,JSONObject response) {
+			Log.e("RESPONSE PRECIOS", response.toString());
 			if(response != null){
 				try {
 					
 					base = new BDopenHelper(act).getWritableDatabase();
 					if(response.getBoolean("insert")){
-						base.execSQL("Update inteligencia set status=2 where idTienda="+idTienda+"  and fecha='"+fecha+"' and idProducto="+idPro);
+						base.execSQL("update inteligencia set status=2 where idTienda=" +idTienda+ " and fecha='"+fecha+"' and idProducto="+idPro);
 						Toast.makeText(act, "Registro Recibido", Toast.LENGTH_SHORT).show();
 						
 						base.close();
@@ -1200,16 +1331,24 @@ public class EnviarDatos {
 						Toast.makeText(act, "No se Recibio", Toast.LENGTH_SHORT).show();
 					}
 				} catch (JSONException e) {
+					Log.e("RESPONSE PRECIOS", e.getMessage());
 					e.printStackTrace();
 				}
+			}else{
+				Log.e("RESPONSE PRECIOS", response.toString());
 			}
 		}
 
 		@Override
 		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-			super.onFailure(statusCode, headers, throwable, errorResponse);
+			//Log.e("RESPONSE PRECIOS", throwable.getMessage());
+			//super.onFailure(statusCode, headers, throwable, errorResponse);
 
-			//Toast.makeText(act, "Registro Recibido", Toast.LENGTH_SHORT).show();
+			if(errorResponse != null) {
+				Log.e("ERROR HTTP RESPONSE", throwable.getMessage());
+			} else {
+				Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+			}
 		}
 	}
 
@@ -1307,6 +1446,12 @@ public class EnviarDatos {
         @Override
         public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
             super.onFailure(statusCode, headers, throwable, errorResponse);
+
+			if(errorResponse != null) {
+				Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+			} else {
+				Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+			}
         }
     }
 	
@@ -1414,6 +1559,12 @@ public class EnviarDatos {
 						@Override
 						public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 							super.onFailure(statusCode, headers, throwable, errorResponse);
+
+							if(errorResponse != null) {
+								Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+							} else {
+								Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+							}
 						}
 					});
 
@@ -1506,6 +1657,12 @@ public class EnviarDatos {
 						@Override
 						public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 							super.onFailure(statusCode, headers, throwable, errorResponse);
+
+							if(errorResponse != null) {
+								Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+							} else {
+								Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+							}
 						}
 					});
 

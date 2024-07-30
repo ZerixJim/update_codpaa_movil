@@ -42,6 +42,8 @@ public class DialogFragmentMarcas extends DialogFragment {
 
         RecyclerMarcasFaltantes adapter = new RecyclerMarcasFaltantes(getContext(), getMarcasFaltantes(b.getInt("idTienda", 0)));
 
+        //Log.d("MARCASD", getMarcasFaltantes(b.getInt("idTienda", 0)));
+
         recyclerView.setAdapter(adapter);
 
 
@@ -51,7 +53,8 @@ public class DialogFragmentMarcas extends DialogFragment {
 
 
 
-
+    //FUNCIÓN PENSADA PARA MOSTRAR LAS MARCAS FALTANTES PERO SE ADECUÓ PARA MOSTRAR SIMPLEMENTE LAS
+    //MARCAS CARGADAS A LA TIENDA
     private List<MarcaModel> getMarcasFaltantes(int idTienda){
 
         List<MarcaModel> list = new ArrayList<>();
@@ -76,7 +79,14 @@ public class DialogFragmentMarcas extends DialogFragment {
 
                 " ) f on (tm.idTienda=f.idTienda and f.idMarca=tm.idMarca and strftime('%d-%m-%Y', 'now') = f.fecha)" +
 
-                " where tm.idTienda = " + idTienda;
+                " where tm.idTienda = " + idTienda + " " +
+                " and tm.idMarca not in (356, 357, 358, 359, 360);";
+
+        /*String sql = "select m.nombre, 0 total_fotos, 0 total_frentes" +
+                "from tienda_marca tm " +
+                "left join marca m on tm.idMarca = m.idMarca " +
+                "where tm.idTienda = " + idTienda + " " +
+                "and tm.idMarca not in(356, 357, 358, 359, 360)" + ";";*/
 
         SQLiteDatabase db = new BDopenHelper(getContext()).getReadableDatabase();
 
@@ -95,14 +105,13 @@ public class DialogFragmentMarcas extends DialogFragment {
 
 
                 //Log.d("Dialog", "total frentes " + mm.getNumberFrentes());
+                //Log.d("LISTAMARCAS", cursor.getString(cursor.getColumnIndex("nombre")));
 
                 list.add(mm);
 
 
-
             }
-
-
+            
         }
         cursor.close();
         db.close();

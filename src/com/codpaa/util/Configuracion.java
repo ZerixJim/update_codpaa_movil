@@ -22,6 +22,7 @@ public class Configuracion {
     private final String KEY_PROMOTOR_MODE = "promotorModo";
     public static final String TOKEN_FIREBASE = "gmc_token";
     private final String KEY_TOKEN_FIREBASE_SENT = "firebase_token";
+    private final String KEY_CATPROD = "cateProd";
     //private final String KEY_ENCUESTA = "encuestaDisponible";
 
 
@@ -163,6 +164,14 @@ public class Configuracion {
 
     }
 
+    public void setCategoriasProd(String fecha){
+        SharedPreferences.Editor editor = getSettings().edit();
+
+        editor.putString(KEY_CATPROD, fecha);
+        //editor.commit();
+        editor.apply();
+    }
+
 
     /*public void setEncuestaDisponibleByDay(String fecha){
         SharedPreferences.Editor editor = getSettings().edit();
@@ -203,6 +212,8 @@ public class Configuracion {
     public int getPromotorMode(){
         return getSettings().getInt(KEY_PROMOTOR_MODE, 1);
     }
+
+    public String getCateProd() {return getSettings().getString(KEY_CATPROD, null);}
 
 
     public String getProductoByTienda(){

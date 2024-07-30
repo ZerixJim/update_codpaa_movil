@@ -26,13 +26,13 @@ public class VisitasModel {
         this.autoTime = autoTime;
     }
 
-    public String getNumeroTelefono() {
+    /*public String getNumeroTelefono() {
         return numeroTelefono;
     }
 
     public void setNumeroTelefono(String numeroTelefono) {
         this.numeroTelefono = numeroTelefono;
-    }
+    }*/
 
     public int getIdTienda() {
         return idTienda;

@@ -64,6 +64,13 @@ public class ResponseMarcas extends JsonHttpResponseHandler{
     @Override
     public void onFailure(int statusCode, Header[] headers,Throwable e, JSONObject errorResponse) {
         super.onFailure(statusCode, headers,e, errorResponse);
+
+        if(errorResponse != null) {
+            Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+        } else {
+            Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+        }
+
         Toast.makeText(_context.getApplicationContext(),"Error al descargar Marcas",Toast.LENGTH_SHORT).show();
     }
 

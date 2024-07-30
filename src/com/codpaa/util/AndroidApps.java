@@ -33,7 +33,7 @@ import cz.msebera.android.httpclient.Header;
 
 
 public class AndroidApps {
-
+    /*
     private Context context;
     private static final String LOG = "AndriodApps";
     private int idUsuario;
@@ -87,11 +87,11 @@ public class AndroidApps {
         return packageReporter;
 
 
-    }
+    }*/
 
 
 
-    public void sentSingleApp(String appName, String action){
+    /*public void sentSingleApp(String appName, String action){
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dFecha = new SimpleDateFormat("w", Locale.getDefault());
@@ -154,13 +154,21 @@ public class AndroidApps {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 
-                //Log.e("Apps", errorResponse.toString());
+                if(errorResponse != null) {
+                    Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+                } else {
+                    Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+                }
 
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                //Log.e("Apps", errorResponse.toString());
+                if(errorResponse != null) {
+                    Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+                } else {
+                    Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+                }
             }
 
             @Override
@@ -178,9 +186,10 @@ public class AndroidApps {
 
 
 
-    }
+    }*/
 
 
+    /*
     public void sentInstallAppsByWeek() {
 
         Calendar c = Calendar.getInstance();
@@ -235,7 +244,11 @@ public class AndroidApps {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 
-                    //Log.e("Apps", errorResponse.toString());
+                    if(errorResponse != null) {
+                        Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+                    } else {
+                        Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+                    }
 
                 }
 
@@ -264,9 +277,9 @@ public class AndroidApps {
 
 
 
-    }
+    }*/
 
-
+    /*
     public void sentInstallApps(){
 
 
@@ -280,7 +293,7 @@ public class AndroidApps {
 
         Log.d(LOG, "IMEI " + getIMEI());
 
-        if (conf.getInstallApps() == null /*|| !conf.getInstallApps().equals(fecha)*/){
+        if (conf.getInstallApps() == null){
 
             if (getGpsInstallApps().size() > 0){
 
@@ -325,7 +338,11 @@ public class AndroidApps {
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 
-                        //Log.e("Apps", errorResponse.toString());
+                        if(errorResponse != null) {
+                            Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+                        } else {
+                            Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+                        }
 
                     }
 
@@ -359,8 +376,9 @@ public class AndroidApps {
 
 
 
-    }
+    }*/
 
+    /*
     public String getIMEI(){
 
         String imei = "";
@@ -391,5 +409,5 @@ public class AndroidApps {
     }
 
 
-
+*/
 }

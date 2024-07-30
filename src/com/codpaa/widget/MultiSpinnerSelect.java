@@ -29,8 +29,10 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 
 import com.codpaa.R;
+import com.codpaa.adapter.CategoriasProductoAdapter;
 import com.codpaa.adapter.ProductosAdapter;
 import com.codpaa.model.ProductosModel;
+import com.codpaa.model.SpinnerCateProdModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,6 +42,7 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
 
 
     ProductosAdapter arrayAdapter;
+    CategoriasProductoAdapter categoriaArrayAdapter;
 
 
     public MultiSpinnerSelect(Context context) {
@@ -272,6 +275,7 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
         return true;
     }
 
+    //SE CONFIGURAN LOS PRODUCTOS POR MARCA
     public void setItems(ArrayList<ProductosModel> items, String allText){
 
 
@@ -283,12 +287,23 @@ public class MultiSpinnerSelect extends androidx.appcompat.widget.AppCompatSpinn
                 items);
         setAdapter(arrayAdapter);
 
+    }
 
+    //SE CONFIGURAN LAS CATEGORIAS DE ACUERDO A LA MARCA
+    public void setCategorias(ArrayList<SpinnerCateProdModel> items){
+        categoriaArrayAdapter = new CategoriasProductoAdapter(getContext(), android.R.layout.simple_spinner_item, items);
+        setAdapter(categoriaArrayAdapter);
+        //Log.i("ADAPTER", categoriaArrayAdapter.getItem(2).getCategoria());
     }
 
 
     public ArrayList<ProductosModel> getSelectedItems(){
         ArrayList<ProductosModel> productos = arrayAdapter.getProductos();
+
+        if (productos == null){
+            return new ArrayList<>();
+        }
+
         ArrayList<ProductosModel> produtoSelected = new ArrayList<>();
         for (ProductosModel producto : productos){
             if (producto.isChecked()){

@@ -181,6 +181,14 @@
     <string name="estudio_de_marcado">Estudio de marcado</string>
     <string name="cantidad_frentes">cantidad frentes</string>
     <string name="search_hint">filtro</string>
+    <string name="medicion_mueble">Medición en cm</string>
+
+    <string name="titulo1">Ubicación</string>
+    <string name="avisoUbicacion">Codpaa recoge la ubicación del dispositivo para poder registrar la entrada y salida en tienda.\n\nEsta información solo se captura una sola vez y es guardada para el registro de la visita.</string>
+    <string name="titulo2">Imágenes</string>
+    <string name="avisoImagen">Codpaa recoge y guarda las fotos que capturas desde la aplicación para tener un registro de la evidencia.</string>
+    <string name="titulo3">Políticas de privacidad</string>
+    <string name="avisoPoliticas">Ahora Codpaa ha integrado las políticas de privacidad para que puedas acceder a ellas y conocer cómo es tratada tu información.</string>
 
 
 </resources>

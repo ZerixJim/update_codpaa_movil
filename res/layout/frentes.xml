@@ -41,6 +41,12 @@
                 android:layout_height="50dp"
                 android:theme="@style/MiTema"
                 android:layout_marginTop="15dp"/>
+            <Spinner
+                android:id="@+id/spinnerCatClorox"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:theme="@style/MiTema"
+                android:layout_marginTop="15dp"/>
 
             <!--<Spinner
                 android:id="@+id/spinnerFrePro"

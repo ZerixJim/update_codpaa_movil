@@ -1,5 +1,7 @@
 package com.codpaa.response;
 
+import android.util.Log;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
@@ -28,6 +30,12 @@ public class ImageUpload extends JsonHttpResponseHandler {
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
+
+        if(errorResponse != null) {
+            Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+        } else {
+            Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+        }
     }
 
     @Override

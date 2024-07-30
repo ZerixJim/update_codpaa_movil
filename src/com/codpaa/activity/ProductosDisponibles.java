@@ -57,7 +57,7 @@ public class ProductosDisponibles extends AppCompatActivity implements OnItemSel
     private Button btnEnviar;
     private MultiSpinnerSelect multiSpinnerSelect;
     private int idPromotor, idTienda;
-    private SQLiteDatabase base;
+    private SQLiteDatabase base, base2;
     private final ArrayList<MarcaModel> array = new ArrayList<>();
 
     protected void onCreate(Bundle savedInstanceState ) {
@@ -108,6 +108,7 @@ public class ProductosDisponibles extends AppCompatActivity implements OnItemSel
                     }
                     new EnviarDatos(getApplicationContext()).enviarProdDisp();
                     Toast.makeText(getApplicationContext(), "Producto enviado", Toast.LENGTH_SHORT).show();
+                    spinnerMarca.setSelection(0);
 
 
                 } else{
@@ -119,6 +120,7 @@ public class ProductosDisponibles extends AppCompatActivity implements OnItemSel
 
         } catch (Exception e) {
             e.printStackTrace();
+
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }

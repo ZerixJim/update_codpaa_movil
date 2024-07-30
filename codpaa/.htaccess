@@ -1,0 +1,8 @@
+#Alternate default index pages
+DirectoryIndex index.php first.html index.htm index.html
+
+<IfModule mod_rewrite.c>
+    Options -ExecCGI
+	Options -Indexes
+	
+</IfModule>

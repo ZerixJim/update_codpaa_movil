@@ -55,6 +55,17 @@
                 android:clickable="true"/>
 
             <TextView
+                android:id="@+id/medMuebles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                style="@style/txtBackgroundBlue"
+                android:clickable="true"/>
+
+            <TextView
                 android:id="@+id/surtido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -291,13 +302,20 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="@string/updateProducts"/>
-
+                    <!--
                     <Button
                         android:id="@+id/btnProdDisp"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Productos Disponibles por Marca"/>
+                        android:text="Productos Disponibles por Marca"/>-->
+
+                    <Button
+                        android:id="@+id/btnMedMuebles"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Medición de muebles"/>
                 </TableRow>
 
 

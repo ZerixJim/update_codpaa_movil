@@ -6,6 +6,7 @@ package com.codpaa.listener;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.codpaa.db.BDopenHelper;
@@ -80,14 +81,26 @@ public class ResponseVisitasJson extends JsonHttpResponseHandler{
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 
-        Toast.makeText(context,"No hay conexion",Toast.LENGTH_SHORT).show();
-
         super.onFailure(statusCode, headers, throwable, errorResponse);
+
+        if(errorResponse != null) {
+            Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+        } else {
+            Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+        }
+
+        Toast.makeText(context,"No hay conexion",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
+
+        if(errorResponse != null) {
+            //Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+        } else {
+            // Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+        }
     }
 
     @Override

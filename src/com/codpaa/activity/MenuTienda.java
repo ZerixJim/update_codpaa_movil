@@ -1,9 +1,11 @@
 package com.codpaa.activity;
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,6 +35,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
@@ -84,6 +87,16 @@ import com.codpaa.adapter.InventariosCustomAdapter;
 import com.codpaa.model.FrentesModel;
 import com.codpaa.model.InventarioModel;
 import com.codpaa.adapter.MenuTiendaAdapter.MenuTiendaListener;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.SyncHttpClient;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 public class MenuTienda extends AppCompatActivity implements OnClickListener, MenuTiendaListener{
 
@@ -96,9 +109,11 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
     //private TextView txtEncargado;
-    private TextView frentes, surtido, inventario, fotos;
+    private TextView frentes, surtido, inventario, fotos, muebles;
     final int REQUEST_CODE_ASK_PERMISSIONS = 123;
     int idPromotor, idTienda, idTipo;
+    int salidaValida = 0;
+    String fechaCaptura;
     private BDopenHelper DB = null;
     private EnviarDatos enviar;
     //private Spinner spinnerEnc;
@@ -155,6 +170,8 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         idTienda = recibeIdTi.getIntExtra("idTienda", 0);
         idPromotor = recibeIdTi.getIntExtra("idPromotor", 0);
         idTipo = recibeIdTi.getIntExtra("idTipo", 0);
+
+
 
 
         Toolbar toolbar = findViewById(R.id.toolbar_menu_principal);
@@ -258,6 +275,9 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.codpaa.action.close");
         broadcastManager.registerReceiver(mBroadcastReceiber, filter);
+
+        //OBTENER EL TOTAL DE FOTOS QUE LLEVA EN LA SEMANA
+
 
 
     }
@@ -368,7 +388,12 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 array.add(item15);
 
             }*/
-
+            //Encuestas
+            final MenuTiendaModel item16 = new MenuTiendaModel();
+            item16.setIdMenu(19);
+            item16.setNombreMenu("Encuestas");
+            item16.setImage("ic_assignment_grey600_24dp");
+            array.add(item16);
 
             //agotados
             final MenuTiendaModel item12 = new MenuTiendaModel();
@@ -384,11 +409,17 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             item11.setImage("ic_autorenew_grey_600_24dp");
             array.add(item11);
 
-            final MenuTiendaModel item17 = new MenuTiendaModel();
+            /*final MenuTiendaModel item17 = new MenuTiendaModel();
             item17.setIdMenu(17);
             item17.setNombreMenu("Productos disponibles por marca");
             item17.setImage("ic_assignment_grey600_24dp");
-            array.add(item17);
+            array.add(item17);*/
+
+            /*final MenuTiendaModel item18 = new MenuTiendaModel();
+            item18.setIdMenu(18);
+            item18.setNombreMenu("Medición de muebles");
+            item18.setImage("ic_grid_on_grey600_24dp");
+            array.add(item18);*/
 
 
 
@@ -449,6 +480,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         surtido =  findViewById(R.id.surtido);
         //exhi = findViewById(R.id.textExhibicio);
         fotos =  findViewById(R.id.text_fotos);
+        muebles = findViewById(R.id.medMuebles);
 
         Button btnFrente = findViewById(R.id.buttonMensaje);
         btnSalidaTi =  findViewById(R.id.salidaTienda);
@@ -492,6 +524,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
         inventario.setOnClickListener(this);
         //exhi.setOnClickListener(this);
         fotos.setOnClickListener(this);
+        muebles.setOnClickListener(this);
 
     }
 
@@ -773,6 +806,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
     private void salidaTienda() {
 
+
         if (Entrada) {
 
 
@@ -797,21 +831,38 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 
 
                         if (!Salida) {
-
                             Calendar c = Calendar.getInstance();
                             SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                             SimpleDateFormat dHora = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-
 
                             final String fecha = dFecha.format(c.getTime());
                             final String hora = dHora.format(c.getTime());
 
 
+                            //Se obtiene el año actual
+                            Date date = null;
+
+                            int currYear = 0;
+
+                            try {
+                                date = dFecha.parse(fecha);
+                            }catch(ParseException pe){
+                                pe.printStackTrace();
+                            }
+
+                            try {
+                                c.setTime(date);
+                                currYear = c.get(Calendar.YEAR);
+                            }catch (Exception e){
+                                //Toast.makeText(MenuTienda.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
                             if (location != null) {
 
                                 try {
 
-
+                                    //rutaPromotor.close();
+                                    final int finalCurrYear = currYear;
                                     fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                                         @Override
                                         public void onSuccess(Location locat) {
@@ -819,29 +870,61 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                                             if (locat != null){
                                                 location = locat;
 
-
                                                 BDopenHelper base = new BDopenHelper(getApplicationContext());
 
-                                                int autoTime = Utilities.isAutoTime(MenuTienda.this) ? 1: 0;
-                                                base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locat.getLatitude(), locat.getLongitude(), 12, "S", 1, Utilities.getCurrentDate(), autoTime);
+                                                int autoTime = Utilities.isAutoTime(MenuTienda.this) ? 1 : 0;
 
-                                                Salida = true;
+                                                if (DB.tipoTienda(idTienda) > 0) {
+                                                    //PARA CUALQUIER TIENDA, REQUIERE MÍNIMO DE FOTOS
 
-                                                btnSalidaTi.post(new Runnable() {
-                                                    public void run() {
+                                                    if(DB.contarFotos(idTienda) >= 2) { //Cambiar a dos fotos mínimo
+
+                                                        base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locat.getLatitude(), locat.getLongitude(), 12, "S", 1, Utilities.getCurrentDate(), autoTime);
+
+                                                        Salida = true;
+
+                                                        btnSalidaTi.post(new Runnable() {
+                                                            public void run() {
 
 
-                                                        btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
-                                                        btnSalidaTi.setTextColor(Color.WHITE);
-                                                        Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
+                                                                btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                                                btnSalidaTi.setTextColor(Color.WHITE);
+                                                                Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
 
-                                                        enviar.enviarVisitas();
+                                                                enviar.enviarVisitas();
+
+                                                            }
+
+                                                        });
 
                                                     }
+                                                    else{
+                                                        Toast.makeText(MenuTienda.this, "Requiere tomar el mínimo de fotos para marcar salida", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                                else{
+                                                    //SI ES DE MAYOREO, NO REQUIERE MÍNIMO DE FOTOS
+                                                    base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locat.getLatitude(), locat.getLongitude(), 12, "S", 1, Utilities.getCurrentDate(), autoTime);
 
-                                                });
-                                            }else {
-                                                Toast.makeText(MenuTienda.this, "problema para obtener la ubicacion ", Toast.LENGTH_SHORT).show();
+                                                    Salida = true;
+
+                                                    btnSalidaTi.post(new Runnable() {
+                                                        public void run() {
+
+
+                                                            btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                                                            btnSalidaTi.setTextColor(Color.WHITE);
+                                                            Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
+
+                                                            enviar.enviarVisitas();
+
+                                                        }
+
+                                                    });
+                                                }
+                                            }
+                                            else {
+                                                Toast.makeText(MenuTienda.this, "Problema para obtener la ubicación ", Toast.LENGTH_SHORT).show();
                                             }
 
 
@@ -937,19 +1020,47 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
             capturaGeneral();
         } else if (id == R.id.btnMateriales) {
             openMateriales();
-        } else if(id == R.id.btnProdDisp) {
-            productosDisponibles();
+        } else if(id == R.id.btnMedMuebles){
+            medicionMuebles();
         }
+
 
     }
 
     private void productosDisponibles() {
-        Intent intent = new Intent(this, ProductosDisponibles.class);
-        intent.putExtra("idTienda", idTienda);
-        intent.putExtra("idPromotor", this.idPromotor);
-        startActivity(intent);
+        if(Entrada) {
+            Intent intent = new Intent(this, ProductosDisponibles.class);
+            intent.putExtra("idTienda", idTienda);
+            intent.putExtra("idPromotor", this.idPromotor);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(this, "No has registrado Entrada", Toast.LENGTH_SHORT).show();
+        }
     }
 
+    private void medicionMuebles(){
+        if(Entrada){
+            Intent intent = new Intent(this, MedicionMuebles.class);
+            intent.putExtra("idTienda", idTienda);
+            intent.putExtra("idPromotor", idPromotor);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(this, "No has registrado Entrada", Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void encuestadlr(){
+        if(Entrada){
+            Intent intent = new Intent(this, EncuestaActivity.class);
+            intent.putExtra("idTienda", idTienda);
+            intent.putExtra("idPromotor", idPromotor);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(this, "No has registrado Entrada", Toast.LENGTH_SHORT).show();
+        }
+    }
     private void openMateriales() {
 
         Intent intent = new Intent(this, MaterialesActivity.class);
@@ -1029,6 +1140,12 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 DB.close();
             }
 
+            Cursor curMuebles = DB.contadorMedicionMuebles(idTienda, fecha);
+            if(curMuebles.getCount() > 0){
+                muebles.setVisibility(View.VISIBLE);
+                muebles.setText(String.format(Locale.getDefault(), "Mediciones %d", curMuebles.getCount()));
+                DB.close();
+            }
 
 
             Cursor cuSurt = DB.SurtidoCantidad(idTienda, fecha);
@@ -1036,10 +1153,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 surtido.setVisibility(View.VISIBLE);
                 surtido.setText(String.format(Locale.getDefault(), "Surtido %d", cuSurt.getCount()));
                 DB.close();
-
             }
-
-
 
             Cursor cuInventario = DB.contarInventario(idTienda, fecha);
             if (cuInventario.getCount() > 0){
@@ -1620,6 +1734,12 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 productosDisponibles();
                 break;
 
+            case 18:
+                medicionMuebles();
+                break;
+            case 19:
+                encuestadlr();
+                break;
 
 		}
 
@@ -1775,7 +1895,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
     private ArrayList<FrentesModel> getFrentesCapturados(){
         base = new BDopenHelper(this).getReadableDatabase();
         String sql = "select m.nombre, p.nombre || ' ' || p.presentacion, f.cantidad as total, f.status, f.fecha," +
-				" (f.unifila+f.fila1+f.fila2+f.fila3+f.fila4+f.fila5+f.fila6+f.fila7+f.fila8+f.fila9+f.fila10+f.fila11+f.fila12+f.fila13+f.fila14) as filas " +
+				" (f.unifila+f.fila1+f.fila2+f.fila3+f.fila4+f.fila5+f.fila6+f.fila7+f.fila8+f.fila9+f.fila10+f.fila11+f.fila12+f.fila13+f.fila14) as filas, f.idCategoria " +
                 "from frentesCharola as f inner join marca as m on f.idMarca=m.idMarca " +
                 "inner join producto as p on f.idProducto=p.idProducto where f.idTienda="+idTienda;
         Cursor frentes = base.rawQuery(sql,null);
@@ -1790,6 +1910,7 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
                 fm.setStatus(frentes.getInt(3));
                 fm.setFecha(frentes.getString(4));
 				fm.setFilas(frentes.getInt(5));
+				fm.setCategoria(frentes.getInt(frentes.getColumnIndex("idCategoria")));
 
 
                 arrayFrentes.add(fm);
@@ -2056,8 +2177,170 @@ public class MenuTienda extends AppCompatActivity implements OnClickListener, Me
 	    return count;
     }
 
+    private void registrarSalida(Location locat, String fecha, String hora){
+
+        //PARTE IMPORTANTE
+        location = locat;
 
 
-	
+        BDopenHelper base = new BDopenHelper(getApplicationContext());
+
+        int autoTime = Utilities.isAutoTime(MenuTienda.this) ? 1 : 0;
+        base.insertarLocalizacion(idTienda, idPromotor, fecha, hora, locat.getLatitude(), locat.getLongitude(), 12, "S", 1, Utilities.getCurrentDate(), autoTime);
+
+        Salida = true;
+
+        btnSalidaTi.post(new Runnable() {
+            public void run() {
+
+
+                btnSalidaTi.setBackgroundResource(R.drawable.custom_btn_dark_khaki);
+                btnSalidaTi.setTextColor(Color.WHITE);
+                Toast.makeText(getApplicationContext(), "Salida Registrada", Toast.LENGTH_SHORT).show();
+
+                enviar.enviarVisitas();
+
+            }
+
+        });
+        //FIN DE PARTE IMPORTANTE
+    }
+
+    private int visitasPorSemana(int idTienda, int idPromotor){
+        //OBTENER EL TOTAL DE VISITAS POR SEMANA DE LA TIENDA
+        int n = DB.obtenerRuta(idTienda, idPromotor).getCount();
+        int lun, mar, mie, jue, vie, sab;
+        int total = 0;
+
+        Cursor route = DB.obtenerRuta(idTienda, idPromotor);
+
+        route.moveToFirst();
+
+        try {
+            lun = route.getInt(route.getColumnIndex("lunes"));
+            mar = route.getInt(route.getColumnIndex("martes"));
+            mie = route.getInt(route.getColumnIndex("miercoles"));
+            jue = route.getInt(route.getColumnIndex("jueves"));
+            vie = route.getInt(route.getColumnIndex("viernes"));
+            sab = route.getInt(route.getColumnIndex("sabado"));
+
+            total = lun+mar+mie+jue+vie+sab;
+
+            Toast.makeText(MenuTienda.this, "NUM: " + total, Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(MenuTienda.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        route.close();
+
+        return total;
+    }
+
+    private int totalVisits(int flag, int visits, int brands){
+	    int limitBrands = 0;
+	    int totalPhotos = 0;
+
+	    //Si en la tienda se atienden más de 5 marcas, se establece el límite de marcas a 5 para no requerir demasiadas fotos.
+        limitBrands = (brands > 5) ? 5 : brands;
+
+	    if(flag == 1){
+	        //Si en la tienda solo se atiende Clorox, las fotos totales se determina por
+            //la cantidad de días que se visita la tienda multiplicado por 4, porque Clorox
+            //requiere 4 fotos por visita.
+
+            totalPhotos = visits * 4;
+        }
+	    else if(flag == 2){
+	        //Si en la tienda se atienden más de una marca y una es Clorox, las fotos totales se
+            //determina con la siguiente expresión, donde a las visitas semanales se le resta 1
+            //porque ese día está destinado a Clorox, y a las marcas se le resta 1 porque no se considera Clorox
+
+	        totalPhotos = (visits - 1) * 2 * (limitBrands - 1) + 4;
+        }
+	    else{
+	        //Si en la tienda no se visita Clorox, el total de fotos se determina multiplicando los
+            //días de visita por la cantidad de marcas por dos.
+
+            totalPhotos = visits * limitBrands * 2;
+        }
+
+	    return totalPhotos;
+    }
+
+    private int getPhotosTaken(int idPromotor, int idTienda, int semana, int year){
+
+        final AsyncHttpClient photos = new AsyncHttpClient();
+        final int[] photosCounter = {0};
+        RequestParams rp = new RequestParams();
+        rp.put("FotosMarca", "fotosAcumuladas");
+        rp.put("idTienda", String.valueOf(idTienda));
+        rp.put("idPromotor", String.valueOf(idPromotor));
+        rp.put("semana", semana);
+        rp.put("year", year);
+
+        photos.get(Utilities.WEB_SERVICE_CODPAA+"getFotos.php", rp, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response){
+                if(response != null){
+                    int photosTaken = 0;
+                    try {
+                        photosTaken = response.getInt("rows");
+                        Toast.makeText(getApplicationContext(), "Fotos Taken 1: " + photosTaken, Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    photosCounter[0] = photosTaken;
+                    Toast.makeText(getApplicationContext(), "Fotos Taken 2: " + photosCounter[0], Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "El servidor no responde", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Error al recibir datos (" + statusCode + ")", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Toast.makeText(getApplicationContext(), "Fotos Taken 3: " + photosCounter[0], Toast.LENGTH_SHORT).show();
+	    return photosCounter[0];
+    }
+
+    private int getPhotosCurrentDate(int idPromotor, int idTienda, String fecha){
+        final AsyncHttpClient photosCurrentDate = new AsyncHttpClient();
+        final int[] photosCounter = {0};
+        RequestParams rp = new RequestParams();
+        rp.put("FotosMarca", "fotosFechaActual");
+        rp.put("idTienda", String.valueOf(idTienda));
+        rp.put("idPromotor", String.valueOf(idPromotor));
+        rp.put("fecha", fecha);
+
+        photosCurrentDate.get(Utilities.WEB_SERVICE_CODPAA+"getFotos.php", rp, new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response){
+                if(response != null){
+                    int photosTaken = 0;
+                    try {
+                        photosTaken = response.getInt("rows");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    photosCounter[0] = photosTaken;
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "El servidor no responde", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Error al recibir datos (" + statusCode + ")", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return photosCounter[0];
+    }
+
 
 }

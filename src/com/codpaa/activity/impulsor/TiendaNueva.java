@@ -423,7 +423,11 @@ public class TiendaNueva extends AppCompatActivity implements View.OnClickListen
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 
 
-                        //Log.d("response", "errorfasfsadfsdafsad");
+                        if(errorResponse != null) {
+                            Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+                        } else {
+                            Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+                        }
 
                         super.onFailure(statusCode, headers, throwable, errorResponse);
 
@@ -433,8 +437,6 @@ public class TiendaNueva extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
 
-
-                        //Log.d("Error", "errorororro");
                         super.onFailure(statusCode, headers, throwable, errorResponse);
                     }
                 });

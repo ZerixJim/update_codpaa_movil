@@ -30,7 +30,7 @@ public class InstallApps extends BroadcastReceiver {
 
             Log.w("Action App", intent.getAction());
 
-            AndroidApps app = new AndroidApps(context, getUser(context));
+            //AndroidApps app = new AndroidApps(context, getUser(context));
 
             String action = intent.getAction();
             String actionString = "";
@@ -46,7 +46,7 @@ public class InstallApps extends BroadcastReceiver {
             }
 
 
-            app.sentSingleApp(intent.getData().getEncodedSchemeSpecificPart(), actionString);
+            //app.sentSingleApp(intent.getData().getEncodedSchemeSpecificPart(), actionString);
         }
 
 

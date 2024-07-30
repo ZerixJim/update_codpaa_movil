@@ -161,10 +161,20 @@ public class Agotados extends AppCompatActivity implements AdapterView.OnItemSel
         ArrayList<MarcaModel> array = new ArrayList<>();
 
         SQLiteDatabase bd = new BDopenHelper(this).getReadableDatabase();
-        String sql = "select m.nombre, m.idMarca  from marca m " +
+
+        String sql = "select m.nombre, m.idMarca " +
+                "from tienda_marca tm " +
+                "left join marca m on tm.idMarca = m.idMarca " +
+                "left join producto p on (p.idMarca = tm.idMarca) " +
+                "where tm.idTienda = " + idTienda + " " +
+                "and p.agotado = 1 " +
+                "and tm.idMarca not in(356, 357, 358, 359, 360) " +
+                "group by m.idMarca;";
+
+        /*String sql = "select m.nombre, m.idMarca  from marca m " +
                 " left join producto p on (p.idMarca = m.idMarca ) " +
                 " where p.agotado = 1" +
-                " group by m.idMarca ";
+                " group by m.idMarca ";*/
         Cursor cursorMarca = bd.rawQuery(sql, null);
 
         for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){

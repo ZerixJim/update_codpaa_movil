@@ -109,7 +109,7 @@ public class GeoLocalizar extends Service {
 
 			if (response != null) {
 				try {
-					Log.d("ResponseFrentes", response.toString());
+					Log.d("ResponseFrentes1", response.toString());
 					if (response.getBoolean("insert")) {
 						bdF = new BDopenHelper(con).getWritableDatabase();
 						bdF.execSQL("Update frentesCharola set status=2 where idTienda=" +
@@ -117,16 +117,16 @@ public class GeoLocalizar extends Service {
 								response.getString("fecha") + "' and idMarca=" +
 								response.getInt("idMarca") + " and idProducto=" +
 								response.getInt("idProducto"));
-						Log.d("ResponseFrentes", "insertado :)");
+						Log.d("ResponseFrentes2", "insertado :)");
 
 						bdF.close();
 
 					} else {
-						Log.d("ResponseFrentes", "fallo :(");
+						Log.d("ResponseFrentes3", "fallo :(");
 					}
 
 				} catch (JSONException e) {
-					Log.d("ResponseFrentes", "Error");
+					Log.d("ResponseFrentes4", "Error");
 					e.printStackTrace();
 				}
 			}
@@ -136,7 +136,13 @@ public class GeoLocalizar extends Service {
 		@Override
 		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 			super.onFailure(statusCode, headers, throwable, errorResponse);
-			Log.d("ResponseFrentes", "Se perdio la coneccion :(");
+			Log.d("ResponseFrentes5", "Se perdio la coneccion :(");
+
+			if(errorResponse != null) {
+				Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+			} else {
+				Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+			}
 
 		}
 	};
@@ -177,6 +183,12 @@ public class GeoLocalizar extends Service {
 			super.onFailure(statusCode, headers, throwable, errorResponse);
 
 			Log.d("ResponseInteligencia", "Se perdio la conexion :(");
+
+			if(errorResponse != null) {
+				Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+			} else {
+				Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+			}
 		}
 	};
 
@@ -212,6 +224,12 @@ public class GeoLocalizar extends Service {
 		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 			super.onFailure(statusCode, headers, throwable, errorResponse);
 			Log.d("ResponseInventario", "se perdio la conexion");
+
+			if(errorResponse != null) {
+				Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+			} else {
+				Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+			}
 		}
 	};
 
@@ -252,6 +270,12 @@ public class GeoLocalizar extends Service {
 			super.onFailure(statusCode, headers, throwable, errorResponse);
 
 			Log.d("ResponseInteligencia", "Se perdio la conexion :(");
+
+			if(errorResponse != null) {
+				Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+			} else {
+				Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+			}
 		}
 	};
 
@@ -374,7 +398,7 @@ public class GeoLocalizar extends Service {
 
 
 		resultIntent = new Intent(this, GeoLocalizar.class);
-		pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		pendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_IMMUTABLE); //ORIGINAL: PendingIntent.FLAG_UPDATE_CURRENT
 
 
 		//conexion para la api de location
@@ -829,6 +853,9 @@ public class GeoLocalizar extends Service {
 					rp.put("idMarc", Integer.toString(curFrentes.getInt(3)));
 					rp.put("idProdu", Integer.toString(curFrentes.getInt(4)));
 					rp.put("cantidad", Integer.toString(curFrentes.getInt(curFrentes.getColumnIndex("cantidad"))));
+					rp.put("idCategoria", Integer.toString(curFrentes.getInt(curFrentes.getColumnIndex("idCategoria"))));
+
+					Log.d("DatosGeo", rp.toString());
 					/*rp.put("cha1", Integer.toString(curFrentes.getInt(5)));
 					rp.put("cha2", Integer.toString(curFrentes.getInt(6)));
 					rp.put("cha3", Integer.toString(curFrentes.getInt(7)));
@@ -853,7 +880,7 @@ public class GeoLocalizar extends Service {
 
 					AsyncHttpClient cliente = new AsyncHttpClient();
 
-					cliente.post(Utilities.WEB_SERVICE_CODPAA + "send_front.php", rp, respuestaFrentes);
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "send_front_copy.php", rp, respuestaFrentes);
 
 				}
 
@@ -864,6 +891,7 @@ public class GeoLocalizar extends Service {
 			base.close();
 			DBhelper.close();
 		} catch (Exception e) {
+			Log.v("otroError", e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -1115,6 +1143,7 @@ public class GeoLocalizar extends Service {
 			Cursor curInteli = DBhelper.datosInteligenciaMercado();
 			base = new BDopenHelper(this).getWritableDatabase();
 			RequestParams rpIn = new RequestParams();
+			AsyncHttpClient cliente = new AsyncHttpClient();
 			if (curInteli.getCount() > 0) {
 
 
@@ -1134,15 +1163,18 @@ public class GeoLocalizar extends Service {
 					rpIn.put("finofer", curInteli.getString(11));
 					rpIn.put("preciocaja", curInteli.getString(12));
 					rpIn.put("cambioprecio", curInteli.getString(13));
+					rpIn.put("idCategoria", curInteli.getInt(curInteli.getColumnIndex("idCategoria")));
+					rpIn.put("precioCajaOferta", curInteli.getString(curInteli.getColumnIndex("precioOfertaCaja")));
 
 
-					AsyncHttpClient cliente = new AsyncHttpClient();
-					cliente.post(Utilities.WEB_SERVICE_CODPAA + "send_precio.php", rpIn, respuestaInteligencia);
+					//AsyncHttpClient cliente = new AsyncHttpClient();
+					cliente.post(Utilities.WEB_SERVICE_CODPAA + "send_precio_copy.php", rpIn, respuestaInteligencia);
 
 
 				}
 			}
 
+			curInteli.close();
 			base.close();
 			DBhelper.close();
 

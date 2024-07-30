@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.codpaa.R;
+import com.codpaa.activity.Disclosure;
 import com.codpaa.activity.MainActivity;
 import com.codpaa.service.GeoLocalizar;
 
@@ -56,7 +57,7 @@ public class Lanzador extends Activity{
 		return new Runnable(){
 			public void run(){
 		
-				Intent intent = new Intent(Lanzador.this, MainActivity.class);
+				Intent intent = new Intent(Lanzador.this, Disclosure.class); //Aquí iba MainActivity
 				startActivity(intent);
 				finish();
 			}

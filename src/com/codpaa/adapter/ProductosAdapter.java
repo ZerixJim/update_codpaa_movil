@@ -227,6 +227,11 @@ public class ProductosAdapter extends ArrayAdapter<ProductosModel> implements Fi
     }
 
     public ArrayList<ProductosModel> getProductos() {
+        //Garantizar que el método no devuelva NULL
+
+        if(arrayList == null){
+            arrayList = new ArrayList<>();
+        }
         return arrayList;
     }
 

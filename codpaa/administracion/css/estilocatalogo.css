@@ -1,0 +1,1 @@
+*{  margin: 0;  padding: 0;}header {    width: auto;    margin-left: 10px;    margin-right: 10px;    }#contenerdor{    width: 90%;    border: 1px dashed rgba(0,0,0,0.5);    border-radius: 3px;}

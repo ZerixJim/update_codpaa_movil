@@ -16,7 +16,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import com.codpaa.adapter.CategoriasProductoAdapter;
 import com.codpaa.model.ProductosModel;
+import com.codpaa.model.SpinnerCateProdModel;
 import com.codpaa.util.NumberTextWatcher;
 import com.codpaa.widget.SingleSpinnerSelect;
 import com.google.android.material.textfield.TextInputLayout;
@@ -54,7 +56,7 @@ import com.codpaa.db.BDopenHelper;
 
 public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 
-	Spinner spMarca;
+	Spinner spMarca, spinnerCategoria;
 	private SingleSpinnerSelect spProducto;
 
     private static Button btnFechaInicio;
@@ -64,7 +66,7 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 	private TextInputLayout tilPrecioCaja;
 	/*private TextInputLayout tilPrecioOferta;*/
 	SQLiteDatabase base;
-	EditText editProNormal, editProOfer, editPrecioCaja;
+	EditText editProNormal, editProOfer, editPrecioCaja, editPreOferCaja;
 	//CheckBox chOferCr, chProExtra, chProEmp, chCambioI, chCambioP;
 	InputMethodManager im;
 	ArrayList<MarcaModel> array = new ArrayList<>();
@@ -88,23 +90,22 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 		
 		spMarca =  findViewById(R.id.spInMar);
 		spProducto =  findViewById(R.id.spInProd);
+		//spinnerCategoria = findViewById(R.id.spinner_categorias_prod2);
 		
 		editProNormal =  findViewById(R.id.editPreN);
 		editProOfer =  findViewById(R.id.editPreOfer);
 		editPrecioCaja = findViewById(R.id.editTextPreCaj);
+		editPreOferCaja = findViewById(R.id.editPreOferCaja);
 
 
 		//editProNormal.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(4,2)});
 		//editProOfer.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(4,2)});
 		//editPrecioCaja.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(4,2)});
 
-
-
 		editProNormal.addTextChangedListener(new NumberTextWatcher(editProNormal));
 		editProOfer.addTextChangedListener(new NumberTextWatcher(editProOfer));
 		editPrecioCaja.addTextChangedListener(new NumberTextWatcher(editPrecioCaja));
-
-
+		editPreOferCaja.addTextChangedListener(new NumberTextWatcher(editPreOferCaja));
 
 		
 		/*chOferCr = (CheckBox) findViewById(R.id.checkOferC);
@@ -138,6 +139,9 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 		}catch(Exception e) {
 			Toast.makeText(this, "Error Frentes 3", Toast.LENGTH_SHORT).show();
 		}
+
+		//Se cargan las categorías
+		//spinnerCate();
 
 
 		try {
@@ -211,6 +215,14 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 		int idMarca = spM.getId();
 
 		loadSpinnerProd(idMarca);
+
+		/*if(idMarca == 249){
+			//Si la marca es Clorox se muestra el apartado de categorías
+			spinnerCategoria.setVisibility(View.VISIBLE);
+		}
+		else{
+			spinnerCategoria.setVisibility(View.INVISIBLE);
+		}*/
 		
 	}
 
@@ -234,6 +246,8 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 			editProOfer.setText("0.00");
 		if(editPrecioCaja.getText().length() > 0)
 			editPrecioCaja.setText("0.00");
+		if(editPreOferCaja.getText().length() > 0)
+			editPreOferCaja.setText("0.00");
 	}
 	
 	
@@ -244,6 +258,9 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 			String normal = editProNormal.getText().toString();
 			String caja = editPrecioCaja.getText().toString();
 			String oferta = editProOfer.getText().toString();
+			String ofertaCaja = editPreOferCaja.getText().toString();
+
+
 
 			if (isNotEmptyField(normal)){
 				tilPrecioNormal.setError(null);
@@ -303,61 +320,107 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 			try {
 				MarcaModel spM = (MarcaModel) spMarca.getSelectedItem();
 				ProductosModel spP = (ProductosModel) spProducto.getSelectedItem();
+				//SpinnerCateProdModel spC = (SpinnerCateProdModel) spinnerCategoria.getSelectedItem();
 				Calendar c = Calendar.getInstance();
 				SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
 
 				String fecha = dFecha.format(c.getTime());
 				int idMarca = spM.getId();
 				int idProdu = spP.getIdProducto();
+				//int idCateProd = spC.getId();
+
 				if(idMarca != 0){
+
 					if(idProdu != 0){
 
-						if (isNotEmptyField(normal)) {
+						if(idMarca != 0) {
+
+							//Si es cualquier marca menos Clorox, se puede registrar la información
+							if (isNotEmptyField(normal)) {
 
 
-							if (isNotEmptyField(oferta)  &&  ( getFechaInicio().isEmpty() || getFechaFin().isEmpty() ) ){
+								if (isNotEmptyField(oferta) && (getFechaInicio().isEmpty() || getFechaFin().isEmpty())) {
 
-								Toast.makeText(this,"fecha de la oferta faltante ", Toast.LENGTH_SHORT).show();
+									Toast.makeText(this, "fecha de la oferta faltante ", Toast.LENGTH_SHORT).show();
 
+								} else {
+									int contador = 0;
+									contador = baseH.cuentaPreciosV1(idPromotor, idTienda, idProdu, fecha);
+
+									if(contador == 0){
+
+										baseH.insertarPrecio(idPromotor, idTienda, idProdu, normal, caja, oferta, fecha, 1, getFechaInicio(), getFechaFin(), 0, ofertaCaja);
+										//Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + normal + " precOfer " + oferta + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
+										enviar.enviarInteli();
+										Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
+
+										resetCampos();
+										spProducto.resetFilter();
+										spProducto.setSelection(0);
+
+										btnFechaInicio.setText(R.string.fecha);
+										btnFechaFin.setText(R.string.fecha);
+										Log.e("PRECIOSCAPT", "Precio capturado");
+									}else{
+										Log.e("PRECIOSCAPT", "Ese registro ya existe");
+									}
+
+								}
+
+
+							} else {
+								Toast.makeText(this, "Campos de Precio son Requeridos", Toast.LENGTH_SHORT).show();
+							}
+						}
+						/*else{
+							if(idCateProd != 0) {
+
+								if (isNotEmptyField(normal)) {
+
+
+									if (isNotEmptyField(oferta) && (getFechaInicio().isEmpty() || getFechaFin().isEmpty())) {
+
+										Toast.makeText(this, "fecha de la oferta faltante ", Toast.LENGTH_SHORT).show();
+
+
+									} else {
+
+										baseH.insertarPrecio(idPromotor, idTienda, idProdu, normal, caja, oferta, fecha, 1, getFechaInicio(), getFechaFin(), idCateProd, ofertaCaja);
+										//Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + normal + " precOfer " + oferta + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
+										enviar.enviarInteli();
+										Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
+
+										resetCampos();
+										spProducto.resetFilter();
+										spProducto.setSelection(0);
+
+										btnFechaInicio.setText(R.string.fecha);
+										btnFechaFin.setText(R.string.fecha);
+									}
+
+
+								} else {
+									Toast.makeText(this, "Campos de Precio son Requeridos", Toast.LENGTH_SHORT).show();
+								}
 
 							}else{
-
-								baseH.insertarPrecio(idPromotor, idTienda, idProdu, normal, caja ,oferta, fecha, 1, getFechaInicio(), getFechaFin());
-								//Log.d("InteligMer", "idProm " + idPromotor + " idT " + idTienda + " idP " + normal + " precOfer " + oferta + " fecha " + fecha + " pferCr " + oferCru + " proE" + proEmpl);
-								enviar.enviarInteli();
-								Toast.makeText(getApplicationContext(), "Guardando.. y Enviando...", Toast.LENGTH_SHORT).show();
-
-								resetCampos();
-								spProducto.resetFilter();
-								spProducto.setSelection(0);
-
-								btnFechaInicio.setText(R.string.fecha);
-								btnFechaFin.setText(R.string.fecha);
+								Toast.makeText(this, "No seleccionaste la categoría", Toast.LENGTH_SHORT).show();
 							}
-
-
-
-
-						} else {
-							Toast.makeText(this, "Campos de Precio son Requeridos", Toast.LENGTH_SHORT).show();
-						}
+						}*/
 
 					}else{
-						Toast.makeText(getApplicationContext(), "NO seleccionaste Marca", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(), "No seleccionaste un producto", Toast.LENGTH_SHORT).show();
 					}
-				}else{
-					Toast.makeText(getApplicationContext(), "NO seleccionaste Marca", Toast.LENGTH_SHORT).show();
+				}
+				else{
+					Toast.makeText(getApplicationContext(), "No seleccionaste una marca", Toast.LENGTH_SHORT).show();
 				}
 
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
 
-			
-			
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -412,6 +475,44 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 		} catch (Exception e) {
 			Toast.makeText(this, "Error Mayoreo 4", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	/*private void spinnerCate(){
+		try {
+			CategoriasProductoAdapter adapterCate = new CategoriasProductoAdapter(this, android.R.layout.simple_spinner_item, getArrayCate());
+			spinnerCategoria.setAdapter(adapterCate);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}*/
+
+	private ArrayList<SpinnerCateProdModel> getArrayCate(){
+
+		base = new BDopenHelper(this).getReadableDatabase();
+		ArrayList<SpinnerCateProdModel> arrayE = new ArrayList<>();
+		String sql = "select id, categoria from categoriasProducto order by id asc;";
+		Cursor cursorE = base.rawQuery(sql, null);
+
+		for(cursorE.moveToFirst(); !cursorE.isAfterLast(); cursorE.moveToNext()){
+
+			final SpinnerCateProdModel spiM = new SpinnerCateProdModel();
+			spiM.setCategoria(cursorE.getString(1));
+			spiM.setId(cursorE.getInt(0));
+			Log.v("cate", spiM.getCategoria());
+
+			arrayE.add(spiM);
+		}
+
+		final SpinnerCateProdModel spiMfirst = new SpinnerCateProdModel();
+		spiMfirst.setCategoria("Categoría del producto");
+		spiMfirst.setId(0);
+
+		arrayE.add(0,spiMfirst);
+
+		cursorE.close();
+		base.close();
+		return arrayE;
+
 	}
 
 	private ArrayList<ProductosModel> getArrayListPro(int idMarca){
@@ -475,7 +576,13 @@ public class Precio extends AppCompatActivity implements OnItemSelectedListener{
 	private ArrayList<MarcaModel> getArrayList(){
 		
 		base = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select idMarca as _id, nombre, img from marca order by nombre asc;";
+		//String sql = "select idMarca as _id, nombre, img from marca order by nombre asc;";
+		String sql = "select tm.idMarca as _id, m.nombre, m.img " +
+					 "from tienda_marca tm " +
+					 "left join marca m on tm.idMarca = m.idMarca " +
+					 "where tm.idTienda = " + idTienda + " " +
+					 "and tm.idMarca not in(356, 357, 358, 359, 360)" + ";";
+
 		Cursor cursorMarca = base.rawQuery(sql, null);
 		
 		for(cursorMarca.moveToFirst(); !cursorMarca.isAfterLast(); cursorMarca.moveToNext()){

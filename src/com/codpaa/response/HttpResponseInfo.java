@@ -9,6 +9,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.codpaa.db.BDopenHelper;
@@ -75,7 +76,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
     public void onSuccess(int statusCode, Header[] headers, final JSONObject response) {
 
 
-        //Log.d("OnSuccess Info", "1");
+        Log.v("OnSuccess Info", "1");
         final Handler handler = new Handler();
 
 
@@ -97,6 +98,9 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                         JSONArray productoTienda = response.getJSONArray("productoTienda");
                         JSONArray materiales = response.getJSONArray("materiales");
                         JSONArray tiendaMarca = response.getJSONArray("tienda_marca");
+                        JSONArray categoriasProductos = response.getJSONArray("categoriasProductos");
+
+                        Log.v("INFOCAT", String.valueOf(categoriasProductos.length()));
 
 
                         parseJSONMarca(marcas);
@@ -107,6 +111,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                         parseJSONProductoByFormato(productoFormato);
                         parseJSONProductoByTienda(productoTienda);
                         parseJSONMateriales(materiales);
+                        parseJSONCategoriasProd(categoriasProductos);
 
 
                         insertTiendaMarca(tiendaMarca);
@@ -136,6 +141,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Log.v("NOTINFOCAT", "Error");
 
 
                         handler.postDelayed(new Runnable() {
@@ -174,6 +180,13 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
         super.onFailure(statusCode, headers, throwable, errorResponse);
 
         Toast.makeText(context, "Error Al descargar la Informacion!!", Toast.LENGTH_SHORT).show();
+
+        if(errorResponse != null) {
+            //Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+        } else {
+            // Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+        }
+
         progressDialog.dismiss();
     }
 
@@ -285,6 +298,7 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
                     productosArray.getJSONObject(i).getString("presentacion"),
                     productosArray.getJSONObject(i).getInt("idMarca"),
                     productosArray.getJSONObject(i).getString("cb"),
+                    productosArray.getJSONObject(i).getInt("tipo"),
                     productosArray.getJSONObject(i).getInt("tester"),
                     productosArray.getJSONObject(i).getDouble("precio_compra"),
                     productosArray.getJSONObject(i).getDouble("precio_sugerido"),
@@ -429,6 +443,45 @@ public class HttpResponseInfo extends JsonHttpResponseHandler {
 
         configuracion.setProductoByTienda(fecha);
 
+    }
+
+    private synchronized void parseJSONCategoriasProd(JSONArray arrayCate) throws JSONException{
+        BDopenHelper b = new BDopenHelper(context.getApplicationContext());
+        b.vaciarTabla("categoriasProducto");
+
+        Configuracion configuracion = new Configuracion(context);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String fecha = dFecha.format(c.getTime());
+
+        Log.v("sizearray", String.valueOf(arrayCate.length()));
+
+        for(int i= 0; i < arrayCate.length(); i++) {
+            //Log.v("idcat", String.valueOf(i));
+            //Log.v("valueId", String.valueOf(arrayCate.getJSONObject(i)));
+            b.insertarCategoriasProd(arrayCate.getJSONObject(i).getInt("id_categoria"),
+                    arrayCate.getJSONObject(i).getString("categoria"));
+        }
+
+        configuracion.setCategoriasProd(fecha);
+
+
+        /*BDopenHelper b = new BDopenHelper(context.getApplicationContext());
+        b.vaciarTabla("tipoexhibicion");
+
+        Configuracion configuracion = new Configuracion(context);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dFecha = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String fecha = dFecha.format(c.getTime());
+
+        for(int i= 0; i < exhiArray.length(); i++) {
+            b.insertarTipoExhibicion(exhiArray.getJSONObject(i).getInt("IE"),
+                    exhiArray.getJSONObject(i).getString("N"));
+        }
+
+        configuracion.setExhibicion(fecha);*/
     }
 
 

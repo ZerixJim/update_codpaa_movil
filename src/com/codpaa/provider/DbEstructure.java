@@ -399,4 +399,70 @@ public class DbEstructure {
         public static final String FECHA = "fecha";
     }
 
+
+    /**
+     * Tabla de categorias de producto
+     * */
+     public static class encuestas{
+        private  encuestas(){}
+
+        public static final String TABLE_NAME = "encuestas";
+        public static final String ID_PREGUNTA = "idPregunta";
+        public static final String ID_MARCA = "idMarca";
+        public static final String PREGUNTA = "pregunta";
+        public static final String STATUS = "status";
+    }
+
+    public static class promotor_encuesta{
+        private  promotor_encuesta(){}
+
+        public static final String TABLE_NAME = "promotor_encuesta";
+        public static final String ID_ENCUESTA = "idEncuesta";
+        public static final String SUCURSAL = "Sucursal";
+        public static final String ID_ESTADO = "idEstado";
+        public static final String ID_PROMOTOR = "idPromotor";
+        public static final String ID_MARCA = "idMarca";
+        public static final String FECHA_CAPTURA = "fecha_captura";
+        public static final String PREGUNTA1 = "pregunta1";
+        public static final String PREGUNTA2 = "pregunta2";
+        public static final String PREGUNTA3 = "pregunta3";
+        public static final String PREGUNTA4 = "pregunta4";
+        public static final String PREGUNTA5 = "pregunta5";
+        public static final String PREGUNTA6 = "pregunta6";
+        public static final String PREGUNTA7 = "pregunta7";
+        public static final String PREGUNTA8 = "pregunta8";
+        public static final String PREGUNTA9 = "pregunta9";
+        public static final String PREGUNTA10 = "pregunta10";
+        public static final String PREGUNTA11 = "pregunta11";
+        public static final String PREGUNTA12 = "pregunta12";
+        public static final String PREGUNTA13 = "pregunta13";
+        public static final String PREGUNTA14 = "pregunta14";
+        public static final String PREGUNTA15 = "pregunta15";
+        public static final String PREGUNTA16 = "pregunta16";
+        public static final String PREGUNTA17 = "pregunta17";
+        public static final String PREGUNTA18 = "pregunta18";
+        public static final String PREGUNTA19 = "pregunta19";
+        public static final String PREGUNTA20 = "pregunta20";
+        public static final String PREGUNTA21 = "pregunta21";
+        public static final String PREGUNTA22 = "pregunta22";
+        public static final String PREGUNTA23 = "pregunta23";
+        public static final String PREGUNTA24 = "pregunta24";
+        public static final String PREGUNTA25 = "pregunta25";
+        public static final String PREGUNTA26 = "pregunta26";
+        public static final String PREGUNTA27 = "pregunta27";
+        public static final String PREGUNTA28 = "pregunta28";
+        public static final String PREGUNTA29 = "pregunta29";
+        public static final String PREGUNTA30 = "pregunta30";
+        public static final String PREGUNTA31 = "pregunta31";
+
+    }
+    public static class respuestas_encuesta{
+        private  respuestas_encuesta(){}
+
+        public static final String TABLE_NAME = "respuesta_encuesta";
+        public static final String ID_RESPUESTA = "idRespuesta";
+        public static final String ID_MARCA = "idMarca";
+        public static final String RESPUESTA = "respuesta";
+        public static final String STATUS = "status";
+    }
 }

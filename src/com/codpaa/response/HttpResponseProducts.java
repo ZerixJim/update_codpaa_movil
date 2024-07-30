@@ -8,13 +8,17 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.codpaa.activity.MainMenu;
+import com.codpaa.activity.MenuPrincipal;
 import com.codpaa.db.BDopenHelper;
 import com.codpaa.provider.DbEstructure;
 import com.codpaa.provider.DbEstructure.Materiales;
 import com.codpaa.provider.DbEstructure.ProductByFormato;
 import com.codpaa.provider.DbEstructure.ProductoByTienda;
+import com.codpaa.update.UpdateInformation;
 import com.codpaa.util.Configuracion;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -123,8 +127,9 @@ public class HttpResponseProducts extends JsonHttpResponseHandler {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-
-                                progressDialog.dismiss();
+                                if(progressDialog != null && progressDialog.isShowing()) {
+                                    progressDialog.dismiss();
+                                }
 
                             }
                         }, 1000);
@@ -169,6 +174,12 @@ public class HttpResponseProducts extends JsonHttpResponseHandler {
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
         super.onFailure(statusCode, headers, throwable, errorResponse);
+
+        if(errorResponse != null) {
+            Log.e("ERROR HTTP RESPONSE", errorResponse.toString());
+        } else {
+            Log.e("ERROR HTTP RESPONSE", "ErrorResponse is null");
+        }
 
         Toast.makeText(context, "Error Al descargar la Informacion!!", Toast.LENGTH_SHORT).show();
         progressDialog.dismiss();
@@ -258,6 +269,7 @@ public class HttpResponseProducts extends JsonHttpResponseHandler {
                     productosArray.getJSONObject(i).getString("presentacion"),
                     productosArray.getJSONObject(i).getInt("idMarca"),
                     productosArray.getJSONObject(i).getString("cb"),
+                    productosArray.getJSONObject(i).getInt("tipo"),
                     productosArray.getJSONObject(i).getInt("tester"),
                     productosArray.getJSONObject(i).getDouble("precio_compra"),
                     productosArray.getJSONObject(i).getDouble("precio_sugerido"),
@@ -270,12 +282,12 @@ public class HttpResponseProducts extends JsonHttpResponseHandler {
 
 
 
-        }
 
 
         configuracion.setProducto(fecha);
     }
 
+}
     private synchronized void parseJSONExhi(JSONArray exhiArray) throws JSONException {
         BDopenHelper b = new BDopenHelper(context.getApplicationContext());
         b.vaciarTabla("tipoexhibicion");

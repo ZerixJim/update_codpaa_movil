@@ -78,7 +78,11 @@ public class ComentariosActivity extends AppCompatActivity {
 	private ArrayList<MarcaModel> getMarcas(){
 
 		SQLiteDatabase base = new BDopenHelper(this).getReadableDatabase();
-		String sql = "select idMarca, nombre, img from marca order by nombre asc;";
+		String sql = "select tm.idMarca as _id, m.nombre, m.img " +
+				"from tienda_marca tm " +
+				"left join marca m on tm.idMarca = m.idMarca " +
+				"where tm.idTienda = " + idTienda + " " +
+				"and tm.idMarca not in(356, 357, 358, 359, 360)" + ";";
 		Cursor cursorMarca = base.rawQuery(sql, null);
 		ArrayList<MarcaModel> array = new ArrayList<>();
 

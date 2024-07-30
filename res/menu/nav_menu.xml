@@ -11,6 +11,10 @@
         android:id="@+id/shutdown"
         android:icon="@drawable/ic_power_settings_new_black_18dp"
         android:title="@string/cerrar_aplicacion"/>
+    <item
+        android:id="@+id/privpolicy"
+        android:icon="@drawable/ic_message_blue_grey_700_36dp"
+        android:title="Aviso de privacidad"/>
 
     <!--<group android:checkableBehavior="single">
 
